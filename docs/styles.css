@@ -1,3 +1,4 @@
+@import './docs-shell.css';
 @import '../src/assets/css/styles.css';
 @source '../src';
 @source './';
