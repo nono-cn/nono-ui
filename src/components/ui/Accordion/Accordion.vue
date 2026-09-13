@@ -53,7 +53,7 @@ function getItemProps(context: AccordionItemContext) {
     value: context.item.value,
     disabled: context.item.disabled,
     unmountOnHide: context.item.unmountOnHide ?? props.unmountOnHide,
-    class: cn('border-b last:border-b-0', itemUI.class),
+    class: cn('border-b border-border last:border-b-0', itemUI.class),
     style: itemUI.style,
   }
 }
@@ -75,7 +75,7 @@ function getContentProps(context: AccordionItemContext) {
   return {
     ...ui,
     class: cn(
-      'pt-0 pb-4 overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
+      'overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
       ui.class,
     ),
     style: ui.style,
@@ -155,13 +155,15 @@ function getIconDropdownProps(context: AccordionItemContext) {
         v-bind="getContentProps(context)"
         :data-test-accordion-content="context.item.value"
       >
-        <slot :name="getSlots(context).content" v-bind="context">
-          <slot name="content" v-bind="context">
-            <span :data-test-accordion-description="context.item.value">
-              {{ context.item.description }}
-            </span>
+        <div class="pt-0 pb-4">
+          <slot :name="getSlots(context).content" v-bind="context">
+            <slot name="content" v-bind="context">
+              <span :data-test-accordion-description="context.item.value">
+                {{ context.item.description }}
+              </span>
+            </slot>
           </slot>
-        </slot>
+        </div>
       </AccordionContent>
     </AccordionItem>
   </AccordionRoot>
