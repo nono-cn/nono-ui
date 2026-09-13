@@ -1,12 +1,18 @@
 import type {
   DropdownMenuContentEmits as RekaDropdownMenuContentEmits,
   DropdownMenuContentProps as RekaDropdownMenuContentProps,
+  DropdownMenuArrowProps as RekaDropdownMenuArrowProps,
   DropdownMenuRootEmits,
   DropdownMenuRootProps,
   DropdownMenuTriggerProps,
 } from 'reka-ui'
 
 export { default as DropdownMenu } from './DropdownMenu.vue'
+
+export type DropdownMenuArrowProps = Pick<
+  RekaDropdownMenuArrowProps,
+  'height' | 'rounded' | 'width'
+>
 
 export type DropdownMenuContentProps = Pick<
   RekaDropdownMenuContentProps,
@@ -34,6 +40,9 @@ export type DropdownMenuContentProps = Pick<
 export type DropdownMenuProps = Pick<DropdownMenuRootProps, 'modal'> &
   DropdownMenuContentProps & {
     open?: boolean
+    heightArrow?: DropdownMenuArrowProps['height']
+    roundedArrow?: DropdownMenuArrowProps['rounded']
+    widthArrow?: DropdownMenuArrowProps['width']
     disabled?: DropdownMenuRootProps['disabled'] & DropdownMenuTriggerProps['disabled']
   }
 

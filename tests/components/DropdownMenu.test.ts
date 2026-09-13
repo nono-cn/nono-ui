@@ -3,6 +3,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import {
   DropdownMenuContent,
+  DropdownMenuArrow,
   DropdownMenuPortal,
   DropdownMenuRoot,
   DropdownMenuTrigger,
@@ -142,6 +143,26 @@ const casesContentEmits = [
   'pointerDownOutside',
 ] as const
 
+const casesArrowProps = {
+  heightArrow: [
+    { input: -1, expected: -1 },
+    { input: 0, expected: 0 },
+    { input: 5, expected: 5 },
+    { input: undefined, expected: 5 },
+  ],
+  widthArrow: [
+    { input: -1, expected: -1 },
+    { input: 0, expected: 0 },
+    { input: 10, expected: 10 },
+    { input: undefined, expected: 10 },
+  ],
+  roundedArrow: [
+    { input: true, expected: true },
+    { input: false, expected: false },
+    { input: undefined, expected: false },
+  ],
+} as const
+
 function mountDropdownMenu(options: MountingOptions<DropdownMenuProps> = {}) {
   return mount(DropdownMenu, {
     ...options,
@@ -153,6 +174,10 @@ function mountDropdownMenu(options: MountingOptions<DropdownMenuProps> = {}) {
           props: Object.keys(casesContentProps),
           emits: casesContentEmits,
           template: '<div><slot /></div>',
+        },
+        DropdownMenuArrow: {
+          props: ['height', 'rounded', 'width'],
+          template: '<span><slot /></span>',
         },
       },
     },
@@ -216,6 +241,19 @@ describe('DropdownMenu', () => {
           } else {
             expect(wrapper.getComponent(DropdownMenuContent).props(prop)).toEqual(expected)
           }
+        })
+      })
+    }
+
+    for (const [prop, cases] of Object.entries(casesArrowProps)) {
+      describe(prop, () => {
+        it.each(cases)('pasa el valor $input y su default al Arrow', ({ input, expected }) => {
+          const wrapper = mountDropdownMenuContent({
+            props: { open: true, disabled: true, forceMount: true, [prop]: input },
+          })
+
+          const arrowProp = prop.replace('Arrow', '').toLowerCase()
+          expect(wrapper.getComponent(DropdownMenuArrow).props(arrowProp)).toBe(expected)
         })
       })
     }

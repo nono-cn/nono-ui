@@ -21,6 +21,24 @@ const propRows: ApiTableRow[] = [
     default: String(dropdownMenuDefaults.disabled),
     description: 'Deshabilita el menú y su trigger.',
   },
+  {
+    name: 'heightArrow',
+    type: 'number',
+    default: String(dropdownMenuDefaults.heightArrow),
+    description: 'Altura de la flecha en píxeles.',
+  },
+  {
+    name: 'widthArrow',
+    type: 'number',
+    default: String(dropdownMenuDefaults.widthArrow),
+    description: 'Anchura de la flecha en píxeles.',
+  },
+  {
+    name: 'roundedArrow',
+    type: 'boolean',
+    default: String(dropdownMenuDefaults.roundedArrow),
+    description: 'Renderiza la versión redondeada de la flecha.',
+  },
   ...[
     [
       'align',

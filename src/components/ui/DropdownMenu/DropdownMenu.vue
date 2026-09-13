@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import {
   DropdownMenuContent,
+  DropdownMenuArrow,
   DropdownMenuPortal,
   DropdownMenuRoot,
   DropdownMenuTrigger,
@@ -16,6 +17,7 @@ defineSlots<DropdownMenuSlots>()
 const props = withDefaults(defineProps<DropdownMenuProps>(), dropdownMenuDefaults)
 const emit = defineEmits<DropdownMenuEmits>()
 const open = defineModel<boolean>('open', { default: false })
+const portalTarget = ref<HTMLElement>()
 
 const rootProps = computed(() => ({ modal: props.modal }))
 const triggerProps = computed(() => ({
@@ -24,6 +26,7 @@ const triggerProps = computed(() => ({
 }))
 const portalProps = computed(() => ({
   disabled: props.disabled,
+  to: portalTarget.value,
 }))
 const contentProps = computed(() => ({
   align: props.align,
@@ -54,17 +57,26 @@ const contentProps = computed(() => ({
   onPointerDownOutside: (event: DropdownMenuEmits['pointerDownOutside'][0]) =>
     emit('pointerDownOutside', event),
 }))
+const arrowProps = computed(() => ({
+  height: props.heightArrow,
+  rounded: props.roundedArrow,
+  width: props.widthArrow,
+}))
 </script>
 
 <template>
-  <DropdownMenuRoot v-bind="rootProps" v-model:open="open" data-test-dropdown-menu-root>
-    <DropdownMenuTrigger v-bind="triggerProps" as-child data-test-dropdown-menu-trigger>
-      <slot></slot>
-    </DropdownMenuTrigger>
-    <DropdownMenuPortal v-bind="portalProps">
-      <DropdownMenuContent v-bind="contentProps" data-test-dropdown-menu-content>
-        <slot name="content" />
-      </DropdownMenuContent>
-    </DropdownMenuPortal>
-  </DropdownMenuRoot>
+  <div>
+    <DropdownMenuRoot v-bind="rootProps" v-model:open="open" data-test-dropdown-menu-root>
+      <DropdownMenuTrigger v-bind="triggerProps" as-child data-test-dropdown-menu-trigger>
+        <slot></slot>
+      </DropdownMenuTrigger>
+      <DropdownMenuPortal v-bind="portalProps">
+        <DropdownMenuContent v-bind="contentProps" data-test-dropdown-menu-content>
+          <slot name="content" />
+          <DropdownMenuArrow v-bind="arrowProps" data-test-dropdown-menu-arrow />
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenuRoot>
+    <div ref="portalTarget" data-test-dropdown-menu-portal-target />
+  </div>
 </template>

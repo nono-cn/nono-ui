@@ -19,4 +19,7 @@ export const dropdownMenuDefaults = {
   sideOffset: 0,
   sticky: 'partial' as const,
   updatePositionStrategy: 'optimized' as const,
+  heightArrow: 5,
+  roundedArrow: false,
+  widthArrow: 10,
 }

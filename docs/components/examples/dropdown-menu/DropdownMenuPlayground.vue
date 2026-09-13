@@ -11,6 +11,9 @@ const initialState = () => ({
   side: 'bottom',
   sideOffset: 0,
   loop: false,
+  heightArrow: 5,
+  widthArrow: 10,
+  roundedArrow: false,
   customSlot: false,
   attrs: false,
 })
@@ -30,6 +33,9 @@ function generateCode() {
     state.value.side !== 'bottom' && `side="${state.value.side}"`,
     state.value.sideOffset !== 0 && `:side-offset="${state.value.sideOffset}"`,
     state.value.loop && ':loop="true"',
+    state.value.heightArrow !== 5 && `:height-arrow="${state.value.heightArrow}"`,
+    state.value.widthArrow !== 10 && `:width-arrow="${state.value.widthArrow}"`,
+    state.value.roundedArrow && ':rounded-arrow="true"',
     state.value.attrs && 'aria-label="Opciones" class="border-primary"',
   ].filter(Boolean)
   const slot = state.value.customSlot
@@ -114,6 +120,15 @@ watch(state, syncFromControls, { deep: true, immediate: true })
             <input v-model.number="state.sideOffset" class="w-16 border" type="number" /></label
           ><label class="flex items-center gap-2 text-sm"
             ><input v-model="state.loop" type="checkbox" /> Loop</label
+          >
+          <label class="flex items-center gap-2 text-sm"
+            >Altura flecha
+            <input v-model.number="state.heightArrow" class="w-16 border" type="number" /></label
+          ><label class="flex items-center gap-2 text-sm"
+            >Anchura flecha
+            <input v-model.number="state.widthArrow" class="w-16 border" type="number" /></label
+          ><label class="flex items-center gap-2 text-sm"
+            ><input v-model="state.roundedArrow" type="checkbox" /> Flecha redondeada</label
           >
         </fieldset>
         <fieldset class="grid gap-3">
