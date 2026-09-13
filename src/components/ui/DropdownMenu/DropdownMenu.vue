@@ -75,10 +75,16 @@ const arrowProps = computed(() => ({
       </DropdownMenuTrigger>
       <DropdownMenuPortal v-bind="portalProps">
         <DropdownMenuContent v-bind="contentProps" data-test-dropdown-menu-content>
-          <DropdownMenuOption v-for="(item, index) in props.items" :key="index" :item="item" :index="index" :value="String(index)">
-              <template v-for="(_, slotName) in $slots" #[slotName]="slotProps" :key="slotName">
-                <slot :name="slotName" v-bind="slotProps" />
-              </template>
+          <DropdownMenuOption
+            v-for="(item, index) in props.items"
+            :key="index"
+            :item="item"
+            :index="index"
+            :value="String(index)"
+          >
+            <template v-for="(_, slotName) in $slots" #[slotName]="slotProps" :key="slotName">
+              <slot :name="slotName" v-bind="slotProps" />
+            </template>
           </DropdownMenuOption>
           <slot v-if="!props.items?.length" />
           <DropdownMenuArrow v-bind="arrowProps" data-test-dropdown-menu-arrow />

@@ -270,7 +270,12 @@ describe('DropdownMenu', () => {
         })
         await nextTick()
 
-        expect(wrapper.getComponent(DropdownMenuOption).find('[data-test-dropdown-menu-separator]').exists()).toBe(true)
+        expect(
+          wrapper
+            .getComponent(DropdownMenuOption)
+            .find('[data-test-dropdown-menu-separator]')
+            .exists(),
+        ).toBe(true)
         expect(wrapper.find('[data-test-dropdown-menu-item]').exists()).toBe(false)
       })
 

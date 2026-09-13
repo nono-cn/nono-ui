@@ -7,6 +7,7 @@ import type {
   DropdownMenuTriggerProps,
 } from 'reka-ui'
 import type { IconConfig } from '@/components/ui/Icon'
+import type { LinkProps } from '@/components/ui/Link'
 
 export { default as DropdownMenu } from './DropdownMenu.vue'
 
@@ -18,6 +19,7 @@ export type DropdownMenuArrowProps = Pick<
 export interface DropdownMenuItem {
   label?: string
   type?: 'item' | 'separator'
+  to?: LinkProps['to']
   icon?: IconConfig
   disabled?: boolean
   onSelect?: (event: Event) => void

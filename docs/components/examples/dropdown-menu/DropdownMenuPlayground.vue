@@ -18,6 +18,10 @@ const initialState = () => ({
   items: [
     { label: 'Perfil' },
     { type: 'separator' },
+    {
+      label: 'Documentación',
+      to: { path: '/button', query: { from: 'playground' }, hash: '#props' },
+    },
     { label: 'Configuración' },
     { label: 'Eliminar', disabled: true },
   ],
@@ -34,7 +38,7 @@ const Preview = shallowRef()
 
 function generateCode() {
   const items = state.value.onSelect
-    ? `:items="[{ label: 'Perfil', onSelect: () => console.log('Perfil seleccionado') }, { label: 'Configuración' }, { label: 'Eliminar', disabled: true }]"`
+    ? `:items="[{ label: 'Perfil', onSelect: () => console.log('Perfil seleccionado') }, { label: 'Documentación', to: { path: '/button', query: { from: 'playground' }, hash: '#props' } }, { label: 'Configuración' }, { label: 'Eliminar', disabled: true }]"`
     : `:items='${JSON.stringify(state.value.items)}'`
   const typedItems = state.value.type === 'separator' ? `:items="[{ type: 'separator' }]"` : items
   const props = [
@@ -149,9 +153,6 @@ watch(state, syncFromControls, { deep: true, immediate: true })
               <option value="item">item</option>
               <option value="separator">separator</option>
             </select></label
-          >
-          <label class="flex items-center gap-2 text-sm"
-            ><input v-model="state.onSelect" type="checkbox" /> onSelect en Perfil</label
           >
         </fieldset>
         <fieldset class="grid gap-3">

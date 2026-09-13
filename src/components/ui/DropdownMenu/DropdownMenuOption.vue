@@ -1,23 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import { DropdownMenuItem as RekaDropdownMenuItem, DropdownMenuSeparator } from 'reka-ui'
-import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
-import type {
-  DropdownMenuItem as DropdownMenuItemConfig,
-  DropdownMenuItemContext,
-  DropdownMenuSlots,
-} from '.'
+import DropdownMenuItem from './DropdownMenuItem.vue'
+import type { DropdownMenuItem as ItemConfig, DropdownMenuItemContext, DropdownMenuSlots } from '.'
 
-const props = defineProps<{
-  item: DropdownMenuItemConfig
-  index: number
-  value: string
-}>()
+const props = defineProps<{ item: ItemConfig; index: number; value: string }>()
 defineSlots<DropdownMenuSlots>()
 
 const context: DropdownMenuItemContext = props
-
 const itemProps = computed(() => ({
   value: props.value,
   disabled: props.item.disabled,
@@ -29,20 +21,23 @@ const itemProps = computed(() => ({
 </script>
 
 <template>
-  <DropdownMenuSeparator v-if="item.type === 'separator'" class="-mx-1 my-1 h-px bg-border" data-test-dropdown-menu-separator />
-  <RekaDropdownMenuItem v-else
+  <DropdownMenuSeparator
+    v-if="item.type === 'separator'"
+    class="-mx-1 my-1 h-px bg-border"
+    data-test-dropdown-menu-separator
+  />
+
+  <RekaDropdownMenuItem
+    v-else
     v-bind="itemProps"
+    :as="item.to !== undefined ? RouterLink : undefined"
+    :to="item.to"
     data-test-dropdown-menu-item
   >
-    <slot name="item" v-bind="context">
-      <div data-test-dropdown-menu-item-leading>
-        <slot name="item-leading" v-bind="context">
-          <Icon v-if="item.icon" v-bind="item.icon" data-test-dropdown-menu-item-icon />
-        </slot>
-      </div>
-      <div data-test-dropdown-menu-item-label>
-        <slot name="item-label" v-bind="context">{{ item.label }}</slot>
-      </div>
-    </slot>
+    <DropdownMenuItem :item="item" :index="index" :value="value">
+      <template v-for="(_, slotName) in $slots" #[slotName]="slotProps" :key="slotName"
+        ><slot :name="slotName" v-bind="slotProps"
+      /></template>
+    </DropdownMenuItem>
   </RekaDropdownMenuItem>
 </template>

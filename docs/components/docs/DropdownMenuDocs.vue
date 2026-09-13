@@ -150,6 +150,13 @@ const emitRows: ApiTableRow[] = [
 ]
 const itemRows: ApiTableRow[] = [
   {
+    name: 'to',
+    type: 'LinkProps["to"]',
+    typeLink: '/link',
+    default: '-',
+    description: 'Ruta o URL que convierte el item en un enlace.',
+  },
+  {
     name: 'type',
     type: "'item' | 'separator'",
     default: "'item'",
@@ -204,11 +211,12 @@ const slotRows: ApiTableRow[] = [
       <ApiTable title="Props" :rows="propRows" /><ApiTable
         title="Emits"
         :rows="emitRows"
-      /><ApiTable title="Slots" type-label="slotProps" :show-default="false" :rows="slotRows" /><ApiTable
-        id="dropdown-menu-item"
-        title="DropdownMenuItem[]"
-        :rows="itemRows"
-      />
+      /><ApiTable
+        title="Slots"
+        type-label="slotProps"
+        :show-default="false"
+        :rows="slotRows"
+      /><ApiTable id="dropdown-menu-item" title="DropdownMenuItem[]" :rows="itemRows" />
     </div>
   </section>
 </template>
