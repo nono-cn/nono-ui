@@ -264,6 +264,16 @@ describe('DropdownMenu', () => {
     }
 
     describe('items', () => {
+      it('renderiza DropdownMenuSeparator cuando type es separator', async () => {
+        const wrapper = mountDropdownMenu({
+          props: { open: true, disabled: true, forceMount: true, items: [{ type: 'separator' }] },
+        })
+        await nextTick()
+
+        expect(wrapper.getComponent(DropdownMenuOption).find('[data-test-dropdown-menu-separator]').exists()).toBe(true)
+        expect(wrapper.find('[data-test-dropdown-menu-item]').exists()).toBe(false)
+      })
+
       for (const [prop, cases] of Object.entries(casesItems)) {
         describe(prop, () => {
           it.each(cases)('pasa $input al DropdownMenuOption', async ({ input, expected }) => {

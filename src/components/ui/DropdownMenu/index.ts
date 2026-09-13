@@ -16,7 +16,8 @@ export type DropdownMenuArrowProps = Pick<
 >
 
 export interface DropdownMenuItem {
-  label: string
+  label?: string
+  type?: 'item' | 'separator'
   icon?: IconConfig
   disabled?: boolean
   onSelect?: (event: Event) => void

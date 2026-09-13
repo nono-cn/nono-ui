@@ -44,7 +44,7 @@ const propRows: ApiTableRow[] = [
     type: 'DropdownMenuItem[]',
     typeLink: '#dropdown-menu-item',
     default: '[]',
-    description: 'Opciones del menú con label, icon, disabled y onSelect.',
+    description: 'Items del menú con type, label, icon, disabled y onSelect.',
   },
   ...[
     [
@@ -150,10 +150,15 @@ const emitRows: ApiTableRow[] = [
 ]
 const itemRows: ApiTableRow[] = [
   {
+    name: 'type',
+    type: "'item' | 'separator'",
+    default: "'item'",
+    description: 'Define si el elemento es una opción o un separador.',
+  },
+  {
     name: 'label',
     type: 'string',
     default: '-',
-    required: true,
     description: 'Texto visible del item.',
   },
   {

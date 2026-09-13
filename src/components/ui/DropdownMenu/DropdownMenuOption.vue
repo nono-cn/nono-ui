@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { DropdownMenuItem as RekaDropdownMenuItem } from 'reka-ui'
+import { DropdownMenuItem as RekaDropdownMenuItem, DropdownMenuSeparator } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
 import type {
@@ -29,7 +29,8 @@ const itemProps = computed(() => ({
 </script>
 
 <template>
-  <RekaDropdownMenuItem
+  <DropdownMenuSeparator v-if="item.type === 'separator'" class="-mx-1 my-1 h-px bg-border" data-test-dropdown-menu-separator />
+  <RekaDropdownMenuItem v-else
     v-bind="itemProps"
     data-test-dropdown-menu-item
   >
