@@ -1,6 +1,6 @@
-import { h } from 'vue'
+import { h, nextTick } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import {
   DropdownMenuContent,
   DropdownMenuArrow,
@@ -10,6 +10,8 @@ import {
 } from 'reka-ui'
 
 import { DropdownMenu, type DropdownMenuProps } from '@/components/ui/DropdownMenu'
+import DropdownMenuOption from '@/components/ui/DropdownMenu/DropdownMenuOption.vue'
+import { testIconProps } from '../utils/testIconProps'
 
 const casesModal = [
   { name: 'normal true', input: true, expected: true },
@@ -163,39 +165,36 @@ const casesArrowProps = {
   ],
 } as const
 
+const casesItems = {
+  label: [
+    { input: 'Perfil', expected: 'Perfil' },
+    { input: '', expected: '' },
+    { input: undefined, expected: undefined },
+  ],
+  disabled: [
+    { input: true, expected: true },
+    { input: false, expected: false },
+    { input: undefined, expected: undefined },
+  ],
+} as const
+
+beforeAll(() => {
+  class TestResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+
+  globalThis.ResizeObserver = TestResizeObserver as typeof ResizeObserver
+})
+
 function mountDropdownMenu(options: MountingOptions<DropdownMenuProps> = {}) {
-  return mount(DropdownMenu, {
-    ...options,
-    global: {
-      ...options.global,
-      stubs: {
-        ...options.global?.stubs,
-        DropdownMenuContent: {
-          props: Object.keys(casesContentProps),
-          emits: casesContentEmits,
-          template: '<div><slot /></div>',
-        },
-        DropdownMenuArrow: {
-          props: ['height', 'rounded', 'width'],
-          template: '<span><slot /></span>',
-        },
-      },
-    },
-  })
+  return mount(DropdownMenu, { attachTo: document.body, ...options })
 }
 
-function mountDropdownMenuContent(options: MountingOptions<DropdownMenuProps> = {}) {
-  return mountDropdownMenu({
-    ...options,
-    global: {
-      ...options.global,
-      stubs: {
-        ...options.global?.stubs,
-        DropdownMenuPortal: { template: '<div><slot /></div>' },
-      },
-    },
-  })
-}
+afterEach(() => {
+  document.body.innerHTML = ''
+})
 
 describe('DropdownMenu', () => {
   describe('props', () => {
@@ -226,8 +225,8 @@ describe('DropdownMenu', () => {
 
     for (const [prop, cases] of Object.entries(casesContentProps)) {
       describe(prop, () => {
-        it.each(cases)('pasa el valor $input y su default', ({ input, expected }) => {
-          const wrapper = mountDropdownMenuContent({
+        it.each(cases)('pasa el valor $input y su default', async ({ input, expected }) => {
+          const wrapper = mountDropdownMenu({
             props: {
               open: true,
               disabled: true,
@@ -235,6 +234,7 @@ describe('DropdownMenu', () => {
               [prop]: input,
             },
           })
+          await nextTick()
 
           if (prop === 'forceMount' && input === undefined) {
             expect(wrapper.props('forceMount')).toBeUndefined()
@@ -247,16 +247,55 @@ describe('DropdownMenu', () => {
 
     for (const [prop, cases] of Object.entries(casesArrowProps)) {
       describe(prop, () => {
-        it.each(cases)('pasa el valor $input y su default al Arrow', ({ input, expected }) => {
-          const wrapper = mountDropdownMenuContent({
-            props: { open: true, disabled: true, forceMount: true, [prop]: input },
-          })
+        it.each(cases)(
+          'pasa el valor $input y su default al Arrow',
+          async ({ input, expected }) => {
+            const wrapper = mountDropdownMenu({
+              props: { open: true, disabled: true, forceMount: true, [prop]: input },
+            })
+            await nextTick()
 
-          const arrowProp = prop.replace('Arrow', '').toLowerCase()
-          expect(wrapper.getComponent(DropdownMenuArrow).props(arrowProp)).toBe(expected)
-        })
+            const arrowProp = prop.replace('Arrow', '').toLowerCase()
+            expect(wrapper.getComponent(DropdownMenuArrow).props(arrowProp)).toBe(expected)
+          },
+        )
       })
     }
+
+    describe('items', () => {
+      for (const [prop, cases] of Object.entries(casesItems)) {
+        describe(prop, () => {
+          it.each(cases)('pasa $input al DropdownMenuOption', async ({ input, expected }) => {
+            const item = { label: 'Opción', [prop]: input }
+            const wrapper = mountDropdownMenu({
+              props: { open: true, disabled: true, forceMount: true, items: [item] },
+            })
+            await nextTick()
+
+            expect(wrapper.getComponent(DropdownMenuOption).props('item')[prop]).toEqual(expected)
+          })
+        })
+      }
+
+      describe('icon', () => {
+        testIconProps({
+          text: 'pasa toda la configuración del icono del item',
+          id: '[data-test-dropdown-menu-item-icon]',
+          mount: async (icon) => {
+            const wrapper = mountDropdownMenu({
+              props: {
+                open: true,
+                disabled: true,
+                forceMount: true,
+                items: [{ label: 'Opción', icon }],
+              },
+            })
+            await nextTick()
+            return wrapper
+          },
+        })
+      })
+    })
   })
 
   describe('emits', () => {
@@ -270,10 +309,11 @@ describe('DropdownMenu', () => {
 
     for (const event of casesContentEmits) {
       describe(event, () => {
-        it('reenvía el evento de DropdownMenuContent', () => {
-          const wrapper = mountDropdownMenuContent({
+        it('reenvía el evento de DropdownMenuContent', async () => {
+          const wrapper = mountDropdownMenu({
             props: { open: true, disabled: true, forceMount: true },
           })
+          await nextTick()
           const payload = new Event(event)
 
           wrapper.getComponent(DropdownMenuContent).vm.$emit(event, payload)
@@ -297,5 +337,32 @@ describe('DropdownMenu', () => {
         expect(wrapper.get('[data-test-dropdown-menu-trigger]').text()).toBe('Abrir')
       })
     })
+
+    for (const slotName of ['item', 'item-leading', 'item-label'] as const) {
+      describe(slotName, () => {
+        it('renderiza el slot con item e index', async () => {
+          const wrapper = mountDropdownMenu({
+            props: {
+              open: true,
+              disabled: true,
+              forceMount: true,
+              items: [{ label: 'Opción' }],
+            },
+            slots: {
+              [slotName]: ({ item, index }) => h('span', `${item.label}-${index}`),
+            },
+          })
+          await nextTick()
+
+          const selector = {
+            item: '[data-test-dropdown-menu-item]',
+            'item-leading': '[data-test-dropdown-menu-item-leading]',
+            'item-label': '[data-test-dropdown-menu-item-label]',
+          }[slotName]
+
+          expect(wrapper.get(selector).text()).toContain('Opción-0')
+        })
+      })
+    }
   })
 })

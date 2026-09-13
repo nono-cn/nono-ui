@@ -22,4 +22,5 @@ export const dropdownMenuDefaults = {
   heightArrow: 5,
   roundedArrow: false,
   widthArrow: 10,
+  items: () => [],
 }

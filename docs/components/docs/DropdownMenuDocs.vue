@@ -39,6 +39,12 @@ const propRows: ApiTableRow[] = [
     default: String(dropdownMenuDefaults.roundedArrow),
     description: 'Renderiza la versión redondeada de la flecha.',
   },
+  {
+    name: 'items',
+    type: 'DropdownMenuItem[]',
+    default: '[]',
+    description: 'Opciones del menú con label, icon y disabled.',
+  },
   ...[
     [
       'align',
@@ -147,12 +153,6 @@ const slotRows: ApiTableRow[] = [
     type: 'never',
     default: 'Icon menu',
     description: 'Contenido opcional del trigger.',
-  },
-  {
-    name: 'content',
-    type: 'never',
-    default: 'Opciones del menú',
-    description: 'Contenido del menú desplegable.',
   },
 ]
 </script>

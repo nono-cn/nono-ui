@@ -14,6 +14,7 @@ const initialState = () => ({
   heightArrow: 5,
   widthArrow: 10,
   roundedArrow: false,
+  items: [{ label: 'Perfil' }, { label: 'Configuración' }, { label: 'Eliminar', disabled: true }],
   customSlot: false,
   attrs: false,
 })
@@ -36,12 +37,13 @@ function generateCode() {
     state.value.heightArrow !== 5 && `:height-arrow="${state.value.heightArrow}"`,
     state.value.widthArrow !== 10 && `:width-arrow="${state.value.widthArrow}"`,
     state.value.roundedArrow && ':rounded-arrow="true"',
+    `:items='${JSON.stringify(state.value.items)}'`,
     state.value.attrs && 'aria-label="Opciones" class="border-primary"',
   ].filter(Boolean)
   const slot = state.value.customSlot
     ? '\n  <button type="button" class="rounded-full border p-2" aria-label="Opciones">☰</button>\n'
     : '\n  <button type="button" class="inline-flex h-[35px] w-[35px] items-center justify-center rounded-full border bg-white text-grass11 shadow-sm outline-none hover:bg-stone-50 focus:shadow-[0_0_0_2px] focus:shadow-black" aria-label="Opciones">☰</button>\n'
-  return `<DropdownMenu${props.length ? `\n  ${props.join('\n  ')}` : ''}>${slot}\n  <template #content>\n    <div class="grid min-w-40 gap-1 rounded-md border bg-white p-1 text-sm shadow-md">\n      <button type="button" class="rounded px-2 py-1 text-left hover:bg-stone-100">Perfil</button>\n      <button type="button" class="rounded px-2 py-1 text-left hover:bg-stone-100">Configuración</button>\n    </div>\n  </template>\n</DropdownMenu>`
+  return `<DropdownMenu${props.length ? `\n  ${props.join('\n  ')}` : ''}>${slot}</DropdownMenu>`
 }
 
 function applyCode() {

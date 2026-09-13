@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from 'reka-ui'
 import { cn } from '@/lib/utils'
+import DropdownMenuOption from './DropdownMenuOption.vue'
 import type { DropdownMenuEmits, DropdownMenuProps, DropdownMenuSlots } from '.'
 import { dropdownMenuDefaults } from './default'
 
@@ -72,7 +73,18 @@ const arrowProps = computed(() => ({
       </DropdownMenuTrigger>
       <DropdownMenuPortal v-bind="portalProps">
         <DropdownMenuContent v-bind="contentProps" data-test-dropdown-menu-content>
-          <slot name="content" />
+          <DropdownMenuOption
+            v-for="(item, index) in props.items"
+            :key="index"
+            :item="item"
+            :index="index"
+            :value="String(index)"
+          >
+            <template v-for="(_, slotName) in $slots" #[slotName]="slotProps" :key="slotName">
+              <slot :name="slotName" v-bind="slotProps" />
+            </template>
+          </DropdownMenuOption>
+          <slot v-if="!props.items?.length" />
           <DropdownMenuArrow v-bind="arrowProps" data-test-dropdown-menu-arrow />
         </DropdownMenuContent>
       </DropdownMenuPortal>
