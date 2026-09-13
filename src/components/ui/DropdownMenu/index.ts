@@ -19,6 +19,7 @@ export interface DropdownMenuItem {
   label: string
   icon?: IconConfig
   disabled?: boolean
+  onSelect?: (event: Event) => void
 }
 
 export interface DropdownMenuItemContext {

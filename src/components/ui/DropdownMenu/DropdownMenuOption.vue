@@ -21,6 +21,7 @@ const context: DropdownMenuItemContext = props
 const itemProps = computed(() => ({
   value: props.value,
   disabled: props.item.disabled,
+  onSelect: props.item.onSelect,
   class: cn(
     'relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   ),
@@ -28,7 +29,10 @@ const itemProps = computed(() => ({
 </script>
 
 <template>
-  <RekaDropdownMenuItem v-bind="itemProps" data-test-dropdown-menu-item>
+  <RekaDropdownMenuItem
+    v-bind="itemProps"
+    data-test-dropdown-menu-item
+  >
     <slot name="item" v-bind="context">
       <div data-test-dropdown-menu-item-leading>
         <slot name="item-leading" v-bind="context">

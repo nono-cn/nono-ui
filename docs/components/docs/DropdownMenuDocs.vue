@@ -42,8 +42,9 @@ const propRows: ApiTableRow[] = [
   {
     name: 'items',
     type: 'DropdownMenuItem[]',
+    typeLink: '#dropdown-menu-item',
     default: '[]',
-    description: 'Opciones del menú con label, icon y disabled.',
+    description: 'Opciones del menú con label, icon, disabled y onSelect.',
   },
   ...[
     [
@@ -147,6 +148,34 @@ const emitRows: ApiTableRow[] = [
     ['pointerDownOutside', 'event: PointerDownOutsideEvent', 'Se emite al pulsar fuera.'],
   ].map(([name, type, description]) => ({ name, type, default: '-', description })),
 ]
+const itemRows: ApiTableRow[] = [
+  {
+    name: 'label',
+    type: 'string',
+    default: '-',
+    required: true,
+    description: 'Texto visible del item.',
+  },
+  {
+    name: 'icon',
+    type: 'IconConfig',
+    typeLink: '/icon#icon-config',
+    default: '-',
+    description: 'Icono opcional mostrado al inicio del item.',
+  },
+  {
+    name: 'disabled',
+    type: 'boolean',
+    default: 'false',
+    description: 'Deshabilita el item e impide su selección.',
+  },
+  {
+    name: 'onSelect',
+    type: '(event: Event) => void',
+    default: '-',
+    description: 'Función que se ejecuta al seleccionar el item.',
+  },
+]
 const slotRows: ApiTableRow[] = [
   {
     name: 'default',
@@ -170,7 +199,11 @@ const slotRows: ApiTableRow[] = [
       <ApiTable title="Props" :rows="propRows" /><ApiTable
         title="Emits"
         :rows="emitRows"
-      /><ApiTable title="Slots" type-label="slotProps" :show-default="false" :rows="slotRows" />
+      /><ApiTable title="Slots" type-label="slotProps" :show-default="false" :rows="slotRows" /><ApiTable
+        id="dropdown-menu-item"
+        title="DropdownMenuItem[]"
+        :rows="itemRows"
+      />
     </div>
   </section>
 </template>

@@ -17,6 +17,7 @@ const initialState = () => ({
   items: [{ label: 'Perfil' }, { label: 'Configuración' }, { label: 'Eliminar', disabled: true }],
   customSlot: false,
   attrs: false,
+  onSelect: false,
 })
 const state = ref(initialState())
 const editorCode = ref('')
@@ -26,6 +27,9 @@ const previewKey = ref(0)
 const Preview = shallowRef()
 
 function generateCode() {
+  const items = state.value.onSelect
+    ? `:items="[{ label: 'Perfil', onSelect: () => console.log('Perfil seleccionado') }, { label: 'Configuración' }, { label: 'Eliminar', disabled: true }]"`
+    : `:items='${JSON.stringify(state.value.items)}'`
   const props = [
     'v-model:open="open"',
     !state.value.modal && ':modal="false"',
@@ -37,7 +41,7 @@ function generateCode() {
     state.value.heightArrow !== 5 && `:height-arrow="${state.value.heightArrow}"`,
     state.value.widthArrow !== 10 && `:width-arrow="${state.value.widthArrow}"`,
     state.value.roundedArrow && ':rounded-arrow="true"',
-    `:items='${JSON.stringify(state.value.items)}'`,
+    items,
     state.value.attrs && 'aria-label="Opciones" class="border-primary"',
   ].filter(Boolean)
   const slot = state.value.customSlot
@@ -131,6 +135,9 @@ watch(state, syncFromControls, { deep: true, immediate: true })
             <input v-model.number="state.widthArrow" class="w-16 border" type="number" /></label
           ><label class="flex items-center gap-2 text-sm"
             ><input v-model="state.roundedArrow" type="checkbox" /> Flecha redondeada</label
+          >
+          <label class="flex items-center gap-2 text-sm"
+            ><input v-model="state.onSelect" type="checkbox" /> onSelect en Perfil</label
           >
         </fieldset>
         <fieldset class="grid gap-3">

@@ -1,12 +1,13 @@
 import { h, nextTick } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
-import { afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import {
   DropdownMenuContent,
   DropdownMenuArrow,
   DropdownMenuPortal,
   DropdownMenuRoot,
   DropdownMenuTrigger,
+  DropdownMenuItem as RekaDropdownMenuItem,
 } from 'reka-ui'
 
 import { DropdownMenu, type DropdownMenuProps } from '@/components/ui/DropdownMenu'
@@ -293,6 +294,26 @@ describe('DropdownMenu', () => {
             await nextTick()
             return wrapper
           },
+        })
+      })
+
+      describe('onSelect', () => {
+        it('ejecuta la función cuando RekaDropdownMenuItem emite select', async () => {
+          const onSelect = vi.fn()
+          const wrapper = mountDropdownMenu({
+            props: {
+              open: true,
+              disabled: true,
+              forceMount: true,
+              items: [{ label: 'Opción', onSelect }],
+            },
+          })
+          await nextTick()
+          const event = new Event('select')
+
+          await wrapper.getComponent(RekaDropdownMenuItem).vm.$emit('select', event)
+
+          expect(onSelect).toHaveBeenCalledWith(event)
         })
       })
     })
