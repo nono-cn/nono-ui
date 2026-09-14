@@ -1,5 +1,6 @@
 import announcer from './components/announcer'
 import alert from './components/alert'
+import alertDialog from './components/alert-dialog'
 import attachment from './components/attachment'
 import aspectRatio from './components/aspect-ratio'
 import badge from './components/badge'
@@ -17,6 +18,7 @@ export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'descrip
 export const docsComponents = [
   announcer,
   alert,
+  alertDialog,
   attachment,
   aspectRatio,
   badge,
