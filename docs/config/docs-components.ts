@@ -1,4 +1,5 @@
 import announcer from './components/announcer'
+import accordion from './components/accordion'
 import alert from './components/alert'
 import alertDialog from './components/alert-dialog'
 import attachment from './components/attachment'
@@ -17,6 +18,7 @@ import type { ComponentDocConfig } from './component-docs'
 export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'description'>
 
 export const docsComponents = [
+  accordion,
   announcer,
   alert,
   alertDialog,
