@@ -1,6 +1,7 @@
 import announcer from './components/announcer'
 import alert from './components/alert'
 import attachment from './components/attachment'
+import aspectRatio from './components/aspect-ratio'
 import badge from './components/badge'
 import button from './components/button'
 import icon from './components/icon'
@@ -17,6 +18,7 @@ export const docsComponents = [
   announcer,
   alert,
   attachment,
+  aspectRatio,
   badge,
   button,
   icon,
