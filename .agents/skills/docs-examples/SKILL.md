@@ -1,32 +1,119 @@
 ---
 name: docs-examples
-description: Crea o actualiza la pagina de documentacion y los ejemplos copiables de componentes Vue de este repositorio. Usala al documentar props, emits, slots, expose, tipos o contextos en docs/components.
+description: Crea o actualiza documentación Nuxt-style y ejemplos copiables de componentes Vue en este repositorio.
 ---
 
-# Documentacion y ejemplos de componentes
+# Documentación Nuxt-style de componentes
 
-Inspecciona primero el contrato publico del componente, sus defaults, tipos, emits y slots. Conserva los cambios existentes del usuario y sigue como referencia directa un componente reciente con contrato parecido; usa `LinearChart` cuando se solicite expresamente su formato.
+Usa esta skill cuando el usuario pida documentar un componente Vue de esta librería. Conserva los cambios existentes y documenta únicamente el contrato público real del componente. No inventes props, eventos, slots, tipos, valores por defecto ni enlaces.
 
-## Documentacion API
+## Descubrimiento y estructura
 
-Crea o actualiza `docs/components/docs/<Component>Docs.vue` con `ApiTable`. Incluye Props, Emits, Slots y Expose, y añade tablas separadas para tipos publicos y contextos usados por props, slots o resolvers `ui`.
+Antes de escribir, inspecciona:
 
-- Usa los defaults reales importados cuando resulte practico.
-- Enlaza `IconConfig` con `/icon#icon-config` y `ButtonConfig` con `/button#button-config`.
-- Enlaza tipos locales con anchors de la propia pagina mediante `typeLink`.
-- Para tipos compuestos que contienen enlaces, usa `typeParts`.
-- Documenta `ui` dentro de la fila de la prop `ui`, enumerando cada resolver y enlazando su contexto.
-- En las filas de slots usa `type-label="slotProps"`; enlaza cada slot a su tipo de contexto y crea la tabla de ese contexto.
-- Describe el comportamiento observable y la accesibilidad relevante.
+- `src/components/ui/<Component>/index.ts` para props, tipos, emits, slots, expose y configuraciones exportadas.
+- La implementación `.vue`, defaults, hijos y composables para confirmar el comportamiento observable, el elemento raíz y el paso de attrs.
+- Los tests existentes para comprobar accesibilidad, estados e interacciones ya soportadas.
+- La infraestructura existente en `docs/components`, `docs/config/component-docs.ts` y `docs/components/examples` antes de crear componentes genéricos nuevos.
 
-## Ejemplos
+Cada componente documentado debe tener un descriptor en `docs/config/components/<slug>.ts` con esta información:
 
-Crea o actualiza `docs/components/examples/<component>/<Component>Examples.vue`. Cada prop, emit y slot publico debe tener un ejemplo relacionado y un bloque de codigo completo que se pueda copiar. Incluye valores normales y usa ejemplos separados para miembros de una union cuando su resultado sea distinto.
+- `slug`, `title`, `description` e `importPath`.
+- Ejemplos separados para `usage`, `examples` y `accessibility`.
+- API con `props`, `emits`, `slots`, `expose` y `configs` opcional.
 
-Los ejemplos interactivos deben poder reiniciarse. El codigo mostrado debe importar todo lo que usa, compilar al copiarse y coincidir con la vista renderizada. Retira ejemplos de APIs eliminadas. No importes primitivas unstyled salvo que el contrato publico requiera que el consumidor las use.
+No crees una página independiente por componente ni rutas individuales. La página genérica se registra mediante el descriptor y usa la ruta canónica `/components/:slug`. Registra solo componentes con documentación real para evitar enlaces muertos.
 
-Registra la pagina en `docs/router.ts` y `docs/config/components.ts` cuando sea nueva. Si la pagina ya incluye ejemplos exhaustivos, evita que `ComponentApiExamples` los duplique.
+## Orden de la página
 
-## Verificacion
+La página debe seguir siempre este orden:
 
-Ejecuta Prettier y ESLint sobre los archivos modificados, compila la documentacion y revisa que cada miembro del contrato tenga una fila y un ejemplo. Distingue fallos preexistentes de los introducidos por el cambio.
+`Título y descripción → Import → Usage → Examples → Accessibility → API`
+
+- **Título y descripción:** muestra únicamente el título y la descripción del componente. No añadas el kicker azul `Component`.
+- **Import:** sección independiente con el import público del componente.
+- **Usage:** ejemplo básico y común del componente.
+- **Examples:** ejemplos separados para las props relevantes, especialmente cuando cambien el resultado visual o el comportamiento.
+- **Accessibility:** recomendaciones y ejemplos de accesibilidad cuando el componente renderice contenido semántico, interactivo o iconos.
+- **API:** referencia de la API pública, con tablas solo cuando tengan datos.
+
+El sidebar derecho debe comenzar en `Import`; no debe mostrar `Overview`. El ancla `overview` y la navegación móvil pueden conservarse si ya forman parte de la infraestructura.
+
+## Ejemplos copiables
+
+Crea los ejemplos en `docs/components/examples/<component>/` y reutiliza `ComponentExample.vue` y `example-code.ts` cuando estén disponibles.
+
+- Coloca los controles encima de la preview.
+- Mantén la preview en el centro y el código debajo.
+- El código mostrado debe ser un snippet completo y ejecutable de Vue (`script setup`, imports, estado y template).
+- Sincroniza siempre el snippet con los controles y la preview.
+- Incluye copiar al portapapeles y restablecer valores iniciales en ejemplos interactivos.
+- El código es solo lectura: no uses textarea, edición directa, compilación runtime ni playground editable.
+- Retira ejemplos de APIs eliminadas y no importes primitivas unstyled salvo que el contrato público lo requiera.
+- Para una unión cuyos miembros producen resultados visuales distintos, usa ejemplos separados; no fuerces un único ejemplo genérico.
+
+## Tablas API
+
+Usa `ApiTable` y el modelo actual del descriptor:
+
+```ts
+interface ComponentApiConfig {
+  props: ApiTableRow[]
+  configs?: ApiTableConfig[]
+  emits: ApiTableRow[]
+  slots: ApiTableRow[]
+  expose: ApiTableRow[]
+}
+
+interface ApiTableConfig {
+  id: string
+  title: string
+  rows: ApiTableRow[]
+  description?: string
+  typeLabel?: string
+  showDefault?: boolean
+}
+```
+
+Reglas:
+
+- No renderices una tabla cuyo array esté vacío. En particular, no muestres `Emits`, `Slots` o `Expose` si no tienen miembros.
+- Incluye en `Props` los valores reales de las uniones directamente en la columna de tipo, por ejemplo `'xs' | 'sm' | 'md' | 'lg'`.
+- No crees una tabla genérica de tipos por defecto. Añade una tabla en `configs` solo cuando exista una configuración pública reutilizable que merezca explicación propia.
+- No dupliques en una tabla de configuración todas las props ya descritas en `Props` si basta con enlazar o explicar su composición.
+- Documenta los defaults reales y marca las props requeridas.
+- Usa `typeLink` para anchors locales y `typeParts` cuando solo una parte de un tipo compuesto deba enlazarse.
+- Para la prop `ui`, documenta cada resolver únicamente si forma parte del contrato público y enlaza sus contextos reales.
+- En slots, usa `type-label="slotProps"` solo cuando existan props de slot documentadas.
+- Describe comportamiento observable y accesibilidad, no solo nombres de tipos.
+
+### IconConfig
+
+`IconConfig` es `IconProps & HTMLAttributes`.
+
+Cuando se documente `Icon`, usa una tabla `IconConfig` dentro de `api.configs` para explicar esa composición sin repetir innecesariamente las props:
+
+- `IconProps` incluye `name`, `size` y `color`; enlázalo con `/components/icon#props`.
+- `HTMLAttributes` incluye atributos HTML y ARIA, `class`, `style` y listeners nativos como `onClick` u `onFocus`.
+- Esos listeners son eventos DOM que se aplican al SVG raíz; no son `emits` propios de `Icon`.
+- Cuando otra prop use `IconConfig`, enlázala con `/components/icon#icon-config`.
+- Usa el anchor `/components/icon#icon-config` para identificar la tabla de configuración completa.
+
+Para configuraciones equivalentes de otros componentes, conserva el mismo criterio y usa únicamente rutas de componentes que estén registradas.
+
+## Verificación
+
+Después de modificar la documentación:
+
+1. Ejecuta `scripts/quick_validate.py .agents/skills/docs-examples` desde la skill `skill-creator`.
+2. Ejecuta Prettier y ESLint sobre los archivos de documentación modificados.
+3. Ejecuta `npm run typecheck` y `npm run build:docs`.
+4. Revisa manualmente la ruta `/components/<slug>`:
+   - las secciones aparecen en el orden indicado;
+   - los controles actualizan preview y código;
+   - el código no es editable;
+   - copiar y restablecer funcionan;
+   - las tablas muestran todos los miembros públicos aplicables;
+   - los attrs y atributos ARIA llegan al elemento raíz.
+
+Distingue los fallos preexistentes de los introducidos por el cambio y no afirmes que una comprobación pasa si no se ha ejecutado.
