@@ -1,3 +1,4 @@
+import announcer from './components/announcer'
 import alert from './components/alert'
 import badge from './components/badge'
 import button from './components/button'
@@ -9,6 +10,7 @@ import type { ComponentDocConfig } from './component-docs'
 export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'description'>
 
 export const docsComponents = [
+  announcer,
   alert,
   badge,
   button,
