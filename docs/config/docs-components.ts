@@ -3,6 +3,7 @@ import alert from './components/alert'
 import alertDialog from './components/alert-dialog'
 import attachment from './components/attachment'
 import aspectRatio from './components/aspect-ratio'
+import avatar from './components/avatar'
 import badge from './components/badge'
 import button from './components/button'
 import icon from './components/icon'
@@ -21,6 +22,7 @@ export const docsComponents = [
   alertDialog,
   attachment,
   aspectRatio,
+  avatar,
   badge,
   button,
   icon,
