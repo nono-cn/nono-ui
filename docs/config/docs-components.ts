@@ -5,6 +5,7 @@ import button from './components/button'
 import icon from './components/icon'
 import kbd from './components/kbd'
 import popover from './components/popover'
+import ribbon from './components/ribbon'
 import scrollArea from './components/scroll-area'
 import separator from './components/separator'
 import type { ComponentDocConfig } from './component-docs'
@@ -19,6 +20,7 @@ export const docsComponents = [
   icon,
   kbd,
   popover,
+  ribbon,
   scrollArea,
   separator,
 ] satisfies ComponentDocConfig[]
