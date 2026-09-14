@@ -62,6 +62,29 @@ const iconConfig: ComponentDocConfig = {
         description: 'Color CSS aplicado al icono.',
       },
     ],
+    configs: [
+      {
+        id: 'icon-config',
+        title: 'IconConfig',
+        description:
+          'IconConfig combina IconProps con HTMLAttributes. Los atributos, atributos ARIA y listeners nativos como onClick u onFocus se aplican al SVG raíz.',
+        showDefault: false,
+        rows: [
+          {
+            name: 'IconProps',
+            type: 'IconProps',
+            typeLink: '#props',
+            description: 'Incluye las props name, size y color del componente Icon.',
+          },
+          {
+            name: 'HTMLAttributes',
+            type: 'HTMLAttributes',
+            description:
+              'Incluye atributos HTML y ARIA, class, style y listeners de eventos DOM como onClick y onFocus.',
+          },
+        ],
+      },
+    ],
     emits: [],
     slots: [],
     expose: [],

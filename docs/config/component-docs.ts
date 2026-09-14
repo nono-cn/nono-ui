@@ -15,8 +15,18 @@ export interface ApiTableRow {
   required?: boolean
 }
 
+export interface ApiTableConfig {
+  id: string
+  title: string
+  rows: ApiTableRow[]
+  description?: string
+  typeLabel?: string
+  showDefault?: boolean
+}
+
 export interface ComponentApiConfig {
   props: ApiTableRow[]
+  configs?: ApiTableConfig[]
   emits: ApiTableRow[]
   slots: ApiTableRow[]
   expose: ApiTableRow[]

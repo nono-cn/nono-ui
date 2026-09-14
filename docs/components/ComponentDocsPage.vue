@@ -81,8 +81,8 @@ defineProps<{
       <div class="grid gap-2">
         <h2 class="text-2xl font-semibold tracking-tight">API</h2>
         <p class="text-sm leading-6 text-muted-foreground">
-          Referencia completa de las propiedades, eventos, slots y tipos públicos de
-          {{ component.title }}.
+          Referencia completa de la API pública de {{ component.title }}, incluidas sus
+          configuraciones reutilizables.
         </p>
       </div>
 
@@ -94,6 +94,19 @@ defineProps<{
           :rows="component.api.props"
           empty-text="Este componente no define props propias."
         />
+        <template v-for="table in component.api.configs ?? []" :key="table.id">
+          <p v-if="table.description" class="text-sm leading-6 text-muted-foreground">
+            {{ table.description }}
+          </p>
+          <ApiTable
+            v-if="table.rows.length"
+            :id="table.id"
+            :title="table.title"
+            :rows="table.rows"
+            :type-label="table.typeLabel"
+            :show-default="table.showDefault"
+          />
+        </template>
         <ApiTable
           v-if="component.api.emits.length"
           id="emits"
