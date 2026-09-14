@@ -9,6 +9,7 @@ import badge from './components/badge'
 import button from './components/button'
 import buttonGroup from './components/button-group'
 import bubble from './components/bubble'
+import card from './components/card'
 import icon from './components/icon'
 import kbd from './components/kbd'
 import popover from './components/popover'
@@ -31,6 +32,7 @@ export const docsComponents = [
   button,
   buttonGroup,
   bubble,
+  card,
   icon,
   kbd,
   popover,
