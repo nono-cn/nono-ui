@@ -1,5 +1,6 @@
 import announcer from './components/announcer'
 import alert from './components/alert'
+import attachment from './components/attachment'
 import badge from './components/badge'
 import button from './components/button'
 import icon from './components/icon'
@@ -15,6 +16,7 @@ export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'descrip
 export const docsComponents = [
   announcer,
   alert,
+  attachment,
   badge,
   button,
   icon,
