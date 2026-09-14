@@ -10,6 +10,7 @@ import button from './components/button'
 import buttonGroup from './components/button-group'
 import bubble from './components/bubble'
 import chip from './components/chip'
+import empty from './components/empty'
 import card from './components/card'
 import icon from './components/icon'
 import kbd from './components/kbd'
@@ -34,6 +35,7 @@ export const docsComponents = [
   buttonGroup,
   bubble,
   chip,
+  empty,
   card,
   icon,
   kbd,
