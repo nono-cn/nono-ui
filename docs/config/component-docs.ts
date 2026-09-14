@@ -10,6 +10,7 @@ export interface ApiTableRow {
   type: string
   typeLink?: string
   typeParts?: ApiTypePart[]
+  typePre?: boolean
   default?: string
   description: string
   required?: boolean

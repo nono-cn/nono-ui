@@ -42,8 +42,12 @@ withDefaults(
               {{ row.name }}<span v-if="row.required" class="text-destructive"> *</span>
             </td>
             <td class="px-4 py-3 sm:px-5">
+              <pre
+                v-if="row.typePre"
+                class="overflow-x-auto rounded bg-muted px-2 py-1 text-xs leading-5 whitespace-pre"
+              ><code>{{ row.type }}</code></pre>
               <a
-                v-if="row.typeLink"
+                v-else-if="row.typeLink"
                 :href="row.typeLink"
                 class="text-primary underline-offset-4 hover:underline"
               >
