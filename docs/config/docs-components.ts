@@ -7,6 +7,7 @@ import aspectRatio from './components/aspect-ratio'
 import avatar from './components/avatar'
 import badge from './components/badge'
 import button from './components/button'
+import buttonGroup from './components/button-group'
 import icon from './components/icon'
 import kbd from './components/kbd'
 import popover from './components/popover'
@@ -27,6 +28,7 @@ export const docsComponents = [
   avatar,
   badge,
   button,
+  buttonGroup,
   icon,
   kbd,
   popover,
