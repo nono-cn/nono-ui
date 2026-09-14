@@ -1,5 +1,4 @@
 import type { ComponentDocConfig } from '../component-docs'
-import SeparatorAccessibilityExample from '../../components/examples/separator/SeparatorAccessibilityExample.vue'
 import SeparatorOrientationExample from '../../components/examples/separator/SeparatorOrientationExample.vue'
 import SeparatorSlotExample from '../../components/examples/separator/SeparatorSlotExample.vue'
 import SeparatorUsageExample from '../../components/examples/separator/SeparatorUsageExample.vue'
@@ -34,8 +33,13 @@ const separatorConfig: ComponentDocConfig = {
     {
       title: 'Separadores decorativos y semánticos',
       description:
-        'Los atributos HTML, class, style, data-* y ARIA se reenvían al elemento raíz. Usa decorative=false para exponer un separador semántico y aria-label solo cuando necesite contexto adicional.',
-      component: SeparatorAccessibilityExample,
+        'Los atributos HTML, class, style, data-* y ARIA se reenvían al elemento raíz. Usa decorative=false para exponer un separador semántico y aria-label solo cuando necesite contexto adicional. No dependas únicamente del color o del grosor para comunicar información.',
+      links: [
+        {
+          label: 'Consulta la guía de accesibilidad de Separator en Reka UI',
+          href: 'https://www.reka-ui.com/docs/components/separator#accessibility',
+        },
+      ],
     },
   ],
   api: {

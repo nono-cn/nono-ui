@@ -45,7 +45,16 @@ withDefaults(
               <pre
                 v-if="row.typePre"
                 class="overflow-x-auto rounded bg-muted px-2 py-1 text-xs leading-5 whitespace-pre"
-              ><code>{{ row.type }}</code></pre>
+              ><code
+                ><template v-for="(part, index) in row.typeParts" :key="`${row.name}-pre-${index}`"
+                  ><a
+                    v-if="part.link"
+                    :href="part.link"
+                    class="text-primary underline-offset-4 hover:underline"
+                    >{{ part.text }}</a
+                  ><template v-else>{{ part.text }}</template></template
+                ><template v-if="!row.typeParts">{{ row.type }}</template></code
+              ></pre>
               <a
                 v-else-if="row.typeLink"
                 :href="row.typeLink"

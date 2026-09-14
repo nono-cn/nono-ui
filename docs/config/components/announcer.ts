@@ -1,5 +1,4 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AnnouncerAccessibilityExample from '../../components/examples/announcer/AnnouncerAccessibilityExample.vue'
 import AnnouncerAtomicExample from '../../components/examples/announcer/AnnouncerAtomicExample.vue'
 import AnnouncerMessageExample from '../../components/examples/announcer/AnnouncerMessageExample.vue'
 import AnnouncerPolitenessExample from '../../components/examples/announcer/AnnouncerPolitenessExample.vue'
@@ -44,8 +43,7 @@ const announcerConfig: ComponentDocConfig = {
     {
       title: 'Regiones live',
       description:
-        'Announcer renderiza un span con aria-live y aria-atomic, reenvía los atributos HTML, class, style y ARIA al elemento raíz y permanece oculto visualmente cuando no se usa el slot default.',
-      component: AnnouncerAccessibilityExample,
+        'Announcer renderiza un span con aria-live y aria-atomic, reenvía los atributos HTML, class, style y ARIA al elemento raíz y permanece oculto visualmente cuando no se usa el slot default. Usa politeness assertive solo para cambios urgentes y evita anunciar el mismo estado varias veces.',
     },
   ],
   api: {

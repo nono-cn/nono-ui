@@ -1,5 +1,4 @@
 import type { ComponentDocConfig } from '../component-docs'
-import KbdAccessibilityExample from '../../components/examples/kbd/KbdAccessibilityExample.vue'
 import KbdColorExample from '../../components/examples/kbd/KbdColorExample.vue'
 import KbdSeverityExample from '../../components/examples/kbd/KbdSeverityExample.vue'
 import KbdSizeExample from '../../components/examples/kbd/KbdSizeExample.vue'
@@ -50,8 +49,7 @@ const kbdConfig: ComponentDocConfig = {
     {
       title: 'Contenido accesible',
       description:
-        'Kbd renderiza un elemento kbd semántico y reenvía los atributos HTML, class, style y ARIA al elemento raíz. Mantén visible el atajo y añade aria-label cuando su pronunciación necesite contexto.',
-      component: KbdAccessibilityExample,
+        'Kbd renderiza un elemento kbd semántico y reenvía los atributos HTML, class, style y ARIA al elemento raíz. Mantén visible el atajo y añade contexto textual cuando su pronunciación no sea evidente. No uses solo el color o el estilo visual para comunicar una acción.',
     },
   ],
   api: {

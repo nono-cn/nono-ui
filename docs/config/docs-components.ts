@@ -4,6 +4,7 @@ import badge from './components/badge'
 import button from './components/button'
 import icon from './components/icon'
 import kbd from './components/kbd'
+import popover from './components/popover'
 import separator from './components/separator'
 import type { ComponentDocConfig } from './component-docs'
 
@@ -16,6 +17,7 @@ export const docsComponents = [
   button,
   icon,
   kbd,
+  popover,
   separator,
 ] satisfies ComponentDocConfig[]
 

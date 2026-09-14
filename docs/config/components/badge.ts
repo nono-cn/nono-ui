@@ -1,5 +1,4 @@
 import type { ComponentDocConfig } from '../component-docs'
-import BadgeAccessibilityExample from '../../components/examples/badge/BadgeAccessibilityExample.vue'
 import BadgeColorExample from '../../components/examples/badge/BadgeColorExample.vue'
 import BadgeIconsExample from '../../components/examples/badge/BadgeIconsExample.vue'
 import BadgeSeverityExample from '../../components/examples/badge/BadgeSeverityExample.vue'
@@ -17,8 +16,7 @@ const badgeConfig: ComponentDocConfig = {
     {
       title: 'Contenido y semántica',
       description:
-        'Usa texto visible para comunicar el estado y añade semántica ARIA solo cuando el contenido lo necesite.',
-      component: BadgeAccessibilityExample,
+        'Usa texto visible para comunicar el estado y añade semántica ARIA solo cuando el contenido lo necesite. No dependas únicamente del color para transmitir el significado del badge.',
     },
   ],
   usage: [

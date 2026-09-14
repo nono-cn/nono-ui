@@ -1,6 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
 import IconColorExample from '../../components/examples/icon/IconColorExample.vue'
-import IconAccessibilityExample from '../../components/examples/icon/IconAccessibilityExample.vue'
 import IconNameExample from '../../components/examples/icon/IconNameExample.vue'
 import IconSizeExample from '../../components/examples/icon/IconSizeExample.vue'
 import IconUsageExample from '../../components/examples/icon/IconUsageExample.vue'
@@ -13,8 +12,8 @@ const iconConfig: ComponentDocConfig = {
   accessibility: [
     {
       title: 'Iconos decorativos y semánticos',
-      description: 'Oculta los iconos decorativos y proporciona un nombre a los informativos.',
-      component: IconAccessibilityExample,
+      description:
+        'Oculta los iconos decorativos con aria-hidden="true" y proporciona un nombre accesible a los iconos informativos mediante texto visible o aria-label en el elemento que los contiene. No dependas únicamente del icono o del color para comunicar información.',
     },
   ],
   usage: [

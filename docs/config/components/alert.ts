@@ -1,5 +1,4 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AlertAccessibilityExample from '../../components/examples/alert/AlertAccessibilityExample.vue'
 import AlertCloseButtonExample from '../../components/examples/alert/AlertCloseButtonExample.vue'
 import AlertClosableExample from '../../components/examples/alert/AlertClosableExample.vue'
 import AlertColorExample from '../../components/examples/alert/AlertColorExample.vue'
@@ -68,8 +67,7 @@ const alertConfig: ComponentDocConfig = {
     {
       title: 'Alertas informativas y decorativas',
       description:
-        'Alert usa role=alert por defecto. Usa decorative=true solo para contenido visual que no deba anunciarse, proporciona nombres accesibles a los iconos informativos y conserva un nombre claro en los cierres personalizados.',
-      component: AlertAccessibilityExample,
+        'Alert usa role=alert por defecto. Usa decorative=true solo para contenido visual que no deba anunciarse, proporciona nombres accesibles a los iconos informativos y conserva un nombre claro en los cierres personalizados. No dependas únicamente del color para comunicar la severidad.',
     },
   ],
   api: {

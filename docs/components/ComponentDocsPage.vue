@@ -67,12 +67,27 @@ defineProps<{
           Usa las recomendaciones y ejemplos de accesibilidad aplicables a {{ component.title }}.
         </p>
       </div>
-      <div class="grid gap-6">
-        <component
-          :is="example.component"
-          v-for="example in component.accessibility"
-          :key="example.title"
-        />
+      <div class="grid gap-5">
+        <article
+          v-for="item in component.accessibility"
+          :key="item.title"
+          class="grid gap-3 rounded-xl border bg-card p-4 text-card-foreground sm:p-5"
+        >
+          <h3 class="font-semibold">{{ item.title }}</h3>
+          <p class="text-sm leading-6 text-muted-foreground">{{ item.description }}</p>
+          <div v-if="item.links?.length" class="grid gap-2">
+            <a
+              v-for="link in item.links"
+              :key="link.href"
+              :href="link.href"
+              target="_blank"
+              rel="noreferrer"
+              class="w-fit text-sm text-primary underline-offset-4 hover:underline"
+            >
+              {{ link.label }}
+            </a>
+          </div>
+        </article>
       </div>
     </section>
 

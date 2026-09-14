@@ -39,12 +39,23 @@ export interface ComponentExampleConfig {
   component: Component
 }
 
+export interface ComponentAccessibilityLink {
+  label: string
+  href: string
+}
+
+export interface ComponentAccessibilityConfig {
+  title: string
+  description: string
+  links?: ComponentAccessibilityLink[]
+}
+
 export interface ComponentDocConfig {
   slug: string
   title: string
   description: string
   importPath: string
-  accessibility: ComponentExampleConfig[]
+  accessibility: ComponentAccessibilityConfig[]
   usage: ComponentExampleConfig[]
   examples: ComponentExampleConfig[]
   api: ComponentApiConfig

@@ -1,5 +1,4 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ButtonAccessibilityExample from '../../components/examples/button/ButtonAccessibilityExample.vue'
 import ButtonAsExample from '../../components/examples/button/ButtonAsExample.vue'
 import ButtonColorExample from '../../components/examples/button/ButtonColorExample.vue'
 import ButtonIconsExample from '../../components/examples/button/ButtonIconsExample.vue'
@@ -74,8 +73,7 @@ const buttonConfig: ComponentDocConfig = {
     {
       title: 'Acciones accesibles',
       description:
-        'Usa un nombre accesible para botones solo con icono y conserva aria-busy y aria-disabled durante la carga. Los atributos HTML, class, style y ARIA se reenvían al elemento raíz.',
-      component: ButtonAccessibilityExample,
+        'Usa un nombre accesible para botones solo con icono y conserva aria-busy y aria-disabled durante la carga. Los atributos HTML, class, style y ARIA se reenvían al elemento raíz. No dependas únicamente del color o del icono para comunicar la acción.',
     },
   ],
   api: {
