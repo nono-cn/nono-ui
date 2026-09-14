@@ -1,11 +1,10 @@
-export interface DocsComponent {
-  slug: string
-  title: string
-  description: string
-}
+import icon from './components/icon'
+import type { ComponentDocConfig } from './component-docs'
 
-export const docsComponents: DocsComponent[] = [
-  { slug: 'alert', title: 'Alert', description: 'Mensaje contextual para comunicar información.' },
-  { slug: 'button', title: 'Button', description: 'Acción interactiva para la interfaz.' },
-  { slug: 'icon', title: 'Icon', description: 'Icono consistente para la interfaz.' },
-]
+export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'description'>
+
+export const docsComponents = [icon] satisfies ComponentDocConfig[]
+
+export const docsComponentsBySlug = Object.fromEntries(
+  docsComponents.map((component) => [component.slug, component]),
+) as Record<string, ComponentDocConfig>

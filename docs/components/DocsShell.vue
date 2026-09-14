@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Moon, Palette, Sun } from '@lucide/vue'
+import { RouterLink, useRoute } from 'vue-router'
 import packageJson from '../../package.json'
 import DocsComponentsSidebar from './DocsComponentsSidebar.vue'
+import ComponentDocsPage from './ComponentDocsPage.vue'
+import { docsComponentsBySlug } from '../config/docs-components'
 
+const route = useRoute()
 const dark = ref(false)
 const themeOpen = ref(false)
 const pageOpen = ref(false)
@@ -17,14 +21,33 @@ function toggleTheme() {
   dark.value = !dark.value
   document.documentElement.classList.toggle('dark', dark.value)
 }
+
+const component = computed(() => docsComponentsBySlug[String(route.params.slug)])
+const tocItems = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'import', label: 'Import' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'examples', label: 'Examples' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'api', label: 'API' },
+]
+const desktopTocItems = tocItems.filter((item) => item.id !== 'overview')
+
+watch(
+  component,
+  (value) => {
+    document.title = value ? `${value.title} · nono-ui` : 'nono-ui · Components'
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
   <div class="docs-shell">
     <header class="docs-topbar">
-      <a href="#" class="docs-brand"
+      <RouterLink to="/components/icon" class="docs-brand"
         ><span class="docs-brand-mark">N</span><span>nono-ui</span
-        ><span class="docs-version">v{{ packageJson.version }}</span></a
+        ><span class="docs-version">v{{ packageJson.version }}</span></RouterLink
       >
       <div class="docs-actions">
         <div class="docs-theme-wrap">
@@ -50,30 +73,40 @@ function toggleTheme() {
       </div>
     </header>
     <div class="docs-sectionbar">
-      <div class="docs-sectionbar-inner"><span class="docs-section-title">Components</span></div>
+      <div class="docs-sectionbar-inner">
+        <RouterLink to="/components" class="docs-section-title">Components</RouterLink>
+        <span v-if="component" class="docs-section-current">/ {{ component.title }}</span>
+      </div>
     </div>
     <div class="docs-workspace">
-      <div class="docs-mobile-nav">
+      <div v-if="component" class="docs-mobile-nav">
         <details :open="pageOpen" @toggle="pageOpen = ($event.target as HTMLDetailsElement).open">
           <summary>On this page</summary>
           <nav>
-            <a href="#">Overview</a><a href="#">Usage</a><a href="#">API</a><a href="#">Examples</a>
+            <a v-for="item in tocItems" :key="item.id" :href="`#${item.id}`">{{ item.label }}</a>
           </nav>
         </details>
       </div>
       <DocsComponentsSidebar />
       <main class="docs-content">
-        <div class="docs-empty">
+        <ComponentDocsPage v-if="component" :component="component" />
+        <div v-else class="docs-empty">
           <span class="docs-empty-kicker">Components</span>
-          <h1>Documentación</h1>
-          <p>Selecciona un componente para empezar a explorar su API y ejemplos.</p>
+          <h1>Componente no encontrado</h1>
+          <p>Selecciona un componente disponible en la navegación.</p>
         </div>
       </main>
-      <aside class="docs-toc">
+      <aside v-if="component" class="docs-toc">
         <div class="docs-toc-inner">
           <p>On this page</p>
-          <a class="is-active" href="#">Overview</a><a href="#">Usage</a><a href="#">API</a
-          ><a href="#">Examples</a>
+          <a
+            v-for="(item, index) in desktopTocItems"
+            :key="item.id"
+            :class="{ 'is-active': index === 0 }"
+            :href="`#${item.id}`"
+          >
+            {{ item.label }}
+          </a>
         </div>
       </aside>
     </div>

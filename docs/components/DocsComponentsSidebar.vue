@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useRoute, RouterLink } from 'vue-router'
 import { docsComponents } from '../config/docs-components'
+
+const route = useRoute()
 </script>
 
 <template>
@@ -7,13 +10,16 @@ import { docsComponents } from '../config/docs-components'
     <div class="docs-sidebar-inner">
       <p>Components</p>
       <nav>
-        <a
+        <RouterLink
           v-for="component in docsComponents"
           :key="component.slug"
-          :href="`/components/${component.slug}`"
+          :to="`/components/${component.slug}`"
+          :class="{
+            'bg-accent text-foreground': route.params.slug === component.slug,
+          }"
         >
           {{ component.title }}
-        </a>
+        </RouterLink>
       </nav>
     </div>
   </aside>
