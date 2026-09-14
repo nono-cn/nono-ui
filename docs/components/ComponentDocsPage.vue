@@ -64,8 +64,7 @@ defineProps<{
       <div class="grid gap-2">
         <h2 class="text-2xl font-semibold tracking-tight">Accessibility</h2>
         <p class="text-sm leading-6 text-muted-foreground">
-          Usa Icon como elemento decorativo por defecto y configura un nombre accesible cuando el
-          icono comunique información por sí mismo.
+          Usa las recomendaciones y ejemplos de accesibilidad aplicables a {{ component.title }}.
         </p>
       </div>
       <div class="grid gap-6">

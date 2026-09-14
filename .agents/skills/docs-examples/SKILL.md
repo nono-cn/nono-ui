@@ -96,6 +96,7 @@ Cuando se documente `Icon`, usa una tabla `IconConfig` dentro de `api.configs` p
 - `IconProps` incluye `name`, `size` y `color`; enlázalo con `/components/icon#props`.
 - `HTMLAttributes` incluye atributos HTML y ARIA, `class`, `style` y listeners nativos como `onClick` u `onFocus`.
 - Esos listeners son eventos DOM que se aplican al SVG raíz; no son `emits` propios de `Icon`.
+- Si otro componente acepta tanto un nombre directo como una configuración, documenta el tipo `IconName | IconConfig` y muestra ambas formas sin afirmar que solo acepta `IconConfig`.
 - Cuando otra prop use `IconConfig`, enlázala con `/components/icon#icon-config`.
 - Usa el anchor `/components/icon#icon-config` para identificar la tabla de configuración completa.
 
