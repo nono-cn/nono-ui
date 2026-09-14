@@ -2,7 +2,6 @@ import type { ComponentDocConfig } from '../component-docs'
 import ScrollAreaOrientationExample from '../../components/examples/scroll-area/ScrollAreaOrientationExample.vue'
 import ScrollAreaScrollHideDelayExample from '../../components/examples/scroll-area/ScrollAreaScrollHideDelayExample.vue'
 import ScrollAreaTypeExample from '../../components/examples/scroll-area/ScrollAreaTypeExample.vue'
-import ScrollAreaUIExample from '../../components/examples/scroll-area/ScrollAreaUIExample.vue'
 import ScrollAreaUsageExample from '../../components/examples/scroll-area/ScrollAreaUsageExample.vue'
 
 const scrollAreaConfig: ComponentDocConfig = {
@@ -33,11 +32,6 @@ const scrollAreaConfig: ComponentDocConfig = {
       title: 'Scroll hide delay',
       description: 'Ajusta cuánto tardan en ocultarse las barras con type scroll o hover.',
       component: ScrollAreaScrollHideDelayExample,
-    },
-    {
-      title: 'UI',
-      description: 'Personaliza el viewport, las barras, los thumbs y la esquina con ui.',
-      component: ScrollAreaUIExample,
     },
   ],
   accessibility: [

@@ -4,8 +4,6 @@ import AlertClosableExample from '../../components/examples/alert/AlertClosableE
 import AlertColorExample from '../../components/examples/alert/AlertColorExample.vue'
 import AlertIconExample from '../../components/examples/alert/AlertIconExample.vue'
 import AlertSeverityExample from '../../components/examples/alert/AlertSeverityExample.vue'
-import AlertSlotsExample from '../../components/examples/alert/AlertSlotsExample.vue'
-import AlertUIExample from '../../components/examples/alert/AlertUIExample.vue'
 import AlertUsageExample from '../../components/examples/alert/AlertUsageExample.vue'
 import AlertVariantExample from '../../components/examples/alert/AlertVariantExample.vue'
 
@@ -51,16 +49,6 @@ const alertConfig: ComponentDocConfig = {
       title: 'Close button',
       description: 'Personaliza el botón de cierre mediante ButtonConfig.',
       component: AlertCloseButtonExample,
-    },
-    {
-      title: 'UI',
-      description: 'Ajusta los atributos y clases de las partes internas con AlertUI.',
-      component: AlertUIExample,
-    },
-    {
-      title: 'Slots',
-      description: 'Personaliza el icono, el contenido y el cierre con los slots disponibles.',
-      component: AlertSlotsExample,
     },
   ],
   accessibility: [

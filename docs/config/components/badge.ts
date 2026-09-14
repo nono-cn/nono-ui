@@ -3,7 +3,6 @@ import BadgeColorExample from '../../components/examples/badge/BadgeColorExample
 import BadgeIconsExample from '../../components/examples/badge/BadgeIconsExample.vue'
 import BadgeSeverityExample from '../../components/examples/badge/BadgeSeverityExample.vue'
 import BadgeSizeExample from '../../components/examples/badge/BadgeSizeExample.vue'
-import BadgeSlotsExample from '../../components/examples/badge/BadgeSlotsExample.vue'
 import BadgeUsageExample from '../../components/examples/badge/BadgeUsageExample.vue'
 import BadgeVariantExample from '../../components/examples/badge/BadgeVariantExample.vue'
 
@@ -51,11 +50,6 @@ const badgeConfig: ComponentDocConfig = {
       title: 'Icons',
       description: 'Configura los iconos inicial y final mediante IconConfig.',
       component: BadgeIconsExample,
-    },
-    {
-      title: 'Slots',
-      description: 'Personaliza el contenido y sustituye los iconos fallback.',
-      component: BadgeSlotsExample,
     },
   ],
   api: {

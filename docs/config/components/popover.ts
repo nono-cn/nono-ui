@@ -3,8 +3,6 @@ import PopoverArrowExample from '../../components/examples/popover/PopoverArrowE
 import PopoverModalExample from '../../components/examples/popover/PopoverModalExample.vue'
 import PopoverOpenExample from '../../components/examples/popover/PopoverOpenExample.vue'
 import PopoverPositionExample from '../../components/examples/popover/PopoverPositionExample.vue'
-import PopoverSlotsExample from '../../components/examples/popover/PopoverSlotsExample.vue'
-import PopoverUIExample from '../../components/examples/popover/PopoverUIExample.vue'
 import PopoverUsageExample from '../../components/examples/popover/PopoverUsageExample.vue'
 
 const popoverConfig: ComponentDocConfig = {
@@ -39,16 +37,6 @@ const popoverConfig: ComponentDocConfig = {
       title: 'Modal',
       description: 'Desactiva la interacción exterior cuando el popover funciona como modal.',
       component: PopoverModalExample,
-    },
-    {
-      title: 'Slots',
-      description: 'Usa el contexto de los slots para reflejar el estado y cerrar el popover.',
-      component: PopoverSlotsExample,
-    },
-    {
-      title: 'UI',
-      description: 'Personaliza las partes content y arrow con resolvers de atributos y clases.',
-      component: PopoverUIExample,
     },
   ],
   accessibility: [

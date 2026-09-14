@@ -3,9 +3,7 @@ import AttachmentIconExample from '../../components/examples/attachment/Attachme
 import AttachmentMediaVariantExample from '../../components/examples/attachment/AttachmentMediaVariantExample.vue'
 import AttachmentOrientationExample from '../../components/examples/attachment/AttachmentOrientationExample.vue'
 import AttachmentSizeExample from '../../components/examples/attachment/AttachmentSizeExample.vue'
-import AttachmentSlotsExample from '../../components/examples/attachment/AttachmentSlotsExample.vue'
 import AttachmentStateExample from '../../components/examples/attachment/AttachmentStateExample.vue'
-import AttachmentUIExample from '../../components/examples/attachment/AttachmentUIExample.vue'
 import AttachmentUsageExample from '../../components/examples/attachment/AttachmentUsageExample.vue'
 
 const attachmentConfig: ComponentDocConfig = {
@@ -46,16 +44,6 @@ const attachmentConfig: ComponentDocConfig = {
       title: 'Media variant',
       description: 'Usa un icono o proporciona una vista previa personalizada mediante media.',
       component: AttachmentMediaVariantExample,
-    },
-    {
-      title: 'UI',
-      description: 'Personaliza las partes internas con resolvers de atributos y clases.',
-      component: AttachmentUIExample,
-    },
-    {
-      title: 'Slots',
-      description: 'Sustituye la media, los textos y las acciones con contenido propio.',
-      component: AttachmentSlotsExample,
     },
   ],
   accessibility: [

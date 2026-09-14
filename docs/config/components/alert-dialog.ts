@@ -4,8 +4,6 @@ import AlertDialogFooterExample from '../../components/examples/alert-dialog/Ale
 import AlertDialogIconExample from '../../components/examples/alert-dialog/AlertDialogIconExample.vue'
 import AlertDialogOpenExample from '../../components/examples/alert-dialog/AlertDialogOpenExample.vue'
 import AlertDialogOptionsExample from '../../components/examples/alert-dialog/AlertDialogOptionsExample.vue'
-import AlertDialogSlotsExample from '../../components/examples/alert-dialog/AlertDialogSlotsExample.vue'
-import AlertDialogUIExample from '../../components/examples/alert-dialog/AlertDialogUIExample.vue'
 import AlertDialogUsageExample from '../../components/examples/alert-dialog/AlertDialogUsageExample.vue'
 
 const alertDialogConfig: ComponentDocConfig = {
@@ -38,19 +36,9 @@ const alertDialogConfig: ComponentDocConfig = {
       component: AlertDialogIconExample,
     },
     {
-      title: 'Slots',
-      description: 'Sustituye textos, contenido y acciones con los slots disponibles.',
-      component: AlertDialogSlotsExample,
-    },
-    {
       title: 'Footer',
       description: 'Reemplaza por completo el pie y ciérralo con la función close del slot.',
       component: AlertDialogFooterExample,
-    },
-    {
-      title: 'UI',
-      description: 'Personaliza las partes internas con resolvers de atributos y clases.',
-      component: AlertDialogUIExample,
     },
     {
       title: 'Mount y pointer events',

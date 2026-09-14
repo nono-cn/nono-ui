@@ -1,7 +1,6 @@
 import type { ComponentDocConfig } from '../component-docs'
 import AccordionUsageExample from '../../components/examples/accordion/AccordionUsageExample.vue'
 import AccordionTypeExample from '../../components/examples/accordion/AccordionTypeExample.vue'
-import AccordionSlotsExample from '../../components/examples/accordion/AccordionSlotsExample.vue'
 import AccordionIconsExample from '../../components/examples/accordion/AccordionIconsExample.vue'
 import AccordionCollapsibleExample from '../../components/examples/accordion/AccordionCollapsibleExample.vue'
 import AccordionDisabledExample from '../../components/examples/accordion/AccordionDisabledExample.vue'
@@ -35,12 +34,6 @@ const accordionConfig: ComponentDocConfig = {
       title: 'Disabled',
       description: 'Deshabilita todo el acordeón para impedir la interacción con sus secciones.',
       component: AccordionDisabledExample,
-    },
-    {
-      title: 'Slots',
-      description:
-        'Personaliza el contenido de los activadores y de las secciones usando el contexto de cada elemento.',
-      component: AccordionSlotsExample,
     },
     {
       title: 'Disabled e iconos',

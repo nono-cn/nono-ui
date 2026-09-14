@@ -6,7 +6,6 @@ import ButtonLoadingExample from '../../components/examples/button/ButtonLoading
 import ButtonSeverityExample from '../../components/examples/button/ButtonSeverityExample.vue'
 import ButtonShapeExample from '../../components/examples/button/ButtonShapeExample.vue'
 import ButtonSizeExample from '../../components/examples/button/ButtonSizeExample.vue'
-import ButtonSlotsExample from '../../components/examples/button/ButtonSlotsExample.vue'
 import ButtonUsageExample from '../../components/examples/button/ButtonUsageExample.vue'
 import ButtonVariantExample from '../../components/examples/button/ButtonVariantExample.vue'
 
@@ -62,11 +61,6 @@ const buttonConfig: ComponentDocConfig = {
       title: 'As y asChild',
       description: 'Renderiza otro elemento o compón el botón sobre un elemento hijo.',
       component: ButtonAsExample,
-    },
-    {
-      title: 'Slots',
-      description: 'Personaliza el contenido principal, los iconos y el estado de carga.',
-      component: ButtonSlotsExample,
     },
   ],
   accessibility: [
