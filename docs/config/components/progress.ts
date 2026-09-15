@@ -1,8 +1,13 @@
 import type { ComponentDocConfig } from '../component-docs'
 import ProgressColorExample from '../../components/examples/progress/ProgressColorExample.vue'
+import ProgressIndeterminateExample from '../../components/examples/progress/ProgressIndeterminateExample.vue'
+import ProgressInvertedExample from '../../components/examples/progress/ProgressInvertedExample.vue'
+import ProgressOrientationExample from '../../components/examples/progress/ProgressOrientationExample.vue'
 import ProgressLabelExample from '../../components/examples/progress/ProgressLabelExample.vue'
 import ProgressMaxExample from '../../components/examples/progress/ProgressMaxExample.vue'
 import ProgressSlotExample from '../../components/examples/progress/ProgressSlotExample.vue'
+import ProgressSizeExample from '../../components/examples/progress/ProgressSizeExample.vue'
+import ProgressSeverityExample from '../../components/examples/progress/ProgressSeverityExample.vue'
 import ProgressUsageExample from '../../components/examples/progress/ProgressUsageExample.vue'
 import ProgressValueExample from '../../components/examples/progress/ProgressValueExample.vue'
 
@@ -26,6 +31,21 @@ const progressConfig: ComponentDocConfig = {
       component: ProgressValueExample,
     },
     {
+      title: 'Indeterminate',
+      description: 'Usa value null para mostrar progreso indeterminado y configurar su animación.',
+      component: ProgressIndeterminateExample,
+    },
+    {
+      title: 'Orientation',
+      description: 'Cambia la orientación de la barra de progreso.',
+      component: ProgressOrientationExample,
+    },
+    {
+      title: 'Inverted',
+      description: 'Invierte la dirección de llenado del indicador.',
+      component: ProgressInvertedExample,
+    },
+    {
       title: 'Max',
       description: 'Calcula el progreso sobre una escala personalizada con max.',
       component: ProgressMaxExample,
@@ -44,6 +64,16 @@ const progressConfig: ComponentDocConfig = {
       title: 'Color',
       description: 'Personaliza por separado el color del indicador y el color del track.',
       component: ProgressColorExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el grosor de la barra con tamaños predefinidos.',
+      component: ProgressSizeExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Comunica el estado del progreso mediante colores semánticos.',
+      component: ProgressSeverityExample,
     },
   ],
   accessibility: [
@@ -110,6 +140,36 @@ const progressConfig: ComponentDocConfig = {
         type: 'string',
         default: 'undefined',
         description: 'Valor CSS personalizado para el color del track.',
+      },
+      {
+        name: 'size',
+        type: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'",
+        default: "'md'",
+        description: 'Tamaño que determina el grosor de la barra de progreso.',
+      },
+      {
+        name: 'severity',
+        type: "'primary' | 'secondary' | 'success' | 'warning' | 'error'",
+        default: "'primary'",
+        description: 'Color semántico del track y del indicador de progreso.',
+      },
+      {
+        name: 'animation',
+        type: "'carousel' | 'carousel-inverse' | 'swing' | 'elastic'",
+        default: "'carousel'",
+        description: 'Animación usada cuando value es null.',
+      },
+      {
+        name: 'orientation',
+        type: "'horizontal' | 'vertical'",
+        default: "'horizontal'",
+        description: 'Orientación de la barra de progreso.',
+      },
+      {
+        name: 'inverted',
+        type: 'boolean',
+        default: 'false',
+        description: 'Invierte la dirección de llenado del indicador.',
       },
       {
         name: 'ui',

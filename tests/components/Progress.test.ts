@@ -50,6 +50,51 @@ const casesEmittedValues = [
   { input: null as ProgressValue },
 ]
 
+const casesSizes = [
+  { input: '2xs', expected: 'h-px' },
+  { input: 'xs', expected: 'h-0.5' },
+  { input: 'sm', expected: 'h-1' },
+  { input: 'md', expected: 'h-2' },
+  { input: 'lg', expected: 'h-3' },
+  { input: 'xl', expected: 'h-4' },
+  { input: '2xl', expected: 'h-5' },
+  { input: undefined, expected: 'h-2' },
+]
+
+const casesSeverities = [
+  { input: 'primary', track: 'bg-primary/20', indicator: 'bg-primary' },
+  { input: 'secondary', track: 'bg-secondary/20', indicator: 'bg-secondary' },
+  { input: 'success', track: 'bg-success/20', indicator: 'bg-success' },
+  { input: 'warning', track: 'bg-warning/20', indicator: 'bg-warning' },
+  { input: 'error', track: 'bg-error/20', indicator: 'bg-error' },
+  { input: undefined, track: 'bg-primary/20', indicator: 'bg-primary' },
+]
+
+const casesOrientations = [
+  { input: 'horizontal', expected: ['w-full', 'h-2'] },
+  { input: 'vertical', expected: ['w-2', '!h-full'] },
+]
+
+const casesAnimations = [
+  {
+    input: 'carousel',
+    expected: 'data-[state=indeterminate]:animate-[progress-carousel_2s_ease-in-out_infinite]',
+  },
+  {
+    input: 'carousel-inverse',
+    expected:
+      'data-[state=indeterminate]:animate-[progress-carousel-inverse_2s_ease-in-out_infinite]',
+  },
+  {
+    input: 'swing',
+    expected: 'data-[state=indeterminate]:animate-[progress-swing_2s_ease-in-out_infinite]',
+  },
+  {
+    input: 'elastic',
+    expected: 'data-[state=indeterminate]:animate-[progress-elastic_2s_ease-in-out_infinite]',
+  },
+]
+
 describe('Progress', () => {
   describe('props', () => {
     describe('value', () => {
@@ -60,9 +105,15 @@ describe('Progress', () => {
           const root = wrapper.getComponent(ProgressRoot)
 
           expect(root.props('modelValue')).toBe(expected)
-          expect(wrapper.get('[data-test-progress-indicator]').attributes('style')).toContain(
-            `translateX(-${100 - percentage}%)`,
-          )
+          if (percentage === 0 && input === null) {
+            expect(
+              wrapper.get('[data-test-progress-indicator]').attributes('style'),
+            ).toBeUndefined()
+          } else {
+            expect(wrapper.get('[data-test-progress-indicator]').attributes('style')).toContain(
+              `translateX(${percentage === 100 ? 0 : -(100 - percentage)}%)`,
+            )
+          }
         },
       )
     })
@@ -88,14 +139,11 @@ describe('Progress', () => {
     })
 
     describe('getValueText', () => {
-      it.each([vi.fn(() => '50 of 100')])(
-        'pasa el resolver a ProgressRoot',
-        (input) => {
-          const root = mountWithProp('getValueText', input).getComponent(ProgressRoot)
+      it.each([vi.fn(() => '50 of 100')])('pasa el resolver a ProgressRoot', (input) => {
+        const root = mountWithProp('getValueText', input).getComponent(ProgressRoot)
 
-          expect(root.props('getValueText')).toBe(input)
-        },
-      )
+        expect(root.props('getValueText')).toBe(input)
+      })
     })
 
     describe('label', () => {
@@ -111,12 +159,12 @@ describe('Progress', () => {
         if (visible) expect(label.text()).toBe(expected)
       })
 
-      it('adds the label height to the root', () => {
-        const root = mountProgress({ props: { label: 'Uploading' } }).get(
+      it.each(casesSizes)('mantiene size=$input aunque tenga label', ({ input, expected }) => {
+        const root = mountProgress({ props: { label: 'Uploading', size: input } }).get(
           '[data-test-progress-root]',
         )
 
-        expect(root.classes()).toContain('h-4')
+        expect(root.classes()).toContain(expected)
       })
     })
 
@@ -135,6 +183,64 @@ describe('Progress', () => {
         id: '[data-test-progress-root]',
         varColor: '--progress-track-color',
         mount: (trackColor) => mountProgress({ props: { trackColor } }),
+      })
+    })
+
+    describe('size', () => {
+      it.each(casesSizes)('aplica size=$input como $expected', ({ input, expected }) => {
+        const root = mountWithProp('size', input).get('[data-test-progress-root]')
+
+        expect(root.classes()).toContain(expected)
+      })
+    })
+
+    describe('severity', () => {
+      it.each(casesSeverities)(
+        'aplica severity=$input al track y al indicador',
+        ({ input, track, indicator }) => {
+          const wrapper = mountWithProp('severity', input)
+
+          expect(wrapper.get('[data-test-progress-root]').classes()).toContain(track)
+          expect(wrapper.get('[data-test-progress-indicator]').classes()).toContain(indicator)
+        },
+      )
+    })
+
+    describe('animation', () => {
+      it.each(casesAnimations)(
+        'aplica animation=$input al indicador indeterminado',
+        ({ input, expected }) => {
+          const wrapper = mountProgress({ props: { value: null, animation: input } })
+
+          expect(wrapper.get('[data-test-progress-indicator]').classes()).toContain(expected)
+        },
+      )
+
+      it('no aplica transform cuando value es null', () => {
+        expect(
+          mountProgress({ props: { value: null } })
+            .get('[data-test-progress-indicator]')
+            .attributes('style'),
+        ).toBeUndefined()
+      })
+    })
+
+    describe('orientation', () => {
+      it.each(casesOrientations)('aplica orientation=$input', ({ input, expected }) => {
+        const root = mountWithProp('orientation', input).get('[data-test-progress-root]')
+        expected.forEach((className) => expect(root.classes()).toContain(className))
+      })
+    })
+
+    describe('inverted', () => {
+      it.each([
+        { input: false, expected: 'translateX(-35%)' },
+        { input: true, expected: 'translateX(35%)' },
+      ])('invierte el indicador con inverted=$input', ({ input, expected }) => {
+        const indicator = mountProgress({ props: { value: 65, inverted: input } }).get(
+          '[data-test-progress-indicator]',
+        )
+        expect(indicator.attributes('style')).toContain(expected)
       })
     })
 

@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from 'vue'
+import { computed, useAttrs } from 'vue'
 import { ProgressIndicator, ProgressRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import { useColor } from '@/composables'
-import type { ProgressContext, ProgressProps, ProgressSlots, ProgressValue } from '.'
+import {
+  progressIndicatorVariants,
+  progressLabelVariants,
+  progressVariants,
+  type ProgressContext,
+  type ProgressProps,
+  type ProgressSlots,
+  type ProgressValue,
+} from '.'
 import { progressDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })
@@ -12,7 +20,6 @@ defineOptions({ inheritAttrs: false })
 defineSlots<ProgressSlots>()
 
 const attrs = useAttrs()
-const slots = useSlots()
 const props = withDefaults(defineProps<ProgressProps>(), progressDefaults)
 const value = defineModel<ProgressValue>('value', { default: progressDefaults.value })
 
@@ -31,6 +38,15 @@ const percentage = computed(() => {
   return Math.min(100, Math.max(0, (value.value / props.max) * 100))
 })
 
+const indicatorTransform = computed(() => {
+  if (value.value === null) return undefined
+  const offset = 100 - percentage.value
+  const direction = props.inverted ? offset : -offset
+  return props.orientation === 'vertical'
+    ? `translateY(${direction}%)`
+    : `translateX(${direction}%)`
+})
+
 const progressContext = computed<ProgressContext>(() => {
   return {
     value: value.value,
@@ -47,8 +63,12 @@ const rootProps = computed(() => {
     getValueText: props.getValueText,
     'aria-label': attrs['aria-label'],
     class: cn(
-      'relative h-2 w-full overflow-hidden rounded-full bg-primary/20',
-      (props.label || slots.label) && 'h-4',
+      progressVariants({
+        size: props.size,
+        severity: props.severity,
+        orientation: props.orientation,
+        inverted: props.inverted,
+      }),
       props.trackColor ? 'bg-(--progress-track-color)' : props.color && 'bg-(--progress-color)/20',
       attrs.class,
     ),
@@ -62,11 +82,14 @@ const indicatorProps = computed(() => {
   return {
     ...indicatorUI,
     class: cn(
-      'h-full w-full flex-1 bg-primary transition-all',
+      progressIndicatorVariants({ severity: props.severity, animation: props.animation }),
       props.color && 'bg-(--progress-color)',
       indicatorUI.class,
     ),
-    style: [{ transform: `translateX(-${100 - percentage.value}%)` }, indicatorUI.style],
+    style: [
+      indicatorTransform.value ? { transform: indicatorTransform.value } : undefined,
+      indicatorUI.style,
+    ],
   }
 })
 
@@ -77,7 +100,8 @@ const labelProps = computed(() => {
     ...labelUI,
     'aria-hidden': true,
     class: cn(
-      'pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-2 text-center text-xs font-medium text-white [text-shadow:0_1px_3px_rgb(0_0_0),0_0_7px_rgb(0_0_0/0.9),0_0_12px_rgb(0_0_0/0.7)]',
+      'pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-2 text-center font-medium text-white [text-shadow:0_1px_3px_rgb(0_0_0),0_0_7px_rgb(0_0_0/0.9),0_0_12px_rgb(0_0_0/0.7)]',
+      progressLabelVariants({ size: props.size }),
       labelUI.class,
     ),
   }
