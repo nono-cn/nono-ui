@@ -70,6 +70,11 @@ const casesSeverities = [
   { input: undefined, track: 'bg-primary/20', indicator: 'bg-primary' },
 ]
 
+const casesOrientations = [
+  { input: 'horizontal', expected: ['w-full', 'h-2'] },
+  { input: 'vertical', expected: ['w-2', '!h-full'] },
+]
+
 const casesAnimations = [
   {
     input: 'carousel',
@@ -106,7 +111,7 @@ describe('Progress', () => {
             ).toBeUndefined()
           } else {
             expect(wrapper.get('[data-test-progress-indicator]').attributes('style')).toContain(
-              `translateX(-${100 - percentage}%)`,
+              `translateX(${percentage === 100 ? 0 : -(100 - percentage)}%)`,
             )
           }
         },
@@ -217,6 +222,25 @@ describe('Progress', () => {
             .get('[data-test-progress-indicator]')
             .attributes('style'),
         ).toBeUndefined()
+      })
+    })
+
+    describe('orientation', () => {
+      it.each(casesOrientations)('aplica orientation=$input', ({ input, expected }) => {
+        const root = mountWithProp('orientation', input).get('[data-test-progress-root]')
+        expected.forEach((className) => expect(root.classes()).toContain(className))
+      })
+    })
+
+    describe('inverted', () => {
+      it.each([
+        { input: false, expected: 'translateX(-35%)' },
+        { input: true, expected: 'translateX(35%)' },
+      ])('invierte el indicador con inverted=$input', ({ input, expected }) => {
+        const indicator = mountProgress({ props: { value: 65, inverted: input } }).get(
+          '[data-test-progress-indicator]',
+        )
+        expect(indicator.attributes('style')).toContain(expected)
       })
     })
 

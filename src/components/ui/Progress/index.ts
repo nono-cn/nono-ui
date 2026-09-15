@@ -16,6 +16,8 @@ export const progressVariants = cva(
         warning: 'bg-warning/20',
         error: 'bg-error/20',
       },
+      orientation: { horizontal: 'h-2 w-full', vertical: '!h-full w-2' },
+      inverted: { true: '', false: '' },
       size: {
         '2xs': 'h-px',
         xs: 'h-0.5',
@@ -26,7 +28,12 @@ export const progressVariants = cva(
         '2xl': 'h-5',
       },
     },
-    defaultVariants: { severity: 'primary', size: 'md' },
+    defaultVariants: {
+      severity: 'primary',
+      orientation: 'horizontal',
+      inverted: false,
+      size: 'md',
+    },
   },
 )
 
@@ -50,9 +57,26 @@ export const progressIndicatorVariants = cva('h-full w-full flex-1 transition-al
   defaultVariants: { animation: 'carousel', severity: 'primary' },
 })
 
+export const progressLabelVariants = cva('text-xs', {
+  variants: {
+    size: {
+      '2xs': 'text-[10px]',
+      xs: 'text-[10px]',
+      sm: 'text-xs',
+      md: 'text-xs',
+      lg: 'text-sm',
+      xl: 'text-sm',
+      '2xl': 'text-base',
+    },
+  },
+  defaultVariants: { size: 'md' },
+})
+
 export type ProgressVariants = VariantProps<typeof progressVariants>
 export type ProgressSize = NonNullable<ProgressVariants['size']>
 export type ProgressSeverity = NonNullable<ProgressVariants['severity']>
+export type ProgressOrientation = NonNullable<ProgressVariants['orientation']>
+export type ProgressLabelSize = NonNullable<VariantProps<typeof progressLabelVariants>['size']>
 export type ProgressAnimation = NonNullable<
   VariantProps<typeof progressIndicatorVariants>['animation']
 >
@@ -76,6 +100,8 @@ export interface ProgressProps extends ProgressRootProps {
   size?: ProgressSize
   severity?: ProgressSeverity
   animation?: ProgressAnimation
+  orientation?: ProgressOrientation
+  inverted?: ProgressVariants['inverted'] | boolean
   ui?: ProgressUI
 }
 

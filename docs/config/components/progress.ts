@@ -1,6 +1,8 @@
 import type { ComponentDocConfig } from '../component-docs'
 import ProgressColorExample from '../../components/examples/progress/ProgressColorExample.vue'
 import ProgressIndeterminateExample from '../../components/examples/progress/ProgressIndeterminateExample.vue'
+import ProgressInvertedExample from '../../components/examples/progress/ProgressInvertedExample.vue'
+import ProgressOrientationExample from '../../components/examples/progress/ProgressOrientationExample.vue'
 import ProgressLabelExample from '../../components/examples/progress/ProgressLabelExample.vue'
 import ProgressMaxExample from '../../components/examples/progress/ProgressMaxExample.vue'
 import ProgressSlotExample from '../../components/examples/progress/ProgressSlotExample.vue'
@@ -32,6 +34,16 @@ const progressConfig: ComponentDocConfig = {
       title: 'Indeterminate',
       description: 'Usa value null para mostrar progreso indeterminado y configurar su animación.',
       component: ProgressIndeterminateExample,
+    },
+    {
+      title: 'Orientation',
+      description: 'Cambia la orientación de la barra de progreso.',
+      component: ProgressOrientationExample,
+    },
+    {
+      title: 'Inverted',
+      description: 'Invierte la dirección de llenado del indicador.',
+      component: ProgressInvertedExample,
     },
     {
       title: 'Max',
@@ -146,6 +158,18 @@ const progressConfig: ComponentDocConfig = {
         type: "'carousel' | 'carousel-inverse' | 'swing' | 'elastic'",
         default: "'carousel'",
         description: 'Animación usada cuando value es null.',
+      },
+      {
+        name: 'orientation',
+        type: "'horizontal' | 'vertical'",
+        default: "'horizontal'",
+        description: 'Orientación de la barra de progreso.',
+      },
+      {
+        name: 'inverted',
+        type: 'boolean',
+        default: 'false',
+        description: 'Invierte la dirección de llenado del indicador.',
       },
       {
         name: 'ui',
