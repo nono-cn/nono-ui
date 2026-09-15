@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from 'vue'
+import { computed, useAttrs } from 'vue'
 import { ProgressIndicator, ProgressRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
@@ -18,7 +18,6 @@ defineOptions({ inheritAttrs: false })
 defineSlots<ProgressSlots>()
 
 const attrs = useAttrs()
-const slots = useSlots()
 const props = withDefaults(defineProps<ProgressProps>(), progressDefaults)
 const value = defineModel<ProgressValue>('value', { default: progressDefaults.value })
 
@@ -54,7 +53,6 @@ const rootProps = computed(() => {
     'aria-label': attrs['aria-label'],
     class: cn(
       progressVariants({ size: props.size }),
-      (props.label || slots.label) && 'h-4',
       props.trackColor ? 'bg-(--progress-track-color)' : props.color && 'bg-(--progress-color)/20',
       attrs.class,
     ),

@@ -122,13 +122,16 @@ describe('Progress', () => {
         if (visible) expect(label.text()).toBe(expected)
       })
 
-      it('adds the label height to the root', () => {
-        const root = mountProgress({ props: { label: 'Uploading' } }).get(
-          '[data-test-progress-root]',
-        )
+      it.each(casesSizes)(
+        'mantiene size=$input aunque tenga label',
+        ({ input, expected }) => {
+          const root = mountProgress({ props: { label: 'Uploading', size: input } }).get(
+            '[data-test-progress-root]',
+          )
 
-        expect(root.classes()).toContain('h-4')
-      })
+          expect(root.classes()).toContain(expected)
+        },
+      )
     })
 
     describe('color', () => {
