@@ -33,6 +33,15 @@
   text-decoration: none;
   font-weight: 650;
 }
+.docs-playground-link {
+  color: var(--muted-foreground);
+  font-size: 13px;
+  text-decoration: none;
+}
+.docs-playground-link:hover,
+.docs-playground-link-active {
+  color: var(--foreground);
+}
 .docs-brand-mark {
   display: grid;
   place-items: center;
@@ -111,6 +120,9 @@
   display: grid;
   grid-template-columns: var(--docs-sidebar-width) minmax(0, 1fr) var(--docs-toc-width);
   min-height: calc(100vh - 112px);
+}
+.docs-workspace-playground {
+  grid-template-columns: minmax(0, 1fr);
 }
 .docs-sidebar {
   border-right: 1px solid var(--border);

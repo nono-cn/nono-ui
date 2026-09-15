@@ -5,12 +5,14 @@ import { RouterLink, useRoute } from 'vue-router'
 import packageJson from '../../package.json'
 import DocsComponentsSidebar from './DocsComponentsSidebar.vue'
 import ComponentDocsPage from './ComponentDocsPage.vue'
+import PlaygroundPage from './PlaygroundPage.vue'
 import { docsComponentsBySlug } from '../config/docs-components'
 
 const route = useRoute()
 const dark = ref(false)
 const themeOpen = ref(false)
 const pageOpen = ref(false)
+const isPlayground = computed(() => route.path === '/playground')
 const variables = ref([
   { name: '--primary', value: 'oklch(0.51 0.11 248)' },
   { name: '--radius', value: '0.625rem' },
@@ -23,6 +25,13 @@ function toggleTheme() {
 }
 
 const component = computed(() => docsComponentsBySlug[String(route.params.slug)])
+const pageTitle = computed(() =>
+  isPlayground.value
+    ? 'Playground · nono-ui'
+    : component.value
+      ? `${component.value.title} · nono-ui`
+      : 'nono-ui · Components',
+)
 const tocItems = [
   { id: 'overview', label: 'Overview' },
   { id: 'import', label: 'Import' },
@@ -33,13 +42,7 @@ const tocItems = [
 ]
 const desktopTocItems = tocItems.filter((item) => item.id !== 'overview')
 
-watch(
-  component,
-  (value) => {
-    document.title = value ? `${value.title} · nono-ui` : 'nono-ui · Components'
-  },
-  { immediate: true },
-)
+watch(pageTitle, (value) => (document.title = value), { immediate: true })
 </script>
 
 <template>
@@ -49,6 +52,13 @@ watch(
         ><span class="docs-brand-mark">N</span><span>nono-ui</span
         ><span class="docs-version">v{{ packageJson.version }}</span></RouterLink
       >
+      <RouterLink
+        to="/playground"
+        class="docs-playground-link"
+        :class="{ 'docs-playground-link-active': isPlayground }"
+      >
+        Playground
+      </RouterLink>
       <div class="docs-actions">
         <div class="docs-theme-wrap">
           <button class="docs-icon-button" @click="themeOpen = !themeOpen">
@@ -74,11 +84,13 @@ watch(
     </header>
     <div class="docs-sectionbar">
       <div class="docs-sectionbar-inner">
-        <RouterLink to="/components" class="docs-section-title">Components</RouterLink>
+        <RouterLink :to="isPlayground ? '/playground' : '/components'" class="docs-section-title">
+          {{ isPlayground ? 'Playground' : 'Components' }}
+        </RouterLink>
         <span v-if="component" class="docs-section-current">/ {{ component.title }}</span>
       </div>
     </div>
-    <div class="docs-workspace">
+    <div class="docs-workspace" :class="{ 'docs-workspace-playground': isPlayground }">
       <div v-if="component" class="docs-mobile-nav">
         <details :open="pageOpen" @toggle="pageOpen = ($event.target as HTMLDetailsElement).open">
           <summary>On this page</summary>
@@ -87,9 +99,10 @@ watch(
           </nav>
         </details>
       </div>
-      <DocsComponentsSidebar />
+      <DocsComponentsSidebar v-if="!isPlayground" />
       <main class="docs-content">
-        <ComponentDocsPage v-if="component" :component="component" />
+        <PlaygroundPage v-if="isPlayground" />
+        <ComponentDocsPage v-else-if="component" :component="component" />
         <div v-else class="docs-empty">
           <span class="docs-empty-kicker">Components</span>
           <h1>Componente no encontrado</h1>

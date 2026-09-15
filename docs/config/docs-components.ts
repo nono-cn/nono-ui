@@ -18,6 +18,7 @@ import kbd from './components/kbd'
 import marker from './components/marker'
 import message from './components/message'
 import popover from './components/popover'
+import progress from './components/progress'
 import ribbon from './components/ribbon'
 import scrollArea from './components/scroll-area'
 import separator from './components/separator'
@@ -46,6 +47,7 @@ export const docsComponents = [
   marker,
   message,
   popover,
+  progress,
   ribbon,
   scrollArea,
   separator,

@@ -5,6 +5,10 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/playground',
+      component: DocsShell,
+    },
+    {
       path: '/components/:slug',
       alias: '/:slug',
       component: DocsShell,
