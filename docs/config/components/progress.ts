@@ -4,6 +4,7 @@ import ProgressLabelExample from '../../components/examples/progress/ProgressLab
 import ProgressMaxExample from '../../components/examples/progress/ProgressMaxExample.vue'
 import ProgressSlotExample from '../../components/examples/progress/ProgressSlotExample.vue'
 import ProgressSizeExample from '../../components/examples/progress/ProgressSizeExample.vue'
+import ProgressSeverityExample from '../../components/examples/progress/ProgressSeverityExample.vue'
 import ProgressUsageExample from '../../components/examples/progress/ProgressUsageExample.vue'
 import ProgressValueExample from '../../components/examples/progress/ProgressValueExample.vue'
 
@@ -50,6 +51,11 @@ const progressConfig: ComponentDocConfig = {
       title: 'Size',
       description: 'Ajusta el grosor de la barra con tamaños predefinidos.',
       component: ProgressSizeExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Comunica el estado del progreso mediante colores semánticos.',
+      component: ProgressSeverityExample,
     },
   ],
   accessibility: [
@@ -122,6 +128,12 @@ const progressConfig: ComponentDocConfig = {
         type: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'",
         default: "'md'",
         description: 'Tamaño que determina el grosor de la barra de progreso.',
+      },
+      {
+        name: 'severity',
+        type: "'primary' | 'secondary' | 'success' | 'warning' | 'error'",
+        default: "'primary'",
+        description: 'Color semántico del track y del indicador de progreso.',
       },
       {
         name: 'ui',

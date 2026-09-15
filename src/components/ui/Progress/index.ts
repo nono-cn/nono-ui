@@ -9,6 +9,13 @@ export const progressVariants = cva(
   'relative h-2 w-full overflow-hidden rounded-full bg-primary/20',
   {
     variants: {
+      severity: {
+        primary: 'bg-primary/20',
+        secondary: 'bg-secondary/20',
+        success: 'bg-success/20',
+        warning: 'bg-warning/20',
+        error: 'bg-error/20',
+      },
       size: {
         '2xs': 'h-px',
         xs: 'h-0.5',
@@ -19,12 +26,26 @@ export const progressVariants = cva(
         '2xl': 'h-5',
       },
     },
-    defaultVariants: { size: 'md' },
+    defaultVariants: { severity: 'primary', size: 'md' },
   },
 )
 
+export const progressIndicatorVariants = cva('h-full w-full flex-1 transition-all', {
+  variants: {
+    severity: {
+      primary: 'bg-primary',
+      secondary: 'bg-secondary',
+      success: 'bg-success',
+      warning: 'bg-warning',
+      error: 'bg-error',
+    },
+  },
+  defaultVariants: { severity: 'primary' },
+})
+
 export type ProgressVariants = VariantProps<typeof progressVariants>
 export type ProgressSize = NonNullable<ProgressVariants['size']>
+export type ProgressSeverity = NonNullable<ProgressVariants['severity']>
 export type ProgressRootProps = Pick<
   RekaProgressRootProps,
   'max' | 'getValueLabel' | 'getValueText'
@@ -43,6 +64,7 @@ export interface ProgressProps extends ProgressRootProps {
   color?: string
   trackColor?: string
   size?: ProgressSize
+  severity?: ProgressSeverity
   ui?: ProgressUI
 }
 

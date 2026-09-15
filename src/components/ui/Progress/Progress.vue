@@ -5,6 +5,7 @@ import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import { useColor } from '@/composables'
 import {
+  progressIndicatorVariants,
   progressVariants,
   type ProgressContext,
   type ProgressProps,
@@ -52,7 +53,7 @@ const rootProps = computed(() => {
     getValueText: props.getValueText,
     'aria-label': attrs['aria-label'],
     class: cn(
-      progressVariants({ size: props.size }),
+      progressVariants({ size: props.size, severity: props.severity }),
       props.trackColor ? 'bg-(--progress-track-color)' : props.color && 'bg-(--progress-color)/20',
       attrs.class,
     ),
@@ -66,7 +67,7 @@ const indicatorProps = computed(() => {
   return {
     ...indicatorUI,
     class: cn(
-      'h-full w-full flex-1 bg-primary transition-all',
+      progressIndicatorVariants({ severity: props.severity }),
       props.color && 'bg-(--progress-color)',
       indicatorUI.class,
     ),

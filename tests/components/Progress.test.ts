@@ -61,6 +61,15 @@ const casesSizes = [
   { input: undefined, expected: 'h-2' },
 ]
 
+const casesSeverities = [
+  { input: 'primary', track: 'bg-primary/20', indicator: 'bg-primary' },
+  { input: 'secondary', track: 'bg-secondary/20', indicator: 'bg-secondary' },
+  { input: 'success', track: 'bg-success/20', indicator: 'bg-success' },
+  { input: 'warning', track: 'bg-warning/20', indicator: 'bg-warning' },
+  { input: 'error', track: 'bg-error/20', indicator: 'bg-error' },
+  { input: undefined, track: 'bg-primary/20', indicator: 'bg-primary' },
+]
+
 describe('Progress', () => {
   describe('props', () => {
     describe('value', () => {
@@ -99,14 +108,11 @@ describe('Progress', () => {
     })
 
     describe('getValueText', () => {
-      it.each([vi.fn(() => '50 of 100')])(
-        'pasa el resolver a ProgressRoot',
-        (input) => {
-          const root = mountWithProp('getValueText', input).getComponent(ProgressRoot)
+      it.each([vi.fn(() => '50 of 100')])('pasa el resolver a ProgressRoot', (input) => {
+        const root = mountWithProp('getValueText', input).getComponent(ProgressRoot)
 
-          expect(root.props('getValueText')).toBe(input)
-        },
-      )
+        expect(root.props('getValueText')).toBe(input)
+      })
     })
 
     describe('label', () => {
@@ -122,16 +128,13 @@ describe('Progress', () => {
         if (visible) expect(label.text()).toBe(expected)
       })
 
-      it.each(casesSizes)(
-        'mantiene size=$input aunque tenga label',
-        ({ input, expected }) => {
-          const root = mountProgress({ props: { label: 'Uploading', size: input } }).get(
-            '[data-test-progress-root]',
-          )
+      it.each(casesSizes)('mantiene size=$input aunque tenga label', ({ input, expected }) => {
+        const root = mountProgress({ props: { label: 'Uploading', size: input } }).get(
+          '[data-test-progress-root]',
+        )
 
-          expect(root.classes()).toContain(expected)
-        },
-      )
+        expect(root.classes()).toContain(expected)
+      })
     })
 
     describe('color', () => {
@@ -158,6 +161,18 @@ describe('Progress', () => {
 
         expect(root.classes()).toContain(expected)
       })
+    })
+
+    describe('severity', () => {
+      it.each(casesSeverities)(
+        'aplica severity=$input al track y al indicador',
+        ({ input, track, indicator }) => {
+          const wrapper = mountWithProp('severity', input)
+
+          expect(wrapper.get('[data-test-progress-root]').classes()).toContain(track)
+          expect(wrapper.get('[data-test-progress-indicator]').classes()).toContain(indicator)
+        },
+      )
     })
 
     describe('ui', () => {
