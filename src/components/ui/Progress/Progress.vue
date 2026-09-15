@@ -67,11 +67,14 @@ const indicatorProps = computed(() => {
   return {
     ...indicatorUI,
     class: cn(
-      progressIndicatorVariants({ severity: props.severity }),
+      progressIndicatorVariants({ severity: props.severity, animation: props.animation }),
       props.color && 'bg-(--progress-color)',
       indicatorUI.class,
     ),
-    style: [{ transform: `translateX(-${100 - percentage.value}%)` }, indicatorUI.style],
+    style: [
+      value.value === null ? undefined : { transform: `translateX(-${100 - percentage.value}%)` },
+      indicatorUI.style,
+    ],
   }
 })
 

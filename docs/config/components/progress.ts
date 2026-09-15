@@ -1,5 +1,6 @@
 import type { ComponentDocConfig } from '../component-docs'
 import ProgressColorExample from '../../components/examples/progress/ProgressColorExample.vue'
+import ProgressIndeterminateExample from '../../components/examples/progress/ProgressIndeterminateExample.vue'
 import ProgressLabelExample from '../../components/examples/progress/ProgressLabelExample.vue'
 import ProgressMaxExample from '../../components/examples/progress/ProgressMaxExample.vue'
 import ProgressSlotExample from '../../components/examples/progress/ProgressSlotExample.vue'
@@ -26,6 +27,11 @@ const progressConfig: ComponentDocConfig = {
       title: 'Value',
       description: 'Controla el valor actual y representa un progreso indeterminado con null.',
       component: ProgressValueExample,
+    },
+    {
+      title: 'Indeterminate',
+      description: 'Usa value null para mostrar progreso indeterminado y configurar su animación.',
+      component: ProgressIndeterminateExample,
     },
     {
       title: 'Max',
@@ -134,6 +140,12 @@ const progressConfig: ComponentDocConfig = {
         type: "'primary' | 'secondary' | 'success' | 'warning' | 'error'",
         default: "'primary'",
         description: 'Color semántico del track y del indicador de progreso.',
+      },
+      {
+        name: 'animation',
+        type: "'carousel' | 'carousel-inverse' | 'swing' | 'elastic'",
+        default: "'carousel'",
+        description: 'Animación usada cuando value es null.',
       },
       {
         name: 'ui',

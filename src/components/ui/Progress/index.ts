@@ -32,6 +32,13 @@ export const progressVariants = cva(
 
 export const progressIndicatorVariants = cva('h-full w-full flex-1 transition-all', {
   variants: {
+    animation: {
+      carousel: 'data-[state=indeterminate]:animate-[progress-carousel_2s_ease-in-out_infinite]',
+      'carousel-inverse':
+        'data-[state=indeterminate]:animate-[progress-carousel-inverse_2s_ease-in-out_infinite]',
+      swing: 'data-[state=indeterminate]:animate-[progress-swing_2s_ease-in-out_infinite]',
+      elastic: 'data-[state=indeterminate]:animate-[progress-elastic_2s_ease-in-out_infinite]',
+    },
     severity: {
       primary: 'bg-primary',
       secondary: 'bg-secondary',
@@ -40,12 +47,15 @@ export const progressIndicatorVariants = cva('h-full w-full flex-1 transition-al
       error: 'bg-error',
     },
   },
-  defaultVariants: { severity: 'primary' },
+  defaultVariants: { animation: 'carousel', severity: 'primary' },
 })
 
 export type ProgressVariants = VariantProps<typeof progressVariants>
 export type ProgressSize = NonNullable<ProgressVariants['size']>
 export type ProgressSeverity = NonNullable<ProgressVariants['severity']>
+export type ProgressAnimation = NonNullable<
+  VariantProps<typeof progressIndicatorVariants>['animation']
+>
 export type ProgressRootProps = Pick<
   RekaProgressRootProps,
   'max' | 'getValueLabel' | 'getValueText'
@@ -65,6 +75,7 @@ export interface ProgressProps extends ProgressRootProps {
   trackColor?: string
   size?: ProgressSize
   severity?: ProgressSeverity
+  animation?: ProgressAnimation
   ui?: ProgressUI
 }
 

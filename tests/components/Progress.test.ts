@@ -70,6 +70,26 @@ const casesSeverities = [
   { input: undefined, track: 'bg-primary/20', indicator: 'bg-primary' },
 ]
 
+const casesAnimations = [
+  {
+    input: 'carousel',
+    expected: 'data-[state=indeterminate]:animate-[progress-carousel_2s_ease-in-out_infinite]',
+  },
+  {
+    input: 'carousel-inverse',
+    expected:
+      'data-[state=indeterminate]:animate-[progress-carousel-inverse_2s_ease-in-out_infinite]',
+  },
+  {
+    input: 'swing',
+    expected: 'data-[state=indeterminate]:animate-[progress-swing_2s_ease-in-out_infinite]',
+  },
+  {
+    input: 'elastic',
+    expected: 'data-[state=indeterminate]:animate-[progress-elastic_2s_ease-in-out_infinite]',
+  },
+]
+
 describe('Progress', () => {
   describe('props', () => {
     describe('value', () => {
@@ -80,9 +100,15 @@ describe('Progress', () => {
           const root = wrapper.getComponent(ProgressRoot)
 
           expect(root.props('modelValue')).toBe(expected)
-          expect(wrapper.get('[data-test-progress-indicator]').attributes('style')).toContain(
-            `translateX(-${100 - percentage}%)`,
-          )
+          if (percentage === 0 && input === null) {
+            expect(
+              wrapper.get('[data-test-progress-indicator]').attributes('style'),
+            ).toBeUndefined()
+          } else {
+            expect(wrapper.get('[data-test-progress-indicator]').attributes('style')).toContain(
+              `translateX(-${100 - percentage}%)`,
+            )
+          }
         },
       )
     })
@@ -173,6 +199,25 @@ describe('Progress', () => {
           expect(wrapper.get('[data-test-progress-indicator]').classes()).toContain(indicator)
         },
       )
+    })
+
+    describe('animation', () => {
+      it.each(casesAnimations)(
+        'aplica animation=$input al indicador indeterminado',
+        ({ input, expected }) => {
+          const wrapper = mountProgress({ props: { value: null, animation: input } })
+
+          expect(wrapper.get('[data-test-progress-indicator]').classes()).toContain(expected)
+        },
+      )
+
+      it('no aplica transform cuando value es null', () => {
+        expect(
+          mountProgress({ props: { value: null } })
+            .get('[data-test-progress-indicator]')
+            .attributes('style'),
+        ).toBeUndefined()
+      })
     })
 
     describe('ui', () => {
