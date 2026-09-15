@@ -3,6 +3,7 @@ import ProgressColorExample from '../../components/examples/progress/ProgressCol
 import ProgressLabelExample from '../../components/examples/progress/ProgressLabelExample.vue'
 import ProgressMaxExample from '../../components/examples/progress/ProgressMaxExample.vue'
 import ProgressSlotExample from '../../components/examples/progress/ProgressSlotExample.vue'
+import ProgressSizeExample from '../../components/examples/progress/ProgressSizeExample.vue'
 import ProgressUsageExample from '../../components/examples/progress/ProgressUsageExample.vue'
 import ProgressValueExample from '../../components/examples/progress/ProgressValueExample.vue'
 
@@ -44,6 +45,11 @@ const progressConfig: ComponentDocConfig = {
       title: 'Color',
       description: 'Personaliza por separado el color del indicador y el color del track.',
       component: ProgressColorExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el grosor de la barra con tamaños predefinidos.',
+      component: ProgressSizeExample,
     },
   ],
   accessibility: [
@@ -110,6 +116,12 @@ const progressConfig: ComponentDocConfig = {
         type: 'string',
         default: 'undefined',
         description: 'Valor CSS personalizado para el color del track.',
+      },
+      {
+        name: 'size',
+        type: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'",
+        default: "'md'",
+        description: 'Tamaño que determina el grosor de la barra de progreso.',
       },
       {
         name: 'ui',

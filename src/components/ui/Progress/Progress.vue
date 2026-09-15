@@ -4,7 +4,13 @@ import { ProgressIndicator, ProgressRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import { useColor } from '@/composables'
-import type { ProgressContext, ProgressProps, ProgressSlots, ProgressValue } from '.'
+import {
+  progressVariants,
+  type ProgressContext,
+  type ProgressProps,
+  type ProgressSlots,
+  type ProgressValue,
+} from '.'
 import { progressDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })
@@ -47,7 +53,7 @@ const rootProps = computed(() => {
     getValueText: props.getValueText,
     'aria-label': attrs['aria-label'],
     class: cn(
-      'relative h-2 w-full overflow-hidden rounded-full bg-primary/20',
+      progressVariants({ size: props.size }),
       (props.label || slots.label) && 'h-4',
       props.trackColor ? 'bg-(--progress-track-color)' : props.color && 'bg-(--progress-color)/20',
       attrs.class,

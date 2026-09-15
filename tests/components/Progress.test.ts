@@ -50,6 +50,17 @@ const casesEmittedValues = [
   { input: null as ProgressValue },
 ]
 
+const casesSizes = [
+  { input: '2xs', expected: 'h-px' },
+  { input: 'xs', expected: 'h-0.5' },
+  { input: 'sm', expected: 'h-1' },
+  { input: 'md', expected: 'h-2' },
+  { input: 'lg', expected: 'h-3' },
+  { input: 'xl', expected: 'h-4' },
+  { input: '2xl', expected: 'h-5' },
+  { input: undefined, expected: 'h-2' },
+]
+
 describe('Progress', () => {
   describe('props', () => {
     describe('value', () => {
@@ -135,6 +146,14 @@ describe('Progress', () => {
         id: '[data-test-progress-root]',
         varColor: '--progress-track-color',
         mount: (trackColor) => mountProgress({ props: { trackColor } }),
+      })
+    })
+
+    describe('size', () => {
+      it.each(casesSizes)('aplica size=$input como $expected', ({ input, expected }) => {
+        const root = mountWithProp('size', input).get('[data-test-progress-root]')
+
+        expect(root.classes()).toContain(expected)
       })
     })
 
