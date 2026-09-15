@@ -16,6 +16,7 @@ import card from './components/card'
 import icon from './components/icon'
 import kbd from './components/kbd'
 import marker from './components/marker'
+import message from './components/message'
 import popover from './components/popover'
 import ribbon from './components/ribbon'
 import scrollArea from './components/scroll-area'
@@ -43,6 +44,7 @@ export const docsComponents = [
   icon,
   kbd,
   marker,
+  message,
   popover,
   ribbon,
   scrollArea,

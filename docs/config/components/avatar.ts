@@ -100,6 +100,22 @@ const avatarConfig: ComponentDocConfig = {
           'Texto mostrado en el fallback cuando no se proporciona icon ni el slot fallback.',
       },
     ],
+    configs: [
+      {
+        id: 'avatar-config',
+        title: 'AvatarConfig',
+        description: 'Alias de AvatarProps para configurar avatares en componentes compuestos.',
+        showDefault: false,
+        rows: [
+          {
+            name: 'AvatarProps',
+            type: 'AvatarProps',
+            typeLink: '#props',
+            description: 'Incluye las props públicas de Avatar.',
+          },
+        ],
+      },
+    ],
     emits: [],
     slots: [
       {

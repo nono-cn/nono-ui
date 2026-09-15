@@ -114,6 +114,22 @@ const bubbleConfig: ComponentDocConfig = {
         description: 'Resolvers para personalizar la superficie y las reacciones.',
       },
     ],
+    configs: [
+      {
+        id: 'bubble-config',
+        title: 'BubbleConfig',
+        description: 'Alias de BubbleProps para configurar burbujas en componentes compuestos.',
+        showDefault: false,
+        rows: [
+          {
+            name: 'BubbleProps',
+            type: 'BubbleProps',
+            typeLink: '#props',
+            description: 'Incluye las props públicas de Bubble.',
+          },
+        ],
+      },
+    ],
     emits: [],
     slots: [
       { name: 'default', type: '-', description: 'Contenido principal de la burbuja.' },
