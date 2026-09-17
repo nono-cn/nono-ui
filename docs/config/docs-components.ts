@@ -16,6 +16,7 @@ import card from './components/card'
 import icon from './components/icon'
 import kbd from './components/kbd'
 import marker from './components/marker'
+import masonry from './components/masonry'
 import message from './components/message'
 import popover from './components/popover'
 import progress from './components/progress'
@@ -45,6 +46,7 @@ export const docsComponents = [
   icon,
   kbd,
   marker,
+  masonry,
   message,
   popover,
   progress,
