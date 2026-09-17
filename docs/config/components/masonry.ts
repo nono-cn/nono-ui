@@ -1,6 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
 import MasonryColumnsExample from '../../components/examples/masonry/MasonryColumnsExample.vue'
 import MasonrySequentialExample from '../../components/examples/masonry/MasonrySequentialExample.vue'
+import MasonrySpacingExample from '../../components/examples/masonry/MasonrySpacingExample.vue'
 import MasonryUsageExample from '../../components/examples/masonry/MasonryUsageExample.vue'
 
 const masonryConfig: ComponentDocConfig = {
@@ -26,6 +27,11 @@ const masonryConfig: ComponentDocConfig = {
       title: 'Sequential',
       description: 'Compara el reparto por columna más corta con el orden secuencial.',
       component: MasonrySequentialExample,
+    },
+    {
+      title: 'Spacing',
+      description: 'Ajusta la separación entre columnas y elementos.',
+      component: MasonrySpacingExample,
     },
   ],
   accessibility: [
