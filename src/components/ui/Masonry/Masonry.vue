@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   computed,
+  defineComponent,
   h,
   nextTick,
   onBeforeUnmount,
@@ -10,7 +11,6 @@ import {
   useSlots,
   watch,
 } from 'vue'
-import type { VNode } from 'vue'
 import { cn } from '@/lib/utils'
 import { masonryDefaults } from './defaults'
 import type { MasonryProps, MasonrySlots } from './index'
@@ -33,15 +33,24 @@ const gap = computed(() => {
   return `${Math.max(0, value) * 0.25}rem`
 })
 
+const MasonryItem = defineComponent({
+  props: {
+    item: { required: true },
+    index: { type: Number, required: true },
+  },
+  setup(itemProps, { slots: itemSlots }) {
+    return () =>
+      itemSlots.default?.({ item: itemProps.item, index: itemProps.index }) ??
+      h('div', String(itemProps.item))
+  },
+})
+
 const sourceItems = computed(() => {
-  return props.items.flatMap((item, index) => {
-    const content = slots.default?.({ item, index }) ?? [h('div', String(item))]
-    return [{ key: `item-${index}`, content }]
-  })
+  return props.items.map((item, index) => ({ key: `item-${index}`, item, index }))
 })
 
 const columns = computed(() => {
-  const result: Array<Array<{ key: string; content: VNode[] }>> = Array.from(
+  const result: Array<Array<{ key: string; item: unknown; index: number }>> = Array.from(
     { length: columnCount.value },
     () => [],
   )
@@ -112,11 +121,12 @@ onBeforeUnmount(() => resizeObserver?.disconnect())
   <div v-if="props.items.length > 0" v-bind="rootProps">
     <div v-for="(column, columnIndex) in columns" :key="columnIndex" v-bind="columnProps()">
       <div v-for="item in column" :key="item.key" v-bind="itemProps(item.key)">
-        <component
-          :is="content"
-          v-for="(content, contentIndex) in item.content"
-          :key="contentIndex"
-        />
+        <MasonryItem v-if="slots.default" :item="item.item" :index="item.index">
+          <template #default="slotProps">
+            <slot v-bind="slotProps" />
+          </template>
+        </MasonryItem>
+        <MasonryItem v-else :item="item.item" :index="item.index" />
       </div>
     </div>
   </div>
