@@ -24,9 +24,29 @@ const slots = useSlots()
 const root = ref<HTMLElement>()
 const itemElements = new Map<string, HTMLElement>()
 const heights = ref(new Map<string, number>())
+const viewportWidth = ref(typeof window === 'undefined' ? 0 : window.innerWidth)
 let resizeObserver: ResizeObserver | undefined
 
-const columnCount = computed(() => Math.max(1, Math.floor(Number(props.columns) || 1)))
+function updateViewportWidth() {
+  viewportWidth.value = window.innerWidth
+}
+
+const columnCount = computed(() => {
+  const configured = props.columns
+  if (typeof configured === 'number') return Math.max(1, Math.floor(configured || 1))
+
+  const width = viewportWidth.value
+  const value =
+    width >= 1024
+      ? (configured.lg ?? configured.md ?? configured.sm)
+      : width >= 768
+        ? (configured.md ?? configured.sm ?? configured.lg)
+        : width >= 640
+          ? (configured.sm ?? configured.md ?? configured.lg)
+          : (configured.md ?? configured.sm ?? configured.lg)
+
+  return Math.max(1, Math.floor(value || 1))
+})
 const gap = computed(() => {
   const value =
     typeof props.spacing === 'number' ? props.spacing : Number.parseFloat(props.spacing) || 0
@@ -106,6 +126,7 @@ watch([sourceItems, () => props.columns, () => props.sequential], async () => {
 })
 
 onMounted(() => {
+  window.addEventListener('resize', updateViewportWidth)
   measure()
   if (typeof ResizeObserver !== 'undefined') {
     resizeObserver = new ResizeObserver(measure)
@@ -114,7 +135,10 @@ onMounted(() => {
   }
 })
 
-onBeforeUnmount(() => resizeObserver?.disconnect())
+onBeforeUnmount(() => {
+  resizeObserver?.disconnect()
+  window.removeEventListener('resize', updateViewportWidth)
+})
 </script>
 
 <template>

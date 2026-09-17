@@ -4,9 +4,10 @@ export { default as Masonry } from './Masonry.vue'
 export { masonryDefaults } from './defaults'
 
 export type MasonryItem = unknown
+export type MasonryResponsiveColumns = { sm?: number; md?: number; lg?: number }
 
 export interface MasonryProps {
-  columns?: number
+  columns?: number | MasonryResponsiveColumns
   spacing?: number | string
   sequential?: boolean
   items: MasonryItem[]

@@ -2,6 +2,7 @@ import type { ComponentDocConfig } from '../component-docs'
 import MasonryColumnsExample from '../../components/examples/masonry/MasonryColumnsExample.vue'
 import MasonrySequentialExample from '../../components/examples/masonry/MasonrySequentialExample.vue'
 import MasonrySpacingExample from '../../components/examples/masonry/MasonrySpacingExample.vue'
+import MasonryResponsiveColumnsExample from '../../components/examples/masonry/MasonryResponsiveColumnsExample.vue'
 import MasonryUsageExample from '../../components/examples/masonry/MasonryUsageExample.vue'
 
 const masonryConfig: ComponentDocConfig = {
@@ -33,6 +34,11 @@ const masonryConfig: ComponentDocConfig = {
       description: 'Ajusta la separación entre columnas y elementos.',
       component: MasonrySpacingExample,
     },
+    {
+      title: 'Responsive columns',
+      description: 'Configura un número de columnas distinto para sm, md y lg.',
+      component: MasonryResponsiveColumnsExample,
+    },
   ],
   accessibility: [
     {
@@ -50,7 +56,12 @@ const masonryConfig: ComponentDocConfig = {
         required: true,
         description: 'Elementos que Masonry distribuirá entre las columnas.',
       },
-      { name: 'columns', type: 'number', default: '4', description: 'Número de columnas.' },
+      {
+        name: 'columns',
+        type: 'number | { sm?: number; md?: number; lg?: number }',
+        default: '4',
+        description: 'Número de columnas o configuración responsive para sm, md y lg.',
+      },
       {
         name: 'spacing',
         type: 'number | string',

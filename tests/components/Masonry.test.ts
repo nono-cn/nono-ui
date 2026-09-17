@@ -72,6 +72,20 @@ describe('Masonry', () => {
 
         expect(getColumns(wrapper)).toHaveLength(expected)
       })
+
+      it.each([
+        { width: 500, expected: 2, label: 'fallback md' },
+        { width: 700, expected: 1, label: 'sm' },
+        { width: 800, expected: 2, label: 'md' },
+        { width: 1200, expected: 4, label: 'lg' },
+      ])('resuelve columns responsive en $label', ({ width, expected }) => {
+        window.innerWidth = width
+        const wrapper = mountMasonry({
+          props: { items, columns: { sm: 1, md: 2, lg: 4 } },
+        })
+
+        expect(getColumns(wrapper)).toHaveLength(expected)
+      })
     })
 
     describe('spacing', () => {
