@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs, watch } from 'vue'
 import { SwitchRoot, SwitchThumb } from 'reka-ui'
+import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { useColor } from '@/composables'
 import { cn } from '@/lib/utils'
@@ -38,6 +39,14 @@ watch(
 const switchContext = computed(() => ({
   state: value.value === props.trueValue,
 }))
+const thumbIcon = computed(() =>
+  switchContext.value.state ? props.checkedIcon : props.uncheckedIcon,
+)
+const thumbIconSize = computed(() => {
+  if (thumbIcon.value?.size) return thumbIcon.value.size
+
+  return props.size === 'lg' || props.size === 'xl' ? 'sm' : 'xs'
+})
 
 const attrs = useAttrs()
 const { colorStyle } = useColor(
@@ -66,7 +75,7 @@ const thumbProps = computed(() => {
   return {
     ...thumbUI,
     class: cn(
-      'pointer-events-none block rounded-full bg-background ring-0 transition-transform data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground',
+      'pointer-events-none block rounded-full bg-background ring-0 transition-transform [&>*]:!size-full data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground',
       switchThumbVariants({ size: props.size }),
       thumbUI.class,
     ),
@@ -79,6 +88,13 @@ const thumbProps = computed(() => {
   <SwitchRoot v-bind="rootProps" v-model="value" data-test-switch-root>
     <SwitchThumb v-bind="thumbProps" data-test-switch-thumb>
       <slot name="thumb" v-bind="switchContext" />
+      <Icon
+        v-if="!$slots.thumb && thumbIcon?.name"
+        v-bind="thumbIcon"
+        :name="thumbIcon.name"
+        :size="thumbIconSize"
+        data-test-switch-icon
+      />
     </SwitchThumb>
   </SwitchRoot>
 </template>

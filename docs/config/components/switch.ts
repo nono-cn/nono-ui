@@ -5,6 +5,7 @@ import SwitchThumbExample from '../../components/examples/switch/SwitchThumbExam
 import SwitchSizeExample from '../../components/examples/switch/SwitchSizeExample.vue'
 import SwitchColorExample from '../../components/examples/switch/SwitchColorExample.vue'
 import SwitchSeverityExample from '../../components/examples/switch/SwitchSeverityExample.vue'
+import SwitchIconsExample from '../../components/examples/switch/SwitchIconsExample.vue'
 
 const switchConfig: ComponentDocConfig = {
   slug: 'switch',
@@ -43,6 +44,11 @@ const switchConfig: ComponentDocConfig = {
       title: 'Thumb personalizado',
       description: 'Personaliza el contenido del thumb con su estado actual.',
       component: SwitchThumbExample,
+    },
+    {
+      title: 'Checked y unchecked icons',
+      description: 'Muestra un icono distinto para cada estado.',
+      component: SwitchIconsExample,
     },
   ],
   accessibility: [
@@ -89,6 +95,20 @@ const switchConfig: ComponentDocConfig = {
         type: 'string',
         default: 'undefined',
         description: 'Color CSS personalizado. Tiene prioridad sobre severity.',
+      },
+      {
+        name: 'uncheckedIcon',
+        type: 'IconConfig',
+        typeLink: '/components/icon#icon-config',
+        default: 'undefined',
+        description: 'Icono mostrado dentro del thumb cuando el switch está desactivado.',
+      },
+      {
+        name: 'checkedIcon',
+        type: 'IconConfig',
+        typeLink: '/components/icon#icon-config',
+        default: 'undefined',
+        description: 'Icono mostrado dentro del thumb cuando el switch está activado.',
       },
       {
         name: 'ui',

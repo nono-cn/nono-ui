@@ -22,14 +22,14 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Thumb personalizado"
-    description="El slot thumb recibe state."
+    description="El slot thumb recibe state y personaliza su contenido."
     :code="code"
     :show-reset="false"
   >
-    <Switch v-model:value="enabled" aria-label="Modo compacto"
-      ><template #thumb="{ state }"
-        ><span class="text-[0.5rem]">{{ state ? '✓' : '' }}</span></template
-      ></Switch
-    >
+    <Switch v-model:value="enabled" aria-label="Modo compacto">
+      <template #thumb="{ state }">
+        <span>{{ state ? '✓' : '' }}</span>
+      </template>
+    </Switch>
   </ComponentExample>
 </template>

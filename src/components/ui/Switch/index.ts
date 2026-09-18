@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from 'vue'
 import type { SwitchRootProps } from 'reka-ui'
 import { cva, type VariantProps } from 'class-variance-authority'
+import type { IconConfig } from '@/components/ui/Icon'
 
 export { default as Switch } from './Switch.vue'
 
@@ -74,6 +75,8 @@ export interface SwitchProps extends Pick<
   size?: SwitchSize
   severity?: SwitchSeverity
   color?: string
+  uncheckedIcon?: IconConfig
+  checkedIcon?: IconConfig
   ui?: SwitchUI
 }
 

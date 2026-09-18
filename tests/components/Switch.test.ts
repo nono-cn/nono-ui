@@ -10,6 +10,7 @@ import {
 import { SwitchRoot } from 'reka-ui'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
+import { testIconProps } from '../utils/testIconProps'
 
 function mountSwitch(options: ComponentMountingOptions<typeof Switch> = {}) {
   return mount(Switch, options)
@@ -116,6 +117,22 @@ describe('Switch', () => {
       })
     })
 
+    describe('uncheckedIcon', () => {
+      testIconProps({
+        text: 'renderiza uncheckedIcon cuando está desactivado',
+        id: '[data-test-switch-icon]',
+        mount: (uncheckedIcon) => mountSwitch({ props: { value: false, uncheckedIcon } }),
+      })
+    })
+
+    describe('checkedIcon', () => {
+      testIconProps({
+        text: 'renderiza checkedIcon cuando está activado',
+        id: '[data-test-switch-icon]',
+        mount: (checkedIcon) => mountSwitch({ props: { value: true, checkedIcon } }),
+      })
+    })
+
     describe('ui', () => {
       testAttrs({
         text: 'renderiza los atributos de ui.thumb',
@@ -182,6 +199,33 @@ describe('Switch', () => {
         })
 
         expect(switchWrapper.get('[data-test-switch-thumb]').text()).toContain('Contenido')
+      })
+
+      it('hace que el contenido ocupe todo el thumb', () => {
+        const switchWrapper = mountSwitch({
+          slots: {
+            thumb: () => h('span', { 'data-test-switch-thumb-content': '' }, 'Contenido'),
+          },
+        })
+
+        expect(switchWrapper.get('[data-test-switch-thumb]').classes()).toContain(
+          '[&>*]:!size-full',
+        )
+      })
+
+      it('tiene prioridad sobre los iconos del estado', () => {
+        const switchWrapper = mountSwitch({
+          props: {
+            value: true,
+            checkedIcon: { name: 'save' },
+          },
+          slots: {
+            thumb: () => h('span', { 'data-test-switch-thumb-content': '' }, 'Contenido'),
+          },
+        })
+
+        expect(switchWrapper.get('[data-test-switch-thumb-content]').text()).toBe('Contenido')
+        expect(switchWrapper.find('[data-test-switch-icon]').exists()).toBe(false)
       })
 
       it.each([
