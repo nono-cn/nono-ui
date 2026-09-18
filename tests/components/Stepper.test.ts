@@ -21,7 +21,7 @@ import {
 import { stepperDefaults } from '@/components/ui/Stepper/defaults'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 const steps: StepperStep[] = [
   {
@@ -203,7 +203,7 @@ describe('Stepper', () => {
       })
 
       describe('icon', () => {
-        testIconProps({
+        testIconConfig({
           text: 'pasa las props de step.icon',
           id: '[data-test-stepper-icon="first"]',
           mount: (input) =>

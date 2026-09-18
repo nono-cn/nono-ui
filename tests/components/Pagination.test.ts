@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/Button'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 function mountPagination(options: MountingOptions<PaginationProps> = {}) {
   const global = options.global ?? {}
@@ -212,7 +212,7 @@ describe('Pagination', () => {
     })
 
     describe('firstIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza firstIcon',
         id: '[data-test-pagination-first] [data-test-icon-root]',
         default: 'chevronsLeft',
@@ -221,7 +221,7 @@ describe('Pagination', () => {
     })
 
     describe('previousIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza previousIcon',
         id: '[data-test-pagination-previous] [data-test-icon-root]',
         default: 'chevronLeft',
@@ -230,7 +230,7 @@ describe('Pagination', () => {
     })
 
     describe('nextIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza nextIcon',
         id: '[data-test-pagination-next] [data-test-icon-root]',
         default: 'chevronRight',
@@ -239,7 +239,7 @@ describe('Pagination', () => {
     })
 
     describe('lastIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza lastIcon',
         id: '[data-test-pagination-last] [data-test-icon-root]',
         default: 'chevronsRight',
@@ -248,7 +248,7 @@ describe('Pagination', () => {
     })
 
     describe('ellipsisIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza ellipsisIcon',
         id: '[data-test-pagination-ellipsis] [data-test-icon-root]',
         default: 'moreHorizontal',

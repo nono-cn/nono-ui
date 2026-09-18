@@ -2,10 +2,11 @@ import type { VueWrapper } from '@vue/test-utils'
 import { expect, it } from 'vitest'
 import type { IconConfig, IconName, IconSize } from '@/components/ui/Icon'
 
-interface TestIconPropsOptions {
+interface TestIconConfigOptions {
   text: string
   id: string
   default?: IconName
+  omit?: string[]
   mount: (input: IconConfig | undefined) => VueWrapper | Promise<VueWrapper>
 }
 
@@ -16,7 +17,7 @@ interface TestIconSizeOptions {
   mount: (input: IconSize | undefined) => VueWrapper | Promise<VueWrapper>
 }
 
-export function testIconProps({ text, id, default: defaultIcon, mount }: TestIconPropsOptions) {
+export function testIconConfig({ text, id, default: defaultIcon, omit = [], mount }: TestIconConfigOptions) {
   it.each([
     {
       input: {
@@ -31,29 +32,33 @@ export function testIconProps({ text, id, default: defaultIcon, mount }: TestIco
     },
   ])(`${text}`, async ({ input }) => {
     const icon = (await mount(input)).findComponent(id)
-    const expectedProps = getExpectedIconProps(input, defaultIcon)
+    const expectedProps = getExpectedIconProps(input, defaultIcon, omit)
 
     expect(icon.exists()).toBe(expectedProps !== undefined)
     if (expectedProps !== undefined) {
       expect(icon.props()).toMatchObject(expectedProps)
 
-      if (input?.id) expect(icon.attributes('id')).toBe(input.id)
-      if (input?.class) expect(icon.classes()).toContain(input.class)
-      if (input?.style) expect(icon.attributes('style')).toContain('opacity: 0.5')
-      if (input?.['aria-label']) expect(icon.attributes('aria-label')).toBe(input['aria-label'])
-      if (input?.['data-test-icon-prop']) {
+      if (input?.id && !omit.includes('id')) expect(icon.attributes('id')).toBe(input.id)
+      if (input?.class && !omit.includes('class')) expect(icon.classes()).toContain(input.class)
+      if (input?.style && !omit.includes('style')) expect(icon.attributes('style')).toContain('opacity: 0.5')
+      if (input?.['aria-label'] && !omit.includes('aria-label')) expect(icon.attributes('aria-label')).toBe(input['aria-label'])
+      if (input?.['data-test-icon-prop'] && !omit.includes('data-test-icon-prop')) {
         expect(icon.attributes('data-test-icon-prop')).toBe(input['data-test-icon-prop'])
       }
     }
   })
 }
 
-function getExpectedIconProps(input: IconConfig | undefined, defaultIcon: IconName | undefined) {
+function getExpectedIconProps(
+  input: IconConfig | undefined,
+  defaultIcon: IconName | undefined,
+  omit: string[],
+) {
   if (input) {
     return {
-      name: input.name,
-      ...(input.size !== undefined && { size: input.size }),
-      ...(input.color !== undefined && { color: input.color }),
+      ...(!omit.includes('name') && { name: input.name }),
+      ...(!omit.includes('size') && input.size !== undefined && { size: input.size }),
+      ...(!omit.includes('color') && input.color !== undefined && { color: input.color }),
     }
   }
   if (defaultIcon !== undefined) return { name: defaultIcon }

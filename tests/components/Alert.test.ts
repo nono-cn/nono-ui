@@ -7,7 +7,7 @@ import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 import { testButtonConfig } from '../utils/testButtonConfig'
 import { testColor } from '../utils/testColor'
-import { testIconProps, testIconSize } from '../utils/testIconProps'
+import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountAlert(options: MountingOptions<AlertProps> = {}) {
   return mount(Alert, {
@@ -106,7 +106,7 @@ describe('Alert', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de icon',
         id: '[data-test-alert-icon]',
         mount: (input) => mountAlert({ props: { icon: input } }),

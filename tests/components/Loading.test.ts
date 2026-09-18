@@ -3,7 +3,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { i18n } from '@/i18n'
 import { Loading, type LoadingContext, type LoadingProps } from '@/components/ui/Loading'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountLoading(options: MountingOptions<LoadingProps> = {}) {
@@ -35,7 +35,7 @@ describe('Loading', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props del icono',
         id: '[data-test-loading-icon]',
         default: 'spinner',

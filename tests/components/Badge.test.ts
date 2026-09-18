@@ -4,7 +4,7 @@ import { h } from 'vue'
 
 import { Badge, type BadgeProps } from '@/components/ui/Badge'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps, testIconSize } from '../utils/testIconProps'
+import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountBadge(options: MountingOptions<BadgeProps> = {}) {
   return mount(Badge, options)
@@ -95,7 +95,7 @@ describe('Badge', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de icon',
         id: '[data-test-badge-icon]',
         mount: (input) => mountBadge({ props: { icon: input } }),
@@ -117,7 +117,7 @@ describe('Badge', () => {
     })
 
     describe('trailingIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de trailingIcon',
         id: '[data-test-badge-trailing-icon]',
         mount: (input) => mountBadge({ props: { trailingIcon: input } }),

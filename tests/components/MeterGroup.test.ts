@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/MeterGroup'
 import { meterGroupDefaults } from '@/components/ui/MeterGroup/defaults'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 function mountMeterGroup(options: MountingOptions<MeterGroupProps> = {}) {
   return mount(MeterGroup, options)
@@ -153,7 +153,7 @@ describe('MeterGroup', () => {
       })
 
       describe('icon', () => {
-        testIconProps({
+        testIconConfig({
           text: 'pasa las props de item.icon y el color del item a Icon',
           id: '[data-test-meter-group-icon]',
           mount: (input) =>

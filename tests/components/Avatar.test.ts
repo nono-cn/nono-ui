@@ -4,7 +4,7 @@ import { h, nextTick } from 'vue'
 
 import { Avatar, type AvatarProps } from '@/components/ui/Avatar'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps, testIconSize } from '../utils/testIconProps'
+import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountAvatar(options: MountingOptions<AvatarProps> = {}) {
   return mount(Avatar, options)
@@ -82,7 +82,7 @@ describe('Avatar', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props del objeto icon',
         id: '[data-test-avatar-icon]',
         mount: (input) => mountAvatar({ props: { icon: input } }),

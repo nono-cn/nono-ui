@@ -4,7 +4,7 @@ import { h } from 'vue'
 
 import { Button, type ButtonProps } from '@/components/ui/Button'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps, testIconSize } from '../utils/testIconProps'
+import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountButton(options: MountingOptions<ButtonProps> & Record<string, unknown> = {}) {
   return mount(Button, options)
@@ -126,7 +126,7 @@ describe('Button', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de icon',
         id: '[data-test-button-icon]',
         mount: (input) => mountButton({ props: { icon: input } }),
@@ -155,7 +155,7 @@ describe('Button', () => {
     })
 
     describe('trailingIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de trailingIcon',
         id: '[data-test-button-trailing-icon]',
         mount: (input) => mountButton({ props: { trailingIcon: input } }),

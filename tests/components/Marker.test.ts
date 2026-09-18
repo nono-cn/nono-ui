@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import { Icon } from '@/components/ui/Icon'
 import { Marker, type MarkerProps } from '@/components/ui/Marker'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 function mountMarker(options: MountingOptions<MarkerProps> = {}) {
   return mount(Marker, options)
@@ -29,7 +29,7 @@ describe('Marker', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa la configuración del icono',
         id: Icon,
         mount: (icon) => mountMarker({ props: { icon } }),

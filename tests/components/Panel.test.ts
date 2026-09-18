@@ -6,7 +6,7 @@ import { Panel, type PanelContext, type PanelProps } from '@/components/ui/Panel
 import { Button } from '@/components/ui/Button'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 function mountPanel(options: MountingOptions<PanelProps> = {}) {
   return mount(Panel, options)
@@ -142,7 +142,7 @@ describe('Panel', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de icon',
         id: '[data-test-panel-icon]',
         mount: (input) => mountPanel({ props: { icon: input } }),

@@ -10,7 +10,7 @@ import {
   type TimelineProps,
 } from '@/components/ui/Timeline'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 const baseItems: TimelineItem[] = [
   { value: 'created', label: 'Creado', description: 'El pedido fue creado.' },
@@ -77,7 +77,7 @@ describe('Timeline', () => {
         expect(icon.classes()).toContain('size-4')
       })
 
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props del icono a Icon',
         id: '[data-test-timeline-indicator-icon]',
         mount: (icon) => mountTimeline({ props: { items: [{ ...baseItems[0], icon: icon! }] } }),

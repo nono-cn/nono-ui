@@ -12,7 +12,7 @@ import {
 import { Dialog, type DialogContext, type DialogProps } from '@/components/ui/Dialog'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 afterEach(() => {
   document.body.innerHTML = ''
@@ -227,7 +227,7 @@ describe('Dialog', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de icon',
         id: '[data-test-dialog-icon]',
         mount: async (input) => {
@@ -247,7 +247,7 @@ describe('Dialog', () => {
     })
 
     describe('closeIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de closeIcon',
         id: '[data-test-dialog-close-icon]',
         default: 'x',

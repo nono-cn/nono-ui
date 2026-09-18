@@ -4,7 +4,7 @@ import { Switch, type SwitchSeverity, type SwitchSize } from '@/components/ui/Sw
 import { SwitchRoot } from 'reka-ui'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 function mountSwitch(options: ComponentMountingOptions<typeof Switch> = {}) {
   return mount(Switch, options)
@@ -121,7 +121,7 @@ describe('Switch', () => {
     })
 
     describe('uncheckedIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza uncheckedIcon cuando está desactivado',
         id: '[data-test-switch-icon]',
         mount: (uncheckedIcon) => mountSwitch({ props: { value: false, uncheckedIcon } }),
@@ -137,7 +137,7 @@ describe('Switch', () => {
     })
 
     describe('checkedIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza checkedIcon cuando está activado',
         id: '[data-test-switch-icon]',
         mount: (checkedIcon) => mountSwitch({ props: { value: true, checkedIcon } }),

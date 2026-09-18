@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/Button'
 import { i18n } from '@/i18n'
 import { testButtonConfig } from '../utils/testButtonConfig'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 afterEach(() => {
   document.body.innerHTML = ''
@@ -133,7 +133,7 @@ describe('AlertDialog', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de icon',
         id: '[data-test-alert-dialog-icon]',
         mount: async (input) => {

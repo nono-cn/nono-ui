@@ -13,7 +13,7 @@ import {
 import { Link } from '@/components/ui/Link'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 const items: BreadcrumbItem[] = [
   { slot: 'home', label: 'Inicio', to: '/' },
@@ -136,7 +136,7 @@ describe('Breadcrumb', () => {
     })
 
     describe('ellipsisIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza ellipsisIcon',
         id: '[data-test-breadcrumb-ellipsis] [data-test-icon-root]',
         default: 'moreHorizontal',
@@ -148,7 +148,7 @@ describe('Breadcrumb', () => {
     })
 
     describe('separatorIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza separatorIcon',
         id: '[data-test-breadcrumb-separator] [data-test-icon-root]',
         default: 'chevronRight',

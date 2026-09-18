@@ -10,7 +10,7 @@ import {
   type AccordionValue,
 } from '@/components/ui/Accordion'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 const items = [
   {
@@ -278,7 +278,7 @@ describe('Accordion', () => {
     })
 
     describe('iconDropDownOpen', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de iconDropDownOpen',
         id: '[data-test-accordion-icon-dropdown="item"]',
         default: 'chevronUp',
@@ -294,7 +294,7 @@ describe('Accordion', () => {
     })
 
     describe('iconDropDownClose', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de iconDropDownClose',
         id: '[data-test-accordion-icon-dropdown="item"]',
         default: 'chevronDown',
@@ -408,7 +408,7 @@ describe('Accordion', () => {
       })
 
       describe('icon', () => {
-        testIconProps({
+        testIconConfig({
           text: 'pasa las props de item.icon',
           id: '[data-test-accordion-icon="item"]',
           mount: (input) =>

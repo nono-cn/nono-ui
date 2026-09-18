@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/NumberField'
 import { Icon, type IconSize } from '@/components/ui/Icon'
 import { i18n } from '@/i18n'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountNumberField(options: MountingOptions<NumberFieldProps> = {}) {
@@ -524,7 +524,7 @@ describe('NumberField', () => {
   })
 
   describe('iconDecrement', () => {
-    testIconProps({
+    testIconConfig({
       text: 'pasa las props de iconDecrement',
       id: '[data-test-icon-root]',
       mount: (input) =>
@@ -536,7 +536,7 @@ describe('NumberField', () => {
   })
 
   describe('iconIncrement', () => {
-    testIconProps({
+    testIconConfig({
       text: 'pasa las props de iconIncrement',
       id: '[data-test-icon-root]',
       mount: (input) =>

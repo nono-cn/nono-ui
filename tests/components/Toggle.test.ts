@@ -12,7 +12,7 @@ import {
 import { toggleDefaults } from '@/components/ui/Toggle/defaults'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
-import { testIconProps, testIconSize } from '../utils/testIconProps'
+import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountToggle(options: MountingOptions<ToggleProps> = {}) {
   return mount(Toggle, options)
@@ -125,7 +125,7 @@ describe('Toggle', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props del icono',
         id: '[data-test-toggle-icon]',
         mount: (input) => mountToggle({ props: { icon: input } }),
@@ -139,7 +139,7 @@ describe('Toggle', () => {
     })
 
     describe('trailingIcon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de trailingIcon',
         id: '[data-test-toggle-trailing-icon]',
         mount: (input) => mountToggle({ props: { trailingIcon: input } }),

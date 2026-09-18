@@ -5,7 +5,7 @@ import { ListboxItem as RekaListboxItem, ListboxRoot, ListboxVirtualizer } from 
 import { Listbox, type ListboxProps } from '@/components/ui/Listbox'
 import { Input } from '@/components/ui/Input'
 import { i18n } from '@/i18n'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 import { testInputConfig } from '../utils/testInputConfig'
 import { testAttrs } from '../utils/testAttrs'
 import * as filterComposable from '@/composables/useFilter'
@@ -288,7 +288,7 @@ describe('Listbox', () => {
       })
 
       describe('icon', () => {
-        testIconProps({
+        testIconConfig({
           text: 'renderiza el icon de cada item',
           id: '[data-test-listbox-item-icon]',
           mount: (icon) => mountListbox([{ value: 'apple', label: 'Manzana', icon }]),
@@ -595,7 +595,7 @@ describe('Listbox', () => {
     })
 
     describe('iconFilter', () => {
-      testIconProps({
+      testIconConfig({
         text: 'renderiza iconFilter en el leading del filtro',
         id: '[data-test-listbox-icon-filter]',
         mount: (iconFilter) => mountListbox(undefined, { props: { filter: true, iconFilter } }),

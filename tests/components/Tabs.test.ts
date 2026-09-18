@@ -11,7 +11,7 @@ import {
   type TabsProps,
 } from '@/components/ui/Tabs'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps } from '../utils/testIconProps'
+import { testIconConfig } from '../utils/testIconConfig'
 
 const tabs: TabItem[] = [
   {
@@ -179,7 +179,7 @@ describe('Tabs', () => {
       })
 
       describe('icon', () => {
-        testIconProps({
+        testIconConfig({
           text: 'renderiza el icono',
           id: '[data-test-tabs-trigger] [data-test-icon-root]',
           default: 'layoutDashboard',
@@ -188,7 +188,7 @@ describe('Tabs', () => {
       })
 
       describe('trailingIcon', () => {
-        testIconProps({
+        testIconConfig({
           text: 'renderiza trailingIcon',
           id: '[data-test-tabs-trigger] [data-test-icon-root]',
           default: 'check',

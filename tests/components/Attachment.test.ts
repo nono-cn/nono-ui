@@ -4,7 +4,7 @@ import { h } from 'vue'
 
 import { Attachment, type AttachmentProps } from '@/components/ui/Attachment'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconProps, testIconSize } from '../utils/testIconProps'
+import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountAttachment(options: MountingOptions<AttachmentProps> = {}) {
   return mount(Attachment, options)
@@ -116,7 +116,7 @@ describe('Attachment', () => {
     })
 
     describe('icon', () => {
-      testIconProps({
+      testIconConfig({
         text: 'pasa las props de icon',
         id: '[data-test-attachment-icon]',
         mount: (input) => mountAttachment({ props: { icon: input } }),
