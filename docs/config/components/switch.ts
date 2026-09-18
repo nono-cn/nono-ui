@@ -3,6 +3,8 @@ import SwitchUsageExample from '../../components/examples/switch/SwitchUsageExam
 import SwitchValuesExample from '../../components/examples/switch/SwitchValuesExample.vue'
 import SwitchThumbExample from '../../components/examples/switch/SwitchThumbExample.vue'
 import SwitchSizeExample from '../../components/examples/switch/SwitchSizeExample.vue'
+import SwitchColorExample from '../../components/examples/switch/SwitchColorExample.vue'
+import SwitchSeverityExample from '../../components/examples/switch/SwitchSeverityExample.vue'
 
 const switchConfig: ComponentDocConfig = {
   slug: 'switch',
@@ -17,6 +19,16 @@ const switchConfig: ComponentDocConfig = {
     },
   ],
   examples: [
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado.',
+      component: SwitchColorExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Elige el color semántico del estado activado.',
+      component: SwitchSeverityExample,
+    },
     {
       title: 'Size',
       description: 'Ajusta el tamaño del switch y su thumb.',
@@ -65,6 +77,18 @@ const switchConfig: ComponentDocConfig = {
         type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
         default: "'md'",
         description: 'Tamaño visual del switch y de su thumb.',
+      },
+      {
+        name: 'severity',
+        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
+        default: "'primary'",
+        description: 'Color semántico del estado activado.',
+      },
+      {
+        name: 'color',
+        type: 'string',
+        default: 'undefined',
+        description: 'Color CSS personalizado. Tiene prioridad sobre severity.',
       },
       {
         name: 'ui',

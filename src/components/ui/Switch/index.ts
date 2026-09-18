@@ -13,9 +13,26 @@ export const switchVariants = cva('', {
       lg: 'h-6 w-11',
       xl: 'h-7 w-13',
     },
+    severity: {
+      primary:
+        'focus-visible:border-primary focus-visible:ring-primary/50 data-[state=checked]:bg-primary',
+      secondary:
+        'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/50 data-[state=checked]:bg-secondary',
+      warning:
+        'focus-visible:border-warning focus-visible:ring-warning/50 data-[state=checked]:bg-warning',
+      success:
+        'focus-visible:border-success focus-visible:ring-success/50 data-[state=checked]:bg-success',
+      error: 'focus-visible:border-error focus-visible:ring-error/50 data-[state=checked]:bg-error',
+    },
+    color: {
+      true: 'focus-visible:border-(--switch-color) focus-visible:ring-(--switch-color)/50 data-[state=checked]:bg-(--switch-color)',
+      false: '',
+    },
   },
   defaultVariants: {
     size: 'md',
+    severity: 'primary',
+    color: false,
   },
 })
 
@@ -36,6 +53,7 @@ export const switchThumbVariants = cva('', {
 
 export type SwitchVariants = VariantProps<typeof switchVariants>
 export type SwitchSize = NonNullable<SwitchVariants['size']>
+export type SwitchSeverity = NonNullable<SwitchVariants['severity']>
 
 export type SwitchValue = boolean | number | string
 export type SwitchState = boolean
@@ -54,6 +72,8 @@ export interface SwitchProps extends Pick<
 > {
   value?: SwitchValue
   size?: SwitchSize
+  severity?: SwitchSeverity
+  color?: string
   ui?: SwitchUI
 }
 
