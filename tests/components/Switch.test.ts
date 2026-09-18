@@ -1,30 +1,58 @@
 import { describe, expect, it } from 'vitest'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
-import { h } from 'vue'
-import { Switch, type SwitchContext } from '@/components/ui/Switch'
+import { Switch, type SwitchSeverity, type SwitchSize } from '@/components/ui/Switch'
 import { SwitchRoot } from 'reka-ui'
 import { testAttrs } from '../utils/testAttrs'
+import { testColor } from '../utils/testColor'
+import { testIconProps } from '../utils/testIconProps'
 
 function mountSwitch(options: ComponentMountingOptions<typeof Switch> = {}) {
   return mount(Switch, options)
 }
 
+const sizeCases = [
+  { size: 'xs', rootClass: 'h-3.5 w-6', thumbClass: 'size-3' },
+  { size: 'sm', rootClass: 'h-4 w-7', thumbClass: 'size-3.5' },
+  { size: 'md', rootClass: 'h-5 w-9', thumbClass: 'size-4' },
+  { size: 'lg', rootClass: 'h-6 w-11', thumbClass: 'size-5' },
+  { size: 'xl', rootClass: 'h-7 w-13', thumbClass: 'size-6' },
+  { size: undefined, rootClass: 'h-5 w-9', thumbClass: 'size-4' },
+] satisfies Array<{ size: SwitchSize | undefined; rootClass: string; thumbClass: string }>
+
+const severityCases = [
+  { severity: 'primary', class: 'focus-visible:ring-primary/50' },
+  { severity: 'secondary', class: 'focus-visible:ring-secondary-foreground/50' },
+  { severity: 'warning', class: 'focus-visible:ring-warning/50' },
+  { severity: 'success', class: 'focus-visible:ring-success/50' },
+  { severity: 'error', class: 'focus-visible:ring-error/50' },
+  { severity: undefined, class: 'focus-visible:ring-primary/50' },
+] satisfies Array<{ severity: SwitchSeverity | undefined; class: string }>
+
+const iconSeverityCases = [
+  { severity: 'primary', expected: 'var(--primary)' },
+  { severity: 'secondary', expected: 'var(--secondary)' },
+  { severity: 'warning', expected: 'var(--warning)' },
+  { severity: 'success', expected: 'var(--success)' },
+  { severity: 'error', expected: 'var(--error)' },
+  { severity: undefined, expected: 'var(--primary)' },
+] satisfies Array<{ severity: SwitchSeverity; expected: string }>
+
+const valueCases = [
+  { input: true, expected: true, trueValue: true, falseValue: false },
+  { input: false, expected: false, trueValue: true, falseValue: false },
+  { input: undefined, expected: false, trueValue: true, falseValue: false },
+  { input: 1, expected: 1, trueValue: 1, falseValue: 0 },
+  { input: 0, expected: 0, trueValue: 1, falseValue: 0 },
+  { input: undefined, expected: 0, trueValue: 1, falseValue: 0 },
+  { input: 'on', expected: 'on', trueValue: 'on', falseValue: 'off' },
+  { input: 'off', expected: 'off', trueValue: 'on', falseValue: 'off' },
+  { input: undefined, expected: 'off', trueValue: 'on', falseValue: 'off' },
+]
+
 describe('Switch', () => {
   describe('props', () => {
     // Reka
     describe('value', () => {
-      const valueCases = [
-        { input: true, expected: true, trueValue: true, falseValue: false },
-        { input: false, expected: false, trueValue: true, falseValue: false },
-        { input: undefined, expected: false, trueValue: true, falseValue: false },
-        { input: 1, expected: 1, trueValue: 1, falseValue: 0 },
-        { input: 0, expected: 0, trueValue: 1, falseValue: 0 },
-        { input: undefined, expected: 0, trueValue: 1, falseValue: 0 },
-        { input: 'on', expected: 'on', trueValue: 'on', falseValue: 'off' },
-        { input: 'off', expected: 'off', trueValue: 'on', falseValue: 'off' },
-        { input: undefined, expected: 'off', trueValue: 'on', falseValue: 'off' },
-      ]
-
       it.each(valueCases)(
         'renderiza value=$input con modelValue=$input / trueValue=$trueValue / falseValue=$falseValue',
         ({ input, expected, trueValue, falseValue }) => {
@@ -52,6 +80,85 @@ describe('Switch', () => {
         const root = mountSwitch().getComponent(SwitchRoot)
 
         expect(root.props('falseValue')).toBe(false)
+      })
+    })
+
+    describe('size', () => {
+      it.each(sizeCases)('renderiza size=$size', ({ size, rootClass, thumbClass }) => {
+        const wrapper = mountSwitch({ props: { size } })
+
+        expect(wrapper.get('[data-test-switch-root]').attributes('class')).toContain(rootClass)
+        expect(wrapper.get('[data-test-switch-thumb]').attributes('class')).toContain(thumbClass)
+      })
+    })
+
+    describe('severity', () => {
+      it.each(severityCases)('renderiza severity=$severity', ({ severity, class: className }) => {
+        const wrapper = mountSwitch({ props: { severity } })
+
+        expect(wrapper.get('[data-test-switch-root]').attributes('class')).toContain(className)
+      })
+    })
+
+    describe('color', () => {
+      testColor({
+        text: 'aplica un color personalizado',
+        id: '[data-test-switch-root]',
+        varColor: '--switch-color',
+        mount: (color) => mountSwitch({ props: { color } }),
+      })
+
+      it('da prioridad sobre severity', () => {
+        const wrapper = mountSwitch({ props: { color: '#8b5cf6', severity: 'error' } })
+
+        expect(wrapper.get('[data-test-switch-root]').attributes('class')).toContain(
+          'data-[state=checked]:bg-(--switch-color)',
+        )
+        expect(wrapper.get('[data-test-switch-root]').attributes('class')).toContain(
+          'focus-visible:ring-(--switch-color)/50',
+        )
+      })
+    })
+
+    describe('uncheckedIcon', () => {
+      testIconProps({
+        text: 'renderiza uncheckedIcon cuando está desactivado',
+        id: '[data-test-switch-icon]',
+        mount: (uncheckedIcon) => mountSwitch({ props: { value: false, uncheckedIcon } }),
+      })
+
+      it('usa el color gris por defecto', () => {
+        const wrapper = mountSwitch({ props: { value: false, uncheckedIcon: { name: 'x' } } })
+
+        expect(wrapper.getComponent('[data-test-switch-icon]').props('color')).toBe(
+          'var(--muted-foreground)',
+        )
+      })
+    })
+
+    describe('checkedIcon', () => {
+      testIconProps({
+        text: 'renderiza checkedIcon cuando está activado',
+        id: '[data-test-switch-icon]',
+        mount: (checkedIcon) => mountSwitch({ props: { value: true, checkedIcon } }),
+      })
+
+      it.each(iconSeverityCases)('usa el color de severity=$severity', ({ severity, expected }) => {
+        const wrapper = mountSwitch({
+          props: { value: true, severity, checkedIcon: { name: 'check' } },
+        })
+
+        expect(wrapper.getComponent('[data-test-switch-icon]').props('color')).toBe(expected)
+      })
+
+      it('usa el color personalizado cuando se proporciona color', () => {
+        const wrapper = mountSwitch({
+          props: { value: true, color: '#ff0000', checkedIcon: { name: 'check' } },
+        })
+
+        expect(wrapper.getComponent('[data-test-switch-icon]').props('color')).toBe(
+          'var(--switch-color)',
+        )
       })
     })
 
@@ -108,25 +215,6 @@ describe('Switch', () => {
           expect(switchWrapper.emitted('update:value')).toEqual([[expected]])
         },
       )
-    })
-  })
-
-  describe('slots', () => {
-    describe('thumb', () => {
-      it.each([
-        { value: true, expected: 'true' },
-        { value: false, expected: 'false' },
-      ])('renderiza el contexto de estado para value=$value', ({ value, expected }) => {
-        const switchWrapper = mountSwitch({
-          props: { value },
-          slots: {
-            thumb: (context: SwitchContext) =>
-              h('span', { 'data-test-switch-slot': '' }, String(context.state)),
-          },
-        })
-
-        expect(switchWrapper.get('[data-test-switch-slot]').text()).toBe(expected)
-      })
     })
   })
 })
