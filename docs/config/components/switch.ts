@@ -1,7 +1,6 @@
 import type { ComponentDocConfig } from '../component-docs'
 import SwitchUsageExample from '../../components/examples/switch/SwitchUsageExample.vue'
 import SwitchValuesExample from '../../components/examples/switch/SwitchValuesExample.vue'
-import SwitchThumbExample from '../../components/examples/switch/SwitchThumbExample.vue'
 import SwitchSizeExample from '../../components/examples/switch/SwitchSizeExample.vue'
 import SwitchColorExample from '../../components/examples/switch/SwitchColorExample.vue'
 import SwitchSeverityExample from '../../components/examples/switch/SwitchSeverityExample.vue'
@@ -43,7 +42,6 @@ const switchConfig: ComponentDocConfig = {
     {
       title: 'Thumb personalizado',
       description: 'Personaliza el contenido del thumb con su estado actual.',
-      component: SwitchThumbExample,
     },
     {
       title: 'Checked y unchecked icons',
@@ -132,14 +130,7 @@ const switchConfig: ComponentDocConfig = {
         description: 'Se emite cuando cambia el valor.',
       },
     ],
-    slots: [
-      {
-        name: 'thumb',
-        type: 'SwitchContext',
-        typeLink: '/components/switch#switch-context',
-        description: 'Contenido del thumb; recibe state.',
-      },
-    ],
+    slots: [],
     configs: [
       {
         id: 'switch-context',

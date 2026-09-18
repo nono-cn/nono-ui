@@ -5,19 +5,12 @@ import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { useColor } from '@/composables'
 import { cn } from '@/lib/utils'
-import {
-  switchThumbVariants,
-  switchVariants,
-  type SwitchProps,
-  type SwitchSlots,
-  type SwitchValue,
-} from '.'
+import { switchThumbVariants, switchVariants, type SwitchProps, type SwitchValue } from '.'
 import { switchDefaults } from './default'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<SwitchProps>(), switchDefaults)
-defineSlots<SwitchSlots>()
 const value = defineModel<SwitchValue>('value', { default: false })
 
 const validateValue = (val: SwitchValue) => {
@@ -42,10 +35,11 @@ const switchContext = computed(() => ({
 const thumbIcon = computed(() =>
   switchContext.value.state ? props.checkedIcon : props.uncheckedIcon,
 )
-const thumbIconSize = computed(() => {
-  if (thumbIcon.value?.size) return thumbIcon.value.size
+const colorIcon = computed(() => {
+  if (!switchContext.value.state) return 'var(--muted-foreground)'
+  if (props.color) return 'var(--switch-color)'
 
-  return props.size === 'lg' || props.size === 'xl' ? 'sm' : 'xs'
+  return `var(--${props.severity})`
 })
 
 const attrs = useAttrs()
@@ -76,7 +70,12 @@ const thumbProps = computed(() => {
     ...thumbUI,
     class: cn(
       'pointer-events-none block rounded-full bg-background ring-0 transition-transform [&>*]:!size-full data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground',
-      switchThumbVariants({ size: props.size }),
+      '[&>svg]:text-foreground',
+      switchThumbVariants({
+        size: props.size,
+        severity: props.severity,
+        color: Boolean(props.color),
+      }),
       thumbUI.class,
     ),
     style: thumbUI.style,
@@ -87,12 +86,12 @@ const thumbProps = computed(() => {
 <template>
   <SwitchRoot v-bind="rootProps" v-model="value" data-test-switch-root>
     <SwitchThumb v-bind="thumbProps" data-test-switch-thumb>
-      <slot name="thumb" v-bind="switchContext" />
       <Icon
-        v-if="!$slots.thumb && thumbIcon?.name"
+        v-if="thumbIcon?.name"
         v-bind="thumbIcon"
         :name="thumbIcon.name"
-        :size="thumbIconSize"
+        :color="thumbIcon.color ?? colorIcon"
+        :class="thumbIcon.class"
         data-test-switch-icon
       />
     </SwitchThumb>

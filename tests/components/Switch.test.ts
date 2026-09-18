@@ -1,12 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
-import { h } from 'vue'
-import {
-  Switch,
-  type SwitchContext,
-  type SwitchSeverity,
-  type SwitchSize,
-} from '@/components/ui/Switch'
+import { Switch, type SwitchSeverity, type SwitchSize } from '@/components/ui/Switch'
 import { SwitchRoot } from 'reka-ui'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
@@ -33,6 +27,15 @@ const severityCases = [
   { severity: 'error', class: 'focus-visible:ring-error/50' },
   { severity: undefined, class: 'focus-visible:ring-primary/50' },
 ] satisfies Array<{ severity: SwitchSeverity | undefined; class: string }>
+
+const iconSeverityCases = [
+  { severity: 'primary', expected: 'var(--primary)' },
+  { severity: 'secondary', expected: 'var(--secondary)' },
+  { severity: 'warning', expected: 'var(--warning)' },
+  { severity: 'success', expected: 'var(--success)' },
+  { severity: 'error', expected: 'var(--error)' },
+  { severity: undefined, expected: 'var(--primary)' },
+] satisfies Array<{ severity: SwitchSeverity; expected: string }>
 
 const valueCases = [
   { input: true, expected: true, trueValue: true, falseValue: false },
@@ -123,6 +126,14 @@ describe('Switch', () => {
         id: '[data-test-switch-icon]',
         mount: (uncheckedIcon) => mountSwitch({ props: { value: false, uncheckedIcon } }),
       })
+
+      it('usa el color gris por defecto', () => {
+        const wrapper = mountSwitch({ props: { value: false, uncheckedIcon: { name: 'x' } } })
+
+        expect(wrapper.getComponent('[data-test-switch-icon]').props('color')).toBe(
+          'var(--muted-foreground)',
+        )
+      })
     })
 
     describe('checkedIcon', () => {
@@ -130,6 +141,24 @@ describe('Switch', () => {
         text: 'renderiza checkedIcon cuando está activado',
         id: '[data-test-switch-icon]',
         mount: (checkedIcon) => mountSwitch({ props: { value: true, checkedIcon } }),
+      })
+
+      it.each(iconSeverityCases)('usa el color de severity=$severity', ({ severity, expected }) => {
+        const wrapper = mountSwitch({
+          props: { value: true, severity, checkedIcon: { name: 'check' } },
+        })
+
+        expect(wrapper.getComponent('[data-test-switch-icon]').props('color')).toBe(expected)
+      })
+
+      it('usa el color personalizado cuando se proporciona color', () => {
+        const wrapper = mountSwitch({
+          props: { value: true, color: '#ff0000', checkedIcon: { name: 'check' } },
+        })
+
+        expect(wrapper.getComponent('[data-test-switch-icon]').props('color')).toBe(
+          'var(--switch-color)',
+        )
       })
     })
 
@@ -186,62 +215,6 @@ describe('Switch', () => {
           expect(switchWrapper.emitted('update:value')).toEqual([[expected]])
         },
       )
-    })
-  })
-
-  describe('slots', () => {
-    describe('thumb', () => {
-      it('renderiza contenido dentro del thumb', () => {
-        const switchWrapper = mountSwitch({
-          slots: {
-            thumb: () => h('span', { 'data-test-switch-thumb-content': '' }, 'Contenido'),
-          },
-        })
-
-        expect(switchWrapper.get('[data-test-switch-thumb]').text()).toContain('Contenido')
-      })
-
-      it('hace que el contenido ocupe todo el thumb', () => {
-        const switchWrapper = mountSwitch({
-          slots: {
-            thumb: () => h('span', { 'data-test-switch-thumb-content': '' }, 'Contenido'),
-          },
-        })
-
-        expect(switchWrapper.get('[data-test-switch-thumb]').classes()).toContain(
-          '[&>*]:!size-full',
-        )
-      })
-
-      it('tiene prioridad sobre los iconos del estado', () => {
-        const switchWrapper = mountSwitch({
-          props: {
-            value: true,
-            checkedIcon: { name: 'save' },
-          },
-          slots: {
-            thumb: () => h('span', { 'data-test-switch-thumb-content': '' }, 'Contenido'),
-          },
-        })
-
-        expect(switchWrapper.get('[data-test-switch-thumb-content]').text()).toBe('Contenido')
-        expect(switchWrapper.find('[data-test-switch-icon]').exists()).toBe(false)
-      })
-
-      it.each([
-        { value: true, expected: 'true' },
-        { value: false, expected: 'false' },
-      ])('renderiza el contexto de estado para value=$value', ({ value, expected }) => {
-        const switchWrapper = mountSwitch({
-          props: { value },
-          slots: {
-            thumb: (context: SwitchContext) =>
-              h('span', { 'data-test-switch-slot': '' }, String(context.state)),
-          },
-        })
-
-        expect(switchWrapper.get('[data-test-switch-slot]').text()).toBe(expected)
-      })
     })
   })
 })

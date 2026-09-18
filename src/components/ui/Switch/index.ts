@@ -46,9 +46,22 @@ export const switchThumbVariants = cva('', {
       lg: 'size-5 data-[state=checked]:translate-x-[calc(100%-2px)]',
       xl: 'size-6 data-[state=checked]:translate-x-[calc(100%-2px)]',
     },
+    severity: {
+      primary: 'data-[state=checked]:[&>svg]:text-primary-foreground',
+      secondary: 'data-[state=checked]:[&>svg]:text-secondary-foreground',
+      warning: 'data-[state=checked]:[&>svg]:text-warning-foreground',
+      success: 'data-[state=checked]:[&>svg]:text-success-foreground',
+      error: 'data-[state=checked]:[&>svg]:text-error-foreground',
+    },
+    color: {
+      true: 'data-[state=checked]:[&>svg]:text-(--switch-color-foreground)',
+      false: '',
+    },
   },
   defaultVariants: {
     size: 'md',
+    severity: 'primary',
+    color: false,
   },
 })
 
@@ -88,9 +101,4 @@ export interface SwitchContext {
 // Emits
 export interface SwitchEmits {
   'update:value': [value: SwitchValue]
-}
-
-// Slots
-export interface SwitchSlots {
-  thumb?(props: SwitchContext): unknown
 }
