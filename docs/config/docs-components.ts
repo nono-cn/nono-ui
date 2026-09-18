@@ -23,6 +23,7 @@ import progress from './components/progress'
 import ribbon from './components/ribbon'
 import scrollArea from './components/scroll-area'
 import separator from './components/separator'
+import switchConfig from './components/switch'
 import type { ComponentDocConfig } from './component-docs'
 
 export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'description'>
@@ -53,6 +54,7 @@ export const docsComponents = [
   ribbon,
   scrollArea,
   separator,
+  switchConfig,
 ] satisfies ComponentDocConfig[]
 
 export const docsComponentsBySlug = Object.fromEntries(
