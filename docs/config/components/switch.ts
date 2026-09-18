@@ -2,6 +2,7 @@ import type { ComponentDocConfig } from '../component-docs'
 import SwitchUsageExample from '../../components/examples/switch/SwitchUsageExample.vue'
 import SwitchValuesExample from '../../components/examples/switch/SwitchValuesExample.vue'
 import SwitchThumbExample from '../../components/examples/switch/SwitchThumbExample.vue'
+import SwitchSizeExample from '../../components/examples/switch/SwitchSizeExample.vue'
 
 const switchConfig: ComponentDocConfig = {
   slug: 'switch',
@@ -16,6 +17,11 @@ const switchConfig: ComponentDocConfig = {
     },
   ],
   examples: [
+    {
+      title: 'Size',
+      description: 'Ajusta el tamaño del switch y su thumb.',
+      component: SwitchSizeExample,
+    },
     {
       title: 'Valores personalizados',
       description: 'Usa trueValue y falseValue para valores no booleanos.',
@@ -53,6 +59,12 @@ const switchConfig: ComponentDocConfig = {
         type: 'boolean | number | string',
         default: 'false',
         description: 'Valor que representa el estado desactivado.',
+      },
+      {
+        name: 'size',
+        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+        default: "'md'",
+        description: 'Tamaño visual del switch y de su thumb.',
       },
       {
         name: 'ui',

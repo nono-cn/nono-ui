@@ -1,13 +1,22 @@
 import { describe, expect, it } from 'vitest'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { h } from 'vue'
-import { Switch, type SwitchContext } from '@/components/ui/Switch'
-import { SwitchRoot } from 'reka-ui'
+import { Switch, type SwitchContext, type SwitchSize } from '@/components/ui/Switch'
+import { SwitchRoot, SwitchThumb } from 'reka-ui'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountSwitch(options: ComponentMountingOptions<typeof Switch> = {}) {
   return mount(Switch, options)
 }
+
+const sizeCases = [
+  { size: 'xs', rootClass: 'h-3.5 w-6', thumbClass: 'size-3' },
+  { size: 'sm', rootClass: 'h-4 w-7', thumbClass: 'size-3.5' },
+  { size: 'md', rootClass: 'h-5 w-9', thumbClass: 'size-4' },
+  { size: 'lg', rootClass: 'h-6 w-11', thumbClass: 'size-5' },
+  { size: 'xl', rootClass: 'h-7 w-13', thumbClass: 'size-6' },
+  { size: undefined, rootClass: 'h-5 w-9', thumbClass: 'size-4' },
+] satisfies Array<{ size: SwitchSize | undefined; rootClass: string; thumbClass: string }>
 
 describe('Switch', () => {
   describe('props', () => {
@@ -52,6 +61,15 @@ describe('Switch', () => {
         const root = mountSwitch().getComponent(SwitchRoot)
 
         expect(root.props('falseValue')).toBe(false)
+      })
+    })
+
+    describe('size', () => {
+      it.each(sizeCases)('renderiza size=$size', ({ size, rootClass, thumbClass }) => {
+        const wrapper = mountSwitch({ props: { size } })
+
+        expect(wrapper.get('[data-test-switch-root]').attributes('class')).toContain(rootClass)
+        expect(wrapper.get('[data-test-switch-thumb]').attributes('class')).toContain(thumbClass)
       })
     })
 
