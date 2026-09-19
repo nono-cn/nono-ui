@@ -1,51 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AttachmentIconExample from '../../components/examples/attachment/AttachmentIconExample.vue'
-import AttachmentMediaVariantExample from '../../components/examples/attachment/AttachmentMediaVariantExample.vue'
-import AttachmentOrientationExample from '../../components/examples/attachment/AttachmentOrientationExample.vue'
-import AttachmentSizeExample from '../../components/examples/attachment/AttachmentSizeExample.vue'
-import AttachmentStateExample from '../../components/examples/attachment/AttachmentStateExample.vue'
-import AttachmentUsageExample from '../../components/examples/attachment/AttachmentUsageExample.vue'
+import AttachmentPlaygroundExample from '../../components/examples/attachment/AttachmentPlaygroundExample.vue'
 
 const attachmentConfig: ComponentDocConfig = {
   slug: 'attachment',
   title: 'Attachment',
   description: 'Presenta un archivo con su información, estado y acciones relacionadas.',
   importPath: '@nono-cn/nono-ui/components/ui/Attachment',
-  usage: [
-    {
-      title: 'Uso básico',
-      description:
-        'Combina label, description, icon y el slot actions para representar un archivo.',
-      component: AttachmentUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Icon',
-      description: 'Selecciona el icono que se muestra junto a la información del archivo.',
-      component: AttachmentIconExample,
-    },
-    {
-      title: 'Orientation',
-      description: 'Cambia entre una presentación horizontal y una tarjeta vertical.',
-      component: AttachmentOrientationExample,
-    },
-    {
-      title: 'Size',
-      description: 'Ajusta el tamaño de la miniatura, el texto y el espaciado interno.',
-      component: AttachmentSizeExample,
-    },
-    {
-      title: 'State',
-      description: 'Representa los estados idle, uploading, processing, error y done.',
-      component: AttachmentStateExample,
-    },
-    {
-      title: 'Media variant',
-      description: 'Usa un icono o proporciona una vista previa personalizada mediante media.',
-      component: AttachmentMediaVariantExample,
-    },
-  ],
+  playground: AttachmentPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Información del archivo',
