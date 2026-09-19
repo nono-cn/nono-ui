@@ -23,6 +23,7 @@ import popover from './components/popover'
 import progress from './components/progress'
 import ribbon from './components/ribbon'
 import scrollArea from './components/scroll-area'
+import search from './components/search'
 import separator from './components/separator'
 import switchConfig from './components/switch'
 import textarea from './components/textarea'
@@ -56,6 +57,7 @@ export const docsComponents = [
   progress,
   ribbon,
   scrollArea,
+  search,
   separator,
   switchConfig,
   textarea,
