@@ -456,6 +456,11 @@
 .popover-playground-stage button {
   cursor: pointer;
 }
+.avatar-playground-stage {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);

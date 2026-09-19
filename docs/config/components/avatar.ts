@@ -1,50 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AvatarDelayExample from '../../components/examples/avatar/AvatarDelayExample.vue'
-import AvatarFallbackExample from '../../components/examples/avatar/AvatarFallbackExample.vue'
-import AvatarImageExample from '../../components/examples/avatar/AvatarImageExample.vue'
-import AvatarShapeExample from '../../components/examples/avatar/AvatarShapeExample.vue'
-import AvatarSizeExample from '../../components/examples/avatar/AvatarSizeExample.vue'
-import AvatarUsageExample from '../../components/examples/avatar/AvatarUsageExample.vue'
+import AvatarPlaygroundExample from '../../components/examples/avatar/AvatarPlaygroundExample.vue'
 
 const avatarConfig: ComponentDocConfig = {
   slug: 'avatar',
   title: 'Avatar',
   description: 'Muestra una imagen de perfil con contenido alternativo cuando no está disponible.',
   importPath: '@nono-cn/nono-ui/components/ui/Avatar',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Proporciona un label para mostrar las iniciales como contenido alternativo.',
-      component: AvatarUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Image',
-      description: 'Muestra una imagen y pasa atributos HTML como alt al elemento img.',
-      component: AvatarImageExample,
-    },
-    {
-      title: 'Size',
-      description: 'Ajusta el tamaño del avatar entre xs, sm, md y lg.',
-      component: AvatarSizeExample,
-    },
-    {
-      title: 'Shape',
-      description: 'Elige entre la forma circular rounded y la forma cuadrada square.',
-      component: AvatarShapeExample,
-    },
-    {
-      title: 'Fallback e icon',
-      description: 'Personaliza el contenido alternativo con label, IconConfig o el slot fallback.',
-      component: AvatarFallbackExample,
-    },
-    {
-      title: 'Delay',
-      description: 'Retrasa la aparición del fallback mientras se resuelve la imagen.',
-      component: AvatarDelayExample,
-    },
-  ],
+  playground: AvatarPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Texto alternativo',
