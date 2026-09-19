@@ -378,6 +378,15 @@
   color: var(--foreground);
   font-size: 14px;
 }
+.progress-playground-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+}
+.progress-playground-control[data-orientation='vertical'] {
+  height: 110px;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);

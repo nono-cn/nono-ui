@@ -1,15 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ProgressColorExample from '../../components/examples/progress/ProgressColorExample.vue'
-import ProgressIndeterminateExample from '../../components/examples/progress/ProgressIndeterminateExample.vue'
-import ProgressInvertedExample from '../../components/examples/progress/ProgressInvertedExample.vue'
-import ProgressOrientationExample from '../../components/examples/progress/ProgressOrientationExample.vue'
-import ProgressLabelExample from '../../components/examples/progress/ProgressLabelExample.vue'
-import ProgressMaxExample from '../../components/examples/progress/ProgressMaxExample.vue'
-import ProgressSlotExample from '../../components/examples/progress/ProgressSlotExample.vue'
-import ProgressSizeExample from '../../components/examples/progress/ProgressSizeExample.vue'
-import ProgressSeverityExample from '../../components/examples/progress/ProgressSeverityExample.vue'
-import ProgressUsageExample from '../../components/examples/progress/ProgressUsageExample.vue'
-import ProgressValueExample from '../../components/examples/progress/ProgressValueExample.vue'
+import ProgressPlaygroundExample from '../../components/examples/progress/ProgressPlaygroundExample.vue'
 
 const progressConfig: ComponentDocConfig = {
   slug: 'progress',
@@ -17,65 +7,9 @@ const progressConfig: ComponentDocConfig = {
   description:
     'Muestra el avance de una tarea con una barra de progreso accesible y personalizable.',
   importPath: '@nono-cn/nono-ui/components/ui/Progress',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Pasa el valor actual para mostrar una barra de progreso determinada.',
-      component: ProgressUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Value',
-      description: 'Controla el valor actual y representa un progreso indeterminado con null.',
-      component: ProgressValueExample,
-    },
-    {
-      title: 'Indeterminate',
-      description: 'Usa value null para mostrar progreso indeterminado y configurar su animación.',
-      component: ProgressIndeterminateExample,
-    },
-    {
-      title: 'Orientation',
-      description: 'Cambia la orientación de la barra de progreso.',
-      component: ProgressOrientationExample,
-    },
-    {
-      title: 'Inverted',
-      description: 'Invierte la dirección de llenado del indicador.',
-      component: ProgressInvertedExample,
-    },
-    {
-      title: 'Max',
-      description: 'Calcula el progreso sobre una escala personalizada con max.',
-      component: ProgressMaxExample,
-    },
-    {
-      title: 'Label',
-      description: 'Muestra una etiqueta visible dentro de la barra.',
-      component: ProgressLabelExample,
-    },
-    {
-      title: 'Slot label',
-      description: 'Personaliza la etiqueta usando value, max y percentage del contexto del slot.',
-      component: ProgressSlotExample,
-    },
-    {
-      title: 'Color',
-      description: 'Personaliza por separado el color del indicador y el color del track.',
-      component: ProgressColorExample,
-    },
-    {
-      title: 'Size',
-      description: 'Ajusta el grosor de la barra con tamaños predefinidos.',
-      component: ProgressSizeExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Comunica el estado del progreso mediante colores semánticos.',
-      component: ProgressSeverityExample,
-    },
-  ],
+  playground: ProgressPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Nombre y valores accesibles',
