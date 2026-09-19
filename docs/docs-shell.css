@@ -254,8 +254,13 @@
   gap: 6px;
   font-weight: 500;
 }
-.playground-control-checkbox input { order: 0; margin: 0; }
-.playground-control-checkbox span { order: 1; }
+.playground-control-checkbox input {
+  order: 0;
+  margin: 0;
+}
+.playground-control-checkbox span {
+  order: 1;
+}
 .playground-prop-controls .playground-control-checkbox {
   display: inline-flex !important;
   flex-direction: row;
@@ -312,6 +317,10 @@
 }
 .playground-example-preview > * {
   width: min(100%, 480px);
+}
+.switch-playground-stage {
+  display: grid;
+  place-items: center;
 }
 .playground-preview-label {
   display: block;

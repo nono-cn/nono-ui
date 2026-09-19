@@ -1,54 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import SwitchUsageExample from '../../components/examples/switch/SwitchUsageExample.vue'
-import SwitchValuesExample from '../../components/examples/switch/SwitchValuesExample.vue'
-import SwitchSizeExample from '../../components/examples/switch/SwitchSizeExample.vue'
-import SwitchColorExample from '../../components/examples/switch/SwitchColorExample.vue'
-import SwitchSeverityExample from '../../components/examples/switch/SwitchSeverityExample.vue'
-import SwitchIconsExample from '../../components/examples/switch/SwitchIconsExample.vue'
+import SwitchPlaygroundExample from '../../components/examples/switch/SwitchPlaygroundExample.vue'
 
 const switchConfig: ComponentDocConfig = {
   slug: 'switch',
   title: 'Switch',
   description: 'Control interactivo para activar o desactivar una opción.',
   importPath: '@nono-cn/nono-ui/components/ui/Switch',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Controla un valor booleano con v-model:value.',
-      component: SwitchUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Color',
-      description: 'Aplica un color CSS personalizado.',
-      component: SwitchColorExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Elige el color semántico del estado activado.',
-      component: SwitchSeverityExample,
-    },
-    {
-      title: 'Size',
-      description: 'Ajusta el tamaño del switch y su thumb.',
-      component: SwitchSizeExample,
-    },
-    {
-      title: 'Valores personalizados',
-      description: 'Usa trueValue y falseValue para valores no booleanos.',
-      component: SwitchValuesExample,
-    },
-    {
-      title: 'Thumb personalizado',
-      description: 'Personaliza el contenido del thumb con su estado actual.',
-    },
-    {
-      title: 'Checked y unchecked icons',
-      description: 'Muestra un icono distinto para cada estado.',
-      component: SwitchIconsExample,
-    },
-  ],
+  playground: SwitchPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Nombre accesible',
