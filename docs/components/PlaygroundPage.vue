@@ -19,7 +19,8 @@ const value = ref('')
           v-model:value="value"
           aria-label="Textarea playground"
           placeholder="Escribe algo aquí..."
-          rows="22"
+          autoresize
+          size="md"
         />
 
         <p class="text-sm text-muted-foreground">
