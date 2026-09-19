@@ -466,6 +466,11 @@
   min-height: 150px;
   place-items: center;
 }
+.button-playground-stage {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);

@@ -1,68 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ButtonAsExample from '../../components/examples/button/ButtonAsExample.vue'
-import ButtonColorExample from '../../components/examples/button/ButtonColorExample.vue'
-import ButtonIconsExample from '../../components/examples/button/ButtonIconsExample.vue'
-import ButtonLoadingExample from '../../components/examples/button/ButtonLoadingExample.vue'
-import ButtonSeverityExample from '../../components/examples/button/ButtonSeverityExample.vue'
-import ButtonShapeExample from '../../components/examples/button/ButtonShapeExample.vue'
-import ButtonSizeExample from '../../components/examples/button/ButtonSizeExample.vue'
-import ButtonUsageExample from '../../components/examples/button/ButtonUsageExample.vue'
-import ButtonVariantExample from '../../components/examples/button/ButtonVariantExample.vue'
+import ButtonPlaygroundExample from '../../components/examples/button/ButtonPlaygroundExample.vue'
 
 const buttonConfig: ComponentDocConfig = {
   slug: 'button',
   title: 'Button',
   description: 'Acción interactiva con variantes, estados, iconos y elementos raíz configurables.',
   importPath: '@nono-cn/nono-ui/components/ui/Button',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Proporciona un label para crear un botón con el estilo predeterminado.',
-      component: ButtonUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Size',
-      description: 'Ajusta el tamaño y el espaciado interno del botón.',
-      component: ButtonSizeExample,
-    },
-    {
-      title: 'Variant',
-      description: 'Elige el tratamiento visual que mejor encaje con la acción.',
-      component: ButtonVariantExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Representa la importancia o el estado semántico de la acción.',
-      component: ButtonSeverityExample,
-    },
-    {
-      title: 'Shape',
-      description: 'Combina rounded, square y raised para ajustar la forma del botón.',
-      component: ButtonShapeExample,
-    },
-    {
-      title: 'Loading',
-      description: 'Muestra el estado de carga y comunica que la acción está ocupada.',
-      component: ButtonLoadingExample,
-    },
-    {
-      title: 'Color',
-      description: 'Aplica un color CSS personalizado al botón.',
-      component: ButtonColorExample,
-    },
-    {
-      title: 'Icons',
-      description: 'Añade iconos al inicio o al final usando IconConfig.',
-      component: ButtonIconsExample,
-    },
-    {
-      title: 'As y asChild',
-      description: 'Renderiza otro elemento o compón el botón sobre un elemento hijo.',
-      component: ButtonAsExample,
-    },
-  ],
+  playground: ButtonPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Acciones accesibles',
