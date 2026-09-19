@@ -502,6 +502,22 @@
   color: var(--foreground);
   font-size: 13px;
 }
+.bubble-playground-stage {
+  display: flex;
+  flex-direction: column;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.bubble-playground-stage > * {
+  width: fit-content;
+  max-width: 80%;
+}
+.bubble-playground-stage span {
+  margin-left: 4px;
+  font-size: 12px;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);

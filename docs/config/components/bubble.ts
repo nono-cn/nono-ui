@@ -1,10 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import BubbleUsageExample from '../../components/examples/bubble/BubbleUsageExample.vue'
-import BubbleAlignExample from '../../components/examples/bubble/BubbleAlignExample.vue'
-import BubbleVariantExample from '../../components/examples/bubble/BubbleVariantExample.vue'
-import BubbleSeverityExample from '../../components/examples/bubble/BubbleSeverityExample.vue'
-import BubbleColorExample from '../../components/examples/bubble/BubbleColorExample.vue'
-import BubbleReactionsExample from '../../components/examples/bubble/BubbleReactionsExample.vue'
+import BubblePlaygroundExample from '../../components/examples/bubble/BubblePlaygroundExample.vue'
 
 const bubbleConfig: ComponentDocConfig = {
   slug: 'bubble',
@@ -12,40 +7,9 @@ const bubbleConfig: ComponentDocConfig = {
   description:
     'Representa mensajes o intervenciones en una conversación con alineación, variantes y reacciones.',
   importPath: '@nono-cn/nono-ui/components/ui/Bubble',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Alinea una burbuja de mensaje dentro de una conversación.',
-      component: BubbleUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Align',
-      description: 'Alinea las burbujas al inicio o al final de la conversación.',
-      component: BubbleAlignExample,
-    },
-    {
-      title: 'Variant',
-      description: 'Elige el tratamiento visual de la superficie.',
-      component: BubbleVariantExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Representa la severidad semántica del mensaje.',
-      component: BubbleSeverityExample,
-    },
-    {
-      title: 'Color',
-      description: 'Aplica un color CSS personalizado a la burbuja.',
-      component: BubbleColorExample,
-    },
-    {
-      title: 'Reactions',
-      description: 'Añade reacciones arriba o abajo de la burbuja.',
-      component: BubbleReactionsExample,
-    },
-  ],
+  playground: BubblePlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Contenido conversacional',
