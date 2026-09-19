@@ -131,21 +131,7 @@ runCode(initialCode)
       </div>
     </template>
     <div class="slider-playground-stage" :class="`is-${orientation}`">
-      <Slider
-        v-model:value="value"
-        :min-steps-between-thumbs="Number(minStepsBetweenThumbs) || 0"
-        :thumb-alignment="thumbAlignment"
-        :min="Number(min) || 0"
-        :max="Number(max) || 100"
-        :step="Number(step) || 1"
-        :orientation="orientation"
-        :size="size"
-        :severity="severity"
-        v-bind="useCustomColor ? { color } : {}"
-        :disabled="disabled"
-        :inverted="inverted"
-        aria-label="Nivel"
-      />
+      <component :is="runtimeComponent" v-if="runtimeComponent" />
     </div>
     <p class="text-center text-sm text-muted-foreground">Valor: {{ value?.join(' – ') ?? '—' }}</p>
     <p v-if="runtimeError" class="playground-runtime-error">{{ runtimeError }}</p>

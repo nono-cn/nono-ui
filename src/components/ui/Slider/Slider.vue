@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, useAttrs, watch } from 'vue'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
@@ -26,7 +26,25 @@ const emit = defineEmits<{
 
 const attrs = useAttrs()
 const value = defineModel<SliderValue>('value', { default: () => [...sliderDefaults.value()] })
-const sliderValues = computed(() => value.value ?? [])
+
+const validateValue = (val: SliderValue) => {
+  if (val === null) return [0]
+
+  const values = (val ?? []).filter((item) => item >= props.min && item <= props.max)
+  if (values.length === 0) return val.length === 1 && val[0] === 0 ? val : [0]
+  if (values.length === val.length && val.length <= 2) return val
+
+  return values.slice(0, 2) as SliderValue
+}
+
+watch(
+  [value, () => props.min, () => props.max],
+  () => {
+    value.value = validateValue(value.value)
+  },
+  { immediate: true },
+)
+
 const { t } = useI18n()
 const { colorStyle } = useColor(
   computed(() => props.color),
@@ -51,7 +69,7 @@ function createSliderThumbContext(
   }
 }
 
-const sliderContext = computed<SliderContext>(() => createSliderContext(sliderValues.value))
+const sliderContext = computed<SliderContext>(() => createSliderContext(value.value))
 
 const rootProps = computed(() => {
   return {
@@ -106,7 +124,7 @@ const rangeProps = computed(() => {
 })
 
 const thumbContexts = computed<SliderThumbContext[]>(() =>
-  sliderValues.value.map((thumbValue, index, values) =>
+  value.value.map((thumbValue, index, values) =>
     createSliderThumbContext(values, index, thumbValue),
   ),
 )

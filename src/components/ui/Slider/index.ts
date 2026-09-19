@@ -98,7 +98,7 @@ export type SliderVariants = VariantProps<typeof sliderVariants>
 export type SliderSize = NonNullable<VariantProps<typeof sliderThumbVariants>['size']>
 export type SliderSeverity = NonNullable<VariantProps<typeof sliderTrackVariants>['severity']>
 
-export type SliderValue = number[] | null
+export type SliderValue = [] | [number] | [number, number] | null
 export type SliderRootProps = Pick<
   RekaSliderRootProps,
   | 'disabled'

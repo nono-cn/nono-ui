@@ -2,7 +2,12 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { SliderRoot } from 'reka-ui'
 
-import { Slider, type SliderProps } from '@/components/ui/Slider'
+import {
+  Slider,
+  type SliderContext,
+  type SliderProps,
+  type SliderThumbContext,
+} from '@/components/ui/Slider'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
@@ -90,6 +95,17 @@ const casesSeverity = [
   { input: undefined, track: 'bg-primary/20', range: 'bg-primary', thumb: 'border-primary', focus: 'focus-visible:ring-primary/50' },
 ]
 
+const casesValues = [
+  { input: undefined, expected: [0], thumbs: 1 },
+  { input: null, expected: [0], thumbs: 1 },
+  { input: [], expected: [0], thumbs: 1 },
+  { input: [35], expected: [35], thumbs: 1 },
+  { input: [25, 75], expected: [25, 75], thumbs: 2 },
+  { input: [10, 50, 90], expected: [10, 50], thumbs: 2 },
+  { input: [-10, 50, 110], expected: [50], thumbs: 1 },
+  { input: [-10, 110], expected: [0], thumbs: 1 },
+]
+
 vi.stubGlobal(
   'ResizeObserver',
   class ResizeObserver {
@@ -116,6 +132,18 @@ describe('Slider', () => {
   })
 
   describe('props', () => {
+    describe('values', () => {
+      it.each(casesValues)(
+        'normaliza value=$input como $expected',
+        ({ input, expected, thumbs }) => {
+          const wrapper = mountSlider({ props: { value: input as SliderProps['value'] } })
+
+          expect(wrapper.findAll('[data-test-slider-thumb]')).toHaveLength(thumbs)
+          expect(wrapper.getComponent(SliderRoot).props('modelValue')).toEqual(expected)
+        },
+      )
+    })
+
     describe('disabled', () => {
       it.each(casesDisabled)(
         'pasa disabled=$input a SliderRoot como $expected',
@@ -169,6 +197,18 @@ describe('Slider', () => {
         id: '[data-test-slider-track]',
         varColor: '--slider-color',
         mount: (color) => mountSlider({ props: { color } }),
+      })
+
+      it('sobrescribe severity con color personalizado', () => {
+        const wrapper = mountSlider({ props: { color: '#ff0000', severity: 'success' } })
+
+        expect(wrapper.get('[data-test-slider-track]').classes()).toContain(
+          'bg-(--slider-color)/20',
+        )
+        expect(wrapper.get('[data-test-slider-range]').classes()).toContain('bg-(--slider-color)')
+        expect(wrapper.get('[data-test-slider-thumb="0"]').classes()).toContain(
+          'border-(--slider-color)',
+        )
       })
     })
 
@@ -307,6 +347,57 @@ describe('Slider', () => {
           expect(wrapper.emitted('valueCommit')).toEqual([[value]])
         },
       )
+    })
+  })
+
+  describe('context contract', () => {
+    describe('SliderContext', () => {
+      it.each(casesValues)('expone values=$expected', ({ input, expected }) => {
+        let context: SliderContext | undefined
+
+        mountSlider({
+          props: {
+            value: input,
+            ui: {
+              track: (uiContext) => {
+                context = uiContext
+                return {}
+              },
+            },
+          },
+        })
+
+        expect(context).toEqual({ values: expected ?? [] })
+      })
+    })
+
+    describe('SliderThumbContext', () => {
+      it.each([
+        { input: [35], expected: [{ values: [35], index: 0, value: 35, first: true, last: true }] },
+        {
+          input: [25, 75],
+          expected: [
+            { values: [25, 75], index: 0, value: 25, first: true, last: false },
+            { values: [25, 75], index: 1, value: 75, first: false, last: true },
+          ],
+        },
+      ])('expone el contexto de cada thumb para values=$input', ({ input, expected }) => {
+        const contexts: SliderThumbContext[] = []
+
+        mountSlider({
+          props: {
+            value: input,
+            ui: {
+              thumb: (uiContext) => {
+                contexts.push(uiContext)
+                return {}
+              },
+            },
+          },
+        })
+
+        expect(contexts).toEqual(expected)
+      })
     })
   })
 })
