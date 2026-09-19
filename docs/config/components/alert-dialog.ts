@@ -1,51 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AlertDialogButtonsExample from '../../components/examples/alert-dialog/AlertDialogButtonsExample.vue'
-import AlertDialogFooterExample from '../../components/examples/alert-dialog/AlertDialogFooterExample.vue'
-import AlertDialogIconExample from '../../components/examples/alert-dialog/AlertDialogIconExample.vue'
-import AlertDialogOpenExample from '../../components/examples/alert-dialog/AlertDialogOpenExample.vue'
-import AlertDialogOptionsExample from '../../components/examples/alert-dialog/AlertDialogOptionsExample.vue'
-import AlertDialogUsageExample from '../../components/examples/alert-dialog/AlertDialogUsageExample.vue'
+import AlertDialogPlaygroundExample from '../../components/examples/alert-dialog/AlertDialogPlaygroundExample.vue'
 
 const alertDialogConfig: ComponentDocConfig = {
   slug: 'alert-dialog',
   title: 'AlertDialog',
   description: 'Solicita una confirmación explícita antes de ejecutar una acción importante.',
   importPath: '@nono-cn/nono-ui/components/ui/AlertDialog',
-  usage: [
-    {
-      title: 'Uso básico',
-      description:
-        'Combina un disparador, un label, una descripción y las acciones de confirmación.',
-      component: AlertDialogUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Open',
-      description: 'Controla la visibilidad desde el componente padre con v-model:open.',
-      component: AlertDialogOpenExample,
-    },
-    {
-      title: 'Action y cancel',
-      description: 'Personaliza las acciones predeterminadas con configuraciones de Button.',
-      component: AlertDialogButtonsExample,
-    },
-    {
-      title: 'Icon',
-      description: 'Añade un icono al label usando IconConfig.',
-      component: AlertDialogIconExample,
-    },
-    {
-      title: 'Footer',
-      description: 'Reemplaza por completo el pie y ciérralo con la función close del slot.',
-      component: AlertDialogFooterExample,
-    },
-    {
-      title: 'Mount y pointer events',
-      description: 'Configura el montaje del contenido y la interacción exterior.',
-      component: AlertDialogOptionsExample,
-    },
-  ],
+  playground: AlertDialogPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Confirmación y foco',
