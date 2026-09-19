@@ -1,43 +1,19 @@
 import type { ComponentDocConfig } from '../component-docs'
-import IconColorExample from '../../components/examples/icon/IconColorExample.vue'
-import IconNameExample from '../../components/examples/icon/IconNameExample.vue'
-import IconSizeExample from '../../components/examples/icon/IconSizeExample.vue'
-import IconUsageExample from '../../components/examples/icon/IconUsageExample.vue'
+import IconPlaygroundExample from '../../components/examples/icon/IconPlaygroundExample.vue'
 
 const iconConfig: ComponentDocConfig = {
   slug: 'icon',
   title: 'Icon',
   description: 'Renderiza un icono Lucide con una API compacta y consistente.',
   importPath: '@nono-cn/nono-ui/components/ui/Icon',
+  playground: IconPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Iconos decorativos y semánticos',
       description:
         'Oculta los iconos decorativos con aria-hidden="true" y proporciona un nombre accesible a los iconos informativos mediante texto visible o aria-label en el elemento que los contiene. No dependas únicamente del icono o del color para comunicar información.',
-    },
-  ],
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Importa Icon y pasa el nombre del icono que quieres renderizar.',
-      component: IconUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Name',
-      description: 'Usa cualquier nombre incluido en el mapa público de iconos.',
-      component: IconNameExample,
-    },
-    {
-      title: 'Size',
-      description: 'Ajusta el tamaño visual con uno de los cuatro tamaños disponibles.',
-      component: IconSizeExample,
-    },
-    {
-      title: 'Color',
-      description: 'Aplica cualquier valor CSS válido al color del icono.',
-      component: IconColorExample,
     },
   ],
   api: {
