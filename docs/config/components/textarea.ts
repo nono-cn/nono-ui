@@ -1,6 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
 import TextareaUsageExample from '../../components/examples/textarea/TextareaUsageExample.vue'
 import TextareaControlledExample from '../../components/examples/textarea/TextareaControlledExample.vue'
+import TextareaAutoresizeExample from '../../components/examples/textarea/TextareaAutoresizeExample.vue'
 
 const textareaConfig: ComponentDocConfig = {
   slug: 'textarea',
@@ -20,6 +21,11 @@ const textareaConfig: ComponentDocConfig = {
       description: 'Sincroniza el contenido mediante v-model:value.',
       component: TextareaControlledExample,
     },
+    {
+      title: 'Auto-resize',
+      description: 'Ajusta la altura del campo al contenido con la prop autoresize.',
+      component: TextareaAutoresizeExample,
+    },
   ],
   accessibility: [
     {
@@ -35,6 +41,12 @@ const textareaConfig: ComponentDocConfig = {
         type: 'string',
         default: "''",
         description: 'Valor del campo. También puede enlazarse con v-model:value.',
+      },
+      {
+        name: 'autoresize',
+        type: 'boolean',
+        default: 'false',
+        description: 'Ajusta automáticamente la altura al contenido cuando es true.',
       },
     ],
     emits: [

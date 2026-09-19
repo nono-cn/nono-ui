@@ -14,8 +14,25 @@ const casesValue = [
   { input: undefined, expected: '' },
 ]
 
+const autoresizeCases = [
+  { autoresize: undefined, expectedClass: 'field-sizing-fixed' },
+  { autoresize: false, expectedClass: 'field-sizing-fixed' },
+  { autoresize: true, expectedClass: 'field-sizing-content' },
+]
+
 describe('Textarea', () => {
   describe('props', () => {
+    describe('autoresize', () => {
+      it.each(autoresizeCases)(
+        'aplica la clase correcta con autoresize=$autoresize',
+        ({ autoresize, expectedClass }) => {
+          const root = mountTextarea({ props: { autoresize } }).get('[data-test-textarea-root]')
+
+          expect(root.classes()).toContain(expectedClass)
+        },
+      )
+    })
+
     describe('value', () => {
       it.each(casesValue)('renderiza value=$input como "$expected"', ({ input, expected }) => {
         const root = mountTextarea({ props: { value: input } }).get('[data-test-textarea-root]')
