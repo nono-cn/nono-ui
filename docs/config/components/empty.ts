@@ -1,38 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import EmptyUsageExample from '../../components/examples/empty/EmptyUsageExample.vue'
-import EmptyMediaVariantExample from '../../components/examples/empty/EmptyMediaVariantExample.vue'
-import EmptyLabelExample from '../../components/examples/empty/EmptyLabelExample.vue'
-import EmptyDescriptionExample from '../../components/examples/empty/EmptyDescriptionExample.vue'
+import EmptyPlaygroundExample from '../../components/examples/empty/EmptyPlaygroundExample.vue'
 
 const emptyConfig: ComponentDocConfig = {
   slug: 'empty',
   title: 'Empty',
   description: 'Estado visual para representar que una sección no contiene datos o resultados.',
   importPath: '@nono-cn/nono-ui/components/ui/Empty',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Muestra un estado vacío con label, descripción y contenido opcional.',
-      component: EmptyUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Media variant',
-      description: 'Aplica el tratamiento de icono al contenido del slot media.',
-      component: EmptyMediaVariantExample,
-    },
-    {
-      title: 'Label',
-      description: 'Configura el título del estado vacío.',
-      component: EmptyLabelExample,
-    },
-    {
-      title: 'Description',
-      description: 'Configura el texto complementario.',
-      component: EmptyDescriptionExample,
-    },
-  ],
+  playground: EmptyPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Mensaje de estado',
