@@ -1,35 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AspectRatioRatioExample from '../../components/examples/aspect-ratio/AspectRatioRatioExample.vue'
-import AspectRatioSlotExample from '../../components/examples/aspect-ratio/AspectRatioSlotExample.vue'
-import AspectRatioUsageExample from '../../components/examples/aspect-ratio/AspectRatioUsageExample.vue'
+import AspectRatioPlaygroundExample from '../../components/examples/aspect-ratio/AspectRatioPlaygroundExample.vue'
 
 const aspectRatioConfig: ComponentDocConfig = {
   slug: 'aspect-ratio',
   title: 'AspectRatio',
   description: 'Mantiene una proporción constante para imágenes, vídeos y contenido adaptable.',
   importPath: '@nono-cn/nono-ui/components/ui/AspectRatio',
-  usage: [
-    {
-      title: 'Uso básico',
-      description:
-        'Define una proporción y coloca el contenido que quieras mantener dentro de ella.',
-      component: AspectRatioUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Ratio',
-      description:
-        'Cambia la proporción para adaptar el espacio a distintos formatos de contenido.',
-      component: AspectRatioRatioExample,
-    },
-    {
-      title: 'Slot',
-      description:
-        'Compón el contenido del ratio con una imagen, un vídeo o cualquier elemento Vue.',
-      component: AspectRatioSlotExample,
-    },
-  ],
+  playground: AspectRatioPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Contenido accesible',

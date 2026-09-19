@@ -518,6 +518,23 @@
   margin-left: 4px;
   font-size: 12px;
 }
+.aspect-ratio-playground-stage {
+  min-height: 180px;
+}
+.aspect-ratio-playground-stage > * {
+  width: min(100%, 520px);
+}
+.aspect-ratio-playground-content {
+  display: grid;
+  position: absolute;
+  inset: 0;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--muted);
+  color: var(--foreground);
+  font-size: 14px;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);
