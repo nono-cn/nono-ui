@@ -347,6 +347,21 @@
 .separator-playground-layout.vertical > [data-test-separator-root] {
   height: 100%;
 }
+.scroll-area-playground-stage {
+  height: 190px;
+}
+.scroll-area-playground-control {
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+}
+.scroll-area-playground-control p {
+  margin: 0 0 10px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  white-space: nowrap;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);

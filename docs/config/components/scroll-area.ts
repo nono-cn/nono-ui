@@ -1,39 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ScrollAreaOrientationExample from '../../components/examples/scroll-area/ScrollAreaOrientationExample.vue'
-import ScrollAreaScrollHideDelayExample from '../../components/examples/scroll-area/ScrollAreaScrollHideDelayExample.vue'
-import ScrollAreaTypeExample from '../../components/examples/scroll-area/ScrollAreaTypeExample.vue'
-import ScrollAreaUsageExample from '../../components/examples/scroll-area/ScrollAreaUsageExample.vue'
+import ScrollAreaPlaygroundExample from '../../components/examples/scroll-area/ScrollAreaPlaygroundExample.vue'
 
 const scrollAreaConfig: ComponentDocConfig = {
   slug: 'scroll-area',
   title: 'ScrollArea',
   description: 'Añade scroll nativo con barras personalizables y comportamiento consistente.',
   importPath: '@nono-cn/nono-ui/components/ui/ScrollArea',
-  usage: [
-    {
-      title: 'Uso básico',
-      description:
-        'Define un tamaño para el área y coloca el contenido desplazable en su slot default.',
-      component: ScrollAreaUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Type',
-      description: 'Elige cuándo deben aparecer las barras de desplazamiento.',
-      component: ScrollAreaTypeExample,
-    },
-    {
-      title: 'Orientation',
-      description: 'Activa el desplazamiento vertical, horizontal o en ambas direcciones.',
-      component: ScrollAreaOrientationExample,
-    },
-    {
-      title: 'Scroll hide delay',
-      description: 'Ajusta cuánto tardan en ocultarse las barras con type scroll o hover.',
-      component: ScrollAreaScrollHideDelayExample,
-    },
-  ],
+  playground: ScrollAreaPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Scroll nativo y teclado',
