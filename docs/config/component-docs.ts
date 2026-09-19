@@ -58,5 +58,6 @@ export interface ComponentDocConfig {
   accessibility: ComponentAccessibilityConfig[]
   usage: ComponentExampleConfig[]
   examples: ComponentExampleConfig[]
+  playground?: Component
   api: ComponentApiConfig
 }

@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import { Textarea, type TextareaProps } from '@/components/ui/Textarea'
 import { testAttrs } from '../utils/testAttrs'
+import { testColor } from '../utils/testColor'
 
 function mountTextarea(options: MountingOptions<TextareaProps> = {}) {
   return mount(Textarea, options)
@@ -14,13 +15,154 @@ const casesValue = [
   { input: undefined, expected: '' },
 ]
 
+const autoresizeCases = [
+  { autoresize: undefined, expectedClass: 'field-sizing-fixed' },
+  { autoresize: false, expectedClass: 'field-sizing-fixed' },
+  { autoresize: true, expectedClass: 'field-sizing-content' },
+]
+
+const sizeCases = [
+  { size: undefined, expectedClass: 'min-h-20', expectedTextClass: 'text-base' },
+  { size: 'xs', expectedClass: 'min-h-14', expectedTextClass: 'text-sm' },
+  { size: 'sm', expectedClass: 'min-h-16', expectedTextClass: 'text-sm' },
+  { size: 'md', expectedClass: 'min-h-20', expectedTextClass: 'text-base' },
+  { size: 'lg', expectedClass: 'min-h-24', expectedTextClass: 'text-lg' },
+  { size: 'xl', expectedClass: 'min-h-28', expectedTextClass: 'text-xl' },
+] as const
+
+const severityCases = [
+  { severity: undefined, expectedClass: 'focus-visible:border-primary' },
+  { severity: 'primary', expectedClass: 'focus-visible:border-primary' },
+  { severity: 'secondary', expectedClass: 'focus-visible:border-secondary-foreground' },
+  { severity: 'error', expectedClass: 'focus-visible:border-error' },
+  { severity: 'warning', expectedClass: 'focus-visible:border-warning' },
+  { severity: 'success', expectedClass: 'focus-visible:border-success' },
+] as const
+
+const highlightCases = [
+  { highlight: undefined, severity: undefined, color: undefined, expectedClass: 'border-input' },
+  { highlight: false, severity: 'error', color: undefined, expectedClass: 'border-input' },
+  { highlight: true, severity: undefined, color: undefined, expectedClass: 'border-primary/40' },
+  { highlight: true, severity: 'error', color: undefined, expectedClass: 'border-error/40' },
+  {
+    highlight: true,
+    severity: 'error',
+    color: '#7c3aed',
+    expectedClass: 'border-(--textarea-color)/40',
+    unexpectedClass: 'border-error/40',
+  },
+] as const
+
+const variantCases = [
+  {
+    variant: undefined,
+    severity: undefined,
+    expectedClasses: ['border', 'bg-transparent', 'shadow-xs'],
+  },
+  {
+    variant: 'outline',
+    severity: 'error',
+    expectedClasses: ['border', 'bg-transparent', 'shadow-xs'],
+  },
+  {
+    variant: 'subtle',
+    severity: 'error',
+    expectedClasses: ['border', 'shadow-xs', 'bg-error/10'],
+  },
+  {
+    variant: 'soft',
+    severity: 'success',
+    expectedClasses: ['border-transparent', 'shadow-none', 'bg-success/10'],
+  },
+  {
+    variant: 'plain',
+    severity: 'warning',
+    expectedClasses: ['border-transparent', 'bg-transparent', 'shadow-none'],
+  },
+  {
+    variant: 'none',
+    severity: 'primary',
+    expectedClasses: ['border-0', 'bg-transparent', 'shadow-none', 'focus-visible:border-0'],
+  },
+] as const
+
 describe('Textarea', () => {
   describe('props', () => {
+    describe('autoresize', () => {
+      it.each(autoresizeCases)(
+        'aplica la clase correcta con autoresize=$autoresize',
+        ({ autoresize, expectedClass }) => {
+          const root = mountTextarea({ props: { autoresize } }).get('[data-test-textarea-root]')
+
+          expect(root.classes()).toContain(expectedClass)
+        },
+      )
+    })
+
     describe('value', () => {
       it.each(casesValue)('renderiza value=$input como "$expected"', ({ input, expected }) => {
         const root = mountTextarea({ props: { value: input } }).get('[data-test-textarea-root]')
 
         expect(root.element.value).toBe(expected)
+      })
+    })
+
+    describe('size', () => {
+      it.each(sizeCases)('aplica el tamaño $size', ({ size, expectedClass, expectedTextClass }) => {
+        const root = mountTextarea({ props: { size } }).get('[data-test-textarea-root]')
+
+        expect(root.classes()).toContain(expectedClass)
+        expect(root.classes()).toContain(expectedTextClass)
+      })
+    })
+
+    describe('severity', () => {
+      it.each(severityCases)('aplica severity=$severity', ({ severity, expectedClass }) => {
+        const root = mountTextarea({ props: { severity } }).get('[data-test-textarea-root]')
+
+        expect(root.classes()).toContain(expectedClass)
+      })
+    })
+
+    describe('color', () => {
+      testColor({
+        text: 'aplica el color personalizado',
+        id: '[data-test-textarea-root]',
+        varColor: '--textarea-color',
+        mount: (color) => mountTextarea({ props: { color } }),
+      })
+
+      it('sobreescribe severity', () => {
+        const root = mountTextarea({ props: { color: '#7c3aed', severity: 'error' } }).get(
+          '[data-test-textarea-root]',
+        )
+
+        expect(root.classes()).toContain('focus-visible:border-(--textarea-color)')
+        expect(root.classes()).not.toContain('focus-visible:border-error')
+      })
+    })
+
+    describe('highlight', () => {
+      it.each(highlightCases)(
+        'aplica highlight=$highlight con severity=$severity y color=$color',
+        ({ highlight, severity, color, expectedClass, unexpectedClass }) => {
+          const root = mountTextarea({ props: { highlight, severity, color } }).get(
+            '[data-test-textarea-root]',
+          )
+
+          expect(root.classes()).toContain(expectedClass)
+          if (unexpectedClass) expect(root.classes()).not.toContain(unexpectedClass)
+        },
+      )
+    })
+
+    describe('variant', () => {
+      it.each(variantCases)('aplica variant=$variant', ({ variant, severity, expectedClasses }) => {
+        const root = mountTextarea({ props: { variant, severity } }).get(
+          '[data-test-textarea-root]',
+        )
+
+        for (const expectedClass of expectedClasses) expect(root.classes()).toContain(expectedClass)
       })
     })
   })
