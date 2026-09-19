@@ -1,46 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ChipUsageExample from '../../components/examples/chip/ChipUsageExample.vue'
-import ChipSizeExample from '../../components/examples/chip/ChipSizeExample.vue'
-import ChipPositionExample from '../../components/examples/chip/ChipPositionExample.vue'
-import ChipColorExample from '../../components/examples/chip/ChipColorExample.vue'
-import ChipInsetExample from '../../components/examples/chip/ChipInsetExample.vue'
-import ChipStandaloneExample from '../../components/examples/chip/ChipStandaloneExample.vue'
+import ChipPlaygroundExample from '../../components/examples/chip/ChipPlaygroundExample.vue'
 
 const chipConfig: ComponentDocConfig = {
   slug: 'chip',
   title: 'Chip',
   description: 'Indicador compacto que puede mostrarse sobre un elemento o de forma independiente.',
   importPath: '@nono-cn/nono-ui/components/ui/Chip',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Muestra un chip sobre un elemento.',
-      component: ChipUsageExample,
-    },
-  ],
-  examples: [
-    { title: 'Size', description: 'Ajusta el tamaño del indicador.', component: ChipSizeExample },
-    {
-      title: 'Position',
-      description: 'Coloca el chip en una de las esquinas.',
-      component: ChipPositionExample,
-    },
-    {
-      title: 'Color',
-      description: 'Aplica un color CSS personalizado.',
-      component: ChipColorExample,
-    },
-    {
-      title: 'Inset',
-      description: 'Evita el desplazamiento del chip respecto a su posición.',
-      component: ChipInsetExample,
-    },
-    {
-      title: 'Standalone',
-      description: 'Muestra el chip sin posicionamiento absoluto.',
-      component: ChipStandaloneExample,
-    },
-  ],
+  playground: ChipPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Información visual',
