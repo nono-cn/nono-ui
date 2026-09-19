@@ -214,8 +214,8 @@
   background: color-mix(in srgb, var(--muted) 25%, transparent);
 }
 .playground-prop-controls {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   align-items: end;
   gap: 12px;
 }
@@ -286,7 +286,8 @@
   font-size: 12px;
 }
 .playground-prop-controls input[type='text'] {
-  width: 180px;
+  width: 100%;
+  min-width: 0;
   height: 30px;
   padding: 0 8px;
   border: 1px solid var(--border);
@@ -308,6 +309,10 @@
   border: 1px solid var(--border);
   border-radius: 5px;
   background: var(--background);
+}
+.playground-prop-controls .playground-control-checkbox {
+  align-self: center;
+  min-height: 30px;
 }
 .playground-prop-controls .playground-checkbox {
   display: flex;
@@ -383,6 +388,19 @@
   align-items: center;
   justify-content: center;
   height: 150px;
+}
+.slider-playground-stage {
+  display: flex;
+  min-height: 150px;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.slider-playground-stage.is-horizontal {
+  width: min(100%, 480px);
+}
+.slider-playground-stage.is-vertical {
+  height: 190px;
 }
 .progress-playground-control[data-orientation='vertical'] {
   height: 110px;
