@@ -1,46 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import MarkerIconExample from '../../components/examples/marker/MarkerIconExample.vue'
-import MarkerShimmerExample from '../../components/examples/marker/MarkerShimmerExample.vue'
-import MarkerStatusExample from '../../components/examples/marker/MarkerStatusExample.vue'
-import MarkerUsageExample from '../../components/examples/marker/MarkerUsageExample.vue'
-import MarkerVariantExample from '../../components/examples/marker/MarkerVariantExample.vue'
+import MarkerPlaygroundExample from '../../components/examples/marker/MarkerPlaygroundExample.vue'
 
 const markerConfig: ComponentDocConfig = {
   slug: 'marker',
   title: 'Marker',
   description: 'Indicador de estado para mostrar información breve sobre una operación o proceso.',
   importPath: '@nono-cn/nono-ui/components/ui/Marker',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Muestra un mensaje de estado con el contenido de label.',
-      component: MarkerUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Variant',
-      description:
-        'Elige entre un indicador simple, con borde inferior o con separadores laterales.',
-      component: MarkerVariantExample,
-    },
-    {
-      title: 'Icon',
-      description: 'Añade un icono mediante IconConfig o elimina el icono.',
-      component: MarkerIconExample,
-    },
-    {
-      title: 'Status',
-      description:
-        'Expone el indicador con role=status para comunicar una actualización no urgente.',
-      component: MarkerStatusExample,
-    },
-    {
-      title: 'Shimmer',
-      description: 'Aplica una animación de pulso mientras el proceso está en curso.',
-      component: MarkerShimmerExample,
-    },
-  ],
+  playground: MarkerPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Mensajes de estado',

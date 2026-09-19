@@ -422,6 +422,14 @@
   width: 100%;
   max-width: 520px;
 }
+.marker-playground-stage {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+}
+.marker-playground-stage > * {
+  width: min(100%, 520px);
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);
