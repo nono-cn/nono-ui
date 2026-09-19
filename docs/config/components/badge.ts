@@ -1,55 +1,19 @@
 import type { ComponentDocConfig } from '../component-docs'
-import BadgeColorExample from '../../components/examples/badge/BadgeColorExample.vue'
-import BadgeIconsExample from '../../components/examples/badge/BadgeIconsExample.vue'
-import BadgeSeverityExample from '../../components/examples/badge/BadgeSeverityExample.vue'
-import BadgeSizeExample from '../../components/examples/badge/BadgeSizeExample.vue'
-import BadgeUsageExample from '../../components/examples/badge/BadgeUsageExample.vue'
-import BadgeVariantExample from '../../components/examples/badge/BadgeVariantExample.vue'
+import BadgePlaygroundExample from '../../components/examples/badge/BadgePlaygroundExample.vue'
 
 const badgeConfig: ComponentDocConfig = {
   slug: 'badge',
   title: 'Badge',
   description: 'Etiqueta compacta para estados, categorías y metadatos.',
   importPath: '@nono-cn/nono-ui/components/ui/Badge',
+  playground: BadgePlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Contenido y semántica',
       description:
         'Usa texto visible para comunicar el estado y añade semántica ARIA solo cuando el contenido lo necesite. No dependas únicamente del color para transmitir el significado del badge.',
-    },
-  ],
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Importa Badge y proporciona un label para mostrar un estado o metadato.',
-      component: BadgeUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Size',
-      description: 'Ajusta el tamaño y el espaciado interno del badge.',
-      component: BadgeSizeExample,
-    },
-    {
-      title: 'Variant',
-      description: 'Elige el tratamiento visual del badge.',
-      component: BadgeVariantExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Representa la severidad semántica del estado.',
-      component: BadgeSeverityExample,
-    },
-    {
-      title: 'Color',
-      description: 'Aplica un color CSS personalizado al badge.',
-      component: BadgeColorExample,
-    },
-    {
-      title: 'Icons',
-      description: 'Configura los iconos inicial y final mediante IconConfig.',
-      component: BadgeIconsExample,
     },
   ],
   api: {
