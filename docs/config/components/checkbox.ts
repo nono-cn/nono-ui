@@ -1,62 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import CheckboxUsageExample from '../../components/examples/checkbox/CheckboxUsageExample.vue'
-import CheckboxValuesExample from '../../components/examples/checkbox/CheckboxValuesExample.vue'
-import CheckboxStatesExample from '../../components/examples/checkbox/CheckboxStatesExample.vue'
-import CheckboxIconExample from '../../components/examples/checkbox/CheckboxIconExample.vue'
-import CheckboxSizeExample from '../../components/examples/checkbox/CheckboxSizeExample.vue'
-import CheckboxSeverityExample from '../../components/examples/checkbox/CheckboxSeverityExample.vue'
-import CheckboxColorExample from '../../components/examples/checkbox/CheckboxColorExample.vue'
-import CheckboxIndeterminateIconExample from '../../components/examples/checkbox/CheckboxIndeterminateIconExample.vue'
+import CheckboxPlaygroundExample from '../../components/examples/checkbox/CheckboxPlaygroundExample.vue'
 
 const checkboxConfig: ComponentDocConfig = {
   slug: 'checkbox',
   title: 'Checkbox',
   description: 'Control accesible para seleccionar una opción o representar una selección parcial.',
   importPath: '@nono-cn/nono-ui/components/ui/Checkbox',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Controla un valor booleano con v-model:value.',
-      component: CheckboxUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Valores personalizados',
-      description: 'Usa trueValue y falseValue para representar estados con valores propios.',
-      component: CheckboxValuesExample,
-    },
-    {
-      title: 'Estado indeterminado',
-      description: 'Representa una selección parcial con el valor indeterminate.',
-      component: CheckboxStatesExample,
-    },
-    {
-      title: 'Size',
-      description: 'Ajusta el tamaño del checkbox y de su icono.',
-      component: CheckboxSizeExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Elige el color semántico del estado seleccionado.',
-      component: CheckboxSeverityExample,
-    },
-    {
-      title: 'Color',
-      description: 'Aplica un color CSS personalizado con prioridad sobre severity.',
-      component: CheckboxColorExample,
-    },
-    {
-      title: 'Icon',
-      description: 'Personaliza el icono del indicador mediante IconConfig.',
-      component: CheckboxIconExample,
-    },
-    {
-      title: 'Indeterminate icon',
-      description: 'Personaliza el icono mostrado cuando el valor es indeterminate.',
-      component: CheckboxIndeterminateIconExample,
-    },
-  ],
+  playground: CheckboxPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Nombre accesible',
