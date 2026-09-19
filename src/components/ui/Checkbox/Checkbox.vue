@@ -4,13 +4,12 @@ import { Icon } from '@/components/ui/Icon'
 import { CheckboxIndicator, CheckboxRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import type { CheckboxModelValue, CheckboxProps, CheckboxSlots } from '.'
+import type { CheckboxModelValue, CheckboxProps } from '.'
 import { checkboxDefaults } from './default'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<CheckboxProps>(), checkboxDefaults)
-defineSlots<CheckboxSlots>()
 
 const value = defineModel<CheckboxModelValue>('value', {
   default: false,
@@ -67,8 +66,7 @@ const indicatorProps = computed(() => {
 <template>
   <CheckboxRoot v-bind="rootProps" v-model="value" data-test-checkbox-root>
     <CheckboxIndicator v-bind="indicatorProps" data-test-checkbox-indicator>
-      <slot v-if="$slots.indicator" name="indicator" v-bind="checkboxContext" />
-      <Icon v-else name="check" class="size-3.5" data-test-checkbox-icon />
+      <Icon v-bind="props.icon" class="size-3.5" data-test-checkbox-icon />
     </CheckboxIndicator>
   </CheckboxRoot>
 </template>

@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from 'vue'
 import type { CheckboxRootProps } from 'reka-ui'
+import type { IconConfig } from '@/components/ui/Icon'
 
 export { default as Checkbox } from './Checkbox.vue'
 
@@ -21,6 +22,7 @@ export interface CheckboxProps extends Pick<
   'trueValue' | 'falseValue'
 > {
   value?: CheckboxModelValue
+  icon?: IconConfig
   ui?: CheckboxUI
 }
 
@@ -32,9 +34,4 @@ export interface CheckboxContext {
 // Emits
 export interface CheckboxEmits {
   'update:value': [value: CheckboxModelValue]
-}
-
-// Slots
-export interface CheckboxSlots {
-  indicator?(props: CheckboxContext): unknown
 }

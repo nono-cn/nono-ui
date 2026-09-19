@@ -1,10 +1,11 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { h } from 'vue'
 import { CheckboxRoot } from 'reka-ui'
 
-import { Checkbox, type CheckboxContext, type CheckboxProps } from '@/components/ui/Checkbox'
+import { Checkbox, type CheckboxProps } from '@/components/ui/Checkbox'
+import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
+import { testIconConfig } from '../utils/testIconConfig'
 
 function mountCheckbox(options: MountingOptions<CheckboxProps> = {}) {
   return mount(Checkbox, options)
@@ -68,6 +69,15 @@ describe('Checkbox', () => {
       })
     })
 
+    describe('icon', () => {
+      testIconConfig({
+        text: 'pasa la configuración del icono',
+        id: Icon,
+        default: 'check',
+        mount: (icon) => mountCheckbox({ props: { value: true, icon } }),
+      })
+    })
+
     describe('ui.indicator', () => {
       testAttrs({
         text: 'pasa los atributos de ui.indicator',
@@ -117,29 +127,6 @@ describe('Checkbox', () => {
           expect(checkbox.emitted('update:value')).toEqual([[expected]])
         },
       )
-    })
-  })
-
-  describe('slots', () => {
-    describe('indicator', () => {
-      it('renderiza el slot indicator con el contexto state', () => {
-        const checkbox = mountCheckbox({
-          props: { value: true },
-          slots: {
-            indicator: (context: CheckboxContext) =>
-              h('span', { 'data-test-checkbox-slot': '' }, String(context.state)),
-          },
-        })
-
-        expect(checkbox.get('[data-test-checkbox-slot]').text()).toBe('true')
-        expect(checkbox.find('[data-test-checkbox-icon]').exists()).toBe(false)
-      })
-
-      it('renderiza el icono predeterminado del indicador', () => {
-        const checkbox = mountCheckbox({ props: { value: true } })
-
-        expect(checkbox.get('[data-test-checkbox-icon]').exists()).toBe(true)
-      })
     })
   })
 })

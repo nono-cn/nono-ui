@@ -2,6 +2,7 @@ import type { ComponentDocConfig } from '../component-docs'
 import CheckboxUsageExample from '../../components/examples/checkbox/CheckboxUsageExample.vue'
 import CheckboxValuesExample from '../../components/examples/checkbox/CheckboxValuesExample.vue'
 import CheckboxStatesExample from '../../components/examples/checkbox/CheckboxStatesExample.vue'
+import CheckboxIconExample from '../../components/examples/checkbox/CheckboxIconExample.vue'
 
 const checkboxConfig: ComponentDocConfig = {
   slug: 'checkbox',
@@ -25,6 +26,11 @@ const checkboxConfig: ComponentDocConfig = {
       title: 'Estado indeterminado',
       description: 'Representa una selección parcial con el valor indeterminate.',
       component: CheckboxStatesExample,
+    },
+    {
+      title: 'Icon',
+      description: 'Personaliza el icono del indicador mediante IconConfig.',
+      component: CheckboxIconExample,
     },
   ],
   accessibility: [
@@ -55,6 +61,13 @@ const checkboxConfig: ComponentDocConfig = {
         description: 'Valor que representa el estado no seleccionado.',
       },
       {
+        name: 'icon',
+        type: 'IconConfig',
+        typeLink: '/components/icon#icon-config',
+        default: "{ name: 'check' }",
+        description: 'Configuración del icono mostrado dentro del indicador.',
+      },
+      {
         name: 'ui',
         type: '{ indicator?: (context: CheckboxContext) => HTMLAttributes }',
         typeParts: [
@@ -74,13 +87,7 @@ const checkboxConfig: ComponentDocConfig = {
         description: 'Se emite cuando cambia el valor.',
       },
     ],
-    slots: [
-      {
-        name: 'indicator',
-        type: 'slotProps',
-        description: 'Contenido del indicador; recibe state con el estado actual.',
-      },
-    ],
+    slots: [],
     configs: [
       {
         id: 'checkbox-context',
