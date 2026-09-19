@@ -1,7 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import CardUsageExample from '../../components/examples/card/CardUsageExample.vue'
-import CardLabelExample from '../../components/examples/card/CardLabelExample.vue'
-import CardDescriptionExample from '../../components/examples/card/CardDescriptionExample.vue'
+import CardPlaygroundExample from '../../components/examples/card/CardPlaygroundExample.vue'
 
 const cardConfig: ComponentDocConfig = {
   slug: 'card',
@@ -9,25 +7,9 @@ const cardConfig: ComponentDocConfig = {
   description:
     'Superficie con encabezado, contenido y pie opcionales para agrupar información relacionada.',
   importPath: '@nono-cn/nono-ui/components/ui/Card',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Muestra una card con label, descripción y contenido principal.',
-      component: CardUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Label',
-      description: 'Añade un encabezado visible a la card mediante label.',
-      component: CardLabelExample,
-    },
-    {
-      title: 'Description',
-      description: 'Añade una descripción debajo del encabezado mediante description.',
-      component: CardDescriptionExample,
-    },
-  ],
+  playground: CardPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Contenido y encabezados',
