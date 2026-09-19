@@ -1,6 +1,7 @@
 export const checkboxDefaults = {
   trueValue: true,
   falseValue: false,
-  icon: { name: 'check' },
+  size: 'md' as const,
+  icon: () => ({ name: 'check' as const }),
   ui: undefined,
 }

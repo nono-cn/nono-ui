@@ -3,6 +3,7 @@ import CheckboxUsageExample from '../../components/examples/checkbox/CheckboxUsa
 import CheckboxValuesExample from '../../components/examples/checkbox/CheckboxValuesExample.vue'
 import CheckboxStatesExample from '../../components/examples/checkbox/CheckboxStatesExample.vue'
 import CheckboxIconExample from '../../components/examples/checkbox/CheckboxIconExample.vue'
+import CheckboxSizeExample from '../../components/examples/checkbox/CheckboxSizeExample.vue'
 
 const checkboxConfig: ComponentDocConfig = {
   slug: 'checkbox',
@@ -26,6 +27,11 @@ const checkboxConfig: ComponentDocConfig = {
       title: 'Estado indeterminado',
       description: 'Representa una selección parcial con el valor indeterminate.',
       component: CheckboxStatesExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el tamaño del checkbox y de su icono.',
+      component: CheckboxSizeExample,
     },
     {
       title: 'Icon',
@@ -59,6 +65,12 @@ const checkboxConfig: ComponentDocConfig = {
         type: 'boolean | number | string',
         default: 'false',
         description: 'Valor que representa el estado no seleccionado.',
+      },
+      {
+        name: 'size',
+        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+        default: "'md'",
+        description: 'Tamaño visual del checkbox y de su icono.',
       },
       {
         name: 'icon',

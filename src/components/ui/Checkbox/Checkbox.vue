@@ -4,7 +4,13 @@ import { Icon } from '@/components/ui/Icon'
 import { CheckboxIndicator, CheckboxRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import type { CheckboxModelValue, CheckboxProps } from '.'
+import {
+  checkboxIconVariants,
+  checkboxVariants,
+  type CheckboxContext,
+  type CheckboxModelValue,
+  type CheckboxProps,
+} from '.'
 import { checkboxDefaults } from './default'
 
 defineOptions({ inheritAttrs: false })
@@ -32,7 +38,7 @@ watch(
   },
 )
 
-const checkboxContext = computed(() => ({
+const checkboxContext = computed<CheckboxContext>(() => ({
   state: value.value === 'indeterminate' ? 'indeterminate' : value.value === props.trueValue,
 }))
 
@@ -45,8 +51,9 @@ const rootProps = computed(() => {
     falseValue: props.falseValue,
     trueValue: props.trueValue,
     class: cn(
-      'peer size-4 shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:aria-invalid:ring-destructive/40',
+      'peer shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:aria-invalid:ring-destructive/40',
       'focus-visible:border-primary focus-visible:ring-primary/50',
+      checkboxVariants({ size: props.size }),
       attrs.class,
     ),
     style: attrs.style,
@@ -66,7 +73,12 @@ const indicatorProps = computed(() => {
 <template>
   <CheckboxRoot v-bind="rootProps" v-model="value" data-test-checkbox-root>
     <CheckboxIndicator v-bind="indicatorProps" data-test-checkbox-indicator>
-      <Icon v-bind="props.icon" class="size-3.5" data-test-checkbox-icon />
+      <Icon
+        v-bind="props.icon"
+        :size="undefined"
+        :class="checkboxIconVariants({ size: props.size, class: props.icon.class })"
+        data-test-checkbox-icon
+      />
     </CheckboxIndicator>
   </CheckboxRoot>
 </template>

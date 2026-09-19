@@ -2,8 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { CheckboxRoot } from 'reka-ui'
 
-import { Checkbox, type CheckboxProps } from '@/components/ui/Checkbox'
-import { Icon } from '@/components/ui/Icon'
+import { Checkbox, type CheckboxProps, type CheckboxSize } from '@/components/ui/Checkbox'
 import { testAttrs } from '../utils/testAttrs'
 import { testIconConfig } from '../utils/testIconConfig'
 
@@ -38,6 +37,15 @@ const casesUpdateValue = [
   { value: 'off', trueValue: 'on', falseValue: 'off', expected: 'on' },
 ]
 
+const sizeCases = [
+  { size: 'xs', rootClass: 'size-3', iconClass: 'size-2.5' },
+  { size: 'sm', rootClass: 'size-3.5', iconClass: 'size-3' },
+  { size: 'md', rootClass: 'size-4', iconClass: 'size-3.5' },
+  { size: 'lg', rootClass: 'size-5', iconClass: 'size-4' },
+  { size: 'xl', rootClass: 'size-6', iconClass: 'size-5' },
+  { size: undefined, rootClass: 'size-4', iconClass: 'size-3.5' },
+] satisfies Array<{ size: CheckboxSize | undefined; rootClass: string; iconClass: string }>
+
 describe('Checkbox', () => {
   describe('props', () => {
     describe('value', () => {
@@ -50,6 +58,14 @@ describe('Checkbox', () => {
         expect(root.props('modelValue')).toBe(expected)
         expect(root.props('trueValue')).toBe(trueValue)
         expect(root.props('falseValue')).toBe(falseValue)
+      })
+
+      it('normaliza un value inválido a falseValue', () => {
+        const root = mountCheckbox({
+          props: { value: 'invalid', trueValue: 'on', falseValue: 'off' },
+        }).getComponent(CheckboxRoot)
+
+        expect(root.props('modelValue')).toBe('off')
       })
     })
 
@@ -69,12 +85,37 @@ describe('Checkbox', () => {
       })
     })
 
+    describe('size', () => {
+      it.each(sizeCases)('renderiza size=$size', ({ size, rootClass, iconClass }) => {
+        const checkbox = mountCheckbox({ props: { value: true, size } })
+
+        expect(checkbox.get('[data-test-checkbox-root]').classes()).toContain(rootClass)
+        expect(checkbox.get('[data-test-checkbox-icon]').classes()).toContain(iconClass)
+      })
+    })
+
     describe('icon', () => {
       testIconConfig({
         text: 'pasa la configuración del icono',
-        id: Icon,
+        id: '[data-test-checkbox-icon]',
         default: 'check',
+        omit: ['size'],
         mount: (icon) => mountCheckbox({ props: { value: true, icon } }),
+      })
+
+      it('siempre pasa size undefined al icono', () => {
+        const checkbox = mountCheckbox({
+          props: { value: true, icon: { name: 'check', size: 'xl' } },
+        })
+        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
+
+        expect(icon.vm.$.vnode.props?.size).toBeUndefined()
+      })
+
+      it('no renderiza el icono cuando no está checkeado', () => {
+        const checkbox = mountCheckbox({ props: { value: false } })
+
+        expect(checkbox.find('[data-test-checkbox-icon]').exists()).toBe(false)
       })
     })
 
