@@ -1,62 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import TextareaUsageExample from '../../components/examples/textarea/TextareaUsageExample.vue'
-import TextareaControlledExample from '../../components/examples/textarea/TextareaControlledExample.vue'
-import TextareaAutoresizeExample from '../../components/examples/textarea/TextareaAutoresizeExample.vue'
-import TextareaSizeExample from '../../components/examples/textarea/TextareaSizeExample.vue'
-import TextareaSeverityExample from '../../components/examples/textarea/TextareaSeverityExample.vue'
-import TextareaColorExample from '../../components/examples/textarea/TextareaColorExample.vue'
-import TextareaHighlightExample from '../../components/examples/textarea/TextareaHighlightExample.vue'
-import TextareaVariantExample from '../../components/examples/textarea/TextareaVariantExample.vue'
+import TextareaPlaygroundExample from '../../components/examples/textarea/TextareaPlaygroundExample.vue'
 
 const textareaConfig: ComponentDocConfig = {
   slug: 'textarea',
   title: 'Textarea',
   description: 'Campo de texto multilínea para introducir contenido largo.',
   importPath: '@nono-cn/nono-ui/components/ui/Textarea',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Muestra un campo de texto multilínea con un valor inicial.',
-      component: TextareaUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Valor controlado',
-      description: 'Sincroniza el contenido mediante v-model:value.',
-      component: TextareaControlledExample,
-    },
-    {
-      title: 'Auto-resize',
-      description: 'Ajusta la altura del campo al contenido con la prop autoresize.',
-      component: TextareaAutoresizeExample,
-    },
-    {
-      title: 'Tamaños',
-      description: 'Adapta la escala visual del campo mediante la prop size.',
-      component: TextareaSizeExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Cambia el color semántico del campo.',
-      component: TextareaSeverityExample,
-    },
-    {
-      title: 'Color personalizado',
-      description: 'Usa un color propio que sobreescribe severity.',
-      component: TextareaColorExample,
-    },
-    {
-      title: 'Highlight',
-      description: 'Muestra el borde semántico sin necesidad de foco.',
-      component: TextareaHighlightExample,
-    },
-    {
-      title: 'Variantes',
-      description: 'Cambia el estilo del borde y del fondo.',
-      component: TextareaVariantExample,
-    },
-  ],
+  playground: TextareaPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Etiqueta y descripción',

@@ -28,23 +28,22 @@ defineProps<{
       ><code>import { {{ component.title }} } from '{{ component.importPath }}'</code></pre>
     </section>
 
-    <section id="usage" class="grid scroll-mt-8 gap-5">
+    <section v-if="component.playground" id="playground" class="grid scroll-mt-8 gap-5">
       <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Usage</h2>
+        <h2 class="text-2xl font-semibold tracking-tight">Playground</h2>
         <p class="text-sm leading-6 text-muted-foreground">
-          Empieza con el uso básico y configura el componente según las necesidades de tu interfaz.
+          Personaliza las props y ejecuta el ejemplo para ver el resultado.
         </p>
       </div>
-      <div class="grid gap-6">
-        <component
-          :is="example.component"
-          v-for="example in component.usage"
-          :key="example.title"
-        />
-      </div>
+      <component :is="component.playground" />
     </section>
 
-    <section id="examples" class="grid scroll-mt-8 gap-5">
+    <section v-if="!component.playground" id="usage" class="grid scroll-mt-8 gap-5">
+      <div class="grid gap-2"><h2 class="text-2xl font-semibold tracking-tight">Usage</h2><p class="text-sm leading-6 text-muted-foreground">Empieza con el uso básico y configura el componente según las necesidades de tu interfaz.</p></div>
+      <div class="grid gap-6"><component :is="example.component" v-for="example in component.usage" :key="example.title" /></div>
+    </section>
+
+    <section v-if="!component.playground" id="examples" class="grid scroll-mt-8 gap-5">
       <div class="grid gap-2">
         <h2 class="text-2xl font-semibold tracking-tight">Examples</h2>
         <p class="text-sm leading-6 text-muted-foreground">
