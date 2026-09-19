@@ -387,6 +387,24 @@
 .progress-playground-control[data-orientation='vertical'] {
   height: 110px;
 }
+.label-playground-stage {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+}
+.label-playground-content {
+  display: grid;
+  width: min(100%, 280px);
+  gap: 8px;
+}
+.label-playground-content input {
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--foreground);
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);
