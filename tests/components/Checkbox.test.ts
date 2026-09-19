@@ -2,8 +2,14 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { CheckboxRoot } from 'reka-ui'
 
-import { Checkbox, type CheckboxProps, type CheckboxSize } from '@/components/ui/Checkbox'
+import {
+  Checkbox,
+  type CheckboxProps,
+  type CheckboxSeverity,
+  type CheckboxSize,
+} from '@/components/ui/Checkbox'
 import { testAttrs } from '../utils/testAttrs'
+import { testColor } from '../utils/testColor'
 import { testIconConfig } from '../utils/testIconConfig'
 
 function mountCheckbox(options: MountingOptions<CheckboxProps> = {}) {
@@ -45,6 +51,15 @@ const sizeCases = [
   { size: 'xl', rootClass: 'size-6', iconClass: 'size-5' },
   { size: undefined, rootClass: 'size-4', iconClass: 'size-3.5' },
 ] satisfies Array<{ size: CheckboxSize | undefined; rootClass: string; iconClass: string }>
+
+const severityCases = [
+  { severity: 'primary', class: 'data-[state=checked]:bg-primary' },
+  { severity: 'secondary', class: 'data-[state=checked]:bg-secondary' },
+  { severity: 'warning', class: 'data-[state=checked]:bg-warning' },
+  { severity: 'success', class: 'data-[state=checked]:bg-success' },
+  { severity: 'error', class: 'data-[state=checked]:bg-error' },
+  { severity: undefined, class: 'data-[state=checked]:bg-primary' },
+] satisfies Array<{ severity: CheckboxSeverity | undefined; class: string }>
 
 describe('Checkbox', () => {
   describe('props', () => {
@@ -94,12 +109,38 @@ describe('Checkbox', () => {
       })
     })
 
+    describe('severity', () => {
+      it.each(severityCases)('renderiza severity=$severity', ({ severity, class: className }) => {
+        const checkbox = mountCheckbox({ props: { severity } })
+
+        expect(checkbox.get('[data-test-checkbox-root]').classes()).toContain(className)
+      })
+    })
+
+    describe('color', () => {
+      testColor({
+        text: 'aplica un color personalizado',
+        id: '[data-test-checkbox-root]',
+        varColor: '--checkbox-color',
+        mount: (color) => mountCheckbox({ props: { color } }),
+      })
+
+      it('tiene prioridad sobre severity', () => {
+        const root = mountCheckbox({
+          props: { color: '#8b5cf6', severity: 'error' },
+        }).get('[data-test-checkbox-root]')
+
+        expect(root.classes()).toContain('data-[state=checked]:bg-(--checkbox-color)')
+        expect(root.classes()).toContain('focus-visible:ring-(--checkbox-color)/50')
+      })
+    })
+
     describe('icon', () => {
       testIconConfig({
         text: 'pasa la configuración del icono',
         id: '[data-test-checkbox-icon]',
         default: 'check',
-        omit: ['size'],
+        omit: ['size', 'color'],
         mount: (icon) => mountCheckbox({ props: { value: true, icon } }),
       })
 
@@ -110,6 +151,15 @@ describe('Checkbox', () => {
         const icon = checkbox.getComponent('[data-test-checkbox-icon]')
 
         expect(icon.vm.$.vnode.props?.size).toBeUndefined()
+      })
+
+      it('siempre pasa color undefined al icono', () => {
+        const checkbox = mountCheckbox({
+          props: { value: true, icon: { name: 'check', color: '#ff0000' } },
+        })
+        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
+
+        expect(icon.vm.$.vnode.props?.color).toBeUndefined()
       })
 
       it('no renderiza el icono cuando no está checkeado', () => {

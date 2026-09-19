@@ -4,6 +4,8 @@ import CheckboxValuesExample from '../../components/examples/checkbox/CheckboxVa
 import CheckboxStatesExample from '../../components/examples/checkbox/CheckboxStatesExample.vue'
 import CheckboxIconExample from '../../components/examples/checkbox/CheckboxIconExample.vue'
 import CheckboxSizeExample from '../../components/examples/checkbox/CheckboxSizeExample.vue'
+import CheckboxSeverityExample from '../../components/examples/checkbox/CheckboxSeverityExample.vue'
+import CheckboxColorExample from '../../components/examples/checkbox/CheckboxColorExample.vue'
 
 const checkboxConfig: ComponentDocConfig = {
   slug: 'checkbox',
@@ -32,6 +34,16 @@ const checkboxConfig: ComponentDocConfig = {
       title: 'Size',
       description: 'Ajusta el tamaño del checkbox y de su icono.',
       component: CheckboxSizeExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Elige el color semántico del estado seleccionado.',
+      component: CheckboxSeverityExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado con prioridad sobre severity.',
+      component: CheckboxColorExample,
     },
     {
       title: 'Icon',
@@ -71,6 +83,18 @@ const checkboxConfig: ComponentDocConfig = {
         type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
         default: "'md'",
         description: 'Tamaño visual del checkbox y de su icono.',
+      },
+      {
+        name: 'severity',
+        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
+        default: "'primary'",
+        description: 'Color semántico del estado seleccionado.',
+      },
+      {
+        name: 'color',
+        type: 'string',
+        default: 'undefined',
+        description: 'Color CSS personalizado. Tiene prioridad sobre severity.',
       },
       {
         name: 'icon',

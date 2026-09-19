@@ -14,9 +14,27 @@ export const checkboxVariants = cva('', {
       lg: 'size-5',
       xl: 'size-6',
     },
+    severity: {
+      primary:
+        'focus-visible:border-primary focus-visible:ring-primary/50 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
+      secondary:
+        'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/50 data-[state=checked]:border-secondary data-[state=checked]:bg-secondary data-[state=checked]:text-secondary-foreground',
+      warning:
+        'focus-visible:border-warning focus-visible:ring-warning/50 data-[state=checked]:border-warning data-[state=checked]:bg-warning data-[state=checked]:text-warning-foreground',
+      success:
+        'focus-visible:border-success focus-visible:ring-success/50 data-[state=checked]:border-success data-[state=checked]:bg-success data-[state=checked]:text-success-foreground',
+      error:
+        'focus-visible:border-error focus-visible:ring-error/50 data-[state=checked]:border-error data-[state=checked]:bg-error data-[state=checked]:text-error-foreground',
+    },
+    color: {
+      true: 'focus-visible:border-(--checkbox-color) focus-visible:ring-(--checkbox-color)/50 data-[state=checked]:border-(--checkbox-color) data-[state=checked]:bg-(--checkbox-color) data-[state=checked]:text-(--checkbox-color-foreground)',
+      false: '',
+    },
   },
   defaultVariants: {
     size: 'md',
+    severity: 'primary',
+    color: false,
   },
 })
 
@@ -37,6 +55,7 @@ export const checkboxIconVariants = cva('', {
 
 export type CheckboxVariants = VariantProps<typeof checkboxVariants>
 export type CheckboxSize = NonNullable<CheckboxVariants['size']>
+export type CheckboxSeverity = NonNullable<CheckboxVariants['severity']>
 
 export type CheckboxValue = boolean | string | number
 export type CheckboxModelValue = CheckboxValue | 'indeterminate'
@@ -57,6 +76,8 @@ export interface CheckboxProps extends Pick<
 > {
   value?: CheckboxModelValue
   size?: CheckboxSize
+  severity?: CheckboxSeverity
+  color?: string
   icon?: IconConfig
   ui?: CheckboxUI
 }

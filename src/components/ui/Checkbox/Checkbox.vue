@@ -3,6 +3,7 @@ import { computed, useAttrs, watch } from 'vue'
 import { Icon } from '@/components/ui/Icon'
 import { CheckboxIndicator, CheckboxRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
+import { useColor } from '@/composables'
 import { cn } from '@/lib/utils'
 import {
   checkboxIconVariants,
@@ -43,6 +44,10 @@ const checkboxContext = computed<CheckboxContext>(() => ({
 }))
 
 const attrs = useAttrs()
+const { colorStyle } = useColor(
+  computed(() => props.color),
+  'checkbox',
+)
 const rootProps = computed(() => {
   return {
     ...attrs,
@@ -51,12 +56,15 @@ const rootProps = computed(() => {
     falseValue: props.falseValue,
     trueValue: props.trueValue,
     class: cn(
-      'peer shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:aria-invalid:ring-destructive/40',
-      'focus-visible:border-primary focus-visible:ring-primary/50',
-      checkboxVariants({ size: props.size }),
+      'peer shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
+      checkboxVariants({
+        size: props.size,
+        severity: props.severity,
+        color: Boolean(props.color),
+      }),
       attrs.class,
     ),
-    style: attrs.style,
+    style: [colorStyle.value, attrs.style],
   }
 })
 
@@ -76,6 +84,7 @@ const indicatorProps = computed(() => {
       <Icon
         v-bind="props.icon"
         :size="undefined"
+        :color="undefined"
         :class="checkboxIconVariants({ size: props.size, class: props.icon.class })"
         data-test-checkbox-icon
       />
