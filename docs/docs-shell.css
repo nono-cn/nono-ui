@@ -569,6 +569,12 @@
   min-height: 180px;
   place-items: center;
 }
+.accordion-playground-stage {
+  min-height: 220px;
+}
+.accordion-playground-stage > * {
+  width: min(100%, 560px);
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);

@@ -1,9 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AccordionUsageExample from '../../components/examples/accordion/AccordionUsageExample.vue'
-import AccordionTypeExample from '../../components/examples/accordion/AccordionTypeExample.vue'
-import AccordionIconsExample from '../../components/examples/accordion/AccordionIconsExample.vue'
-import AccordionCollapsibleExample from '../../components/examples/accordion/AccordionCollapsibleExample.vue'
-import AccordionDisabledExample from '../../components/examples/accordion/AccordionDisabledExample.vue'
+import AccordionPlaygroundExample from '../../components/examples/accordion/AccordionPlaygroundExample.vue'
 
 const accordionConfig: ComponentDocConfig = {
   slug: 'accordion',
@@ -11,36 +7,9 @@ const accordionConfig: ComponentDocConfig = {
   description:
     'Muestra y oculta secciones de contenido relacionadas mediante activadores accesibles.',
   importPath: '@nono-cn/nono-ui/components/ui/Accordion',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Define los elementos con value, label y description para crear un acordeón.',
-      component: AccordionUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Multiple',
-      description:
-        'Usa type="multiple" para permitir varias secciones abiertas y value para definir las abiertas inicialmente.',
-      component: AccordionTypeExample,
-    },
-    {
-      title: 'Collapsible',
-      description: 'Permite cerrar la sección abierta en un acordeón de tipo single.',
-      component: AccordionCollapsibleExample,
-    },
-    {
-      title: 'Disabled',
-      description: 'Deshabilita todo el acordeón para impedir la interacción con sus secciones.',
-      component: AccordionDisabledExample,
-    },
-    {
-      title: 'Disabled e iconos',
-      description: 'Añade iconos por elemento y deshabilita una sección concreta.',
-      component: AccordionIconsExample,
-    },
-  ],
+  playground: AccordionPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Activadores y contenido',
