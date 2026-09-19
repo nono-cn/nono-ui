@@ -25,6 +25,7 @@ import ribbon from './components/ribbon'
 import scrollArea from './components/scroll-area'
 import separator from './components/separator'
 import switchConfig from './components/switch'
+import checkboxConfig from './components/checkbox'
 import type { ComponentDocConfig } from './component-docs'
 
 export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'description'>
@@ -57,6 +58,7 @@ export const docsComponents = [
   scrollArea,
   separator,
   switchConfig,
+  checkboxConfig,
 ] satisfies ComponentDocConfig[]
 
 export const docsComponentsBySlug = Object.fromEntries(
