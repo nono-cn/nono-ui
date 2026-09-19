@@ -29,14 +29,40 @@ export const textareaVariants = cva('', {
       true: '',
       false: 'border-input',
     },
+    variant: {
+      outline: 'rounded-md border bg-transparent shadow-xs',
+      subtle: 'rounded-md border shadow-xs',
+      soft: 'rounded-md border-transparent shadow-none',
+      plain: 'rounded-md border-transparent bg-transparent shadow-none',
+      none: 'rounded-md border-0 bg-transparent shadow-none',
+    },
   },
   compoundVariants: [
+    { variant: 'subtle', severity: 'primary', class: 'bg-primary/10' },
+    { variant: 'soft', severity: 'primary', class: 'bg-primary/10' },
+    { variant: 'subtle', severity: 'secondary', class: 'bg-secondary/60' },
+    { variant: 'soft', severity: 'secondary', class: 'bg-secondary/60' },
+    {
+      variant: 'subtle',
+      severity: 'secondary',
+      class: 'bg-secondary/60',
+    },
+    { variant: 'soft', severity: 'secondary', class: 'bg-secondary/60' },
+    { variant: 'subtle', severity: 'error', class: 'bg-error/10' },
+    { variant: 'soft', severity: 'error', class: 'bg-error/10' },
+    { variant: 'subtle', severity: 'warning', class: 'bg-warning/10' },
+    { variant: 'soft', severity: 'warning', class: 'bg-warning/10' },
+    { variant: 'subtle', severity: 'success', class: 'bg-success/10' },
+    { variant: 'soft', severity: 'success', class: 'bg-success/10' },
+    { variant: 'subtle', color: true, class: 'bg-(--textarea-color)/10' },
+    { variant: 'soft', color: true, class: 'bg-(--textarea-color)/10' },
     { highlight: true, severity: 'primary', class: 'border-primary/40' },
     { highlight: true, severity: 'secondary', class: 'border-secondary-foreground/30' },
     { highlight: true, severity: 'error', class: 'border-error/40' },
     { highlight: true, severity: 'warning', class: 'border-warning/40' },
     { highlight: true, severity: 'success', class: 'border-success/40' },
     { highlight: true, color: true, class: 'border-(--textarea-color)/40' },
+    { variant: 'none', class: 'focus-visible:border-0 focus-visible:ring-0' },
   ],
   defaultVariants: {
     autoresize: false,
@@ -44,6 +70,7 @@ export const textareaVariants = cva('', {
     severity: 'primary',
     color: false,
     highlight: false,
+    variant: 'outline',
   },
 })
 
@@ -61,6 +88,7 @@ export interface TextareaProps {
   severity?: TextareaVariants['severity']
   color?: string
   highlight?: TextareaVariants['highlight']
+  variant?: TextareaVariants['variant']
 }
 
 // Emits

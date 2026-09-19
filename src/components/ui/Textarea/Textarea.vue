@@ -37,6 +37,7 @@ const rootProps = computed(() => {
         severity: props.color ? undefined : props.severity,
         color: Boolean(props.color),
         highlight: props.highlight,
+        variant: props.variant,
       }),
       attrs.class,
     ),

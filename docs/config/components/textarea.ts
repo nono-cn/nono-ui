@@ -6,6 +6,7 @@ import TextareaSizeExample from '../../components/examples/textarea/TextareaSize
 import TextareaSeverityExample from '../../components/examples/textarea/TextareaSeverityExample.vue'
 import TextareaColorExample from '../../components/examples/textarea/TextareaColorExample.vue'
 import TextareaHighlightExample from '../../components/examples/textarea/TextareaHighlightExample.vue'
+import TextareaVariantExample from '../../components/examples/textarea/TextareaVariantExample.vue'
 
 const textareaConfig: ComponentDocConfig = {
   slug: 'textarea',
@@ -49,6 +50,11 @@ const textareaConfig: ComponentDocConfig = {
       title: 'Highlight',
       description: 'Muestra el borde semántico sin necesidad de foco.',
       component: TextareaHighlightExample,
+    },
+    {
+      title: 'Variantes',
+      description: 'Cambia el estilo del borde y del fondo.',
+      component: TextareaVariantExample,
     },
   ],
   accessibility: [
@@ -95,6 +101,13 @@ const textareaConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'false',
         description: 'Muestra el borde con el color de severity o color incluso sin foco.',
+      },
+      {
+        name: 'variant',
+        type: "'outline' | 'subtle' | 'soft' | 'plain' | 'none'",
+        default: "'outline'",
+        description:
+          'Define el estilo del borde y del fondo. none también elimina el borde al enfocar.',
       },
     ],
     emits: [

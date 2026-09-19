@@ -53,6 +53,39 @@ const highlightCases = [
   },
 ] as const
 
+const variantCases = [
+  {
+    variant: undefined,
+    severity: undefined,
+    expectedClasses: ['border', 'bg-transparent', 'shadow-xs'],
+  },
+  {
+    variant: 'outline',
+    severity: 'error',
+    expectedClasses: ['border', 'bg-transparent', 'shadow-xs'],
+  },
+  {
+    variant: 'subtle',
+    severity: 'error',
+    expectedClasses: ['border', 'shadow-xs', 'bg-error/10'],
+  },
+  {
+    variant: 'soft',
+    severity: 'success',
+    expectedClasses: ['border-transparent', 'shadow-none', 'bg-success/10'],
+  },
+  {
+    variant: 'plain',
+    severity: 'warning',
+    expectedClasses: ['border-transparent', 'bg-transparent', 'shadow-none'],
+  },
+  {
+    variant: 'none',
+    severity: 'primary',
+    expectedClasses: ['border-0', 'bg-transparent', 'shadow-none', 'focus-visible:border-0'],
+  },
+] as const
+
 describe('Textarea', () => {
   describe('props', () => {
     describe('autoresize', () => {
@@ -121,6 +154,16 @@ describe('Textarea', () => {
           if (unexpectedClass) expect(root.classes()).not.toContain(unexpectedClass)
         },
       )
+    })
+
+    describe('variant', () => {
+      it.each(variantCases)('aplica variant=$variant', ({ variant, severity, expectedClasses }) => {
+        const root = mountTextarea({ props: { variant, severity } }).get(
+          '[data-test-textarea-root]',
+        )
+
+        for (const expectedClass of expectedClasses) expect(root.classes()).toContain(expectedClass)
+      })
     })
   })
 

@@ -5,4 +5,5 @@ export const textareaDefaults = {
   severity: 'primary' as const,
   color: undefined,
   highlight: false,
+  variant: 'outline' as const,
 }
