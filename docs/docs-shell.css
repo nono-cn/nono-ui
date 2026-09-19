@@ -535,6 +535,13 @@
   color: var(--foreground);
   font-size: 14px;
 }
+.message-playground-stage {
+  min-height: 180px;
+  padding: 16px;
+}
+.message-playground-stage > * {
+  width: 100%;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);
