@@ -362,6 +362,22 @@
   font-size: 13px;
   white-space: nowrap;
 }
+.ribbon-playground-stage {
+  height: 190px;
+}
+.ribbon-playground-control {
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--muted);
+}
+.ribbon-playground-content {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: var(--foreground);
+  font-size: 14px;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);

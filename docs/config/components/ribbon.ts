@@ -1,51 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import RibbonColorExample from '../../components/examples/ribbon/RibbonColorExample.vue'
-import RibbonMultipleExample from '../../components/examples/ribbon/RibbonMultipleExample.vue'
-import RibbonPositionExample from '../../components/examples/ribbon/RibbonPositionExample.vue'
-import RibbonRotationExample from '../../components/examples/ribbon/RibbonRotationExample.vue'
-import RibbonSeverityExample from '../../components/examples/ribbon/RibbonSeverityExample.vue'
-import RibbonUsageExample from '../../components/examples/ribbon/RibbonUsageExample.vue'
+import RibbonPlaygroundExample from '../../components/examples/ribbon/RibbonPlaygroundExample.vue'
 
 const ribbonConfig: ComponentDocConfig = {
   slug: 'ribbon',
   title: 'Ribbon',
   description: 'Añade cintas decorativas superpuestas a una tarjeta o bloque de contenido.',
   importPath: '@nono-cn/nono-ui/components/ui/Ribbon',
-  usage: [
-    {
-      title: 'Uso básico',
-      description:
-        'Pasa una etiqueta en ribbons y coloca el contenido que quieras decorar en el slot default.',
-      component: RibbonUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Position',
-      description: 'Coloca la cinta en cualquiera de las cuatro esquinas del contenedor.',
-      component: RibbonPositionExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Usa una severidad para aplicar uno de los tratamientos visuales disponibles.',
-      component: RibbonSeverityExample,
-    },
-    {
-      title: 'Color',
-      description: 'Sobrescribe la severidad con un color CSS personalizado.',
-      component: RibbonColorExample,
-    },
-    {
-      title: 'Rotate & zIndex',
-      description: 'Ajusta manualmente la rotación y el orden de apilado de una cinta.',
-      component: RibbonRotationExample,
-    },
-    {
-      title: 'Multiple ribbons',
-      description: 'Renderiza varias cintas con una sola instancia de Ribbon.',
-      component: RibbonMultipleExample,
-    },
-  ],
+  playground: RibbonPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Contenido decorativo',
