@@ -1,44 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AnnouncerAtomicExample from '../../components/examples/announcer/AnnouncerAtomicExample.vue'
-import AnnouncerMessageExample from '../../components/examples/announcer/AnnouncerMessageExample.vue'
-import AnnouncerPolitenessExample from '../../components/examples/announcer/AnnouncerPolitenessExample.vue'
-import AnnouncerSlotExample from '../../components/examples/announcer/AnnouncerSlotExample.vue'
-import AnnouncerUsageExample from '../../components/examples/announcer/AnnouncerUsageExample.vue'
+import AnnouncerPlaygroundExample from '../../components/examples/announcer/AnnouncerPlaygroundExample.vue'
 
 const announcerConfig: ComponentDocConfig = {
   slug: 'announcer',
   title: 'Announcer',
   description: 'Anuncia cambios dinámicos a lectores de pantalla sin añadir contenido visual.',
   importPath: '@nono-cn/nono-ui/components/ui/Announcer',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Proporciona un mensaje para anunciar una actualización de estado.',
-      component: AnnouncerUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Politeness',
-      description: 'Controla la prioridad con la que se anuncia el mensaje.',
-      component: AnnouncerPolitenessExample,
-    },
-    {
-      title: 'Atomic',
-      description: 'Decide si se anuncia toda la región o solo la parte que ha cambiado.',
-      component: AnnouncerAtomicExample,
-    },
-    {
-      title: 'Message',
-      description: 'Actualiza el mensaje anunciado desde el estado de tu aplicación.',
-      component: AnnouncerMessageExample,
-    },
-    {
-      title: 'Slot',
-      description: 'Usa el slot default para proporcionar contenido personalizado.',
-      component: AnnouncerSlotExample,
-    },
-  ],
+  playground: AnnouncerPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Regiones live',

@@ -551,6 +551,13 @@
   width: 100%;
   max-width: 520px;
 }
+.announcer-playground-stage {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+  color: var(--foreground);
+  font-size: 13px;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);
