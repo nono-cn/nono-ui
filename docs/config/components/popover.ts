@@ -1,44 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import PopoverArrowExample from '../../components/examples/popover/PopoverArrowExample.vue'
-import PopoverModalExample from '../../components/examples/popover/PopoverModalExample.vue'
-import PopoverOpenExample from '../../components/examples/popover/PopoverOpenExample.vue'
-import PopoverPositionExample from '../../components/examples/popover/PopoverPositionExample.vue'
-import PopoverUsageExample from '../../components/examples/popover/PopoverUsageExample.vue'
+import PopoverPlaygroundExample from '../../components/examples/popover/PopoverPlaygroundExample.vue'
 
 const popoverConfig: ComponentDocConfig = {
   slug: 'popover',
   title: 'Popover',
   description: 'Muestra contenido contextual relacionado con un elemento disparador.',
   importPath: '@nono-cn/nono-ui/components/ui/Popover',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Coloca el elemento disparador en el slot default y el contenido en content.',
-      component: PopoverUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Open',
-      description: 'Controla el estado abierto mediante v-model:open.',
-      component: PopoverOpenExample,
-    },
-    {
-      title: 'Position',
-      description: 'Configura el lado, la alineación y la distancia respecto al disparador.',
-      component: PopoverPositionExample,
-    },
-    {
-      title: 'Arrow',
-      description: 'Muestra y personaliza la flecha que conecta el contenido con el disparador.',
-      component: PopoverArrowExample,
-    },
-    {
-      title: 'Modal',
-      description: 'Desactiva la interacción exterior cuando el popover funciona como modal.',
-      component: PopoverModalExample,
-    },
-  ],
+  playground: PopoverPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Disparadores y teclado',
@@ -290,12 +260,14 @@ const popoverConfig: ComponentDocConfig = {
     slots: [
       {
         name: 'default',
-        type: '{ open: boolean; close: () => void }',
+        type: 'PopoverContext',
+        typeLink: '#popover-context',
         description: 'Elemento disparador. Recibe el estado open y la función close.',
       },
       {
         name: 'content',
-        type: '{ open: boolean; close: () => void }',
+        type: 'PopoverContext',
+        typeLink: '#popover-context',
         description: 'Contenido contextual. Recibe el estado open y la función close.',
       },
     ],

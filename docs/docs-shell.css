@@ -448,6 +448,14 @@
   color: var(--foreground);
   font-size: 13px;
 }
+.popover-playground-stage {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+}
+.popover-playground-stage button {
+  cursor: pointer;
+}
 .playground-preview-label {
   display: block;
   width: min(100%, 480px);
