@@ -1,56 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AlertCloseButtonExample from '../../components/examples/alert/AlertCloseButtonExample.vue'
-import AlertClosableExample from '../../components/examples/alert/AlertClosableExample.vue'
-import AlertColorExample from '../../components/examples/alert/AlertColorExample.vue'
-import AlertIconExample from '../../components/examples/alert/AlertIconExample.vue'
-import AlertSeverityExample from '../../components/examples/alert/AlertSeverityExample.vue'
-import AlertUsageExample from '../../components/examples/alert/AlertUsageExample.vue'
-import AlertVariantExample from '../../components/examples/alert/AlertVariantExample.vue'
+import AlertPlaygroundExample from '../../components/examples/alert/AlertPlaygroundExample.vue'
 
 const alertConfig: ComponentDocConfig = {
   slug: 'alert',
   title: 'Alert',
   description: 'Comunica información, estados y acciones importantes dentro de una interfaz.',
   importPath: '@nono-cn/nono-ui/components/ui/Alert',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Muestra un mensaje con un label y una descripción opcional.',
-      component: AlertUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Variant',
-      description: 'Elige el tratamiento visual del mensaje.',
-      component: AlertVariantExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Representa la importancia o el estado semántico del mensaje.',
-      component: AlertSeverityExample,
-    },
-    {
-      title: 'Color',
-      description: 'Aplica un color CSS personalizado al alert.',
-      component: AlertColorExample,
-    },
-    {
-      title: 'Icon',
-      description: 'Añade un icono inicial usando IconConfig.',
-      component: AlertIconExample,
-    },
-    {
-      title: 'Closable',
-      description: 'Permite cerrar el alert y escucha el evento close.',
-      component: AlertClosableExample,
-    },
-    {
-      title: 'Close button',
-      description: 'Personaliza el botón de cierre mediante ButtonConfig.',
-      component: AlertCloseButtonExample,
-    },
-  ],
+  playground: AlertPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Alertas informativas y decorativas',
