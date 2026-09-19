@@ -1,9 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import MasonryColumnsExample from '../../components/examples/masonry/MasonryColumnsExample.vue'
-import MasonrySequentialExample from '../../components/examples/masonry/MasonrySequentialExample.vue'
-import MasonrySpacingExample from '../../components/examples/masonry/MasonrySpacingExample.vue'
-import MasonryResponsiveColumnsExample from '../../components/examples/masonry/MasonryResponsiveColumnsExample.vue'
-import MasonryUsageExample from '../../components/examples/masonry/MasonryUsageExample.vue'
+import MasonryPlaygroundExample from '../../components/examples/masonry/MasonryPlaygroundExample.vue'
 
 const masonryConfig: ComponentDocConfig = {
   slug: 'masonry',
@@ -11,35 +7,9 @@ const masonryConfig: ComponentDocConfig = {
   description:
     'Distribuye elementos de altura variable en columnas optimizando el espacio disponible.',
   importPath: '@nono-cn/nono-ui/components/ui/Masonry',
-  usage: [
-    {
-      title: 'Uso básico',
-      description: 'Pasa un array de items y renderiza cada elemento con el slot default scoped.',
-      component: MasonryUsageExample,
-    },
-  ],
-  examples: [
-    {
-      title: 'Columns',
-      description: 'Cambia el número de columnas del layout.',
-      component: MasonryColumnsExample,
-    },
-    {
-      title: 'Sequential',
-      description: 'Compara el reparto por columna más corta con el orden secuencial.',
-      component: MasonrySequentialExample,
-    },
-    {
-      title: 'Spacing',
-      description: 'Ajusta la separación entre columnas y elementos.',
-      component: MasonrySpacingExample,
-    },
-    {
-      title: 'Responsive columns',
-      description: 'Configura un número de columnas distinto para sm, md y lg.',
-      component: MasonryResponsiveColumnsExample,
-    },
-  ],
+  playground: MasonryPlaygroundExample,
+  usage: [],
+  examples: [],
   accessibility: [
     {
       title: 'Orden y semántica',
