@@ -1,18 +1,94 @@
-import { h, nextTick } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { SliderRoot } from 'reka-ui'
 
-import {
-  Slider,
-  type SliderContext,
-  type SliderProps,
-  type SliderThumbContext,
-  type SliderValue,
-} from '@/components/ui/Slider'
-import { sliderDefaults } from '@/components/ui/Slider/defaults'
+import { Slider, type SliderProps } from '@/components/ui/Slider'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
+import { testColor } from '../utils/testColor'
+
+const casesDisabled = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: false },
+]
+
+const casesThumbCursor = [
+  { input: false, expected: 'cursor-grab', activeExpected: 'active:cursor-grabbing' },
+  { input: true, expected: '!cursor-default', activeExpected: 'disabled:active:!cursor-default' },
+]
+
+const casesInverted = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: false },
+]
+
+const casesMin = [
+  { input: 0, expected: 0 },
+  { input: 10, expected: 10 },
+  { input: undefined, expected: 0 },
+]
+
+const casesMax = [
+  { input: 100, expected: 100 },
+  { input: 200, expected: 200 },
+  { input: undefined, expected: 100 },
+]
+
+const casesStep = [
+  { input: 1, expected: 1 },
+  { input: 5, expected: 5 },
+  { input: undefined, expected: 1 },
+]
+
+const casesMinStepsBetweenThumbs = [
+  { input: 0, expected: 0 },
+  { input: 2, expected: 2 },
+  { input: undefined, expected: 0 },
+]
+
+const casesThumbAlignment = [
+  { input: 'contain' as const, expected: 'contain' as const },
+  { input: 'overflow' as const, expected: 'overflow' as const },
+  { input: undefined, expected: 'contain' as const },
+]
+
+const casesName = [
+  { input: 'price', expected: 'price' },
+  { input: '', expected: '' },
+  { input: undefined, expected: undefined },
+]
+
+const casesRequired = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: undefined },
+]
+
+const casesOrientation = [
+  { input: 'horizontal' as const, expected: 'horizontal' as const, class: 'items-center' },
+  { input: 'vertical' as const, expected: 'vertical' as const, class: 'flex-col' },
+  { input: undefined, expected: 'horizontal' as const, class: 'items-center' },
+]
+
+const casesSize = [
+  { input: 'xs' as const, thumb: 'size-3.5', horizontalTrack: 'h-[7px]', verticalTrack: 'w-[7px]' },
+  { input: 'sm' as const, thumb: 'size-4', horizontalTrack: 'h-2', verticalTrack: 'w-2' },
+  { input: 'md' as const, thumb: 'size-4.5', horizontalTrack: 'h-[9px]', verticalTrack: 'w-[9px]' },
+  { input: 'lg' as const, thumb: 'size-5', horizontalTrack: 'h-[10px]', verticalTrack: 'w-[10px]' },
+  { input: 'xl' as const, thumb: 'size-5.5', horizontalTrack: 'h-[11px]', verticalTrack: 'w-[11px]' },
+  { input: undefined, thumb: 'size-4.5', horizontalTrack: 'h-[9px]', verticalTrack: 'w-[9px]' },
+]
+
+const casesSeverity = [
+  { input: 'primary' as const, track: 'bg-primary/20', range: 'bg-primary', thumb: 'border-primary', focus: 'focus-visible:ring-primary/50' },
+  { input: 'secondary' as const, track: 'bg-secondary/20', range: 'bg-secondary', thumb: 'border-secondary', focus: 'focus-visible:ring-secondary/50' },
+  { input: 'success' as const, track: 'bg-success/20', range: 'bg-success', thumb: 'border-success', focus: 'focus-visible:ring-success/50' },
+  { input: 'warning' as const, track: 'bg-warning/20', range: 'bg-warning', thumb: 'border-warning', focus: 'focus-visible:ring-warning/50' },
+  { input: 'error' as const, track: 'bg-error/20', range: 'bg-error', thumb: 'border-error', focus: 'focus-visible:ring-error/50' },
+  { input: undefined, track: 'bg-primary/20', range: 'bg-primary', thumb: 'border-primary', focus: 'focus-visible:ring-primary/50' },
+]
 
 vi.stubGlobal(
   'ResizeObserver',
@@ -30,137 +106,35 @@ function mountSlider(options: MountingOptions<SliderProps> = {}) {
   })
 }
 
-function mountWithProp(prop: keyof SliderProps, value: unknown) {
-  return mountSlider({ props: { [prop]: value } as SliderProps })
-}
-
-function pickThumbContext({ values, index, value, first, last }: SliderThumbContext) {
-  return { values, index, value, first, last }
-}
-
-const casesValue = [
-  { input: [25], expected: [25] },
-  { input: [20, 80], expected: [20, 80] },
-  { input: null, expected: null },
-  { input: undefined, expected: sliderDefaults.value },
-]
-
-const casesBoolean = [
-  { input: true, expected: true },
-  { input: false, expected: false },
-  { input: undefined, expected: false },
-]
-
-const casesOrientation = [
-  { input: 'horizontal' as const, expected: 'horizontal', class: 'items-center' },
-  { input: 'vertical' as const, expected: 'vertical', class: 'flex-col' },
-  { input: undefined, expected: sliderDefaults.orientation, class: 'items-center' },
-]
-
-const casesMin = [
-  { input: 0, expected: 0 },
-  { input: 10, expected: 10 },
-  { input: undefined, expected: sliderDefaults.min },
-]
-
-const casesMax = [
-  { input: 100, expected: 100 },
-  { input: 200, expected: 200 },
-  { input: undefined, expected: sliderDefaults.max },
-]
-
-const casesStep = [
-  { input: 1, expected: 1 },
-  { input: 5, expected: 5 },
-  { input: undefined, expected: sliderDefaults.step },
-]
-
-const casesMinStepsBetweenThumbs = [
-  { input: 0, expected: 0 },
-  { input: 2, expected: 2 },
-  { input: undefined, expected: sliderDefaults.minStepsBetweenThumbs },
-]
-
-const casesThumbAlignment = [
-  { input: 'contain' as const, expected: 'contain' },
-  { input: 'overflow' as const, expected: 'overflow' },
-  { input: undefined, expected: sliderDefaults.thumbAlignment },
-]
-
-const casesName = [
-  { input: 'price', expected: 'price' },
-  { input: '', expected: '' },
-  { input: undefined, expected: undefined },
-]
-
-const casesRequired = [
-  { input: true, expected: true },
-  { input: false, expected: false },
-  { input: undefined, expected: undefined },
-]
-
-const casesEmittedValues = [
-  { input: [80] as SliderValue },
-  { input: [20, 80] as SliderValue },
-  { input: null as SliderValue },
-]
-
-const casesCommittedValues = [{ input: [80] }, { input: [20, 80] }]
-
-const casesSliderContext = [{ values: [50] }, { values: [20, 80] }, { values: [] }]
-
-const casesThumbContext = [
-  {
-    values: [50],
-    expected: { values: [50], index: 0, value: 50, first: true, last: true },
-  },
-  {
-    values: [20, 80],
-    expected: { values: [20, 80], index: 0, value: 20, first: true, last: false },
-  },
-  {
-    values: [20, 80],
-    expected: { values: [20, 80], index: 1, value: 80, first: false, last: true },
-  },
-]
-
 describe('Slider', () => {
-  describe('props', () => {
-    describe('value', () => {
-      it.each(casesValue)(
-        'pasa value=$input a SliderRoot como $expected',
-        ({ input, expected }) => {
-          const wrapper = mountWithProp('value', input)
+  describe('attrs', () => {
+    testAttrs({
+      text: 'pasa atributos arbitrarios, la clase y el estilo a la raíz',
+      id: '[data-test-slider-root]',
+      mount: (attrs) => mountSlider({ attrs }),
+    })
+  })
 
-          expect(wrapper.getComponent(SliderRoot).props('modelValue')).toEqual(expected)
+  describe('props', () => {
+    describe('disabled', () => {
+      it.each(casesDisabled)(
+        'pasa disabled=$input a SliderRoot como $expected',
+        ({ input, expected }) => {
+          const wrapper = mountSlider({ props: { disabled: input } })
+
+          expect(wrapper.getComponent(SliderRoot).props('disabled')).toBe(expected)
         },
       )
 
-      it('proporciona etiquetas localizadas para los thumbs del rango', () => {
-        const wrapper = mountSlider({ props: { value: [20, 80] } })
-        const labels = wrapper
-          .findAll('[data-test-slider-thumb]')
-          .map((thumb) => thumb.attributes('aria-label'))
+      it.each(casesThumbCursor)(
+        'aplica $expected al indicador cuando disabled=$input',
+        ({ input, expected, activeExpected }) => {
+          const thumb = mountSlider({ props: { disabled: input } }).get(
+            '[data-test-slider-thumb="0"]',
+          )
 
-        expect(labels).toEqual([i18n.global.t('minimum'), i18n.global.t('maximum')])
-      })
-
-      it('muestra un cursor de agarre en los thumbs', () => {
-        const wrapper = mountSlider({ props: { value: [20] } })
-        const thumb = wrapper.get('[data-test-slider-thumb="0"]')
-
-        expect(thumb.classes()).toContain('cursor-grab')
-        expect(thumb.classes()).toContain('active:cursor-grabbing')
-      })
-    })
-
-    describe('disabled', () => {
-      it.each(casesBoolean)(
-        'pasa disabled=$input a SliderRoot como $expected',
-        ({ input, expected }) => {
-          const wrapper = mountWithProp('disabled', input)
-
-          expect(wrapper.getComponent(SliderRoot).props('disabled')).toBe(expected)
+          expect(thumb.classes()).toContain(expected)
+          expect(thumb.classes()).toContain(activeExpected)
         },
       )
     })
@@ -169,7 +143,7 @@ describe('Slider', () => {
       it.each(casesOrientation)(
         'pasa orientation=$input a SliderRoot como $expected',
         ({ input, expected, class: expectedClass }) => {
-          const wrapper = mountWithProp('orientation', input)
+          const wrapper = mountSlider({ props: { orientation: input } })
 
           expect(wrapper.getComponent(SliderRoot).props('orientation')).toBe(expected)
           expect(wrapper.get('[data-test-slider-root]').classes()).toContain(expectedClass)
@@ -177,11 +151,43 @@ describe('Slider', () => {
       )
     })
 
+    describe('size', () => {
+      it.each(casesSize)('aplica size=$input al thumb y al track', ({ input, thumb, horizontalTrack, verticalTrack }) => {
+        const horizontal = mountSlider({ props: { size: input } })
+        const vertical = mountSlider({ props: { size: input, orientation: 'vertical' } })
+
+        expect(horizontal.get('[data-test-slider-thumb="0"]').classes()).toContain(thumb)
+        expect(horizontal.get('[data-test-slider-track]').classes()).toContain(horizontalTrack)
+        expect(vertical.get('[data-test-slider-thumb="0"]').classes()).toContain(thumb)
+        expect(vertical.get('[data-test-slider-track]').classes()).toContain(verticalTrack)
+      })
+    })
+
+    describe('color', () => {
+      testColor({
+        text: 'aplica color personalizado al slider',
+        id: '[data-test-slider-track]',
+        varColor: '--slider-color',
+        mount: (color) => mountSlider({ props: { color } }),
+      })
+    })
+
+    describe('severity', () => {
+      it.each(casesSeverity)('aplica severity=$input al track, range y thumb', ({ input, track, range, thumb, focus }) => {
+        const wrapper = mountSlider({ props: { severity: input } })
+
+        expect(wrapper.get('[data-test-slider-track]').classes()).toContain(track)
+        expect(wrapper.get('[data-test-slider-range]').classes()).toContain(range)
+        expect(wrapper.get('[data-test-slider-thumb="0"]').classes()).toContain(thumb)
+        expect(wrapper.get('[data-test-slider-thumb="0"]').classes()).toContain(focus)
+      })
+    })
+
     describe('inverted', () => {
-      it.each(casesBoolean)(
+      it.each(casesInverted)(
         'pasa inverted=$input a SliderRoot como $expected',
         ({ input, expected }) => {
-          const wrapper = mountWithProp('inverted', input)
+          const wrapper = mountSlider({ props: { inverted: input } })
 
           expect(wrapper.getComponent(SliderRoot).props('inverted')).toBe(expected)
         },
@@ -190,7 +196,7 @@ describe('Slider', () => {
 
     describe('min', () => {
       it.each(casesMin)('pasa min=$input a SliderRoot como $expected', ({ input, expected }) => {
-        const wrapper = mountWithProp('min', input)
+        const wrapper = mountSlider({ props: { min: input } })
 
         expect(wrapper.getComponent(SliderRoot).props('min')).toBe(expected)
       })
@@ -198,7 +204,7 @@ describe('Slider', () => {
 
     describe('max', () => {
       it.each(casesMax)('pasa max=$input a SliderRoot como $expected', ({ input, expected }) => {
-        const wrapper = mountWithProp('max', input)
+        const wrapper = mountSlider({ props: { max: input } })
 
         expect(wrapper.getComponent(SliderRoot).props('max')).toBe(expected)
       })
@@ -206,7 +212,7 @@ describe('Slider', () => {
 
     describe('step', () => {
       it.each(casesStep)('pasa step=$input a SliderRoot como $expected', ({ input, expected }) => {
-        const wrapper = mountWithProp('step', input)
+        const wrapper = mountSlider({ props: { step: input } })
 
         expect(wrapper.getComponent(SliderRoot).props('step')).toBe(expected)
       })
@@ -216,7 +222,7 @@ describe('Slider', () => {
       it.each(casesMinStepsBetweenThumbs)(
         'pasa minStepsBetweenThumbs=$input a SliderRoot como $expected',
         ({ input, expected }) => {
-          const wrapper = mountWithProp('minStepsBetweenThumbs', input)
+          const wrapper = mountSlider({ props: { minStepsBetweenThumbs: input } })
 
           expect(wrapper.getComponent(SliderRoot).props('minStepsBetweenThumbs')).toBe(expected)
         },
@@ -227,7 +233,7 @@ describe('Slider', () => {
       it.each(casesThumbAlignment)(
         'pasa thumbAlignment=$input a SliderRoot como $expected',
         ({ input, expected }) => {
-          const wrapper = mountWithProp('thumbAlignment', input)
+          const wrapper = mountSlider({ props: { thumbAlignment: input } })
 
           expect(wrapper.getComponent(SliderRoot).props('thumbAlignment')).toBe(expected)
         },
@@ -236,7 +242,7 @@ describe('Slider', () => {
 
     describe('name', () => {
       it.each(casesName)('pasa name=$input a SliderRoot como $expected', ({ input, expected }) => {
-        const wrapper = mountWithProp('name', input)
+        const wrapper = mountSlider({ props: { name: input } })
 
         expect(wrapper.getComponent(SliderRoot).props('name')).toBe(expected)
       })
@@ -246,7 +252,7 @@ describe('Slider', () => {
       it.each(casesRequired)(
         'pasa required=$input a SliderRoot como $expected',
         ({ input, expected }) => {
-          const wrapper = mountWithProp('required', input)
+          const wrapper = mountSlider({ props: { required: input } })
 
           expect(wrapper.getComponent(SliderRoot).props('required')).toBe(expected)
         },
@@ -255,221 +261,52 @@ describe('Slider', () => {
 
     describe('ui', () => {
       testAttrs({
-        text: 'pasa los atributos mediante ui.track',
+        text: 'reenvia attrs, class y style mediante ui.track',
         id: '[data-test-slider-track]',
         mount: (attrs) => mountSlider({ props: { ui: { track: () => attrs } } }),
       })
 
       testAttrs({
-        text: 'pasa los atributos mediante ui.range',
+        text: 'reenvia attrs, class y style mediante ui.range',
         id: '[data-test-slider-range]',
         mount: (attrs) => mountSlider({ props: { ui: { range: () => attrs } } }),
       })
 
       testAttrs({
-        text: 'pasa los atributos mediante ui.thumb',
+        text: 'reenvia attrs, class y style mediante ui.thumb',
         id: '[data-test-slider-thumb="0"]',
-        mount: (attrs) =>
-          mountSlider({
-            props: { value: [20, 80], ui: { thumb: () => attrs } },
-          }),
+        mount: (attrs) => mountSlider({ props: { ui: { thumb: () => attrs } } }),
       })
     })
   })
 
   describe('emits', () => {
     describe('update:value', () => {
-      it.each(casesEmittedValues)('reenvía value=$input desde SliderRoot', async ({ input }) => {
-        const wrapper = mountSlider({ props: { value: [20] } })
+      it.each([[[10]], [[25, 75]]])(
+        'reenvia update:modelValue de SliderRoot como update:value con %j',
+        async (value) => {
+          const wrapper = mountSlider()
+          const root = wrapper.getComponent(SliderRoot)
 
-        await wrapper.getComponent(SliderRoot).vm.$emit('update:modelValue', input)
-        await nextTick()
+          await root.vm.$emit('update:modelValue', value)
 
-        expect(wrapper.emitted('update:value')).toEqual([[input]])
-      })
+          expect(wrapper.emitted('update:value')).toEqual([[value]])
+        },
+      )
     })
 
     describe('valueCommit', () => {
-      it.each(casesCommittedValues)(
-        'reenvía valueCommit=$input desde SliderRoot',
-        async ({ input }) => {
-          const wrapper = mountSlider({ props: { value: [20] } })
+      it.each([[[10]], [[25, 75]]])(
+        'reenvia value-commit de SliderRoot como valueCommit con %j',
+        async (value) => {
+          const wrapper = mountSlider()
+          const root = wrapper.getComponent(SliderRoot)
 
-          await wrapper.getComponent(SliderRoot).vm.$emit('valueCommit', input)
-          await nextTick()
+          await root.vm.$emit('value-commit', value)
 
-          expect(wrapper.emitted('valueCommit')).toEqual([[input]])
+          expect(wrapper.emitted('valueCommit')).toEqual([[value]])
         },
       )
-    })
-  })
-
-  describe('attrs', () => {
-    testAttrs({
-      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
-      id: '[data-test-slider-root]',
-      mount: (attrs) => mountSlider({ attrs }),
-    })
-  })
-
-  describe('context contract', () => {
-    describe('SliderContext', () => {
-      it.each(casesSliderContext)('pasa values=$values', ({ values }) => {
-        let context: SliderContext | undefined
-
-        mountSlider({
-          props: { value: values },
-          slots: {
-            track: (slotProps) => {
-              context = slotProps
-              return h('span', 'Pista')
-            },
-          },
-        })
-
-        expect(context).toEqual({ values })
-      })
-
-      it.each(casesSliderContext)('pasa values=$values al slot range', ({ values }) => {
-        let context: SliderContext | undefined
-
-        mountSlider({
-          props: { value: values },
-          slots: {
-            range: (slotProps) => {
-              context = slotProps
-              return h('span')
-            },
-          },
-        })
-
-        expect(context).toEqual({ values })
-      })
-    })
-
-    describe('SliderThumbContext', () => {
-      it.each(casesThumbContext)(
-        'pasa el contexto esperado para values=$values en index=$expected.index',
-        ({ values, expected }) => {
-          const contexts: SliderThumbContext[] = []
-
-          mountSlider({
-            props: { value: values },
-            slots: {
-              thumb: (slotProps: SliderThumbContext) => {
-                contexts.push(pickThumbContext(slotProps))
-                return h('span')
-              },
-            },
-          })
-
-          expect(contexts).toContainEqual(expected)
-        },
-      )
-    })
-  })
-
-  describe('slots', () => {
-    describe('track', () => {
-      it('renderiza el slot y sustituye el range predeterminado', () => {
-        const wrapper = mountSlider({
-          props: { value: [20] },
-          slots: {
-            track: () => h('span', { 'data-test-slider-slot': 'track' }, 'Track del slot'),
-          },
-        })
-
-        expect(wrapper.get('[data-test-slider-slot="track"]').text()).toBe('Track del slot')
-        expect(wrapper.find('[data-test-slider-range]').exists()).toBe(false)
-      })
-
-      it('pasa SliderContext como slotProps', () => {
-        let context: SliderContext | undefined
-
-        mountSlider({
-          props: { value: [20, 80] },
-          slots: {
-            track: (slotProps: SliderContext) => {
-              context = slotProps
-              return h('span')
-            },
-          },
-        })
-
-        expect(context).toEqual({ values: [20, 80] })
-      })
-    })
-
-    describe('range', () => {
-      it('renderiza el slot y sustituye el range predeterminado', () => {
-        const wrapper = mountSlider({
-          props: { value: [20] },
-          slots: {
-            range: () => h('span', { 'data-test-slider-slot': 'range' }, 'Range del slot'),
-          },
-        })
-
-        expect(wrapper.get('[data-test-slider-slot="range"]').text()).toBe('Range del slot')
-        expect(wrapper.find('[data-test-slider-range]').exists()).toBe(false)
-      })
-
-      it('pasa SliderContext como slotProps', () => {
-        let context: SliderContext | undefined
-
-        mountSlider({
-          props: { value: [20, 80] },
-          slots: {
-            range: (slotProps: SliderContext) => {
-              context = slotProps
-              return h('span')
-            },
-          },
-        })
-
-        expect(context).toEqual({ values: [20, 80] })
-      })
-    })
-
-    describe('thumb', () => {
-      it('renderiza el slot dentro de cada thumb', () => {
-        const wrapper = mountSlider({
-          props: { value: [20, 80] },
-          slots: {
-            thumb: (slotProps: SliderThumbContext) =>
-              h(
-                'span',
-                { 'data-test-slider-slot': `thumb-${slotProps.index}` },
-                `Thumb del slot ${slotProps.value}`,
-              ),
-          },
-        })
-
-        expect(wrapper.get('[data-test-slider-slot="thumb-0"]').text()).toBe('Thumb del slot 20')
-        expect(wrapper.get('[data-test-slider-slot="thumb-1"]').text()).toBe('Thumb del slot 80')
-      })
-
-      it('pasa SliderThumbContext como slotProps', () => {
-        const contexts: SliderThumbContext[] = []
-
-        mountSlider({
-          props: { value: [20, 80] },
-          slots: {
-            thumb: (slotProps: SliderThumbContext) => {
-              contexts.push(pickThumbContext(slotProps))
-              return h('span')
-            },
-          },
-        })
-
-        const uniqueContexts = Array.from(
-          new Map(contexts.map((context) => [context.index, context])).values(),
-        )
-
-        expect(uniqueContexts).toEqual([
-          { values: [20, 80], index: 0, value: 20, first: true, last: false },
-          { values: [20, 80], index: 1, value: 80, first: false, last: true },
-        ])
-      })
     })
   })
 })

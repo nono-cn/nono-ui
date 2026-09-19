@@ -1,5 +1,5 @@
 export const sliderDefaults = {
-  value: [0] as number[],
+  value: () => [0] as number[],
   disabled: false,
   orientation: 'horizontal' as const,
   inverted: false,
@@ -8,4 +8,6 @@ export const sliderDefaults = {
   step: 1,
   minStepsBetweenThumbs: 0,
   thumbAlignment: 'contain' as const,
+  size: 'md' as const,
+  severity: 'primary' as const,
 }
