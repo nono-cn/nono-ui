@@ -16,18 +16,18 @@ export const checkboxVariants = cva('', {
     },
     severity: {
       primary:
-        'focus-visible:border-primary focus-visible:ring-primary/50 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
+        'focus-visible:border-primary focus-visible:ring-primary/50 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground',
       secondary:
-        'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/50 data-[state=checked]:border-secondary data-[state=checked]:bg-secondary data-[state=checked]:text-secondary-foreground',
+        'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/50 data-[state=checked]:border-secondary data-[state=checked]:bg-secondary data-[state=checked]:text-secondary-foreground data-[state=indeterminate]:border-secondary data-[state=indeterminate]:bg-secondary data-[state=indeterminate]:text-secondary-foreground',
       warning:
-        'focus-visible:border-warning focus-visible:ring-warning/50 data-[state=checked]:border-warning data-[state=checked]:bg-warning data-[state=checked]:text-warning-foreground',
+        'focus-visible:border-warning focus-visible:ring-warning/50 data-[state=checked]:border-warning data-[state=checked]:bg-warning data-[state=checked]:text-warning-foreground data-[state=indeterminate]:border-warning data-[state=indeterminate]:bg-warning data-[state=indeterminate]:text-warning-foreground',
       success:
-        'focus-visible:border-success focus-visible:ring-success/50 data-[state=checked]:border-success data-[state=checked]:bg-success data-[state=checked]:text-success-foreground',
+        'focus-visible:border-success focus-visible:ring-success/50 data-[state=checked]:border-success data-[state=checked]:bg-success data-[state=checked]:text-success-foreground data-[state=indeterminate]:border-success data-[state=indeterminate]:bg-success data-[state=indeterminate]:text-success-foreground',
       error:
-        'focus-visible:border-error focus-visible:ring-error/50 data-[state=checked]:border-error data-[state=checked]:bg-error data-[state=checked]:text-error-foreground',
+        'focus-visible:border-error focus-visible:ring-error/50 data-[state=checked]:border-error data-[state=checked]:bg-error data-[state=checked]:text-error-foreground data-[state=indeterminate]:border-error data-[state=indeterminate]:bg-error data-[state=indeterminate]:text-error-foreground',
     },
     color: {
-      true: 'focus-visible:border-(--checkbox-color) focus-visible:ring-(--checkbox-color)/50 data-[state=checked]:border-(--checkbox-color) data-[state=checked]:bg-(--checkbox-color) data-[state=checked]:text-(--checkbox-color-foreground)',
+      true: 'focus-visible:border-(--checkbox-color) focus-visible:ring-(--checkbox-color)/50 data-[state=checked]:border-(--checkbox-color) data-[state=checked]:bg-(--checkbox-color) data-[state=checked]:text-(--checkbox-color-foreground) data-[state=indeterminate]:border-(--checkbox-color) data-[state=indeterminate]:bg-(--checkbox-color) data-[state=indeterminate]:text-(--checkbox-color-foreground)',
       false: '',
     },
   },
@@ -79,6 +79,7 @@ export interface CheckboxProps extends Pick<
   severity?: CheckboxSeverity
   color?: string
   icon?: IconConfig
+  indeterminateIcon?: IconConfig
   ui?: CheckboxUI
 }
 

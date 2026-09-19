@@ -6,6 +6,7 @@ import CheckboxIconExample from '../../components/examples/checkbox/CheckboxIcon
 import CheckboxSizeExample from '../../components/examples/checkbox/CheckboxSizeExample.vue'
 import CheckboxSeverityExample from '../../components/examples/checkbox/CheckboxSeverityExample.vue'
 import CheckboxColorExample from '../../components/examples/checkbox/CheckboxColorExample.vue'
+import CheckboxIndeterminateIconExample from '../../components/examples/checkbox/CheckboxIndeterminateIconExample.vue'
 
 const checkboxConfig: ComponentDocConfig = {
   slug: 'checkbox',
@@ -49,6 +50,11 @@ const checkboxConfig: ComponentDocConfig = {
       title: 'Icon',
       description: 'Personaliza el icono del indicador mediante IconConfig.',
       component: CheckboxIconExample,
+    },
+    {
+      title: 'Indeterminate icon',
+      description: 'Personaliza el icono mostrado cuando el valor es indeterminate.',
+      component: CheckboxIndeterminateIconExample,
     },
   ],
   accessibility: [
@@ -102,6 +108,13 @@ const checkboxConfig: ComponentDocConfig = {
         typeLink: '/components/icon#icon-config',
         default: "{ name: 'check' }",
         description: 'Configuración del icono mostrado dentro del indicador.',
+      },
+      {
+        name: 'indeterminateIcon',
+        type: 'IconConfig',
+        typeLink: '/components/icon#icon-config',
+        default: "{ name: 'minus' }",
+        description: 'Configuración del icono mostrado cuando value es indeterminate.',
       },
       {
         name: 'ui',

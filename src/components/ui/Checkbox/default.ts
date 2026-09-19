@@ -5,5 +5,6 @@ export const checkboxDefaults = {
   severity: 'primary' as const,
   color: undefined,
   icon: () => ({ name: 'check' as const }),
+  indeterminateIcon: () => ({ name: 'minus' as const }),
   ui: undefined,
 }

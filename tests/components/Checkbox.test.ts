@@ -53,12 +53,36 @@ const sizeCases = [
 ] satisfies Array<{ size: CheckboxSize | undefined; rootClass: string; iconClass: string }>
 
 const severityCases = [
-  { severity: 'primary', class: 'data-[state=checked]:bg-primary' },
-  { severity: 'secondary', class: 'data-[state=checked]:bg-secondary' },
-  { severity: 'warning', class: 'data-[state=checked]:bg-warning' },
-  { severity: 'success', class: 'data-[state=checked]:bg-success' },
-  { severity: 'error', class: 'data-[state=checked]:bg-error' },
-  { severity: undefined, class: 'data-[state=checked]:bg-primary' },
+  {
+    severity: 'primary',
+    class: 'data-[state=checked]:bg-primary',
+    indeterminateClass: 'data-[state=indeterminate]:bg-primary',
+  },
+  {
+    severity: 'secondary',
+    class: 'data-[state=checked]:bg-secondary',
+    indeterminateClass: 'data-[state=indeterminate]:bg-secondary',
+  },
+  {
+    severity: 'warning',
+    class: 'data-[state=checked]:bg-warning',
+    indeterminateClass: 'data-[state=indeterminate]:bg-warning',
+  },
+  {
+    severity: 'success',
+    class: 'data-[state=checked]:bg-success',
+    indeterminateClass: 'data-[state=indeterminate]:bg-success',
+  },
+  {
+    severity: 'error',
+    class: 'data-[state=checked]:bg-error',
+    indeterminateClass: 'data-[state=indeterminate]:bg-error',
+  },
+  {
+    severity: undefined,
+    class: 'data-[state=checked]:bg-primary',
+    indeterminateClass: 'data-[state=indeterminate]:bg-primary',
+  },
 ] satisfies Array<{ severity: CheckboxSeverity | undefined; class: string }>
 
 describe('Checkbox', () => {
@@ -110,11 +134,15 @@ describe('Checkbox', () => {
     })
 
     describe('severity', () => {
-      it.each(severityCases)('renderiza severity=$severity', ({ severity, class: className }) => {
-        const checkbox = mountCheckbox({ props: { severity } })
+      it.each(severityCases)(
+        'renderiza severity=$severity en checked e indeterminate',
+        ({ severity, class: className, indeterminateClass }) => {
+          const checkbox = mountCheckbox({ props: { severity } })
 
-        expect(checkbox.get('[data-test-checkbox-root]').classes()).toContain(className)
-      })
+          expect(checkbox.get('[data-test-checkbox-root]').classes()).toContain(className)
+          expect(checkbox.get('[data-test-checkbox-root]').classes()).toContain(indeterminateClass)
+        },
+      )
     })
 
     describe('color', () => {
@@ -132,6 +160,7 @@ describe('Checkbox', () => {
 
         expect(root.classes()).toContain('data-[state=checked]:bg-(--checkbox-color)')
         expect(root.classes()).toContain('focus-visible:ring-(--checkbox-color)/50')
+        expect(root.classes()).toContain('data-[state=indeterminate]:bg-(--checkbox-color)')
       })
     })
 
@@ -166,6 +195,45 @@ describe('Checkbox', () => {
         const checkbox = mountCheckbox({ props: { value: false } })
 
         expect(checkbox.find('[data-test-checkbox-icon]').exists()).toBe(false)
+      })
+    })
+
+    describe('indeterminateIcon', () => {
+      testIconConfig({
+        text: 'pasa la configuración del icono indeterminado',
+        id: '[data-test-checkbox-icon]',
+        default: 'minus',
+        omit: ['size', 'color'],
+        mount: (icon) =>
+          mountCheckbox({ props: { value: 'indeterminate', indeterminateIcon: icon } }),
+      })
+
+      it('usa el icono indeterminado por defecto', () => {
+        const checkbox = mountCheckbox({ props: { value: 'indeterminate' } })
+        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
+
+        expect(icon.props('name')).toBe('minus')
+      })
+
+      it('siempre pasa size undefined al icono', () => {
+        const checkbox = mountCheckbox({
+          props: { value: 'indeterminate', indeterminateIcon: { name: 'minus', size: 'xl' } },
+        })
+        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
+
+        expect(icon.vm.$.vnode.props?.size).toBeUndefined()
+      })
+
+      it('siempre pasa color undefined al icono', () => {
+        const checkbox = mountCheckbox({
+          props: {
+            value: 'indeterminate',
+            indeterminateIcon: { name: 'minus', color: '#ff0000' },
+          },
+        })
+        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
+
+        expect(icon.vm.$.vnode.props?.color).toBeUndefined()
       })
     })
 

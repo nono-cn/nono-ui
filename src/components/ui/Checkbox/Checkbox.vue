@@ -43,6 +43,10 @@ const checkboxContext = computed<CheckboxContext>(() => ({
   state: value.value === 'indeterminate' ? 'indeterminate' : value.value === props.trueValue,
 }))
 
+const checkboxIcon = computed(() =>
+  value.value === 'indeterminate' ? props.indeterminateIcon : props.icon,
+)
+
 const attrs = useAttrs()
 const { colorStyle } = useColor(
   computed(() => props.color),
@@ -82,10 +86,10 @@ const indicatorProps = computed(() => {
   <CheckboxRoot v-bind="rootProps" v-model="value" data-test-checkbox-root>
     <CheckboxIndicator v-bind="indicatorProps" data-test-checkbox-indicator>
       <Icon
-        v-bind="props.icon"
+        v-bind="checkboxIcon"
         :size="undefined"
         :color="undefined"
-        :class="checkboxIconVariants({ size: props.size, class: props.icon.class })"
+        :class="checkboxIconVariants({ size: props.size, class: checkboxIcon.class })"
         data-test-checkbox-icon
       />
     </CheckboxIndicator>
