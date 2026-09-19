@@ -1,20 +1,21 @@
-import announcer from './components/announcer'
 import accordion from './components/accordion'
 import alert from './components/alert'
 import alertDialog from './components/alert-dialog'
+import announcer from './components/announcer'
 import attachment from './components/attachment'
 import aspectRatio from './components/aspect-ratio'
 import avatar from './components/avatar'
 import badge from './components/badge'
+import bubble from './components/bubble'
 import button from './components/button'
 import buttonGroup from './components/button-group'
-import bubble from './components/bubble'
+import card from './components/card'
+import checkboxConfig from './components/checkbox'
 import chip from './components/chip'
 import empty from './components/empty'
-import label from './components/label'
-import card from './components/card'
 import icon from './components/icon'
 import kbd from './components/kbd'
+import label from './components/label'
 import marker from './components/marker'
 import masonry from './components/masonry'
 import message from './components/message'
@@ -30,22 +31,23 @@ export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'descrip
 
 export const docsComponents = [
   accordion,
-  announcer,
   alert,
   alertDialog,
+  announcer,
   attachment,
   aspectRatio,
   avatar,
   badge,
+  bubble,
   button,
   buttonGroup,
-  bubble,
+  card,
+  checkboxConfig,
   chip,
   empty,
-  label,
-  card,
   icon,
   kbd,
+  label,
   marker,
   masonry,
   message,
