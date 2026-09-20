@@ -28,6 +28,7 @@ import scrollArea from './components/scroll-area'
 import search from './components/search'
 import slider from './components/slider'
 import separator from './components/separator'
+import splitter from './components/splitter'
 import switchConfig from './components/switch'
 import textarea from './components/textarea'
 import type { ComponentDocConfig } from './component-docs'
@@ -65,6 +66,7 @@ export const docsComponents = [
   search,
   slider,
   separator,
+  splitter,
   switchConfig,
   textarea,
 ] satisfies ComponentDocConfig[]
