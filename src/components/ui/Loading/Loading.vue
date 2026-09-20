@@ -23,7 +23,7 @@ const rootProps = computed(() => ({
   ...attrs,
   role: 'status',
   'aria-busy': props.loading,
-  'aria-label': attrs['aria-label'] ?? t('loading'),
+  'aria-label': props.loading ? (attrs['aria-label'] ?? t('loading')) : undefined,
   class: cn('w-full', attrs.class),
   style: attrs.style,
 }))
