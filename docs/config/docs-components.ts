@@ -13,6 +13,7 @@ import card from './components/card'
 import checkboxConfig from './components/checkbox'
 import chip from './components/chip'
 import empty from './components/empty'
+import fieldSet from './components/field-set'
 import icon from './components/icon'
 import kbd from './components/kbd'
 import label from './components/label'
@@ -49,6 +50,7 @@ export const docsComponents = [
   checkboxConfig,
   chip,
   empty,
+  fieldSet,
   icon,
   kbd,
   label,
