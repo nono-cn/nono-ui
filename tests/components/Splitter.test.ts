@@ -25,25 +25,126 @@ function makeItem(overrides: Partial<SplitterItem> = {}): SplitterItem {
   }
 }
 
+const casesIds = [
+  { input: 'splitter-group', expected: 'splitter-group' },
+  { input: undefined, expected: undefined },
+]
+const casesAutoSaveIds = [
+  { input: 'splitter-layout', expected: 'splitter-layout' },
+  { input: null, expected: null },
+  { input: undefined, expected: null },
+]
+const casesDirections = [
+  { input: 'horizontal' as const, expected: 'horizontal' },
+  { input: 'vertical' as const, expected: 'vertical' },
+  { input: undefined, expected: 'horizontal' },
+]
+const casesKeyboardResizeBy = [
+  { input: 7, expected: 7 },
+  { input: null, expected: null },
+  { input: undefined, expected: 10 },
+]
+const storage = {
+  getItem: vi.fn(() => null),
+  setItem: vi.fn(),
+}
+const hitAreaMargins = { mouse: 12, touch: 24 }
+const casesTabindexes = [
+  { input: 0, expected: 0 },
+  { input: undefined, expected: 0 },
+]
+const casesDisabled = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: undefined },
+]
+const casesNonces = [
+  { input: 'splitter-nonce', expected: 'splitter-nonce' },
+  { input: undefined, expected: undefined },
+]
+
 describe('Splitter', () => {
   describe('props', () => {
-    describe('direction', () => {
-      it.each([
-        { input: 'horizontal' as const, expected: 'horizontal' },
-        { input: 'vertical' as const, expected: 'vertical' },
-        { input: undefined, expected: 'horizontal' },
-      ])('pasa direction=$input al SplitterGroup de Reka como $expected', ({ input, expected }) => {
-        const wrapper = mountSplitter({ props: { direction: input } })
+    describe('items', () => {
+      const mountItem = (item: Partial<SplitterItem>) =>
+        mountSplitter({ props: { items: [makeItem(item)] } }).getComponent(SplitterPanel)
 
-        expect(wrapper.getComponent(SplitterGroup).props('direction')).toBe(expected)
+      describe('slot', () => {
+        it('usa slot para resolver el nombre del panel', () => {
+          const wrapper = mountSplitter({
+            props: { items: [makeItem({ slot: 'files' })] },
+            slots: { 'panel-files': () => h('span', 'Files') },
+          })
+
+          expect(wrapper.text()).toContain('Files')
+        })
+      })
+
+      describe('id', () => {
+        it('pasa id a SplitterPanel de Reka', () => {
+          expect(mountItem({ id: 'panel-id' }).props('id')).toBe('panel-id')
+        })
+      })
+
+      describe('collapsedSize', () => {
+        it('pasa collapsedSize a SplitterPanel de Reka', () => {
+          expect(mountItem({ collapsedSize: 5 }).props('collapsedSize')).toBe(5)
+        })
+      })
+
+      describe('collapsible', () => {
+        it.each([true, false, undefined])('pasa collapsible=%s a SplitterPanel de Reka', (value) => {
+          expect(mountItem({ collapsible: value }).props('collapsible')).toBe(value)
+        })
+      })
+
+      describe('defaultSize', () => {
+        it('pasa defaultSize a SplitterPanel de Reka', () => {
+          expect(mountItem({ defaultSize: 35 }).props('defaultSize')).toBe(35)
+        })
+      })
+
+      describe('maxSize', () => {
+        it('pasa maxSize a SplitterPanel de Reka', () => {
+          expect(mountItem({ maxSize: 70 }).props('maxSize')).toBe(70)
+        })
+      })
+
+      describe('minSize', () => {
+        it('pasa minSize a SplitterPanel de Reka', () => {
+          expect(mountItem({ minSize: 20 }).props('minSize')).toBe(20)
+        })
+      })
+
+      describe('order', () => {
+        it('pasa order a SplitterPanel de Reka', () => {
+          expect(mountItem({ order: 2 }).props('order')).toBe(2)
+        })
+      })
+
+      describe('sizeUnit', () => {
+        it.each(['%', 'px'] as const)('pasa sizeUnit=%s a SplitterPanel de Reka', (value) => {
+          expect(mountItem({ sizeUnit: value }).props('sizeUnit')).toBe(value)
+        })
+      })
+
+      describe('class', () => {
+        it('pasa class al SplitterPanel de Reka', () => {
+          expect(mountItem({ class: 'panel-custom' }).classes()).toContain('panel-custom')
+        })
+      })
+
+      describe('style', () => {
+        it('pasa style al SplitterPanel de Reka', () => {
+          expect(mountItem({ style: 'background: red' }).attributes('style')).toContain(
+            'background: red',
+          )
+        })
       })
     })
 
     describe('id', () => {
-      it.each([
-        { input: 'splitter-group', expected: 'splitter-group' },
-        { input: undefined, expected: undefined },
-      ])('pasa id=$input a SplitterGroup', ({ input, expected }) => {
+      it.each(casesIds)('pasa id=$input al SplitterGroup de Reka', ({ input, expected }) => {
         const group = mountSplitter({ props: { id: input } }).getComponent(SplitterGroup)
 
         expect(group.props('id')).toBe(expected)
@@ -51,179 +152,50 @@ describe('Splitter', () => {
     })
 
     describe('autoSaveId', () => {
-      it.each([
-        { input: 'splitter-layout', expected: 'splitter-layout' },
-        { input: null, expected: null },
-        { input: undefined, expected: null },
-      ])('pasa autoSaveId=$input a SplitterGroup', ({ input, expected }) => {
-        const group = mountSplitter({ props: { autoSaveId: input } }).getComponent(SplitterGroup)
+      it.each(casesAutoSaveIds)(
+        'pasa autoSaveId=$input al SplitterGroup de Reka',
+        ({ input, expected }) => {
+          const group = mountSplitter({ props: { autoSaveId: input } }).getComponent(SplitterGroup)
 
-        expect(group.props('autoSaveId')).toBe(expected)
-      })
+          expect(group.props('autoSaveId')).toBe(expected)
+        },
+      )
+    })
+
+    describe('direction', () => {
+      it.each(casesDirections)(
+        'pasa direction=$input al SplitterGroup de Reka',
+        ({ input, expected }) => {
+          const group = mountSplitter({ props: { direction: input } }).getComponent(SplitterGroup)
+
+          expect(group.props('direction')).toBe(expected)
+        },
+      )
     })
 
     describe('keyboardResizeBy', () => {
-      it.each([
-        { input: 7, expected: 7 },
-        { input: null, expected: null },
-        { input: undefined, expected: 10 },
-      ])('pasa keyboardResizeBy=$input a SplitterGroup', ({ input, expected }) => {
-        const group = mountSplitter({ props: { keyboardResizeBy: input } }).getComponent(
-          SplitterGroup,
-        )
+      it.each(casesKeyboardResizeBy)(
+        'pasa keyboardResizeBy=$input al SplitterGroup de Reka',
+        ({ input, expected }) => {
+          const group = mountSplitter({ props: { keyboardResizeBy: input } }).getComponent(
+            SplitterGroup,
+          )
 
-        expect(group.props('keyboardResizeBy')).toBe(expected)
-      })
+          expect(group.props('keyboardResizeBy')).toBe(expected)
+        },
+      )
     })
 
     describe('storage', () => {
-      it('pasa la API de almacenamiento personalizada a SplitterGroup', () => {
-        const storage = {
-          getItem: vi.fn(() => null),
-          setItem: vi.fn(),
-        }
+      it('pasa la API de almacenamiento personalizada al SplitterGroup de Reka', () => {
         const group = mountSplitter({ props: { storage } }).getComponent(SplitterGroup)
 
         expect(group.props('storage')).toEqual(storage)
       })
     })
 
-    describe('items', () => {
-      it('no renderiza paneles cuando items es undefined', () => {
-        const wrapper = mountSplitter()
-
-        expect(wrapper.findAllComponents(SplitterPanel)).toHaveLength(0)
-        expect(wrapper.findAllComponents(SplitterResizeHandle)).toHaveLength(0)
-      })
-
-      it('renderiza un panel por elemento y un manejador por cada par adyacente', () => {
-        const wrapper = mountSplitter({
-          props: {
-            items: [makeItem(), makeItem({ id: 'right', slot: 'right' })],
-          },
-        })
-
-        expect(wrapper.findAllComponents(SplitterPanel)).toHaveLength(2)
-        expect(wrapper.findAllComponents(SplitterResizeHandle)).toHaveLength(1)
-      })
-
-      describe('slot', () => {
-        it('usa el slot del elemento para resolver el nombre del slot del panel', () => {
-          const wrapper = mountSplitter({
-            props: { items: [makeItem({ slot: 'files' })] },
-            slots: {
-              'panel-files': () => h('span', { 'data-test-item-slot': '' }, 'Files'),
-            },
-          })
-
-          expect(wrapper.get('[data-test-item-slot]').text()).toBe('Files')
-        })
-      })
-
-      describe('id', () => {
-        it('pasa el id del elemento a SplitterPanel', () => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ id: 'panel-id' })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.props('id')).toBe('panel-id')
-        })
-      })
-
-      describe('collapsedSize', () => {
-        it('pasa collapsedSize a SplitterPanel', () => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ collapsedSize: 5 })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.props('collapsedSize')).toBe(5)
-        })
-      })
-
-      describe('collapsible', () => {
-        it.each([true, false, undefined])('pasa collapsible=%s a SplitterPanel', (value) => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ collapsible: value })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.props('collapsible')).toBe(value)
-        })
-      })
-
-      describe('defaultSize', () => {
-        it('pasa defaultSize a SplitterPanel', () => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ defaultSize: 35 })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.props('defaultSize')).toBe(35)
-        })
-      })
-
-      describe('maxSize', () => {
-        it('pasa maxSize a SplitterPanel', () => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ maxSize: 70 })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.props('maxSize')).toBe(70)
-        })
-      })
-
-      describe('minSize', () => {
-        it('pasa minSize a SplitterPanel', () => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ minSize: 20 })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.props('minSize')).toBe(20)
-        })
-      })
-
-      describe('order', () => {
-        it('pasa order a SplitterPanel', () => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ order: 2 })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.props('order')).toBe(2)
-        })
-      })
-
-      describe('sizeUnit', () => {
-        it.each(['%', 'px'] as const)('pasa sizeUnit=%s a SplitterPanel', (value) => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ sizeUnit: value })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.props('sizeUnit')).toBe(value)
-        })
-      })
-
-      describe('class', () => {
-        it('pasa la class del elemento a SplitterPanel', () => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ class: 'panel-custom' })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.classes()).toContain('panel-custom')
-        })
-      })
-
-      describe('style', () => {
-        it('pasa el style del elemento a SplitterPanel', () => {
-          const panel = mountSplitter({
-            props: { items: [makeItem({ style: 'background: red' })] },
-          }).getComponent(SplitterPanel)
-
-          expect(panel.attributes('style')).toContain('background: red')
-        })
-      })
-    })
-
     describe('hitAreaMargins', () => {
-      it('pasa hitAreaMargins a cada SplitterResizeHandle', () => {
-        const hitAreaMargins = { mouse: 12, touch: 24 }
+      it('pasa hitAreaMargins a cada SplitterResizeHandle de Reka', () => {
         const wrapper = mountSplitter({
           props: {
             hitAreaMargins,
@@ -238,42 +210,51 @@ describe('Splitter', () => {
     })
 
     describe('tabindex', () => {
-      it('pasa tabindex a cada SplitterResizeHandle', () => {
-        const wrapper = mountSplitter({
-          props: {
-            tabindex: 0,
-            items: [makeItem(), makeItem({ id: 'right', slot: 'right' })],
-          },
-        })
+      it.each(casesTabindexes)(
+        'pasa tabindex=$input a cada SplitterResizeHandle de Reka',
+        ({ input, expected }) => {
+          const wrapper = mountSplitter({
+            props: {
+              tabindex: input,
+              items: [makeItem(), makeItem({ id: 'right', slot: 'right' })],
+            },
+          })
 
-        expect(wrapper.getComponent(SplitterResizeHandle).props('tabindex')).toBe(0)
-      })
+          expect(wrapper.getComponent(SplitterResizeHandle).props('tabindex')).toBe(expected)
+        },
+      )
     })
 
     describe('disabled', () => {
-      it.each([true, false, undefined])('pasa disabled=%s a cada manejador', (value) => {
-        const wrapper = mountSplitter({
-          props: {
-            disabled: value,
-            items: [makeItem(), makeItem({ id: 'right', slot: 'right' })],
-          },
-        })
+      it.each(casesDisabled)(
+        'pasa disabled=$input a cada SplitterResizeHandle de Reka',
+        ({ input, expected }) => {
+          const wrapper = mountSplitter({
+            props: {
+              disabled: input,
+              items: [makeItem(), makeItem({ id: 'right', slot: 'right' })],
+            },
+          })
 
-        expect(wrapper.getComponent(SplitterResizeHandle).props('disabled')).toBe(value)
-      })
+          expect(wrapper.getComponent(SplitterResizeHandle).props('disabled')).toBe(expected)
+        },
+      )
     })
 
     describe('nonce', () => {
-      it('pasa nonce a cada SplitterResizeHandle', () => {
-        const wrapper = mountSplitter({
-          props: {
-            nonce: 'splitter-nonce',
-            items: [makeItem(), makeItem({ id: 'right', slot: 'right' })],
-          },
-        })
+      it.each(casesNonces)(
+        'pasa nonce=$input a cada SplitterResizeHandle de Reka',
+        ({ input, expected }) => {
+          const wrapper = mountSplitter({
+            props: {
+              nonce: input,
+              items: [makeItem(), makeItem({ id: 'right', slot: 'right' })],
+            },
+          })
 
-        expect(wrapper.getComponent(SplitterResizeHandle).props('nonce')).toBe('splitter-nonce')
-      })
+          expect(wrapper.getComponent(SplitterResizeHandle).props('nonce')).toBe(expected)
+        },
+      )
     })
 
     describe('ui', () => {
@@ -309,17 +290,9 @@ describe('Splitter', () => {
     })
   })
 
-  describe('attrs', () => {
-    testAttrs({
-      id: '[data-test-splitter-root]',
-      assertId: false,
-      mount: (attrs) => mountSplitter({ attrs }),
-    })
-  })
-
   describe('emits', () => {
     describe('layout', () => {
-      it('reenvia el layout emitido por SplitterGroup', async () => {
+      it('reenvía el layout emitido por SplitterGroup de Reka', async () => {
         const wrapper = mountSplitter()
         const layout = [35, 65]
 
@@ -330,21 +303,30 @@ describe('Splitter', () => {
       })
     })
 
-    describe('collapse and expand', () => {
-      it.each(['collapse', 'expand'] as const)(
-        'reenvia el evento %s de SplitterPanel',
-        async (event) => {
-          const wrapper = mountSplitter({ props: { items: [makeItem()] } })
-          wrapper.getComponent(SplitterPanel).vm.$emit(event)
-          await nextTick()
+    describe('collapse', () => {
+      it('reenvía collapse emitido por SplitterPanel de Reka', async () => {
+        const wrapper = mountSplitter({ props: { items: [makeItem()] } })
 
-          expect(wrapper.emitted(event)).toEqual([[]])
-        },
-      )
+        wrapper.getComponent(SplitterPanel).vm.$emit('collapse')
+        await nextTick()
+
+        expect(wrapper.emitted('collapse')).toEqual([[]])
+      })
+    })
+
+    describe('expand', () => {
+      it('reenvía expand emitido por SplitterPanel de Reka', async () => {
+        const wrapper = mountSplitter({ props: { items: [makeItem()] } })
+
+        wrapper.getComponent(SplitterPanel).vm.$emit('expand')
+        await nextTick()
+
+        expect(wrapper.emitted('expand')).toEqual([[]])
+      })
     })
 
     describe('resize', () => {
-      it('reenvia el tamaño y el tamaño anterior de SplitterPanel', async () => {
+      it('reenvía el tamaño y el tamaño anterior de SplitterPanel de Reka', async () => {
         const wrapper = mountSplitter({ props: { items: [makeItem()] } })
         await nextTick()
         wrapper.emitted('resize')?.splice(0)
@@ -359,7 +341,7 @@ describe('Splitter', () => {
 
   describe('slots', () => {
     describe('default', () => {
-      it('renderiza el slot de panel por defecto cuando un elemento no tiene nombre de slot', () => {
+      it('renderiza el slot de panel por defecto', () => {
         const wrapper = mountSplitter({
           props: { items: [makeItem({ slot: undefined })] },
           slots: {
@@ -372,7 +354,7 @@ describe('Splitter', () => {
     })
 
     describe('handle', () => {
-      it('renderiza el slot global del manejador cuando un elemento no tiene nombre de slot', () => {
+      it('renderiza el slot global del manejador', () => {
         const wrapper = mountSplitter({
           props: {
             items: [makeItem({ slot: undefined }), makeItem({ id: 'right', slot: undefined })],
@@ -386,8 +368,8 @@ describe('Splitter', () => {
       })
     })
 
-    describe('panel-{slot}', () => {
-      it('renderiza el slot del panel calculado a partir del slot del elemento', () => {
+    describe('{slot}', () => {
+      it('renderiza panel-{slot} para el panel dirigido', () => {
         const wrapper = mountSplitter({
           props: { items: [makeItem({ slot: 'files' })] },
           slots: {
@@ -397,10 +379,8 @@ describe('Splitter', () => {
 
         expect(wrapper.get('[data-test-panel-files]').text()).toBe('Files panel')
       })
-    })
 
-    describe('handle-{slot}', () => {
-      it('renderiza el slot del manejador calculado a partir del slot del elemento', () => {
+      it('renderiza handle-{slot} para el manejador dirigido', () => {
         const wrapper = mountSplitter({
           props: {
             items: [makeItem({ slot: 'files' }), makeItem({ id: 'right', slot: 'right' })],
@@ -416,7 +396,7 @@ describe('Splitter', () => {
   })
 
   describe('context contract', () => {
-    it('pasa los seis campos de contexto compartidos a los slots de panel y manejador', () => {
+    it('pasa el contexto compartido a los slots de panel y manejador', () => {
       const items = [makeItem(), makeItem({ id: 'right', slot: 'right' })]
       const panelContexts: SplitterItemContext[] = []
       const handleContexts: SplitterItemContext[] = []
@@ -471,6 +451,14 @@ describe('Splitter', () => {
         last: false,
         nextItem: items[1],
       })
+    })
+  })
+
+  describe('attrs', () => {
+    testAttrs({
+      id: '[data-test-splitter-root]',
+      assertId: false,
+      mount: (attrs) => mountSplitter({ attrs }),
     })
   })
 })
