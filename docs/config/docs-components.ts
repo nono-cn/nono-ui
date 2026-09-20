@@ -16,6 +16,7 @@ import empty from './components/empty'
 import icon from './components/icon'
 import kbd from './components/kbd'
 import label from './components/label'
+import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
 import message from './components/message'
@@ -51,6 +52,7 @@ export const docsComponents = [
   icon,
   kbd,
   label,
+  loading,
   marker,
   masonry,
   message,
