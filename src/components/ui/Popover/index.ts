@@ -6,6 +6,7 @@ import type {
   PopoverRootEmits as RekaPopoverRootEmits,
   PopoverRootProps as RekaPopoverRootProps,
 } from 'reka-ui'
+import type { EmitsAsProps } from '@/types/emits'
 
 export { default as Popover } from './Popover.vue'
 
@@ -33,24 +34,17 @@ export type PopoverContentProps = Pick<
   | 'updatePositionStrategy'
 >
 export type PopoverArrowProps = Pick<RekaPopoverArrowProps, 'width' | 'height' | 'rounded'>
-
-// Fn
-export type PopoverFn<T> = (context: PopoverContext) => T
-
-// UI
-export interface PopoverUI {
-  content?: PopoverFn<HTMLAttributes>
-  arrow?: PopoverFn<HTMLAttributes>
-}
+export type PopoverContentConfig = PopoverContentProps &
+  EmitsAsProps<RekaPopoverContentEmits> &
+  HTMLAttributes
+export type PopoverArrowConfig = PopoverArrowProps & HTMLAttributes
 
 // Props
-export interface PopoverProps extends PopoverRootProps, PopoverContentProps {
+export interface PopoverProps extends PopoverRootProps {
   open?: boolean
   showArrow?: boolean
-  arrowWidth?: PopoverArrowProps['width']
-  arrowHeight?: PopoverArrowProps['height']
-  arrowRounded?: PopoverArrowProps['rounded']
-  ui?: PopoverUI
+  content?: PopoverContentConfig
+  arrow?: PopoverArrowConfig
 }
 
 // Context
