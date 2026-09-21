@@ -1,23 +1,23 @@
 import { computed, type Ref } from 'vue'
-import type { PopoverArrowConfig } from '@/components/ui/Popover'
 import { cn } from '@/lib/utils'
 
-const arrowDefaults = {
-  width: 10,
-  height: 5,
-  rounded: false,
+export interface ArrowOptions<T extends object> {
+  class?: string
 }
 
-export function useArrow(arrow: Ref<PopoverArrowConfig | undefined>) {
+const arrowDefaults = { width: 10, height: 5, rounded: false }
+
+export function useArrow<T extends object>(
+  arrow: Ref<T | undefined>,
+  options: ArrowOptions<T> = {},
+) {
   return computed(() => {
     const config = arrow.value ?? {}
     const { class: configClass, style: configStyle, ...props } = config
     return {
+      ...arrowDefaults,
       ...props,
-      width: config.width ?? arrowDefaults.width,
-      height: config.height ?? arrowDefaults.height,
-      rounded: config.rounded ?? arrowDefaults.rounded,
-      class: cn('fill-popover', configClass),
+      class: cn(options.class, configClass),
       style: configStyle,
     }
   })
