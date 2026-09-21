@@ -31,16 +31,18 @@ import { Button } from '@nono-cn/nono-ui/components/ui/Button'
 
 <template>
   <Popover
-    side="${side.value}"
-    align="${align.value}"
-    :side-offset="${Number(sideOffset.value) || 0}"
-    :align-offset="${Number(alignOffset.value) || 0}"
+    :content="{
+      side: '${side.value}',
+      align: '${align.value}',
+      sideOffset: ${Number(sideOffset.value) || 0},
+      alignOffset: ${Number(alignOffset.value) || 0},
+      sideFlip: ${sideFlip.value},
+      alignFlip: ${alignFlip.value},
+      avoidCollisions: ${avoidCollisions.value},
+      forceMount: ${forceMount.value}
+    }"
     :modal="${modal.value}"
     :show-arrow="${showArrow.value}"
-    :side-flip="${sideFlip.value}"
-    :align-flip="${alignFlip.value}"
-    :avoid-collisions="${avoidCollisions.value}"
-    :force-mount="${forceMount.value}"
   >
     <Button label="Abrir popover" />
     <template #content="{ close }">
