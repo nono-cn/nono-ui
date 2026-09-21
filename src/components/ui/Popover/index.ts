@@ -3,7 +3,6 @@ import type {
   PopoverArrowProps as RekaPopoverArrowProps,
   PopoverContentEmits as RekaPopoverContentEmits,
   PopoverContentProps as RekaPopoverContentProps,
-  PopoverRootEmits as RekaPopoverRootEmits,
   PopoverRootProps as RekaPopoverRootProps,
 } from 'reka-ui'
 import type { EmitsAsProps } from '@/types/emits'
@@ -54,11 +53,11 @@ export interface PopoverContext {
 }
 
 // Emits
-export type PopoverEmits = RekaPopoverRootEmits &
-  RekaPopoverContentEmits & {
-    show: []
-    close: []
-  }
+export interface PopoverEmits {
+  'update:open': [value: boolean]
+  show: []
+  close: []
+}
 
 // Slots
 export interface PopoverSlots {
