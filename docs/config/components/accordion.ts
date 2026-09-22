@@ -1,5 +1,12 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AccordionPlaygroundExample from '../../components/examples/accordion/AccordionPlaygroundExample.vue'
+import AccordionBasicExample from '../../components/examples/accordion/AccordionBasicExample.vue'
+import AccordionTypeExample from '../../components/examples/accordion/AccordionTypeExample.vue'
+import AccordionValueExample from '../../components/examples/accordion/AccordionValueExample.vue'
+import AccordionCollapsibleExample from '../../components/examples/accordion/AccordionCollapsibleExample.vue'
+import AccordionDisabledExample from '../../components/examples/accordion/AccordionDisabledExample.vue'
+import AccordionItemsExample from '../../components/examples/accordion/AccordionItemsExample.vue'
+import AccordionIconDropDownExample from '../../components/examples/accordion/AccordionIconDropDownExample.vue'
+import AccordionSlotsExample from '../../components/examples/accordion/AccordionSlotsExample.vue'
 
 const accordionConfig: ComponentDocConfig = {
   slug: 'accordion',
@@ -7,9 +14,50 @@ const accordionConfig: ComponentDocConfig = {
   description:
     'Muestra y oculta secciones de contenido relacionadas mediante activadores accesibles.',
   importPath: '@nono-ui/components/ui/Accordion',
-  playground: AccordionPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Define cada sección con un valor, un título y una descripción.',
+      component: AccordionBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Type',
+      description: 'Permite abrir una sola sección o varias al mismo tiempo.',
+      component: AccordionTypeExample,
+    },
+    {
+      title: 'Value',
+      description: 'Controla la sección abierta mediante v-model:value.',
+      component: AccordionValueExample,
+    },
+    {
+      title: 'Collapsible',
+      description: 'Permite cerrar la sección abierta en modo single.',
+      component: AccordionCollapsibleExample,
+    },
+    {
+      title: 'Disabled',
+      description: 'Deshabilita todo el acordeón o un elemento individual.',
+      component: AccordionDisabledExample,
+    },
+    {
+      title: 'Items',
+      description: 'Configura el contenido, el icono y el estado de cada sección.',
+      component: AccordionItemsExample,
+    },
+    {
+      title: 'IconDropDown',
+      description: 'Personaliza los iconos del activador en los estados abierto y cerrado.',
+      component: AccordionIconDropDownExample,
+    },
+    {
+      title: 'Slots Example',
+      description: 'Personaliza el contenido de un elemento con slots dirigidos.',
+      component: AccordionSlotsExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Activadores y contenido',
@@ -141,6 +189,41 @@ const accordionConfig: ComponentDocConfig = {
           },
         ],
       },
+      {
+        id: 'accordion-item-context',
+        title: 'AccordionItemContext',
+        typeLabel: 'slotProps',
+        showDefault: false,
+        description: 'Contexto que reciben los slots y resolvers de UI para cada elemento.',
+        rows: [
+          {
+            name: 'item',
+            type: 'AccordionItem',
+            typeLink: '#accordion-item',
+            description: 'Datos y opciones del elemento actual.',
+          },
+          {
+            name: 'index',
+            type: 'number',
+            description: 'Índice del elemento, empezando en cero.',
+          },
+          {
+            name: 'open',
+            type: 'boolean',
+            description: 'Indica si el elemento está abierto.',
+          },
+          {
+            name: 'first',
+            type: 'boolean',
+            description: 'Indica si es el primer elemento del acordeón.',
+          },
+          {
+            name: 'last',
+            type: 'boolean',
+            description: 'Indica si es el último elemento del acordeón.',
+          },
+        ],
+      },
     ],
     emits: [
       {
@@ -150,24 +233,59 @@ const accordionConfig: ComponentDocConfig = {
       },
     ],
     slots: [
-      { name: 'trigger', type: 'slotProps', description: 'Sustituye el activador completo.' },
-      { name: 'leading', type: 'slotProps', description: 'Contenido situado antes del label.' },
-      { name: 'label', type: 'slotProps', description: 'Sustituye el label del activador.' },
+      {
+        name: 'trigger',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
+        description: 'Sustituye el activador completo.',
+      },
+      {
+        name: 'leading',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
+        description: 'Contenido situado antes del label.',
+      },
+      {
+        name: 'label',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
+        description: 'Sustituye el label del activador.',
+      },
       {
         name: 'content',
-        type: 'slotProps',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
         description: 'Sustituye la descripción del contenido.',
       },
       {
         name: 'iconDropdown',
-        type: 'slotProps',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
         description: 'Sustituye el icono de estado del activador.',
       },
       {
-        name: 'trigger-{slot}, leading-{slot}, label-{slot}, content-{slot}',
-        type: 'slotProps',
-        description:
-          'Versiones dirigidas a un elemento cuyo item.slot coincide con el nombre indicado.',
+        name: 'trigger-{slot}',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
+        description: 'Sustituye el activador del elemento cuyo item.slot coincide con {slot}.',
+      },
+      {
+        name: 'leading-{slot}',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
+        description: 'Contenido antes del label del elemento cuyo item.slot coincide con {slot}.',
+      },
+      {
+        name: 'label-{slot}',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
+        description: 'Sustituye el label del elemento cuyo item.slot coincide con {slot}.',
+      },
+      {
+        name: 'content-{slot}',
+        type: 'AccordionItemContext',
+        typeLink: '#accordion-item-context',
+        description: 'Sustituye el contenido del elemento cuyo item.slot coincide con {slot}.',
       },
     ],
     expose: [],
