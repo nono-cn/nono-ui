@@ -1,14 +1,38 @@
 import type { ComponentDocConfig } from '../component-docs'
-import FieldSetPlaygroundExample from '../../components/examples/field-set/FieldSetPlaygroundExample.vue'
+import FieldSetDescriptionExample from '../../components/examples/field-set/FieldSetDescriptionExample.vue'
+import FieldSetLegendExample from '../../components/examples/field-set/FieldSetLegendExample.vue'
+import FieldSetLegendVariantExample from '../../components/examples/field-set/FieldSetLegendVariantExample.vue'
+import FieldSetUsageExample from '../../components/examples/field-set/FieldSetUsageExample.vue'
 
 const fieldSetConfig: ComponentDocConfig = {
   slug: 'field-set',
   title: 'FieldSet',
   description: 'Agrupa controles de formulario relacionados con una leyenda y una descripción.',
   importPath: '@nono-cn/nono-ui/components/ui/FieldSet',
-  playground: FieldSetPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Agrupa controles relacionados con una leyenda y una descripción.',
+      component: FieldSetUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Legend',
+      description: 'Define el nombre accesible del grupo.',
+      component: FieldSetLegendExample,
+    },
+    {
+      title: 'Description',
+      description: 'Añade contexto adicional al grupo.',
+      component: FieldSetDescriptionExample,
+    },
+    {
+      title: 'LegendVariant',
+      description: 'Ajusta el tamaño visual de la leyenda.',
+      component: FieldSetLegendVariantExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Agrupa controles relacionados',
