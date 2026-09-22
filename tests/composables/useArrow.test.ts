@@ -8,7 +8,7 @@ describe('useArrow', () => {
     const arrow = useArrow(ref<PopoverArrowConfig | undefined>(undefined))
 
     expect(arrow.value).toMatchObject({ width: 10, height: 5, rounded: false })
-    expect(arrow.value.class).toContain('fill-popover')
+    expect(arrow.value.class).toBe('')
   })
 
   it('conserva las props, atributos y estilos configurados', () => {
@@ -22,6 +22,7 @@ describe('useArrow', () => {
         style: { opacity: 0.5 },
         'aria-label': 'Arrow',
       }),
+      { class: 'fill-popover' },
     )
 
     expect(arrow.value).toMatchObject({

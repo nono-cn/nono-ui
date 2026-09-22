@@ -14,16 +14,18 @@ describe('useContent', () => {
       arrowPadding: 0,
       avoidCollisions: true,
       collisionPadding: 8,
+      disableUpdateOnLayoutShift: false,
       hideShiftedArrow: true,
       hideWhenDetached: false,
       positionStrategy: 'fixed',
+      prioritizePosition: false,
       side: 'bottom',
       sideFlip: true,
       sideOffset: 4,
       sticky: 'partial',
       updatePositionStrategy: 'optimized',
     })
-    expect(content.value.class).toContain('z-50')
+    expect(content.value.class).toBe('')
   })
 
   it('sobrescribe los defaults y conserva atributos, clases y estilos', () => {
