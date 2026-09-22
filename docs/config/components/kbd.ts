@@ -1,14 +1,44 @@
 import type { ComponentDocConfig } from '../component-docs'
-import KbdPlaygroundExample from '../../components/examples/kbd/KbdPlaygroundExample.vue'
+import KbdColorExample from '../../components/examples/kbd/KbdColorExample.vue'
+import KbdSeverityExample from '../../components/examples/kbd/KbdSeverityExample.vue'
+import KbdSizeExample from '../../components/examples/kbd/KbdSizeExample.vue'
+import KbdUsageExample from '../../components/examples/kbd/KbdUsageExample.vue'
+import KbdVariantExample from '../../components/examples/kbd/KbdVariantExample.vue'
 
 const kbdConfig: ComponentDocConfig = {
   slug: 'kbd',
   title: 'Kbd',
   description: 'Muestra una tecla o atajo de teclado con una apariencia semántica y consistente.',
   importPath: '@nono-cn/nono-ui/components/ui/Kbd',
-  playground: KbdPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Empieza mostrando una tecla con su etiqueta visible.',
+      component: KbdUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Variant',
+      description: 'Compara los tratamientos visuales de la tecla.',
+      component: KbdVariantExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Compara las severidades de la tecla.',
+      component: KbdSeverityExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el tamaño visual de la tecla.',
+      component: KbdSizeExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado.',
+      component: KbdColorExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Contenido accesible',
