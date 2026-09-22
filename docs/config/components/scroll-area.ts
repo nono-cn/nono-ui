@@ -1,14 +1,38 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ScrollAreaPlaygroundExample from '../../components/examples/scroll-area/ScrollAreaPlaygroundExample.vue'
+import ScrollAreaBasicExample from '../../components/examples/scroll-area/ScrollAreaBasicExample.vue'
+import ScrollAreaOrientationExample from '../../components/examples/scroll-area/ScrollAreaOrientationExample.vue'
+import ScrollAreaTypeExample from '../../components/examples/scroll-area/ScrollAreaTypeExample.vue'
+import ScrollAreaScrollHideDelayExample from '../../components/examples/scroll-area/ScrollAreaScrollHideDelayExample.vue'
 
 const scrollAreaConfig: ComponentDocConfig = {
   slug: 'scroll-area',
   title: 'ScrollArea',
   description: 'Añade scroll nativo con barras personalizables y comportamiento consistente.',
   importPath: '@nono-ui/components/ui/ScrollArea',
-  playground: ScrollAreaPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Scroll vertical',
+      description: 'Limita la altura de un contenido largo con scroll vertical.',
+      component: ScrollAreaBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Type',
+      description: 'Compara los cinco comportamientos de visibilidad de las barras.',
+      component: ScrollAreaTypeExample,
+    },
+    {
+      title: 'ScrollHideDelay',
+      description: 'Ajusta cuánto tarda en ocultarse la barra después del desplazamiento.',
+      component: ScrollAreaScrollHideDelayExample,
+    },
+    {
+      title: 'Orientation',
+      description: 'Compara el scroll vertical, horizontal y en ambas direcciones.',
+      component: ScrollAreaOrientationExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Scroll nativo y teclado',

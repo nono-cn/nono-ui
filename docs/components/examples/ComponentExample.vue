@@ -36,7 +36,9 @@ async function copyCode() {
 </script>
 
 <template>
-  <article class="overflow-hidden rounded-xl border bg-card text-card-foreground">
+  <article
+    class="max-w-full min-w-0 overflow-hidden rounded-xl border bg-card text-card-foreground"
+  >
     <header class="flex flex-wrap items-start justify-between gap-3 border-b p-4 sm:p-5">
       <div class="grid gap-1">
         <h3 class="font-semibold">{{ title }}</h3>
@@ -57,7 +59,7 @@ async function copyCode() {
       <slot name="controls" />
     </div>
 
-    <div class="grid min-h-36 place-items-center p-8 sm:min-h-44">
+    <div class="grid min-h-36 w-full max-w-full min-w-0 place-items-center p-8 sm:min-h-44">
       <slot />
     </div>
 
