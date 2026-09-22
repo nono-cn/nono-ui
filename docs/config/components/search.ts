@@ -1,14 +1,26 @@
 import type { ComponentDocConfig } from '../component-docs'
-import SearchPlaygroundExample from '../../components/examples/search/SearchPlaygroundExample.vue'
+import SearchBasicExample from '../../components/examples/search/SearchBasicExample.vue'
+import SearchMultipleRegionsExample from '../../components/examples/search/SearchMultipleRegionsExample.vue'
 
 const searchConfig: ComponentDocConfig = {
   slug: 'search',
   title: 'Search',
   description: 'Contenedor semántico para agrupar los controles de una búsqueda.',
   importPath: '@nono-ui/components/ui/Search',
-  playground: SearchPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Búsqueda básica',
+      description: 'Agrupa un campo y un botón dentro de una región de búsqueda accesible.',
+      component: SearchBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Varias regiones',
+      description: 'Distingue cada formulario de búsqueda con su propio nombre accesible.',
+      component: SearchMultipleRegionsExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Región de búsqueda',
