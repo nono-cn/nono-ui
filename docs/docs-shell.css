@@ -592,12 +592,6 @@
   color: var(--foreground);
   font-size: 13px;
 }
-.alert-playground-stage {
-  min-height: 150px;
-}
-.alert-playground-stage > * {
-  width: 100%;
-}
 .alert-dialog-playground-stage {
   display: grid;
   min-height: 180px;

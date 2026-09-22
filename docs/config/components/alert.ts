@@ -1,14 +1,62 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AlertPlaygroundExample from '../../components/examples/alert/AlertPlaygroundExample.vue'
+import AlertBasicExample from '../../components/examples/alert/AlertBasicExample.vue'
+import AlertVariantExample from '../../components/examples/alert/AlertVariantExample.vue'
+import AlertSeverityExample from '../../components/examples/alert/AlertSeverityExample.vue'
+import AlertColorExample from '../../components/examples/alert/AlertColorExample.vue'
+import AlertIconExample from '../../components/examples/alert/AlertIconExample.vue'
+import AlertClosableExample from '../../components/examples/alert/AlertClosableExample.vue'
+import AlertCloseButtonExample from '../../components/examples/alert/AlertCloseButtonExample.vue'
+import AlertDecorativeExample from '../../components/examples/alert/AlertDecorativeExample.vue'
 
 const alertConfig: ComponentDocConfig = {
   slug: 'alert',
   title: 'Alert',
   description: 'Comunica información, estados y acciones importantes dentro de una interfaz.',
   importPath: '@nono-ui/components/ui/Alert',
-  playground: AlertPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Muestra un título y una descripción con la apariencia predeterminada.',
+      component: AlertBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Variant',
+      description: 'Compara los cinco tratamientos visuales disponibles.',
+      component: AlertVariantExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Compara los colores semánticos disponibles.',
+      component: AlertSeverityExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado al tratamiento visual.',
+      component: AlertColorExample,
+    },
+    {
+      title: 'Icon',
+      description: 'Muestra un icono inicial mediante la prop icon.',
+      component: AlertIconExample,
+    },
+    {
+      title: 'Closable',
+      description: 'Permite cerrar el alert con el botón predeterminado.',
+      component: AlertClosableExample,
+    },
+    {
+      title: 'CloseButton',
+      description: 'Personaliza la configuración del botón de cierre.',
+      component: AlertCloseButtonExample,
+    },
+    {
+      title: 'Decorative',
+      description: 'Compara el rol de anuncio predeterminado con el modo decorativo.',
+      component: AlertDecorativeExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Alertas informativas y decorativas',
