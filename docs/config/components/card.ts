@@ -1,5 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
-import CardPlaygroundExample from '../../components/examples/card/CardPlaygroundExample.vue'
+import CardBasicExample from '../../components/examples/card/CardBasicExample.vue'
+import CardActionExample from '../../components/examples/card/CardActionExample.vue'
+import CardHeaderExample from '../../components/examples/card/CardHeaderExample.vue'
 
 const cardConfig: ComponentDocConfig = {
   slug: 'card',
@@ -7,9 +9,25 @@ const cardConfig: ComponentDocConfig = {
   description:
     'Superficie con encabezado, contenido y pie opcionales para agrupar información relacionada.',
   importPath: '@nono-cn/nono-ui/components/ui/Card',
-  playground: CardPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Card básica',
+      description: 'Usa label y description para crear el encabezado automáticamente.',
+      component: CardBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Acción y pie',
+      description: 'Añade acciones en el encabezado y contenido complementario en el pie.',
+      component: CardActionExample,
+    },
+    {
+      title: 'Encabezado personalizado',
+      description: 'Sustituye el encabezado generado con el slot header.',
+      component: CardHeaderExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Contenido y encabezados',
