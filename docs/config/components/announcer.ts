@@ -1,14 +1,32 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AnnouncerPlaygroundExample from '../../components/examples/announcer/AnnouncerPlaygroundExample.vue'
+import AnnouncerBasicExample from '../../components/examples/announcer/AnnouncerBasicExample.vue'
+import AnnouncerPolitenessExample from '../../components/examples/announcer/AnnouncerPolitenessExample.vue'
+import AnnouncerSlotExample from '../../components/examples/announcer/AnnouncerSlotExample.vue'
 
 const announcerConfig: ComponentDocConfig = {
   slug: 'announcer',
   title: 'Announcer',
   description: 'Anuncia cambios dinámicos a lectores de pantalla sin añadir contenido visual.',
   importPath: '@nono-cn/nono-ui/components/ui/Announcer',
-  playground: AnnouncerPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Mensaje básico',
+      description: 'Anuncia un cambio dinámico con la configuración predeterminada.',
+      component: AnnouncerBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Politeness',
+      description: 'Elige el nivel de prioridad del anuncio.',
+      component: AnnouncerPolitenessExample,
+    },
+    {
+      title: 'Contenido personalizado',
+      description: 'Usa el slot default cuando necesites controlar el contenido anunciado.',
+      component: AnnouncerSlotExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Regiones live',
