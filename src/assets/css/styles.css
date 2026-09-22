@@ -131,6 +131,52 @@
   }
 }
 
+@keyframes progress-carousel-vertical {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes progress-carousel-inverse-vertical {
+  0% {
+    transform: translateY(100%);
+  }
+  50% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes progress-swing-vertical {
+  0%,
+  100% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+}
+
+@keyframes progress-elastic-vertical {
+  0% {
+    transform: translateY(-100%) scaleY(0.3);
+  }
+  50% {
+    transform: translateY(0) scaleY(1);
+  }
+  100% {
+    transform: translateY(100%) scaleY(0.3);
+  }
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

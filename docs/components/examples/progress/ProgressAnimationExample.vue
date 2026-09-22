@@ -12,14 +12,43 @@ const animations = ['carousel', 'carousel-inverse', 'swing', 'elastic'] as const
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full max-w-lg gap-5">
-    <div
-      v-for="animation in animations"
-      :key="animation"
-      class="grid grid-cols-[9rem_minmax(0,1fr)] items-center gap-4"
-    >
-      <span class="text-sm">{{ animation }}</span>
-      <Progress :value="null" :animation="animation" :aria-label="'Progreso ' + animation" />
+  <div class="grid w-full max-w-lg gap-6">
+    <div class="grid gap-3">
+      <span class="font-medium">Horizontal</span>
+      <div class="grid gap-5">
+        <div
+          v-for="animation in animations"
+          :key="animation"
+          class="grid grid-cols-[9rem_minmax(0,1fr)] items-center gap-4"
+        >
+          <span class="text-sm">{{ animation }}</span>
+          <Progress
+            :value="null"
+            :animation="animation"
+            :aria-label="'Progreso horizontal ' + animation"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-3">
+      <span class="font-medium">Vertical</span>
+      <div class="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
+        <div
+          v-for="animation in animations"
+          :key="animation"
+          class="grid justify-items-center gap-2"
+        >
+          <span class="text-center text-sm">{{ animation }}</span>
+          <div class="h-32">
+            <Progress
+              :value="null"
+              :animation="animation"
+              orientation="vertical"
+              :aria-label="'Progreso vertical ' + animation"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>`
@@ -28,18 +57,47 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Animation"
-    description="Compara las cuatro animaciones disponibles para el progreso indeterminado."
+    description="Compara las cuatro animaciones en los ejes horizontal y vertical."
     :code="code"
     :show-reset="false"
   >
-    <div class="grid w-full max-w-lg gap-5">
-      <div
-        v-for="animation in animations"
-        :key="animation"
-        class="grid grid-cols-[9rem_minmax(0,1fr)] items-center gap-4"
-      >
-        <span class="text-sm">{{ animation }}</span>
-        <Progress :value="null" :animation="animation" :aria-label="'Progreso ' + animation" />
+    <div class="grid w-full max-w-lg gap-6">
+      <div class="grid gap-3">
+        <span class="font-medium">Horizontal</span>
+        <div class="grid gap-5">
+          <div
+            v-for="animation in animations"
+            :key="animation"
+            class="grid grid-cols-[9rem_minmax(0,1fr)] items-center gap-4"
+          >
+            <span class="text-sm">{{ animation }}</span>
+            <Progress
+              :value="null"
+              :animation="animation"
+              :aria-label="'Progreso horizontal ' + animation"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="grid gap-3">
+        <span class="font-medium">Vertical</span>
+        <div class="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
+          <div
+            v-for="animation in animations"
+            :key="animation"
+            class="grid justify-items-center gap-2"
+          >
+            <span class="text-center text-sm">{{ animation }}</span>
+            <div class="h-32">
+              <Progress
+                :value="null"
+                :animation="animation"
+                orientation="vertical"
+                :aria-label="'Progreso vertical ' + animation"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </ComponentExample>

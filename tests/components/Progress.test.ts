@@ -95,6 +95,11 @@ const casesAnimations = [
   },
 ]
 
+const casesVerticalAnimations = casesAnimations.map(({ input }) => ({
+  input,
+  expected: `data-[state=indeterminate]:animate-[progress-${input}-vertical_2s_ease-in-out_infinite]`,
+}))
+
 describe('Progress', () => {
   describe('props', () => {
     describe('value', () => {
@@ -223,6 +228,21 @@ describe('Progress', () => {
             .attributes('style'),
         ).toBeUndefined()
       })
+
+      it.each(casesVerticalAnimations)(
+        'usa animation=$input en el eje vertical cuando value es null',
+        ({ input, expected }) => {
+          const wrapper = mountProgress({
+            props: { value: null, orientation: 'vertical', animation: input },
+          })
+          const indicator = wrapper.get('[data-test-progress-indicator]')
+
+          expect(indicator.classes()).toContain(expected)
+          expect(indicator.classes()).not.toContain(
+            casesAnimations.find((animation) => animation.input === input)?.expected,
+          )
+        },
+      )
     })
 
     describe('orientation', () => {

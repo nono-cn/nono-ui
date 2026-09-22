@@ -55,6 +55,20 @@ const progressContext = computed<ProgressContext>(() => {
   }
 })
 
+const verticalAnimationClasses = {
+  carousel:
+    'data-[state=indeterminate]:animate-[progress-carousel-vertical_2s_ease-in-out_infinite]',
+  'carousel-inverse':
+    'data-[state=indeterminate]:animate-[progress-carousel-inverse-vertical_2s_ease-in-out_infinite]',
+  swing: 'data-[state=indeterminate]:animate-[progress-swing-vertical_2s_ease-in-out_infinite]',
+  elastic: 'data-[state=indeterminate]:animate-[progress-elastic-vertical_2s_ease-in-out_infinite]',
+} as const
+
+const verticalAnimationClass = computed(() => {
+  if (props.orientation !== 'vertical') return undefined
+  return verticalAnimationClasses[props.animation ?? 'carousel']
+})
+
 const rootProps = computed(() => {
   return {
     ...attrs,
@@ -82,7 +96,11 @@ const indicatorProps = computed(() => {
   return {
     ...indicatorUI,
     class: cn(
-      progressIndicatorVariants({ severity: props.severity, animation: props.animation }),
+      progressIndicatorVariants({
+        severity: props.severity,
+        animation: props.orientation === 'vertical' ? null : props.animation,
+      }),
+      verticalAnimationClass.value,
       props.color && 'bg-(--progress-color)',
       indicatorUI.class,
     ),

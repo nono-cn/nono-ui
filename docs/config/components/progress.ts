@@ -40,7 +40,8 @@ const progressConfig: ComponentDocConfig = {
     },
     {
       title: 'Animation',
-      description: 'Compara las animaciones disponibles para el progreso indeterminado.',
+      description:
+        'Compara las animaciones del progreso indeterminado en orientación horizontal y vertical.',
       component: ProgressAnimationExample,
     },
     {
@@ -115,7 +116,8 @@ const progressConfig: ComponentDocConfig = {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Texto visible que se muestra dentro de la barra.',
+        description:
+          'Texto visible dentro de la barra; el tamaño tipográfico se adapta a la prop size.',
       },
       {
         name: 'color',
@@ -133,7 +135,7 @@ const progressConfig: ComponentDocConfig = {
         name: 'size',
         type: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'",
         default: "'md'",
-        description: 'Tamaño que determina el grosor de la barra de progreso.',
+        description: 'Determina el grosor de la barra y el tamaño tipográfico de su label.',
       },
       {
         name: 'severity',
