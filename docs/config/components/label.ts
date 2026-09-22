@@ -1,14 +1,26 @@
 import type { ComponentDocConfig } from '../component-docs'
-import LabelPlaygroundExample from '../../components/examples/label/LabelPlaygroundExample.vue'
+import LabelForExample from '../../components/examples/label/LabelForExample.vue'
+import LabelUsageExample from '../../components/examples/label/LabelUsageExample.vue'
 
 const labelConfig: ComponentDocConfig = {
   slug: 'label',
   title: 'Label',
   description: 'Etiqueta accesible para identificar controles de formulario.',
   importPath: '@nono-cn/nono-ui/components/ui/Label',
-  playground: LabelPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Asocia una etiqueta visible con un control de formulario.',
+      component: LabelUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'For',
+      description: 'Asocia la etiqueta con el id de un control.',
+      component: LabelForExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Asociación con controles',
