@@ -1,5 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
-import LoadingPlaygroundExample from '../../components/examples/loading/LoadingPlaygroundExample.vue'
+import LoadingBasicExample from '../../components/examples/loading/LoadingBasicExample.vue'
+import LoadingCustomExample from '../../components/examples/loading/LoadingCustomExample.vue'
+import LoadingContentExample from '../../components/examples/loading/LoadingContentExample.vue'
 
 const loadingConfig: ComponentDocConfig = {
   slug: 'loading',
@@ -7,9 +9,25 @@ const loadingConfig: ComponentDocConfig = {
   description:
     'Alterna entre un indicador de carga y el contenido cuando una operación cambia de estado.',
   importPath: '@nono-cn/nono-ui/components/ui/Loading',
-  playground: LoadingPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Carga básica',
+      description: 'Muestra el indicador predeterminado mientras una operación está en curso.',
+      component: LoadingBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Loading personalizado',
+      description: 'Sustituye el icono por defecto mediante el slot loading.',
+      component: LoadingCustomExample,
+    },
+    {
+      title: 'Contenido cargado',
+      description: 'Muestra el contenido cuando la operación termina.',
+      component: LoadingContentExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Estado de carga accesible',
