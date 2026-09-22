@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/Button'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { AlertDialog } from '@nono-cn/nono-ui/components/ui/AlertDialog'
-import { Button } from '@nono-cn/nono-ui/components/ui/Button'
+import { AlertDialog } from '__DOCS_PACKAGE__/components/ui/AlertDialog'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 <\/script>
 
 <template>

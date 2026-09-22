@@ -6,7 +6,7 @@ const progressConfig: ComponentDocConfig = {
   title: 'Progress',
   description:
     'Muestra el avance de una tarea con una barra de progreso accesible y personalizable.',
-  importPath: '@nono-cn/nono-ui/components/ui/Progress',
+  importPath: '@nono-ui/components/ui/Progress',
   playground: ProgressPlaygroundExample,
   usage: [],
   examples: [],

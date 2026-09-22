@@ -5,7 +5,7 @@ const sliderConfig: ComponentDocConfig = {
   slug: 'slider',
   title: 'Slider',
   description: 'Control deslizante accesible para seleccionar uno o varios valores numéricos.',
-  importPath: '@nono-cn/nono-ui/components/ui/Slider',
+  importPath: '@nono-ui/components/ui/Slider',
   playground: SliderPlaygroundExample,
   usage: [],
   examples: [],

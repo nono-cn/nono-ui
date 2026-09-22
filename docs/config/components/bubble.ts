@@ -11,7 +11,7 @@ const bubbleConfig: ComponentDocConfig = {
   title: 'Bubble',
   description:
     'Representa mensajes o intervenciones en una conversación con alineación, variantes y reacciones.',
-  importPath: '@nono-cn/nono-ui/components/ui/Bubble',
+  importPath: '@nono-ui/components/ui/Bubble',
   usage: [
     {
       title: 'Bubble básica',

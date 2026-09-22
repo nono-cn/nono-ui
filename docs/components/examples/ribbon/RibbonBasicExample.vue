@@ -3,7 +3,7 @@ import { Ribbon } from '@/components/ui/Ribbon'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Ribbon } from '@nono-cn/nono-ui/components/ui/Ribbon'
+import { Ribbon } from '__DOCS_PACKAGE__/components/ui/Ribbon'
 <\/script>
 
 <template>

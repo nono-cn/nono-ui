@@ -24,7 +24,7 @@ const runtimeError = ref('')
 function makeCode() {
   return `<script setup lang="ts">
 import { ref } from 'vue'
-import { Textarea } from '@nono-cn/nono-ui/components/ui/Textarea'
+import { Textarea } from '__DOCS_PACKAGE__/components/ui/Textarea'
 const value = ref('${value.value}')
 <\/script>
 

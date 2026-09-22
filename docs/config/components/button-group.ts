@@ -7,7 +7,7 @@ const buttonGroupConfig: ComponentDocConfig = {
   slug: 'button-group',
   title: 'ButtonGroup',
   description: 'Agrupa botones relacionados y adapta su unión, orientación y tamaño.',
-  importPath: '@nono-cn/nono-ui/components/ui/ButtonGroup',
+  importPath: '@nono-ui/components/ui/ButtonGroup',
   usage: [
     {
       title: 'Grupo básico',

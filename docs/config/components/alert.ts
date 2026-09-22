@@ -5,7 +5,7 @@ const alertConfig: ComponentDocConfig = {
   slug: 'alert',
   title: 'Alert',
   description: 'Comunica información, estados y acciones importantes dentro de una interfaz.',
-  importPath: '@nono-cn/nono-ui/components/ui/Alert',
+  importPath: '@nono-ui/components/ui/Alert',
   playground: AlertPlaygroundExample,
   usage: [],
   examples: [],

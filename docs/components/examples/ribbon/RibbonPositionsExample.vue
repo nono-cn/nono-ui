@@ -10,7 +10,7 @@ const ribbons = [
 ] as const
 
 const code = `<script setup lang="ts">
-import { Ribbon } from '@nono-cn/nono-ui/components/ui/Ribbon'
+import { Ribbon } from '__DOCS_PACKAGE__/components/ui/Ribbon'
 
 const ribbons = [
   { label: 'Top right', position: 'top-right' },

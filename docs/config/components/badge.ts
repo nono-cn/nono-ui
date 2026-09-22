@@ -11,7 +11,7 @@ const badgeConfig: ComponentDocConfig = {
   slug: 'badge',
   title: 'Badge',
   description: 'Etiqueta compacta para estados, categorías y metadatos.',
-  importPath: '@nono-cn/nono-ui/components/ui/Badge',
+  importPath: '@nono-ui/components/ui/Badge',
   usage: [
     {
       title: 'Uso básico',

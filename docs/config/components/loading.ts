@@ -8,7 +8,7 @@ const loadingConfig: ComponentDocConfig = {
   title: 'Loading',
   description:
     'Alterna entre un indicador de carga y el contenido cuando una operación cambia de estado.',
-  importPath: '@nono-cn/nono-ui/components/ui/Loading',
+  importPath: '@nono-ui/components/ui/Loading',
   usage: [
     {
       title: 'Carga básica',

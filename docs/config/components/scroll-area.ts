@@ -5,7 +5,7 @@ const scrollAreaConfig: ComponentDocConfig = {
   slug: 'scroll-area',
   title: 'ScrollArea',
   description: 'Añade scroll nativo con barras personalizables y comportamiento consistente.',
-  importPath: '@nono-cn/nono-ui/components/ui/ScrollArea',
+  importPath: '@nono-ui/components/ui/ScrollArea',
   playground: ScrollAreaPlaygroundExample,
   usage: [],
   examples: [],

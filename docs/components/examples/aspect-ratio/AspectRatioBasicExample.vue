@@ -3,7 +3,7 @@ import { AspectRatio } from '@/components/ui/AspectRatio'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { AspectRatio } from '@nono-cn/nono-ui/components/ui/AspectRatio'
+import { AspectRatio } from '__DOCS_PACKAGE__/components/ui/AspectRatio'
 <\/script>
 
 <template>

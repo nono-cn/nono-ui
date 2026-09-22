@@ -2,10 +2,15 @@
 import ApiTable from './docs/ApiTable.vue'
 import type { ComponentDocConfig } from '../config/component-docs'
 import { exampleAnchor } from '../config/docs-anchors'
+import { docsPackageName } from '../config/constants'
 
 defineProps<{
   component: ComponentDocConfig
 }>()
+
+function publicImportPath(importPath: string) {
+  return importPath.replace(/^@nono-ui/, docsPackageName)
+}
 </script>
 
 <template>
@@ -26,7 +31,7 @@ defineProps<{
       </div>
       <pre
         class="overflow-x-auto rounded-xl border bg-muted/40 p-4 text-sm"
-      ><code>import { {{ component.title }} } from '{{ component.importPath }}'</code></pre>
+      ><code>import { {{ component.title }} } from '{{ publicImportPath(component.importPath) }}'</code></pre>
     </section>
 
     <section v-if="component.playground" id="playground" class="grid scroll-mt-8 gap-5">

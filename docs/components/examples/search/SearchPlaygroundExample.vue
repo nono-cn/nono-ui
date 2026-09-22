@@ -13,9 +13,9 @@ const runtimeError = shallowRef('')
 
 function makeCode() {
   return `<script setup lang="ts">
-import { Search } from '@nono-cn/nono-ui/components/ui/Search'
-import { Button } from '@nono-cn/nono-ui/components/ui/Button'
-import { Input } from '@nono-cn/nono-ui/components/ui/Input'
+import { Search } from '__DOCS_PACKAGE__/components/ui/Search'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
 <\/script>
 
 <template>

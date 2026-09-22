@@ -16,7 +16,7 @@ const buttonConfig: ComponentDocConfig = {
   slug: 'button',
   title: 'Button',
   description: 'Acción interactiva con variantes, estados, iconos y elementos raíz configurables.',
-  importPath: '@nono-cn/nono-ui/components/ui/Button',
+  importPath: '@nono-ui/components/ui/Button',
   usage: [
     {
       title: 'Uso básico',

@@ -8,7 +8,7 @@ const fieldSetConfig: ComponentDocConfig = {
   slug: 'field-set',
   title: 'FieldSet',
   description: 'Agrupa controles de formulario relacionados con una leyenda y una descripción.',
-  importPath: '@nono-cn/nono-ui/components/ui/FieldSet',
+  importPath: '@nono-ui/components/ui/FieldSet',
   usage: [
     {
       title: 'Uso básico',

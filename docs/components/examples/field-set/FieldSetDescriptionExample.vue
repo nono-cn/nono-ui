@@ -6,9 +6,9 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Checkbox } from '@nono-cn/nono-ui/components/ui/Checkbox'
-import { FieldSet } from '@nono-cn/nono-ui/components/ui/FieldSet'
-import { Label } from '@nono-cn/nono-ui/components/ui/Label'
+import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
+import { FieldSet } from '__DOCS_PACKAGE__/components/ui/FieldSet'
+import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 ${scriptEnd}
 
 <template>

@@ -6,7 +6,7 @@ const labelConfig: ComponentDocConfig = {
   slug: 'label',
   title: 'Label',
   description: 'Etiqueta accesible para identificar controles de formulario.',
-  importPath: '@nono-cn/nono-ui/components/ui/Label',
+  importPath: '@nono-ui/components/ui/Label',
   usage: [
     {
       title: 'Uso básico',

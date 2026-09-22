@@ -8,7 +8,7 @@ const masonryConfig: ComponentDocConfig = {
   title: 'Masonry',
   description:
     'Distribuye elementos de altura variable en columnas optimizando el espacio disponible.',
-  importPath: '@nono-cn/nono-ui/components/ui/Masonry',
+  importPath: '@nono-ui/components/ui/Masonry',
   usage: [
     {
       title: 'Masonry básico',

@@ -7,7 +7,7 @@ const alertDialogConfig: ComponentDocConfig = {
   slug: 'alert-dialog',
   title: 'AlertDialog',
   description: 'Solicita una confirmación explícita antes de ejecutar una acción importante.',
-  importPath: '@nono-cn/nono-ui/components/ui/AlertDialog',
+  importPath: '@nono-ui/components/ui/AlertDialog',
   usage: [
     {
       title: 'Confirmación básica',

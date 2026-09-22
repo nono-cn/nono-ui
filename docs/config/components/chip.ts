@@ -12,7 +12,7 @@ const chipConfig: ComponentDocConfig = {
   slug: 'chip',
   title: 'Chip',
   description: 'Indicador compacto que puede mostrarse sobre un elemento o de forma independiente.',
-  importPath: '@nono-cn/nono-ui/components/ui/Chip',
+  importPath: '@nono-ui/components/ui/Chip',
   usage: [
     {
       title: 'Uso básico',

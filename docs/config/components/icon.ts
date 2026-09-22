@@ -8,7 +8,7 @@ const iconConfig: ComponentDocConfig = {
   slug: 'icon',
   title: 'Icon',
   description: 'Renderiza un icono Lucide con una API compacta y consistente.',
-  importPath: '@nono-cn/nono-ui/components/ui/Icon',
+  importPath: '@nono-ui/components/ui/Icon',
   usage: [
     {
       title: 'Uso básico',

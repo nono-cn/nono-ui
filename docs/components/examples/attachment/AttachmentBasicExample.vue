@@ -3,7 +3,7 @@ import { Attachment } from '@/components/ui/Attachment'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Attachment } from '@nono-cn/nono-ui/components/ui/Attachment'
+import { Attachment } from '__DOCS_PACKAGE__/components/ui/Attachment'
 <\/script>
 
 <template>

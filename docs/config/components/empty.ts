@@ -9,7 +9,7 @@ const emptyConfig: ComponentDocConfig = {
   slug: 'empty',
   title: 'Empty',
   description: 'Estado visual para representar que una sección no contiene datos o resultados.',
-  importPath: '@nono-cn/nono-ui/components/ui/Empty',
+  importPath: '@nono-ui/components/ui/Empty',
   usage: [
     {
       title: 'Uso básico',

@@ -3,7 +3,7 @@ import { Checkbox } from '@/components/ui/Checkbox'
 import ComponentExample from '../ComponentExample.vue'
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 const code = `<script setup lang="ts">
-import { Checkbox } from '@nono-cn/nono-ui/components/ui/Checkbox'
+import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 <\/script>
 <template>

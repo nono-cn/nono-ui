@@ -9,7 +9,7 @@ const ratios = [
 ]
 
 const code = `<script setup lang="ts">
-import { AspectRatio } from '@nono-cn/nono-ui/components/ui/AspectRatio'
+import { AspectRatio } from '__DOCS_PACKAGE__/components/ui/AspectRatio'
 
 const ratios = [
   { label: '1:1', value: 1 },

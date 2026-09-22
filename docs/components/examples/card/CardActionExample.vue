@@ -4,8 +4,8 @@ import { Card } from '@/components/ui/Card'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Button } from '@nono-cn/nono-ui/components/ui/Button'
-import { Card } from '@nono-cn/nono-ui/components/ui/Card'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
 <\/script>
 
 <template>

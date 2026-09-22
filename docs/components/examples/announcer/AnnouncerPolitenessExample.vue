@@ -3,7 +3,7 @@ import { Announcer } from '@/components/ui/Announcer'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Announcer } from '@nono-cn/nono-ui/components/ui/Announcer'
+import { Announcer } from '__DOCS_PACKAGE__/components/ui/Announcer'
 <\/script>
 
 <template>

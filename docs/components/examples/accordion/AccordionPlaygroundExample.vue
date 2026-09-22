@@ -17,7 +17,7 @@ const runtimeError = ref('')
 
 function makeCode() {
   return `<script setup lang="ts">
-import { Accordion } from '@nono-cn/nono-ui/components/ui/Accordion'
+import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
 
 const items = [
   {

@@ -1,4 +1,4 @@
-# @nono-cn/nono-ui
+# @nono-ui
 
 Librería de componentes para Vue 3 basada en Reka UI, Tailwind CSS 4, Vue
 I18n y Lucide.

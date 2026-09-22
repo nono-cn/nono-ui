@@ -5,8 +5,8 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Avatar } from '@nono-cn/nono-ui/components/ui/Avatar'
-import { Chip } from '@nono-cn/nono-ui/components/ui/Chip'
+import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
+import { Chip } from '__DOCS_PACKAGE__/components/ui/Chip'
 ${scriptEnd}
 
 <template>

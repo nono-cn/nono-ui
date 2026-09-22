@@ -12,7 +12,7 @@ const items = [
 ]
 
 const code = `<script setup lang="ts">
-import { Masonry } from '@nono-cn/nono-ui/components/ui/Masonry'
+import { Masonry } from '__DOCS_PACKAGE__/components/ui/Masonry'
 
 const items = [
   { label: 'Primero', height: 128 },

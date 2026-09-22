@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/Card'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Card } from '@nono-cn/nono-ui/components/ui/Card'
+import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
 <\/script>
 
 <template>

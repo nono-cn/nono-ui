@@ -5,7 +5,7 @@ const textareaConfig: ComponentDocConfig = {
   slug: 'textarea',
   title: 'Textarea',
   description: 'Campo de texto multilínea para introducir contenido largo.',
-  importPath: '@nono-cn/nono-ui/components/ui/Textarea',
+  importPath: '@nono-ui/components/ui/Textarea',
   playground: TextareaPlaygroundExample,
   usage: [],
   examples: [],

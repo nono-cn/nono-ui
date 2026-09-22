@@ -19,7 +19,7 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'node_modules/vue/dist/vue.esm-bundler.js'),
       },
       { find: '@', replacement: path.resolve(__dirname, 'src') },
-      { find: '@nono-cn/nono-ui', replacement: path.resolve(__dirname, 'src') },
+      { find: '@nono-ui', replacement: path.resolve(__dirname, 'src') },
     ],
   },
   build: {

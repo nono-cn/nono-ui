@@ -22,7 +22,7 @@ function makeCode() {
   const tag = (value: string) => String.fromCharCode(60) + value
 
   return `${tag('script setup lang="ts">')}
-import { Splitter } from '@nono-cn/nono-ui/components/ui/Splitter'
+import { Splitter } from '__DOCS_PACKAGE__/components/ui/Splitter'
 
 const items = ${JSON.stringify(items, null, 2)}
 ${tag('/script>')}

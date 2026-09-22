@@ -7,7 +7,7 @@ const markerConfig: ComponentDocConfig = {
   slug: 'marker',
   title: 'Marker',
   description: 'Indicador de estado para mostrar información breve sobre una operación o proceso.',
-  importPath: '@nono-cn/nono-ui/components/ui/Marker',
+  importPath: '@nono-ui/components/ui/Marker',
   usage: [
     {
       title: 'Marker básico',

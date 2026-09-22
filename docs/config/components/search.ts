@@ -5,7 +5,7 @@ const searchConfig: ComponentDocConfig = {
   slug: 'search',
   title: 'Search',
   description: 'Contenedor semántico para agrupar los controles de una búsqueda.',
-  importPath: '@nono-cn/nono-ui/components/ui/Search',
+  importPath: '@nono-ui/components/ui/Search',
   playground: SearchPlaygroundExample,
   usage: [],
   examples: [],

@@ -7,7 +7,7 @@ const aspectRatioConfig: ComponentDocConfig = {
   slug: 'aspect-ratio',
   title: 'AspectRatio',
   description: 'Mantiene una proporción constante para imágenes, vídeos y contenido adaptable.',
-  importPath: '@nono-cn/nono-ui/components/ui/AspectRatio',
+  importPath: '@nono-ui/components/ui/AspectRatio',
   usage: [
     {
       title: 'Contenido adaptable',

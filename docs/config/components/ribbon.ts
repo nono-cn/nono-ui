@@ -7,7 +7,7 @@ const ribbonConfig: ComponentDocConfig = {
   slug: 'ribbon',
   title: 'Ribbon',
   description: 'Añade cintas decorativas superpuestas a una tarjeta o bloque de contenido.',
-  importPath: '@nono-cn/nono-ui/components/ui/Ribbon',
+  importPath: '@nono-ui/components/ui/Ribbon',
   usage: [
     {
       title: 'Ribbon básica',

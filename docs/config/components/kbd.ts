@@ -9,7 +9,7 @@ const kbdConfig: ComponentDocConfig = {
   slug: 'kbd',
   title: 'Kbd',
   description: 'Muestra una tecla o atajo de teclado con una apariencia semántica y consistente.',
-  importPath: '@nono-cn/nono-ui/components/ui/Kbd',
+  importPath: '@nono-ui/components/ui/Kbd',
   usage: [
     {
       title: 'Uso básico',

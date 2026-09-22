@@ -2,7 +2,7 @@
 import { Checkbox } from '@/components/ui/Checkbox'
 import ComponentExample from '../ComponentExample.vue'
 const code = `<script setup lang="ts">
-import { Checkbox } from '@nono-cn/nono-ui/components/ui/Checkbox'
+import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
 <\/script>
 <template>
   <Checkbox

@@ -10,7 +10,7 @@ const attachmentConfig: ComponentDocConfig = {
   slug: 'attachment',
   title: 'Attachment',
   description: 'Presenta un archivo con su información, estado y acciones relacionadas.',
-  importPath: '@nono-cn/nono-ui/components/ui/Attachment',
+  importPath: '@nono-ui/components/ui/Attachment',
   usage: [
     {
       title: 'Archivo básico',

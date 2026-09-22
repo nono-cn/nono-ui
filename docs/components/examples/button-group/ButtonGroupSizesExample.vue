@@ -4,8 +4,8 @@ import { ButtonGroup } from '@/components/ui/ButtonGroup'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Button } from '@nono-cn/nono-ui/components/ui/Button'
-import { ButtonGroup } from '@nono-cn/nono-ui/components/ui/ButtonGroup'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { ButtonGroup } from '__DOCS_PACKAGE__/components/ui/ButtonGroup'
 <\/script>
 
 <template>

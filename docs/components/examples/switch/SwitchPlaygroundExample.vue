@@ -28,7 +28,7 @@ function makeCode() {
 
   return `<script setup lang="ts">
 import { ref } from 'vue'
-import { Switch } from '@nono-cn/nono-ui/components/ui/Switch'
+import { Switch } from '__DOCS_PACKAGE__/components/ui/Switch'
 const enabled = ref(${enabled.value})
 <\/script>
 

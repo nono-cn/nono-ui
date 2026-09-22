@@ -5,7 +5,7 @@ const switchConfig: ComponentDocConfig = {
   slug: 'switch',
   title: 'Switch',
   description: 'Control interactivo para activar o desactivar una opción.',
-  importPath: '@nono-cn/nono-ui/components/ui/Switch',
+  importPath: '@nono-ui/components/ui/Switch',
   playground: SwitchPlaygroundExample,
   usage: [],
   examples: [],

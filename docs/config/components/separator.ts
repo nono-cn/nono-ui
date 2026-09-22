@@ -6,7 +6,7 @@ const separatorConfig: ComponentDocConfig = {
   title: 'Separator',
   description:
     'Divide visualmente el contenido y comunica separaciones semánticas cuando es necesario.',
-  importPath: '@nono-cn/nono-ui/components/ui/Separator',
+  importPath: '@nono-ui/components/ui/Separator',
   playground: SeparatorPlaygroundExample,
   usage: [],
   examples: [],

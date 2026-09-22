@@ -7,8 +7,8 @@ import ComponentExample from '../ComponentExample.vue'
 const open = ref(false)
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Popover } from '@nono-cn/nono-ui/components/ui/Popover'
-import { Button } from '@nono-cn/nono-ui/components/ui/Button'
+import { Popover } from '__DOCS_PACKAGE__/components/ui/Popover'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 
 const open = ref(false)
 <\/script>

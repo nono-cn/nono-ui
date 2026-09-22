@@ -6,7 +6,7 @@ const accordionConfig: ComponentDocConfig = {
   title: 'Accordion',
   description:
     'Muestra y oculta secciones de contenido relacionadas mediante activadores accesibles.',
-  importPath: '@nono-cn/nono-ui/components/ui/Accordion',
+  importPath: '@nono-ui/components/ui/Accordion',
   playground: AccordionPlaygroundExample,
   usage: [],
   examples: [],

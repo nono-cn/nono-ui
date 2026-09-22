@@ -20,7 +20,7 @@ function help() {
 
 Opciones:
   --cwd <directorio>       Proyecto consumidor
-  --package <nombre>       Paquete real (por defecto: @nono-cn/nono-ui)
+  --package <nombre>       Paquete real (por defecto: @nono-ui)
   --skip-install           Muestra la configuración sin instalar dependencias`)
 }
 

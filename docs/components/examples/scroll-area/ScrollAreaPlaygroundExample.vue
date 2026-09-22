@@ -24,7 +24,7 @@ function makeCode() {
   )
 
   return `<script setup lang="ts">
-import { ScrollArea } from '@nono-cn/nono-ui/components/ui/ScrollArea'
+import { ScrollArea } from '__DOCS_PACKAGE__/components/ui/ScrollArea'
 <\/script>
 
 <template>

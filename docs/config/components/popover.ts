@@ -8,7 +8,7 @@ const popoverConfig: ComponentDocConfig = {
   slug: 'popover',
   title: 'Popover',
   description: 'Muestra contenido contextual relacionado con un elemento disparador.',
-  importPath: '@nono-cn/nono-ui/components/ui/Popover',
+  importPath: '@nono-ui/components/ui/Popover',
   usage: [
     {
       title: 'Popover básico',

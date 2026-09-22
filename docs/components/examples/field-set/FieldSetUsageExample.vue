@@ -6,9 +6,9 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { FieldSet } from '@nono-cn/nono-ui/components/ui/FieldSet'
-import { Input } from '@nono-cn/nono-ui/components/ui/Input'
-import { Label } from '@nono-cn/nono-ui/components/ui/Label'
+import { FieldSet } from '__DOCS_PACKAGE__/components/ui/FieldSet'
+import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
+import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 ${scriptEnd}
 
 <template>

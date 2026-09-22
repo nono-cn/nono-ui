@@ -5,7 +5,7 @@ const splitterConfig: ComponentDocConfig = {
   slug: 'splitter',
   title: 'Splitter',
   description: 'Divide un espacio en paneles redimensionables mediante manejadores accesibles.',
-  importPath: '@nono-cn/nono-ui/components/ui/Splitter',
+  importPath: '@nono-ui/components/ui/Splitter',
   playground: SplitterPlaygroundExample,
   usage: [],
   examples: [],

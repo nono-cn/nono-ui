@@ -3,7 +3,7 @@ import { Marker } from '@/components/ui/Marker'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Marker } from '@nono-cn/nono-ui/components/ui/Marker'
+import { Marker } from '__DOCS_PACKAGE__/components/ui/Marker'
 <\/script>
 
 <template>

@@ -1,5 +1,5 @@
 {
-  "name": "@nono-cn/nono-ui",
+  "name": "@nono-ui",
   "version": "0.3.0",
   "description": "Librería personal de componentes Vue con Reka UI y Tailwind CSS",
   "keywords": [

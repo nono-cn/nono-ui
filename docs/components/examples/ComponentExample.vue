@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Check, Clipboard, RotateCcw } from '@lucide/vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { docsPackageName } from '../../config/constants'
 
 const props = withDefaults(
   defineProps<{
@@ -19,13 +20,15 @@ const emit = defineEmits<{
   reset: []
 }>()
 
+const displayCode = computed(() => props.code.replaceAll('__DOCS_PACKAGE__', docsPackageName))
+
 const copied = ref(false)
 let copyTimer: ReturnType<typeof setTimeout> | undefined
 
 async function copyCode() {
   if (!navigator.clipboard) return
 
-  await navigator.clipboard.writeText(props.code)
+  await navigator.clipboard.writeText(displayCode.value)
   copied.value = true
   clearTimeout(copyTimer)
   copyTimer = setTimeout(() => (copied.value = false), 1600)
@@ -71,7 +74,7 @@ async function copyCode() {
       </button>
       <pre
         class="overflow-x-auto p-4 pr-14 text-sm leading-6 break-words whitespace-pre-wrap"
-      ><code>{{ code }}</code></pre>
+      ><code>{{ displayCode }}</code></pre>
     </div>
   </article>
 </template>

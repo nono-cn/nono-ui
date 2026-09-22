@@ -15,7 +15,7 @@ const runtimeError = ref('')
 
 function makeCode() {
   return `<script setup lang="ts">
-import { Separator } from '@nono-cn/nono-ui/components/ui/Separator'
+import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
 <\/script>
 
 <template>

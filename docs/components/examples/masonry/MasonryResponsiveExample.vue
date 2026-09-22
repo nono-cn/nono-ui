@@ -5,7 +5,7 @@ import ComponentExample from '../ComponentExample.vue'
 const items = ['A', 'B', 'C', 'D', 'E', 'F']
 
 const code = `<script setup lang="ts">
-import { Masonry } from '@nono-cn/nono-ui/components/ui/Masonry'
+import { Masonry } from '__DOCS_PACKAGE__/components/ui/Masonry'
 
 const items = ['A', 'B', 'C', 'D', 'E', 'F']
 <\/script>

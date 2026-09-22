@@ -7,7 +7,7 @@ const announcerConfig: ComponentDocConfig = {
   slug: 'announcer',
   title: 'Announcer',
   description: 'Anuncia cambios dinámicos a lectores de pantalla sin añadir contenido visual.',
-  importPath: '@nono-cn/nono-ui/components/ui/Announcer',
+  importPath: '@nono-ui/components/ui/Announcer',
   usage: [
     {
       title: 'Mensaje básico',

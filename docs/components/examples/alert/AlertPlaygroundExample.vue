@@ -24,7 +24,7 @@ const runtimeError = ref('')
 
 function makeCode() {
   return `<script setup lang="ts">
-import { Alert } from '@nono-cn/nono-ui/components/ui/Alert'
+import { Alert } from '__DOCS_PACKAGE__/components/ui/Alert'
 <\/script>
 
 <template>

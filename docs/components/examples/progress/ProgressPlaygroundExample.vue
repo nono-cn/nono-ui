@@ -31,7 +31,7 @@ function makeCode() {
     : ''
 
   return `<script setup lang="ts">
-import { Progress } from '@nono-cn/nono-ui/components/ui/Progress'
+import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
 <\/script>
 
 <template>

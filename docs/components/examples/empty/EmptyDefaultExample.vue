@@ -5,8 +5,8 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Button } from '@nono-cn/nono-ui/components/ui/Button'
-import { Empty } from '@nono-cn/nono-ui/components/ui/Empty'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Empty } from '__DOCS_PACKAGE__/components/ui/Empty'
 ${scriptEnd}
 
 <template>

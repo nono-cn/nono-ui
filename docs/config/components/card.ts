@@ -8,7 +8,7 @@ const cardConfig: ComponentDocConfig = {
   title: 'Card',
   description:
     'Superficie con encabezado, contenido y pie opcionales para agrupar información relacionada.',
-  importPath: '@nono-cn/nono-ui/components/ui/Card',
+  importPath: '@nono-ui/components/ui/Card',
   usage: [
     {
       title: 'Card básica',

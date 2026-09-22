@@ -4,7 +4,7 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Icon } from '@nono-cn/nono-ui/components/ui/Icon'
+import { Icon } from '__DOCS_PACKAGE__/components/ui/Icon'
 ${scriptEnd}
 
 <template>

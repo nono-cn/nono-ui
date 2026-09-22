@@ -30,7 +30,7 @@ const runtimeError = ref('')
 function makeCode() {
   return `<script setup lang="ts">
 import { ref } from 'vue'
-import { Slider } from '@nono-cn/nono-ui/components/ui/Slider'
+import { Slider } from '__DOCS_PACKAGE__/components/ui/Slider'
 
 const value = ref([${value.value.join(', ')}])
 <\/script>

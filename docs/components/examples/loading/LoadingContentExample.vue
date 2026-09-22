@@ -3,7 +3,7 @@ import { Loading } from '@/components/ui/Loading'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Loading } from '@nono-cn/nono-ui/components/ui/Loading'
+import { Loading } from '__DOCS_PACKAGE__/components/ui/Loading'
 <\/script>
 
 <template>

@@ -9,7 +9,7 @@ const messageConfig: ComponentDocConfig = {
   slug: 'message',
   title: 'Message',
   description: 'Compone un mensaje de conversación con burbuja, avatar, metadatos y reacciones.',
-  importPath: '@nono-cn/nono-ui/components/ui/Message',
+  importPath: '@nono-ui/components/ui/Message',
   usage: [
     {
       title: 'Mensaje básico',

@@ -6,7 +6,7 @@ import ComponentExample from '../ComponentExample.vue'
 const value = ref<'yes' | 'no'>('no')
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Checkbox } from '@nono-cn/nono-ui/components/ui/Checkbox'
+import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
 
 const value = ref<'yes' | 'no'>('no')
 <\/script>

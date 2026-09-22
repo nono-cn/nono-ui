@@ -10,7 +10,7 @@ const checkboxConfig: ComponentDocConfig = {
   slug: 'checkbox',
   title: 'Checkbox',
   description: 'Control accesible para seleccionar una opción o representar una selección parcial.',
-  importPath: '@nono-cn/nono-ui/components/ui/Checkbox',
+  importPath: '@nono-ui/components/ui/Checkbox',
   usage: [
     {
       title: 'trueValue y falseValue',

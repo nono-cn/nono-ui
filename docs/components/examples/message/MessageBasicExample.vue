@@ -3,7 +3,7 @@ import { Message } from '@/components/ui/Message'
 import ComponentExample from '../ComponentExample.vue'
 
 const code = `<script setup lang="ts">
-import { Message } from '@nono-cn/nono-ui/components/ui/Message'
+import { Message } from '__DOCS_PACKAGE__/components/ui/Message'
 <\/script>
 
 <template>

@@ -12,7 +12,7 @@ const avatarConfig: ComponentDocConfig = {
   slug: 'avatar',
   title: 'Avatar',
   description: 'Muestra una imagen de perfil con contenido alternativo cuando no está disponible.',
-  importPath: '@nono-cn/nono-ui/components/ui/Avatar',
+  importPath: '@nono-ui/components/ui/Avatar',
   usage: [
     {
       title: 'Uso básico',

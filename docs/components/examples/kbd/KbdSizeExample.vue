@@ -4,7 +4,7 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Kbd } from '@nono-cn/nono-ui/components/ui/Kbd'
+import { Kbd } from '__DOCS_PACKAGE__/components/ui/Kbd'
 ${scriptEnd}
 
 <template>

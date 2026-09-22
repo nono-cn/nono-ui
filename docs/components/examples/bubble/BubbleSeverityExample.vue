@@ -4,7 +4,7 @@ import ComponentExample from '../ComponentExample.vue'
 
 const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as const
 const code = `<script setup lang="ts">
-import { Bubble } from '@nono-cn/nono-ui/components/ui/Bubble'
+import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
 
 const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as const
 <\/script>
