@@ -1,14 +1,51 @@
 import type { ComponentDocConfig } from '../component-docs'
-import SplitterPlaygroundExample from '../../components/examples/splitter/SplitterPlaygroundExample.vue'
+import SplitterBasicExample from '../../components/examples/splitter/SplitterBasicExample.vue'
+import SplitterDirectionExample from '../../components/examples/splitter/SplitterDirectionExample.vue'
+import SplitterNestedExample from '../../components/examples/splitter/SplitterNestedExample.vue'
+import SplitterDefaultSizeExample from '../../components/examples/splitter/SplitterDefaultSizeExample.vue'
+import SplitterDisabledExample from '../../components/examples/splitter/SplitterDisabledExample.vue'
+import SplitterSlotsExample from '../../components/examples/splitter/SplitterSlotsExample.vue'
 
 const splitterConfig: ComponentDocConfig = {
   slug: 'splitter',
   title: 'Splitter',
   description: 'Divide un espacio en paneles redimensionables mediante manejadores accesibles.',
   importPath: '@nono-ui/components/ui/Splitter',
-  playground: SplitterPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Define varios paneles, sus tamaños iniciales y el contenido de cada uno.',
+      component: SplitterBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Direction',
+      description: 'Organiza los paneles en horizontal o en vertical.',
+      component: SplitterDirectionExample,
+    },
+    {
+      title: 'Nested',
+      description:
+        'Combina grupos de paneles para crear una distribución con varias áreas redimensionables.',
+      component: SplitterNestedExample,
+    },
+    {
+      title: 'DefaultSize',
+      description: 'Establece la proporción inicial y limita el tamaño de cada panel.',
+      component: SplitterDefaultSizeExample,
+    },
+    {
+      title: 'Disabled',
+      description: 'Compara los manejadores habilitados con los deshabilitados.',
+      component: SplitterDisabledExample,
+    },
+    {
+      title: 'Slots',
+      description: 'Personaliza paneles y manejadores con slots por defecto y dirigidos.',
+      component: SplitterSlotsExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Redimensionado por teclado',
