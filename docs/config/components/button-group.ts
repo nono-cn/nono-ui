@@ -1,14 +1,32 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ButtonGroupPlaygroundExample from '../../components/examples/button-group/ButtonGroupPlaygroundExample.vue'
+import ButtonGroupBasicExample from '../../components/examples/button-group/ButtonGroupBasicExample.vue'
+import ButtonGroupVerticalExample from '../../components/examples/button-group/ButtonGroupVerticalExample.vue'
+import ButtonGroupSizesExample from '../../components/examples/button-group/ButtonGroupSizesExample.vue'
 
 const buttonGroupConfig: ComponentDocConfig = {
   slug: 'button-group',
   title: 'ButtonGroup',
   description: 'Agrupa botones relacionados y adapta su unión, orientación y tamaño.',
   importPath: '@nono-cn/nono-ui/components/ui/ButtonGroup',
-  playground: ButtonGroupPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Grupo básico',
+      description: 'Agrupa acciones relacionadas en una única unidad visual.',
+      component: ButtonGroupBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Orientación vertical',
+      description: 'Cambia la orientación cuando las acciones necesitan apilarse.',
+      component: ButtonGroupVerticalExample,
+    },
+    {
+      title: 'Tamaños',
+      description: 'Aplica un tamaño común a todos los botones del grupo.',
+      component: ButtonGroupSizesExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Grupo de acciones',
