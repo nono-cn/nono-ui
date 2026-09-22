@@ -1,14 +1,44 @@
 import type { ComponentDocConfig } from '../component-docs'
-import EmptyPlaygroundExample from '../../components/examples/empty/EmptyPlaygroundExample.vue'
+import EmptyDefaultExample from '../../components/examples/empty/EmptyDefaultExample.vue'
+import EmptyDescriptionExample from '../../components/examples/empty/EmptyDescriptionExample.vue'
+import EmptyLabelExample from '../../components/examples/empty/EmptyLabelExample.vue'
+import EmptyMediaVariantExample from '../../components/examples/empty/EmptyMediaVariantExample.vue'
+import EmptyUsageExample from '../../components/examples/empty/EmptyUsageExample.vue'
 
 const emptyConfig: ComponentDocConfig = {
   slug: 'empty',
   title: 'Empty',
   description: 'Estado visual para representar que una sección no contiene datos o resultados.',
   importPath: '@nono-cn/nono-ui/components/ui/Empty',
-  playground: EmptyPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Muestra un estado vacío con una acción para continuar.',
+      component: EmptyUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Default',
+      description: 'Añade acciones o enlaces como contenido principal.',
+      component: EmptyDefaultExample,
+    },
+    {
+      title: 'Label',
+      description: 'Define el título principal del estado vacío.',
+      component: EmptyLabelExample,
+    },
+    {
+      title: 'Description',
+      description: 'Añade información complementaria al estado vacío.',
+      component: EmptyDescriptionExample,
+    },
+    {
+      title: 'MediaVariant',
+      description: 'Aplica el tratamiento visual de icono al contenido media.',
+      component: EmptyMediaVariantExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Mensaje de estado',
