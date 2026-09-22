@@ -1,14 +1,50 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AttachmentPlaygroundExample from '../../components/examples/attachment/AttachmentPlaygroundExample.vue'
+import AttachmentBasicExample from '../../components/examples/attachment/AttachmentBasicExample.vue'
+import AttachmentIconExample from '../../components/examples/attachment/AttachmentIconExample.vue'
+import AttachmentOrientationExample from '../../components/examples/attachment/AttachmentOrientationExample.vue'
+import AttachmentSizesExample from '../../components/examples/attachment/AttachmentSizesExample.vue'
+import AttachmentStateExample from '../../components/examples/attachment/AttachmentStateExample.vue'
+import AttachmentMediaVariantExample from '../../components/examples/attachment/AttachmentMediaVariantExample.vue'
 
 const attachmentConfig: ComponentDocConfig = {
   slug: 'attachment',
   title: 'Attachment',
   description: 'Presenta un archivo con su información, estado y acciones relacionadas.',
   importPath: '@nono-cn/nono-ui/components/ui/Attachment',
-  playground: AttachmentPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Archivo básico',
+      description: 'Muestra el nombre, la información y el icono de un archivo.',
+      component: AttachmentBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Icono',
+      description: 'Añade un icono para identificar visualmente el tipo de archivo.',
+      component: AttachmentIconExample,
+    },
+    {
+      title: 'Orientación',
+      description: 'Coloca la media y la información en horizontal o vertical.',
+      component: AttachmentOrientationExample,
+    },
+    {
+      title: 'Tamaños',
+      description: 'Compara los tamaños md, sm y xs.',
+      component: AttachmentSizesExample,
+    },
+    {
+      title: 'Estados',
+      description: 'Comprueba los estados visuales disponibles para un archivo.',
+      component: AttachmentStateExample,
+    },
+    {
+      title: 'Media variant',
+      description: 'Cambia entre media de tipo icono e imagen.',
+      component: AttachmentMediaVariantExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Información del archivo',

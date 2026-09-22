@@ -69,7 +69,9 @@ async function copyCode() {
         <Check v-if="copied" class="size-4" aria-hidden="true" />
         <Clipboard v-else class="size-4" aria-hidden="true" />
       </button>
-      <pre class="overflow-x-auto p-4 pr-14 text-sm leading-6"><code>{{ code }}</code></pre>
+      <pre
+        class="overflow-x-auto p-4 pr-14 text-sm leading-6 break-words whitespace-pre-wrap"
+      ><code>{{ code }}</code></pre>
     </div>
   </article>
 </template>
