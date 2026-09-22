@@ -149,6 +149,10 @@
 }
 .docs-sidebar {
   border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 112px);
+  overflow-y: auto;
 }
 .docs-sidebar-inner,
 .docs-toc-inner {
@@ -1054,6 +1058,9 @@
     background: var(--accent);
   }
   .docs-sidebar {
+    position: static;
+    height: auto;
+    overflow: visible;
     display: none;
   }
   .docs-toc {

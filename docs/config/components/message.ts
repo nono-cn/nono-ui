@@ -1,14 +1,44 @@
 import type { ComponentDocConfig } from '../component-docs'
-import MessagePlaygroundExample from '../../components/examples/message/MessagePlaygroundExample.vue'
+import MessageBasicExample from '../../components/examples/message/MessageBasicExample.vue'
+import MessageAlignExample from '../../components/examples/message/MessageAlignExample.vue'
+import MessageAvatarExample from '../../components/examples/message/MessageAvatarExample.vue'
+import MessageSlotsExample from '../../components/examples/message/MessageSlotsExample.vue'
+import MessageBubbleExample from '../../components/examples/message/MessageBubbleExample.vue'
 
 const messageConfig: ComponentDocConfig = {
   slug: 'message',
   title: 'Message',
   description: 'Compone un mensaje de conversación con burbuja, avatar, metadatos y reacciones.',
   importPath: '@nono-cn/nono-ui/components/ui/Message',
-  playground: MessagePlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Mensaje básico',
+      description: 'Muestra un mensaje con el contenido y el estilo predeterminados.',
+      component: MessageBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Align',
+      description: 'Alinea el mensaje al inicio o al final del contenedor.',
+      component: MessageAlignExample,
+    },
+    {
+      title: 'Avatar',
+      description: 'Añade un avatar para identificar al interlocutor.',
+      component: MessageAvatarExample,
+    },
+    {
+      title: 'Bubble',
+      description: 'Personaliza la variante y la severidad de la burbuja interna.',
+      component: MessageBubbleExample,
+    },
+    {
+      title: 'Con slots',
+      description: 'Personaliza el encabezado, las reacciones y el pie del mensaje.',
+      component: MessageSlotsExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Contenido conversacional',
