@@ -1,14 +1,32 @@
 import type { ComponentDocConfig } from '../component-docs'
-import RibbonPlaygroundExample from '../../components/examples/ribbon/RibbonPlaygroundExample.vue'
+import RibbonBasicExample from '../../components/examples/ribbon/RibbonBasicExample.vue'
+import RibbonPositionsExample from '../../components/examples/ribbon/RibbonPositionsExample.vue'
+import RibbonStylesExample from '../../components/examples/ribbon/RibbonStylesExample.vue'
 
 const ribbonConfig: ComponentDocConfig = {
   slug: 'ribbon',
   title: 'Ribbon',
   description: 'Añade cintas decorativas superpuestas a una tarjeta o bloque de contenido.',
   importPath: '@nono-cn/nono-ui/components/ui/Ribbon',
-  playground: RibbonPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Ribbon básica',
+      description: 'Añade una cinta decorativa al contenido.',
+      component: RibbonBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Posiciones',
+      description: 'Coloca las cintas en cualquiera de las cuatro esquinas.',
+      component: RibbonPositionsExample,
+    },
+    {
+      title: 'Severity y color',
+      description: 'Usa una severidad o un color CSS personalizado.',
+      component: RibbonStylesExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Contenido decorativo',
