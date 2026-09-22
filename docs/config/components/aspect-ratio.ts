@@ -1,14 +1,32 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AspectRatioPlaygroundExample from '../../components/examples/aspect-ratio/AspectRatioPlaygroundExample.vue'
+import AspectRatioBasicExample from '../../components/examples/aspect-ratio/AspectRatioBasicExample.vue'
+import AspectRatioVideoExample from '../../components/examples/aspect-ratio/AspectRatioVideoExample.vue'
+import AspectRatioRatiosExample from '../../components/examples/aspect-ratio/AspectRatioRatiosExample.vue'
 
 const aspectRatioConfig: ComponentDocConfig = {
   slug: 'aspect-ratio',
   title: 'AspectRatio',
   description: 'Mantiene una proporción constante para imágenes, vídeos y contenido adaptable.',
   importPath: '@nono-cn/nono-ui/components/ui/AspectRatio',
-  playground: AspectRatioPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Contenido adaptable',
+      description: 'Mantén una proporción cuadrada para contenido visual.',
+      component: AspectRatioBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Formato panorámico',
+      description: 'Usa una proporción 16:9 para vídeos y contenido audiovisual.',
+      component: AspectRatioVideoExample,
+    },
+    {
+      title: 'Diferentes proporciones',
+      description: 'Compara varias proporciones para elegir la más adecuada.',
+      component: AspectRatioRatiosExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Contenido accesible',
