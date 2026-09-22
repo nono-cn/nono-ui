@@ -418,19 +418,6 @@
   justify-content: center;
   height: 150px;
 }
-.slider-playground-stage {
-  display: flex;
-  min-height: 150px;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-.slider-playground-stage.is-horizontal {
-  width: min(100%, 480px);
-}
-.slider-playground-stage.is-vertical {
-  height: 190px;
-}
 .progress-playground-control[data-orientation='vertical'] {
   height: 110px;
 }

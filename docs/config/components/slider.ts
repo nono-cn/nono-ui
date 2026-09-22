@@ -1,14 +1,68 @@
 import type { ComponentDocConfig } from '../component-docs'
-import SliderPlaygroundExample from '../../components/examples/slider/SliderPlaygroundExample.vue'
+import SliderBasicExample from '../../components/examples/slider/SliderBasicExample.vue'
+import SliderRangeExample from '../../components/examples/slider/SliderRangeExample.vue'
+import SliderVerticalExample from '../../components/examples/slider/SliderVerticalExample.vue'
+import SliderSizesExample from '../../components/examples/slider/SliderSizesExample.vue'
+import SliderSeverityExample from '../../components/examples/slider/SliderSeverityExample.vue'
+import SliderColorExample from '../../components/examples/slider/SliderColorExample.vue'
+import SliderInvertedExample from '../../components/examples/slider/SliderInvertedExample.vue'
+import SliderThumbAlignmentExample from '../../components/examples/slider/SliderThumbAlignmentExample.vue'
+import SliderDisabledExample from '../../components/examples/slider/SliderDisabledExample.vue'
 
 const sliderConfig: ComponentDocConfig = {
   slug: 'slider',
   title: 'Slider',
   description: 'Control deslizante accesible para seleccionar uno o varios valores numéricos.',
   importPath: '@nono-ui/components/ui/Slider',
-  playground: SliderPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Value',
+      description: 'Enlaza un valor, define un nombre accesible y muestra el valor seleccionado.',
+      component: SliderBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'MinStepsBetweenThumbs',
+      description: 'Usa dos thumbs con límites, incrementos y una distancia mínima entre ellos.',
+      component: SliderRangeExample,
+    },
+    {
+      title: 'Orientation',
+      description: 'Coloca el slider vertical dentro de un contenedor con altura definida.',
+      component: SliderVerticalExample,
+    },
+    {
+      title: 'Size',
+      description: 'Compara los tamaños xs, sm, md, lg y xl.',
+      component: SliderSizesExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Compara los colores semánticos disponibles para el valor seleccionado.',
+      component: SliderSeverityExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS propio en lugar del color semántico.',
+      component: SliderColorExample,
+    },
+    {
+      title: 'Inverted',
+      description: 'Compara el sentido normal con inverted activado.',
+      component: SliderInvertedExample,
+    },
+    {
+      title: 'ThumbAlignment',
+      description: 'Compara cómo contain y overflow alinean el thumb en los extremos.',
+      component: SliderThumbAlignmentExample,
+    },
+    {
+      title: 'Disabled',
+      description: 'Compara el control interactivo con su estado disabled.',
+      component: SliderDisabledExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Etiquetas de los thumbs',
@@ -20,7 +74,7 @@ const sliderConfig: ComponentDocConfig = {
     props: [
       {
         name: 'value',
-        type: 'number[] | null',
+        type: '[] | [number] | [number, number] | null',
         default: '[0]',
         description: 'Valor controlado del slider. También puede enlazarse con v-model:value.',
       },
@@ -127,7 +181,7 @@ const sliderConfig: ComponentDocConfig = {
     emits: [
       {
         name: 'update:value',
-        type: '[value: number[] | null]',
+        type: '[value: [] | [number] | [number, number] | null]',
         description: 'Se emite cuando cambia el valor durante la interacción.',
       },
       {

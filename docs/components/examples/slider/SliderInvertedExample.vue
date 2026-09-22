@@ -1,0 +1,80 @@
+<script setup lang="ts">
+/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
+import { ref } from 'vue'
+import { Label } from '@/components/ui/Label'
+import { Slider } from '@/components/ui/Slider'
+import ComponentExample from '../ComponentExample.vue'
+
+const normalValue = ref<[number]>([30])
+const invertedValue = ref<[number]>([30])
+const sliderUi = (labelId: string) => ({
+  thumb: () => ({ 'aria-labelledby': labelId }),
+})
+
+const code = `<script setup lang="ts">
+import { ref } from 'vue'
+import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Slider } from '__DOCS_PACKAGE__/components/ui/Slider'
+
+const normalValue = ref<[number]>([30])
+const invertedValue = ref<[number]>([30])
+const sliderUi = (labelId: string) => ({
+  thumb: () => ({ 'aria-labelledby': labelId }),
+})
+<\/script>
+
+<template>
+  <div class="grid w-full max-w-md gap-5">
+    <div class="grid gap-2">
+      <Label id="normal-direction-label">Normal</Label>
+      <Slider
+        v-model:value="normalValue"
+        :min="0"
+        :max="100"
+        :ui="sliderUi('normal-direction-label')"
+      />
+    </div>
+    <div class="grid gap-2">
+      <Label id="inverted-direction-label">Invertido</Label>
+      <Slider
+        v-model:value="invertedValue"
+        :min="0"
+        :max="100"
+        inverted
+        :ui="sliderUi('inverted-direction-label')"
+      />
+    </div>
+  </div>
+</template>`
+</script>
+
+<template>
+  <ComponentExample
+    title="Inverted"
+    description="El mismo valor aparece en sentidos opuestos cuando inverted está activado."
+    :code="code"
+    :show-reset="false"
+  >
+    <div class="grid w-full max-w-md gap-5">
+      <div class="grid gap-2">
+        <Label id="normal-direction-label">Normal</Label>
+        <Slider
+          v-model:value="normalValue"
+          :min="0"
+          :max="100"
+          :ui="sliderUi('normal-direction-label')"
+        />
+      </div>
+      <div class="grid gap-2">
+        <Label id="inverted-direction-label">Invertido</Label>
+        <Slider
+          v-model:value="invertedValue"
+          :min="0"
+          :max="100"
+          inverted
+          :ui="sliderUi('inverted-direction-label')"
+        />
+      </div>
+    </div>
+  </ComponentExample>
+</template>
