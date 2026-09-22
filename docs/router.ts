@@ -3,7 +3,8 @@ import DocsShell from './components/DocsShell.vue'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  scrollBehavior() {
+  scrollBehavior(to, from) {
+    if (to.path === from.path) return false
     return { top: 0, left: 0 }
   },
   routes: [

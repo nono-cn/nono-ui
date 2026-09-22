@@ -8,7 +8,10 @@ const route = useRoute()
 <template>
   <aside class="docs-sidebar">
     <div class="docs-sidebar-inner">
-      <p>Componentes</p>
+      <p class="docs-sidebar-heading">
+        <span>Componentes</span>
+        <span class="docs-sidebar-count">{{ docsComponents.length }}</span>
+      </p>
       <nav>
         <RouterLink
           v-for="component in docsComponents"

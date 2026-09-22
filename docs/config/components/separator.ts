@@ -1,5 +1,6 @@
 import type { ComponentDocConfig } from '../component-docs'
-import SeparatorPlaygroundExample from '../../components/examples/separator/SeparatorPlaygroundExample.vue'
+import SeparatorHorizontalExample from '../../components/examples/separator/SeparatorHorizontalExample.vue'
+import SeparatorVerticalExample from '../../components/examples/separator/SeparatorVerticalExample.vue'
 
 const separatorConfig: ComponentDocConfig = {
   slug: 'separator',
@@ -7,9 +8,20 @@ const separatorConfig: ComponentDocConfig = {
   description:
     'Divide visualmente el contenido y comunica separaciones semánticas cuando es necesario.',
   importPath: '@nono-ui/components/ui/Separator',
-  playground: SeparatorPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Separa secciones usando la orientación horizontal predeterminada.',
+      component: SeparatorHorizontalExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Separación vertical',
+      description: 'Divide elementos colocados en una fila y ocupa la altura del contenedor.',
+      component: SeparatorVerticalExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Separadores decorativos y semánticos',
