@@ -1,14 +1,38 @@
 import type { ComponentDocConfig } from '../component-docs'
-import IconPlaygroundExample from '../../components/examples/icon/IconPlaygroundExample.vue'
+import IconColorExample from '../../components/examples/icon/IconColorExample.vue'
+import IconNameExample from '../../components/examples/icon/IconNameExample.vue'
+import IconSizeExample from '../../components/examples/icon/IconSizeExample.vue'
+import IconUsageExample from '../../components/examples/icon/IconUsageExample.vue'
 
 const iconConfig: ComponentDocConfig = {
   slug: 'icon',
   title: 'Icon',
   description: 'Renderiza un icono Lucide con una API compacta y consistente.',
   importPath: '@nono-cn/nono-ui/components/ui/Icon',
-  playground: IconPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Empieza indicando el nombre del icono que quieres renderizar.',
+      component: IconUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Name',
+      description: 'Selecciona un icono por su nombre registrado en la librería.',
+      component: IconNameExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el tamaño visual del icono.',
+      component: IconSizeExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado al icono.',
+      component: IconColorExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Iconos decorativos y semánticos',
