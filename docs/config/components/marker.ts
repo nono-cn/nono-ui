@@ -1,14 +1,32 @@
 import type { ComponentDocConfig } from '../component-docs'
-import MarkerPlaygroundExample from '../../components/examples/marker/MarkerPlaygroundExample.vue'
+import MarkerBasicExample from '../../components/examples/marker/MarkerBasicExample.vue'
+import MarkerVariantsExample from '../../components/examples/marker/MarkerVariantsExample.vue'
+import MarkerShimmerExample from '../../components/examples/marker/MarkerShimmerExample.vue'
 
 const markerConfig: ComponentDocConfig = {
   slug: 'marker',
   title: 'Marker',
   description: 'Indicador de estado para mostrar información breve sobre una operación o proceso.',
   importPath: '@nono-cn/nono-ui/components/ui/Marker',
-  playground: MarkerPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Marker básico',
+      description: 'Muestra un mensaje breve con un icono decorativo opcional.',
+      component: MarkerBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Variantes',
+      description: 'Elige entre los tratamientos default, border y separator.',
+      component: MarkerVariantsExample,
+    },
+    {
+      title: 'Shimmer',
+      description: 'Aplica una animación de pulso mientras el contenido está procesándose.',
+      component: MarkerShimmerExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Mensajes de estado',
