@@ -1,14 +1,56 @@
 import type { ComponentDocConfig } from '../component-docs'
-import BadgePlaygroundExample from '../../components/examples/badge/BadgePlaygroundExample.vue'
+import BadgeColorExample from '../../components/examples/badge/BadgeColorExample.vue'
+import BadgeIconExample from '../../components/examples/badge/BadgeIconExample.vue'
+import BadgeSeverityExample from '../../components/examples/badge/BadgeSeverityExample.vue'
+import BadgeSizeExample from '../../components/examples/badge/BadgeSizeExample.vue'
+import BadgeTrailingIconExample from '../../components/examples/badge/BadgeTrailingIconExample.vue'
+import BadgeUsageExample from '../../components/examples/badge/BadgeUsageExample.vue'
+import BadgeVariantExample from '../../components/examples/badge/BadgeVariantExample.vue'
 
 const badgeConfig: ComponentDocConfig = {
   slug: 'badge',
   title: 'Badge',
   description: 'Etiqueta compacta para estados, categorías y metadatos.',
   importPath: '@nono-cn/nono-ui/components/ui/Badge',
-  playground: BadgePlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Empieza con un badge usando la configuración predeterminada.',
+      component: BadgeUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Variant',
+      description: 'Compara los tratamientos visuales del badge.',
+      component: BadgeVariantExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Compara las severidades del badge.',
+      component: BadgeSeverityExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el tamaño visual del badge.',
+      component: BadgeSizeExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado.',
+      component: BadgeColorExample,
+    },
+    {
+      title: 'Icon',
+      description: 'Añade un icono inicial.',
+      component: BadgeIconExample,
+    },
+    {
+      title: 'TrailingIcon',
+      description: 'Añade un icono final.',
+      component: BadgeTrailingIconExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Contenido y semántica',
