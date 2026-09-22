@@ -56,7 +56,6 @@ export interface BubbleReactionsProps {
 export type BubbleFn<T> = () => T
 
 export interface BubbleUI {
-  root?: BubbleFn<HTMLAttributes>
   reactions?: BubbleFn<HTMLAttributes>
 }
 

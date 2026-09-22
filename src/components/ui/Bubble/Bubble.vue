@@ -22,10 +22,8 @@ const wrapperProps = computed(() => ({
   class: bubbleWrapperVariants({ align: props.align }),
 }))
 const surfaceProps = computed(() => {
-  const ui = useUi(props.ui?.root, undefined)
   return {
     ...attrs,
-    ...ui,
     as: props.as,
     asChild: props.asChild,
     class: cn(
@@ -34,10 +32,9 @@ const surfaceProps = computed(() => {
         severity: props.severity,
         color: Boolean(props.color),
       }),
-      ui.class,
       attrs.class,
     ),
-    style: [colorStyle.value, ui.style, attrs.style],
+    style: [colorStyle.value, attrs.style],
   }
 })
 const reactionProps = computed(() => {

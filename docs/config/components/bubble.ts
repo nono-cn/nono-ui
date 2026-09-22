@@ -41,7 +41,7 @@ const bubbleConfig: ComponentDocConfig = {
       component: BubbleColorExample,
     },
     {
-      title: 'Reacciones',
+      title: 'Reactions',
       description: 'Añade reacciones en la parte superior o inferior de la burbuja.',
       component: BubbleReactionsExample,
     },
@@ -106,7 +106,6 @@ const bubbleConfig: ComponentDocConfig = {
       {
         name: 'ui',
         type: `{
-  root?: () => HTMLAttributes
   reactions?: () => HTMLAttributes
 }`,
         typePre: true,

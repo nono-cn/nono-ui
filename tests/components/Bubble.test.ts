@@ -94,14 +94,6 @@ describe('Bubble', () => {
     })
 
     describe('ui', () => {
-      describe('root', () => {
-        testAttrs({
-          text: 'renderiza los atributos de ui.root',
-          id: '[data-test-bubble-surface]',
-          mount: (attrs) => mountBubble({ props: { ui: { root: () => attrs } } }),
-        })
-      })
-
       describe('reactions', () => {
         testAttrs({
           text: 'renderiza los atributos de ui.reactions',
