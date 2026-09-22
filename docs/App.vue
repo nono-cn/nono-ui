@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DocsShell from './components/DocsShell.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <DocsShell />
+  <RouterView />
 </template>
