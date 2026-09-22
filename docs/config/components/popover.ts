@@ -1,14 +1,38 @@
 import type { ComponentDocConfig } from '../component-docs'
-import PopoverPlaygroundExample from '../../components/examples/popover/PopoverPlaygroundExample.vue'
+import PopoverBasicExample from '../../components/examples/popover/PopoverBasicExample.vue'
+import PopoverContentExample from '../../components/examples/popover/PopoverContentExample.vue'
+import PopoverArrowExample from '../../components/examples/popover/PopoverArrowExample.vue'
+import PopoverControlledExample from '../../components/examples/popover/PopoverControlledExample.vue'
 
 const popoverConfig: ComponentDocConfig = {
   slug: 'popover',
   title: 'Popover',
   description: 'Muestra contenido contextual relacionado con un elemento disparador.',
   importPath: '@nono-cn/nono-ui/components/ui/Popover',
-  playground: PopoverPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Popover básico',
+      description: 'Abre contenido contextual desde un botón disparador.',
+      component: PopoverBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Content',
+      description: 'Configura la posición, offsets y colisiones del contenido.',
+      component: PopoverContentExample,
+    },
+    {
+      title: 'Arrow',
+      description: 'Personaliza el tamaño y la forma de la flecha.',
+      component: PopoverArrowExample,
+    },
+    {
+      title: 'Estado controlado',
+      description: 'Controla el estado abierto desde el componente padre.',
+      component: PopoverControlledExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Disparadores y teclado',
