@@ -1,14 +1,50 @@
 import type { ComponentDocConfig } from '../component-docs'
-import CheckboxPlaygroundExample from '../../components/examples/checkbox/CheckboxPlaygroundExample.vue'
+import CheckboxValuesExample from '../../components/examples/checkbox/CheckboxValuesExample.vue'
+import CheckboxIndeterminateExample from '../../components/examples/checkbox/CheckboxIndeterminateExample.vue'
+import CheckboxSizeExample from '../../components/examples/checkbox/CheckboxSizeExample.vue'
+import CheckboxSeverityExample from '../../components/examples/checkbox/CheckboxSeverityExample.vue'
+import CheckboxColorExample from '../../components/examples/checkbox/CheckboxColorExample.vue'
+import CheckboxIconsExample from '../../components/examples/checkbox/CheckboxIconsExample.vue'
 
 const checkboxConfig: ComponentDocConfig = {
   slug: 'checkbox',
   title: 'Checkbox',
   description: 'Control accesible para seleccionar una opción o representar una selección parcial.',
   importPath: '@nono-cn/nono-ui/components/ui/Checkbox',
-  playground: CheckboxPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'trueValue y falseValue',
+      description: 'Usa valores personalizados para los estados seleccionado y no seleccionado.',
+      component: CheckboxValuesExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Indeterminate',
+      description: 'Representa una selección parcial con el valor indeterminate.',
+      component: CheckboxIndeterminateExample,
+    },
+    {
+      title: 'Size',
+      description: 'Configura el tamaño visual del checkbox.',
+      component: CheckboxSizeExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Aplica un color semántico al estado seleccionado.',
+      component: CheckboxSeverityExample,
+    },
+    {
+      title: 'Color',
+      description: 'Usa un color CSS personalizado.',
+      component: CheckboxColorExample,
+    },
+    {
+      title: 'Icon e indeterminateIcon',
+      description: 'Personaliza los iconos de seleccionado e indeterminado.',
+      component: CheckboxIconsExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Nombre accesible',
