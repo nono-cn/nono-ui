@@ -1,14 +1,62 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AvatarPlaygroundExample from '../../components/examples/avatar/AvatarPlaygroundExample.vue'
+import AvatarDelayMsExample from '../../components/examples/avatar/AvatarDelayMsExample.vue'
+import AvatarFallbackExample from '../../components/examples/avatar/AvatarFallbackExample.vue'
+import AvatarIconExample from '../../components/examples/avatar/AvatarIconExample.vue'
+import AvatarLabelExample from '../../components/examples/avatar/AvatarLabelExample.vue'
+import AvatarShapeExample from '../../components/examples/avatar/AvatarShapeExample.vue'
+import AvatarSizeExample from '../../components/examples/avatar/AvatarSizeExample.vue'
+import AvatarSrcExample from '../../components/examples/avatar/AvatarSrcExample.vue'
+import AvatarUsageExample from '../../components/examples/avatar/AvatarUsageExample.vue'
 
 const avatarConfig: ComponentDocConfig = {
   slug: 'avatar',
   title: 'Avatar',
   description: 'Muestra una imagen de perfil con contenido alternativo cuando no está disponible.',
   importPath: '@nono-cn/nono-ui/components/ui/Avatar',
-  playground: AvatarPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Muestra una imagen de perfil con un fallback textual.',
+      component: AvatarUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Src',
+      description: 'Carga la imagen de perfil desde una URL.',
+      component: AvatarSrcExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el tamaño visual del avatar.',
+      component: AvatarSizeExample,
+    },
+    {
+      title: 'Shape',
+      description: 'Elige entre una forma circular o cuadrada.',
+      component: AvatarShapeExample,
+    },
+    {
+      title: 'DelayMs',
+      description: 'Retrasa la aparición del contenido alternativo.',
+      component: AvatarDelayMsExample,
+    },
+    {
+      title: 'Icon',
+      description: 'Muestra un icono en el fallback del avatar.',
+      component: AvatarIconExample,
+    },
+    {
+      title: 'Label',
+      description: 'Muestra texto en el fallback del avatar.',
+      component: AvatarLabelExample,
+    },
+    {
+      title: 'Fallback',
+      description: 'Sustituye por completo el contenido alternativo.',
+      component: AvatarFallbackExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Texto alternativo',
