@@ -1,0 +1,32 @@
+<script setup lang="ts">
+import { Bubble } from '@/components/ui/Bubble'
+import ComponentExample from '../ComponentExample.vue'
+
+const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as const
+const code = `<script setup lang="ts">
+import { Bubble } from '@nono-cn/nono-ui/components/ui/Bubble'
+
+const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as const
+<\/script>
+
+<template>
+  <div class="grid w-full gap-3">
+    <Bubble v-for="severity in severities" :key="severity" :severity="severity">{{ severity }}</Bubble>
+  </div>
+</template>`
+</script>
+
+<template>
+  <ComponentExample
+    title="Severity"
+    description="Compara las severidades semánticas."
+    :code="code"
+    :show-reset="false"
+  >
+    <div class="grid w-full gap-3">
+      <Bubble v-for="severity in severities" :key="severity" :severity="severity">{{
+        severity
+      }}</Bubble>
+    </div>
+  </ComponentExample>
+</template>

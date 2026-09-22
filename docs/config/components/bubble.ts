@@ -1,5 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
-import BubblePlaygroundExample from '../../components/examples/bubble/BubblePlaygroundExample.vue'
+import BubbleBasicExample from '../../components/examples/bubble/BubbleBasicExample.vue'
+import BubbleAlignExample from '../../components/examples/bubble/BubbleAlignExample.vue'
+import BubbleVariantExample from '../../components/examples/bubble/BubbleVariantExample.vue'
+import BubbleSeverityExample from '../../components/examples/bubble/BubbleSeverityExample.vue'
+import BubbleColorExample from '../../components/examples/bubble/BubbleColorExample.vue'
+import BubbleReactionsExample from '../../components/examples/bubble/BubbleReactionsExample.vue'
 
 const bubbleConfig: ComponentDocConfig = {
   slug: 'bubble',
@@ -7,9 +12,40 @@ const bubbleConfig: ComponentDocConfig = {
   description:
     'Representa mensajes o intervenciones en una conversación con alineación, variantes y reacciones.',
   importPath: '@nono-cn/nono-ui/components/ui/Bubble',
-  playground: BubblePlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Bubble básica',
+      description: 'Muestra un mensaje con el tratamiento visual predeterminado.',
+      component: BubbleBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Align',
+      description: 'Alinea la burbuja al inicio o al final del contenedor.',
+      component: BubbleAlignExample,
+    },
+    {
+      title: 'Variant',
+      description: 'Cambia el tratamiento visual de la superficie.',
+      component: BubbleVariantExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Compara las severidades semánticas disponibles.',
+      component: BubbleSeverityExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado a la burbuja.',
+      component: BubbleColorExample,
+    },
+    {
+      title: 'Reacciones',
+      description: 'Añade reacciones en la parte superior o inferior de la burbuja.',
+      component: BubbleReactionsExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Contenido conversacional',
