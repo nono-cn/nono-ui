@@ -1,14 +1,32 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AlertDialogPlaygroundExample from '../../components/examples/alert-dialog/AlertDialogPlaygroundExample.vue'
+import AlertDialogBasicExample from '../../components/examples/alert-dialog/AlertDialogBasicExample.vue'
+import AlertDialogIconExample from '../../components/examples/alert-dialog/AlertDialogIconExample.vue'
+import AlertDialogActionsExample from '../../components/examples/alert-dialog/AlertDialogActionsExample.vue'
 
 const alertDialogConfig: ComponentDocConfig = {
   slug: 'alert-dialog',
   title: 'AlertDialog',
   description: 'Solicita una confirmación explícita antes de ejecutar una acción importante.',
   importPath: '@nono-cn/nono-ui/components/ui/AlertDialog',
-  playground: AlertDialogPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Confirmación básica',
+      description: 'Solicita confirmación antes de eliminar un elemento.',
+      component: AlertDialogBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Icono',
+      description: 'Añade un icono para reforzar visualmente el contexto de la acción.',
+      component: AlertDialogIconExample,
+    },
+    {
+      title: 'Acciones personalizadas',
+      description: 'Configura los botones de acción y cancelación mediante props.',
+      component: AlertDialogActionsExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Confirmación y foco',
