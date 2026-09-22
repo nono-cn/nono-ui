@@ -1,14 +1,50 @@
 import type { ComponentDocConfig } from '../component-docs'
-import SwitchPlaygroundExample from '../../components/examples/switch/SwitchPlaygroundExample.vue'
+import SwitchBasicExample from '../../components/examples/switch/SwitchBasicExample.vue'
+import SwitchValuesExample from '../../components/examples/switch/SwitchValuesExample.vue'
+import SwitchSizesExample from '../../components/examples/switch/SwitchSizesExample.vue'
+import SwitchSeverityExample from '../../components/examples/switch/SwitchSeverityExample.vue'
+import SwitchColorExample from '../../components/examples/switch/SwitchColorExample.vue'
+import SwitchIconsExample from '../../components/examples/switch/SwitchIconsExample.vue'
 
 const switchConfig: ComponentDocConfig = {
   slug: 'switch',
   title: 'Switch',
   description: 'Control interactivo para activar o desactivar una opción.',
   importPath: '@nono-ui/components/ui/Switch',
-  playground: SwitchPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Asocia el control a un texto y enlaza su estado con v-model:value.',
+      component: SwitchBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Valores personalizados',
+      description: 'Configura trueValue y falseValue para usar valores distintos de booleanos.',
+      component: SwitchValuesExample,
+    },
+    {
+      title: 'Tamaños',
+      description: 'Compara los cinco tamaños disponibles.',
+      component: SwitchSizesExample,
+    },
+    {
+      title: 'Severidad',
+      description: 'Elige un color semántico para el estado activado.',
+      component: SwitchSeverityExample,
+    },
+    {
+      title: 'Color personalizado',
+      description: 'Usa color para aplicar un color CSS propio con prioridad sobre severity.',
+      component: SwitchColorExample,
+    },
+    {
+      title: 'Iconos',
+      description: 'Muestra iconos distintos en el thumb según el estado.',
+      component: SwitchIconsExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Nombre accesible',

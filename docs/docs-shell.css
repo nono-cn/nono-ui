@@ -381,10 +381,6 @@
 .playground-example-preview > * {
   width: min(100%, 480px);
 }
-.switch-playground-stage {
-  display: grid;
-  place-items: center;
-}
 .scroll-area-playground-stage {
   height: 190px;
 }
