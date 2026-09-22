@@ -1,14 +1,62 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ChipPlaygroundExample from '../../components/examples/chip/ChipPlaygroundExample.vue'
+import ChipColorExample from '../../components/examples/chip/ChipColorExample.vue'
+import ChipDefaultExample from '../../components/examples/chip/ChipDefaultExample.vue'
+import ChipInsetExample from '../../components/examples/chip/ChipInsetExample.vue'
+import ChipPositionExample from '../../components/examples/chip/ChipPositionExample.vue'
+import ChipShowExample from '../../components/examples/chip/ChipShowExample.vue'
+import ChipSizeExample from '../../components/examples/chip/ChipSizeExample.vue'
+import ChipStandaloneExample from '../../components/examples/chip/ChipStandaloneExample.vue'
+import ChipUsageExample from '../../components/examples/chip/ChipUsageExample.vue'
 
 const chipConfig: ComponentDocConfig = {
   slug: 'chip',
   title: 'Chip',
   description: 'Indicador compacto que puede mostrarse sobre un elemento o de forma independiente.',
   importPath: '@nono-cn/nono-ui/components/ui/Chip',
-  playground: ChipPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Muestra un indicador sobre un elemento asociado.',
+      component: ChipUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Default',
+      description: 'Usa el slot default para posicionar el chip sobre un elemento.',
+      component: ChipDefaultExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado al indicador.',
+      component: ChipColorExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el tamaño del indicador.',
+      component: ChipSizeExample,
+    },
+    {
+      title: 'Position',
+      description: 'Coloca el indicador en una de las esquinas disponibles.',
+      component: ChipPositionExample,
+    },
+    {
+      title: 'Show',
+      description: 'Controla si el indicador se muestra.',
+      component: ChipShowExample,
+    },
+    {
+      title: 'Inset',
+      description: 'Evita el desplazamiento del indicador respecto a su posición.',
+      component: ChipInsetExample,
+    },
+    {
+      title: 'Standalone',
+      description: 'Muestra el indicador sin posicionamiento absoluto.',
+      component: ChipStandaloneExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Información visual',
