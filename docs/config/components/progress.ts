@@ -1,5 +1,13 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ProgressPlaygroundExample from '../../components/examples/progress/ProgressPlaygroundExample.vue'
+import ProgressBasicExample from '../../components/examples/progress/ProgressBasicExample.vue'
+import ProgressValueExample from '../../components/examples/progress/ProgressValueExample.vue'
+import ProgressSizeExample from '../../components/examples/progress/ProgressSizeExample.vue'
+import ProgressSeverityExample from '../../components/examples/progress/ProgressSeverityExample.vue'
+import ProgressAnimationExample from '../../components/examples/progress/ProgressAnimationExample.vue'
+import ProgressOrientationExample from '../../components/examples/progress/ProgressOrientationExample.vue'
+import ProgressInvertedExample from '../../components/examples/progress/ProgressInvertedExample.vue'
+import ProgressColorExample from '../../components/examples/progress/ProgressColorExample.vue'
+import ProgressLabelExample from '../../components/examples/progress/ProgressLabelExample.vue'
 
 const progressConfig: ComponentDocConfig = {
   slug: 'progress',
@@ -7,9 +15,55 @@ const progressConfig: ComponentDocConfig = {
   description:
     'Muestra el avance de una tarea con una barra de progreso accesible y personalizable.',
   importPath: '@nono-ui/components/ui/Progress',
-  playground: ProgressPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Muestra el avance actual con un valor y una etiqueta accesible.',
+      component: ProgressBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Value',
+      description: 'Compara valores determinados con un progreso indeterminado usando null.',
+      component: ProgressValueExample,
+    },
+    {
+      title: 'Size',
+      description: 'Compara los siete tamaños disponibles para el grosor de la barra.',
+      component: ProgressSizeExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Compara los colores semánticos disponibles para la barra.',
+      component: ProgressSeverityExample,
+    },
+    {
+      title: 'Animation',
+      description: 'Compara las animaciones disponibles para el progreso indeterminado.',
+      component: ProgressAnimationExample,
+    },
+    {
+      title: 'Orientation',
+      description: 'Muestra el progreso en orientación horizontal y vertical.',
+      component: ProgressOrientationExample,
+    },
+    {
+      title: 'Inverted',
+      description: 'Invierte la dirección de llenado del indicador.',
+      component: ProgressInvertedExample,
+    },
+    {
+      title: 'Color',
+      description: 'Personaliza el color del indicador y, opcionalmente, el del track.',
+      component: ProgressColorExample,
+    },
+    {
+      title: 'Label',
+      description: 'Personaliza el contenido de la etiqueta y utiliza el contexto del slot.',
+      component: ProgressLabelExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Nombre y valores accesibles',
