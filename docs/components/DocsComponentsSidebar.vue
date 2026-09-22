@@ -8,7 +8,7 @@ const route = useRoute()
 <template>
   <aside class="docs-sidebar">
     <div class="docs-sidebar-inner">
-      <p>Components</p>
+      <p>Componentes</p>
       <nav>
         <RouterLink
           v-for="component in docsComponents"

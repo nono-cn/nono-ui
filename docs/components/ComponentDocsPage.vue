@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ApiTable from './docs/ApiTable.vue'
 import type { ComponentDocConfig } from '../config/component-docs'
+import { exampleAnchor } from '../config/docs-anchors'
 
 defineProps<{
   component: ComponentDocConfig
@@ -18,7 +19,7 @@ defineProps<{
 
     <section id="import" class="grid scroll-mt-8 gap-5">
       <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Import</h2>
+        <h2 class="text-2xl font-semibold tracking-tight">Importación</h2>
         <p class="text-sm leading-6 text-muted-foreground">
           Importa {{ component.title }} desde su entrada pública para usarlo en una vista Vue.
         </p>
@@ -39,29 +40,46 @@ defineProps<{
     </section>
 
     <section v-if="!component.playground" id="usage" class="grid scroll-mt-8 gap-5">
-      <div class="grid gap-2"><h2 class="text-2xl font-semibold tracking-tight">Usage</h2><p class="text-sm leading-6 text-muted-foreground">Empieza con el uso básico y configura el componente según las necesidades de tu interfaz.</p></div>
-      <div class="grid gap-6"><component :is="example.component" v-for="example in component.usage" :key="example.title" /></div>
+      <div class="grid gap-2">
+        <h2 class="text-2xl font-semibold tracking-tight">Uso</h2>
+        <p class="text-sm leading-6 text-muted-foreground">
+          Empieza con el uso básico y configura el componente según las necesidades de tu interfaz.
+        </p>
+      </div>
+      <div class="grid gap-6">
+        <div
+          v-for="(example, index) in component.usage"
+          :id="exampleAnchor('usage', example.title, index)"
+          :key="example.title"
+          class="scroll-mt-8"
+        >
+          <component :is="example.component" />
+        </div>
+      </div>
     </section>
 
     <section v-if="!component.playground" id="examples" class="grid scroll-mt-8 gap-5">
       <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Examples</h2>
+        <h2 class="text-2xl font-semibold tracking-tight">Ejemplos</h2>
         <p class="text-sm leading-6 text-muted-foreground">
           Explora las props más habituales con controles interactivos y ejemplos copiable.
         </p>
       </div>
       <div class="grid gap-6">
-        <component
-          :is="example.component"
-          v-for="example in component.examples"
+        <div
+          v-for="(example, index) in component.examples"
+          :id="exampleAnchor('examples', example.title, index)"
           :key="example.title"
-        />
+          class="scroll-mt-8"
+        >
+          <component :is="example.component" />
+        </div>
       </div>
     </section>
 
     <section id="accessibility" class="grid scroll-mt-8 gap-5">
       <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Accessibility</h2>
+        <h2 class="text-2xl font-semibold tracking-tight">Accesibilidad</h2>
         <p class="text-sm leading-6 text-muted-foreground">
           Usa las recomendaciones y ejemplos de accesibilidad aplicables a {{ component.title }}.
         </p>

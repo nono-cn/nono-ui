@@ -7,6 +7,7 @@ import DocsComponentsSidebar from './DocsComponentsSidebar.vue'
 import ComponentDocsPage from './ComponentDocsPage.vue'
 import { ConfigProvider } from '@/components/provider'
 import { docsComponentsBySlug } from '../config/docs-components'
+import { exampleAnchor } from '../config/docs-anchors'
 
 const route = useRoute()
 const dark = ref(false)
@@ -25,25 +26,60 @@ function toggleTheme() {
 
 const component = computed(() => docsComponentsBySlug[String(route.params.slug)])
 const pageTitle = computed(() =>
-  component.value ? `${component.value.title} · nono-ui` : 'nono-ui · Components',
+  component.value ? `${component.value.title} · nono-ui` : 'nono-ui · Componentes',
 )
-const tocItems = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'import', label: 'Import' },
-  { id: 'playground', label: 'Playground' },
-  { id: 'usage', label: 'Usage' },
-  { id: 'examples', label: 'Examples' },
-  { id: 'accessibility', label: 'Accessibility' },
-  { id: 'api', label: 'API' },
-]
-const visibleTocItems = computed(() =>
-  component.value?.playground
-    ? tocItems.filter((item) => !['usage', 'examples'].includes(item.id))
-    : tocItems.filter((item) => item.id !== 'playground'),
-)
-const desktopTocItems = computed(() =>
-  visibleTocItems.value.filter((item) => item.id !== 'overview'),
-)
+interface DocsTocItem {
+  id: string
+  label: string
+  children?: DocsTocItem[]
+}
+
+const tocTree = computed<DocsTocItem[]>(() => {
+  const currentComponent = component.value
+  if (!currentComponent) return []
+
+  const items: DocsTocItem[] = [{ id: 'import', label: 'Importación' }]
+
+  if (currentComponent.playground) {
+    items.push({ id: 'playground', label: 'Playground' })
+  } else {
+    if (currentComponent.usage.length) {
+      items.push({
+        id: 'usage',
+        label: 'Uso',
+        children: currentComponent.usage.map((example, index) => ({
+          id: exampleAnchor('usage', example.title, index),
+          label: example.title,
+        })),
+      })
+    }
+
+    if (currentComponent.examples.length) {
+      items.push({
+        id: 'examples',
+        label: 'Ejemplos',
+        children: currentComponent.examples.map((example, index) => ({
+          id: exampleAnchor('examples', example.title, index),
+          label: example.title,
+        })),
+      })
+    }
+  }
+
+  items.push({ id: 'accessibility', label: 'Accesibilidad' })
+
+  const apiChildren: DocsTocItem[] = []
+  if (currentComponent.api.props.length) apiChildren.push({ id: 'props', label: 'Props' })
+  for (const table of currentComponent.api.configs ?? []) {
+    if (table.rows.length) apiChildren.push({ id: table.id, label: table.title })
+  }
+  if (currentComponent.api.emits.length) apiChildren.push({ id: 'emits', label: 'Emits' })
+  if (currentComponent.api.slots.length) apiChildren.push({ id: 'slots', label: 'Slots' })
+  if (currentComponent.api.expose.length) apiChildren.push({ id: 'expose', label: 'Expose' })
+
+  items.push({ id: 'api', label: 'API', children: apiChildren })
+  return items
+})
 
 watch(pageTitle, (value) => (document.title = value), { immediate: true })
 </script>
@@ -83,18 +119,25 @@ watch(pageTitle, (value) => (document.title = value), { immediate: true })
       </header>
       <div class="docs-sectionbar">
         <div class="docs-sectionbar-inner">
-          <RouterLink to="/components" class="docs-section-title"> Components </RouterLink>
+          <RouterLink to="/components" class="docs-section-title"> Componentes </RouterLink>
           <span v-if="component" class="docs-section-current">/ {{ component.title }}</span>
         </div>
       </div>
       <div class="docs-workspace">
         <div v-if="component" class="docs-mobile-nav">
           <details :open="pageOpen" @toggle="pageOpen = ($event.target as HTMLDetailsElement).open">
-            <summary>On this page</summary>
-            <nav>
-              <a v-for="item in visibleTocItems" :key="item.id" :href="`#${item.id}`">{{
-                item.label
-              }}</a>
+            <summary>En esta página</summary>
+            <nav aria-label="En esta página">
+              <ul class="docs-mobile-toc-tree">
+                <li v-for="item in tocTree" :key="item.id">
+                  <a :href="`#${item.id}`">{{ item.label }}</a>
+                  <ul v-if="item.children?.length" class="docs-mobile-toc-children">
+                    <li v-for="child in item.children" :key="child.id">
+                      <a :href="`#${child.id}`">{{ child.label }}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </nav>
           </details>
         </div>
@@ -102,22 +145,28 @@ watch(pageTitle, (value) => (document.title = value), { immediate: true })
         <main class="docs-content">
           <ComponentDocsPage v-if="component" :component="component" />
           <div v-else class="docs-empty">
-            <span class="docs-empty-kicker">Components</span>
+            <span class="docs-empty-kicker">Componentes</span>
             <h1>Componente no encontrado</h1>
             <p>Selecciona un componente disponible en la navegación.</p>
           </div>
         </main>
         <aside v-if="component" class="docs-toc">
           <div class="docs-toc-inner">
-            <p>On this page</p>
-            <a
-              v-for="(item, index) in desktopTocItems"
-              :key="item.id"
-              :class="{ 'is-active': index === 0 }"
-              :href="`#${item.id}`"
-            >
-              {{ item.label }}
-            </a>
+            <p>En esta página</p>
+            <nav aria-label="En esta página">
+              <ul class="docs-toc-tree">
+                <li v-for="(item, index) in tocTree" :key="item.id">
+                  <a :class="{ 'is-active': index === 0 }" :href="`#${item.id}`">
+                    {{ item.label }}
+                  </a>
+                  <ul v-if="item.children?.length" class="docs-toc-children">
+                    <li v-for="child in item.children" :key="child.id">
+                      <a :href="`#${child.id}`">{{ child.label }}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
           </div>
         </aside>
       </div>

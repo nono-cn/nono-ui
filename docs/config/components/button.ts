@@ -1,14 +1,86 @@
 import type { ComponentDocConfig } from '../component-docs'
-import ButtonPlaygroundExample from '../../components/examples/button/ButtonPlaygroundExample.vue'
+import ButtonColorExample from '../../components/examples/button/ButtonColorExample.vue'
+import ButtonIconExample from '../../components/examples/button/ButtonIconExample.vue'
+import ButtonDisabledExample from '../../components/examples/button/ButtonDisabledExample.vue'
+import ButtonLoadingExample from '../../components/examples/button/ButtonLoadingExample.vue'
+import ButtonRaisedExample from '../../components/examples/button/ButtonRaisedExample.vue'
+import ButtonRoundedExample from '../../components/examples/button/ButtonRoundedExample.vue'
+import ButtonSeverityExample from '../../components/examples/button/ButtonSeverityExample.vue'
+import ButtonSquareExample from '../../components/examples/button/ButtonSquareExample.vue'
+import ButtonSizeExample from '../../components/examples/button/ButtonSizeExample.vue'
+import ButtonTrailingIconExample from '../../components/examples/button/ButtonTrailingIconExample.vue'
+import ButtonUsageExample from '../../components/examples/button/ButtonUsageExample.vue'
+import ButtonVariantsExample from '../../components/examples/button/ButtonVariantsExample.vue'
 
 const buttonConfig: ComponentDocConfig = {
   slug: 'button',
   title: 'Button',
   description: 'Acción interactiva con variantes, estados, iconos y elementos raíz configurables.',
   importPath: '@nono-cn/nono-ui/components/ui/Button',
-  playground: ButtonPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Uso básico',
+      description: 'Empieza con un botón con la configuración predeterminada.',
+      component: ButtonUsageExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Variant',
+      description: 'Compara las variantes visuales del botón usando la misma severidad.',
+      component: ButtonVariantsExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Compara las severidades del botón usando la misma variante visual.',
+      component: ButtonSeverityExample,
+    },
+    {
+      title: 'Size',
+      description: 'Ajusta el tamaño visual del botón.',
+      component: ButtonSizeExample,
+    },
+    {
+      title: 'Rounded',
+      description: 'Aplica una forma completamente redondeada al botón.',
+      component: ButtonRoundedExample,
+    },
+    {
+      title: 'Square',
+      description: 'Iguala el ancho y el alto para crear botones cuadrados.',
+      component: ButtonSquareExample,
+    },
+    {
+      title: 'Raised',
+      description: 'Añade una sombra ligera para comunicar elevación visual.',
+      component: ButtonRaisedExample,
+    },
+    {
+      title: 'Loading',
+      description: 'Muestra el estado de carga de la acción.',
+      component: ButtonLoadingExample,
+    },
+    {
+      title: 'Disabled',
+      description: 'Impide la interacción con el botón.',
+      component: ButtonDisabledExample,
+    },
+    {
+      title: 'Color',
+      description: 'Aplica un color CSS personalizado al botón.',
+      component: ButtonColorExample,
+    },
+    {
+      title: 'Icon',
+      description: 'Añade un icono inicial al botón.',
+      component: ButtonIconExample,
+    },
+    {
+      title: 'TrailingIcon',
+      description: 'Añade un icono final al botón.',
+      component: ButtonTrailingIconExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Acciones accesibles',
