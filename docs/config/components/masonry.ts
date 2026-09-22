@@ -1,5 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
-import MasonryPlaygroundExample from '../../components/examples/masonry/MasonryPlaygroundExample.vue'
+import MasonryBasicExample from '../../components/examples/masonry/MasonryBasicExample.vue'
+import MasonryResponsiveExample from '../../components/examples/masonry/MasonryResponsiveExample.vue'
+import MasonrySequentialExample from '../../components/examples/masonry/MasonrySequentialExample.vue'
 
 const masonryConfig: ComponentDocConfig = {
   slug: 'masonry',
@@ -7,9 +9,25 @@ const masonryConfig: ComponentDocConfig = {
   description:
     'Distribuye elementos de altura variable en columnas optimizando el espacio disponible.',
   importPath: '@nono-cn/nono-ui/components/ui/Masonry',
-  playground: MasonryPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Masonry básico',
+      description: 'Distribuye elementos de altura variable en tres columnas.',
+      component: MasonryBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Columnas responsive',
+      description: 'Adapta el número de columnas según el ancho de la ventana.',
+      component: MasonryResponsiveExample,
+    },
+    {
+      title: 'Orden secuencial',
+      description: 'Reparte los elementos de izquierda a derecha en orden estricto.',
+      component: MasonrySequentialExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Orden y semántica',

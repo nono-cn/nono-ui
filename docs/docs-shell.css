@@ -176,6 +176,17 @@
 }
 .docs-content {
   min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.docs-page {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.docs-page > * {
+  min-width: 0;
+  max-width: 100%;
 }
 .docs-empty {
   max-width: 680px;

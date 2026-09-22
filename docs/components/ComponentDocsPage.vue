@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <article class="docs-page mx-auto grid max-w-4xl gap-12 px-5 py-10 sm:px-8 sm:py-14">
+  <article class="docs-page mx-auto grid min-w-0 gap-12 px-5 py-10 sm:px-8 sm:py-14">
     <header id="overview" class="grid scroll-mt-8 gap-4">
       <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{{ component.title }}</h1>
       <p class="max-w-2xl text-base leading-7 text-muted-foreground">
