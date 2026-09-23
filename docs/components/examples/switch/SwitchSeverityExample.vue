@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains escaped SFC tags. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Switch } from '@/components/ui/Switch'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as const
 const values = ref([true, true, true, true, true])
@@ -15,7 +15,7 @@ import { Switch } from '__DOCS_PACKAGE__/components/ui/Switch'
 
 const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as const
 const values = ref([true, true, true, true, true])
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-sm gap-3">
@@ -24,7 +24,7 @@ const values = ref([true, true, true, true, true])
       :key="severity"
       class="flex items-center justify-between gap-4"
     >
-      <Label :for="\`switch-severity-\${severity}\">{{ severity }}</Label>
+      <Label :for="\`switch-severity-\${severity}\`">{{ severity }}</Label>
       <Switch
         :id="\`switch-severity-\${severity}\`"
         v-model:value="values[index]"
@@ -37,8 +37,8 @@ const values = ref([true, true, true, true, true])
 
 <template>
   <ComponentExample
-    title="Severidad"
-    description="Elige un color semántico para el estado activado."
+    title="Severity"
+    description="Choose a semantic color for the on state."
     :code="code"
     :show-reset="false"
   >

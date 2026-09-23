@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains escaped SFC tags. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Switch } from '@/components/ui/Switch'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const value = ref<'on' | 'off'>('off')
 
@@ -13,12 +13,12 @@ import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 import { Switch } from '__DOCS_PACKAGE__/components/ui/Switch'
 
 const value = ref<'on' | 'off'>('off')
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-sm gap-3">
     <div class="flex items-center justify-between gap-4">
-      <Label for="switch-values">Notificaciones</Label>
+      <Label for="switch-values">Notifications</Label>
       <Switch
         id="switch-values"
         v-model:value="value"
@@ -26,24 +26,24 @@ const value = ref<'on' | 'off'>('off')
         false-value="off"
       />
     </div>
-    <p class="text-sm text-muted-foreground">Valor actual: {{ value }}</p>
+    <p class="text-sm text-muted-foreground">Current value: {{ value }}</p>
   </div>
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Valores personalizados"
-    description="Configura trueValue y falseValue para usar valores distintos de booleanos."
+    title="Custom values"
+    description="Set trueValue and falseValue to use non-boolean values."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-sm gap-3">
       <div class="flex items-center justify-between gap-4">
-        <Label for="switch-values">Notificaciones</Label>
+        <Label for="switch-values">Notifications</Label>
         <Switch id="switch-values" v-model:value="value" true-value="on" false-value="off" />
       </div>
-      <p class="text-sm text-muted-foreground">Valor actual: {{ value }}</p>
+      <p class="text-sm text-muted-foreground">Current value: {{ value }}</p>
     </div>
   </ComponentExample>
 </template>

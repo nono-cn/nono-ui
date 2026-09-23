@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains escaped SFC tags. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Switch } from '@/components/ui/Switch'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const enabled = ref(true)
 
@@ -13,11 +13,11 @@ import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 import { Switch } from '__DOCS_PACKAGE__/components/ui/Switch'
 
 const enabled = ref(true)
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="flex w-full max-w-sm items-center justify-between gap-4">
-    <Label for="switch-custom-color">Modo violeta</Label>
+    <Label for="switch-custom-color">Violet mode</Label>
     <Switch
       id="switch-custom-color"
       v-model:value="enabled"
@@ -30,13 +30,13 @@ const enabled = ref(true)
 
 <template>
   <ComponentExample
-    title="Color personalizado"
-    description="La prop color aplica un color CSS y tiene prioridad sobre severity."
+    title="Custom color"
+    description="The color prop applies a CSS color and takes precedence over severity."
     :code="code"
     :show-reset="false"
   >
     <div class="flex w-full max-w-sm items-center justify-between gap-4">
-      <Label for="switch-custom-color">Modo violeta</Label>
+      <Label for="switch-custom-color">Violet mode</Label>
       <Switch
         id="switch-custom-color"
         v-model:value="enabled"

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains escaped SFC tags. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Switch } from '@/components/ui/Switch'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const enabled = ref(false)
 
@@ -13,11 +13,11 @@ import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 import { Switch } from '__DOCS_PACKAGE__/components/ui/Switch'
 
 const enabled = ref(false)
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="flex w-full max-w-sm items-center justify-between gap-4 rounded-lg border p-4">
-    <Label for="updates-switch">Recibir novedades</Label>
+    <Label for="updates-switch">Receive updates</Label>
     <Switch id="updates-switch" v-model:value="enabled" />
   </div>
 </template>`
@@ -25,13 +25,13 @@ const enabled = ref(false)
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Asocia el control a un texto y enlaza su estado con v-model:value."
+    title="Basic usage"
+    description="Associate the control with a label and bind its state with v-model:value."
     :code="code"
     :show-reset="false"
   >
     <div class="flex w-full max-w-sm items-center justify-between gap-4 rounded-lg border p-4">
-      <Label for="updates-switch">Recibir novedades</Label>
+      <Label for="updates-switch">Receive updates</Label>
       <Switch id="updates-switch" v-model:value="enabled" />
     </div>
   </ComponentExample>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains escaped SFC tags. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Switch } from '@/components/ui/Switch'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 const values = ref([true, true, true, true, true])
@@ -15,7 +15,7 @@ import { Switch } from '__DOCS_PACKAGE__/components/ui/Switch'
 
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 const values = ref([true, true, true, true, true])
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-sm gap-3">
@@ -24,7 +24,7 @@ const values = ref([true, true, true, true, true])
       :key="size"
       class="flex items-center justify-between gap-4"
     >
-      <Label :for="\`switch-size-\${size}\">{{ size }}</Label>
+      <Label :for="\`switch-size-\${size}\`">{{ size }}</Label>
       <Switch
         :id="\`switch-size-\${size}\`"
         v-model:value="values[index]"
@@ -37,8 +37,8 @@ const values = ref([true, true, true, true, true])
 
 <template>
   <ComponentExample
-    title="Tamaños"
-    description="Compara los cinco tamaños disponibles."
+    title="Size"
+    description="Compare the five available sizes."
     :code="code"
     :show-reset="false"
   >

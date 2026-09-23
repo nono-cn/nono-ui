@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains escaped SFC tags. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Switch } from '@/components/ui/Switch'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const enabled = ref(false)
 
@@ -13,11 +13,11 @@ import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 import { Switch } from '__DOCS_PACKAGE__/components/ui/Switch'
 
 const enabled = ref(false)
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="flex w-full max-w-sm items-center justify-between gap-4">
-    <Label for="switch-icons">Alertas</Label>
+    <Label for="switch-icons">Alerts</Label>
     <Switch
       id="switch-icons"
       v-model:value="enabled"
@@ -30,13 +30,13 @@ const enabled = ref(false)
 
 <template>
   <ComponentExample
-    title="Iconos"
-    description="Usa uncheckedIcon y checkedIcon para cambiar el icono según el estado."
+    title="Icons"
+    description="Use uncheckedIcon and checkedIcon to change the icon based on the state."
     :code="code"
     :show-reset="false"
   >
     <div class="flex w-full max-w-sm items-center justify-between gap-4">
-      <Label for="switch-icons">Alertas</Label>
+      <Label for="switch-icons">Alerts</Label>
       <Switch
         id="switch-icons"
         v-model:value="enabled"
