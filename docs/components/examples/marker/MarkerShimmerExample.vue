@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import { Marker } from '@/components/ui/Marker'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Marker } from '__DOCS_PACKAGE__/components/ui/Marker'
-<\/script>
+${scriptEnd}
 
 <template>
-  <Marker shimmer label="Procesando la solicitud..." />
+  <Marker shimmer label="Processing the request..." />
 </template>`
 </script>
 
 <template>
   <ComponentExample
     title="Shimmer"
-    description="Indica que una operación sigue en curso."
+    description="Indicate that an operation is still in progress."
     :code="code"
     :show-reset="false"
   >
-    <Marker shimmer label="Procesando la solicitud..." />
+    <Marker shimmer label="Processing the request..." />
   </ComponentExample>
 </template>

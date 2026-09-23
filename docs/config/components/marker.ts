@@ -6,32 +6,33 @@ import MarkerShimmerExample from '../../components/examples/marker/MarkerShimmer
 const markerConfig: ComponentDocConfig = {
   slug: 'marker',
   title: 'Marker',
-  description: 'Indicador de estado para mostrar información breve sobre una operación o proceso.',
+  language: 'en',
+  description: 'Status indicator for displaying brief information about an operation or process.',
   importPath: '@nono-ui/components/ui/Marker',
   usage: [
     {
-      title: 'Marker básico',
-      description: 'Muestra un mensaje breve con un icono decorativo opcional.',
+      title: 'Basic marker',
+      description: 'Show a brief message with an optional decorative icon.',
       component: MarkerBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Variantes',
-      description: 'Elige entre los tratamientos default, border y separator.',
+      title: 'Variants',
+      description: 'Choose from the default, border, and separator styles.',
       component: MarkerVariantsExample,
     },
     {
       title: 'Shimmer',
-      description: 'Aplica una animación de pulso mientras el contenido está procesándose.',
+      description: 'Apply a pulse animation while content is being processed.',
       component: MarkerShimmerExample,
     },
   ],
   accessibility: [
     {
-      title: 'Mensajes de estado',
+      title: 'Status messages',
       description:
-        'Usa status=true solo para actualizaciones de estado que deban exponerse como role="status" y conserva un texto visible que explique el cambio. El componente reenvía los atributos HTML, class, style, data-* y ARIA al elemento raíz. Los iconos configurados se marcan como decorativos con aria-hidden="true", por lo que no deben ser la única fuente de información.',
+        'Use status=true only for status updates that should be exposed as role="status", and keep visible text that explains the change. The component forwards HTML attributes, class, style, data-*, and ARIA to the root element. Configured icons are marked as decorative with aria-hidden="true", so they should not be the only source of information.',
     },
   ],
   api: {
@@ -40,32 +41,32 @@ const markerConfig: ComponentDocConfig = {
         name: 'variant',
         type: "'default' | 'border' | 'separator'",
         default: "'default'",
-        description: 'Tratamiento visual del indicador.',
+        description: 'Visual style applied to the indicator.',
       },
       {
         name: 'icon',
         type: 'IconConfig',
         typeLink: '/components/icon#icon-config',
         default: 'undefined',
-        description: 'Configuración del icono mostrado antes del contenido.',
+        description: 'Icon configuration displayed before the content.',
       },
       {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Texto mostrado cuando no se proporciona contenido en el slot default.',
+        description: 'Text displayed when no content is provided in the default slot.',
       },
       {
         name: 'status',
         type: 'boolean',
         default: 'false',
-        description: 'Cuando es true, establece role="status" en el elemento raíz.',
+        description: 'When true, sets role="status" on the root element.',
       },
       {
         name: 'shimmer',
         type: 'boolean',
         default: 'false',
-        description: 'Aplica la animación de pulso al elemento raíz.',
+        description: 'Applies the pulse animation to the root element.',
       },
     ],
     emits: [],
@@ -73,13 +74,12 @@ const markerConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Contenido principal del indicador; sustituye el fallback de label.',
+        description: 'Main indicator content; overrides the label fallback.',
       },
       {
         name: 'icon',
         type: '-',
-        description:
-          'Contenido mostrado antes del contenido principal; sustituye el fallback de icon.',
+        description: 'Content displayed before the main content; overrides the icon fallback.',
       },
     ],
     expose: [],
