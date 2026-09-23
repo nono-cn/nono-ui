@@ -69,7 +69,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Nested"
-    description="Anida un grupo vertical dentro de un panel para construir un editor con terminal redimensionable."
+    description="Nest a vertical group inside a panel to build an editor with a resizable terminal."
     :code="code"
     :show-reset="false"
   >

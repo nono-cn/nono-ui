@@ -40,8 +40,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="DefaultSize"
-    description="Define tamaños iniciales y límites mínimos y máximos para cada panel."
+    title="Default size"
+    description="Set the initial size and minimum and maximum limits for each panel."
     :code="code"
     :show-reset="false"
   >

@@ -40,8 +40,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Redimensiona tres paneles arrastrando los manejadores o usando el teclado."
+    title="Basic usage"
+    description="Resize three panels by dragging the handles or using the keyboard."
     :code="code"
     :show-reset="false"
   >

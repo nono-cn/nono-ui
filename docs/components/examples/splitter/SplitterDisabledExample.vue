@@ -18,19 +18,28 @@ const items = [
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full max-w-2xl gap-5 sm:grid-cols-2">
-    <div class="grid gap-2">
-      <span class="text-sm font-medium">Enabled</span>
-      <Splitter :items="items" class="h-36 overflow-hidden rounded-lg border">
-        <template #panel-first>
-          <div class="flex h-full items-center justify-center bg-muted/30 p-2 text-sm">First</div>
-        </template>
-        <template #panel-second>
-          <div class="flex h-full items-center justify-center p-2 text-sm">Second</div>
-        </template>
-      </Splitter>
-    </div>
-    <div class="grid gap-2">
+  <div class="grid w-full max-w-2xl gap-2">
+    <span class="text-sm font-medium">Disabled</span>
+    <Splitter :items="items" disabled class="h-36 overflow-hidden rounded-lg border">
+      <template #panel-first>
+        <div class="flex h-full items-center justify-center bg-muted/30 p-2 text-sm">First</div>
+      </template>
+      <template #panel-second>
+        <div class="flex h-full items-center justify-center p-2 text-sm">Second</div>
+      </template>
+    </Splitter>
+  </div>
+</template>`
+</script>
+
+<template>
+  <ComponentExample
+    title="Disabled"
+    description="Disable the resize handles without changing the content or initial layout."
+    :code="code"
+    :show-reset="false"
+  >
+    <div class="grid w-full max-w-2xl gap-2">
       <span class="text-sm font-medium">Disabled</span>
       <Splitter :items="items" disabled class="h-36 overflow-hidden rounded-lg border">
         <template #panel-first>
@@ -40,41 +49,6 @@ ${scriptEnd}
           <div class="flex h-full items-center justify-center p-2 text-sm">Second</div>
         </template>
       </Splitter>
-    </div>
-  </div>
-</template>`
-</script>
-
-<template>
-  <ComponentExample
-    title="Disabled"
-    description="Deshabilita los manejadores sin cambiar el contenido ni el layout inicial."
-    :code="code"
-    :show-reset="false"
-  >
-    <div class="grid w-full max-w-2xl gap-5 sm:grid-cols-2">
-      <div class="grid gap-2">
-        <span class="text-sm font-medium">Enabled</span>
-        <Splitter :items="items" class="h-36 overflow-hidden rounded-lg border">
-          <template #panel-first>
-            <div class="flex h-full items-center justify-center bg-muted/30 p-2 text-sm">First</div>
-          </template>
-          <template #panel-second>
-            <div class="flex h-full items-center justify-center p-2 text-sm">Second</div>
-          </template>
-        </Splitter>
-      </div>
-      <div class="grid gap-2">
-        <span class="text-sm font-medium">Disabled</span>
-        <Splitter :items="items" disabled class="h-36 overflow-hidden rounded-lg border">
-          <template #panel-first>
-            <div class="flex h-full items-center justify-center bg-muted/30 p-2 text-sm">First</div>
-          </template>
-          <template #panel-second>
-            <div class="flex h-full items-center justify-center p-2 text-sm">Second</div>
-          </template>
-        </Splitter>
-      </div>
     </div>
   </ComponentExample>
 </template>

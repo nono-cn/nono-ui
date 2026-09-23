@@ -86,7 +86,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Slots"
-    description="Compón una interfaz de archivos con paneles dirigidos, contenido por defecto y manejadores personalizados."
+    description="Build a file browser with targeted panels, default content, and custom handles."
     :code="code"
     :show-reset="false"
   >
