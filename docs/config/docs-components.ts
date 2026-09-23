@@ -15,6 +15,7 @@ import chip from './components/chip'
 import empty from './components/empty'
 import fieldSet from './components/field-set'
 import icon from './components/icon'
+import iconTile from './components/icon-tile'
 import kbd from './components/kbd'
 import label from './components/label'
 import loading from './components/loading'
@@ -53,6 +54,7 @@ export const docsComponents = [
   empty,
   fieldSet,
   icon,
+  iconTile,
   kbd,
   label,
   loading,
