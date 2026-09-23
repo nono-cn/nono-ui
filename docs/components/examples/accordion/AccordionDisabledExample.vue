@@ -8,36 +8,18 @@ const rootDisabledValue = ref<string | undefined>('account')
 const rootDisabledItems = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Este acordeón completo está deshabilitado.',
+    label: 'Account',
+    description: 'This entire accordion is disabled.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Este acordeón completo está deshabilitado.',
+    label: 'Security',
+    description: 'This entire accordion is disabled.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Este acordeón completo está deshabilitado.',
-  },
-]
-const itemDisabledItems = [
-  {
-    value: 'account',
-    label: 'Cuenta',
-    description: 'Esta sección se puede abrir.',
-  },
-  {
-    value: 'security',
-    label: 'Seguridad',
-    description: 'Esta sección está deshabilitada individualmente.',
-    disabled: true,
-  },
-  {
-    value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Esta sección se puede abrir.',
+    label: 'Notifications',
+    description: 'This entire accordion is disabled.',
   },
 ]
 
@@ -49,54 +31,25 @@ const rootDisabledValue = ref<string | undefined>('account')
 const rootDisabledItems = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Este acordeón completo está deshabilitado.',
+    label: 'Account',
+    description: 'This entire accordion is disabled.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Este acordeón completo está deshabilitado.',
+    label: 'Security',
+    description: 'This entire accordion is disabled.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Este acordeón completo está deshabilitado.',
-  },
-]
-const itemDisabledItems = [
-  {
-    value: 'account',
-    label: 'Cuenta',
-    description: 'Esta sección se puede abrir.',
-  },
-  {
-    value: 'security',
-    label: 'Seguridad',
-    description: 'Esta sección está deshabilitada individualmente.',
-    disabled: true,
-  },
-  {
-    value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Esta sección se puede abrir.',
+    label: 'Notifications',
+    description: 'This entire accordion is disabled.',
   },
 ]
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full max-w-3xl gap-6 md:grid-cols-2">
-    <section class="grid content-start gap-2">
-      <h4 class="text-sm font-medium">Disabled root</h4>
-      <Accordion
-        v-model:value="rootDisabledValue"
-        :items="rootDisabledItems"
-        :disabled="true"
-      />
-    </section>
-    <section class="grid content-start gap-2">
-      <h4 class="text-sm font-medium">Disabled item</h4>
-      <Accordion :items="itemDisabledItems" />
-    </section>
+  <div class="w-full max-w-2xl">
+    <Accordion v-model:value="rootDisabledValue" :items="rootDisabledItems" disabled />
   </div>
 </template>`
 </script>
@@ -104,19 +57,12 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Disabled"
-    description="Deshabilita todo el acordeón o una sección individual."
+    description="Disable the entire accordion and all of its items."
     :code="code"
     :show-reset="false"
   >
-    <div class="grid w-full max-w-3xl gap-6 md:grid-cols-2">
-      <section class="grid content-start gap-2">
-        <h4 class="text-sm font-medium">Disabled root</h4>
-        <Accordion v-model:value="rootDisabledValue" :items="rootDisabledItems" :disabled="true" />
-      </section>
-      <section class="grid content-start gap-2">
-        <h4 class="text-sm font-medium">Disabled item</h4>
-        <Accordion :items="itemDisabledItems" />
-      </section>
+    <div class="w-full max-w-2xl">
+      <Accordion v-model:value="rootDisabledValue" :items="rootDisabledItems" disabled />
     </div>
   </ComponentExample>
 </template>

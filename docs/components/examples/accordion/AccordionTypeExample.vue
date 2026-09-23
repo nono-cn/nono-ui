@@ -6,18 +6,18 @@ import { scriptEnd } from '../example-code'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
 
@@ -27,32 +27,26 @@ import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full max-w-3xl gap-6 md:grid-cols-2">
-    <section class="grid content-start gap-2">
-      <h4 class="text-sm font-medium">Single</h4>
-      <Accordion type="single" :items="items" />
-    </section>
-    <section class="grid content-start gap-2">
-      <h4 class="text-sm font-medium">Multiple</h4>
-      <Accordion type="multiple" :items="items" />
-    </section>
+  <div class="grid w-full max-w-3xl gap-2">
+    <h4 class="text-sm font-medium">Multiple</h4>
+    <Accordion type="multiple" :items="items" />
   </div>
 </template>`
 </script>
@@ -60,19 +54,13 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Type"
-    description="Abre una sola sección o varias al mismo tiempo."
+    description="Allow multiple sections to stay open at the same time."
     :code="code"
     :show-reset="false"
   >
-    <div class="grid w-full max-w-3xl gap-6 md:grid-cols-2">
-      <section class="grid content-start gap-2">
-        <h4 class="text-sm font-medium">Single</h4>
-        <Accordion type="single" :items="items" />
-      </section>
-      <section class="grid content-start gap-2">
-        <h4 class="text-sm font-medium">Multiple</h4>
-        <Accordion type="multiple" :items="items" />
-      </section>
+    <div class="grid w-full max-w-3xl gap-2">
+      <h4 class="text-sm font-medium">Multiple</h4>
+      <Accordion type="multiple" :items="items" />
     </div>
   </ComponentExample>
 </template>

@@ -6,18 +6,18 @@ import { scriptEnd } from '../example-code'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
 
@@ -27,18 +27,18 @@ import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
 ${scriptEnd}
@@ -50,8 +50,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Define cada sección con un valor, un título y una descripción."
+    title="Basic usage"
+    description="Define each section with a value, title, and description."
     :code="code"
     :show-reset="false"
   >

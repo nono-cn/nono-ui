@@ -7,21 +7,20 @@ import { scriptEnd } from '../example-code'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
-const fixedValue = ref<string | undefined>('security')
 const collapsibleValue = ref<string | undefined>('security')
 
 const code = `<script setup lang="ts">
@@ -31,39 +30,26 @@ import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
-const fixedValue = ref<string | undefined>('security')
 const collapsibleValue = ref<string | undefined>('security')
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full max-w-3xl gap-6 md:grid-cols-2">
-    <section class="grid content-start gap-2">
-      <h4 class="text-sm font-medium">No collapsible</h4>
-      <Accordion v-model:value="fixedValue" type="single" :items="items" />
-    </section>
-    <section class="grid content-start gap-2">
-      <h4 class="text-sm font-medium">Collapsible</h4>
-      <Accordion
-        v-model:value="collapsibleValue"
-        type="single"
-        collapsible
-        :items="items"
-      />
-    </section>
+  <div class="w-full max-w-2xl">
+    <Accordion v-model:value="collapsibleValue" type="single" collapsible :items="items" />
   </div>
 </template>`
 </script>
@@ -71,19 +57,12 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Collapsible"
-    description="En modo single, permite cerrar la sección que ya está abierta."
+    description="In single mode, the open section can be closed by activating it again."
     :code="code"
     :show-reset="false"
   >
-    <div class="grid w-full max-w-3xl gap-6 md:grid-cols-2">
-      <section class="grid content-start gap-2">
-        <h4 class="text-sm font-medium">No collapsible</h4>
-        <Accordion v-model:value="fixedValue" type="single" :items="items" />
-      </section>
-      <section class="grid content-start gap-2">
-        <h4 class="text-sm font-medium">Collapsible</h4>
-        <Accordion v-model:value="collapsibleValue" type="single" collapsible :items="items" />
-      </section>
+    <div class="w-full max-w-2xl">
+      <Accordion v-model:value="collapsibleValue" type="single" collapsible :items="items" />
     </div>
   </ComponentExample>
 </template>

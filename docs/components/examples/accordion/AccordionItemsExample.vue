@@ -6,21 +6,21 @@ import { scriptEnd } from '../example-code'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
     icon: { name: 'user' },
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
     icon: { name: 'info' },
     disabled: true,
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
     icon: { name: 'warning' },
   },
 ]
@@ -31,21 +31,21 @@ import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
     icon: { name: 'user' },
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
     icon: { name: 'info' },
     disabled: true,
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
     icon: { name: 'warning' },
   },
 ]
@@ -59,7 +59,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Items"
-    description="Cada elemento puede definir su título, descripción, icono y estado."
+    description="Each item can define its label, description, icon, and state."
     :code="code"
     :show-reset="false"
   >

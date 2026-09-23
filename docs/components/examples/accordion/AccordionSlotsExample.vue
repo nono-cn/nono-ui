@@ -6,19 +6,19 @@ import { scriptEnd } from '../example-code'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
     slot: 'account',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
 
@@ -28,19 +28,19 @@ import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
     slot: 'account',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
 ${scriptEnd}
@@ -51,12 +51,12 @@ ${scriptEnd}
       <span class="flex items-center gap-2">
         {{ item.label }}
         <span class="text-xs text-muted-foreground">
-          {{ open ? 'Abierto' : 'Cerrado' }}
+          {{ open ? 'Open' : 'Closed' }}
         </span>
       </span>
     </template>
     <template #content-account="{ item }">
-      <p>{{ item.description }} Puedes añadir aquí contenido personalizado.</p>
+      <p>{{ item.description }} Add custom content here.</p>
     </template>
   </Accordion>
 </template>`
@@ -64,8 +64,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Slots Example"
-    description="Usa item.slot para personalizar el label y el contenido de una sección."
+    title="Slots example"
+    description="Use item.slot to customize a section’s label and content."
     :code="code"
     :show-reset="false"
   >
@@ -75,12 +75,12 @@ ${scriptEnd}
           <span class="flex items-center gap-2">
             {{ item.label }}
             <span class="text-xs text-muted-foreground">
-              {{ open ? 'Abierto' : 'Cerrado' }}
+              {{ open ? 'Open' : 'Closed' }}
             </span>
           </span>
         </template>
         <template #content-account="{ item }">
-          <p>{{ item.description }} Puedes añadir aquí contenido personalizado.</p>
+          <p>{{ item.description }} Add custom content here.</p>
         </template>
       </Accordion>
     </div>

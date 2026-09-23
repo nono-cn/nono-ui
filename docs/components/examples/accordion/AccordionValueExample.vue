@@ -8,18 +8,18 @@ const value = ref<string | undefined>('account')
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
 
@@ -31,18 +31,18 @@ const value = ref<string | undefined>('account')
 const items = [
   {
     value: 'account',
-    label: 'Cuenta',
-    description: 'Gestiona tus datos personales y preferencias.',
+    label: 'Account',
+    description: 'Manage your personal details and preferences.',
   },
   {
     value: 'security',
-    label: 'Seguridad',
-    description: 'Configura la contraseña y la autenticación.',
+    label: 'Security',
+    description: 'Update your password and authentication settings.',
   },
   {
     value: 'notifications',
-    label: 'Notificaciones',
-    description: 'Elige qué avisos quieres recibir.',
+    label: 'Notifications',
+    description: 'Choose which notifications you want to receive.',
   },
 ]
 ${scriptEnd}
@@ -51,7 +51,7 @@ ${scriptEnd}
   <div class="grid w-full max-w-2xl gap-3">
     <Accordion v-model:value="value" :items="items" />
     <output class="text-sm text-muted-foreground">
-      Sección abierta: {{ value ?? 'ninguna' }}
+      Open section: {{ value ?? 'none' }}
     </output>
   </div>
 </template>`
@@ -60,15 +60,13 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Value"
-    description="Enlaza el valor abierto y refleja los cambios en el estado de Vue."
+    description="Bind the open value and reflect changes in Vue state."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-2xl gap-3">
       <Accordion v-model:value="value" :items="items" />
-      <output class="text-sm text-muted-foreground">
-        Sección abierta: {{ value ?? 'ninguna' }}
-      </output>
+      <output class="text-sm text-muted-foreground"> Open section: {{ value ?? 'none' }} </output>
     </div>
   </ComponentExample>
 </template>
