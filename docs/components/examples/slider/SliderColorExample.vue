@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Slider } from '@/components/ui/Slider'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const value = ref<[number]>([62])
 const sliderUi = {
@@ -19,12 +19,12 @@ const value = ref<[number]>([62])
 const sliderUi = {
   thumb: () => ({ 'aria-labelledby': 'temperature-label' }),
 }
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-md gap-3">
     <div class="flex items-center justify-between gap-3">
-      <Label id="temperature-label">Temperatura</Label>
+      <Label id="temperature-label">Temperature</Label>
       <output class="text-sm text-muted-foreground">{{ value[0] }} °C</output>
     </div>
     <Slider
@@ -42,13 +42,13 @@ const sliderUi = {
 <template>
   <ComponentExample
     title="Color"
-    description="La prop color aplica un color CSS y tiene prioridad sobre severity."
+    description="The color prop applies a CSS color and takes precedence over severity."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-md gap-3">
       <div class="flex items-center justify-between gap-3">
-        <Label id="temperature-label">Temperatura</Label>
+        <Label id="temperature-label">Temperature</Label>
         <output class="text-sm text-muted-foreground">{{ value[0] }} °C</output>
       </div>
       <Slider

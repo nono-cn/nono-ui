@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Slider } from '@/components/ui/Slider'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const normalValue = ref<[number]>([30])
 const invertedValue = ref<[number]>([30])
@@ -21,7 +21,7 @@ const invertedValue = ref<[number]>([30])
 const sliderUi = (labelId: string) => ({
   thumb: () => ({ 'aria-labelledby': labelId }),
 })
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-md gap-5">
@@ -35,7 +35,7 @@ const sliderUi = (labelId: string) => ({
       />
     </div>
     <div class="grid gap-2">
-      <Label id="inverted-direction-label">Invertido</Label>
+      <Label id="inverted-direction-label">Inverted</Label>
       <Slider
         v-model:value="invertedValue"
         :min="0"
@@ -51,7 +51,7 @@ const sliderUi = (labelId: string) => ({
 <template>
   <ComponentExample
     title="Inverted"
-    description="El mismo valor aparece en sentidos opuestos cuando inverted está activado."
+    description="The same value appears in opposite directions when inverted is enabled."
     :code="code"
     :show-reset="false"
   >
@@ -66,7 +66,7 @@ const sliderUi = (labelId: string) => ({
         />
       </div>
       <div class="grid gap-2">
-        <Label id="inverted-direction-label">Invertido</Label>
+        <Label id="inverted-direction-label">Inverted</Label>
         <Slider
           v-model:value="invertedValue"
           :min="0"

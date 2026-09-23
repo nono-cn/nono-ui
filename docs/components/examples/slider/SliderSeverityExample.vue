@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Slider } from '@/components/ui/Slider'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const severities = ['primary', 'secondary', 'success', 'warning', 'error'] as const
 const values = ref<[number][]>([[15], [30], [45], [60], [75]])
@@ -21,7 +21,7 @@ const values = ref<[number][]>([[15], [30], [45], [60], [75]])
 const sliderUi = (labelId: string) => ({
   thumb: () => ({ 'aria-labelledby': labelId }),
 })
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-lg gap-4">
@@ -46,7 +46,7 @@ const sliderUi = (labelId: string) => ({
 <template>
   <ComponentExample
     title="Severity"
-    description="Compara los colores semánticos disponibles para el valor seleccionado."
+    description="Compare the available semantic colors for the selected value."
     :code="code"
     :show-reset="false"
   >

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Slider } from '@/components/ui/Slider'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const value = ref<[number, number]>([25, 75])
 
@@ -13,11 +13,11 @@ import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 import { Slider } from '__DOCS_PACKAGE__/components/ui/Slider'
 
 const value = ref<[number, number]>([25, 75])
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-md gap-3">
-    <Label id="price-range-label">Rango de precio</Label>
+    <Label id="price-range-label">Price range</Label>
     <Slider
       v-model:value="value"
       :min="0"
@@ -37,13 +37,13 @@ const value = ref<[number, number]>([25, 75])
 
 <template>
   <ComponentExample
-    title="MinStepsBetweenThumbs"
-    description="Usa dos thumbs, límites e incrementos; minStepsBetweenThumbs establece su distancia mínima."
+    title="Min steps between thumbs"
+    description="Use two thumbs, limits, and increments; minStepsBetweenThumbs sets their minimum distance."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-md gap-3">
-      <Label id="price-range-label">Rango de precio</Label>
+      <Label id="price-range-label">Price range</Label>
       <Slider
         v-model:value="value"
         :min="0"

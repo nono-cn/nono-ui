@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Slider } from '@/components/ui/Slider'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const containedValue = ref<[number]>([0])
 const overflowValue = ref<[number]>([0])
@@ -21,7 +21,7 @@ const overflowValue = ref<[number]>([0])
 const sliderUi = (labelId: string) => ({
   thumb: () => ({ 'aria-labelledby': labelId }),
 })
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-md gap-5">
@@ -51,8 +51,8 @@ const sliderUi = (labelId: string) => ({
 
 <template>
   <ComponentExample
-    title="ThumbAlignment"
-    description="Compara el comportamiento del thumb en el extremo inicial del track."
+    title="Thumb alignment"
+    description="Compare thumb behavior at the starting end of the track."
     :code="code"
     :show-reset="false"
   >

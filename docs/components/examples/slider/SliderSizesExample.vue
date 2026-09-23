@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Slider } from '@/components/ui/Slider'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 const values = ref<[number][]>([[15], [30], [45], [60], [75]])
@@ -21,7 +21,7 @@ const values = ref<[number][]>([[15], [30], [45], [60], [75]])
 const sliderUi = (labelId: string) => ({
   thumb: () => ({ 'aria-labelledby': labelId }),
 })
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-lg gap-4">
@@ -46,7 +46,7 @@ const sliderUi = (labelId: string) => ({
 <template>
   <ComponentExample
     title="Size"
-    description="Compara los cinco tamaños disponibles."
+    description="Compare the five available sizes."
     :code="code"
     :show-reset="false"
   >

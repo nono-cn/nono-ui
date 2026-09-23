@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Slider } from '@/components/ui/Slider'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const value = ref<[number]>([35])
 const sliderUi = {
@@ -19,12 +19,12 @@ const value = ref<[number]>([35])
 const sliderUi = {
   thumb: () => ({ 'aria-labelledby': 'volume-label' }),
 }
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-md gap-3">
     <div class="flex items-center justify-between gap-3">
-      <Label id="volume-label">Volumen</Label>
+      <Label id="volume-label">Volume</Label>
       <output class="text-sm text-muted-foreground">{{ value[0] }} %</output>
     </div>
     <Slider
@@ -43,13 +43,13 @@ const sliderUi = {
 <template>
   <ComponentExample
     title="Value"
-    description="Enlaza un valor, define un nombre accesible y muestra el valor seleccionado."
+    description="Bind a value, provide an accessible name, and display the selected value."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-md gap-3">
       <div class="flex items-center justify-between gap-3">
-        <Label id="volume-label">Volumen</Label>
+        <Label id="volume-label">Volume</Label>
         <output class="text-sm text-muted-foreground">{{ value[0] }} %</output>
       </div>
       <Slider

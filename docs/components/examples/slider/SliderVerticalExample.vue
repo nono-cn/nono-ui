@@ -1,9 +1,9 @@
 <script setup lang="ts">
-/* eslint-disable no-useless-escape -- The copyable snippet contains an escaped closing SFC tag. */
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
 import { Slider } from '@/components/ui/Slider'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const value = ref<[number]>([65])
 const sliderUi = {
@@ -19,11 +19,11 @@ const value = ref<[number]>([65])
 const sliderUi = {
   thumb: () => ({ 'aria-labelledby': 'vertical-slider-label' }),
 }
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid justify-items-center gap-3">
-    <Label id="vertical-slider-label">Intensidad</Label>
+    <Label id="vertical-slider-label">Intensity</Label>
     <div class="flex h-52 w-20 items-center justify-center rounded-lg border p-4">
       <Slider
         v-model:value="value"
@@ -40,12 +40,12 @@ const sliderUi = {
 <template>
   <ComponentExample
     title="Orientation"
-    description="El contenedor define la altura disponible para el slider vertical."
+    description="The container defines the available height for the vertical slider."
     :code="code"
     :show-reset="false"
   >
     <div class="grid justify-items-center gap-3">
-      <Label id="vertical-slider-label">Intensidad</Label>
+      <Label id="vertical-slider-label">Intensity</Label>
       <div class="flex h-52 w-20 items-center justify-center rounded-lg border p-4">
         <Slider v-model:value="value" orientation="vertical" class="h-full" :ui="sliderUi" />
       </div>
