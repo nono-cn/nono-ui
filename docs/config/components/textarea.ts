@@ -1,19 +1,62 @@
 import type { ComponentDocConfig } from '../component-docs'
-import TextareaPlaygroundExample from '../../components/examples/textarea/TextareaPlaygroundExample.vue'
+import TextareaBasicExample from '../../components/examples/textarea/TextareaBasicExample.vue'
+import TextareaSizesExample from '../../components/examples/textarea/TextareaSizesExample.vue'
+import TextareaSeverityExample from '../../components/examples/textarea/TextareaSeverityExample.vue'
+import TextareaVariantsExample from '../../components/examples/textarea/TextareaVariantsExample.vue'
+import TextareaAutoresizeExample from '../../components/examples/textarea/TextareaAutoresizeExample.vue'
+import TextareaHighlightExample from '../../components/examples/textarea/TextareaHighlightExample.vue'
+import TextareaColorExample from '../../components/examples/textarea/TextareaColorExample.vue'
 
 const textareaConfig: ComponentDocConfig = {
   slug: 'textarea',
   title: 'Textarea',
-  description: 'Campo de texto multilínea para introducir contenido largo.',
+  language: 'en',
+  description: 'A multiline text field for entering longer content.',
   importPath: '@nono-ui/components/ui/Textarea',
-  playground: TextareaPlaygroundExample,
-  usage: [],
-  examples: [],
+  usage: [
+    {
+      title: 'Basic usage',
+      description: 'Bind the field value and associate it with a visible label.',
+      component: TextareaBasicExample,
+    },
+  ],
+  examples: [
+    {
+      title: 'Size',
+      description: 'Compare the five available sizes.',
+      component: TextareaSizesExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Focus a field to see its semantic focus color.',
+      component: TextareaSeverityExample,
+    },
+    {
+      title: 'Variant',
+      description: 'Compare the available border and background styles.',
+      component: TextareaVariantsExample,
+    },
+    {
+      title: 'Autoresize',
+      description: 'Let the field grow to fit its content.',
+      component: TextareaAutoresizeExample,
+    },
+    {
+      title: 'Highlight',
+      description: 'Show the semantic border color when the field is not focused.',
+      component: TextareaHighlightExample,
+    },
+    {
+      title: 'Custom color',
+      description: 'Use a custom color that takes precedence over severity.',
+      component: TextareaColorExample,
+    },
+  ],
   accessibility: [
     {
-      title: 'Etiqueta y descripción',
+      title: 'Label and description',
       description:
-        'Asocia una etiqueta visible mediante for e id. Usa aria-describedby para relacionar una ayuda o descripción adicional con el campo.',
+        'Associate a visible label using for and id. Use aria-describedby to associate helper text or an additional description with the field.',
     },
   ],
   api: {
@@ -22,51 +65,52 @@ const textareaConfig: ComponentDocConfig = {
         name: 'value',
         type: 'string',
         default: "''",
-        description: 'Valor del campo. También puede enlazarse con v-model:value.',
+        description: 'Field value. Can also be bound with v-model:value.',
       },
       {
         name: 'autoresize',
         type: 'boolean',
         default: 'false',
-        description: 'Ajusta automáticamente la altura al contenido cuando es true.',
+        description: 'Automatically adjusts the height to fit the content when true.',
       },
       {
         name: 'size',
         type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
         default: "'md'",
-        description: 'Controla la altura mínima, el espaciado y el tamaño del texto.',
+        description: 'Controls the minimum height, spacing, and text size.',
       },
       {
         name: 'severity',
         type: "'primary' | 'secondary' | 'error' | 'warning' | 'success'",
         default: "'primary'",
-        description: 'Define el color semántico del foco del campo.',
+        description: 'Sets the semantic focus color for the field.',
       },
       {
         name: 'color',
         type: 'string',
         default: 'undefined',
-        description: 'Usa un color personalizado y tiene prioridad sobre severity.',
+        description: 'Sets a custom color that takes precedence over severity.',
       },
       {
         name: 'highlight',
         type: 'boolean',
         default: 'false',
-        description: 'Muestra el borde con el color de severity o color incluso sin foco.',
+        description:
+          'Shows the border in the severity or custom color, even when the field is not focused.',
       },
       {
         name: 'variant',
         type: "'outline' | 'subtle' | 'soft' | 'plain' | 'none'",
         default: "'outline'",
         description:
-          'Define el estilo del borde y del fondo. none también elimina el borde al enfocar.',
+          'Defines the border and background style. none also removes the border on focus.',
       },
     ],
     emits: [
       {
         name: 'update:value',
         type: '[value: string]',
-        description: 'Se emite cuando cambia el contenido del campo.',
+        description: 'Emitted when the field content changes.',
       },
     ],
     slots: [],

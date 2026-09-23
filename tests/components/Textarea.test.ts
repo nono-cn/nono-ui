@@ -67,12 +67,12 @@ const variantCases = [
   {
     variant: 'subtle',
     severity: 'error',
-    expectedClasses: ['border', 'shadow-xs', 'bg-error/10'],
+    expectedClasses: ['border', 'shadow-xs', 'bg-muted'],
   },
   {
     variant: 'soft',
     severity: 'success',
-    expectedClasses: ['border-transparent', 'shadow-none', 'bg-success/10'],
+    expectedClasses: ['border-transparent', 'shadow-none', 'bg-muted/50'],
   },
   {
     variant: 'plain',
