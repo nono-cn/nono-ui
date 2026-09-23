@@ -1,20 +1,20 @@
 <script setup lang="ts">
+import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
+import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
 import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 ${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-sm gap-2">
-    <Label for="name">Nombre</Label>
-    <input
+    <Label for="name">Name</Label>
+    <Input
       id="name"
-      type="text"
-      placeholder="Escribe tu nombre"
-      class="h-9 rounded-md border bg-background px-3 text-sm outline-none"
+      placeholder="Enter your name"
     />
   </div>
 </template>`
@@ -22,19 +22,14 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Asocia una etiqueta visible con un control de formulario."
+    title="Basic usage"
+    description="Associate a visible label with a form control."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-sm gap-2">
-      <Label for="name">Nombre</Label>
-      <input
-        id="name"
-        type="text"
-        placeholder="Escribe tu nombre"
-        class="h-9 rounded-md border bg-background px-3 text-sm outline-none"
-      />
+      <Label for="name">Name</Label>
+      <Input id="name" placeholder="Enter your name" />
     </div>
   </ComponentExample>
 </template>

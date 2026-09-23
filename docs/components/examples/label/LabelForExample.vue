@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import { Checkbox } from '@/components/ui/Checkbox'
 import { Label } from '@/components/ui/Label'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
+import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
 import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 ${scriptEnd}
 
 <template>
   <div class="flex items-center gap-2">
-    <input id="updates" type="checkbox" />
-    <Label for="updates">Recibir actualizaciones</Label>
+    <Checkbox id="updates" />
+    <Label for="updates">Receive updates</Label>
   </div>
 </template>`
 </script>
@@ -18,13 +20,13 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="For"
-    description="Usa el mismo id del control en for para mantener la asociación accesible."
+    description="Use the control’s id as the for value to preserve the accessible association."
     :code="code"
     :show-reset="false"
   >
     <div class="flex items-center gap-2">
-      <input id="updates" type="checkbox" />
-      <Label for="updates">Recibir actualizaciones</Label>
+      <Checkbox id="updates" />
+      <Label for="updates">Receive updates</Label>
     </div>
   </ComponentExample>
 </template>

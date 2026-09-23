@@ -5,27 +5,28 @@ import LabelUsageExample from '../../components/examples/label/LabelUsageExample
 const labelConfig: ComponentDocConfig = {
   slug: 'label',
   title: 'Label',
-  description: 'Etiqueta accesible para identificar controles de formulario.',
+  language: 'en',
+  description: 'Accessible label for identifying form controls.',
   importPath: '@nono-ui/components/ui/Label',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Asocia una etiqueta visible con un control de formulario.',
+      title: 'Basic usage',
+      description: 'Associate a visible label with a form control.',
       component: LabelUsageExample,
     },
   ],
   examples: [
     {
       title: 'For',
-      description: 'Asocia la etiqueta con el id de un control.',
+      description: 'Associate the label with a control’s id.',
       component: LabelForExample,
     },
   ],
   accessibility: [
     {
-      title: 'Asociación con controles',
+      title: 'Associating labels with controls',
       description:
-        'Usa for con el mismo id del control para que las tecnologías de asistencia relacionen la etiqueta y el campo. Mantén un texto visible y descriptivo.',
+        'Set for to the same id as the control so assistive technologies associate the label with the field. Keep the label text visible and descriptive.',
     },
   ],
   api: {
@@ -34,11 +35,11 @@ const labelConfig: ComponentDocConfig = {
         name: 'for',
         type: 'string',
         default: 'undefined',
-        description: 'Id del control de formulario asociado.',
+        description: 'Id of the associated form control.',
       },
     ],
     emits: [],
-    slots: [{ name: 'default', type: '-', description: 'Texto o contenido de la etiqueta.' }],
+    slots: [{ name: 'default', type: '-', description: 'Label text or content.' }],
     expose: [],
   },
 }
