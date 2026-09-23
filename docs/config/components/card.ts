@@ -6,33 +6,34 @@ import CardHeaderExample from '../../components/examples/card/CardHeaderExample.
 const cardConfig: ComponentDocConfig = {
   slug: 'card',
   title: 'Card',
+  language: 'en',
   description:
-    'Superficie con encabezado, contenido y pie opcionales para agrupar información relacionada.',
+    'Surface with an optional header, content, and footer for grouping related information.',
   importPath: '@nono-ui/components/ui/Card',
   usage: [
     {
-      title: 'Card básica',
-      description: 'Usa label y description para crear el encabezado automáticamente.',
+      title: 'Basic card',
+      description: 'Use label and description to generate the header automatically.',
       component: CardBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Acción y pie',
-      description: 'Añade acciones en el encabezado y contenido complementario en el pie.',
+      title: 'Action and footer',
+      description: 'Add actions to the header and supporting content to the footer.',
       component: CardActionExample,
     },
     {
-      title: 'Encabezado personalizado',
-      description: 'Sustituye el encabezado generado con el slot header.',
+      title: 'Custom header',
+      description: 'Replace the generated header with the header slot.',
       component: CardHeaderExample,
     },
   ],
   accessibility: [
     {
-      title: 'Contenido y encabezados',
+      title: 'Content and headings',
       description:
-        'Usa label para generar un encabezado h3 o proporciona un encabezado semántico mediante el slot header. Mantén un orden lógico de lectura entre el encabezado, el contenido y el pie.',
+        'Use label to generate an h3 heading, or provide a semantic heading through the header slot. Keep a logical reading order across the header, content, and footer.',
     },
   ],
   api: {
@@ -41,13 +42,13 @@ const cardConfig: ComponentDocConfig = {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Texto del encabezado de la card.',
+        description: 'Card header text.',
       },
       {
         name: 'description',
         type: 'string',
         default: 'undefined',
-        description: 'Texto descriptivo mostrado bajo el encabezado.',
+        description: 'Descriptive text displayed below the header.',
       },
       {
         name: 'ui',
@@ -61,17 +62,17 @@ const cardConfig: ComponentDocConfig = {
 }`,
         typePre: true,
         default: 'undefined',
-        description: 'Resolvers para personalizar los atributos de las regiones de la card.',
+        description: 'Resolvers for customizing the attributes of the card regions.',
       },
     ],
     emits: [],
     slots: [
-      { name: 'default', type: '-', description: 'Contenido principal de la card.' },
-      { name: 'header', type: '-', description: 'Sustituye el contenido completo del encabezado.' },
-      { name: 'label', type: '-', description: 'Contenido del encabezado.' },
-      { name: 'description', type: '-', description: 'Contenido descriptivo del encabezado.' },
-      { name: 'action', type: '-', description: 'Acción situada en el encabezado.' },
-      { name: 'footer', type: '-', description: 'Contenido del pie de la card.' },
+      { name: 'default', type: '-', description: 'Main card content.' },
+      { name: 'header', type: '-', description: 'Replaces the entire header content.' },
+      { name: 'label', type: '-', description: 'Header content.' },
+      { name: 'description', type: '-', description: 'Descriptive header content.' },
+      { name: 'action', type: '-', description: 'Action displayed in the header.' },
+      { name: 'footer', type: '-', description: 'Card footer content.' },
     ],
     expose: [],
   },

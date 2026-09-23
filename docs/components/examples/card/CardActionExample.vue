@@ -2,20 +2,21 @@
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
-<\/script>
+${scriptEnd}
 
 <template>
-  <Card label="Preferencias" description="Gestiona tus preferencias de notificaciones.">
+  <Card label="Preferences" description="Manage your notification preferences.">
     <template #action>
-      <Button label="Editar" variant="outline" size="sm" />
+      <Button label="Edit" variant="outline" size="sm" />
     </template>
-    <p>Recibirás un resumen semanal por correo electrónico.</p>
+    <p>You’ll receive a weekly email summary.</p>
     <template #footer>
-      <span class="text-sm text-muted-foreground">Actualizado ahora</span>
+      <span class="text-sm text-muted-foreground">Updated just now</span>
     </template>
   </Card>
 </template>`
@@ -23,22 +24,22 @@ import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
 
 <template>
   <ComponentExample
-    title="Acción y pie"
-    description="Combina los slots action y footer."
+    title="Action and footer"
+    description="Combine the action and footer slots."
     :code="code"
     :show-reset="false"
   >
     <Card
-      label="Preferencias"
-      description="Gestiona tus preferencias de notificaciones."
+      label="Preferences"
+      description="Manage your notification preferences."
       class="w-full max-w-md"
     >
       <template #action>
-        <Button label="Editar" variant="outline" size="sm" />
+        <Button label="Edit" variant="outline" size="sm" />
       </template>
-      <p>Recibirás un resumen semanal por correo electrónico.</p>
+      <p>You’ll receive a weekly email summary.</p>
       <template #footer>
-        <span class="text-sm text-muted-foreground">Actualizado ahora</span>
+        <span class="text-sm text-muted-foreground">Updated just now</span>
       </template>
     </Card>
   </ComponentExample>

@@ -1,34 +1,35 @@
 <script setup lang="ts">
 import { Card } from '@/components/ui/Card'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
-<\/script>
+${scriptEnd}
 
 <template>
   <Card
-    label="Resumen de la cuenta"
-    description="Consulta la información más reciente de tu cuenta."
+    label="Account overview"
+    description="View the latest information about your account."
   >
-    <p>Tu cuenta está al día.</p>
+    <p>Your account is up to date.</p>
   </Card>
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Card básica"
-    description="Usa un encabezado y contenido principal."
+    title="Basic card"
+    description="Use a header with main content."
     :code="code"
     :show-reset="false"
   >
     <Card
-      label="Resumen de la cuenta"
-      description="Consulta la información más reciente de tu cuenta."
+      label="Account overview"
+      description="View the latest information about your account."
       class="w-full max-w-md"
     >
-      <p>Tu cuenta está al día.</p>
+      <p>Your account is up to date.</p>
     </Card>
   </ComponentExample>
 </template>
