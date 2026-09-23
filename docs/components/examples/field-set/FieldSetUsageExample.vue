@@ -15,16 +15,16 @@ ${scriptEnd}
   <div class="w-full max-w-none rounded-lg border border-border p-6">
     <FieldSet
       class="w-full"
-      legend="Datos de contacto"
-      description="Usaremos estos datos para comunicarnos contigo."
+      legend="Contact details"
+      description="We’ll use this information to contact you."
     >
       <div class="grid gap-2">
-        <Label for="name">Nombre</Label>
-        <Input id="name" placeholder="Tu nombre" />
+        <Label for="name">Name</Label>
+        <Input id="name" placeholder="Your name" />
       </div>
       <div class="grid gap-2">
         <Label for="email">Email</Label>
-        <Input id="email" type="email" placeholder="tu@email.com" />
+        <Input id="email" type="email" placeholder="you@example.com" />
       </div>
     </FieldSet>
   </div>
@@ -33,24 +33,24 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Agrupa controles relacionados con una leyenda y una descripción."
+    title="Basic usage"
+    description="Group related controls under a legend and description."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full max-w-none rounded-lg border border-border p-6">
       <FieldSet
         class="w-full"
-        legend="Datos de contacto"
-        description="Usaremos estos datos para comunicarnos contigo."
+        legend="Contact details"
+        description="We’ll use this information to contact you."
       >
         <div class="grid gap-2">
-          <Label for="name">Nombre</Label>
-          <Input id="name" placeholder="Tu nombre" />
+          <Label for="name">Name</Label>
+          <Input id="name" placeholder="Your name" />
         </div>
         <div class="grid gap-2">
           <Label for="email">Email</Label>
-          <Input id="email" type="email" placeholder="tu@email.com" />
+          <Input id="email" type="email" placeholder="you@example.com" />
         </div>
       </FieldSet>
     </div>

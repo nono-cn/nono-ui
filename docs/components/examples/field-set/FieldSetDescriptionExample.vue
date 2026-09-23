@@ -15,12 +15,12 @@ ${scriptEnd}
   <div class="w-full max-w-none rounded-lg border border-border p-6">
     <FieldSet
       class="w-full"
-      legend="Notificaciones"
-      description="Elige qué avisos quieres recibir."
+      legend="Notifications"
+      description="Choose which notifications you want to receive."
     >
       <div class="flex items-center gap-2">
         <Checkbox id="updates" />
-        <Label for="updates">Actualizaciones del producto</Label>
+        <Label for="updates">Product updates</Label>
       </div>
     </FieldSet>
   </div>
@@ -30,19 +30,19 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Description"
-    description="Añade contexto adicional debajo de la leyenda."
+    description="Add supporting context below the legend."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full max-w-none rounded-lg border border-border p-6">
       <FieldSet
         class="w-full"
-        legend="Notificaciones"
-        description="Elige qué avisos quieres recibir."
+        legend="Notifications"
+        description="Choose which notifications you want to receive."
       >
         <div class="flex items-center gap-2">
           <Checkbox id="updates" />
-          <Label for="updates">Actualizaciones del producto</Label>
+          <Label for="updates">Product updates</Label>
         </div>
       </FieldSet>
     </div>

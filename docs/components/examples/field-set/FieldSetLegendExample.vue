@@ -13,11 +13,11 @@ ${scriptEnd}
 
 <template>
   <div class="w-full max-w-none rounded-lg border border-border p-6">
-    <FieldSet class="w-full" legend="Preferencias">
+    <FieldSet class="w-full" legend="Preferences">
       <div class="flex items-center gap-2">
         <Checkbox id="emails" />
         <Label for="emails">
-          Recibir emails
+          Receive email updates
         </Label>
       </div>
     </FieldSet>
@@ -28,15 +28,15 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Legend"
-    description="Define el nombre accesible del grupo de controles."
+    description="Set the accessible name for the group."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full max-w-none rounded-lg border border-border p-6">
-      <FieldSet class="w-full" legend="Preferencias">
+      <FieldSet class="w-full" legend="Preferences">
         <div class="flex items-center gap-2">
           <Checkbox id="emails" />
-          <Label for="emails">Recibir emails</Label>
+          <Label for="emails">Receive email updates</Label>
         </div>
       </FieldSet>
     </div>

@@ -7,37 +7,38 @@ import FieldSetUsageExample from '../../components/examples/field-set/FieldSetUs
 const fieldSetConfig: ComponentDocConfig = {
   slug: 'field-set',
   title: 'FieldSet',
-  description: 'Agrupa controles de formulario relacionados con una leyenda y una descripción.',
+  language: 'en',
+  description: 'Groups related form controls under a legend and description.',
   importPath: '@nono-ui/components/ui/FieldSet',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Agrupa controles relacionados con una leyenda y una descripción.',
+      title: 'Basic usage',
+      description: 'Group related controls under a legend and description.',
       component: FieldSetUsageExample,
     },
   ],
   examples: [
     {
       title: 'Legend',
-      description: 'Define el nombre accesible del grupo.',
+      description: 'Set the accessible name for the group.',
       component: FieldSetLegendExample,
     },
     {
       title: 'Description',
-      description: 'Añade contexto adicional al grupo.',
+      description: 'Add supporting context to the group.',
       component: FieldSetDescriptionExample,
     },
     {
-      title: 'LegendVariant',
-      description: 'Ajusta el tamaño visual de la leyenda.',
+      title: 'Legend variant',
+      description: 'Adjust the visual size of the legend.',
       component: FieldSetLegendVariantExample,
     },
   ],
   accessibility: [
     {
-      title: 'Agrupa controles relacionados',
+      title: 'Group related controls',
       description:
-        'Usa legend para proporcionar el nombre accesible del grupo y description para aportar contexto adicional. Mantén una etiqueta visible asociada a cada control incluido en el grupo.',
+        "Use legend to provide the group's accessible name and description to add supporting context. Keep a visible label associated with every control in the group.",
     },
   ],
   api: {
@@ -46,21 +47,19 @@ const fieldSetConfig: ComponentDocConfig = {
         name: 'legend',
         type: 'string',
         default: 'undefined',
-        description:
-          'Texto de la leyenda del grupo. Se oculta si está vacío y no se usa el slot legend.',
+        description: 'Legend text for the group. Hidden when empty unless the legend slot is used.',
       },
       {
         name: 'description',
         type: 'string',
         default: 'undefined',
-        description: 'Texto descriptivo mostrado debajo de la leyenda.',
+        description: 'Descriptive text displayed below the legend.',
       },
       {
         name: 'legendVariant',
         type: "'legend' | 'label'",
         default: "'legend'",
-        description:
-          'Define el tamaño visual de la leyenda: base para legend o pequeño para label.',
+        description: 'Visual size of the legend: base for legend or small for label.',
       },
       {
         name: 'ui',
@@ -68,14 +67,14 @@ const fieldSetConfig: ComponentDocConfig = {
         typePre: true,
         default: 'undefined',
         description:
-          'Resolvers para personalizar los atributos y clases de la leyenda, la descripción y el contenedor de controles.',
+          'Resolvers for customizing attributes and classes of the legend, description, and control group.',
       },
     ],
     emits: [],
     slots: [
-      { name: 'default', type: '-', description: 'Controles y contenido del grupo.' },
-      { name: 'legend', type: '-', description: 'Contenido personalizado de la leyenda.' },
-      { name: 'description', type: '-', description: 'Contenido personalizado de la descripción.' },
+      { name: 'default', type: '-', description: 'Controls and content in the group.' },
+      { name: 'legend', type: '-', description: 'Custom legend content.' },
+      { name: 'description', type: '-', description: 'Custom description content.' },
     ],
     expose: [],
   },
