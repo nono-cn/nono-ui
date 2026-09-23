@@ -2,16 +2,17 @@
 import { Popover } from '@/components/ui/Popover'
 import { Button } from '@/components/ui/Button'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Popover } from '__DOCS_PACKAGE__/components/ui/Popover'
 import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-<\/script>
+${scriptEnd}
 
 <template>
   <Popover :content="{ side: 'right', align: 'start', sideOffset: 12, alignOffset: 4, avoidCollisions: true }">
-    <Button label="Abrir contenido" variant="outline" />
-    <template #content><p>Contenido colocado a la derecha.</p></template>
+    <Button label="Open content" variant="outline" />
+    <template #content><p>Content positioned on the right.</p></template>
   </Popover>
 </template>`
 </script>
@@ -19,7 +20,7 @@ import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 <template>
   <ComponentExample
     title="Content"
-    description="Configura side, align y offsets del contenido."
+    description="Configure the content side, alignment, and offsets."
     :code="code"
     :show-reset="false"
   >
@@ -32,8 +33,8 @@ import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
         avoidCollisions: true,
       }"
     >
-      <Button label="Abrir contenido" variant="outline" />
-      <template #content><p>Contenido colocado a la derecha.</p></template>
+      <Button label="Open content" variant="outline" />
+      <template #content><p>Content positioned on the right.</p></template>
     </Popover>
   </ComponentExample>
 </template>

@@ -7,40 +7,41 @@ import PopoverControlledExample from '../../components/examples/popover/PopoverC
 const popoverConfig: ComponentDocConfig = {
   slug: 'popover',
   title: 'Popover',
-  description: 'Muestra contenido contextual relacionado con un elemento disparador.',
+  language: 'en',
+  description: 'Displays contextual content related to a trigger element.',
   importPath: '@nono-ui/components/ui/Popover',
   usage: [
     {
-      title: 'Popover básico',
-      description: 'Abre contenido contextual desde un botón disparador.',
+      title: 'Basic popover',
+      description: 'Open contextual content from a trigger button.',
       component: PopoverBasicExample,
     },
   ],
   examples: [
     {
       title: 'Content',
-      description: 'Configura la posición, offsets y colisiones del contenido.',
+      description: 'Configure the content position, offsets, and collision behavior.',
       component: PopoverContentExample,
     },
     {
       title: 'Arrow',
-      description: 'Personaliza el tamaño y la forma de la flecha.',
+      description: 'Customize the arrow’s size and shape.',
       component: PopoverArrowExample,
     },
     {
-      title: 'Estado controlado',
-      description: 'Controla el estado abierto desde el componente padre.',
+      title: 'Controlled state',
+      description: 'Control the open state from the parent component.',
       component: PopoverControlledExample,
     },
   ],
   accessibility: [
     {
-      title: 'Disparadores y teclado',
+      title: 'Triggers and keyboard',
       description:
-        'Usa un elemento interactivo con nombre accesible como disparador. El contenido gestiona el foco y puede cerrarse con Escape.',
+        'Use an interactive element with a clear accessible name (aria-label / aria-labelledby) as the trigger. The content manages focus and can be dismissed with Escape.',
       links: [
         {
-          label: 'Consulta la guía de accesibilidad de Popover en Reka UI',
+          label: 'See the Reka UI Popover accessibility guide',
           href: 'https://www.reka-ui.com/docs/components/popover#accessibility',
         },
       ],
@@ -52,32 +53,31 @@ const popoverConfig: ComponentDocConfig = {
         name: 'open',
         type: 'boolean',
         default: 'false',
-        description: 'Controla si el popover está abierto. Se usa con v-model:open.',
+        description: 'Controls whether the popover is open. Use with v-model:open.',
       },
       {
         name: 'modal',
         type: 'boolean',
         default: 'false',
-        description: 'Desactiva la interacción con el contenido exterior mientras está abierto.',
+        description: 'Prevents interaction with content outside the popover while it is open.',
       },
       {
         name: 'showArrow',
         type: 'boolean',
         default: 'false',
-        description: 'Muestra la flecha configurada mediante arrow.',
+        description: 'Displays the arrow configured through arrow.',
       },
       {
         name: 'content',
         type: 'PopoverContentConfig',
         default: 'undefined',
-        description:
-          'Configuración agrupada de las props, callbacks y atributos de PopoverContent.',
+        description: 'Grouped configuration of PopoverContent props, callbacks, and attributes.',
       },
       {
         name: 'arrow',
         type: 'PopoverArrowConfig',
         default: 'undefined',
-        description: 'Configuración agrupada de las props y atributos de PopoverArrow.',
+        description: 'Grouped configuration of PopoverArrow props and attributes.',
       },
     ],
     configs: [
@@ -86,13 +86,13 @@ const popoverConfig: ComponentDocConfig = {
         title: 'PopoverContext',
         typeLabel: 'slotProps',
         showDefault: false,
-        description: 'Contexto compartido que reciben los slots default y content.',
+        description: 'Shared context received by the default and content slots.',
         rows: [
-          { name: 'open', type: 'boolean', description: 'Indica si el popover está abierto.' },
+          { name: 'open', type: 'boolean', description: 'Indicates whether the popover is open.' },
           {
             name: 'close',
             type: '() => void',
-            description: 'Cierra el popover de forma programática.',
+            description: 'Closes the popover programmatically.',
           },
         ],
       },
@@ -101,23 +101,23 @@ const popoverConfig: ComponentDocConfig = {
       {
         name: 'update:open',
         type: '[value: boolean]',
-        description: 'Se emite cuando cambia el estado abierto.',
+        description: 'Emitted when the open state changes.',
       },
-      { name: 'show', type: '[]', description: 'Se emite al abrir el popover.' },
-      { name: 'close', type: '[]', description: 'Se emite al cerrar el popover.' },
+      { name: 'show', type: '[]', description: 'Emitted when the popover opens.' },
+      { name: 'close', type: '[]', description: 'Emitted when the popover closes.' },
     ],
     slots: [
       {
         name: 'default',
         type: 'PopoverContext',
         typeLink: '#popover-context',
-        description: 'Disparador. Recibe open y close.',
+        description: 'Trigger. Receives open and close.',
       },
       {
         name: 'content',
         type: 'PopoverContext',
         typeLink: '#popover-context',
-        description: 'Contenido contextual. Recibe open y close.',
+        description: 'Contextual content. Receives open and close.',
       },
     ],
     expose: [],
