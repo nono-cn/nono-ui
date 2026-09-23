@@ -19,7 +19,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Color"
-    description="Aplica un color CSS personalizado al icono."
+    description="Apply a custom CSS color to the icon."
     :code="code"
     :show-reset="false"
   >

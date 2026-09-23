@@ -32,7 +32,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Name"
-    description="Selecciona un icono por su nombre registrado en la librería."
+    description="Select an icon by its registered library name."
     :code="code"
     :show-reset="false"
   >

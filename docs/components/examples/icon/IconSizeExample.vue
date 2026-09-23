@@ -20,7 +20,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Size"
-    description="Ajusta el tamaño visual del icono."
+    description="Adjust the icon’s visual size."
     :code="code"
     :show-reset="false"
   >

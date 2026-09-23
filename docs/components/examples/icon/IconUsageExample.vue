@@ -14,8 +14,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Empieza indicando el nombre del icono que quieres renderizar."
+    title="Basic usage"
+    description="Start by specifying the name of the icon to render."
     :code="code"
     :show-reset="false"
   >
