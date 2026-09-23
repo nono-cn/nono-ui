@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { Announcer } from '@/components/ui/Announcer'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Announcer } from '__DOCS_PACKAGE__/components/ui/Announcer'
-<\/script>
+${scriptEnd}
 
 <template>
-  <Announcer message="Cambios guardados correctamente" />
+  <Announcer message="Changes saved successfully" />
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Mensaje básico"
-    description="Anuncia un mensaje sin añadir contenido visual."
+    title="Basic message"
+    description="Announce a message without adding visible content."
     :code="code"
     :show-reset="false"
   >
-    <Announcer message="Cambios guardados correctamente" />
-    <span class="text-sm text-muted-foreground">El anuncio no es visible visualmente.</span>
+    <Announcer message="Changes saved successfully" />
+    <span class="text-sm text-muted-foreground">The announcement is visually hidden.</span>
   </ComponentExample>
 </template>

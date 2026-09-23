@@ -1,30 +1,31 @@
 <script setup lang="ts">
 import { Announcer } from '@/components/ui/Announcer'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Announcer } from '__DOCS_PACKAGE__/components/ui/Announcer'
-<\/script>
+${scriptEnd}
 
 <template>
   <Announcer politeness="polite">
-    <strong>Sincronización completada.</strong>
+    <strong>Sync complete.</strong>
   </Announcer>
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Contenido personalizado"
-    description="El slot default permite controlar el contenido anunciado."
+    title="Custom content"
+    description="The default slot lets you control the announced content."
     :code="code"
     :show-reset="false"
   >
     <Announcer politeness="polite">
-      <strong>Sincronización completada.</strong>
+      <strong>Sync complete.</strong>
     </Announcer>
     <span class="text-sm text-muted-foreground"
-      >Con slot, el contenido también se muestra visualmente.</span
+      >With a slot, the content is also displayed visually.</span
     >
   </ComponentExample>
 </template>

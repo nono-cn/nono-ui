@@ -6,32 +6,33 @@ import AnnouncerSlotExample from '../../components/examples/announcer/AnnouncerS
 const announcerConfig: ComponentDocConfig = {
   slug: 'announcer',
   title: 'Announcer',
-  description: 'Anuncia cambios dinámicos a lectores de pantalla sin añadir contenido visual.',
+  language: 'en',
+  description: 'Announces dynamic updates to screen readers without adding visible content.',
   importPath: '@nono-ui/components/ui/Announcer',
   usage: [
     {
-      title: 'Mensaje básico',
-      description: 'Anuncia un cambio dinámico con la configuración predeterminada.',
+      title: 'Basic message',
+      description: 'Announce a dynamic update with the default configuration.',
       component: AnnouncerBasicExample,
     },
   ],
   examples: [
     {
       title: 'Politeness',
-      description: 'Elige el nivel de prioridad del anuncio.',
+      description: 'Choose the announcement priority level.',
       component: AnnouncerPolitenessExample,
     },
     {
-      title: 'Contenido personalizado',
-      description: 'Usa el slot default cuando necesites controlar el contenido anunciado.',
+      title: 'Custom content',
+      description: 'Use the default slot when you need control over the announced content.',
       component: AnnouncerSlotExample,
     },
   ],
   accessibility: [
     {
-      title: 'Regiones live',
+      title: 'Live regions',
       description:
-        'Announcer renderiza un span con aria-live y aria-atomic, reenvía los atributos HTML, class, style y ARIA al elemento raíz y permanece oculto visualmente cuando no se usa el slot default. Usa politeness assertive solo para cambios urgentes y evita anunciar el mismo estado varias veces.',
+        'Announcer renders a span with aria-live and aria-atomic, forwards HTML and ARIA attributes, class, and style to the root element, and stays visually hidden when no default slot is provided. Use assertive politeness only for urgent updates, and avoid announcing the same state multiple times.',
     },
   ],
   api: {
@@ -41,20 +42,20 @@ const announcerConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'true',
         description:
-          'Indica si debe anunciarse toda la región cuando cambia una parte de su contenido.',
+          'Determines whether the entire region is announced when part of its content changes.',
       },
       {
         name: 'message',
         type: 'string',
         default: "''",
-        description: 'Mensaje anunciado cuando no se proporciona contenido en el slot default.',
+        description: 'Message announced when no content is provided in the default slot.',
       },
       {
         name: 'politeness',
         type: "'assertive' | 'polite' | 'off'",
         default: "'polite'",
         description:
-          'Valor de aria-live. También determina el role: alert para assertive, status para polite y ninguno para off.',
+          'Value for aria-live. Also determines the role: alert for assertive, status for polite, and no role for off.',
       },
     ],
     emits: [],
@@ -63,7 +64,7 @@ const announcerConfig: ComponentDocConfig = {
         name: 'default',
         type: '-',
         description:
-          'Contenido personalizado anunciado por la región. Cuando se usa, el contenido deja de estar oculto visualmente.',
+          'Custom content announced by the region. When provided, the content is no longer visually hidden.',
       },
     ],
     expose: [],
