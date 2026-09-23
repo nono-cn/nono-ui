@@ -32,7 +32,7 @@ const buttonGroupConfig: ComponentDocConfig = {
     {
       title: 'Action group',
       description:
-        'ButtonGroup adds role="group" to its root element. Give each button a clear accessible label and keep actions in a logical order.',
+        'ButtonGroup adds role="group" to its root element. Give each button a clear accessible label (aria-label / aria-labelledby) and keep actions in a logical order.',
     },
   ],
   api: {
