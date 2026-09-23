@@ -6,32 +6,33 @@ import AspectRatioRatiosExample from '../../components/examples/aspect-ratio/Asp
 const aspectRatioConfig: ComponentDocConfig = {
   slug: 'aspect-ratio',
   title: 'AspectRatio',
-  description: 'Mantiene una proporción constante para imágenes, vídeos y contenido adaptable.',
+  language: 'en',
+  description: 'Maintains a consistent aspect ratio for images, videos, and responsive content.',
   importPath: '@nono-ui/components/ui/AspectRatio',
   usage: [
     {
-      title: 'Contenido adaptable',
-      description: 'Mantén una proporción cuadrada para contenido visual.',
+      title: 'Responsive content',
+      description: 'Keep a square ratio for visual content.',
       component: AspectRatioBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Formato panorámico',
-      description: 'Usa una proporción 16:9 para vídeos y contenido audiovisual.',
+      title: 'Widescreen format',
+      description: 'Use a 16:9 ratio for videos and audiovisual content.',
       component: AspectRatioVideoExample,
     },
     {
-      title: 'Diferentes proporciones',
-      description: 'Compara varias proporciones para elegir la más adecuada.',
+      title: 'Different aspect ratios',
+      description: 'Compare several aspect ratios to choose the best fit.',
       component: AspectRatioRatiosExample,
     },
   ],
   accessibility: [
     {
-      title: 'Contenido accesible',
+      title: 'Accessible content',
       description:
-        'AspectRatio solo controla la proporción del contenedor y no añade por sí mismo un nombre o un rol interactivo. Proporciona alt descriptivo a las imágenes informativas, subtítulos y controles accesibles a los vídeos, y un nombre apropiado a cualquier contenido interactivo que coloques dentro del slot default. El ratio debe ser una decisión visual, no la única forma de comunicar información.',
+        'AspectRatio only controls the container’s proportions; it does not add a name or an interactive role. Provide descriptive alt text for informative images, captions and accessible controls for videos, and an appropriate name for any interactive content placed in the default slot. The aspect ratio is a visual choice and should not be the only way to convey information.',
     },
   ],
   api: {
@@ -40,7 +41,7 @@ const aspectRatioConfig: ComponentDocConfig = {
         name: 'ratio',
         type: 'number',
         default: '1',
-        description: 'Proporción entre el ancho y el alto del contenedor.',
+        description: 'Ratio between the container’s width and height.',
       },
     ],
     emits: [],
@@ -48,7 +49,7 @@ const aspectRatioConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Contenido que se renderiza dentro del contenedor con proporción.',
+        description: 'Content rendered inside the aspect ratio container.',
       },
     ],
     expose: [],

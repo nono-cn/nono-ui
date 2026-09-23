@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { AspectRatio } from '@/components/ui/AspectRatio'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const ratios = [
   { label: '1:1', value: 1 },
@@ -16,7 +17,7 @@ const ratios = [
   { label: '4:3', value: 4 / 3 },
   { label: '16:9', value: 16 / 9 },
 ]
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full gap-4 sm:grid-cols-3">
@@ -32,8 +33,8 @@ const ratios = [
 
 <template>
   <ComponentExample
-    title="Diferentes proporciones"
-    description="Elige el ratio según el contenido visual."
+    title="Different aspect ratios"
+    description="Choose a ratio based on the visual content."
     :code="code"
     :show-reset="false"
   >
