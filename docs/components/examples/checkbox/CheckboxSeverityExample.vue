@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { Checkbox } from '@/components/ui/Checkbox'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as const
 const code = `<script setup lang="ts">
 import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
 const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as const
-<\/script>
+${scriptEnd}
 <template>
   <Checkbox
     v-for="severity in severities"
@@ -19,7 +20,7 @@ const severities = ['primary', 'secondary', 'warning', 'success', 'error'] as co
 <template>
   <ComponentExample
     title="Severity"
-    description="Compara las severidades disponibles."
+    description="Compare the available severity levels."
     :code="code"
     :show-reset="false"
     ><div class="flex items-center gap-4">

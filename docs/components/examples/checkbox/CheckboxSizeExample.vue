@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { Checkbox } from '@/components/ui/Checkbox'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 const code = `<script setup lang="ts">
 import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
-<\/script>
+${scriptEnd}
 <template>
   <Checkbox
     v-for="size in sizes"
@@ -19,7 +20,7 @@ const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 <template>
   <ComponentExample
     title="Size"
-    description="Compara los tamaños disponibles."
+    description="Compare the available sizes."
     :code="code"
     :show-reset="false"
     ><div class="flex items-center gap-4">
