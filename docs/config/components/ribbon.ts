@@ -6,32 +6,33 @@ import RibbonStylesExample from '../../components/examples/ribbon/RibbonStylesEx
 const ribbonConfig: ComponentDocConfig = {
   slug: 'ribbon',
   title: 'Ribbon',
-  description: 'Añade cintas decorativas superpuestas a una tarjeta o bloque de contenido.',
+  language: 'en',
+  description: 'Adds decorative ribbons over a card or content block.',
   importPath: '@nono-ui/components/ui/Ribbon',
   usage: [
     {
-      title: 'Ribbon básica',
-      description: 'Añade una cinta decorativa al contenido.',
+      title: 'Basic ribbon',
+      description: 'Add a decorative ribbon to the content.',
       component: RibbonBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Posiciones',
-      description: 'Coloca las cintas en cualquiera de las cuatro esquinas.',
+      title: 'Positions',
+      description: 'Place ribbons in any of the four corners.',
       component: RibbonPositionsExample,
     },
     {
-      title: 'Severity y color',
-      description: 'Usa una severidad o un color CSS personalizado.',
+      title: 'Severity and color',
+      description: 'Use a severity or a custom CSS color.',
       component: RibbonStylesExample,
     },
   ],
   accessibility: [
     {
-      title: 'Contenido decorativo',
+      title: 'Decorative content',
       description:
-        'Las bandas se renderizan con aria-hidden="true" porque son decorativas. Mantén la información importante también en el contenido del slot default, con texto y acciones que puedan leer y usar las tecnologías de asistencia. No dependas únicamente del color, la posición o la rotación para comunicar un estado.',
+        'Ribbons are rendered with aria-hidden="true" because they are decorative. Keep important information in the default slot content as text and actions that assistive technologies can read and use. Do not rely on color, position, or rotation alone to communicate a status.',
     },
   ],
   api: {
@@ -41,51 +42,51 @@ const ribbonConfig: ComponentDocConfig = {
         type: 'RibbonItem[]',
         typeLink: '/components/ribbon#ribbon-item',
         default: '[]',
-        description: 'Lista de cintas que se renderizan sobre el contenido.',
+        description: 'List of ribbons rendered over the content.',
       },
     ],
     configs: [
       {
         id: 'ribbon-item',
         title: 'RibbonItem',
-        description: 'Configuración de cada objeto dentro de ribbons.',
+        description: 'Configuration for each object in ribbons.',
         showDefault: true,
         rows: [
           {
             name: 'label',
             type: 'string',
-            description: 'Texto que muestra la cinta.',
+            description: 'Text displayed on the ribbon.',
             required: true,
           },
           {
             name: 'severity',
             type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
             default: "'primary'",
-            description: 'Tratamiento visual semántico de la cinta.',
+            description: 'Semantic visual style of the ribbon.',
           },
           {
             name: 'color',
             type: 'string',
             default: 'undefined',
-            description: 'Color CSS personalizado. Tiene prioridad sobre severity.',
+            description: 'Custom CSS color. Takes precedence over severity.',
           },
           {
             name: 'position',
             type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'",
             default: "'top-right'",
-            description: 'Esquina en la que se coloca la cinta.',
+            description: 'Corner where the ribbon is placed.',
           },
           {
             name: 'rotate',
             type: 'number',
-            default: 'según position',
-            description: 'Ángulo de rotación en grados.',
+            default: 'based on position',
+            description: 'Rotation angle in degrees.',
           },
           {
             name: 'zIndex',
             type: 'number',
             default: '20 + index',
-            description: 'Orden de apilado de la cinta respecto a las demás.',
+            description: 'Stacking order of the ribbon relative to the others.',
           },
         ],
       },
@@ -95,7 +96,7 @@ const ribbonConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Contenido que se renderiza por encima de las cintas.',
+        description: 'Content rendered beneath the ribbons.',
       },
     ],
     expose: [],
