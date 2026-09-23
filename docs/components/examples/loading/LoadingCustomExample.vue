@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { Loading } from '@/components/ui/Loading'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Loading } from '__DOCS_PACKAGE__/components/ui/Loading'
-<\/script>
+${scriptEnd}
 
 <template>
-  <Loading :loading="true" aria-label="Preparando usuarios">
+  <Loading :loading="true" aria-label="Preparing users">
     <template #loading>
-      <span>Preparando usuarios...</span>
+      <span>Preparing users...</span>
     </template>
   </Loading>
 </template>`
@@ -17,14 +18,14 @@ import { Loading } from '__DOCS_PACKAGE__/components/ui/Loading'
 
 <template>
   <ComponentExample
-    title="Loading personalizado"
-    description="Sustituye el icono por un mensaje propio."
+    title="Custom loading"
+    description="Replace the default icon with a custom message."
     :code="code"
     :show-reset="false"
   >
-    <Loading :loading="true" aria-label="Preparando usuarios">
+    <Loading :loading="true" aria-label="Preparing users">
       <template #loading>
-        <span>Preparando usuarios...</span>
+        <span>Preparing users...</span>
       </template>
     </Loading>
   </ComponentExample>

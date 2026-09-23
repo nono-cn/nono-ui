@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Loading } from '@/components/ui/Loading'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Loading } from '__DOCS_PACKAGE__/components/ui/Loading'
-<\/script>
+${scriptEnd}
 
 <template>
   <Loading :loading="false">
@@ -19,8 +20,8 @@ import { Loading } from '__DOCS_PACKAGE__/components/ui/Loading'
 
 <template>
   <ComponentExample
-    title="Contenido cargado"
-    description="Cuando loading es false se muestra el contenido del slot default."
+    title="Loaded content"
+    description="When loading is false, the default slot content is displayed."
     :code="code"
     :show-reset="false"
   >

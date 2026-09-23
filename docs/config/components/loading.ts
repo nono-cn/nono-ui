@@ -6,38 +6,38 @@ import LoadingContentExample from '../../components/examples/loading/LoadingCont
 const loadingConfig: ComponentDocConfig = {
   slug: 'loading',
   title: 'Loading',
-  description:
-    'Alterna entre un indicador de carga y el contenido cuando una operación cambia de estado.',
+  language: 'en',
+  description: 'Switches between a loading indicator and content as an operation changes state.',
   importPath: '@nono-ui/components/ui/Loading',
   usage: [
     {
-      title: 'Carga básica',
-      description: 'Muestra el indicador predeterminado mientras una operación está en curso.',
+      title: 'Basic loading',
+      description: 'Show the default indicator while an operation is in progress.',
       component: LoadingBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Loading personalizado',
-      description: 'Sustituye el icono por defecto mediante el slot loading.',
+      title: 'Custom loading',
+      description: 'Replace the default icon using the loading slot.',
       component: LoadingCustomExample,
     },
     {
-      title: 'Contenido cargado',
-      description: 'Muestra el contenido cuando la operación termina.',
+      title: 'Loaded content',
+      description: 'Show the content when the operation finishes.',
       component: LoadingContentExample,
     },
   ],
   accessibility: [
     {
-      title: 'Estado de carga accesible',
+      title: 'Accessible loading state',
       description:
-        'Loading renderiza role="status" y aria-busy en el elemento raíz. Mientras loading es true, usa aria-label para proporcionar un nombre específico; si no se indica, se utiliza la traducción de carga configurada. Cuando la carga termina, aria-label se elimina para que el contenido se exponga con su propio nombre accesible.',
+        'Loading renders role="status" and aria-busy on the root element. While loading is true, use aria-label to provide a specific name; if omitted, the configured loading translation is used. When loading completes, aria-label is removed so the content is exposed with its own accessible name.',
     },
     {
-      title: 'Contenido y spinner',
+      title: 'Content and spinner',
       description:
-        'No dependas únicamente de la animación o del icono para comunicar el estado. Proporciona texto comprensible en el contenido o en el slot loading cuando sea necesario, y marca los iconos decorativos como ocultos para tecnologías de asistencia mediante su configuración correspondiente.',
+        'Do not rely on animation or the icon alone to communicate the state. Provide clear text in the content or loading slot when needed, and mark decorative icons as hidden from assistive technologies through their configuration.',
     },
   ],
   api: {
@@ -46,7 +46,7 @@ const loadingConfig: ComponentDocConfig = {
         name: 'loading',
         type: 'boolean',
         default: 'true',
-        description: 'Determina si se muestra el estado de carga o el contenido del slot default.',
+        description: 'Determines whether to show the loading state or the default slot content.',
       },
       {
         name: 'icon',
@@ -54,7 +54,7 @@ const loadingConfig: ComponentDocConfig = {
         typeLink: '/components/icon#icon-config',
         default: "{ name: 'spinner' }",
         description:
-          'Configuración del icono mostrado durante la carga cuando no se usa el slot loading.',
+          'Icon configuration displayed while loading when the loading slot is not used.',
       },
       {
         name: 'ui',
@@ -72,20 +72,20 @@ const loadingConfig: ComponentDocConfig = {
         typePre: true,
         default: 'undefined',
         description:
-          'Resolvers para personalizar los atributos y clases de los contenedores de carga y contenido.',
+          'Resolvers for customizing the attributes and classes of the loading and content containers.',
       },
     ],
     configs: [
       {
         id: 'loading-context',
         title: 'LoadingContext',
-        description: 'Contexto disponible en los resolvers de ui y en los slots default y loading.',
+        description: 'Context available in ui resolvers and the default and loading slots.',
         showDefault: false,
         rows: [
           {
             name: 'loading',
             type: 'boolean',
-            description: 'Indica si el componente está mostrando el estado de carga.',
+            description: 'Indicates whether the component is showing the loading state.',
           },
         ],
       },
@@ -97,13 +97,13 @@ const loadingConfig: ComponentDocConfig = {
         type: 'LoadingContext',
         typeLink: '#loading-context',
         description:
-          'Contenido mostrado durante la carga. Recibe el contexto actual y sustituye el icono por defecto.',
+          'Content displayed while loading. Receives the current context and replaces the default icon.',
       },
       {
         name: 'default',
         type: 'LoadingContext',
         typeLink: '#loading-context',
-        description: 'Contenido mostrado cuando loading es false. Recibe el contexto actual.',
+        description: 'Content displayed when loading is false. Receives the current context.',
       },
     ],
     expose: [],
