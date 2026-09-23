@@ -8,17 +8,17 @@ import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
 ${scriptEnd}
 
 <template>
-  <Badge label="Verificado" :icon="{ name: 'check' }" />
+  <Badge label="Verified" :icon="{ name: 'check' }" />
 </template>`
 </script>
 
 <template>
   <ComponentExample
     title="Icon"
-    description="Añade un icono al inicio del badge."
+    description="Add an icon at the start of the badge."
     :code="code"
     :show-reset="false"
   >
-    <Badge label="Verificado" :icon="{ name: 'check' }" />
+    <Badge label="Verified" :icon="{ name: 'check' }" />
   </ComponentExample>
 </template>

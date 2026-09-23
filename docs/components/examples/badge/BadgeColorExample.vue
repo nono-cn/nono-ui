@@ -10,8 +10,8 @@ ${scriptEnd}
 <template>
   <div class="flex flex-wrap items-center gap-3">
     <Badge label="Indigo" color="#6366f1" />
-    <Badge label="Verde" color="#22c55e" />
-    <Badge label="Naranja" color="#f97316" />
+    <Badge label="Green" color="#22c55e" />
+    <Badge label="Orange" color="#f97316" />
   </div>
 </template>`
 </script>
@@ -19,14 +19,14 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Color"
-    description="Aplica un color CSS personalizado con contraste calculado."
+    description="Apply a custom CSS color with a calculated contrasting text color."
     :code="code"
     :show-reset="false"
   >
     <div class="flex flex-wrap items-center gap-3">
       <Badge label="Indigo" color="#6366f1" />
-      <Badge label="Verde" color="#22c55e" />
-      <Badge label="Naranja" color="#f97316" />
+      <Badge label="Green" color="#22c55e" />
+      <Badge label="Orange" color="#f97316" />
     </div>
   </ComponentExample>
 </template>

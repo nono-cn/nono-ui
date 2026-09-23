@@ -8,17 +8,17 @@ import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
 ${scriptEnd}
 
 <template>
-  <Badge label="Activo" />
+  <Badge label="Active" />
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Empieza con un badge usando la configuración predeterminada."
+    title="Basic usage"
+    description="Start with a badge using its default configuration."
     :code="code"
     :show-reset="false"
   >
-    <Badge label="Activo" />
+    <Badge label="Active" />
   </ComponentExample>
 </template>

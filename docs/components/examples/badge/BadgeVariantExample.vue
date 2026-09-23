@@ -21,7 +21,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Variant"
-    description="Compara los tratamientos visuales del badge usando la misma severidad."
+    description="Compare the badge’s visual variants using the same severity."
     :code="code"
     :show-reset="false"
   >

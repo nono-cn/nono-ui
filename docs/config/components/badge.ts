@@ -10,52 +10,53 @@ import BadgeVariantExample from '../../components/examples/badge/BadgeVariantExa
 const badgeConfig: ComponentDocConfig = {
   slug: 'badge',
   title: 'Badge',
-  description: 'Etiqueta compacta para estados, categorías y metadatos.',
+  language: 'en',
+  description: 'A compact label for statuses, categories, and metadata.',
   importPath: '@nono-ui/components/ui/Badge',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Empieza con un badge usando la configuración predeterminada.',
+      title: 'Basic usage',
+      description: 'Start with a badge using its default configuration.',
       component: BadgeUsageExample,
     },
   ],
   examples: [
     {
       title: 'Variant',
-      description: 'Compara los tratamientos visuales del badge.',
+      description: 'Compare the badge’s visual variants.',
       component: BadgeVariantExample,
     },
     {
       title: 'Severity',
-      description: 'Compara las severidades del badge.',
+      description: 'Compare badge severities.',
       component: BadgeSeverityExample,
     },
     {
       title: 'Size',
-      description: 'Ajusta el tamaño visual del badge.',
+      description: 'Adjust the badge’s visual size.',
       component: BadgeSizeExample,
     },
     {
       title: 'Color',
-      description: 'Aplica un color CSS personalizado.',
+      description: 'Apply a custom CSS color.',
       component: BadgeColorExample,
     },
     {
       title: 'Icon',
-      description: 'Añade un icono inicial.',
+      description: 'Add a leading icon.',
       component: BadgeIconExample,
     },
     {
-      title: 'TrailingIcon',
-      description: 'Añade un icono final.',
+      title: 'Trailing icon',
+      description: 'Add a trailing icon.',
       component: BadgeTrailingIconExample,
     },
   ],
   accessibility: [
     {
-      title: 'Contenido y semántica',
+      title: 'Content and semantics',
       description:
-        'Usa texto visible para comunicar el estado y añade semántica ARIA solo cuando el contenido lo necesite. No dependas únicamente del color para transmitir el significado del badge.',
+        'Use visible text to communicate status and add ARIA semantics only when needed. Do not rely on color alone to convey a badge’s meaning.',
     },
   ],
   api: {
@@ -64,31 +65,31 @@ const badgeConfig: ComponentDocConfig = {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Texto mostrado cuando no se proporciona contenido en el slot default.',
+        description: 'Text displayed when no content is provided in the default slot.',
       },
       {
         name: 'size',
         type: "'sm' | 'md' | 'lg'",
         default: "'md'",
-        description: 'Tamaño visual y espaciado interno del badge.',
+        description: 'Visual size and internal spacing of the badge.',
       },
       {
         name: 'variant',
         type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft'",
         default: "'solid'",
-        description: 'Tratamiento visual del badge.',
+        description: 'Visual style applied to the badge.',
       },
       {
         name: 'severity',
         type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
         default: "'primary'",
-        description: 'Severidad semántica usada para elegir el color del badge.',
+        description: 'Semantic severity used to choose the badge color.',
       },
       {
         name: 'color',
         type: 'string',
         default: 'undefined',
-        description: 'Color CSS personalizado con un color de contraste calculado.',
+        description: 'Custom CSS color with a calculated contrasting text color.',
       },
       {
         name: 'icon',
@@ -100,7 +101,7 @@ const badgeConfig: ComponentDocConfig = {
         ],
         default: 'undefined',
         description:
-          'Nombre del icono o configuración completa mostrada al inicio cuando no se proporciona el slot leading.',
+          'Icon name or full configuration displayed at the start when no leading slot is provided.',
       },
       {
         name: 'trailingIcon',
@@ -112,7 +113,7 @@ const badgeConfig: ComponentDocConfig = {
         ],
         default: 'undefined',
         description:
-          'Nombre del icono o configuración completa mostrada al final cuando no se proporciona el slot trailing.',
+          'Icon name or full configuration displayed at the end when no trailing slot is provided.',
       },
     ],
     emits: [],
@@ -120,17 +121,17 @@ const badgeConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Contenido principal del badge; sustituye el fallback de label.',
+        description: 'Main badge content; overrides the label fallback.',
       },
       {
         name: 'leading',
         type: '-',
-        description: 'Contenido mostrado al inicio; sustituye el fallback de icon.',
+        description: 'Content displayed at the start; overrides the icon fallback.',
       },
       {
         name: 'trailing',
         type: '-',
-        description: 'Contenido mostrado al final; sustituye el fallback de trailingIcon.',
+        description: 'Content displayed at the end; overrides the trailingIcon fallback.',
       },
     ],
     expose: [],

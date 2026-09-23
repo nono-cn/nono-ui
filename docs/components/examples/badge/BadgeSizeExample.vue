@@ -19,7 +19,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Size"
-    description="Ajusta el tamaño visual y el espaciado interno del badge."
+    description="Adjust the badge’s visual size and internal spacing."
     :code="code"
     :show-reset="false"
   >

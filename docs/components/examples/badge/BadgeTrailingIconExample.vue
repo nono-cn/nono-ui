@@ -8,17 +8,17 @@ import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
 ${scriptEnd}
 
 <template>
-  <Badge label="Siguiente" :trailing-icon="{ name: 'chevronRight' }" />
+  <Badge label="Next" :trailing-icon="{ name: 'chevronRight' }" />
 </template>`
 </script>
 
 <template>
   <ComponentExample
     title="TrailingIcon"
-    description="Añade un icono al final del badge."
+    description="Add an icon at the end of the badge."
     :code="code"
     :show-reset="false"
   >
-    <Badge label="Siguiente" :trailing-icon="{ name: 'chevronRight' }" />
+    <Badge label="Next" :trailing-icon="{ name: 'chevronRight' }" />
   </ComponentExample>
 </template>
