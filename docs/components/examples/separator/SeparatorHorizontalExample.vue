@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { Separator } from '@/components/ui/Separator'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-lg gap-4">
     <section class="grid gap-1">
-      <h3 class="font-medium">Perfil</h3>
-      <p class="text-sm text-muted-foreground">Gestiona tu información personal.</p>
+      <h3 class="font-medium">Profile</h3>
+      <p class="text-sm text-muted-foreground">Manage your personal information.</p>
     </section>
     <Separator />
     <section class="grid gap-1">
-      <h3 class="font-medium">Privacidad</h3>
-      <p class="text-sm text-muted-foreground">Controla quién puede ver tu perfil.</p>
+      <h3 class="font-medium">Privacy</h3>
+      <p class="text-sm text-muted-foreground">Control who can see your profile.</p>
     </section>
   </div>
 </template>`
@@ -23,20 +24,20 @@ import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Separa secciones de contenido con la orientación horizontal predeterminada."
+    title="Basic usage"
+    description="Separate content sections using the default horizontal orientation."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-lg gap-4">
       <section class="grid gap-1">
-        <h3 class="font-medium">Perfil</h3>
-        <p class="text-sm text-muted-foreground">Gestiona tu información personal.</p>
+        <h3 class="font-medium">Profile</h3>
+        <p class="text-sm text-muted-foreground">Manage your personal information.</p>
       </section>
       <Separator />
       <section class="grid gap-1">
-        <h3 class="font-medium">Privacidad</h3>
-        <p class="text-sm text-muted-foreground">Controla quién puede ver tu perfil.</p>
+        <h3 class="font-medium">Privacy</h3>
+        <p class="text-sm text-muted-foreground">Control who can see your profile.</p>
       </section>
     </div>
   </ComponentExample>

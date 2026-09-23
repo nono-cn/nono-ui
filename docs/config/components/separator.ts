@@ -5,31 +5,31 @@ import SeparatorVerticalExample from '../../components/examples/separator/Separa
 const separatorConfig: ComponentDocConfig = {
   slug: 'separator',
   title: 'Separator',
-  description:
-    'Divide visualmente el contenido y comunica separaciones semánticas cuando es necesario.',
+  language: 'en',
+  description: 'Visually separates content and communicates semantic divisions when needed.',
   importPath: '@nono-ui/components/ui/Separator',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Separa secciones usando la orientación horizontal predeterminada.',
+      title: 'Basic usage',
+      description: 'Separate sections using the default horizontal orientation.',
       component: SeparatorHorizontalExample,
     },
   ],
   examples: [
     {
-      title: 'Separación vertical',
-      description: 'Divide elementos colocados en una fila y ocupa la altura del contenedor.',
+      title: 'Vertical separation',
+      description: 'Divide items arranged in a row and spans the height of the container.',
       component: SeparatorVerticalExample,
     },
   ],
   accessibility: [
     {
-      title: 'Separadores decorativos y semánticos',
+      title: 'Decorative and semantic separators',
       description:
-        'Los atributos HTML, class, style, data-* y ARIA se reenvían al elemento raíz. Usa decorative=false para exponer un separador semántico y aria-label solo cuando necesite contexto adicional. No dependas únicamente del color o del grosor para comunicar información.',
+        'HTML attributes, class, style, data-*, and ARIA attributes are forwarded to the root element. Use decorative=false to expose a semantic separator, and use aria-label only when additional context is needed. Do not rely on color or thickness alone to communicate information.',
       links: [
         {
-          label: 'Consulta la guía de accesibilidad de Separator en Reka UI',
+          label: 'See the Separator accessibility guide in Reka UI',
           href: 'https://www.reka-ui.com/docs/components/separator#accessibility',
         },
       ],
@@ -41,14 +41,14 @@ const separatorConfig: ComponentDocConfig = {
         name: 'orientation',
         type: "'horizontal' | 'vertical'",
         default: "'horizontal'",
-        description: 'Define si la línea divide el contenido horizontal o verticalmente.',
+        description: 'Determines whether the line divides content horizontally or vertically.',
       },
       {
         name: 'decorative',
         type: 'boolean',
         default: 'true',
         description:
-          'Cuando es true, el separador se trata como contenido puramente visual y se excluye del árbol de accesibilidad.',
+          'When true, the separator is treated as purely visual content and excluded from the accessibility tree.',
       },
     ],
     emits: [],
@@ -56,7 +56,7 @@ const separatorConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Contenido opcional renderizado dentro del elemento raíz del separador.',
+        description: 'Optional content rendered inside the separator root element.',
       },
     ],
     expose: [],
