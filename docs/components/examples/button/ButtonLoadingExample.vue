@@ -9,7 +9,7 @@ ${scriptEnd}
 
 <template>
   <div class="flex flex-wrap items-center gap-3">
-    <Button label="Guardando" loading />
+    <Button label="Saving" loading />
   </div>
 </template>`
 </script>
@@ -17,12 +17,12 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Loading"
-    description="Muestra el estado de carga y comunica que la acción está temporalmente ocupada."
+    description="Show the loading state to indicate that the action is temporarily busy."
     :code="code"
     :show-reset="false"
   >
     <div class="flex flex-wrap items-center gap-3">
-      <Button label="Guardando" loading />
+      <Button label="Saving" loading />
     </div>
   </ComponentExample>
 </template>

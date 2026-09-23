@@ -9,7 +9,7 @@ ${scriptEnd}
 
 <template>
   <div class="flex flex-wrap items-center gap-3">
-    <Button :icon="{ name: 'plus' }" square aria-label="Añadir elemento" />
+    <Button :icon="{ name: 'plus' }" square aria-label="Add item" />
   </div>
 </template>`
 </script>
@@ -17,12 +17,12 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Square"
-    description="Iguala el ancho y el alto para crear botones cuadrados, normalmente con un icono."
+    description="Set equal width and height to create square buttons, typically with an icon."
     :code="code"
     :show-reset="false"
   >
     <div class="flex flex-wrap items-center gap-3">
-      <Button :icon="{ name: 'plus' }" square aria-label="Añadir elemento" />
+      <Button :icon="{ name: 'plus' }" square aria-label="Add item" />
     </div>
   </ComponentExample>
 </template>

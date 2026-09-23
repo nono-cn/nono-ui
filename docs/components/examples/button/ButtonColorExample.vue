@@ -10,8 +10,8 @@ ${scriptEnd}
 <template>
   <div class="flex flex-wrap items-center gap-3">
     <Button label="Indigo" color="#6366f1" />
-    <Button label="Verde" color="#22c55e" />
-    <Button label="Naranja" color="#f97316" />
+    <Button label="Green" color="#22c55e" />
+    <Button label="Orange" color="#f97316" />
   </div>
 </template>`
 </script>
@@ -19,14 +19,14 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Color"
-    description="Aplica un color CSS personalizado al tratamiento visual del botón."
+    description="Apply a custom CSS color to the button style."
     :code="code"
     :show-reset="false"
   >
     <div class="flex flex-wrap items-center gap-3">
       <Button label="Indigo" color="#6366f1" />
-      <Button label="Verde" color="#22c55e" />
-      <Button label="Naranja" color="#f97316" />
+      <Button label="Green" color="#22c55e" />
+      <Button label="Orange" color="#f97316" />
     </div>
   </ComponentExample>
 </template>

@@ -17,7 +17,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Raised"
-    description="Añade una sombra ligera para comunicar elevación visual."
+    description="Add a subtle shadow to create visual elevation."
     :code="code"
     :show-reset="false"
   >

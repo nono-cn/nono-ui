@@ -17,7 +17,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Rounded"
-    description="Aplica una forma completamente redondeada al botón."
+    description="Apply a fully rounded shape to the button."
     :code="code"
     :show-reset="false"
   >

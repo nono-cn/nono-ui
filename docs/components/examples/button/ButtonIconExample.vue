@@ -8,17 +8,17 @@ import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 ${scriptEnd}
 
 <template>
-  <Button label="Guardar" :icon="{ name: 'save' }" />
+  <Button label="Save" :icon="{ name: 'save' }" />
 </template>`
 </script>
 
 <template>
   <ComponentExample
     title="Icon"
-    description="Añade un icono antes del contenido principal del botón."
+    description="Add an icon before the button’s main content."
     :code="code"
     :show-reset="false"
   >
-    <Button label="Guardar" :icon="{ name: 'save' }" />
+    <Button label="Save" :icon="{ name: 'save' }" />
   </ComponentExample>
 </template>

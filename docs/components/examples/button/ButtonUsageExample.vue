@@ -8,17 +8,17 @@ import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 ${scriptEnd}
 
 <template>
-  <Button label="Guardar cambios" />
+  <Button label="Save changes" />
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Empieza con un botón con la severidad y el tamaño predeterminados."
+    title="Basic usage"
+    description="Start with a button using the default severity and size."
     :code="code"
     :show-reset="false"
   >
-    <Button label="Guardar cambios" />
+    <Button label="Save changes" />
   </ComponentExample>
 </template>

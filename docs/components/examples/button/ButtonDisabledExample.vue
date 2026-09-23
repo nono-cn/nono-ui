@@ -8,17 +8,17 @@ import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 ${scriptEnd}
 
 <template>
-  <Button label="No disponible" disabled />
+  <Button label="Unavailable" disabled />
 </template>`
 </script>
 
 <template>
   <ComponentExample
     title="Disabled"
-    description="Usa el atributo disabled para impedir la interacción con el botón."
+    description="Use the disabled attribute to prevent interaction with the button."
     :code="code"
     :show-reset="false"
   >
-    <Button label="No disponible" disabled />
+    <Button label="Unavailable" disabled />
   </ComponentExample>
 </template>

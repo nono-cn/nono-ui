@@ -20,7 +20,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Size"
-    description="Ajusta el tamaño visual del botón según el espacio y la jerarquía de la interfaz."
+    description="Adjust the button’s visual size to fit the available space and interface hierarchy."
     :code="code"
     :show-reset="false"
   >

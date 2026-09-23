@@ -8,17 +8,17 @@ import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 ${scriptEnd}
 
 <template>
-  <Button label="Siguiente" :trailing-icon="{ name: 'chevronRight' }" />
+  <Button label="Next" :trailing-icon="{ name: 'chevronRight' }" />
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="TrailingIcon"
-    description="Añade un icono después del contenido principal del botón."
+    title="Trailing icon"
+    description="Add an icon after the button’s main content."
     :code="code"
     :show-reset="false"
   >
-    <Button label="Siguiente" :trailing-icon="{ name: 'chevronRight' }" />
+    <Button label="Next" :trailing-icon="{ name: 'chevronRight' }" />
   </ComponentExample>
 </template>

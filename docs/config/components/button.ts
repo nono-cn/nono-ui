@@ -15,77 +15,78 @@ import ButtonVariantsExample from '../../components/examples/button/ButtonVarian
 const buttonConfig: ComponentDocConfig = {
   slug: 'button',
   title: 'Button',
-  description: 'Acción interactiva con variantes, estados, iconos y elementos raíz configurables.',
+  language: 'en',
+  description: 'Interactive action with configurable variants, states, icons, and root elements.',
   importPath: '@nono-ui/components/ui/Button',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Empieza con un botón con la configuración predeterminada.',
+      title: 'Basic usage',
+      description: 'Start with a button using the default configuration.',
       component: ButtonUsageExample,
     },
   ],
   examples: [
     {
       title: 'Variant',
-      description: 'Compara las variantes visuales del botón usando la misma severidad.',
+      description: 'Compare the button’s visual variants using the same severity.',
       component: ButtonVariantsExample,
     },
     {
       title: 'Severity',
-      description: 'Compara las severidades del botón usando la misma variante visual.',
+      description: 'Compare button severity levels using the same visual variant.',
       component: ButtonSeverityExample,
     },
     {
       title: 'Size',
-      description: 'Ajusta el tamaño visual del botón.',
+      description: 'Adjust the button’s visual size.',
       component: ButtonSizeExample,
     },
     {
       title: 'Rounded',
-      description: 'Aplica una forma completamente redondeada al botón.',
+      description: 'Apply a fully rounded shape to the button.',
       component: ButtonRoundedExample,
     },
     {
       title: 'Square',
-      description: 'Iguala el ancho y el alto para crear botones cuadrados.',
+      description: 'Set equal width and height to create square buttons.',
       component: ButtonSquareExample,
     },
     {
       title: 'Raised',
-      description: 'Añade una sombra ligera para comunicar elevación visual.',
+      description: 'Add a subtle shadow to create visual elevation.',
       component: ButtonRaisedExample,
     },
     {
       title: 'Loading',
-      description: 'Muestra el estado de carga de la acción.',
+      description: 'Show the action’s loading state.',
       component: ButtonLoadingExample,
     },
     {
       title: 'Disabled',
-      description: 'Impide la interacción con el botón.',
+      description: 'Prevent interaction with the button.',
       component: ButtonDisabledExample,
     },
     {
       title: 'Color',
-      description: 'Aplica un color CSS personalizado al botón.',
+      description: 'Apply a custom CSS color to the button.',
       component: ButtonColorExample,
     },
     {
       title: 'Icon',
-      description: 'Añade un icono inicial al botón.',
+      description: 'Add a leading icon to the button.',
       component: ButtonIconExample,
     },
     {
-      title: 'TrailingIcon',
-      description: 'Añade un icono final al botón.',
+      title: 'Trailing icon',
+      description: 'Add a trailing icon to the button.',
       component: ButtonTrailingIconExample,
     },
   ],
   accessibility: [
     {
-      title: 'Acciones accesibles',
+      title: 'Accessible actions',
       description:
-        'Usa un nombre accesible para botones solo con icono y conserva aria-busy y aria-disabled durante la carga. Los atributos HTML, class, style y ARIA se reenvían al elemento raíz. No dependas únicamente del color o del icono para comunicar la acción.',
+        'Give icon-only buttons a clear accessible name (aria-label / aria-labelledby) and preserve aria-busy and aria-disabled while loading. HTML and ARIA attributes, class, and style are forwarded to the root element. Do not rely on color or the icon alone to communicate an action.',
     },
   ],
   api: {
@@ -94,84 +95,83 @@ const buttonConfig: ComponentDocConfig = {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Texto mostrado cuando no se proporciona contenido en el slot default.',
+        description: 'Text displayed when no content is provided in the default slot.',
       },
       {
         name: 'variant',
         type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft' | 'link'",
         default: "'solid'",
-        description: 'Tratamiento visual del botón.',
+        description: 'Visual style applied to the button.',
       },
       {
         name: 'severity',
         type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
         default: "'primary'",
-        description: 'Severidad usada para elegir los colores del botón.',
+        description: 'Severity used to choose the button colors.',
       },
       {
         name: 'size',
         type: "'xs' | 'sm' | 'md' | 'lg'",
         default: "'md'",
-        description: 'Tamaño visual del botón.',
+        description: 'Visual size of the button.',
       },
       {
         name: 'rounded',
         type: 'boolean',
         default: 'false',
-        description: 'Aplica una forma completamente redondeada.',
+        description: 'Applies a fully rounded shape.',
       },
       {
         name: 'square',
         type: 'boolean',
         default: 'false',
         description:
-          'Iguala el ancho y el alto para crear un botón cuadrado, normalmente con un icono.',
+          'Sets equal width and height to create a square button, typically with an icon.',
       },
       {
         name: 'raised',
         type: 'boolean',
         default: 'false',
-        description: 'Añade una sombra ligera para elevar visualmente el botón.',
+        description: 'Adds a subtle shadow to visually raise the button.',
       },
       {
         name: 'loading',
         type: 'boolean',
         default: 'false',
         description:
-          'Muestra el icono de carga predeterminado o el slot loading y añade aria-busy y aria-disabled.',
+          'Displays the default loading icon or the loading slot, and adds aria-busy and aria-disabled.',
       },
       {
         name: 'color',
         type: 'string',
         default: 'undefined',
-        description: 'Color CSS personalizado aplicado al tratamiento visual del botón.',
+        description: 'Custom CSS color applied to the button style.',
       },
       {
         name: 'icon',
         type: 'IconConfig',
         typeLink: '/components/icon#icon-config',
         default: 'undefined',
-        description: 'Configuración del icono inicial cuando no se proporciona el slot leading.',
+        description: 'Configuration for the leading icon when the leading slot is not provided.',
       },
       {
         name: 'trailingIcon',
         type: 'IconConfig',
         typeLink: '/components/icon#icon-config',
         default: 'undefined',
-        description: 'Configuración del icono final cuando no se proporciona el slot trailing.',
+        description: 'Configuration for the trailing icon when the trailing slot is not provided.',
       },
       {
         name: 'as',
         type: 'AsTag | Component',
         default: "'button'",
-        description: 'Elemento o componente que se renderiza como raíz, por ejemplo button o a.',
+        description: 'Element or component rendered as the root, such as button or a.',
       },
       {
         name: 'asChild',
         type: 'boolean',
         default: 'false',
-        description:
-          'Aplica las props y el comportamiento al elemento proporcionado en el slot default.',
+        description: 'Applies the props and behavior to the element provided in the default slot.',
       },
     ],
     configs: [
@@ -179,26 +179,27 @@ const buttonConfig: ComponentDocConfig = {
         id: 'button-config',
         title: 'ButtonConfig',
         description:
-          'Tipo reutilizable para configuraciones de Button en otros componentes. Combina ButtonProps, el listener onClick derivado de ButtonEmits y HTMLAttributes.',
+          'Reusable type for Button configurations in other components. Combines ButtonProps, the onClick listener derived from ButtonEmits, and HTMLAttributes.',
         showDefault: false,
         rows: [
           {
             name: 'ButtonProps',
             type: 'ButtonProps',
             typeLink: '#props',
-            description: 'Incluye las props públicas de Button.',
+            description: 'Includes Button’s public props.',
           },
           {
             name: 'EmitsAsProps<ButtonEmits>',
             type: 'EmitsAsProps<ButtonEmits>',
             typeLink: '#emits',
             description:
-              'Expone el evento click como la propiedad onClick en configuraciones anidadas.',
+              'Exposes the click event as the onClick property in nested configurations.',
           },
           {
             name: 'HTMLAttributes',
             type: 'HTMLAttributes',
-            description: 'Incluye atributos HTML y ARIA, class, style y listeners nativos.',
+            description:
+              'Includes HTML and ARIA attributes, class, style, and native event listeners.',
           },
         ],
       },
@@ -207,30 +208,29 @@ const buttonConfig: ComponentDocConfig = {
       {
         name: 'click',
         type: '[event: PointerEvent]',
-        description: 'Se emite al hacer click si el botón no está loading ni aria-disabled.',
+        description: 'Emitted when the button is clicked while it is not loading or aria-disabled.',
       },
     ],
     slots: [
       {
         name: 'default',
         type: '-',
-        description: 'Contenido principal del botón; sustituye el fallback de label.',
+        description: 'Main button content; overrides the label fallback.',
       },
       {
         name: 'leading',
         type: '-',
-        description: 'Contenido mostrado antes del label; sustituye el fallback de icon.',
+        description: 'Content displayed before the label; overrides the icon fallback.',
       },
       {
         name: 'loading',
         type: '-',
-        description:
-          'Contenido mostrado mientras loading es true; sustituye el spinner predeterminado.',
+        description: 'Content displayed while loading is true; overrides the default spinner.',
       },
       {
         name: 'trailing',
         type: '-',
-        description: 'Contenido mostrado después del label; sustituye el fallback de trailingIcon.',
+        description: 'Content displayed after the label; overrides the trailingIcon fallback.',
       },
     ],
     expose: [],

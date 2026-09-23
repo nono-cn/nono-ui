@@ -22,7 +22,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Variant"
-    description="Compara las variantes visuales del botón usando la misma severidad."
+    description="Compare the button’s visual variants using the same severity."
     :code="code"
     :show-reset="false"
   >
