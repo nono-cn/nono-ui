@@ -7,40 +7,41 @@ import ScrollAreaScrollHideDelayExample from '../../components/examples/scroll-a
 const scrollAreaConfig: ComponentDocConfig = {
   slug: 'scroll-area',
   title: 'ScrollArea',
-  description: 'Añade scroll nativo con barras personalizables y comportamiento consistente.',
+  language: 'en',
+  description: 'Adds native scrolling with customizable scrollbars and consistent behavior.',
   importPath: '@nono-ui/components/ui/ScrollArea',
   usage: [
     {
-      title: 'Scroll vertical',
-      description: 'Limita la altura de un contenido largo con scroll vertical.',
+      title: 'Vertical scrolling',
+      description: 'Constrain long content to a set height with vertical scrolling.',
       component: ScrollAreaBasicExample,
     },
   ],
   examples: [
     {
       title: 'Type',
-      description: 'Compara los cinco comportamientos de visibilidad de las barras.',
+      description: 'Compare five scrollbar visibility behaviors.',
       component: ScrollAreaTypeExample,
     },
     {
       title: 'ScrollHideDelay',
-      description: 'Ajusta cuánto tarda en ocultarse la barra después del desplazamiento.',
+      description: 'Adjust how long the scrollbar remains visible after scrolling.',
       component: ScrollAreaScrollHideDelayExample,
     },
     {
       title: 'Orientation',
-      description: 'Compara el scroll vertical, horizontal y en ambas direcciones.',
+      description: 'Compare vertical, horizontal, and bidirectional scrolling.',
       component: ScrollAreaOrientationExample,
     },
   ],
   accessibility: [
     {
-      title: 'Scroll nativo y teclado',
+      title: 'Native scrolling and keyboard support',
       description:
-        'ScrollArea conserva el comportamiento de scroll nativo del navegador, incluido el desplazamiento mediante teclado. Proporciona un tamaño limitado cuando necesites que el contenido desborde, no ocultes la única indicación de desplazamiento y conserva los atributos HTML, class, style y ARIA que se reenvían a la raíz.',
+        'ScrollArea preserves native browser scrolling, including keyboard navigation. Set a constrained size when content should overflow, do not hide the only indication of scrollability, and preserve the HTML, class, style, and ARIA attributes forwarded to the root.',
       links: [
         {
-          label: 'Consulta la guía de accesibilidad de ScrollArea en Reka UI',
+          label: 'See the Reka UI ScrollArea accessibility guide',
           href: 'https://www.reka-ui.com/docs/components/scroll-area#accessibility',
         },
       ],
@@ -53,27 +54,26 @@ const scrollAreaConfig: ComponentDocConfig = {
         type: "'auto' | 'always' | 'scroll' | 'hover' | 'glimpse'",
         default: "'hover'",
         description:
-          'Define cuándo se muestran las barras: con overflow, siempre, durante el scroll, al pasar el ratón o con una aparición breve.',
+          'Defines when scrollbars are shown: when content overflows, always, while scrolling, on hover, or briefly.',
       },
       {
         name: 'scrollHideDelay',
         type: 'number',
         default: '600',
-        description:
-          'Tiempo en milisegundos antes de ocultar las barras cuando type es scroll o hover.',
+        description: 'Delay in milliseconds before hiding scrollbars when type is scroll or hover.',
       },
       {
         name: 'orientation',
         type: "'vertical' | 'horizontal' | 'both'",
         default: "'vertical'",
-        description: 'Direcciones en las que se renderizan las barras de desplazamiento.',
+        description: 'Directions in which scrollbars are rendered.',
       },
       {
         name: 'forceMount',
         type: 'boolean',
         default: 'false',
         description:
-          'Fuerza el montaje de las barras para poder controlarlas con animaciones u otras APIs.',
+          'Forces scrollbars to mount so they can be controlled with animations or other APIs.',
       },
       {
         name: 'ui',
@@ -88,7 +88,7 @@ const scrollAreaConfig: ComponentDocConfig = {
         typePre: true,
         default: 'undefined',
         description:
-          'Resolvers públicos para aplicar atributos y clases a las partes internas del área de scroll.',
+          'Public resolvers for applying attributes and classes to the internal scroll area parts.',
       },
     ],
     emits: [],
@@ -96,7 +96,7 @@ const scrollAreaConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Contenido que se renderiza dentro del viewport desplazable.',
+        description: 'Content rendered inside the scrollable viewport.',
       },
     ],
     expose: [],

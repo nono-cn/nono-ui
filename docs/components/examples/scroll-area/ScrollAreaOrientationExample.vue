@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ScrollArea } from '@/components/ui/ScrollArea'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
-const items = Array.from({ length: 8 }, (_, index) => `Fila ${index + 1}`)
+const items = Array.from({ length: 8 }, (_, index) => `Row ${index + 1}`)
 const code = `<script setup lang="ts">
 import { ScrollArea } from '__DOCS_PACKAGE__/components/ui/ScrollArea'
 
-const items = Array.from({ length: 8 }, (_, index) => \`Fila \${index + 1}\`)
-<\/script>
+const items = Array.from({ length: 8 }, (_, index) => \`Row \${index + 1}\`)
+${scriptEnd}
 
 <template>
   <div class="grid w-full min-w-0 gap-4">
@@ -38,7 +39,7 @@ const items = Array.from({ length: 8 }, (_, index) => \`Fila \${index + 1}\`)
 <template>
   <ComponentExample
     title="Orientation"
-    description="Compara las orientaciones vertical, horizontal y both."
+    description="Compare vertical, horizontal, and bidirectional scrolling."
     :code="code"
     :show-reset="false"
   >

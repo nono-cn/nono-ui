@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { ScrollArea } from '@/components/ui/ScrollArea'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const types = ['auto', 'always', 'scroll', 'hover', 'glimpse'] as const
-const items = Array.from({ length: 6 }, (_, index) => `Contenido ${index + 1}`)
+const items = Array.from({ length: 6 }, (_, index) => `Item ${index + 1}`)
 
 const code = `<script setup lang="ts">
 import { ScrollArea } from '__DOCS_PACKAGE__/components/ui/ScrollArea'
 
 const types = ['auto', 'always', 'scroll', 'hover', 'glimpse'] as const
-const items = Array.from({ length: 6 }, (_, index) => \`Contenido \${index + 1}\`)
-<\/script>
+const items = Array.from({ length: 6 }, (_, index) => \`Item \${index + 1}\`)
+${scriptEnd}
 
 <template>
   <div class="grid w-full min-w-0 gap-4 sm:grid-cols-2">
@@ -27,7 +28,7 @@ const items = Array.from({ length: 6 }, (_, index) => \`Contenido \${index + 1}\
 <template>
   <ComponentExample
     title="Type"
-    description="Compara auto, always, scroll, hover y glimpse con contenido desplazable."
+    description="Compare auto, always, scroll, hover, and glimpse with scrollable content."
     :code="code"
     :show-reset="false"
   >

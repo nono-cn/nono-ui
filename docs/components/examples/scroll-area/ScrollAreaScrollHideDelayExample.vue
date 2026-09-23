@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ScrollArea } from '@/components/ui/ScrollArea'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
-const items = Array.from({ length: 12 }, (_, index) => `Elemento ${index + 1}`)
+const items = Array.from({ length: 12 }, (_, index) => `Item ${index + 1}`)
 const code = `<script setup lang="ts">
 import { ScrollArea } from '__DOCS_PACKAGE__/components/ui/ScrollArea'
 
-const items = Array.from({ length: 12 }, (_, index) => \`Elemento \${index + 1}\`)
-<\/script>
+const items = Array.from({ length: 12 }, (_, index) => \`Item \${index + 1}\`)
+${scriptEnd}
 
 <template>
   <ScrollArea type="scroll" :scroll-hide-delay="1500" class="h-40 w-full min-w-0 max-w-full rounded-md border p-4">
@@ -18,8 +19,8 @@ const items = Array.from({ length: 12 }, (_, index) => \`Elemento \${index + 1}\
 
 <template>
   <ComponentExample
-    title="ScrollHideDelay"
-    description="La barra espera 1500 ms antes de ocultarse tras dejar de desplazar."
+    title="Scroll hide delay"
+    description="The scrollbar waits 1500 ms before hiding after scrolling stops."
     :code="code"
     :show-reset="false"
   >
