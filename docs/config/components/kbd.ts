@@ -8,42 +8,43 @@ import KbdVariantExample from '../../components/examples/kbd/KbdVariantExample.v
 const kbdConfig: ComponentDocConfig = {
   slug: 'kbd',
   title: 'Kbd',
-  description: 'Muestra una tecla o atajo de teclado con una apariencia semántica y consistente.',
+  language: 'en',
+  description: 'Displays a key or keyboard shortcut with consistent semantic styling.',
   importPath: '@nono-ui/components/ui/Kbd',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Empieza mostrando una tecla con su etiqueta visible.',
+      title: 'Basic usage',
+      description: 'Start by displaying a key with its visible label.',
       component: KbdUsageExample,
     },
   ],
   examples: [
     {
       title: 'Variant',
-      description: 'Compara los tratamientos visuales de la tecla.',
+      description: 'Compare the key’s visual variants.',
       component: KbdVariantExample,
     },
     {
       title: 'Severity',
-      description: 'Compara las severidades de la tecla.',
+      description: 'Compare the key’s severity levels.',
       component: KbdSeverityExample,
     },
     {
       title: 'Size',
-      description: 'Ajusta el tamaño visual de la tecla.',
+      description: 'Adjust the key’s visual size.',
       component: KbdSizeExample,
     },
     {
       title: 'Color',
-      description: 'Aplica un color CSS personalizado.',
+      description: 'Apply a custom CSS color.',
       component: KbdColorExample,
     },
   ],
   accessibility: [
     {
-      title: 'Contenido accesible',
+      title: 'Accessible content',
       description:
-        'Kbd renderiza un elemento kbd semántico y reenvía los atributos HTML, class, style y ARIA al elemento raíz. Mantén visible el atajo y añade contexto textual cuando su pronunciación no sea evidente. No uses solo el color o el estilo visual para comunicar una acción.',
+        'Kbd renders a semantic kbd element and forwards HTML and ARIA attributes, class, and style to the root element. Keep the shortcut visible and add text context when its pronunciation is unclear. Do not rely on color or visual styling alone to communicate an action.',
     },
   ],
   api: {
@@ -52,31 +53,31 @@ const kbdConfig: ComponentDocConfig = {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Texto mostrado cuando no se proporciona contenido en el slot default.',
+        description: 'Text displayed when no content is provided in the default slot.',
       },
       {
         name: 'size',
         type: "'sm' | 'md' | 'lg'",
         default: "'md'",
-        description: 'Tamaño visual de la tecla.',
+        description: 'Visual size of the key.',
       },
       {
         name: 'variant',
         type: "'solid' | 'outline' | 'soft' | 'subtle'",
         default: "'soft'",
-        description: 'Tratamiento visual de la tecla.',
+        description: 'Visual style applied to the key.',
       },
       {
         name: 'severity',
         type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
         default: "'secondary'",
-        description: 'Severidad usada para elegir los colores del tratamiento visual.',
+        description: 'Severity used to choose the colors for the visual style.',
       },
       {
         name: 'color',
         type: 'string',
         default: 'undefined',
-        description: 'Color CSS personalizado aplicado al fondo, borde y texto de la tecla.',
+        description: 'Custom CSS color applied to the key’s background, border, and text.',
       },
     ],
     emits: [],
@@ -84,7 +85,7 @@ const kbdConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Contenido personalizado que sustituye el valor de label.',
+        description: 'Custom content that overrides the label value.',
       },
     ],
     expose: [],

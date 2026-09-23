@@ -14,8 +14,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Empieza mostrando una tecla con su etiqueta visible."
+    title="Basic usage"
+    description="Start by displaying a key with its visible label."
     :code="code"
     :show-reset="false"
   >

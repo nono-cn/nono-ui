@@ -20,7 +20,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Variant"
-    description="Compara los tratamientos visuales de la tecla usando la misma severidad."
+    description="Compare visual variants using the same severity level."
     :code="code"
     :show-reset="false"
   >

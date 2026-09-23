@@ -19,7 +19,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Size"
-    description="Ajusta el tamaño visual de la tecla."
+    description="Adjust the key’s visual size."
     :code="code"
     :show-reset="false"
   >

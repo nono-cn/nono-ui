@@ -19,7 +19,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Color"
-    description="Aplica un color CSS personalizado con contraste calculado."
+    description="Apply a custom CSS color with calculated text contrast."
     :code="code"
     :show-reset="false"
   >

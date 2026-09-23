@@ -21,7 +21,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Severity"
-    description="Compara las severidades de la tecla usando la misma variante visual."
+    description="Compare severity levels using the same visual variant."
     :code="code"
     :show-reset="false"
   >
