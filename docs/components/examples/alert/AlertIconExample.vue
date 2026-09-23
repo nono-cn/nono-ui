@@ -9,8 +9,8 @@ ${scriptEnd}
 
 <template>
   <Alert
-    label="Sincronización completada"
-    description="Todos los cambios están actualizados."
+    label="Sync complete"
+    description="All changes are up to date."
     :icon="{ name: 'check' }"
     severity="success"
   />
@@ -20,14 +20,14 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Icon"
-    description="Muestra un icono inicial mediante la prop icon."
+    description="Display a leading icon using the icon prop."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full max-w-2xl">
       <Alert
-        label="Sincronización completada"
-        description="Todos los cambios están actualizados."
+        label="Sync complete"
+        description="All changes are up to date."
         :icon="{ name: 'check' }"
         severity="success"
       />

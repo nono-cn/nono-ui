@@ -9,24 +9,21 @@ ${scriptEnd}
 
 <template>
   <Alert
-    label="Cambios guardados"
-    description="La configuración se ha actualizado correctamente."
+    label="Changes saved"
+    description="Your settings have been updated successfully."
   />
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Muestra un título y una descripción con la apariencia predeterminada."
+    title="Basic usage"
+    description="Show a title and description with the default styling."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full max-w-2xl">
-      <Alert
-        label="Cambios guardados"
-        description="La configuración se ha actualizado correctamente."
-      />
+      <Alert label="Changes saved" description="Your settings have been updated successfully." />
     </div>
   </ComponentExample>
 </template>

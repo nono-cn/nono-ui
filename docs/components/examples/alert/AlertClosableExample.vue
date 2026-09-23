@@ -9,8 +9,8 @@ ${scriptEnd}
 
 <template>
   <Alert
-    label="Sesión activa"
-    description="Puedes cerrar este aviso con el botón situado a la derecha."
+    label="Session active"
+    description="You can dismiss this alert using the button on the right."
     :closable="true"
   />
 </template>`
@@ -19,14 +19,14 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Closable"
-    description="Muestra el botón de cierre predeterminado."
+    description="Show the default close button."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full max-w-2xl">
       <Alert
-        label="Sesión activa"
-        description="Puedes cerrar este aviso con el botón situado a la derecha."
+        label="Session active"
+        description="You can dismiss this alert using the button on the right."
         :closable="true"
       />
     </div>

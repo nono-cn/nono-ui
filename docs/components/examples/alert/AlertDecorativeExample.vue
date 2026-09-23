@@ -9,10 +9,10 @@ ${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-2xl gap-3">
-    <Alert label="Anuncio" description="Este alert usa role=alert por defecto." />
+    <Alert label="Announcement" description="This alert uses role=alert by default." />
     <Alert
-      label="Decorativo"
-      description="Este contenido visual no se anuncia como una alerta."
+      label="Decorative"
+      description="This visual content is not announced as an alert."
       :decorative="true"
     />
   </div>
@@ -22,15 +22,15 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Decorative"
-    description="Usa decorative solo cuando el contenido sea puramente visual."
+    description="Use decorative only when the content is purely visual."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-2xl gap-3">
-      <Alert label="Anuncio" description="Este alert usa role=alert por defecto." />
+      <Alert label="Announcement" description="This alert uses role=alert by default." />
       <Alert
-        label="Decorativo"
-        description="Este contenido visual no se anuncia como una alerta."
+        label="Decorative"
+        description="This visual content is not announced as an alert."
         :decorative="true"
       />
     </div>

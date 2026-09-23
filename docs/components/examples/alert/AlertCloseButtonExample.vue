@@ -9,8 +9,8 @@ ${scriptEnd}
 
 <template>
   <Alert
-    label="Conexión inestable"
-    description="El botón de cierre hereda la apariencia del alert salvo que la configures."
+    label="Unstable connection"
+    description="The close button inherits the alert’s style unless you customize it."
     severity="warning"
     :closable="true"
     :close-button="{ size: 'sm', variant: 'outline', severity: 'secondary' }"
@@ -21,14 +21,14 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="CloseButton"
-    description="Personaliza el tamaño, la variante y la severidad del botón de cierre."
+    description="Customize the close button’s size, variant, and severity."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full max-w-2xl">
       <Alert
-        label="Conexión inestable"
-        description="El botón de cierre hereda la apariencia del alert salvo que la configures."
+        label="Unstable connection"
+        description="The close button inherits the alert’s style unless you customize it."
         severity="warning"
         :closable="true"
         :close-button="{ size: 'sm', variant: 'outline', severity: 'secondary' }"

@@ -11,57 +11,58 @@ import AlertDecorativeExample from '../../components/examples/alert/AlertDecorat
 const alertConfig: ComponentDocConfig = {
   slug: 'alert',
   title: 'Alert',
-  description: 'Comunica información, estados y acciones importantes dentro de una interfaz.',
+  language: 'en',
+  description: 'Communicates important information, statuses, and actions within an interface.',
   importPath: '@nono-ui/components/ui/Alert',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Muestra un título y una descripción con la apariencia predeterminada.',
+      title: 'Basic usage',
+      description: 'Show a title and description with the default styling.',
       component: AlertBasicExample,
     },
   ],
   examples: [
     {
       title: 'Variant',
-      description: 'Compara los cinco tratamientos visuales disponibles.',
+      description: 'Compare the five available visual styles.',
       component: AlertVariantExample,
     },
     {
       title: 'Severity',
-      description: 'Compara los colores semánticos disponibles.',
+      description: 'Compare the available semantic colors.',
       component: AlertSeverityExample,
     },
     {
       title: 'Color',
-      description: 'Aplica un color CSS personalizado al tratamiento visual.',
+      description: 'Apply a custom CSS color to the alert style.',
       component: AlertColorExample,
     },
     {
       title: 'Icon',
-      description: 'Muestra un icono inicial mediante la prop icon.',
+      description: 'Display a leading icon using the icon prop.',
       component: AlertIconExample,
     },
     {
       title: 'Closable',
-      description: 'Permite cerrar el alert con el botón predeterminado.',
+      description: 'Allow the alert to be dismissed with the default close button.',
       component: AlertClosableExample,
     },
     {
       title: 'CloseButton',
-      description: 'Personaliza la configuración del botón de cierre.',
+      description: 'Customize the close button configuration.',
       component: AlertCloseButtonExample,
     },
     {
       title: 'Decorative',
-      description: 'Compara el rol de anuncio predeterminado con el modo decorativo.',
+      description: 'Compare the default alert role with decorative mode.',
       component: AlertDecorativeExample,
     },
   ],
   accessibility: [
     {
-      title: 'Alertas informativas y decorativas',
+      title: 'Informative and decorative alerts',
       description:
-        'Alert usa role=alert por defecto. Usa decorative=true solo para contenido visual que no deba anunciarse, proporciona nombres accesibles a los iconos informativos y conserva un nombre claro en los cierres personalizados. No dependas únicamente del color para comunicar la severidad.',
+        'Alert uses role="alert" by default. Set decorative=true only for visual content that should not be announced. Give informative icons an accessible name (aria-label / aria-labelledby) and ensure custom close controls have a clear accessible name. Do not rely on color alone to communicate severity.',
     },
   ],
   api: {
@@ -70,20 +71,20 @@ const alertConfig: ComponentDocConfig = {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Título breve mostrado en la primera línea del alert.',
+        description: 'Short title displayed on the first line of the alert.',
       },
       {
         name: 'description',
         type: 'string',
         default: 'undefined',
-        description: 'Texto complementario mostrado debajo del label.',
+        description: 'Supporting text displayed below the label.',
       },
       {
         name: 'icon',
         type: 'IconConfig',
         typeLink: '/components/icon#icon-config',
         default: 'undefined',
-        description: 'Configuración del icono mostrado al inicio cuando no se usa el slot icon.',
+        description: 'Icon configuration displayed at the start when the icon slot is not used.',
       },
       {
         name: 'closeButton',
@@ -91,37 +92,37 @@ const alertConfig: ComponentDocConfig = {
         typeLink: '/components/button#button-config',
         default: 'undefined',
         description:
-          'Configuración del botón de cierre predeterminado. Solo se muestra cuando closable es true.',
+          'Configuration for the default close button. Only shown when closable is true.',
       },
       {
         name: 'variant',
         type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft'",
         default: "'soft'",
-        description: 'Tratamiento visual del alert.',
+        description: 'Visual style applied to the alert.',
       },
       {
         name: 'severity',
         type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
         default: "'primary'",
-        description: 'Severidad usada para elegir los colores del alert.',
+        description: 'Severity used to choose the alert colors.',
       },
       {
         name: 'color',
         type: 'string',
         default: 'undefined',
-        description: 'Color CSS personalizado aplicado al tratamiento visual del alert.',
+        description: 'Custom CSS color applied to the alert style.',
       },
       {
         name: 'closable',
         type: 'boolean',
         default: 'false',
-        description: 'Muestra el botón de cierre predeterminado o el slot close.',
+        description: 'Shows the default close button or the close slot.',
       },
       {
         name: 'decorative',
         type: 'boolean',
         default: 'false',
-        description: 'Usa role=none en lugar de role=alert para contenido puramente visual.',
+        description: 'Uses role="none" instead of role="alert" for purely visual content.',
       },
       {
         name: 'ui',
@@ -133,37 +134,37 @@ const alertConfig: ComponentDocConfig = {
         typePre: true,
         default: 'undefined',
         description:
-          'Objeto de resolvers para personalizar los atributos y clases de label, description y closeButtonContainer.',
+          'Resolver object for customizing the attributes and classes of label, description, and closeButtonContainer.',
       },
     ],
     emits: [
       {
         name: 'close',
         type: '[]',
-        description: 'Se emite cuando el alert se cierra desde el botón o el slot close.',
+        description: 'Emitted when the alert is closed using the button or the close slot.',
       },
     ],
     slots: [
       {
         name: 'icon',
         type: '-',
-        description: 'Contenido mostrado al inicio; sustituye el fallback de icon.',
+        description: 'Content displayed at the start; overrides the icon fallback.',
       },
       {
         name: 'label',
         type: '-',
-        description: 'Contenido del título; sustituye el fallback de label.',
+        description: 'Title content; overrides the label fallback.',
       },
       {
         name: 'description',
         type: '-',
-        description: 'Contenido descriptivo; sustituye el fallback de description.',
+        description: 'Description content; overrides the description fallback.',
       },
       {
         name: 'close',
         type: '{ close: () => void }',
         description:
-          'Contenido del cierre. Recibe la función close para ocultar el alert y emitir close.',
+          'Close control content. Receives the close function to dismiss the alert and emit close.',
       },
     ],
     expose: [],

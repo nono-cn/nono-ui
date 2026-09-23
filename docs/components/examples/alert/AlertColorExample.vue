@@ -9,8 +9,8 @@ ${scriptEnd}
 
 <template>
   <Alert
-    label="Tema personalizado"
-    description="El color CSS reemplaza el color semántico del alert."
+    label="Custom theme"
+    description="The CSS color overrides the alert’s semantic color."
     color="#7c3aed"
   />
 </template>`
@@ -19,14 +19,14 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Color"
-    description="Aplica un color CSS personalizado al tratamiento visual."
+    description="Apply a custom CSS color to the alert style."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full max-w-2xl">
       <Alert
-        label="Tema personalizado"
-        description="El color CSS reemplaza el color semántico del alert."
+        label="Custom theme"
+        description="The CSS color overrides the alert’s semantic color."
         color="#7c3aed"
       />
     </div>

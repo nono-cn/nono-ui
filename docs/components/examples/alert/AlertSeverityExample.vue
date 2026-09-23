@@ -9,11 +9,11 @@ ${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-2xl gap-3">
-    <Alert label="Primary" description="Información principal." severity="primary" />
-    <Alert label="Secondary" description="Información secundaria." severity="secondary" />
-    <Alert label="Warning" description="Revisa este aviso." severity="warning" />
-    <Alert label="Success" description="La operación se completó." severity="success" />
-    <Alert label="Error" description="No se pudo completar la operación." severity="error" />
+    <Alert label="Primary" description="Primary information." severity="primary" />
+    <Alert label="Secondary" description="Secondary information." severity="secondary" />
+    <Alert label="Warning" description="Please review this notice." severity="warning" />
+    <Alert label="Success" description="The operation completed successfully." severity="success" />
+    <Alert label="Error" description="The operation could not be completed." severity="error" />
   </div>
 </template>`
 </script>
@@ -21,16 +21,20 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Severity"
-    description="Compara los colores semánticos disponibles."
+    description="Compare the available semantic colors."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-2xl gap-3">
-      <Alert label="Primary" description="Información principal." severity="primary" />
-      <Alert label="Secondary" description="Información secundaria." severity="secondary" />
-      <Alert label="Warning" description="Revisa este aviso." severity="warning" />
-      <Alert label="Success" description="La operación se completó." severity="success" />
-      <Alert label="Error" description="No se pudo completar la operación." severity="error" />
+      <Alert label="Primary" description="Primary information." severity="primary" />
+      <Alert label="Secondary" description="Secondary information." severity="secondary" />
+      <Alert label="Warning" description="Please review this notice." severity="warning" />
+      <Alert
+        label="Success"
+        description="The operation completed successfully."
+        severity="success"
+      />
+      <Alert label="Error" description="The operation could not be completed." severity="error" />
     </div>
   </ComponentExample>
 </template>

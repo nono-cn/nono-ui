@@ -9,11 +9,11 @@ ${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-2xl gap-3">
-    <Alert label="Solid" description="Tratamiento sólido." variant="solid" severity="success" />
-    <Alert label="Outline" description="Tratamiento con contorno." variant="outline" severity="success" />
-    <Alert label="Plain" description="Tratamiento sin fondo ni contorno." variant="plain" severity="success" />
-    <Alert label="Subtle" description="Tratamiento con contorno y fondo tenue." variant="subtle" severity="success" />
-    <Alert label="Soft" description="Tratamiento con fondo tenue." variant="soft" severity="success" />
+    <Alert label="Solid" description="Solid style." variant="solid" severity="success" />
+    <Alert label="Outline" description="Outlined style." variant="outline" severity="success" />
+    <Alert label="Plain" description="No background or border." variant="plain" severity="success" />
+    <Alert label="Subtle" description="Subtle background and border." variant="subtle" severity="success" />
+    <Alert label="Soft" description="Subtle background." variant="soft" severity="success" />
   </div>
 </template>`
 </script>
@@ -21,36 +21,26 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Variant"
-    description="Compara los cinco tratamientos visuales disponibles."
+    description="Compare the five available visual styles."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-2xl gap-3">
-      <Alert label="Solid" description="Tratamiento sólido." variant="solid" severity="success" />
-      <Alert
-        label="Outline"
-        description="Tratamiento con contorno."
-        variant="outline"
-        severity="success"
-      />
+      <Alert label="Solid" description="Solid style." variant="solid" severity="success" />
+      <Alert label="Outline" description="Outlined style." variant="outline" severity="success" />
       <Alert
         label="Plain"
-        description="Tratamiento sin fondo ni contorno."
+        description="No background or border."
         variant="plain"
         severity="success"
       />
       <Alert
         label="Subtle"
-        description="Tratamiento con contorno y fondo tenue."
+        description="Subtle background and border."
         variant="subtle"
         severity="success"
       />
-      <Alert
-        label="Soft"
-        description="Tratamiento con fondo tenue."
-        variant="soft"
-        severity="success"
-      />
+      <Alert label="Soft" description="Subtle background." variant="soft" severity="success" />
     </div>
   </ComponentExample>
 </template>
