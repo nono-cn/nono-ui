@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { Bubble } from '@/components/ui/Bubble'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const variants = ['solid', 'outline', 'plain', 'subtle', 'soft', 'muted'] as const
 const code = `<script setup lang="ts">
 import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
 
 const variants = ['solid', 'outline', 'plain', 'subtle', 'soft', 'muted'] as const
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full gap-3">
@@ -19,7 +20,7 @@ const variants = ['solid', 'outline', 'plain', 'subtle', 'soft', 'muted'] as con
 <template>
   <ComponentExample
     title="Variant"
-    description="Compara los tratamientos visuales disponibles."
+    description="Compare the available visual styles."
     :code="code"
     :show-reset="false"
   >

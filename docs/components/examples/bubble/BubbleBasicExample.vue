@@ -1,25 +1,26 @@
 <script setup lang="ts">
 import { Bubble } from '@/components/ui/Bubble'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
-<\/script>
+${scriptEnd}
 
 <template>
-  <Bubble>Hola, ¿cómo va el proyecto?</Bubble>
+  <Bubble>Hi, how is the project going?</Bubble>
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Bubble básica"
-    description="Muestra un mensaje de conversación."
+    title="Basic usage"
+    description="Show a conversation message."
     :code="code"
     :show-reset="false"
   >
     <div class="flex w-full flex-col gap-3">
-      <Bubble>Hola, ¿cómo va el proyecto?</Bubble>
+      <Bubble>Hi, how is the project going?</Bubble>
     </div>
   </ComponentExample>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Bubble } from '@/components/ui/Bubble'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const combinations = [
   { label: 'Top / start', side: 'top', align: 'start' },
@@ -11,25 +12,25 @@ const combinations = [
 
 const code = `<script setup lang="ts">
 import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full gap-8 sm:grid-cols-2">
     <Bubble side-reaction="top" align-reaction="start">
       Top / start
-      <template #reactions><span aria-label="Me gusta">👍</span></template>
+      <template #reactions><span aria-label="Like">👍</span><span aria-label="Celebrate">🎉</span></template>
     </Bubble>
     <Bubble side-reaction="top" align-reaction="end">
       Top / end
-      <template #reactions><span aria-label="Me gusta">👍</span></template>
+      <template #reactions><span aria-label="Like">👍</span><span aria-label="Celebrate">🎉</span></template>
     </Bubble>
     <Bubble side-reaction="bottom" align-reaction="start">
       Bottom / start
-      <template #reactions><span aria-label="Me gusta">👍</span></template>
+      <template #reactions><span aria-label="Like">👍</span><span aria-label="Celebrate">🎉</span></template>
     </Bubble>
     <Bubble side-reaction="bottom" align-reaction="end">
       Bottom / end
-      <template #reactions><span aria-label="Me gusta">👍</span></template>
+      <template #reactions><span aria-label="Like">👍</span><span aria-label="Celebrate">🎉</span></template>
     </Bubble>
   </div>
 </template>`
@@ -37,8 +38,8 @@ import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
 
 <template>
   <ComponentExample
-    title="Reacciones"
-    description="Comprueba todas las combinaciones de posición y alineación."
+    title="Reactions"
+    description="Compare all side and alignment combinations."
     :code="code"
     :show-reset="false"
   >
@@ -51,8 +52,8 @@ import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
       >
         {{ combination.label }}
         <template #reactions>
-          <span aria-label="Me gusta">👍</span>
-          <span aria-label="Celebrar">🎉</span>
+          <span aria-label="Like">👍</span>
+          <span aria-label="Celebrate">🎉</span>
         </template>
       </Bubble>
     </div>

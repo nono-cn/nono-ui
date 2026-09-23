@@ -9,48 +9,48 @@ import BubbleReactionsExample from '../../components/examples/bubble/BubbleReact
 const bubbleConfig: ComponentDocConfig = {
   slug: 'bubble',
   title: 'Bubble',
-  description:
-    'Representa mensajes o intervenciones en una conversación con alineación, variantes y reacciones.',
+  language: 'en',
+  description: 'Displays conversation messages with alignment, variants, and reactions.',
   importPath: '@nono-ui/components/ui/Bubble',
   usage: [
     {
-      title: 'Bubble básica',
-      description: 'Muestra un mensaje con el tratamiento visual predeterminado.',
+      title: 'Basic usage',
+      description: 'Show a message with the default visual style.',
       component: BubbleBasicExample,
     },
   ],
   examples: [
     {
       title: 'Align',
-      description: 'Alinea la burbuja al inicio o al final del contenedor.',
+      description: 'Align the bubble at the start or end of its container.',
       component: BubbleAlignExample,
     },
     {
       title: 'Variant',
-      description: 'Cambia el tratamiento visual de la superficie.',
+      description: 'Change the visual style of the surface.',
       component: BubbleVariantExample,
     },
     {
       title: 'Severity',
-      description: 'Compara las severidades semánticas disponibles.',
+      description: 'Compare the available semantic severities.',
       component: BubbleSeverityExample,
     },
     {
       title: 'Color',
-      description: 'Aplica un color CSS personalizado a la burbuja.',
+      description: 'Apply a custom CSS color to the bubble.',
       component: BubbleColorExample,
     },
     {
       title: 'Reactions',
-      description: 'Añade reacciones en la parte superior o inferior de la burbuja.',
+      description: 'Add reactions above or below the bubble.',
       component: BubbleReactionsExample,
     },
   ],
   accessibility: [
     {
-      title: 'Contenido conversacional',
+      title: 'Conversation content',
       description:
-        'Usa texto claro y no dependas solo del color o la alineación para identificar quién envía el mensaje. Las reacciones deben tener nombres accesibles cuando sean interactivas.',
+        'Use clear text and do not rely only on color or alignment to identify the message sender. Interactive reactions need accessible names.',
     },
   ],
   api: {
@@ -59,49 +59,49 @@ const bubbleConfig: ComponentDocConfig = {
         name: 'align',
         type: "'start' | 'end'",
         default: "'start'",
-        description: 'Alineación de la burbuja dentro de su contenedor.',
+        description: 'Alignment of the bubble within its container.',
       },
       {
         name: 'variant',
         type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft' | 'muted'",
         default: "'solid'",
-        description: 'Tratamiento visual de la superficie.',
+        description: 'Visual style of the surface.',
       },
       {
         name: 'severity',
         type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
         default: "'primary'",
-        description: 'Severidad usada para elegir los colores.',
+        description: 'Severity used to choose the colors.',
       },
       {
         name: 'color',
         type: 'string',
         default: 'undefined',
-        description: 'Color CSS personalizado.',
+        description: 'Custom CSS color.',
       },
       {
         name: 'sideReaction',
         type: "'top' | 'bottom'",
         default: "'bottom'",
-        description: 'Lado donde aparecen las reacciones.',
+        description: 'Side where reactions appear.',
       },
       {
         name: 'alignReaction',
         type: "'start' | 'end'",
         default: "'end'",
-        description: 'Alineación de las reacciones.',
+        description: 'Alignment of the reactions.',
       },
       {
         name: 'as',
         type: 'AsTag | Component',
         default: "'div'",
-        description: 'Elemento o componente raíz de la superficie.',
+        description: 'Root element or component for the surface.',
       },
       {
         name: 'asChild',
         type: 'boolean',
         default: 'false',
-        description: 'Compone la superficie sobre el elemento del slot default.',
+        description: 'Renders the surface on the element provided by the default slot.',
       },
       {
         name: 'ui',
@@ -110,32 +110,32 @@ const bubbleConfig: ComponentDocConfig = {
 }`,
         typePre: true,
         default: 'undefined',
-        description: 'Resolvers para personalizar la superficie y las reacciones.',
+        description: 'Resolver for customizing the reactions container attributes and classes.',
       },
     ],
     configs: [
       {
         id: 'bubble-config',
         title: 'BubbleConfig',
-        description: 'Alias de BubbleProps para configurar burbujas en componentes compuestos.',
+        description: 'Alias of BubbleProps used to configure bubbles in composite components.',
         showDefault: false,
         rows: [
           {
             name: 'BubbleProps',
             type: 'BubbleProps',
             typeLink: '#props',
-            description: 'Incluye las props públicas de Bubble.',
+            description: 'Includes the public Bubble props.',
           },
         ],
       },
     ],
     emits: [],
     slots: [
-      { name: 'default', type: '-', description: 'Contenido principal de la burbuja.' },
+      { name: 'default', type: '-', description: 'Main bubble content.' },
       {
         name: 'reactions',
         type: '-',
-        description: 'Reacciones que se muestran alrededor de la burbuja.',
+        description: 'Reactions displayed around the bubble.',
       },
     ],
     expose: [],
