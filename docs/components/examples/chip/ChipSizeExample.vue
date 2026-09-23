@@ -27,7 +27,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Size"
-    description="Ajusta el tamaño del indicador."
+    description="Adjust the chip’s size."
     :code="code"
     :show-reset="false"
   >

@@ -22,7 +22,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Position"
-    description="Coloca el indicador en una de las esquinas disponibles."
+    description="Place the chip in one of the available corners."
     :code="code"
     :show-reset="false"
   >

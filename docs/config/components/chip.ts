@@ -11,57 +11,58 @@ import ChipUsageExample from '../../components/examples/chip/ChipUsageExample.vu
 const chipConfig: ComponentDocConfig = {
   slug: 'chip',
   title: 'Chip',
-  description: 'Indicador compacto que puede mostrarse sobre un elemento o de forma independiente.',
+  language: 'en',
+  description: 'Compact indicator that can appear over an element or on its own.',
   importPath: '@nono-ui/components/ui/Chip',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Muestra un indicador sobre un elemento asociado.',
+      title: 'Basic usage',
+      description: 'Display an indicator over an associated element.',
       component: ChipUsageExample,
     },
   ],
   examples: [
     {
       title: 'Default',
-      description: 'Usa el slot default para posicionar el chip sobre un elemento.',
+      description: 'Use the default slot to position the chip over an element.',
       component: ChipDefaultExample,
     },
     {
       title: 'Color',
-      description: 'Aplica un color CSS personalizado al indicador.',
+      description: 'Apply a custom CSS color to the chip.',
       component: ChipColorExample,
     },
     {
       title: 'Size',
-      description: 'Ajusta el tamaño del indicador.',
+      description: 'Adjust the chip’s size.',
       component: ChipSizeExample,
     },
     {
       title: 'Position',
-      description: 'Coloca el indicador en una de las esquinas disponibles.',
+      description: 'Place the chip in one of the available corners.',
       component: ChipPositionExample,
     },
     {
       title: 'Show',
-      description: 'Controla si el indicador se muestra.',
+      description: 'Control whether the chip is visible.',
       component: ChipShowExample,
     },
     {
       title: 'Inset',
-      description: 'Evita el desplazamiento del indicador respecto a su posición.',
+      description: 'Prevent the chip from being offset from its position.',
       component: ChipInsetExample,
     },
     {
       title: 'Standalone',
-      description: 'Muestra el indicador sin posicionamiento absoluto.',
+      description: 'Display the chip without absolute positioning.',
       component: ChipStandaloneExample,
     },
   ],
   accessibility: [
     {
-      title: 'Información visual',
+      title: 'Visual information',
       description:
-        'No dependas únicamente del color o del tamaño para comunicar información importante. Añade contenido accesible en el elemento asociado cuando el chip transmita un estado.',
+        'Do not rely on color or size alone to convey important information. Add accessible content to the associated element when the chip communicates a status.',
     },
   ],
   api: {
@@ -70,49 +71,47 @@ const chipConfig: ComponentDocConfig = {
         name: 'color',
         type: 'string',
         default: 'undefined',
-        description: 'Color CSS personalizado del chip.',
+        description: 'Custom CSS color for the chip.',
       },
       {
         name: 'size',
         type: "'3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'",
         default: "'3xl'",
-        description: 'Tamaño del indicador.',
+        description: 'Size of the chip.',
       },
       {
         name: 'position',
         type: "'top-right' | 'bottom-right' | 'top-left' | 'bottom-left'",
         default: "'top-right'",
-        description: 'Posición del chip cuando no se muestra sobre un slot default.',
+        description: 'Chip position when it is rendered without a default slot.',
       },
       {
         name: 'show',
         type: 'boolean',
         default: 'true',
-        description: 'Controla si se muestra el indicador. Se usa con v-model:show.',
+        description: 'Controls whether the chip is visible. Use with v-model:show.',
       },
       {
         name: 'inset',
         type: 'boolean',
         default: 'false',
-        description: 'Evita el desplazamiento del chip respecto a su posición.',
+        description: 'Prevents the chip from being offset from its position.',
       },
       {
         name: 'standalone',
         type: 'boolean',
         default: 'false',
-        description: 'Muestra el chip sin posicionamiento absoluto.',
+        description: 'Displays the chip without absolute positioning.',
       },
     ],
     emits: [
       {
         name: 'update:show',
         type: '[value: boolean]',
-        description: 'Se emite cuando cambia el estado visible del chip.',
+        description: 'Emitted when the chip’s visibility changes.',
       },
     ],
-    slots: [
-      { name: 'default', type: '-', description: 'Elemento sobre el que se posiciona el chip.' },
-    ],
+    slots: [{ name: 'default', type: '-', description: 'Element the chip is positioned over.' }],
     expose: [],
   },
 }

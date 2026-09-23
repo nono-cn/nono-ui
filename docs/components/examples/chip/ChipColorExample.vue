@@ -15,10 +15,10 @@ ${scriptEnd}
       <Avatar label="IN" size="lg" />
     </Chip>
     <Chip color="#22c55e">
-      <Avatar label="VE" size="lg" />
+      <Avatar label="GR" size="lg" />
     </Chip>
     <Chip color="#f97316">
-      <Avatar label="NA" size="lg" />
+      <Avatar label="OR" size="lg" />
     </Chip>
   </div>
 </template>`
@@ -27,7 +27,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Color"
-    description="Aplica un color CSS personalizado al indicador."
+    description="Apply a custom CSS color to the chip."
     :code="code"
     :show-reset="false"
   >
@@ -36,10 +36,10 @@ ${scriptEnd}
         <Avatar label="IN" size="lg" />
       </Chip>
       <Chip color="#22c55e">
-        <Avatar label="VE" size="lg" />
+        <Avatar label="GR" size="lg" />
       </Chip>
       <Chip color="#f97316">
-        <Avatar label="NA" size="lg" />
+        <Avatar label="OR" size="lg" />
       </Chip>
     </div>
   </ComponentExample>

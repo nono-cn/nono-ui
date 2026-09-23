@@ -26,7 +26,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Inset"
-    description="Evita el desplazamiento del indicador respecto a su posición."
+    description="Prevent the chip from being offset from its position."
     :code="code"
     :show-reset="false"
   >

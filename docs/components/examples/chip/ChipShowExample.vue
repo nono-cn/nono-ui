@@ -17,7 +17,7 @@ ${scriptEnd}
     </div>
     <div class="grid justify-items-center gap-2">
       <Chip :show="false"><Avatar label="OFF" size="lg" /></Chip>
-      <span class="text-xs text-muted-foreground">Oculto</span>
+      <span class="text-xs text-muted-foreground">Hidden</span>
     </div>
   </div>
 </template>`
@@ -26,7 +26,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Show"
-    description="Controla si el indicador se muestra."
+    description="Control whether the chip is visible."
     :code="code"
     :show-reset="false"
   >
@@ -37,7 +37,7 @@ ${scriptEnd}
       </div>
       <div class="grid justify-items-center gap-2">
         <Chip :show="false"><Avatar label="OFF" size="lg" /></Chip>
-        <span class="text-xs text-muted-foreground">Oculto</span>
+        <span class="text-xs text-muted-foreground">Hidden</span>
       </div>
     </div>
   </ComponentExample>

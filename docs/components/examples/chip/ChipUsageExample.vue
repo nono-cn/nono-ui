@@ -18,8 +18,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Muestra un indicador sobre un elemento asociado."
+    title="Basic usage"
+    description="Display an indicator over an associated element."
     :code="code"
     :show-reset="false"
   >

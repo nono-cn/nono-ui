@@ -22,7 +22,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Standalone"
-    description="Muestra el indicador sin posicionamiento absoluto."
+    description="Display the chip without absolute positioning."
     :code="code"
     :show-reset="false"
   >

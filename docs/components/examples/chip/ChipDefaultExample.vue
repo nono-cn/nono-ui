@@ -19,7 +19,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Default"
-    description="Usa el slot default para posicionar el chip sobre un elemento."
+    description="Use the default slot to position the chip over an element."
     :code="code"
     :show-reset="false"
   >
