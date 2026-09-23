@@ -6,43 +6,44 @@ import AlertDialogActionsExample from '../../components/examples/alert-dialog/Al
 const alertDialogConfig: ComponentDocConfig = {
   slug: 'alert-dialog',
   title: 'AlertDialog',
-  description: 'Solicita una confirmación explícita antes de ejecutar una acción importante.',
+  language: 'en',
+  description: 'Prompts the user to explicitly confirm before performing an important action.',
   importPath: '@nono-ui/components/ui/AlertDialog',
   usage: [
     {
-      title: 'Confirmación básica',
-      description: 'Solicita confirmación antes de eliminar un elemento.',
+      title: 'Basic confirmation',
+      description: 'Request confirmation before deleting an item.',
       component: AlertDialogBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Icono',
-      description: 'Añade un icono para reforzar visualmente el contexto de la acción.',
+      title: 'Icon',
+      description: 'Add an icon to reinforce the context of the action.',
       component: AlertDialogIconExample,
     },
     {
-      title: 'Acciones personalizadas',
-      description: 'Configura los botones de acción y cancelación mediante props.',
+      title: 'Custom actions',
+      description: 'Configure the action and cancel buttons with props.',
       component: AlertDialogActionsExample,
     },
   ],
   accessibility: [
     {
-      title: 'Confirmación y foco',
+      title: 'Confirmation and focus',
       description:
-        'Usa AlertDialog para acciones que requieren una decisión explícita. El componente es modal, bloquea por defecto la interacción exterior, gestiona el foco y permite cerrar con Escape. Proporciona siempre un label descriptivo y una acción de cancelación clara.',
+        'Use AlertDialog for actions that require an explicit decision. It is modal, blocks outside interaction by default, manages focus, and can be dismissed with Escape. Always provide a descriptive label and a clear cancel action.',
       links: [
         {
-          label: 'Consulta la guía de accesibilidad de Alert Dialog en Reka UI',
+          label: 'See the Reka UI Alert Dialog accessibility guide',
           href: 'https://www.reka-ui.com/docs/components/alert-dialog#accessibility',
         },
       ],
     },
     {
-      title: 'Nombres y acciones',
+      title: 'Names and actions',
       description:
-        'Cuando uses header, label o description personalizados, conserva AlertDialogTitle y AlertDialogDescription para mantener la relación semántica del diálogo. Los iconos decorativos deben llevar aria-hidden="true" y las acciones personalizadas deben conservar nombres visibles o accesibles claros. Los atributos arbitrarios, class, style y ARIA pasados al componente llegan a su raíz local.',
+        'When using custom header, label, or description content, keep AlertDialogTitle and AlertDialogDescription to preserve the dialog’s semantic relationships. Decorative icons should use aria-hidden="true", and custom actions should retain clear visible or accessible names (aria-label / aria-labelledby). Arbitrary attributes, class, style, and ARIA passed to the component are applied to its local root.',
     },
   ],
   api: {
@@ -51,27 +52,26 @@ const alertDialogConfig: ComponentDocConfig = {
         name: 'open',
         type: 'boolean',
         default: 'false',
-        description: 'Controla si el alert dialog está abierto. Se usa con v-model:open.',
+        description: 'Controls whether the alert dialog is open. Use with v-model:open.',
       },
       {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description:
-          'Título del diálogo y nombre accesible principal cuando no se usa el slot label.',
+        description: 'Dialog title and primary accessible name when the label slot is not used.',
       },
       {
         name: 'description',
         type: 'string',
         default: 'undefined',
-        description: 'Texto complementario mostrado debajo del label.',
+        description: 'Supporting text displayed below the label.',
       },
       {
         name: 'icon',
         type: 'IconConfig',
         typeLink: '/components/icon#icon-config',
         default: 'undefined',
-        description: 'Icono mostrado al inicio del label cuando su configuración incluye name.',
+        description: 'Icon displayed before the label when its configuration includes name.',
       },
       {
         name: 'actionButton',
@@ -79,7 +79,7 @@ const alertDialogConfig: ComponentDocConfig = {
         typeLink: '/components/button#button-config',
         default: 'undefined',
         description:
-          'Configuración del Button de acción predeterminado. Su label viene de i18n (Continuar en español); los valores proporcionados sobrescriben ese fallback.',
+          'Configuration for the default action Button. Its label comes from i18n; provided values override the fallback.',
       },
       {
         name: 'cancelButton',
@@ -87,28 +87,27 @@ const alertDialogConfig: ComponentDocConfig = {
         typeLink: '/components/button#button-config',
         default: 'undefined',
         description:
-          'Configuración del Button de cancelación predeterminado. Usa variant outline, severity secondary y el label de i18n (Cancelar en español) por defecto.',
+          'Configuration for the default cancel Button. Uses the outline variant, secondary severity, and the i18n-provided label by default.',
       },
       {
         name: 'unmountOnHide',
         type: 'boolean',
         default: 'true',
         description:
-          'Desmonta el contenido cuando el diálogo está cerrado; si es false, lo mantiene montado y oculto.',
+          'Unmounts the content when the dialog is closed; when false, keeps it mounted and hidden.',
       },
       {
         name: 'forceMount',
         type: 'boolean',
         default: 'undefined',
         description:
-          'Fuerza el montaje del contenido para tener más control sobre su presencia y animaciones.',
+          'Forces the content to mount for greater control over its presence and animations.',
       },
       {
         name: 'disableOutsidePointerEvents',
         type: 'boolean',
         default: 'true',
-        description:
-          'Bloquea los eventos de puntero fuera del contenido mientras el diálogo está abierto.',
+        description: 'Blocks pointer events outside the content while the dialog is open.',
       },
       {
         name: 'ui',
@@ -124,73 +123,73 @@ const alertDialogConfig: ComponentDocConfig = {
 }`,
         typePre: true,
         default: 'undefined',
-        description: 'Resolvers para personalizar los atributos y clases de las partes internas.',
+        description: 'Resolvers for customizing the attributes and classes of internal parts.',
       },
     ],
     emits: [
       {
         name: 'update:open',
         type: '[value: boolean]',
-        description: 'Se emite cuando cambia el estado abierto.',
+        description: 'Emitted when the open state changes.',
       },
       {
         name: 'action',
         type: '[event: PointerEvent]',
-        description: 'Se emite al activar la acción predeterminada o el slot action.',
+        description: 'Emitted when the default action or action slot is activated.',
       },
       {
         name: 'cancel',
         type: '[event: PointerEvent]',
-        description: 'Se emite al activar la cancelación predeterminada o el slot cancel.',
+        description: 'Emitted when the default cancel button or cancel slot is activated.',
       },
     ],
     slots: [
       {
         name: 'default',
         type: '-',
-        description: 'Elemento disparador que abre y cierra el alert dialog.',
+        description: 'Trigger content that opens the alert dialog.',
       },
       {
         name: 'content',
         type: '-',
-        description: 'Contenido adicional renderizado en el cuerpo desplazable del diálogo.',
+        description: 'Additional content rendered in the dialog’s scrollable body.',
       },
       {
         name: 'header',
         type: '-',
-        description: 'Reemplaza el encabezado completo, incluidos label y description.',
+        description: 'Replaces the entire header, including label and description.',
       },
       {
         name: 'label',
         type: '-',
-        description: 'Contenido del título; sustituye el fallback de label.',
+        description: 'Title content; overrides the label fallback.',
       },
       {
         name: 'description',
         type: '-',
-        description: 'Contenido de la descripción; sustituye el fallback de description.',
+        description: 'Description content; overrides the description fallback.',
       },
       {
         name: 'footer',
         type: '{ close: () => void }',
-        description: 'Reemplaza el pie completo. Recibe close para cerrar el diálogo.',
+        description: 'Replaces the entire footer. Receives close to dismiss the dialog.',
       },
       {
         name: 'action',
         type: '{ close: () => void }',
-        description: 'Sustituye el botón de acción. Recibe close para cerrar el diálogo.',
+        description: 'Replaces the action button. Receives close to dismiss the dialog.',
       },
       {
         name: 'cancel',
         type: '{ close: () => void }',
-        description: 'Sustituye el botón de cancelación. Recibe close para cerrar el diálogo.',
+        description: 'Replaces the cancel button. Receives close to dismiss the dialog.',
       },
     ],
     expose: [
       {
         name: 'close',
         type: '() => void',
-        description: 'Cierra el alert dialog mediante la API expuesta del componente.',
+        description: 'Closes the alert dialog using the component’s exposed API.',
       },
     ],
   },
