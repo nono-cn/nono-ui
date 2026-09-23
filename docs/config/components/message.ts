@@ -8,42 +8,43 @@ import MessageBubbleExample from '../../components/examples/message/MessageBubbl
 const messageConfig: ComponentDocConfig = {
   slug: 'message',
   title: 'Message',
-  description: 'Compone un mensaje de conversación con burbuja, avatar, metadatos y reacciones.',
+  language: 'en',
+  description: 'Composes a conversation message with a bubble, avatar, metadata, and reactions.',
   importPath: '@nono-ui/components/ui/Message',
   usage: [
     {
-      title: 'Mensaje básico',
-      description: 'Muestra un mensaje con el contenido y el estilo predeterminados.',
+      title: 'Basic message',
+      description: 'Displays a message with the default content and styling.',
       component: MessageBasicExample,
     },
   ],
   examples: [
     {
       title: 'Align',
-      description: 'Alinea el mensaje al inicio o al final del contenedor.',
+      description: 'Aligns the message to the start or end of its container.',
       component: MessageAlignExample,
     },
     {
       title: 'Avatar',
-      description: 'Añade un avatar para identificar al interlocutor.',
+      description: 'Adds an avatar to identify the sender.',
       component: MessageAvatarExample,
     },
     {
       title: 'Bubble',
-      description: 'Personaliza la variante y la severidad de la burbuja interna.',
+      description: 'Customizes the variant and severity of the inner bubble.',
       component: MessageBubbleExample,
     },
     {
-      title: 'Con slots',
-      description: 'Personaliza el encabezado, las reacciones y el pie del mensaje.',
+      title: 'Slots',
+      description: 'Customizes the message header, reactions, and footer.',
       component: MessageSlotsExample,
     },
   ],
   accessibility: [
     {
-      title: 'Contenido conversacional',
+      title: 'Conversation content',
       description:
-        'Message renderiza un div y no añade un role conversacional por sí mismo. Usa texto claro para identificar el contenido y no dependas solo de la alineación, el color o el avatar para indicar quién envía el mensaje. Si el avatar identifica a una persona, proporciona un nombre accesible mediante el slot avatar y atributos como aria-label o alt en el contenido correspondiente. Los atributos HTML, class, style, data-* y ARIA se reenvían al elemento raíz.',
+        'Message renders a div and does not add a conversational role by itself. Use clear text to identify the content, and do not rely only on alignment, color, or the avatar to show who sent the message. If the avatar identifies a person, provide an accessible name through the avatar slot and attributes such as aria-label or alt on the relevant content. HTML attributes, class, style, data-*, and ARIA are forwarded to the root element.',
     },
   ],
   api: {
@@ -52,7 +53,7 @@ const messageConfig: ComponentDocConfig = {
         name: 'align',
         type: "'start' | 'end'",
         default: "'start'",
-        description: 'Alineación del mensaje y de la burbuja dentro de su contenedor.',
+        description: 'Alignment of the message and bubble within their container.',
       },
       {
         name: 'avatar',
@@ -60,7 +61,7 @@ const messageConfig: ComponentDocConfig = {
         typeLink: '/components/avatar#avatar-config',
         default: 'undefined',
         description:
-          'Configuración del avatar mostrado junto al mensaje cuando no se usa el slot avatar.',
+          'Configuration for the avatar shown next to the message when the avatar slot is not used.',
       },
       {
         name: 'bubble',
@@ -68,13 +69,13 @@ const messageConfig: ComponentDocConfig = {
         typeLink: '/components/bubble#bubble-config',
         default: 'undefined',
         description:
-          'Configuración de Bubble. La prop align de Message se aplica también a Bubble y prevalece sobre bubble.align.',
+          "Bubble configuration. Message's align prop is also passed to Bubble and takes precedence over bubble.align.",
       },
       {
         name: 'message',
         type: 'string',
         default: 'undefined',
-        description: 'Texto mostrado cuando no se proporciona contenido en el slot default.',
+        description: 'Text rendered when no content is provided in the default slot.',
       },
       {
         name: 'ui',
@@ -85,7 +86,7 @@ const messageConfig: ComponentDocConfig = {
         typePre: true,
         default: 'undefined',
         description:
-          'Resolvers para personalizar los atributos de los contenedores de los slots header y footer.',
+          'Resolvers for customizing attributes on the header and footer slot containers.',
       },
     ],
     emits: [],
@@ -93,27 +94,27 @@ const messageConfig: ComponentDocConfig = {
       {
         name: 'avatar',
         type: '-',
-        description: 'Contenido mostrado junto al mensaje; sustituye el fallback de avatar.',
+        description: 'Content shown next to the message; replaces the avatar fallback.',
       },
       {
         name: 'header',
         type: '-',
-        description: 'Contenido mostrado encima de Bubble, como el autor o la hora.',
+        description: 'Content shown above Bubble, such as the author or time.',
       },
       {
         name: 'default',
         type: '-',
-        description: 'Contenido principal reenviado al slot default de Bubble.',
+        description: "Main content forwarded to Bubble's default slot.",
       },
       {
         name: 'reaction',
         type: '-',
-        description: 'Contenido reenviado al slot reactions de Bubble.',
+        description: "Content forwarded to Bubble's reactions slot.",
       },
       {
         name: 'footer',
         type: '-',
-        description: 'Contenido mostrado debajo de Bubble, como el estado de lectura.',
+        description: 'Content shown below Bubble, such as the read status.',
       },
     ],
     expose: [],

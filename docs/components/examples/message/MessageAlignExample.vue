@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { Message } from '@/components/ui/Message'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Message } from '__DOCS_PACKAGE__/components/ui/Message'
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid w-full gap-4">
-    <Message align="start" message="Mensaje recibido" />
-    <Message align="end" message="Mensaje enviado" />
+    <Message align="start" message="Received message" />
+    <Message align="end" message="Sent message" />
   </div>
 </template>`
 </script>
@@ -17,13 +18,13 @@ import { Message } from '__DOCS_PACKAGE__/components/ui/Message'
 <template>
   <ComponentExample
     title="Align"
-    description="Alinea cada mensaje según el interlocutor."
+    description="Align each message based on who sent it."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full gap-4">
-      <Message align="start" message="Mensaje recibido" />
-      <Message align="end" message="Mensaje enviado" />
+      <Message align="start" message="Received message" />
+      <Message align="end" message="Sent message" />
     </div>
   </ComponentExample>
 </template>
