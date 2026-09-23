@@ -19,7 +19,7 @@ ${scriptEnd}
       class="grid grid-cols-[4rem_minmax(0,1fr)] items-center gap-4"
     >
       <span class="text-sm">{{ size }}</span>
-      <Progress :value="68" :size="size" :aria-label="'Progreso, tamaño ' + size" />
+      <Progress :value="68" :size="size" :aria-label="'Progress, size ' + size" />
     </div>
   </div>
 </template>`
@@ -28,7 +28,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Size"
-    description="Compara los siete tamaños disponibles para el grosor de la barra."
+    description="Compare the seven available bar thicknesses."
     :code="code"
     :show-reset="false"
   >
@@ -39,7 +39,7 @@ ${scriptEnd}
         class="grid grid-cols-[4rem_minmax(0,1fr)] items-center gap-4"
       >
         <span class="text-sm">{{ size }}</span>
-        <Progress :value="68" :size="size" :aria-label="'Progreso, tamaño ' + size" />
+        <Progress :value="68" :size="size" :aria-label="'Progress, size ' + size" />
       </div>
     </div>
   </ComponentExample>

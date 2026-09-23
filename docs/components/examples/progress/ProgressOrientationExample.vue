@@ -8,15 +8,11 @@ import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
 ${scriptEnd}
 
 <template>
-  <div class="flex w-full max-w-lg flex-wrap items-end justify-between gap-8">
-    <div class="grid min-w-48 flex-1 gap-3">
-      <span class="text-sm">Horizontal</span>
-      <Progress :value="68" aria-label="Progreso horizontal" />
-    </div>
+  <div class="grid w-full max-w-lg justify-items-center gap-3">
     <div class="grid justify-items-center gap-3">
       <span class="text-sm">Vertical</span>
       <div class="h-40">
-        <Progress :value="68" orientation="vertical" aria-label="Progreso vertical" />
+        <Progress :value="68" orientation="vertical" aria-label="Vertical progress" />
       </div>
     </div>
   </div>
@@ -26,19 +22,15 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Orientation"
-    description="Muestra el progreso horizontal y vertical; el contenedor vertical define la altura."
+    description="Set orientation to vertical and give the container a height to size the bar."
     :code="code"
     :show-reset="false"
   >
-    <div class="flex w-full max-w-lg flex-wrap items-end justify-between gap-8">
-      <div class="grid min-w-48 flex-1 gap-3">
-        <span class="text-sm">Horizontal</span>
-        <Progress :value="68" aria-label="Progreso horizontal" />
-      </div>
+    <div class="grid w-full max-w-lg justify-items-center gap-3">
       <div class="grid justify-items-center gap-3">
         <span class="text-sm">Vertical</span>
         <div class="h-40">
-          <Progress :value="68" orientation="vertical" aria-label="Progreso vertical" />
+          <Progress :value="68" orientation="vertical" aria-label="Vertical progress" />
         </div>
       </div>
     </div>

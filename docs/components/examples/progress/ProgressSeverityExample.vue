@@ -19,7 +19,7 @@ ${scriptEnd}
       class="grid grid-cols-[5.5rem_minmax(0,1fr)] items-center gap-4"
     >
       <span class="text-sm">{{ severity }}</span>
-      <Progress :value="68" :severity="severity" :aria-label="'Progreso ' + severity" />
+      <Progress :value="68" :severity="severity" :aria-label="'Progress ' + severity" />
     </div>
   </div>
 </template>`
@@ -28,7 +28,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Severity"
-    description="Compara los colores semánticos disponibles para la barra."
+    description="Compare the available semantic colors for the bar."
     :code="code"
     :show-reset="false"
   >
@@ -39,7 +39,7 @@ ${scriptEnd}
         class="grid grid-cols-[5.5rem_minmax(0,1fr)] items-center gap-4"
       >
         <span class="text-sm">{{ severity }}</span>
-        <Progress :value="68" :severity="severity" :aria-label="'Progreso ' + severity" />
+        <Progress :value="68" :severity="severity" :aria-label="'Progress ' + severity" />
       </div>
     </div>
   </ComponentExample>

@@ -19,7 +19,7 @@ ${scriptEnd}
       class="grid grid-cols-[4rem_minmax(0,1fr)] items-center gap-4"
     >
       <span class="text-sm">{{ size }}</span>
-      <Progress :value="68" :size="size" :aria-label="'Progreso de carga, tamaño ' + size">
+      <Progress :value="68" :size="size" :aria-label="'Loading progress, size ' + size">
         <template #label="{ percentage }">{{ Math.round(percentage) }}%</template>
       </Progress>
     </div>
@@ -30,7 +30,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Label"
-    description="El tamaño tipográfico del label sigue a size; el slot permite personalizar su contenido."
+    description="The label font size follows size; use the slot to customize its content."
     :code="code"
     :show-reset="false"
   >
@@ -41,7 +41,7 @@ ${scriptEnd}
         class="grid grid-cols-[4rem_minmax(0,1fr)] items-center gap-4"
       >
         <span class="text-sm">{{ size }}</span>
-        <Progress :value="68" :size="size" :aria-label="'Progreso de carga, tamaño ' + size">
+        <Progress :value="68" :size="size" :aria-label="'Loading progress, size ' + size">
           <template #label="{ percentage }">{{ Math.round(percentage) }}%</template>
         </Progress>
       </div>

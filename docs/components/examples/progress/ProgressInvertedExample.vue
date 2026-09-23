@@ -13,12 +13,8 @@ ${scriptEnd}
       <span class="font-medium">Horizontal</span>
       <div class="grid gap-5">
         <div class="grid gap-2">
-          <span class="text-sm">Normal</span>
-          <Progress :value="32" aria-label="Progreso horizontal normal" />
-        </div>
-        <div class="grid gap-2">
           <span class="text-sm">Inverted</span>
-          <Progress :value="32" inverted aria-label="Progreso horizontal invertido" />
+          <Progress :value="32" inverted aria-label="Horizontal inverted progress" />
         </div>
       </div>
     </div>
@@ -26,19 +22,13 @@ ${scriptEnd}
       <span class="font-medium">Vertical</span>
       <div class="flex items-end gap-8">
         <div class="grid justify-items-center gap-2">
-          <span class="text-sm">Normal</span>
-          <div class="h-32">
-            <Progress :value="32" orientation="vertical" aria-label="Progreso vertical normal" />
-          </div>
-        </div>
-        <div class="grid justify-items-center gap-2">
           <span class="text-sm">Inverted</span>
           <div class="h-32">
             <Progress
               :value="32"
               orientation="vertical"
               inverted
-              aria-label="Progreso vertical invertido"
+              aria-label="Vertical inverted progress"
             />
           </div>
         </div>
@@ -51,7 +41,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Inverted"
-    description="Compara el llenado normal e invertido en orientación horizontal y vertical."
+    description="Compare inverted progress in horizontal and vertical orientations."
     :code="code"
     :show-reset="false"
   >
@@ -60,12 +50,8 @@ ${scriptEnd}
         <span class="font-medium">Horizontal</span>
         <div class="grid gap-5">
           <div class="grid gap-2">
-            <span class="text-sm">Normal</span>
-            <Progress :value="32" aria-label="Progreso horizontal normal" />
-          </div>
-          <div class="grid gap-2">
             <span class="text-sm">Inverted</span>
-            <Progress :value="32" inverted aria-label="Progreso horizontal invertido" />
+            <Progress :value="32" inverted aria-label="Horizontal inverted progress" />
           </div>
         </div>
       </div>
@@ -73,19 +59,13 @@ ${scriptEnd}
         <span class="font-medium">Vertical</span>
         <div class="flex items-end gap-8">
           <div class="grid justify-items-center gap-2">
-            <span class="text-sm">Normal</span>
-            <div class="h-32">
-              <Progress :value="32" orientation="vertical" aria-label="Progreso vertical normal" />
-            </div>
-          </div>
-          <div class="grid justify-items-center gap-2">
             <span class="text-sm">Inverted</span>
             <div class="h-32">
               <Progress
                 :value="32"
                 orientation="vertical"
                 inverted
-                aria-label="Progreso vertical invertido"
+                aria-label="Vertical inverted progress"
               />
             </div>
           </div>

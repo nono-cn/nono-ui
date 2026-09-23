@@ -4,18 +4,18 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const samples = [
-  { label: 'Preparación', value: 20 },
-  { label: 'Procesando', value: 65 },
-  { label: 'Esperando', value: null },
+  { label: 'Preparing', value: 20 },
+  { label: 'Processing', value: 65 },
+  { label: 'Waiting', value: null },
 ]
 
 const code = `<script setup lang="ts">
 import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
 
 const samples = [
-  { label: 'Preparación', value: 20 },
-  { label: 'Procesando', value: 65 },
-  { label: 'Esperando', value: null },
+  { label: 'Preparing', value: 20 },
+  { label: 'Processing', value: 65 },
+  { label: 'Waiting', value: null },
 ]
 ${scriptEnd}
 
@@ -32,7 +32,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Value"
-    description="Usa un número para el progreso determinado y null para el indeterminado."
+    description="Use a number for determinate progress and null for indeterminate progress."
     :code="code"
     :show-reset="false"
   >

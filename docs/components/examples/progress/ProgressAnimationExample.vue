@@ -25,7 +25,7 @@ ${scriptEnd}
           <Progress
             :value="null"
             :animation="animation"
-            :aria-label="'Progreso horizontal ' + animation"
+            :aria-label="'Horizontal progress ' + animation"
           />
         </div>
       </div>
@@ -44,7 +44,7 @@ ${scriptEnd}
               :value="null"
               :animation="animation"
               orientation="vertical"
-              :aria-label="'Progreso vertical ' + animation"
+              :aria-label="'Vertical progress ' + animation"
             />
           </div>
         </div>
@@ -57,7 +57,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Animation"
-    description="Compara las cuatro animaciones en los ejes horizontal y vertical."
+    description="Compare the four animations in horizontal and vertical orientations."
     :code="code"
     :show-reset="false"
   >
@@ -74,7 +74,7 @@ ${scriptEnd}
             <Progress
               :value="null"
               :animation="animation"
-              :aria-label="'Progreso horizontal ' + animation"
+              :aria-label="'Horizontal progress ' + animation"
             />
           </div>
         </div>
@@ -93,7 +93,7 @@ ${scriptEnd}
                 :value="null"
                 :animation="animation"
                 orientation="vertical"
-                :aria-label="'Progreso vertical ' + animation"
+                :aria-label="'Vertical progress ' + animation"
               />
             </div>
           </div>

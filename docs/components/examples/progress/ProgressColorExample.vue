@@ -11,15 +11,15 @@ ${scriptEnd}
   <div class="grid w-full max-w-lg gap-5">
     <div class="grid gap-2">
       <span class="text-sm">Color</span>
-      <Progress :value="68" color="#7c3aed" aria-label="Progreso morado" />
+      <Progress :value="68" color="#7c3aed" aria-label="Purple progress" />
     </div>
     <div class="grid gap-2">
-      <span class="text-sm">Color y trackColor</span>
+      <span class="text-sm">Color and track color</span>
       <Progress
         :value="68"
         color="#0f766e"
         track-color="#ccfbf1"
-        aria-label="Progreso verde azulado"
+        aria-label="Teal progress"
       />
     </div>
   </div>
@@ -29,23 +29,18 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Color"
-    description="Personaliza el indicador con color y define también un color propio para el track."
+    description="Customize the indicator color and optionally set a custom color for the track."
     :code="code"
     :show-reset="false"
   >
     <div class="grid w-full max-w-lg gap-5">
       <div class="grid gap-2">
         <span class="text-sm">Color</span>
-        <Progress :value="68" color="#7c3aed" aria-label="Progreso morado" />
+        <Progress :value="68" color="#7c3aed" aria-label="Purple progress" />
       </div>
       <div class="grid gap-2">
-        <span class="text-sm">Color y trackColor</span>
-        <Progress
-          :value="68"
-          color="#0f766e"
-          track-color="#ccfbf1"
-          aria-label="Progreso verde azulado"
-        />
+        <span class="text-sm">Color and track color</span>
+        <Progress :value="68" color="#0f766e" track-color="#ccfbf1" aria-label="Teal progress" />
       </div>
     </div>
   </ComponentExample>
