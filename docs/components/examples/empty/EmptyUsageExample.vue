@@ -12,27 +12,27 @@ ${scriptEnd}
 <template>
   <Empty
     class="w-full"
-    label="No hay proyectos"
-    description="Crea tu primer proyecto para empezar a trabajar."
+    label="No projects yet"
+    description="Create your first project to get started."
   >
-    <Button label="Crear proyecto" />
+    <Button label="Create project" />
   </Empty>
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Muestra un estado vacío con una acción para continuar."
+    title="Basic usage"
+    description="Show an empty state with an action to continue."
     :code="code"
     :show-reset="false"
   >
     <Empty
       class="w-full"
-      label="No hay proyectos"
-      description="Crea tu primer proyecto para empezar a trabajar."
+      label="No projects yet"
+      description="Create your first project to get started."
     >
-      <Button label="Crear proyecto" />
+      <Button label="Create project" />
     </Empty>
   </ComponentExample>
 </template>

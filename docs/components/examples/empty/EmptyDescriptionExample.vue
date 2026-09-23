@@ -10,7 +10,7 @@ ${scriptEnd}
 <template>
   <Empty
     class="w-full"
-    description="Prueba a cambiar los filtros para encontrar contenido."
+    description="Try changing the filters to find content."
   />
 </template>`
 </script>
@@ -18,10 +18,10 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Description"
-    description="Añade información complementaria al estado vacío."
+    description="Add supporting information to the empty state."
     :code="code"
     :show-reset="false"
   >
-    <Empty class="w-full" description="Prueba a cambiar los filtros para encontrar contenido." />
+    <Empty class="w-full" description="Try changing the filters to find content." />
   </ComponentExample>
 </template>

@@ -12,8 +12,8 @@ ${scriptEnd}
 <template>
   <Empty
     class="w-full"
-    label="No hay archivos"
-    description="Sube un archivo para verlo aquí."
+    label="No files"
+    description="Upload a file to see it here."
     media-variant="icon"
   >
     <template #media>
@@ -25,15 +25,15 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="MediaVariant"
-    description="Aplica el tratamiento visual de icono al contenido media."
+    title="Media variant"
+    description="Apply the icon visual style to the media content."
     :code="code"
     :show-reset="false"
   >
     <Empty
       class="w-full"
-      label="No hay archivos"
-      description="Sube un archivo para verlo aquí."
+      label="No files"
+      description="Upload a file to see it here."
       media-variant="icon"
     >
       <template #media>

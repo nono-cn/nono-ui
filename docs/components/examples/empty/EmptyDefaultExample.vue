@@ -10,8 +10,8 @@ import { Empty } from '__DOCS_PACKAGE__/components/ui/Empty'
 ${scriptEnd}
 
 <template>
-  <Empty class="w-full" label="No hay resultados">
-    <Button label="Restablecer filtros" />
+  <Empty class="w-full" label="No results">
+    <Button label="Reset filters" />
   </Empty>
 </template>`
 </script>
@@ -19,12 +19,12 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Default"
-    description="Añade acciones o enlaces como contenido principal."
+    description="Add actions or links as the main content."
     :code="code"
     :show-reset="false"
   >
-    <Empty class="w-full" label="No hay resultados">
-      <Button label="Restablecer filtros" />
+    <Empty class="w-full" label="No results">
+      <Button label="Reset filters" />
     </Empty>
   </ComponentExample>
 </template>

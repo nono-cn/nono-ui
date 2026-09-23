@@ -8,42 +8,43 @@ import EmptyUsageExample from '../../components/examples/empty/EmptyUsageExample
 const emptyConfig: ComponentDocConfig = {
   slug: 'empty',
   title: 'Empty',
-  description: 'Estado visual para representar que una sección no contiene datos o resultados.',
+  language: 'en',
+  description: 'Visual state for a section with no data or results.',
   importPath: '@nono-ui/components/ui/Empty',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Muestra un estado vacío con una acción para continuar.',
+      title: 'Basic usage',
+      description: 'Show an empty state with an action to continue.',
       component: EmptyUsageExample,
     },
   ],
   examples: [
     {
       title: 'Default',
-      description: 'Añade acciones o enlaces como contenido principal.',
+      description: 'Add actions or links as the main content.',
       component: EmptyDefaultExample,
     },
     {
       title: 'Label',
-      description: 'Define el título principal del estado vacío.',
+      description: 'Set the main title of the empty state.',
       component: EmptyLabelExample,
     },
     {
       title: 'Description',
-      description: 'Añade información complementaria al estado vacío.',
+      description: 'Add supporting information to the empty state.',
       component: EmptyDescriptionExample,
     },
     {
-      title: 'MediaVariant',
-      description: 'Aplica el tratamiento visual de icono al contenido media.',
+      title: 'Media variant',
+      description: 'Apply the icon visual style to the media content.',
       component: EmptyMediaVariantExample,
     },
   ],
   accessibility: [
     {
-      title: 'Mensaje de estado',
+      title: 'Status message',
       description:
-        'Proporciona un label y una descripción claros. Las acciones del contenido deben tener nombres accesibles y el mensaje no debe depender únicamente de un icono o del color.',
+        'Provide a clear label and description. Actions in the content should have accessible names, and the message should not rely solely on an icon or color.',
     },
   ],
   api: {
@@ -52,19 +53,19 @@ const emptyConfig: ComponentDocConfig = {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Título del estado vacío.',
+        description: 'Title of the empty state.',
       },
       {
         name: 'description',
         type: 'string',
         default: 'undefined',
-        description: 'Texto complementario del estado vacío.',
+        description: 'Supporting text for the empty state.',
       },
       {
         name: 'mediaVariant',
         type: "'default' | 'icon'",
         default: "'default'",
-        description: 'Tratamiento visual del slot media.',
+        description: 'Visual style of the media slot.',
       },
       {
         name: 'ui',
@@ -77,15 +78,15 @@ const emptyConfig: ComponentDocConfig = {
 }`,
         typePre: true,
         default: 'undefined',
-        description: 'Resolvers para personalizar los atributos de las regiones internas.',
+        description: 'Resolvers for customizing the attributes of the inner regions.',
       },
     ],
     emits: [],
     slots: [
-      { name: 'default', type: '-', description: 'Contenido principal, como acciones o enlaces.' },
-      { name: 'media', type: '-', description: 'Icono, ilustración u otro contenido visual.' },
-      { name: 'label', type: '-', description: 'Sustituye el texto del label.' },
-      { name: 'description', type: '-', description: 'Sustituye el texto de la description.' },
+      { name: 'default', type: '-', description: 'Main content, such as actions or links.' },
+      { name: 'media', type: '-', description: 'Icon, illustration, or other visual content.' },
+      { name: 'label', type: '-', description: 'Replaces the label text.' },
+      { name: 'description', type: '-', description: 'Replaces the description text.' },
     ],
     expose: [],
   },
