@@ -15,7 +15,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Label"
-    description="Muestra texto en el fallback del avatar."
+    description="Show text in the avatar fallback."
     :code="code"
     :show-reset="false"
   >

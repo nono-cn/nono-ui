@@ -11,7 +11,7 @@ ${scriptEnd}
   <Avatar
     src="https://i.pravatar.cc/150?img=3"
     label="NC"
-    alt="Perfil de ejemplo"
+    alt="Example profile"
   />
 </template>`
 </script>
@@ -19,10 +19,10 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Src"
-    description="Carga la imagen de perfil desde una URL."
+    description="Load the profile image from a URL."
     :code="code"
     :show-reset="false"
   >
-    <Avatar src="https://i.pravatar.cc/150?img=3" label="NC" alt="Perfil de ejemplo" />
+    <Avatar src="https://i.pravatar.cc/150?img=3" label="NC" alt="Example profile" />
   </ComponentExample>
 </template>

@@ -20,7 +20,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Size"
-    description="Ajusta el tamaño visual del avatar."
+    description="Adjust the avatar’s visual size."
     :code="code"
     :show-reset="false"
   >

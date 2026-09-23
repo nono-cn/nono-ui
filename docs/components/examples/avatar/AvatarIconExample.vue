@@ -15,7 +15,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Icon"
-    description="Muestra un icono en el fallback del avatar."
+    description="Show an icon in the avatar fallback."
     :code="code"
     :show-reset="false"
   >

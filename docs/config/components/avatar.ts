@@ -11,62 +11,63 @@ import AvatarUsageExample from '../../components/examples/avatar/AvatarUsageExam
 const avatarConfig: ComponentDocConfig = {
   slug: 'avatar',
   title: 'Avatar',
-  description: 'Muestra una imagen de perfil con contenido alternativo cuando no está disponible.',
+  language: 'en',
+  description: 'Displays a profile image with fallback content when the image is unavailable.',
   importPath: '@nono-ui/components/ui/Avatar',
   usage: [
     {
-      title: 'Uso básico',
-      description: 'Muestra una imagen de perfil con un fallback textual.',
+      title: 'Basic usage',
+      description: 'Display a profile image with a text fallback.',
       component: AvatarUsageExample,
     },
   ],
   examples: [
     {
       title: 'Src',
-      description: 'Carga la imagen de perfil desde una URL.',
+      description: 'Load the profile image from a URL.',
       component: AvatarSrcExample,
     },
     {
       title: 'Size',
-      description: 'Ajusta el tamaño visual del avatar.',
+      description: 'Adjust the avatar’s visual size.',
       component: AvatarSizeExample,
     },
     {
       title: 'Shape',
-      description: 'Elige entre una forma circular o cuadrada.',
+      description: 'Choose between a circular or square shape.',
       component: AvatarShapeExample,
     },
     {
       title: 'DelayMs',
-      description: 'Retrasa la aparición del contenido alternativo.',
+      description: 'Delay the appearance of the fallback content.',
       component: AvatarDelayMsExample,
     },
     {
       title: 'Icon',
-      description: 'Muestra un icono en el fallback del avatar.',
+      description: 'Show an icon in the avatar fallback.',
       component: AvatarIconExample,
     },
     {
       title: 'Label',
-      description: 'Muestra texto en el fallback del avatar.',
+      description: 'Show text in the avatar fallback.',
       component: AvatarLabelExample,
     },
     {
       title: 'Fallback',
-      description: 'Sustituye por completo el contenido alternativo.',
+      description: 'Replace the avatar’s fallback content entirely.',
       component: AvatarFallbackExample,
     },
   ],
   accessibility: [
     {
-      title: 'Texto alternativo',
+      title: 'Alternative text',
       description:
-        'Pasa alt como atributo cuando src contiene una imagen informativa. Usa label para ofrecer un fallback textual cuando la imagen no está disponible y evita depender únicamente del color o de las iniciales para comunicar identidad.',
+        'Pass alt as an attribute when src points to an informative image. Use label to provide a text fallback when the image is unavailable, and avoid relying on color or initials alone to communicate identity.',
     },
     {
-      title: 'Iconos y contenido personalizado',
+      title: 'Icons and custom content',
       description:
-        'Marca los iconos decorativos de icon con aria-hidden="true". Si usas el slot fallback, conserva un nombre o contexto accesible cuando el avatar sea relevante para la tarea.',
+        'Mark decorative icons passed through icon with aria-hidden="true". If you use the fallback slot, preserve a clear accessible name (aria-label / aria-labelledby) or surrounding context when the avatar is relevant to the task.',
     },
   ],
   api: {
@@ -76,25 +77,25 @@ const avatarConfig: ComponentDocConfig = {
         type: 'string',
         default: 'undefined',
         description:
-          'URL de la imagen de perfil. Si no se puede mostrar, se renderiza el fallback.',
+          'Profile image URL. The fallback is rendered if the image cannot be displayed.',
       },
       {
         name: 'size',
         type: "'xs' | 'sm' | 'md' | 'lg'",
         default: "'md'",
-        description: 'Tamaño visual del avatar.',
+        description: 'Visual size of the avatar.',
       },
       {
         name: 'shape',
         type: "'rounded' | 'square'",
         default: "'rounded'",
-        description: 'Forma visual del avatar: circular o cuadrada.',
+        description: 'Visual shape of the avatar: circular or square.',
       },
       {
         name: 'delayMs',
         type: 'number',
         default: 'undefined',
-        description: 'Retraso en milisegundos antes de mostrar el contenido alternativo.',
+        description: 'Delay in milliseconds before showing the fallback content.',
       },
       {
         name: 'icon',
@@ -102,28 +103,28 @@ const avatarConfig: ComponentDocConfig = {
         typeLink: '/components/icon#icon-config',
         default: 'undefined',
         description:
-          'Configuración del icono mostrado en el fallback cuando no se proporciona el slot fallback.',
+          'Icon configuration displayed in the fallback when the fallback slot is not provided.',
       },
       {
         name: 'label',
         type: 'string',
         default: 'undefined',
         description:
-          'Texto mostrado en el fallback cuando no se proporciona icon ni el slot fallback.',
+          'Text displayed in the fallback when neither icon nor the fallback slot is provided.',
       },
     ],
     configs: [
       {
         id: 'avatar-config',
         title: 'AvatarConfig',
-        description: 'Alias de AvatarProps para configurar avatares en componentes compuestos.',
+        description: 'Alias for AvatarProps, used to configure avatars in composite components.',
         showDefault: false,
         rows: [
           {
             name: 'AvatarProps',
             type: 'AvatarProps',
             typeLink: '#props',
-            description: 'Incluye las props públicas de Avatar.',
+            description: 'Includes Avatar’s public props.',
           },
         ],
       },
@@ -133,7 +134,7 @@ const avatarConfig: ComponentDocConfig = {
       {
         name: 'fallback',
         type: '-',
-        description: 'Sustituye por completo el contenido alternativo del avatar.',
+        description: 'Replaces the avatar’s fallback content entirely.',
       },
     ],
     expose: [],

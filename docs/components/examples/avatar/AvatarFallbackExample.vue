@@ -19,7 +19,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Fallback"
-    description="Sustituye por completo el contenido alternativo."
+    description="Replace the avatar’s fallback content entirely."
     :code="code"
     :show-reset="false"
   >

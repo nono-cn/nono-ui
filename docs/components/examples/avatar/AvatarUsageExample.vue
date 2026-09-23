@@ -11,18 +11,18 @@ ${scriptEnd}
   <Avatar
     class="text-primary"
     label="NC"
-    alt="Avatar de Nono UI"
+    alt="Nono UI avatar"
   />
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Uso básico"
-    description="Muestra una imagen de perfil con un fallback textual."
+    title="Basic usage"
+    description="Display a profile image with a text fallback."
     :code="code"
     :show-reset="false"
   >
-    <Avatar class="text-primary" label="NC" alt="Avatar de Nono UI" />
+    <Avatar class="text-primary" label="NC" alt="Nono UI avatar" />
   </ComponentExample>
 </template>

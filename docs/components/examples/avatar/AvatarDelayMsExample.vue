@@ -12,7 +12,7 @@ ${scriptEnd}
     src="/missing-avatar.png"
     :delay-ms="300"
     label="NC"
-    alt="Perfil de ejemplo"
+    alt="Example profile"
   />
 </template>`
 </script>
@@ -20,10 +20,10 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="DelayMs"
-    description="Retrasa la aparición del contenido alternativo cuando la imagen no está disponible."
+    description="Delay the fallback content while the image is unavailable."
     :code="code"
     :show-reset="false"
   >
-    <Avatar src="/missing-avatar.png" :delay-ms="300" label="NC" alt="Perfil de ejemplo" />
+    <Avatar src="/missing-avatar.png" :delay-ms="300" label="NC" alt="Example profile" />
   </ComponentExample>
 </template>

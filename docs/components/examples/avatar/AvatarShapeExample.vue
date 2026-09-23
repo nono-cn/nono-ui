@@ -18,7 +18,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Shape"
-    description="Elige entre una forma circular o cuadrada."
+    description="Choose between a circular or square shape."
     :code="code"
     :show-reset="false"
   >
