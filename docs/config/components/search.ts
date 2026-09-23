@@ -5,27 +5,28 @@ import SearchMultipleRegionsExample from '../../components/examples/search/Searc
 const searchConfig: ComponentDocConfig = {
   slug: 'search',
   title: 'Search',
-  description: 'Contenedor semántico para agrupar los controles de una búsqueda.',
+  language: 'en',
+  description: 'Semantic container for grouping search controls.',
   importPath: '@nono-ui/components/ui/Search',
   usage: [
     {
-      title: 'Búsqueda básica',
-      description: 'Agrupa un campo y un botón dentro de una región de búsqueda accesible.',
+      title: 'Basic search',
+      description: 'Group a field and button inside an accessible search region.',
       component: SearchBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Varias regiones',
-      description: 'Distingue cada formulario de búsqueda con su propio nombre accesible.',
+      title: 'Multiple regions',
+      description: 'Give each search form its own accessible name.',
       component: SearchMultipleRegionsExample,
     },
   ],
   accessibility: [
     {
-      title: 'Región de búsqueda',
+      title: 'Search region',
       description:
-        'Search renderiza un formulario con role="search". Añade aria-label o aria-labelledby para identificar la búsqueda cuando haya más de una región de búsqueda en la página.',
+        'Search renders a form with role="search". Add an accessible name (aria-label / aria-labelledby) to distinguish the search region when the page contains more than one.',
     },
   ],
   api: {
@@ -35,7 +36,7 @@ const searchConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Controles y contenido del formulario de búsqueda.',
+        description: 'Search form controls and content.',
       },
     ],
     expose: [],
