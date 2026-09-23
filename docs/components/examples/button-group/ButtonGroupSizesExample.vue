@@ -2,17 +2,18 @@
 import { Button } from '@/components/ui/Button'
 import { ButtonGroup } from '@/components/ui/ButtonGroup'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 import { ButtonGroup } from '__DOCS_PACKAGE__/components/ui/ButtonGroup'
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid gap-4">
-    <ButtonGroup v-for="size in ['xs', 'sm', 'md', 'lg']" :key="size" :size="size" :aria-label="\`Acciones tamaño \${size}\`">
-      <Button label="Cancelar" variant="outline" />
-      <Button label="Aceptar" />
+    <ButtonGroup v-for="size in ['xs', 'sm', 'md', 'lg']" :key="size" :size="size" :aria-label="\`Actions, size \${size}\`">
+      <Button label="Cancel" variant="outline" />
+      <Button label="Apply" />
     </ButtonGroup>
   </div>
 </template>`
@@ -20,8 +21,8 @@ import { ButtonGroup } from '__DOCS_PACKAGE__/components/ui/ButtonGroup'
 
 <template>
   <ComponentExample
-    title="Tamaños"
-    description="El tamaño se aplica a todos los botones descendientes."
+    title="Size"
+    description="Applies the selected size to every button in the group."
     :code="code"
     :show-reset="false"
   >
@@ -30,10 +31,10 @@ import { ButtonGroup } from '__DOCS_PACKAGE__/components/ui/ButtonGroup'
         v-for="size in ['xs', 'sm', 'md', 'lg']"
         :key="size"
         :size="size"
-        :aria-label="`Acciones tamaño ${size}`"
+        :aria-label="`Actions, size ${size}`"
       >
-        <Button label="Cancelar" variant="outline" />
-        <Button label="Aceptar" />
+        <Button label="Cancel" variant="outline" />
+        <Button label="Apply" />
       </ButtonGroup>
     </div>
   </ComponentExample>

@@ -54,6 +54,7 @@ export interface ComponentDocConfig {
   slug: string
   title: string
   description: string
+  language?: 'en' | 'es'
   importPath: string
   accessibility: ComponentAccessibilityConfig[]
   usage: ComponentExampleConfig[]

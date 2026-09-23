@@ -9,12 +9,14 @@ withDefaults(
     emptyText?: string
     typeLabel?: string
     showDefault?: boolean
+    language?: 'en' | 'es'
   }>(),
   {
     id: undefined,
     emptyText: 'No hay elementos definidos.',
-    typeLabel: 'Tipo',
     showDefault: true,
+    typeLabel: undefined,
+    language: 'es',
   },
 )
 </script>
@@ -29,10 +31,18 @@ withDefaults(
       <table class="w-full min-w-[640px] text-left text-sm">
         <thead class="bg-muted/40 text-xs tracking-wide text-muted-foreground uppercase">
           <tr>
-            <th class="px-4 py-3 font-medium sm:px-5">Nombre</th>
-            <th class="px-4 py-3 font-medium sm:px-5">{{ typeLabel }}</th>
-            <th v-if="showDefault" class="px-4 py-3 font-medium sm:px-5">Por defecto</th>
-            <th class="px-4 py-3 font-medium sm:px-5">Descripción</th>
+            <th class="px-4 py-3 font-medium sm:px-5">
+              {{ language === 'en' ? 'Name' : 'Nombre' }}
+            </th>
+            <th class="px-4 py-3 font-medium sm:px-5">
+              {{ typeLabel ?? (language === 'en' ? 'Type' : 'Tipo') }}
+            </th>
+            <th v-if="showDefault" class="px-4 py-3 font-medium sm:px-5">
+              {{ language === 'en' ? 'Default' : 'Por defecto' }}
+            </th>
+            <th class="px-4 py-3 font-medium sm:px-5">
+              {{ language === 'en' ? 'Description' : 'Descripción' }}
+            </th>
           </tr>
         </thead>
 

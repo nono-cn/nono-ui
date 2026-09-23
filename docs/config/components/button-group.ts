@@ -6,32 +6,33 @@ import ButtonGroupSizesExample from '../../components/examples/button-group/Butt
 const buttonGroupConfig: ComponentDocConfig = {
   slug: 'button-group',
   title: 'ButtonGroup',
-  description: 'Agrupa botones relacionados y adapta su unión, orientación y tamaño.',
+  language: 'en',
+  description: 'Groups related buttons and applies a shared orientation and size.',
   importPath: '@nono-ui/components/ui/ButtonGroup',
   usage: [
     {
-      title: 'Grupo básico',
-      description: 'Agrupa acciones relacionadas en una única unidad visual.',
+      title: 'Basic usage',
+      description: 'Groups related actions into a single visual unit.',
       component: ButtonGroupBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Orientación vertical',
-      description: 'Cambia la orientación cuando las acciones necesitan apilarse.',
+      title: 'Vertical',
+      description: 'Changes the orientation when actions need to be stacked.',
       component: ButtonGroupVerticalExample,
     },
     {
-      title: 'Tamaños',
-      description: 'Aplica un tamaño común a todos los botones del grupo.',
+      title: 'Size',
+      description: 'Applies a shared size to every button in the group.',
       component: ButtonGroupSizesExample,
     },
   ],
   accessibility: [
     {
-      title: 'Grupo de acciones',
+      title: 'Action group',
       description:
-        'ButtonGroup añade role="group" a su raíz. Usa etiquetas claras en cada botón y conserva el orden lógico de las acciones.',
+        'ButtonGroup adds role="group" to its root element. Give each button a clear accessible label and keep actions in a logical order.',
     },
   ],
   api: {
@@ -40,13 +41,13 @@ const buttonGroupConfig: ComponentDocConfig = {
         name: 'orientation',
         type: "'horizontal' | 'vertical'",
         default: "'horizontal'",
-        description: 'Dirección en la que se colocan los botones.',
+        description: 'Direction in which the buttons are arranged.',
       },
       {
         name: 'size',
         type: "'xs' | 'sm' | 'md' | 'lg'",
         default: "'md'",
-        description: 'Tamaño aplicado a los botones descendientes.',
+        description: 'Size applied to descendant buttons.',
       },
     ],
     emits: [],
@@ -54,7 +55,7 @@ const buttonGroupConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '-',
-        description: 'Botones y contenido que se renderizan dentro del grupo.',
+        description: 'Buttons and content rendered inside the group.',
       },
     ],
     expose: [],

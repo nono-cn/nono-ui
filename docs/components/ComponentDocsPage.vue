@@ -1,12 +1,43 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import ApiTable from './docs/ApiTable.vue'
 import type { ComponentDocConfig } from '../config/component-docs'
 import { exampleAnchor } from '../config/docs-anchors'
 import { docsPackageName } from '../config/constants'
 
-defineProps<{
+const props = defineProps<{
   component: ComponentDocConfig
 }>()
+
+const content = computed(() => {
+  if (props.component.language === 'en') {
+    return {
+      importTitle: 'Import',
+      playgroundTitle: 'Playground',
+      usageTitle: 'Usage',
+      examplesTitle: 'Examples',
+      accessibilityTitle: 'Accessibility',
+      apiTitle: 'API',
+      emptyProps: 'This component does not define any props.',
+      emptyEmits: 'This component does not emit any custom events.',
+      emptySlots: 'This component does not define any slots.',
+      emptyExpose: 'This component does not expose any methods.',
+    }
+  }
+
+  return {
+    importTitle: 'Importación',
+    playgroundTitle: 'Playground',
+    usageTitle: 'Uso',
+    examplesTitle: 'Ejemplos',
+    accessibilityTitle: 'Accesibilidad',
+    apiTitle: 'API',
+    emptyProps: 'Este componente no define props propias.',
+    emptyEmits: 'Este componente no emite eventos propios.',
+    emptySlots: 'Este componente no define slots.',
+    emptyExpose: 'Este componente no expone métodos.',
+  }
+})
 
 function publicImportPath(importPath: string) {
   return importPath.replace(/^@nono-ui/, docsPackageName)
@@ -23,59 +54,47 @@ function publicImportPath(importPath: string) {
     </header>
 
     <section id="import" class="grid scroll-mt-8 gap-5">
-      <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Importación</h2>
-        <p class="text-sm leading-6 text-muted-foreground">
-          Importa {{ component.title }} desde su entrada pública para usarlo en una vista Vue.
-        </p>
-      </div>
+      <h2 class="text-2xl font-semibold tracking-tight">{{ content.importTitle }}</h2>
       <pre
         class="overflow-x-auto rounded-xl border bg-muted/40 p-4 text-sm"
       ><code>import { {{ component.title }} } from '{{ publicImportPath(component.importPath) }}'</code></pre>
     </section>
 
     <section v-if="component.playground" id="playground" class="grid scroll-mt-8 gap-5">
-      <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Playground</h2>
-        <p class="text-sm leading-6 text-muted-foreground">
-          Personaliza las props y ejecuta el ejemplo para ver el resultado.
-        </p>
-      </div>
+      <h2 class="text-2xl font-semibold tracking-tight">{{ content.playgroundTitle }}</h2>
       <component :is="component.playground" />
     </section>
 
-    <section v-if="!component.playground" id="usage" class="grid scroll-mt-8 gap-5">
-      <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Uso</h2>
-        <p class="text-sm leading-6 text-muted-foreground">
-          Empieza con el uso básico y configura el componente según las necesidades de tu interfaz.
-        </p>
-      </div>
-      <div class="grid gap-6">
+    <section
+      v-if="!component.playground"
+      id="usage"
+      class="grid min-w-0 scroll-mt-8 grid-cols-1 gap-5"
+    >
+      <h2 class="text-2xl font-semibold tracking-tight">{{ content.usageTitle }}</h2>
+      <div class="grid min-w-0 grid-cols-1 gap-6">
         <div
           v-for="(example, index) in component.usage"
           :id="exampleAnchor('usage', example.title, index)"
           :key="example.title"
-          class="scroll-mt-8"
+          class="min-w-0 scroll-mt-8"
         >
           <component :is="example.component" />
         </div>
       </div>
     </section>
 
-    <section v-if="!component.playground" id="examples" class="grid scroll-mt-8 gap-5">
-      <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Ejemplos</h2>
-        <p class="text-sm leading-6 text-muted-foreground">
-          Explora las props más habituales con controles interactivos y ejemplos copiable.
-        </p>
-      </div>
-      <div class="grid gap-6">
+    <section
+      v-if="!component.playground"
+      id="examples"
+      class="grid min-w-0 scroll-mt-8 grid-cols-1 gap-5"
+    >
+      <h2 class="text-2xl font-semibold tracking-tight">{{ content.examplesTitle }}</h2>
+      <div class="grid min-w-0 grid-cols-1 gap-6">
         <div
           v-for="(example, index) in component.examples"
           :id="exampleAnchor('examples', example.title, index)"
           :key="example.title"
-          class="scroll-mt-8"
+          class="min-w-0 scroll-mt-8"
         >
           <component :is="example.component" />
         </div>
@@ -83,12 +102,7 @@ function publicImportPath(importPath: string) {
     </section>
 
     <section id="accessibility" class="grid scroll-mt-8 gap-5">
-      <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">Accesibilidad</h2>
-        <p class="text-sm leading-6 text-muted-foreground">
-          Usa las recomendaciones y ejemplos de accesibilidad aplicables a {{ component.title }}.
-        </p>
-      </div>
+      <h2 class="text-2xl font-semibold tracking-tight">{{ content.accessibilityTitle }}</h2>
       <div class="grid gap-5">
         <article
           v-for="item in component.accessibility"
@@ -114,13 +128,7 @@ function publicImportPath(importPath: string) {
     </section>
 
     <section id="api" class="grid scroll-mt-8 gap-5">
-      <div class="grid gap-2">
-        <h2 class="text-2xl font-semibold tracking-tight">API</h2>
-        <p class="text-sm leading-6 text-muted-foreground">
-          Referencia completa de la API pública de {{ component.title }}, incluidas sus
-          configuraciones reutilizables.
-        </p>
-      </div>
+      <h2 class="text-2xl font-semibold tracking-tight">{{ content.apiTitle }}</h2>
 
       <div class="grid gap-8">
         <ApiTable
@@ -128,7 +136,8 @@ function publicImportPath(importPath: string) {
           id="props"
           title="Props"
           :rows="component.api.props"
-          empty-text="Este componente no define props propias."
+          :language="component.language"
+          :empty-text="content.emptyProps"
         />
         <template v-for="table in component.api.configs ?? []" :key="table.id">
           <p v-if="table.description" class="text-sm leading-6 text-muted-foreground">
@@ -139,6 +148,7 @@ function publicImportPath(importPath: string) {
             :id="table.id"
             :title="table.title"
             :rows="table.rows"
+            :language="component.language"
             :type-label="table.typeLabel"
             :show-default="table.showDefault"
           />
@@ -148,8 +158,9 @@ function publicImportPath(importPath: string) {
           id="emits"
           title="Emits"
           :rows="component.api.emits"
+          :language="component.language"
           :show-default="false"
-          empty-text="Este componente no emite eventos propios."
+          :empty-text="content.emptyEmits"
         />
         <ApiTable
           v-if="component.api.slots.length"
@@ -157,16 +168,18 @@ function publicImportPath(importPath: string) {
           title="Slots"
           type-label="slotProps"
           :rows="component.api.slots"
+          :language="component.language"
           :show-default="false"
-          empty-text="Este componente no define slots."
+          :empty-text="content.emptySlots"
         />
         <ApiTable
           v-if="component.api.expose.length"
           id="expose"
           title="Expose"
           :rows="component.api.expose"
+          :language="component.language"
           :show-default="false"
-          empty-text="Este componente no expone métodos."
+          :empty-text="content.emptyExpose"
         />
       </div>
     </section>

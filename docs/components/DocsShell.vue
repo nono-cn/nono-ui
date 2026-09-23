@@ -38,7 +38,16 @@ const tocTree = computed<DocsTocItem[]>(() => {
   const currentComponent = component.value
   if (!currentComponent) return []
 
-  const items: DocsTocItem[] = [{ id: 'import', label: 'Importación' }]
+  const labels =
+    currentComponent.language === 'en'
+      ? { import: 'Import', usage: 'Usage', examples: 'Examples', accessibility: 'Accessibility' }
+      : {
+          import: 'Importación',
+          usage: 'Uso',
+          examples: 'Ejemplos',
+          accessibility: 'Accesibilidad',
+        }
+  const items: DocsTocItem[] = [{ id: 'import', label: labels.import }]
 
   if (currentComponent.playground) {
     items.push({ id: 'playground', label: 'Playground' })
@@ -46,7 +55,7 @@ const tocTree = computed<DocsTocItem[]>(() => {
     if (currentComponent.usage.length) {
       items.push({
         id: 'usage',
-        label: 'Uso',
+        label: labels.usage,
         children: currentComponent.usage.map((example, index) => ({
           id: exampleAnchor('usage', example.title, index),
           label: example.title,
@@ -57,7 +66,7 @@ const tocTree = computed<DocsTocItem[]>(() => {
     if (currentComponent.examples.length) {
       items.push({
         id: 'examples',
-        label: 'Ejemplos',
+        label: labels.examples,
         children: currentComponent.examples.map((example, index) => ({
           id: exampleAnchor('examples', example.title, index),
           label: example.title,
@@ -66,7 +75,7 @@ const tocTree = computed<DocsTocItem[]>(() => {
     }
   }
 
-  items.push({ id: 'accessibility', label: 'Accesibilidad' })
+  items.push({ id: 'accessibility', label: labels.accessibility })
 
   const apiChildren: DocsTocItem[] = []
   if (currentComponent.api.props.length) apiChildren.push({ id: 'props', label: 'Props' })
@@ -126,8 +135,8 @@ watch(pageTitle, (value) => (document.title = value), { immediate: true })
       <div class="docs-workspace">
         <div v-if="component" class="docs-mobile-nav">
           <details :open="pageOpen" @toggle="pageOpen = ($event.target as HTMLDetailsElement).open">
-            <summary>En esta página</summary>
-            <nav aria-label="En esta página">
+            <summary>{{ component.language === 'en' ? 'On this page' : 'En esta página' }}</summary>
+            <nav :aria-label="component.language === 'en' ? 'On this page' : 'En esta página'">
               <ul class="docs-mobile-toc-tree">
                 <li v-for="item in tocTree" :key="item.id">
                   <a :href="`#${item.id}`">{{ item.label }}</a>
@@ -152,8 +161,8 @@ watch(pageTitle, (value) => (document.title = value), { immediate: true })
         </main>
         <aside v-if="component" class="docs-toc">
           <div class="docs-toc-inner">
-            <p>En esta página</p>
-            <nav aria-label="En esta página">
+            <p>{{ component.language === 'en' ? 'On this page' : 'En esta página' }}</p>
+            <nav :aria-label="component.language === 'en' ? 'On this page' : 'En esta página'">
               <ul class="docs-toc-tree">
                 <li v-for="(item, index) in tocTree" :key="item.id">
                   <a :class="{ 'is-active': index === 0 }" :href="`#${item.id}`">

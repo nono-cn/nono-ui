@@ -37,7 +37,7 @@ async function copyCode() {
 
 <template>
   <article
-    class="max-w-full min-w-0 overflow-hidden rounded-xl border bg-card text-card-foreground"
+    class="w-full max-w-full min-w-0 overflow-hidden rounded-xl border bg-card text-card-foreground"
   >
     <header class="flex flex-wrap items-start justify-between gap-3 border-b p-4 sm:p-5">
       <div class="grid gap-1">
@@ -63,7 +63,7 @@ async function copyCode() {
       <slot />
     </div>
 
-    <div class="relative border-t bg-muted/40">
+    <div class="relative min-w-0 border-t bg-muted/40">
       <button
         type="button"
         class="absolute top-3 right-3 inline-flex size-8 items-center justify-center rounded-md border bg-background text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
@@ -74,9 +74,11 @@ async function copyCode() {
         <Check v-if="copied" class="size-4" aria-hidden="true" />
         <Clipboard v-else class="size-4" aria-hidden="true" />
       </button>
-      <pre
-        class="overflow-x-auto p-4 pr-14 text-sm leading-6 break-words whitespace-pre-wrap"
-      ><code>{{ displayCode }}</code></pre>
+      <div class="w-full max-w-full min-w-0 overflow-x-auto">
+        <pre
+          class="m-0 w-max min-w-full p-4 pr-14 text-sm leading-6 whitespace-pre"
+        ><code>{{ displayCode }}</code></pre>
+      </div>
     </div>
   </article>
 </template>
