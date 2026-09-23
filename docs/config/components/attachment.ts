@@ -9,52 +9,53 @@ import AttachmentMediaVariantExample from '../../components/examples/attachment/
 const attachmentConfig: ComponentDocConfig = {
   slug: 'attachment',
   title: 'Attachment',
-  description: 'Presenta un archivo con su información, estado y acciones relacionadas.',
+  language: 'en',
+  description: 'Presents a file with its details, state, and related actions.',
   importPath: '@nono-ui/components/ui/Attachment',
   usage: [
     {
-      title: 'Archivo básico',
-      description: 'Muestra el nombre, la información y el icono de un archivo.',
+      title: 'Basic file',
+      description: 'Show a file name, details, and icon.',
       component: AttachmentBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Icono',
-      description: 'Añade un icono para identificar visualmente el tipo de archivo.',
+      title: 'Icon',
+      description: 'Add an icon to identify the file type visually.',
       component: AttachmentIconExample,
     },
     {
-      title: 'Orientación',
-      description: 'Coloca la media y la información en horizontal o vertical.',
+      title: 'Orientation',
+      description: 'Arrange the media and details horizontally or vertically.',
       component: AttachmentOrientationExample,
     },
     {
-      title: 'Tamaños',
-      description: 'Compara los tamaños md, sm y xs.',
+      title: 'Size',
+      description: 'Compare the md, sm, and xs sizes.',
       component: AttachmentSizesExample,
     },
     {
-      title: 'Estados',
-      description: 'Comprueba los estados visuales disponibles para un archivo.',
+      title: 'States',
+      description: 'Compare the available visual states for a file.',
       component: AttachmentStateExample,
     },
     {
       title: 'Media variant',
-      description: 'Cambia entre media de tipo icono e imagen.',
+      description: 'Switch between icon and image media.',
       component: AttachmentMediaVariantExample,
     },
   ],
   accessibility: [
     {
-      title: 'Información del archivo',
+      title: 'File information',
       description:
-        'Attachment renderiza un div y no añade semántica de interacción por sí mismo. Mantén un label y una description comprensibles, proporciona un nombre accesible a los botones del slot actions y usa alt descriptivo cuando media contenga una imagen. Los iconos decorativos deben llevar aria-hidden="true"; si una imagen aporta información, no la ocultes del árbol de accesibilidad.',
+        'Attachment renders a div and does not add interaction semantics by itself. Keep the label and description clear, provide accessible names for buttons in the actions slot, and use descriptive alt text when media contains an image. Decorative icons should have aria-hidden="true"; do not hide informative images from the accessibility tree.',
     },
     {
-      title: 'Estados dinámicos',
+      title: 'Dynamic states',
       description:
-        'state cambia la presentación visual y muestra un spinner durante uploading, pero no anuncia por sí solo el progreso. Si el estado se actualiza durante una operación, comunica el cambio con texto visible y el mecanismo aria-live adecuado en el contexto que controla la carga.',
+        'state changes the visual presentation and shows a spinner during uploading, but does not announce progress by itself. If the state changes during an operation, communicate the update with visible text and an appropriate aria-live mechanism in the context that controls the upload.',
     },
   ],
   api: {
@@ -63,44 +64,44 @@ const attachmentConfig: ComponentDocConfig = {
         name: 'label',
         type: 'string',
         default: 'undefined',
-        description: 'Nombre o título del archivo.',
+        description: 'File name or title.',
       },
       {
         name: 'description',
         type: 'string',
         default: 'undefined',
-        description: 'Información complementaria, como el tamaño o el tipo de archivo.',
+        description: 'Additional information, such as the file size or type.',
       },
       {
         name: 'icon',
         type: 'IconConfig',
         typeLink: '/components/icon#icon-config',
         default: 'undefined',
-        description: 'Configuración del icono de media cuando mediaVariant es icon.',
+        description: 'Media icon configuration when mediaVariant is icon.',
       },
       {
         name: 'orientation',
         type: "'horizontal' | 'vertical'",
         default: "'horizontal'",
-        description: 'Dirección de la composición del attachment.',
+        description: 'Direction of the attachment layout.',
       },
       {
         name: 'size',
         type: "'md' | 'sm' | 'xs'",
         default: "'md'",
-        description: 'Tamaño de la media y de la información del archivo.',
+        description: 'Size of the media and file details.',
       },
       {
         name: 'state',
         type: "'idle' | 'uploading' | 'processing' | 'error' | 'done'",
         default: "'idle'",
-        description: 'Estado visual del archivo. Durante uploading se muestra un spinner.',
+        description: 'Visual state of the file. A spinner is shown while uploading.',
       },
       {
         name: 'mediaVariant',
         type: "'icon' | 'image'",
         default: "'icon'",
-        description: 'Tipo de media renderizada: icono o contenido del slot media.',
+        description: 'Media type to render: an icon or the content of the media slot.',
       },
       {
         name: 'ui',
@@ -114,7 +115,7 @@ const attachmentConfig: ComponentDocConfig = {
         typePre: true,
         default: 'undefined',
         description:
-          'Resolvers para aplicar atributos, class, style y ARIA a media, content, label, description y actions.',
+          'Resolvers for applying attributes, class, style, and ARIA to media, content, label, description, and actions.',
       },
     ],
     emits: [],
@@ -122,22 +123,22 @@ const attachmentConfig: ComponentDocConfig = {
       {
         name: 'media',
         type: '-',
-        description: 'Contenido de la media cuando mediaVariant es image.',
+        description: 'Media content when mediaVariant is image.',
       },
       {
         name: 'label',
         type: '-',
-        description: 'Contenido personalizado que sustituye a label.',
+        description: 'Custom content that replaces label.',
       },
       {
         name: 'description',
         type: '-',
-        description: 'Contenido personalizado que sustituye a description.',
+        description: 'Custom content that replaces description.',
       },
       {
         name: 'actions',
         type: '-',
-        description: 'Acciones renderizadas junto a la información del archivo.',
+        description: 'Actions rendered beside the file details.',
       },
     ],
     expose: [],

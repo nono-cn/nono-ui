@@ -1,25 +1,33 @@
 <script setup lang="ts">
 import { Attachment } from '@/components/ui/Attachment'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const sizes = ['md', 'sm', 'xs'] as const
 const code = `<script setup lang="ts">
 import { Attachment } from '__DOCS_PACKAGE__/components/ui/Attachment'
 
 const sizes = ['md', 'sm', 'xs'] as const
-<\/script>
+${scriptEnd}
 
 <template>
   <div class="grid gap-3">
-    <Attachment v-for="size in sizes" :key="size" :size="size" :label="\`Archivo \${size}\`" description="PDF · 2,4 MB" :icon="{ name: 'fileText' }" />
+    <Attachment
+      v-for="size in sizes"
+      :key="size"
+      :size="size"
+      :label="'File ' + size"
+      description="PDF · 2.4 MB"
+      :icon="{ name: 'fileText' }"
+    />
   </div>
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Tamaños"
-    description="Compara la paleta de tamaños disponible."
+    title="Size"
+    description="Compare the available sizes."
     :code="code"
     :show-reset="false"
   >
@@ -28,8 +36,8 @@ const sizes = ['md', 'sm', 'xs'] as const
         v-for="size in sizes"
         :key="size"
         :size="size"
-        :label="`Archivo ${size}`"
-        description="PDF · 2,4 MB"
+        :label="`File ${size}`"
+        description="PDF · 2.4 MB"
         :icon="{ name: 'fileText' }"
       />
     </div>
