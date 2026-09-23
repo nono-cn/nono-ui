@@ -6,33 +6,34 @@ import MasonrySequentialExample from '../../components/examples/masonry/MasonryS
 const masonryConfig: ComponentDocConfig = {
   slug: 'masonry',
   title: 'Masonry',
+  language: 'en',
   description:
-    'Distribuye elementos de altura variable en columnas optimizando el espacio disponible.',
+    'Arranges items of varying heights into columns to make efficient use of available space.',
   importPath: '@nono-ui/components/ui/Masonry',
   usage: [
     {
-      title: 'Masonry básico',
-      description: 'Distribuye elementos de altura variable en tres columnas.',
+      title: 'Basic masonry',
+      description: 'Arrange items of varying heights into three columns.',
       component: MasonryBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Columnas responsive',
-      description: 'Adapta el número de columnas según el ancho de la ventana.',
+      title: 'Responsive columns',
+      description: 'Adjust the number of columns to the viewport width.',
       component: MasonryResponsiveExample,
     },
     {
-      title: 'Orden secuencial',
-      description: 'Reparte los elementos de izquierda a derecha en orden estricto.',
+      title: 'Sequential order',
+      description: 'Distribute items from left to right in strict order.',
       component: MasonrySequentialExample,
     },
   ],
   accessibility: [
     {
-      title: 'Orden y semántica',
+      title: 'Order and semantics',
       description:
-        'Masonry no añade roles interactivos. Mantén el orden lógico de los items y usa elementos semánticos y nombres accesibles dentro del slot.',
+        'Masonry does not add interactive roles. Keep items in a logical reading order, and use semantic elements and accessible names within the slot.',
     },
   ],
   api: {
@@ -42,26 +43,26 @@ const masonryConfig: ComponentDocConfig = {
         type: 'unknown[]',
         default: '-',
         required: true,
-        description: 'Elementos que Masonry distribuirá entre las columnas.',
+        description: 'Items Masonry distributes across the columns.',
       },
       {
         name: 'columns',
         type: 'number | { sm?: number; md?: number; lg?: number }',
         default: '4',
-        description: 'Número de columnas o configuración responsive para sm, md y lg.',
+        description: 'Number of columns or responsive configuration for sm, md, and lg.',
       },
       {
         name: 'spacing',
         type: 'number | string',
         default: '2',
-        description: 'Separación entre columnas y elementos, multiplicada por 0.25rem.',
+        description: 'Spacing between columns and items, multiplied by 0.25rem.',
       },
       {
         name: 'sequential',
         type: 'boolean',
         default: 'false',
         description:
-          'Reparte los elementos secuencialmente de izquierda a derecha en lugar de elegir la columna más corta.',
+          'Distributes items sequentially from left to right instead of choosing the shortest column.',
       },
     ],
     emits: [],
@@ -69,8 +70,7 @@ const masonryConfig: ComponentDocConfig = {
       {
         name: 'default',
         type: '{ item: unknown; index: number }',
-        description:
-          'Contenido de cada item. Si no se proporciona, se renderiza un div con el valor del item.',
+        description: 'Content for each item. If omitted, a div is rendered with the item’s value.',
       },
     ],
     expose: [],

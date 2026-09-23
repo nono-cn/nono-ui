@@ -1,28 +1,29 @@
 <script setup lang="ts">
 import { Masonry } from '@/components/ui/Masonry'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const items = [
-  { label: 'Uno', height: 72 },
-  { label: 'Dos', height: 120 },
-  { label: 'Tres', height: 88 },
-  { label: 'Cuatro', height: 144 },
-  { label: 'Cinco', height: 96 },
-  { label: 'Seis', height: 64 },
+  { label: 'One', height: 72 },
+  { label: 'Two', height: 120 },
+  { label: 'Three', height: 88 },
+  { label: 'Four', height: 144 },
+  { label: 'Five', height: 96 },
+  { label: 'Six', height: 64 },
 ]
 
 const code = `<script setup lang="ts">
 import { Masonry } from '__DOCS_PACKAGE__/components/ui/Masonry'
 
 const items = [
-  { label: 'Uno', height: 72 },
-  { label: 'Dos', height: 120 },
-  { label: 'Tres', height: 88 },
-  { label: 'Cuatro', height: 144 },
-  { label: 'Cinco', height: 96 },
-  { label: 'Seis', height: 64 },
+  { label: 'One', height: 72 },
+  { label: 'Two', height: 120 },
+  { label: 'Three', height: 88 },
+  { label: 'Four', height: 144 },
+  { label: 'Five', height: 96 },
+  { label: 'Six', height: 64 },
 ]
-<\/script>
+${scriptEnd}
 
 <template>
   <Masonry class="min-w-0" :items="items" :columns="3" :spacing="4">
@@ -37,8 +38,8 @@ const items = [
 
 <template>
   <ComponentExample
-    title="Masonry básico"
-    description="Distribuye elementos con alturas diferentes."
+    title="Basic masonry"
+    description="Arrange items with varying heights."
     :code="code"
     :show-reset="false"
   >

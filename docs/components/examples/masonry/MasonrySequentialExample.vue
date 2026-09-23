@@ -1,28 +1,29 @@
 <script setup lang="ts">
 import { Masonry } from '@/components/ui/Masonry'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const items = [
-  { label: 'Primero', height: 128 },
-  { label: 'Segundo', height: 72 },
-  { label: 'Tercero', height: 112 },
-  { label: 'Cuarto', height: 88 },
-  { label: 'Quinto', height: 144 },
-  { label: 'Sexto', height: 80 },
+  { label: 'First', height: 128 },
+  { label: 'Second', height: 72 },
+  { label: 'Third', height: 112 },
+  { label: 'Fourth', height: 88 },
+  { label: 'Fifth', height: 144 },
+  { label: 'Sixth', height: 80 },
 ]
 
 const code = `<script setup lang="ts">
 import { Masonry } from '__DOCS_PACKAGE__/components/ui/Masonry'
 
 const items = [
-  { label: 'Primero', height: 128 },
-  { label: 'Segundo', height: 72 },
-  { label: 'Tercero', height: 112 },
-  { label: 'Cuarto', height: 88 },
-  { label: 'Quinto', height: 144 },
-  { label: 'Sexto', height: 80 },
+  { label: 'First', height: 128 },
+  { label: 'Second', height: 72 },
+  { label: 'Third', height: 112 },
+  { label: 'Fourth', height: 88 },
+  { label: 'Fifth', height: 144 },
+  { label: 'Sixth', height: 80 },
 ]
-<\/script>
+${scriptEnd}
 
 <template>
   <Masonry class="min-w-0" :items="items" :columns="3" :spacing="3" sequential>
@@ -37,8 +38,8 @@ const items = [
 
 <template>
   <ComponentExample
-    title="Orden secuencial"
-    description="Conserva el orden de izquierda a derecha en cada fila."
+    title="Sequential order"
+    description="Preserve the left-to-right order in each row."
     :code="code"
     :show-reset="false"
   >

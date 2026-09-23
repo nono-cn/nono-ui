@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Masonry } from '@/components/ui/Masonry'
 import ComponentExample from '../ComponentExample.vue'
+import { scriptEnd } from '../example-code'
 
 const items = ['A', 'B', 'C', 'D', 'E', 'F']
 
@@ -8,7 +9,7 @@ const code = `<script setup lang="ts">
 import { Masonry } from '__DOCS_PACKAGE__/components/ui/Masonry'
 
 const items = ['A', 'B', 'C', 'D', 'E', 'F']
-<\/script>
+${scriptEnd}
 
 <template>
   <Masonry class="min-w-0" :items="items" :columns="{ sm: 1, md: 2, lg: 4 }" :spacing="3">
@@ -21,8 +22,8 @@ const items = ['A', 'B', 'C', 'D', 'E', 'F']
 
 <template>
   <ComponentExample
-    title="Columnas responsive"
-    description="Usa una configuración distinta para cada breakpoint."
+    title="Responsive columns"
+    description="Use a different configuration for each breakpoint."
     :code="code"
     :show-reset="false"
   >
