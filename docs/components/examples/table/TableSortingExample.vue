@@ -6,20 +6,18 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 type Person = {
-  firstName: string
-  lastName: string
+  name: string
   age: number
 }
 
 const columns: TableColumnDef<Person>[] = [
-  { accessorKey: 'firstName', header: 'First Name' },
-  { accessorKey: 'lastName', header: 'Last Name' },
-  { accessorKey: 'age', header: 'Age' },
+  { accessorKey: 'name', header: 'Name', enableSorting: true },
+  { accessorKey: 'age', header: 'Age', enableSorting: true },
 ]
 const data = ref<Person[]>([
-  { firstName: 'Tanner', lastName: 'Linsley', age: 24 },
-  { firstName: 'Tandy', lastName: 'Miller', age: 40 },
-  { firstName: 'Joe', lastName: 'Dirte', age: 45 },
+  { name: 'Charlie', age: 32 },
+  { name: 'Ada', age: 36 },
+  { name: 'Grace', age: 29 },
 ])
 
 const code = `<script setup lang="ts">
@@ -28,20 +26,18 @@ import { Table } from '__DOCS_PACKAGE__/components/ui/Table'
 import type { TableColumnDef } from '__DOCS_PACKAGE__/components/ui/Table'
 
 type Person = {
-  firstName: string
-  lastName: string
+  name: string
   age: number
 }
 
 const columns: TableColumnDef<Person>[] = [
-  { accessorKey: 'firstName', header: 'First Name' },
-  { accessorKey: 'lastName', header: 'Last Name' },
-  { accessorKey: 'age', header: 'Age' },
+  { accessorKey: 'name', header: 'Name', enableSorting: true },
+  { accessorKey: 'age', header: 'Age', enableSorting: true },
 ]
 const data = ref<Person[]>([
-  { firstName: 'Tanner', lastName: 'Linsley', age: 24 },
-  { firstName: 'Tandy', lastName: 'Miller', age: 40 },
-  { firstName: 'Joe', lastName: 'Dirte', age: 45 },
+  { name: 'Charlie', age: 32 },
+  { name: 'Ada', age: 36 },
+  { name: 'Grace', age: 29 },
 ])
 ${scriptEnd}
 
@@ -52,8 +48,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Basic usage"
-    description="Render typed rows and columns. Sorting is disabled unless a column opts in with enableSorting."
+    title="Sorting"
+    description="Enable sorting per column with enableSorting: true. Activate that column header to switch between ascending and descending order; sorting state stays internal, and the sort slot customizes its indicator."
     :code="code"
     :show-reset="false"
   >
