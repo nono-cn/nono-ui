@@ -1,6 +1,11 @@
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it } from 'vitest'
-import type { PopoverContentConfig } from '@/components/ui/Popover'
+import type { HTMLAttributes } from 'vue'
+
+type ContentTestConfig = Pick<HTMLAttributes, 'id' | 'class' | 'style' | 'aria-label'> & {
+  side?: 'top' | 'right' | 'bottom' | 'left'
+  sideOffset?: number
+}
 
 export function testContentConfig({
   text,
@@ -10,15 +15,15 @@ export function testContentConfig({
 }: {
   text: string
   id: string
-  omit?: string[]
-  mount: (config: PopoverContentConfig) => VueWrapper | Promise<VueWrapper>
+  omit?: Array<'id' | 'aria-label'>
+  mount: (config: ContentTestConfig) => VueWrapper | Promise<VueWrapper>
 }) {
   it(text, async () => {
-    const config: PopoverContentConfig = {
+    const config: ContentTestConfig = {
       side: 'top',
       sideOffset: 12,
-      id: 'custom-popover-content',
-      class: 'custom-popover-content',
+      id: 'custom-content',
+      class: 'custom-content',
       style: 'opacity: 0.5',
       'aria-label': 'Content',
     }
@@ -28,6 +33,8 @@ export function testContentConfig({
     if (!omit.includes('id')) expect(content.attributes('id')).toBe(config.id)
     expect(content.classes()).toContain(config.class)
     expect(content.attributes('style')).toContain('opacity: 0.5')
-    expect(content.attributes('aria-label')).toBe(config['aria-label'])
+    if (!omit.includes('aria-label')) {
+      expect(content.attributes('aria-label')).toBe(config['aria-label'])
+    }
   })
 }

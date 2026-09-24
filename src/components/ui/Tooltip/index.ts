@@ -6,6 +6,7 @@ import type {
   TooltipRootEmits as RekaTooltipRootEmits,
   TooltipRootProps as RekaTooltipRootProps,
 } from 'reka-ui'
+import type { EmitsAsProps } from '@/types/emits'
 
 export { default as Tooltip } from './Tooltip.vue'
 
@@ -35,37 +36,17 @@ export type TooltipContentProps = Pick<
   | 'updatePositionStrategy'
 >
 export type TooltipArrowProps = Pick<RekaTooltipArrowProps, 'width' | 'height'>
-
-// Fn
-export type TooltipFn<T> = (context: TooltipContext) => T
-
-// UI
-export interface TooltipUI {
-  content?: TooltipFn<HTMLAttributes>
-  arrow?: TooltipFn<HTMLAttributes>
-}
+export type TooltipContentConfig = TooltipContentProps &
+  EmitsAsProps<RekaTooltipContentEmits> &
+  HTMLAttributes
+export type TooltipArrowConfig = TooltipArrowProps & HTMLAttributes
 
 // Props
 export interface TooltipProps extends TooltipRootProps {
   open?: boolean
-  label?: string
-  withArrow?: boolean
-  align?: TooltipContentProps['align']
-  alignOffset?: TooltipContentProps['alignOffset']
-  ariaLabel?: TooltipContentProps['ariaLabel']
-  arrowPadding?: TooltipContentProps['arrowPadding']
-  avoidCollisions?: TooltipContentProps['avoidCollisions']
-  collisionPadding?: TooltipContentProps['collisionPadding']
-  forceMount?: TooltipContentProps['forceMount']
-  hideWhenDetached?: TooltipContentProps['hideWhenDetached']
-  positionStrategy?: TooltipContentProps['positionStrategy']
-  side?: TooltipContentProps['side']
-  sideOffset?: TooltipContentProps['sideOffset']
-  sticky?: TooltipContentProps['sticky']
-  updatePositionStrategy?: TooltipContentProps['updatePositionStrategy']
-  arrowWidth?: TooltipArrowProps['width']
-  arrowHeight?: TooltipArrowProps['height']
-  ui?: TooltipUI
+  showArrow?: boolean
+  content?: TooltipContentConfig
+  arrow?: TooltipArrowConfig
 }
 
 // Context
@@ -75,7 +56,7 @@ export interface TooltipContext {
 }
 
 // Emits
-export type TooltipEmits = RekaTooltipRootEmits & RekaTooltipContentEmits
+export type TooltipEmits = RekaTooltipRootEmits
 
 // Slots
 export interface TooltipSlots {

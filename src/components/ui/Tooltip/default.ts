@@ -1,22 +1,27 @@
 export const tooltipDefaults = {
   delayDuration: 0,
-  withArrow: true,
   disableClosingTrigger: false,
   disabled: false,
   ignoreNonKeyboardFocus: false,
-  align: 'center',
+  showArrow: false,
+}
+
+export const tooltipContentDefaults = {
+  align: 'center' as const,
   alignOffset: 0,
   arrowPadding: 0,
   avoidCollisions: true,
   collisionPadding: 0,
   forceMount: false,
   hideWhenDetached: false,
-  positionStrategy: 'fixed',
-  side: 'top',
+  positionStrategy: 'fixed' as const,
+  side: 'top' as const,
   sideOffset: 2,
-  sticky: 'partial',
-  updatePositionStrategy: 'optimized',
-  arrowWidth: 10,
-  arrowHeight: 5,
-  ui: undefined,
+  sticky: 'partial' as const,
+  updatePositionStrategy: 'optimized' as const,
+}
+
+export const tooltipArrowDefaults = {
+  width: 10,
+  height: 5,
 }
