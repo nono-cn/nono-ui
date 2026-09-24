@@ -32,6 +32,7 @@ import separator from './components/separator'
 import splitter from './components/splitter'
 import switchConfig from './components/switch'
 import textarea from './components/textarea'
+import table from './components/table'
 import type { ComponentDocConfig } from './component-docs'
 
 export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'description'>
@@ -71,6 +72,7 @@ export const docsComponents = [
   splitter,
   switchConfig,
   textarea,
+  table,
 ] satisfies ComponentDocConfig[]
 
 export const docsComponentsBySlug = Object.fromEntries(
