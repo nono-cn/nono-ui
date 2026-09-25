@@ -1,6 +1,8 @@
 import {
   createSortedRowModel,
   cellSpanningFeature,
+  columnSizingFeature,
+  columnPinningFeature,
   rowSortingFeature,
   sortFns,
   tableFeatures,
@@ -9,6 +11,8 @@ import type { ColumnDef, RowData, TableOptions } from '@tanstack/vue-table'
 
 export const tableFeatureSet = tableFeatures({
   cellSpanningFeature,
+  columnSizingFeature,
+  columnPinningFeature,
   rowSortingFeature,
   sortedRowModel: createSortedRowModel(),
   sortFns,

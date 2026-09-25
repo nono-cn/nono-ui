@@ -3,6 +3,7 @@ import TableBasicExample from '../../components/examples/table/TableBasicExample
 import TableSortingExample from '../../components/examples/table/TableSortingExample.vue'
 import TableCellSpanningExample from '../../components/examples/table/TableCellSpanningExample.vue'
 import TableColumnSpanningExample from '../../components/examples/table/TableColumnSpanningExample.vue'
+import TableColumnPinningExample from '../../components/examples/table/TableColumnPinningExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -36,6 +37,12 @@ const tableConfig: ComponentDocConfig = {
       description:
         'Use spanColumns to set a cell’s colspan per row. Return Infinity to span to the end of its pinned region.',
       component: TableColumnSpanningExample,
+    },
+    {
+      title: 'Column pinning',
+      description:
+        'Pin a column to the start of the table with the header button, then scroll horizontally to see it stay in place.',
+      component: TableColumnPinningExample,
     },
   ],
   accessibility: [],
@@ -92,11 +99,24 @@ const tableConfig: ComponentDocConfig = {
               'Explicit stable column identifier. Useful with accessorFn or when the header is not a string.',
           },
           {
+            name: 'size',
+            type: 'number',
+            default: '150',
+            description: 'Sets the column width in pixels.',
+          },
+          {
             name: 'enableSorting',
             type: 'boolean',
             default: 'false',
             description:
               'Allows sorting this column. The Table component disables sorting by default; set this to true to enable its sortable header.',
+          },
+          {
+            name: 'enablePinning',
+            type: 'boolean',
+            default: 'false',
+            description:
+              'Allows this column to be pinned. Set this to true to show its pin button.',
           },
           {
             name: 'spanRows',

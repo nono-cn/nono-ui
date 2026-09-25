@@ -29,6 +29,8 @@ import {
   Image,
   AudioLines,
   Video,
+  Pin,
+  PinOff,
 } from '@lucide/vue'
 
 export const ICONS = {
@@ -62,6 +64,8 @@ export const ICONS = {
   image: Image,
   audio: AudioLines,
   video: Video,
+  pin: Pin,
+  pinOff: PinOff,
 } as const
 
 export type IconName = keyof typeof ICONS
