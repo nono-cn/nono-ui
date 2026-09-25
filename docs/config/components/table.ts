@@ -5,6 +5,7 @@ import TableCellSpanningExample from '../../components/examples/table/TableCellS
 import TableColumnSpanningExample from '../../components/examples/table/TableColumnSpanningExample.vue'
 import TableColumnPinningExample from '../../components/examples/table/TableColumnPinningExample.vue'
 import TableColumnSizingExample from '../../components/examples/table/TableColumnSizingExample.vue'
+import TableColumnResizingExample from '../../components/examples/table/TableColumnResizingExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -50,6 +51,12 @@ const tableConfig: ComponentDocConfig = {
       description:
         'Set size on column definitions to control pixel widths; the rendered table uses their combined width.',
       component: TableColumnSizingExample,
+    },
+    {
+      title: 'Column resizing',
+      description:
+        'Enable resizing per column and drag its header handle to adjust the width within the configured bounds.',
+      component: TableColumnResizingExample,
     },
   ],
   accessibility: [],
@@ -112,6 +119,18 @@ const tableConfig: ComponentDocConfig = {
             description: 'Sets the column width in pixels.',
           },
           {
+            name: 'minSize',
+            type: 'number',
+            default: '20',
+            description: 'Minimum width allowed when resizing the column.',
+          },
+          {
+            name: 'maxSize',
+            type: 'number',
+            default: '9007199254740991',
+            description: 'Maximum width allowed when resizing the column.',
+          },
+          {
             name: 'enableSorting',
             type: 'boolean',
             default: 'false',
@@ -124,6 +143,13 @@ const tableConfig: ComponentDocConfig = {
             default: 'false',
             description:
               'Allows this column to be pinned. Set this to true to show its pin button.',
+          },
+          {
+            name: 'enableResizing',
+            type: 'boolean',
+            default: 'false',
+            description:
+              'Shows a resize handle on the column header. Drag it or focus it and use the arrow keys to adjust the width.',
           },
           {
             name: 'spanRows',

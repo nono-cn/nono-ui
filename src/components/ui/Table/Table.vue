@@ -88,6 +88,45 @@ const tdProps = (cell: Cell<typeof tableFeatureSet, TData, unknown>) => {
   }
 }
 
+const resizeColumnByKeyboard = (
+  column: Column<typeof tableFeatureSet, TData, unknown>,
+  direction: -1 | 1,
+) => {
+  const minSize = column.columnDef.minSize ?? 20
+  const maxSize = column.columnDef.maxSize ?? Number.MAX_SAFE_INTEGER
+  const size = Math.min(maxSize, Math.max(minSize, column.getSize() + direction * 10))
+
+  table.setColumnSizing((old) => ({ ...old, [column.id]: size }))
+}
+
+const resizeHandleProps = (header: Header<typeof tableFeatureSet, TData>) => ({
+  role: 'separator',
+  tabindex: 0,
+  'aria-orientation': 'vertical',
+  'aria-label': `Resize ${header.column.id} column`,
+  'aria-valuenow': header.getSize(),
+  'aria-valuemin': header.column.columnDef.minSize ?? 20,
+  'aria-valuemax': header.column.columnDef.maxSize ?? Number.MAX_SAFE_INTEGER,
+  class:
+    'absolute inset-y-0 right-0 z-30 w-1 cursor-col-resize touch-none select-none bg-transparent hover:bg-primary/50 focus-visible:bg-primary focus-visible:outline-none',
+  onMousedown: (event: MouseEvent) => {
+    event.stopPropagation()
+    header.getResizeHandler()?.(event)
+  },
+  onTouchstart: (event: TouchEvent) => {
+    event.stopPropagation()
+    header.getResizeHandler()?.(event)
+  },
+  onClick: (event: MouseEvent) => event.stopPropagation(),
+  onKeydown: (event: KeyboardEvent) => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault()
+      event.stopPropagation()
+      resizeColumnByKeyboard(header.column, event.key === 'ArrowRight' ? 1 : -1)
+    }
+  },
+})
+
 const pinColumn = (column: Column<typeof tableFeatureSet, TData, unknown>) => {
   column.pin(column.getIsPinned() ? false : 'start')
 }
@@ -128,7 +167,7 @@ const getRowCells = (row: Row<typeof tableFeatureSet, TData>) => [
 
 const table = useTable({
   features: tableFeatureSet,
-  defaultColumn: { enableSorting: false, enablePinning: false },
+  defaultColumn: { enableSorting: false, enablePinning: false, enableResizing: false },
   data: computed(() => props.data ?? []),
   columns: computed(() => props.columns ?? []),
   state: computed(() => ({ sorting: sorting.value, columnPinning: columnPinning.value })),
@@ -150,7 +189,7 @@ const table = useTable({
             v-for="header in group.headers"
             :key="header.id"
             v-bind="thProps(header)"
-            :class="header.column.getIsPinned() && 'sticky z-20 bg-card'"
+            :class="[header.column.getIsPinned() && 'sticky z-20 bg-card', 'relative']"
             :style="
               header.column.getIsPinned()
                 ? getPinningOffset(header.column)
@@ -178,6 +217,10 @@ const table = useTable({
                 <FlexRender v-if="!header.isPlaceholder" :header="header" />
               </div>
             </span>
+            <div
+              v-if="header.column.getCanResize() && !header.isPlaceholder"
+              v-bind="resizeHandleProps(header)"
+            />
           </th>
         </tr>
       </thead>
