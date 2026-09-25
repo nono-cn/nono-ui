@@ -1,11 +1,31 @@
 import {
   createSortedRowModel,
+  createFilteredRowModel,
   cellSpanningFeature,
+  columnFilteringFeature,
   columnSizingFeature,
   columnResizingFeature,
   columnPinningFeature,
   columnVisibilityFeature,
   rowSortingFeature,
+  filterFn_arrHas,
+  filterFn_arrIncludes,
+  filterFn_arrIncludesAll,
+  filterFn_arrIncludesSome,
+  filterFn_between,
+  filterFn_betweenInclusive,
+  filterFn_empty,
+  filterFn_endsWith,
+  filterFn_equals,
+  filterFn_equalsString,
+  filterFn_equalsStringSensitive,
+  filterFn_inDateRange,
+  filterFn_inNumberRange,
+  filterFn_includesString,
+  filterFn_includesStringSensitive,
+  filterFn_notEmpty,
+  filterFn_startsWith,
+  filterFn_weakEquals,
   sortFns,
   tableFeatures,
 } from '@tanstack/vue-table'
@@ -13,6 +33,7 @@ import type {
   Cell,
   Column,
   ColumnDef,
+  ColumnFiltersState,
   ColumnPinningState,
   ColumnVisibilityState,
   Header,
@@ -24,6 +45,28 @@ import type {
 
 export const tableFeatureSet = tableFeatures({
   cellSpanningFeature,
+  columnFilteringFeature,
+  filteredRowModel: createFilteredRowModel(),
+  filterFns: {
+    arrHas: filterFn_arrHas,
+    arrIncludes: filterFn_arrIncludes,
+    arrIncludesAll: filterFn_arrIncludesAll,
+    arrIncludesSome: filterFn_arrIncludesSome,
+    between: filterFn_between,
+    betweenInclusive: filterFn_betweenInclusive,
+    empty: filterFn_empty,
+    endsWith: filterFn_endsWith,
+    equals: filterFn_equals,
+    equalsString: filterFn_equalsString,
+    equalsStringSensitive: filterFn_equalsStringSensitive,
+    inDateRange: filterFn_inDateRange,
+    inNumberRange: filterFn_inNumberRange,
+    includesString: filterFn_includesString,
+    includesStringSensitive: filterFn_includesStringSensitive,
+    notEmpty: filterFn_notEmpty,
+    startsWith: filterFn_startsWith,
+    weakEquals: filterFn_weakEquals,
+  },
   columnSizingFeature,
   columnResizingFeature,
   columnPinningFeature,
@@ -44,6 +87,7 @@ export type TableColumnDef<TData extends RowData> = ColumnDef<typeof tableFeatur
 export type TableProps<TData extends RowData> = {
   data?: TData[]
   columns?: TableOptions<typeof tableFeatureSet, TData>['columns']
+  columnFilters?: ColumnFiltersState
   columnPinning?: ColumnPinningState
   columnVisibility?: ColumnVisibilityState
 }
@@ -63,6 +107,14 @@ export interface TableSlots<TData extends RowData> {
         row: Row<typeof tableFeatureSet, TData>
         column: Column<typeof tableFeatureSet, TData, unknown>
         value: unknown
+      }) => unknown)
+    | undefined
+  [name: `filter-${string}`]:
+    | ((props: {
+        column: Column<typeof tableFeatureSet, TData, unknown>
+        value: unknown
+        setValue: Column<typeof tableFeatureSet, TData, unknown>['setFilterValue']
+        isFiltered: boolean
       }) => unknown)
     | undefined
 }

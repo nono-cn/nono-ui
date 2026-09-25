@@ -7,6 +7,7 @@ import TableColumnPinningExample from '../../components/examples/table/TableColu
 import TableColumnSizingExample from '../../components/examples/table/TableColumnSizingExample.vue'
 import TableColumnResizingExample from '../../components/examples/table/TableColumnResizingExample.vue'
 import TableColumnVisibilityExample from '../../components/examples/table/TableColumnVisibilityExample.vue'
+import TableColumnFilteringExample from '../../components/examples/table/TableColumnFilteringExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -28,6 +29,12 @@ const tableConfig: ComponentDocConfig = {
       description:
         'Set enableSorting: true on each sortable column. The sorting state is managed internally; activate a sortable header to change its order, or use the sort slot to customize the indicator.',
       component: TableSortingExample,
+    },
+    {
+      title: 'Column filtering',
+      description:
+        'Enable filtering per column and provide controls through a dedicated filter row using filter-{column.id} slots.',
+      component: TableColumnFilteringExample,
     },
     {
       title: 'Cell spanning',
@@ -83,6 +90,13 @@ const tableConfig: ComponentDocConfig = {
         description: 'Reactive row data passed to the TanStack table instance.',
       },
       {
+        name: 'columnFilters',
+        type: 'ColumnFiltersState',
+        default: '[]',
+        description:
+          'Active filters by column ID and value. Use v-model:column-filters to initialize, inspect, update, or clear filters from the parent.',
+      },
+      {
         name: 'columnPinning',
         type: 'ColumnPinningState',
         default: '{ start: [], end: [] }',
@@ -128,10 +142,23 @@ const tableConfig: ComponentDocConfig = {
               'Optional cell template. When omitted, the table renders the column value.',
           },
           {
+            name: 'filterFn',
+            type: "'arrHas' | 'arrIncludes' | 'arrIncludesAll' | 'arrIncludesSome' | 'between' | 'betweenInclusive' | 'empty' | 'endsWith' | 'equals' | 'equalsString' | 'equalsStringSensitive' | 'inDateRange' | 'inNumberRange' | 'includesString' | 'includesStringSensitive' | 'notEmpty' | 'startsWith' | 'weakEquals' | FilterFn",
+            description:
+              'Selects the comparison used by this column when filtering. It accepts any registered built-in name or a custom filter function.',
+          },
+          {
+            name: 'enableColumnFilter',
+            type: 'boolean',
+            default: 'false',
+            description:
+              'Allows this column to be filtered. The Table component disables filtering by default; set this to true to enable its filter APIs and controls.',
+          },
+          {
             name: 'id',
             type: 'string',
             description:
-              'Explicit stable column identifier. Useful with accessorFn or when the header is not a string.',
+              'Explicit stable column identifier. TanStack resolves column.id from explicit id first, then accessorKey, then a string header.',
           },
           {
             name: 'size',
@@ -206,13 +233,19 @@ const tableConfig: ComponentDocConfig = {
         name: 'header-{column.id}',
         type: '{ header, column, table }',
         description:
-          'Overrides a column header’s content. The slot name uses TanStack’s column.id, and the default header is rendered when the slot is omitted.',
+          'Overrides a column header’s content. Its name uses the column.id resolved by TanStack, and the default header is rendered when omitted.',
       },
       {
         name: 'cell-{column.id}',
         type: '{ cell, row, column, value }',
         description:
-          'Overrides a column’s body cell content. The slot name uses TanStack’s column.id, and the default cell is rendered when the slot is omitted.',
+          'Overrides a column’s body cell content. Its name uses the column.id resolved by TanStack, and the default cell is rendered when omitted.',
+      },
+      {
+        name: 'filter-{column.id}',
+        type: '{ column, value, setValue, isFiltered }',
+        description:
+          'Renders a custom control in the dedicated filter row. Its name uses the column.id resolved by TanStack, and its cell remains empty when omitted.',
       },
       {
         name: 'sort',
