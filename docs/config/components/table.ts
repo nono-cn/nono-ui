@@ -6,6 +6,7 @@ import TableColumnSpanningExample from '../../components/examples/table/TableCol
 import TableColumnPinningExample from '../../components/examples/table/TableColumnPinningExample.vue'
 import TableColumnSizingExample from '../../components/examples/table/TableColumnSizingExample.vue'
 import TableColumnResizingExample from '../../components/examples/table/TableColumnResizingExample.vue'
+import TableColumnVisibilityExample from '../../components/examples/table/TableColumnVisibilityExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -58,6 +59,12 @@ const tableConfig: ComponentDocConfig = {
         'Enable resizing per column and drag its header handle to adjust the width within the configured bounds.',
       component: TableColumnResizingExample,
     },
+    {
+      title: 'Column visibility',
+      description:
+        'Share column visibility state between Table and an external TableColumnVisibility control.',
+      component: TableColumnVisibilityExample,
+    },
   ],
   accessibility: [],
   api: {
@@ -74,6 +81,13 @@ const tableConfig: ComponentDocConfig = {
         type: 'TData[]',
         default: '[]',
         description: 'Reactive row data passed to the TanStack table instance.',
+      },
+      {
+        name: 'columnVisibility',
+        type: 'ColumnVisibilityState',
+        default: '{}',
+        description:
+          'Visibility map by column ID. Use v-model:column-visibility to connect an external visibility control.',
       },
     ],
     configs: [
@@ -143,6 +157,13 @@ const tableConfig: ComponentDocConfig = {
             default: 'false',
             description:
               'Allows this column to be pinned. Set this to true to show its pin button.',
+          },
+          {
+            name: 'enableHiding',
+            type: 'boolean',
+            default: 'true',
+            description:
+              'Allows this column to be hidden through a column visibility control. Set this to false to keep it always visible.',
           },
           {
             name: 'enableResizing',

@@ -3,6 +3,7 @@ import { FlexRender, functionalUpdate, useTable } from '@tanstack/vue-table'
 import type {
   Column,
   ColumnPinningState,
+  ColumnVisibilityState,
   Cell,
   Header,
   Row,
@@ -25,6 +26,9 @@ defineSlots<TableSlots>()
 const attrs = useAttrs()
 const sorting = ref<SortingState>([])
 const columnPinning = ref<ColumnPinningState>({ start: [], end: [] })
+const columnVisibility = defineModel<ColumnVisibilityState>('columnVisibility', {
+  default: () => ({}),
+})
 
 const rootProps = computed(() => ({
   ...attrs,
@@ -170,12 +174,19 @@ const table = useTable({
   defaultColumn: { enableSorting: false, enablePinning: false, enableResizing: false },
   data: computed(() => props.data ?? []),
   columns: computed(() => props.columns ?? []),
-  state: computed(() => ({ sorting: sorting.value, columnPinning: columnPinning.value })),
+  state: computed(() => ({
+    sorting: sorting.value,
+    columnPinning: columnPinning.value,
+    columnVisibility: columnVisibility.value,
+  })),
   onSortingChange: (updater) => {
     sorting.value = functionalUpdate(updater, sorting.value)
   },
   onColumnPinningChange: (updater) => {
     columnPinning.value = functionalUpdate(updater, columnPinning.value)
+  },
+  onColumnVisibilityChange: (updater) => {
+    columnVisibility.value = functionalUpdate(updater, columnVisibility.value)
   },
 })
 </script>
