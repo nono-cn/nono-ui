@@ -3,6 +3,7 @@ import {
   createFilteredRowModel,
   cellSpanningFeature,
   columnFilteringFeature,
+  globalFilteringFeature,
   columnSizingFeature,
   columnResizingFeature,
   columnPinningFeature,
@@ -34,6 +35,7 @@ import type {
   Column,
   ColumnDef,
   ColumnFiltersState,
+  FilterFnOption,
   ColumnPinningState,
   ColumnVisibilityState,
   Header,
@@ -46,6 +48,7 @@ import type {
 export const tableFeatureSet = tableFeatures({
   cellSpanningFeature,
   columnFilteringFeature,
+  globalFilteringFeature,
   filteredRowModel: createFilteredRowModel(),
   filterFns: {
     arrHas: filterFn_arrHas,
@@ -88,6 +91,9 @@ export type TableProps<TData extends RowData> = {
   data?: TData[]
   columns?: TableOptions<typeof tableFeatureSet, TData>['columns']
   columnFilters?: ColumnFiltersState
+  globalFilter?: unknown
+  globalFilterFn?: FilterFnOption<typeof tableFeatureSet, TData>
+  manualFiltering?: boolean
   columnPinning?: ColumnPinningState
   columnVisibility?: ColumnVisibilityState
 }

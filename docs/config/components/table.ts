@@ -8,6 +8,9 @@ import TableColumnSizingExample from '../../components/examples/table/TableColum
 import TableColumnResizingExample from '../../components/examples/table/TableColumnResizingExample.vue'
 import TableColumnVisibilityExample from '../../components/examples/table/TableColumnVisibilityExample.vue'
 import TableColumnFilteringExample from '../../components/examples/table/TableColumnFilteringExample.vue'
+import TableGlobalFilteringExample from '../../components/examples/table/TableGlobalFilteringExample.vue'
+import TableCustomGlobalFilterExample from '../../components/examples/table/TableCustomGlobalFilterExample.vue'
+import TableServerGlobalFilterExample from '../../components/examples/table/TableServerGlobalFilterExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -35,6 +38,24 @@ const tableConfig: ComponentDocConfig = {
       description:
         'Enable filtering per column and provide controls through a dedicated filter row using filter-{column.id} slots.',
       component: TableColumnFilteringExample,
+    },
+    {
+      title: 'Global filtering',
+      description:
+        'Bind an external search input with v-model:global-filter to filter across columns enabled with enableGlobalFilter: true.',
+      component: TableGlobalFilteringExample,
+    },
+    {
+      title: 'Custom global filter',
+      description:
+        'Pass a custom comparison function to globalFilterFn to search by prefix across enabled columns.',
+      component: TableCustomGlobalFilterExample,
+    },
+    {
+      title: 'Server global filtering',
+      description:
+        'Set manualFiltering when data comes from a filtered API response. The search value drives the request and Table renders the returned rows.',
+      component: TableServerGlobalFilterExample,
     },
     {
       title: 'Cell spanning',
@@ -97,6 +118,27 @@ const tableConfig: ComponentDocConfig = {
           'Active filters by column ID and value. Use v-model:column-filters to initialize, inspect, update, or clear filters from the parent.',
       },
       {
+        name: 'globalFilter',
+        type: 'unknown',
+        default: "''",
+        description:
+          'Current global search value. Use v-model:global-filter to control the search from a parent input; only columns with enableGlobalFilter: true are searched.',
+      },
+      {
+        name: 'globalFilterFn',
+        type: "'auto' | registered filter name | FilterFn<TData>",
+        default: "'includesString'",
+        description:
+          'Selects how the global search compares values. It accepts a registered filter name or a custom TanStack filter function.',
+      },
+      {
+        name: 'manualFiltering',
+        type: 'boolean',
+        default: 'false',
+        description:
+          'Skips client-side filtering when true. Pass rows already filtered by an API and use the globalFilter model to request updated results.',
+      },
+      {
         name: 'columnPinning',
         type: 'ColumnPinningState',
         default: '{ start: [], end: [] }',
@@ -153,6 +195,13 @@ const tableConfig: ComponentDocConfig = {
             default: 'false',
             description:
               'Allows this column to be filtered. The Table component disables filtering by default; set this to true to enable its filter APIs and controls.',
+          },
+          {
+            name: 'enableGlobalFilter',
+            type: 'boolean',
+            default: 'false',
+            description:
+              'Includes this column in global searches. The Table component excludes columns by default; set this to true on columns that should be searched.',
           },
           {
             name: 'id',

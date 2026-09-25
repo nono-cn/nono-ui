@@ -31,6 +31,9 @@ const sorting = ref<SortingState>([])
 const columnFilters = defineModel<ColumnFiltersState>('columnFilters', {
   default: () => [],
 })
+const globalFilter = defineModel<unknown>('globalFilter', {
+  default: '',
+})
 const columnPinning = defineModel<ColumnPinningState>('columnPinning', {
   default: () => ({ start: [], end: [] }),
 })
@@ -210,12 +213,14 @@ const table = useTable({
     enablePinning: false,
     enableResizing: false,
     enableColumnFilter: false,
+    enableGlobalFilter: false,
   },
   data: computed(() => props.data ?? []),
   columns: computed(() => props.columns ?? []),
   state: computed(() => ({
     sorting: sorting.value,
     columnFilters: columnFilters.value,
+    globalFilter: globalFilter.value,
     columnPinning: columnPinning.value,
     columnVisibility: columnVisibility.value,
   })),
@@ -225,6 +230,11 @@ const table = useTable({
   onColumnFiltersChange: (updater) => {
     columnFilters.value = functionalUpdate(updater, columnFilters.value)
   },
+  onGlobalFilterChange: (updater) => {
+    globalFilter.value = functionalUpdate(updater, globalFilter.value)
+  },
+  globalFilterFn: props.globalFilterFn ?? 'includesString',
+  manualFiltering: props.manualFiltering ?? false,
   onColumnPinningChange: (updater) => {
     columnPinning.value = functionalUpdate(updater, columnPinning.value)
   },
