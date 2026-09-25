@@ -16,7 +16,7 @@ type Contact = {
 const columns: TableColumnDef<Contact>[] = [
   { accessorKey: 'name', header: 'Name', enablePinning: true },
   { accessorKey: 'company', header: 'Company' },
-  { accessorKey: 'email', header: 'Email' },
+  { accessorKey: 'email', header: 'Email', enablePinning: true },
   { accessorKey: 'city', header: 'City' },
   { accessorKey: 'status', header: 'Status' },
 ]
@@ -54,7 +54,7 @@ type Contact = {
 const columns: TableColumnDef<Contact>[] = [
   { accessorKey: 'name', header: 'Name', enablePinning: true },
   { accessorKey: 'company', header: 'Company' },
-  { accessorKey: 'email', header: 'Email' },
+  { accessorKey: 'email', header: 'Email', enablePinning: true },
   { accessorKey: 'city', header: 'City' },
   { accessorKey: 'status', header: 'Status' },
 ]

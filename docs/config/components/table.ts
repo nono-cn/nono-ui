@@ -4,6 +4,7 @@ import TableSortingExample from '../../components/examples/table/TableSortingExa
 import TableCellSpanningExample from '../../components/examples/table/TableCellSpanningExample.vue'
 import TableColumnSpanningExample from '../../components/examples/table/TableColumnSpanningExample.vue'
 import TableColumnPinningExample from '../../components/examples/table/TableColumnPinningExample.vue'
+import TableColumnSizingExample from '../../components/examples/table/TableColumnSizingExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -43,6 +44,12 @@ const tableConfig: ComponentDocConfig = {
       description:
         'Pin a column to the start of the table with the header button, then scroll horizontally to see it stay in place.',
       component: TableColumnPinningExample,
+    },
+    {
+      title: 'Column sizing',
+      description:
+        'Set size on column definitions to control pixel widths; the rendered table uses their combined width.',
+      component: TableColumnSizingExample,
     },
   ],
   accessibility: [],

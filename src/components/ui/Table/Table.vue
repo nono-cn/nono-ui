@@ -28,11 +28,12 @@ const columnPinning = ref<ColumnPinningState>({ start: [], end: [] })
 
 const rootProps = computed(() => ({
   ...attrs,
-  class: cn('w-full overflow-x-auto rounded-md border border-border', attrs.class),
+  class: cn('w-full min-w-0 overflow-x-auto rounded-md border border-border', attrs.class),
 }))
 
 const tableProps = computed(() => ({
-  class: cn('w-full min-w-max caption-bottom text-sm'),
+  class: cn('w-max min-w-full table-fixed caption-bottom text-sm'),
+  style: { width: `${table.getTotalSize()}px` },
 }))
 const trHeadProps = computed(() => ({
   class: cn('border-b'),
