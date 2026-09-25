@@ -193,6 +193,8 @@ const filterSlotProps = (column: Column<typeof tableFeatureSet, TData, unknown>)
   value: column.getFilterValue(),
   setValue: (value: Parameters<typeof column.setFilterValue>[0]) => column.setFilterValue(value),
   isFiltered: column.getIsFiltered(),
+  facetedUniqueValues: column.getFacetedUniqueValues(),
+  facetedMinMaxValues: column.getFacetedMinMaxValues(),
 })
 
 const getColumnSlotName = (

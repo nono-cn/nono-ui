@@ -1,7 +1,11 @@
 import {
   createSortedRowModel,
   createFilteredRowModel,
+  createFacetedRowModel,
+  createFacetedUniqueValues,
+  createFacetedMinMaxValues,
   cellSpanningFeature,
+  columnFacetingFeature,
   columnFilteringFeature,
   globalFilteringFeature,
   columnSizingFeature,
@@ -47,9 +51,13 @@ import type {
 
 export const tableFeatureSet = tableFeatures({
   cellSpanningFeature,
+  columnFacetingFeature,
   columnFilteringFeature,
   globalFilteringFeature,
   filteredRowModel: createFilteredRowModel(),
+  facetedRowModel: createFacetedRowModel(),
+  facetedUniqueValues: createFacetedUniqueValues(),
+  facetedMinMaxValues: createFacetedMinMaxValues(),
   filterFns: {
     arrHas: filterFn_arrHas,
     arrIncludes: filterFn_arrIncludes,
@@ -121,6 +129,8 @@ export interface TableSlots<TData extends RowData> {
         value: unknown
         setValue: Column<typeof tableFeatureSet, TData, unknown>['setFilterValue']
         isFiltered: boolean
+        facetedUniqueValues: Map<unknown, number>
+        facetedMinMaxValues: [number, number] | undefined
       }) => unknown)
     | undefined
 }

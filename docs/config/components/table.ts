@@ -11,6 +11,7 @@ import TableColumnFilteringExample from '../../components/examples/table/TableCo
 import TableGlobalFilteringExample from '../../components/examples/table/TableGlobalFilteringExample.vue'
 import TableCustomGlobalFilterExample from '../../components/examples/table/TableCustomGlobalFilterExample.vue'
 import TableServerGlobalFilterExample from '../../components/examples/table/TableServerGlobalFilterExample.vue'
+import TableFacetingExample from '../../components/examples/table/TableFacetingExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -56,6 +57,12 @@ const tableConfig: ComponentDocConfig = {
       description:
         'Set manualFiltering when data comes from a filtered API response. The search value drives the request and Table renders the returned rows.',
       component: TableServerGlobalFilterExample,
+    },
+    {
+      title: 'Column faceting',
+      description:
+        'Build filter choices with counts and numeric ranges derived from rows matching the other active filters.',
+      component: TableFacetingExample,
     },
     {
       title: 'Cell spanning',
@@ -292,9 +299,9 @@ const tableConfig: ComponentDocConfig = {
       },
       {
         name: 'filter-{column.id}',
-        type: '{ column, value, setValue, isFiltered }',
+        type: '{ column, value, setValue, isFiltered, facetedUniqueValues, facetedMinMaxValues }',
         description:
-          'Renders a custom control in the dedicated filter row. Its name uses the column.id resolved by TanStack, and its cell remains empty when omitted.',
+          'Renders a custom control in the dedicated filter row. The facet map contains available values and counts; the range contains numeric limits after other filters. Its cell remains empty when omitted.',
       },
       {
         name: 'sort',
