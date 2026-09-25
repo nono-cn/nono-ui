@@ -29,4 +29,6 @@ export default {
   fileUploadMaxSize: 'لا يمكن أن يتجاوز الحجم الإجمالي {size}.',
   tagInputRemove: 'إزالة الوسم',
   tagInputClear: 'مسح الوسوم',
+  tablePinColumn: 'تثبيت في البداية',
+  tableUnpinColumn: 'إلغاء التثبيت',
 } satisfies Messages

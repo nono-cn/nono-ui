@@ -27,4 +27,6 @@ export interface Messages {
   fileUploadMaxSize: string
   tagInputRemove: string
   tagInputClear: string
+  tablePinColumn: string
+  tableUnpinColumn: string
 }

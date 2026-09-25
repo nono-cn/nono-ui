@@ -9,7 +9,13 @@ import {
   sortFns,
   tableFeatures,
 } from '@tanstack/vue-table'
-import type { ColumnDef, ColumnVisibilityState, RowData, TableOptions } from '@tanstack/vue-table'
+import type {
+  ColumnDef,
+  ColumnPinningState,
+  ColumnVisibilityState,
+  RowData,
+  TableOptions,
+} from '@tanstack/vue-table'
 
 export const tableFeatureSet = tableFeatures({
   cellSpanningFeature,
@@ -33,6 +39,7 @@ export type TableColumnDef<TData extends RowData> = ColumnDef<typeof tableFeatur
 export type TableProps<TData extends RowData> = {
   data?: TData[]
   columns?: TableOptions<typeof tableFeatureSet, TData>['columns']
+  columnPinning?: ColumnPinningState
   columnVisibility?: ColumnVisibilityState
 }
 

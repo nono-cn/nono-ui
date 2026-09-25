@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { ColumnPinningState } from '@tanstack/vue-table'
 import { Table } from '@/components/ui/Table'
 import type { TableColumnDef } from '@/components/ui/Table'
 import ComponentExample from '../ComponentExample.vue'
@@ -38,8 +39,11 @@ const data = ref<Contact[]>([
   },
 ])
 
+const columnPinning = ref<ColumnPinningState>({ start: ['name'], end: [] })
+
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
+import type { ColumnPinningState } from '@tanstack/vue-table'
 import { Table } from '__DOCS_PACKAGE__/components/ui/Table'
 import type { TableColumnDef } from '__DOCS_PACKAGE__/components/ui/Table'
 
@@ -75,22 +79,24 @@ const data = ref<Contact[]>([
     status: 'Active',
   },
 ])
+
+const columnPinning = ref<ColumnPinningState>({ start: ['name'], end: [] })
 ${scriptEnd}
 
 <template>
-  <Table :columns="columns" :data="data" />
+  <Table v-model:column-pinning="columnPinning" :columns="columns" :data="data" />
 </template>`
 </script>
 
 <template>
   <ComponentExample
     title="Column pinning"
-    description="Use the pin button at the start of a header to keep that column visible while scrolling horizontally. Activate it again to unpin."
+    description="Initialize pinning from the parent with v-model:column-pinning. The Name column starts pinned, and the header buttons can pin or unpin eligible columns."
     :code="code"
     :show-reset="false"
   >
     <div class="w-full">
-      <Table :columns="columns" :data="data" />
+      <Table v-model:column-pinning="columnPinning" :columns="columns" :data="data" />
     </div>
   </ComponentExample>
 </template>

@@ -83,6 +83,13 @@ const tableConfig: ComponentDocConfig = {
         description: 'Reactive row data passed to the TanStack table instance.',
       },
       {
+        name: 'columnPinning',
+        type: 'ColumnPinningState',
+        default: '{ start: [], end: [] }',
+        description:
+          'Pinned column IDs by side. Use v-model:column-pinning to initialize or control pinning from the parent.',
+      },
+      {
         name: 'columnVisibility',
         type: 'ColumnVisibilityState',
         default: '{}',

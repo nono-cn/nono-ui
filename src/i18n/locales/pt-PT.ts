@@ -29,4 +29,6 @@ export default {
   fileUploadMaxSize: 'O tamanho total não pode exceder {size}.',
   tagInputRemove: 'Remover etiqueta',
   tagInputClear: 'Limpar etiquetas',
+  tablePinColumn: 'Fixar no início',
+  tableUnpinColumn: 'Desafixar',
 } satisfies Messages

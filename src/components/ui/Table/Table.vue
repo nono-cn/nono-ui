@@ -13,6 +13,7 @@ import type {
 import { computed, ref, useAttrs } from 'vue'
 import { cn } from '@/lib/utils'
 import { Icon } from '@/components/ui/Icon'
+import { useI18n } from '@/i18n'
 import type { TableProps } from '.'
 import type { TableSlots } from '.'
 import { tableFeatureSet } from '.'
@@ -24,8 +25,11 @@ const props = withDefaults(defineProps<TableProps<TData>>(), tableDefaults)
 defineSlots<TableSlots>()
 
 const attrs = useAttrs()
+const { t } = useI18n()
 const sorting = ref<SortingState>([])
-const columnPinning = ref<ColumnPinningState>({ start: [], end: [] })
+const columnPinning = defineModel<ColumnPinningState>('columnPinning', {
+  default: () => ({ start: [], end: [] }),
+})
 const columnVisibility = defineModel<ColumnVisibilityState>('columnVisibility', {
   default: () => ({}),
 })
@@ -44,9 +48,14 @@ const trHeadProps = computed(() => ({
 }))
 const thProps = (header: Header<typeof tableFeatureSet, TData>) => {
   const sorted = header.column.getIsSorted()
+  const pinned = Boolean(header.column.getIsPinned())
 
   return {
-    class: cn('h-10 px-3 text-left align-middle font-medium'),
+    class: cn(
+      'h-10 px-3 text-left align-middle font-medium relative',
+      pinned && 'sticky z-20 bg-card',
+    ),
+    style: pinned ? getPinningOffset(header.column) : getColumnWidth(header.column),
     'aria-sort': sorted === 'asc' ? 'ascending' : sorted === 'desc' ? 'descending' : undefined,
   }
 }
@@ -139,22 +148,23 @@ const toggleColumnSorting = (column: Column<typeof tableFeatureSet, TData, unkno
   column.toggleSorting()
 }
 
-const buttonPinProps = (column: Column<typeof tableFeatureSet, TData, unknown>) => ({
+const buttonPinProps = (header: Header<typeof tableFeatureSet, TData>) => ({
   type: 'button' as const,
   class:
     'inline-flex size-6 shrink-0 items-center justify-center rounded hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-  'aria-label': column.getIsPinned()
-    ? `Unpin ${column.id} column`
-    : `Pin ${column.id} column to start`,
-  'aria-pressed': Boolean(column.getIsPinned()),
+  'aria-labelledby': `${header.id}-pin-action ${header.id}-header-label`,
+  'aria-pressed': Boolean(header.column.getIsPinned()),
   onClick: (event: MouseEvent) => {
     event.stopPropagation()
-    pinColumn(column)
+    pinColumn(header.column)
   },
   onKeydown: (event: KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') event.stopPropagation()
   },
 })
+
+const pinActionLabel = (column: Column<typeof tableFeatureSet, TData, unknown>) =>
+  column.getIsPinned() ? t('tableUnpinColumn') : t('tablePinColumn')
 
 const buttonSortProps = (column: Column<typeof tableFeatureSet, TData, unknown>) => ({
   type: 'button' as const,
@@ -196,23 +206,18 @@ const table = useTable({
     <table v-bind="tableProps">
       <thead>
         <tr v-for="group in table.getHeaderGroups()" :key="group.id" v-bind="trHeadProps">
-          <th
-            v-for="header in group.headers"
-            :key="header.id"
-            v-bind="thProps(header)"
-            :class="[header.column.getIsPinned() && 'sticky z-20 bg-card', 'relative']"
-            :style="
-              header.column.getIsPinned()
-                ? getPinningOffset(header.column)
-                : getColumnWidth(header.column)
-            "
-          >
+          <th v-for="header in group.headers" :key="header.id" v-bind="thProps(header)">
             <span class="inline-flex items-center gap-2">
-              <button v-if="header.column.getCanPin()" v-bind="buttonPinProps(header.column)">
+              <button v-if="header.column.getCanPin()" v-bind="buttonPinProps(header)">
                 <Icon :name="header.column.getIsPinned() ? 'pinOff' : 'pin'" size="sm" />
+                <span :id="`${header.id}-pin-action`" class="sr-only">
+                  {{ pinActionLabel(header.column) }}
+                </span>
               </button>
               <button v-if="header.column.getCanSort()" v-bind="buttonSortProps(header.column)">
-                <FlexRender v-if="!header.isPlaceholder" :header="header" />
+                <span :id="`${header.id}-header-label`">
+                  <FlexRender v-if="!header.isPlaceholder" :header="header" />
+                </span>
                 <span aria-hidden="true">
                   <slot name="sort" :sorted="header.column.getIsSorted()">
                     <Icon v-if="header.column.getIsSorted() === 'asc'" name="chevronUp" size="sm" />
@@ -225,7 +230,9 @@ const table = useTable({
                 </span>
               </button>
               <div v-else class="inline-flex min-w-0 flex-1 items-center gap-2 text-left">
-                <FlexRender v-if="!header.isPlaceholder" :header="header" />
+                <span :id="`${header.id}-header-label`">
+                  <FlexRender v-if="!header.isPlaceholder" :header="header" />
+                </span>
               </div>
             </span>
             <div
