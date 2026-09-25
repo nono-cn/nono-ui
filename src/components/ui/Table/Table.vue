@@ -22,7 +22,7 @@ import { tableDefaults } from './defaults'
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<TableProps<TData>>(), tableDefaults)
-defineSlots<TableSlots>()
+defineSlots<TableSlots<TData>>()
 
 const attrs = useAttrs()
 const { t } = useI18n()
@@ -216,7 +216,14 @@ const table = useTable({
               </button>
               <button v-if="header.column.getCanSort()" v-bind="buttonSortProps(header.column)">
                 <span :id="`${header.id}-header-label`">
-                  <FlexRender v-if="!header.isPlaceholder" :header="header" />
+                  <slot
+                    :name="`header-${header.column.id}`"
+                    :header="header"
+                    :column="header.column"
+                    :table="table"
+                  >
+                    <FlexRender v-if="!header.isPlaceholder" :header="header" />
+                  </slot>
                 </span>
                 <span aria-hidden="true">
                   <slot name="sort" :sorted="header.column.getIsSorted()">
@@ -231,7 +238,14 @@ const table = useTable({
               </button>
               <div v-else class="inline-flex min-w-0 flex-1 items-center gap-2 text-left">
                 <span :id="`${header.id}-header-label`">
-                  <FlexRender v-if="!header.isPlaceholder" :header="header" />
+                  <slot
+                    :name="`header-${header.column.id}`"
+                    :header="header"
+                    :column="header.column"
+                    :table="table"
+                  >
+                    <FlexRender v-if="!header.isPlaceholder" :header="header" />
+                  </slot>
                 </span>
               </div>
             </span>
@@ -246,7 +260,15 @@ const table = useTable({
         <tr v-for="row in table.getRowModel().rows" :key="row.id" v-bind="trBodyProps">
           <template v-for="cell in getRowCells(row)" :key="cell.id">
             <td v-if="!cell.getIsCovered()" v-bind="tdProps(cell)">
-              <FlexRender :cell="cell" />
+              <slot
+                :name="`cell-${cell.column.id}`"
+                :cell="cell"
+                :row="row"
+                :column="cell.column"
+                :value="cell.getValue()"
+              >
+                <FlexRender :cell="cell" />
+              </slot>
             </td>
           </template>
         </tr>

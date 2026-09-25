@@ -10,10 +10,15 @@ import {
   tableFeatures,
 } from '@tanstack/vue-table'
 import type {
+  Cell,
+  Column,
   ColumnDef,
   ColumnPinningState,
   ColumnVisibilityState,
+  Header,
   RowData,
+  Row,
+  Table as TanStackTable,
   TableOptions,
 } from '@tanstack/vue-table'
 
@@ -43,6 +48,21 @@ export type TableProps<TData extends RowData> = {
   columnVisibility?: ColumnVisibilityState
 }
 
-export interface TableSlots {
+export interface TableSlots<TData extends RowData> {
   sort?(props: { sorted: false | 'asc' | 'desc' }): unknown
+  [name: `header-${string}`]:
+    | ((props: {
+        header: Header<typeof tableFeatureSet, TData>
+        column: Column<typeof tableFeatureSet, TData, unknown>
+        table: TanStackTable<typeof tableFeatureSet, TData>
+      }) => unknown)
+    | undefined
+  [name: `cell-${string}`]:
+    | ((props: {
+        cell: Cell<typeof tableFeatureSet, TData, unknown>
+        row: Row<typeof tableFeatureSet, TData>
+        column: Column<typeof tableFeatureSet, TData, unknown>
+        value: unknown
+      }) => unknown)
+    | undefined
 }

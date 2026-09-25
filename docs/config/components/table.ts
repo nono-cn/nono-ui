@@ -203,6 +203,18 @@ const tableConfig: ComponentDocConfig = {
     emits: [],
     slots: [
       {
+        name: 'header-{column.id}',
+        type: '{ header, column, table }',
+        description:
+          'Overrides a column header’s content. The slot name uses TanStack’s column.id, and the default header is rendered when the slot is omitted.',
+      },
+      {
+        name: 'cell-{column.id}',
+        type: '{ cell, row, column, value }',
+        description:
+          'Overrides a column’s body cell content. The slot name uses TanStack’s column.id, and the default cell is rendered when the slot is omitted.',
+      },
+      {
         name: 'sort',
         type: "{ sorted: false | 'asc' | 'desc' }",
         description:
