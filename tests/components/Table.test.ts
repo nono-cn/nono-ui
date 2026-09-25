@@ -19,6 +19,32 @@ const sortableColumns: TableColumnDef<Person>[] = [
   { accessorKey: 'firstName', header: 'First name', enableSorting: true },
   { accessorKey: 'age', header: 'Age', enableSorting: true },
 ]
+type SpanningRow = {
+  region: string
+  city: string
+  isSummary?: boolean
+}
+
+const spanningData: SpanningRow[] = [
+  { region: 'North', city: 'Bilbao' },
+  { region: 'North', city: 'Santander' },
+  { region: 'South', city: 'Seville' },
+  { region: 'Total', city: '', isSummary: true },
+]
+
+const cellSpanningColumns: TableColumnDef<SpanningRow>[] = [
+  { accessorKey: 'region', header: 'Region', spanRows: true },
+  { accessorKey: 'city', header: 'City' },
+]
+
+const columnSpanningColumns: TableColumnDef<SpanningRow>[] = [
+  {
+    accessorKey: 'region',
+    header: 'Region',
+    spanColumns: ({ row }) => (row.original.isSummary ? Infinity : 1),
+  },
+  { accessorKey: 'city', header: 'City' },
+]
 
 function mountTable(options: MountingOptions<TableProps<Person>> = {}) {
   return mount(Table, options)
@@ -148,6 +174,34 @@ describe('Table', () => {
 
         await header.trigger('click')
         expect(header.attributes('aria-sort')).toBe('descending')
+      })
+    })
+
+    describe('cellSpanning', () => {
+      it('renderiza rowspan y omite las celdas cubiertas por filas adyacentes iguales', () => {
+        const wrapper = mountTable({
+          props: { columns: cellSpanningColumns, data: spanningData.slice(0, 3) },
+        })
+        const rows = wrapper.findAll('tbody tr')
+
+        expect(rows[0].find('td').attributes('rowspan')).toBe('2')
+        expect(rows[0].findAll('td').map((cell) => cell.text())).toEqual(['North', 'Bilbao'])
+        expect(rows[1].findAll('td').map((cell) => cell.text())).toEqual(['Santander'])
+        expect(rows[2].findAll('td').map((cell) => cell.text())).toEqual(['South', 'Seville'])
+      })
+    })
+
+    describe('columnSpanning', () => {
+      it('renderiza colspan con Infinity y omite las celdas cubiertas', () => {
+        const wrapper = mountTable({
+          props: { columns: columnSpanningColumns, data: spanningData },
+        })
+        const summaryRow = wrapper.findAll('tbody tr')[3]
+        const summaryCell = summaryRow.get('td')
+
+        expect(summaryCell.text()).toBe('Total')
+        expect(summaryCell.attributes('colspan')).toBe('2')
+        expect(summaryRow.findAll('td')).toHaveLength(1)
       })
     })
   })

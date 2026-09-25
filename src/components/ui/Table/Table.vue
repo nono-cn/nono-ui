@@ -92,9 +92,16 @@ const table = useTable({
       </thead>
       <tbody>
         <tr v-for="row in table.getRowModel().rows" :key="row.id" v-bind="trBodyProps">
-          <td v-for="cell in row.getAllCells()" :key="cell.id" v-bind="tdProps">
-            <FlexRender :cell="cell" />
-          </td>
+          <template v-for="cell in row.getAllCells()" :key="cell.id">
+            <td
+              v-if="!cell.getIsCovered()"
+              v-bind="tdProps"
+              :rowspan="cell.getRowSpan()"
+              :colspan="cell.getColSpan()"
+            >
+              <FlexRender :cell="cell" />
+            </td>
+          </template>
         </tr>
       </tbody>
     </table>
