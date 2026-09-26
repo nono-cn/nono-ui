@@ -22,6 +22,7 @@ export const kbdVariants = cva(
       },
       severity: {
         primary: '',
+        neutral: '',
         secondary: '',
         warning: '',
         success: '',
@@ -52,6 +53,26 @@ export const kbdVariants = cva(
         variant: 'subtle',
         severity: 'primary',
         class: 'border-primary/20 bg-primary/10 text-primary',
+      },
+      {
+        variant: 'solid',
+        severity: 'neutral',
+        class: 'border-transparent bg-foreground text-background',
+      },
+      {
+        variant: 'outline',
+        severity: 'neutral',
+        class: 'border-foreground/30 text-foreground',
+      },
+      {
+        variant: 'soft',
+        severity: 'neutral',
+        class: 'border-transparent bg-muted text-foreground',
+      },
+      {
+        variant: 'subtle',
+        severity: 'neutral',
+        class: 'border-border bg-muted text-foreground',
       },
       {
         variant: 'solid',

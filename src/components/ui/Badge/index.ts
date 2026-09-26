@@ -21,6 +21,7 @@ export const badgeVariants = cva(
       },
       severity: {
         primary: 'focus-visible:border-primary focus-visible:ring-primary/30',
+        neutral: 'focus-visible:border-foreground focus-visible:ring-foreground/30',
         secondary:
           'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/20',
         warning: 'focus-visible:border-warning focus-visible:ring-warning/30',
@@ -57,6 +58,31 @@ export const badgeVariants = cva(
         variant: 'soft',
         severity: 'primary',
         class: 'border-transparent bg-primary/10 text-primary',
+      },
+      {
+        variant: 'solid',
+        severity: 'neutral',
+        class: 'border-transparent bg-foreground text-background',
+      },
+      {
+        variant: 'outline',
+        severity: 'neutral',
+        class: 'border-foreground/30 text-foreground',
+      },
+      {
+        variant: 'plain',
+        severity: 'neutral',
+        class: 'border-transparent text-foreground',
+      },
+      {
+        variant: 'subtle',
+        severity: 'neutral',
+        class: 'border-border bg-muted text-foreground',
+      },
+      {
+        variant: 'soft',
+        severity: 'neutral',
+        class: 'border-transparent bg-muted text-foreground',
       },
       {
         variant: 'solid',

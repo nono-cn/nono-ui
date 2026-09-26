@@ -10,6 +10,7 @@ ${scriptEnd}
 <template>
   <div class="flex flex-wrap items-center gap-3">
     <Badge label="Primary" variant="solid" severity="primary" />
+    <Badge label="Neutral" variant="solid" severity="neutral" />
     <Badge label="Secondary" variant="solid" severity="secondary" />
     <Badge label="Warning" variant="solid" severity="warning" />
     <Badge label="Success" variant="solid" severity="success" />
@@ -27,6 +28,7 @@ ${scriptEnd}
   >
     <div class="flex flex-wrap items-center gap-3">
       <Badge label="Primary" variant="solid" severity="primary" />
+      <Badge label="Neutral" variant="solid" severity="neutral" />
       <Badge label="Secondary" variant="solid" severity="secondary" />
       <Badge label="Warning" variant="solid" severity="warning" />
       <Badge label="Success" variant="solid" severity="success" />

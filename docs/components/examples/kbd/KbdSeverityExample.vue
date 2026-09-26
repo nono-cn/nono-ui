@@ -10,6 +10,7 @@ ${scriptEnd}
 <template>
   <div class="flex flex-wrap items-center gap-3">
     <Kbd label="Ctrl" variant="solid" severity="primary" />
+    <Kbd label="Meta" variant="solid" severity="neutral" />
     <Kbd label="Alt" variant="solid" severity="secondary" />
     <Kbd label="Shift" variant="solid" severity="warning" />
     <Kbd label="Enter" variant="solid" severity="success" />
@@ -27,6 +28,7 @@ ${scriptEnd}
   >
     <div class="flex flex-wrap items-center gap-3">
       <Kbd label="Ctrl" variant="solid" severity="primary" />
+      <Kbd label="Meta" variant="solid" severity="neutral" />
       <Kbd label="Alt" variant="solid" severity="secondary" />
       <Kbd label="Shift" variant="solid" severity="warning" />
       <Kbd label="Enter" variant="solid" severity="success" />
