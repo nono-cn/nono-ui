@@ -51,7 +51,13 @@ const colorAreaConfig: ComponentDocConfig = {
     {
       title: 'Keyboard interaction',
       description:
-        'ColorArea uses the keyboard interaction provided by Reka UI. Additional accessibility guidance will be added as the public API grows.',
+        'Use ArrowLeft and ArrowRight to decrease or increase the horizontal channel, and ArrowUp and ArrowDown to increase or decrease the vertical channel. Hold Shift with an arrow key to change values by 10 steps. PageUp and PageDown change the vertical channel by a larger step; Home and End move the horizontal channel to its minimum and maximum.',
+      links: [
+        {
+          label: 'Read the Reka UI ColorArea accessibility guide',
+          href: 'https://reka-ui.com/docs/components/color-area#accessibility',
+        },
+      ],
     },
   ],
   api: {
