@@ -19,6 +19,8 @@ export const alertVariants = cva('', {
         '[--alert-color:var(--primary)] [--alert-solid:var(--primary)] [--alert-solid-foreground:var(--primary-foreground)]',
       secondary:
         '[--alert-color:var(--secondary-foreground)] [--alert-solid:var(--secondary)] [--alert-solid-foreground:var(--secondary-foreground)]',
+      neutral:
+        '[--alert-color:var(--foreground)] [--alert-solid:var(--foreground)] [--alert-solid-foreground:var(--background)]',
       warning:
         '[--alert-color:var(--warning)] [--alert-solid:var(--warning)] [--alert-solid-foreground:var(--warning-foreground)]',
       success:

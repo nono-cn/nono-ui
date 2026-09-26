@@ -11,6 +11,7 @@ ${scriptEnd}
   <div class="grid w-full max-w-2xl gap-3">
     <Alert label="Primary" description="Primary information." severity="primary" />
     <Alert label="Secondary" description="Secondary information." severity="secondary" />
+    <Alert label="Neutral" description="Neutral information." severity="neutral" />
     <Alert label="Warning" description="Please review this notice." severity="warning" />
     <Alert label="Success" description="The operation completed successfully." severity="success" />
     <Alert label="Error" description="The operation could not be completed." severity="error" />
@@ -28,6 +29,7 @@ ${scriptEnd}
     <div class="grid w-full max-w-2xl gap-3">
       <Alert label="Primary" description="Primary information." severity="primary" />
       <Alert label="Secondary" description="Secondary information." severity="secondary" />
+      <Alert label="Neutral" description="Neutral information." severity="neutral" />
       <Alert label="Warning" description="Please review this notice." severity="warning" />
       <Alert
         label="Success"

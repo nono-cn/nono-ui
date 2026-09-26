@@ -102,7 +102,7 @@ const alertConfig: ComponentDocConfig = {
       },
       {
         name: 'severity',
-        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
+        type: "'primary' | 'secondary' | 'neutral' | 'warning' | 'success' | 'error'",
         default: "'primary'",
         description: 'Severity used to choose the alert colors.',
       },
