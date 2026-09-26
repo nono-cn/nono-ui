@@ -19,6 +19,7 @@ const value = defineModel<ColorAreaValue>('value', { default: colorAreaDefaults.
 const rootProps = computed(() => ({
   ...attrs,
   colorSpace: props.colorSpace,
+  xChannel: props.xChannel,
   class: cn(colorAreaRootVariants(), attrs.class),
   style: attrs.style,
 }))

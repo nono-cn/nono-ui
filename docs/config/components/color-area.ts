@@ -1,6 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
 import ColorAreaBasicExample from '../../components/examples/color-area/ColorAreaBasicExample.vue'
 import ColorAreaValueExample from '../../components/examples/color-area/ColorAreaValueExample.vue'
+import ColorAreaXChannelExample from '../../components/examples/color-area/ColorAreaXChannelExample.vue'
 
 const colorAreaConfig: ComponentDocConfig = {
   slug: 'color-area',
@@ -20,6 +21,11 @@ const colorAreaConfig: ComponentDocConfig = {
       title: 'Value',
       description: 'Bind the selected color with v-model:value.',
       component: ColorAreaValueExample,
+    },
+    {
+      title: 'Horizontal channel',
+      description: 'Compare the HSL channels that can change from left to right.',
+      component: ColorAreaXChannelExample,
     },
   ],
   accessibility: [
@@ -42,6 +48,13 @@ const colorAreaConfig: ComponentDocConfig = {
         type: "'hsl' | 'hsb' | 'rgb'",
         default: "'hsl'",
         description: 'Color space used to calculate and display the selected color.',
+      },
+      {
+        name: 'xChannel',
+        type: "'red' | 'green' | 'blue' | 'hue' | 'saturation' | 'lightness' | 'brightness' | 'alpha'",
+        default: "'hue'",
+        description:
+          'Color channel controlled by horizontal movement from its minimum on the left to its maximum on the right.',
       },
     ],
     emits: [

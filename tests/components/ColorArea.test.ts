@@ -28,6 +28,18 @@ const casesColorSpace = [
   { input: undefined, expected: 'hsl' },
 ]
 
+const casesXChannel = [
+  { input: 'red' as const, expected: 'red' },
+  { input: 'green' as const, expected: 'green' },
+  { input: 'blue' as const, expected: 'blue' },
+  { input: 'hue' as const, expected: 'hue' },
+  { input: 'saturation' as const, expected: 'saturation' },
+  { input: 'lightness' as const, expected: 'lightness' },
+  { input: 'brightness' as const, expected: 'brightness' },
+  { input: 'alpha' as const, expected: 'alpha' },
+  { input: undefined, expected: 'hue' },
+]
+
 function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
   return mount(ColorArea, options)
 }
@@ -52,6 +64,17 @@ describe('ColorArea', () => {
           const wrapper = mountColorArea({ props: { colorSpace: input } })
 
           expect(wrapper.getComponent(ColorAreaRoot).props('colorSpace')).toBe(expected)
+        },
+      )
+    })
+
+    describe('xChannel', () => {
+      it.each(casesXChannel)(
+        'pasa xChannel=$input a ColorAreaRoot como $expected',
+        ({ input, expected }) => {
+          const wrapper = mountColorArea({ props: { xChannel: input } })
+
+          expect(wrapper.getComponent(ColorAreaRoot).props('xChannel')).toBe(expected)
         },
       )
     })
