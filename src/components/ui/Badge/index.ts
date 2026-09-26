@@ -13,203 +13,31 @@ export const badgeVariants = cva(
         lg: 'gap-1.5 px-2 text-lg',
       },
       variant: {
-        solid: '',
-        outline: 'border bg-transparent',
-        plain: 'bg-transparent',
-        subtle: 'border',
-        soft: '',
+        solid: 'border-transparent bg-(--badge-solid) text-(--badge-solid-foreground)',
+        outline: 'border-(--badge-color)/40 bg-transparent text-(--badge-color)',
+        plain: 'border-transparent bg-transparent text-(--badge-color)',
+        subtle: 'border-(--badge-color)/20 bg-(--badge-color)/10 text-(--badge-color)',
+        soft: 'border-transparent bg-(--badge-color)/10 text-(--badge-color)',
       },
       severity: {
-        primary: 'focus-visible:border-primary focus-visible:ring-primary/30',
-        neutral: 'focus-visible:border-foreground focus-visible:ring-foreground/30',
+        primary:
+          'focus-visible:border-primary focus-visible:ring-primary/30 [--badge-color:var(--primary)] [--badge-solid:var(--primary)] [--badge-solid-foreground:var(--primary-foreground)]',
+        neutral:
+          'focus-visible:border-foreground focus-visible:ring-foreground/30 [--badge-color:var(--foreground)] [--badge-solid:var(--foreground)] [--badge-solid-foreground:var(--background)]',
         secondary:
-          'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/20',
-        warning: 'focus-visible:border-warning focus-visible:ring-warning/30',
-        success: 'focus-visible:border-success focus-visible:ring-success/30',
-        error: 'focus-visible:border-error focus-visible:ring-error/30',
+          'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/20 [--badge-color:var(--secondary-foreground)] [--badge-solid:var(--secondary)] [--badge-solid-foreground:var(--secondary-foreground)]',
+        warning:
+          'focus-visible:border-warning focus-visible:ring-warning/30 [--badge-color:var(--warning)] [--badge-solid:var(--warning)] [--badge-solid-foreground:var(--warning-foreground)]',
+        success:
+          'focus-visible:border-success focus-visible:ring-success/30 [--badge-color:var(--success)] [--badge-solid:var(--success)] [--badge-solid-foreground:var(--success-foreground)]',
+        error:
+          'focus-visible:border-error focus-visible:ring-error/30 [--badge-color:var(--error)] [--badge-solid:var(--error)] [--badge-solid-foreground:var(--error-foreground)]',
       },
       color: {
-        true: 'focus-visible:border-(--badge-color) focus-visible:ring-(--badge-color)/30',
+        true: 'focus-visible:border-(--badge-color) focus-visible:ring-(--badge-color)/30 [--badge-solid:var(--badge-color)] [--badge-solid-foreground:var(--badge-color-foreground)]',
         false: '',
       },
     },
-    compoundVariants: [
-      {
-        variant: 'solid',
-        severity: 'primary',
-        class: 'border-transparent bg-primary text-primary-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'primary',
-        class: 'border-primary/40 text-primary',
-      },
-      {
-        variant: 'plain',
-        severity: 'primary',
-        class: 'border-transparent text-primary',
-      },
-      {
-        variant: 'subtle',
-        severity: 'primary',
-        class: 'border-primary/20 bg-primary/10 text-primary',
-      },
-      {
-        variant: 'soft',
-        severity: 'primary',
-        class: 'border-transparent bg-primary/10 text-primary',
-      },
-      {
-        variant: 'solid',
-        severity: 'neutral',
-        class: 'border-transparent bg-foreground text-background',
-      },
-      {
-        variant: 'outline',
-        severity: 'neutral',
-        class: 'border-foreground/30 text-foreground',
-      },
-      {
-        variant: 'plain',
-        severity: 'neutral',
-        class: 'border-transparent text-foreground',
-      },
-      {
-        variant: 'subtle',
-        severity: 'neutral',
-        class: 'border-border bg-muted text-foreground',
-      },
-      {
-        variant: 'soft',
-        severity: 'neutral',
-        class: 'border-transparent bg-muted text-foreground',
-      },
-      {
-        variant: 'solid',
-        severity: 'secondary',
-        class: 'border-transparent bg-secondary text-secondary-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'secondary',
-        class: 'border-secondary-foreground/30 text-secondary-foreground',
-      },
-      {
-        variant: 'plain',
-        severity: 'secondary',
-        class: 'border-transparent text-secondary-foreground',
-      },
-      {
-        variant: 'subtle',
-        severity: 'secondary',
-        class: 'border-secondary-foreground/15 bg-secondary/60 text-secondary-foreground',
-      },
-      {
-        variant: 'soft',
-        severity: 'secondary',
-        class: 'border-transparent bg-secondary/60 text-secondary-foreground',
-      },
-      {
-        variant: 'solid',
-        severity: 'warning',
-        class: 'border-transparent bg-warning text-warning-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'warning',
-        class: 'border-warning/40 text-warning',
-      },
-      {
-        variant: 'plain',
-        severity: 'warning',
-        class: 'border-transparent text-warning',
-      },
-      {
-        variant: 'subtle',
-        severity: 'warning',
-        class: 'border-warning/20 bg-warning/10 text-warning',
-      },
-      {
-        variant: 'soft',
-        severity: 'warning',
-        class: 'border-transparent bg-warning/10 text-warning',
-      },
-      {
-        variant: 'solid',
-        severity: 'success',
-        class: 'border-transparent bg-success text-success-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'success',
-        class: 'border-success/40 text-success',
-      },
-      {
-        variant: 'plain',
-        severity: 'success',
-        class: 'border-transparent text-success',
-      },
-      {
-        variant: 'subtle',
-        severity: 'success',
-        class: 'border-success/20 bg-success/10 text-success',
-      },
-      {
-        variant: 'soft',
-        severity: 'success',
-        class: 'border-transparent bg-success/10 text-success',
-      },
-      {
-        variant: 'solid',
-        severity: 'error',
-        class: 'border-transparent bg-error text-error-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'error',
-        class: 'border-error/40 text-error',
-      },
-      {
-        variant: 'plain',
-        severity: 'error',
-        class: 'border-transparent text-error',
-      },
-      {
-        variant: 'subtle',
-        severity: 'error',
-        class: 'border-error/20 bg-error/10 text-error',
-      },
-      {
-        variant: 'soft',
-        severity: 'error',
-        class: 'border-transparent bg-error/10 text-error',
-      },
-      {
-        color: true,
-        variant: 'solid',
-        class: 'border-transparent bg-(--badge-color) text-(--badge-color-foreground)',
-      },
-      {
-        color: true,
-        variant: 'outline',
-        class: 'border-(--badge-color)/40 bg-transparent text-(--badge-color)',
-      },
-      {
-        color: true,
-        variant: 'plain',
-        class: 'border-transparent bg-transparent text-(--badge-color)',
-      },
-      {
-        color: true,
-        variant: 'subtle',
-        class: 'border-(--badge-color)/20 bg-(--badge-color)/10 text-(--badge-color)',
-      },
-      {
-        color: true,
-        variant: 'soft',
-        class: 'border-transparent bg-(--badge-color)/10 text-(--badge-color)',
-      },
-    ],
     defaultVariants: {
       size: 'md',
       variant: 'solid',

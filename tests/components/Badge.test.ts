@@ -15,92 +15,14 @@ function mountBadge(options: MountingOptions<BadgeProps> = {}) {
   return mount(Badge, options)
 }
 
-const casesSeverityVariant = (
-  [
-    {
-      severity: 'primary',
-      variants: {
-        solid: ['bg-primary', 'text-primary-foreground'],
-        outline: ['border-primary/40', 'text-primary'],
-        plain: ['border-transparent', 'text-primary'],
-        subtle: ['border-primary/20', 'bg-primary/10', 'text-primary'],
-        soft: ['border-transparent', 'bg-primary/10', 'text-primary'],
-      },
-    },
-    {
-      severity: 'neutral',
-      variants: {
-        solid: ['bg-foreground', 'text-background'],
-        outline: ['border-foreground/30', 'text-foreground'],
-        plain: ['border-transparent', 'text-foreground'],
-        subtle: ['border-border', 'bg-muted', 'text-foreground'],
-        soft: ['border-transparent', 'bg-muted', 'text-foreground'],
-      },
-    },
-    {
-      severity: 'secondary',
-      variants: {
-        solid: ['bg-secondary', 'text-secondary-foreground'],
-        outline: ['border-secondary-foreground/30', 'text-secondary-foreground'],
-        plain: ['border-transparent', 'text-secondary-foreground'],
-        subtle: ['border-secondary-foreground/15', 'bg-secondary/60', 'text-secondary-foreground'],
-        soft: ['border-transparent', 'bg-secondary/60', 'text-secondary-foreground'],
-      },
-    },
-    {
-      severity: 'warning',
-      variants: {
-        solid: ['bg-warning', 'text-warning-foreground'],
-        outline: ['border-warning/40', 'text-warning'],
-        plain: ['border-transparent', 'text-warning'],
-        subtle: ['border-warning/20', 'bg-warning/10', 'text-warning'],
-        soft: ['border-transparent', 'bg-warning/10', 'text-warning'],
-      },
-    },
-    {
-      severity: 'success',
-      variants: {
-        solid: ['bg-success', 'text-success-foreground'],
-        outline: ['border-success/40', 'text-success'],
-        plain: ['border-transparent', 'text-success'],
-        subtle: ['border-success/20', 'bg-success/10', 'text-success'],
-        soft: ['border-transparent', 'bg-success/10', 'text-success'],
-      },
-    },
-    {
-      severity: 'error',
-      variants: {
-        solid: ['bg-error', 'text-error-foreground'],
-        outline: ['border-error/40', 'text-error'],
-        plain: ['border-transparent', 'text-error'],
-        subtle: ['border-error/20', 'bg-error/10', 'text-error'],
-        soft: ['border-transparent', 'bg-error/10', 'text-error'],
-      },
-    },
-  ] satisfies {
-    severity: BadgeSeverity
-    variants: Record<BadgeVariant, string[]>
-  }[]
-).flatMap(({ severity, variants }) =>
-  (Object.entries(variants) as [BadgeVariant, string[]][]).map(([variant, semanticClasses]) => ({
-    severity,
-    variant,
-    expected: [
-      ...(variant === 'outline' || variant === 'subtle' ? ['border'] : []),
-      ...(variant === 'outline' || variant === 'plain' ? ['bg-transparent'] : []),
-      ...semanticClasses,
-    ],
-  })),
-)
-
-const casesColorVariant = [
+const casesVariant = [
   {
     variant: 'solid',
-    expected: ['border-transparent', 'bg-(--badge-color)', 'text-(--badge-color-foreground)'],
+    expected: ['border-transparent', 'bg-(--badge-solid)', 'text-(--badge-solid-foreground)'],
   },
   {
     variant: 'outline',
-    expected: ['border', 'border-(--badge-color)/40', 'bg-transparent', 'text-(--badge-color)'],
+    expected: ['border-(--badge-color)/40', 'bg-transparent', 'text-(--badge-color)'],
   },
   {
     variant: 'plain',
@@ -108,18 +30,99 @@ const casesColorVariant = [
   },
   {
     variant: 'subtle',
-    expected: [
-      'border',
-      'border-(--badge-color)/20',
-      'bg-(--badge-color)/10',
-      'text-(--badge-color)',
-    ],
+    expected: ['border-(--badge-color)/20', 'bg-(--badge-color)/10', 'text-(--badge-color)'],
   },
   {
     variant: 'soft',
     expected: ['border-transparent', 'bg-(--badge-color)/10', 'text-(--badge-color)'],
   },
 ] satisfies { variant: BadgeVariant; expected: string[] }[]
+
+const casesSeverity = [
+  {
+    severity: 'primary',
+    expected: [
+      '[--badge-color:var(--primary)]',
+      '[--badge-solid:var(--primary)]',
+      '[--badge-solid-foreground:var(--primary-foreground)]',
+      'focus-visible:border-primary',
+      'focus-visible:ring-primary/30',
+    ],
+  },
+  {
+    severity: 'neutral',
+    expected: [
+      '[--badge-color:var(--foreground)]',
+      '[--badge-solid:var(--foreground)]',
+      '[--badge-solid-foreground:var(--background)]',
+      'focus-visible:border-foreground',
+      'focus-visible:ring-foreground/30',
+    ],
+  },
+  {
+    severity: 'secondary',
+    expected: [
+      '[--badge-color:var(--secondary-foreground)]',
+      '[--badge-solid:var(--secondary)]',
+      '[--badge-solid-foreground:var(--secondary-foreground)]',
+      'focus-visible:border-secondary-foreground',
+      'focus-visible:ring-secondary-foreground/20',
+    ],
+  },
+  {
+    severity: 'warning',
+    expected: [
+      '[--badge-color:var(--warning)]',
+      '[--badge-solid:var(--warning)]',
+      '[--badge-solid-foreground:var(--warning-foreground)]',
+      'focus-visible:border-warning',
+      'focus-visible:ring-warning/30',
+    ],
+  },
+  {
+    severity: 'success',
+    expected: [
+      '[--badge-color:var(--success)]',
+      '[--badge-solid:var(--success)]',
+      '[--badge-solid-foreground:var(--success-foreground)]',
+      'focus-visible:border-success',
+      'focus-visible:ring-success/30',
+    ],
+  },
+  {
+    severity: 'error',
+    expected: [
+      '[--badge-color:var(--error)]',
+      '[--badge-solid:var(--error)]',
+      '[--badge-solid-foreground:var(--error-foreground)]',
+      'focus-visible:border-error',
+      'focus-visible:ring-error/30',
+    ],
+  },
+] satisfies { severity: BadgeSeverity; expected: string[] }[]
+
+const casesSeverityVariant = casesSeverity.flatMap(({ severity, expected: severityClasses }) =>
+  casesVariant.map(({ variant, expected: variantClasses }) => ({
+    severity,
+    variant,
+    expected: [...severityClasses, ...variantClasses],
+  })),
+)
+
+const casesColorVariant = casesVariant.map(({ variant, expected: variantClasses }) => ({
+  variant,
+  expected: [
+    ...variantClasses,
+    'focus-visible:border-(--badge-color)',
+    'focus-visible:ring-(--badge-color)/30',
+    ...(variant === 'solid'
+      ? [
+          '[--badge-solid:var(--badge-color)]',
+          '[--badge-solid-foreground:var(--badge-color-foreground)]',
+        ]
+      : []),
+  ],
+}))
 
 describe('Badge', () => {
   describe('props', () => {
