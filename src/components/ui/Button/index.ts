@@ -18,6 +18,7 @@ export const buttonVariants = cva('', {
     },
     severity: {
       primary: 'focus-visible:border-primary focus-visible:ring-primary/30',
+      neutral: 'focus-visible:border-foreground focus-visible:ring-foreground/30',
       secondary:
         'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/20',
       warning: 'focus-visible:border-warning focus-visible:ring-warning/30',
@@ -115,6 +116,36 @@ export const buttonVariants = cva('', {
       variant: 'link',
       severity: 'secondary',
       class: 'text-secondary-foreground',
+    },
+    {
+      variant: 'solid',
+      severity: 'neutral',
+      class: 'bg-foreground text-background hover:bg-foreground/90 active:bg-foreground/80',
+    },
+    {
+      variant: 'outline',
+      severity: 'neutral',
+      class: 'border-foreground/30 text-foreground hover:bg-muted active:bg-muted/80',
+    },
+    {
+      variant: 'plain',
+      severity: 'neutral',
+      class: 'text-foreground hover:bg-muted active:bg-muted/80',
+    },
+    {
+      variant: 'subtle',
+      severity: 'neutral',
+      class: 'border-border bg-muted text-foreground hover:bg-muted/80 active:bg-muted/70',
+    },
+    {
+      variant: 'soft',
+      severity: 'neutral',
+      class: 'bg-muted text-foreground hover:bg-muted/80 active:bg-muted/70',
+    },
+    {
+      variant: 'link',
+      severity: 'neutral',
+      class: 'text-foreground',
     },
     {
       variant: 'solid',

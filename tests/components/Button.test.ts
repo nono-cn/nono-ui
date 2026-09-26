@@ -2,7 +2,12 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Button, type ButtonProps } from '@/components/ui/Button'
+import {
+  Button,
+  type ButtonProps,
+  type ButtonSeverity,
+  type ButtonVariant,
+} from '@/components/ui/Button'
 import { testAttrs } from '../utils/testAttrs'
 import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
@@ -22,22 +27,266 @@ const casesSize = [
   { input: 'lg' as const, expected: ['h-10', 'text-lg'] },
 ]
 
-const casesVariant = [
-  { input: 'solid' as const, expected: ['bg-primary', 'text-primary-foreground'] },
-  { input: 'outline' as const, expected: ['border', 'border-primary/40', 'text-primary'] },
-  { input: 'plain' as const, expected: ['bg-transparent', 'text-primary'] },
-  { input: 'subtle' as const, expected: ['border', 'bg-primary/10', 'text-primary'] },
-  { input: 'soft' as const, expected: ['bg-primary/10', 'text-primary'] },
-  { input: 'link' as const, expected: ['underline', 'text-primary'] },
-]
-
 const casesRaised = [
   { input: true, expected: true },
   { input: false, expected: false },
   { input: undefined, expected: false },
 ]
 
-const casesSeverity = ['primary', 'secondary', 'warning', 'success', 'error'] as const
+const casesSeverityVariant = (
+  [
+    {
+      severity: 'primary',
+      expectedFocus: ['focus-visible:border-primary', 'focus-visible:ring-primary/30'],
+      variants: [
+        {
+          variant: 'solid',
+          expectedNormal: ['bg-primary', 'text-primary-foreground'],
+          expectedHover: ['hover:bg-primary/90'],
+        },
+        {
+          variant: 'outline',
+          expectedNormal: ['border', 'bg-transparent', 'border-primary/40', 'text-primary'],
+          expectedHover: ['hover:bg-primary/10'],
+        },
+        {
+          variant: 'plain',
+          expectedNormal: ['bg-transparent', 'text-primary'],
+          expectedHover: ['hover:bg-primary/10'],
+        },
+        {
+          variant: 'subtle',
+          expectedNormal: ['border', 'border-primary/20', 'bg-primary/10', 'text-primary'],
+          expectedHover: ['hover:bg-primary/15'],
+        },
+        {
+          variant: 'soft',
+          expectedNormal: ['bg-primary/10', 'text-primary'],
+          expectedHover: ['hover:bg-primary/20'],
+        },
+        {
+          variant: 'link',
+          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-primary'],
+          expectedHover: ['hover:no-underline'],
+        },
+      ],
+    },
+    {
+      severity: 'neutral',
+      expectedFocus: ['focus-visible:border-foreground', 'focus-visible:ring-foreground/30'],
+      variants: [
+        {
+          variant: 'solid',
+          expectedNormal: ['bg-foreground', 'text-background'],
+          expectedHover: ['hover:bg-foreground/90'],
+        },
+        {
+          variant: 'outline',
+          expectedNormal: ['border', 'bg-transparent', 'border-foreground/30', 'text-foreground'],
+          expectedHover: ['hover:bg-muted'],
+        },
+        {
+          variant: 'plain',
+          expectedNormal: ['bg-transparent', 'text-foreground'],
+          expectedHover: ['hover:bg-muted'],
+        },
+        {
+          variant: 'subtle',
+          expectedNormal: ['border', 'border-border', 'bg-muted', 'text-foreground'],
+          expectedHover: ['hover:bg-muted/80'],
+        },
+        {
+          variant: 'soft',
+          expectedNormal: ['bg-muted', 'text-foreground'],
+          expectedHover: ['hover:bg-muted/80'],
+        },
+        {
+          variant: 'link',
+          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-foreground'],
+          expectedHover: ['hover:no-underline'],
+        },
+      ],
+    },
+    {
+      severity: 'secondary',
+      expectedFocus: [
+        'focus-visible:border-secondary-foreground',
+        'focus-visible:ring-secondary-foreground/20',
+      ],
+      variants: [
+        {
+          variant: 'solid',
+          expectedNormal: ['bg-secondary', 'text-secondary-foreground'],
+          expectedHover: ['hover:bg-secondary/80'],
+        },
+        {
+          variant: 'outline',
+          expectedNormal: [
+            'border',
+            'bg-transparent',
+            'border-secondary-foreground/30',
+            'text-secondary-foreground',
+          ],
+          expectedHover: ['hover:bg-secondary'],
+        },
+        {
+          variant: 'plain',
+          expectedNormal: ['bg-transparent', 'text-secondary-foreground'],
+          expectedHover: ['hover:bg-secondary'],
+        },
+        {
+          variant: 'subtle',
+          expectedNormal: [
+            'border',
+            'border-secondary-foreground/15',
+            'bg-secondary/60',
+            'text-secondary-foreground',
+          ],
+          expectedHover: ['hover:bg-secondary/80'],
+        },
+        {
+          variant: 'soft',
+          expectedNormal: ['bg-secondary/60', 'text-secondary-foreground'],
+          expectedHover: ['hover:bg-secondary/80'],
+        },
+        {
+          variant: 'link',
+          expectedNormal: [
+            'bg-transparent',
+            'underline',
+            'underline-offset-4',
+            'text-secondary-foreground',
+          ],
+          expectedHover: ['hover:no-underline'],
+        },
+      ],
+    },
+    {
+      severity: 'warning',
+      expectedFocus: ['focus-visible:border-warning', 'focus-visible:ring-warning/30'],
+      variants: [
+        {
+          variant: 'solid',
+          expectedNormal: ['bg-warning', 'text-warning-foreground'],
+          expectedHover: ['hover:bg-warning/90'],
+        },
+        {
+          variant: 'outline',
+          expectedNormal: ['border', 'bg-transparent', 'border-warning/40', 'text-warning'],
+          expectedHover: ['hover:bg-warning/10'],
+        },
+        {
+          variant: 'plain',
+          expectedNormal: ['bg-transparent', 'text-warning'],
+          expectedHover: ['hover:bg-warning/10'],
+        },
+        {
+          variant: 'subtle',
+          expectedNormal: ['border', 'border-warning/20', 'bg-warning/10', 'text-warning'],
+          expectedHover: ['hover:bg-warning/15'],
+        },
+        {
+          variant: 'soft',
+          expectedNormal: ['bg-warning/10', 'text-warning'],
+          expectedHover: ['hover:bg-warning/20'],
+        },
+        {
+          variant: 'link',
+          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-warning'],
+          expectedHover: ['hover:no-underline'],
+        },
+      ],
+    },
+    {
+      severity: 'success',
+      expectedFocus: ['focus-visible:border-success', 'focus-visible:ring-success/30'],
+      variants: [
+        {
+          variant: 'solid',
+          expectedNormal: ['bg-success', 'text-success-foreground'],
+          expectedHover: ['hover:bg-success/90'],
+        },
+        {
+          variant: 'outline',
+          expectedNormal: ['border', 'bg-transparent', 'border-success/40', 'text-success'],
+          expectedHover: ['hover:bg-success/10'],
+        },
+        {
+          variant: 'plain',
+          expectedNormal: ['bg-transparent', 'text-success'],
+          expectedHover: ['hover:bg-success/10'],
+        },
+        {
+          variant: 'subtle',
+          expectedNormal: ['border', 'border-success/20', 'bg-success/10', 'text-success'],
+          expectedHover: ['hover:bg-success/15'],
+        },
+        {
+          variant: 'soft',
+          expectedNormal: ['bg-success/10', 'text-success'],
+          expectedHover: ['hover:bg-success/20'],
+        },
+        {
+          variant: 'link',
+          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-success'],
+          expectedHover: ['hover:no-underline'],
+        },
+      ],
+    },
+    {
+      severity: 'error',
+      expectedFocus: ['focus-visible:border-error', 'focus-visible:ring-error/30'],
+      variants: [
+        {
+          variant: 'solid',
+          expectedNormal: ['bg-error', 'text-error-foreground'],
+          expectedHover: ['hover:bg-error/90'],
+        },
+        {
+          variant: 'outline',
+          expectedNormal: ['border', 'bg-transparent', 'border-error/40', 'text-error'],
+          expectedHover: ['hover:bg-error/10'],
+        },
+        {
+          variant: 'plain',
+          expectedNormal: ['bg-transparent', 'text-error'],
+          expectedHover: ['hover:bg-error/10'],
+        },
+        {
+          variant: 'subtle',
+          expectedNormal: ['border', 'border-error/20', 'bg-error/10', 'text-error'],
+          expectedHover: ['hover:bg-error/15'],
+        },
+        {
+          variant: 'soft',
+          expectedNormal: ['bg-error/10', 'text-error'],
+          expectedHover: ['hover:bg-error/20'],
+        },
+        {
+          variant: 'link',
+          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-error'],
+          expectedHover: ['hover:no-underline'],
+        },
+      ],
+    },
+  ] satisfies {
+    severity: ButtonSeverity
+    expectedFocus: string[]
+    variants: {
+      variant: ButtonVariant
+      expectedNormal: string[]
+      expectedHover: string[]
+    }[]
+  }[]
+).flatMap(({ severity, expectedFocus, variants }) =>
+  variants.map(({ variant, expectedNormal, expectedHover }) => ({
+    severity,
+    variant,
+    expectedNormal,
+    expectedHover,
+    expectedFocus,
+  })),
+)
 
 const casesShape = [
   { prop: 'rounded' as const, expected: 'rounded-full' },
@@ -78,11 +327,17 @@ describe('Button', () => {
     })
 
     describe('variant', () => {
-      it.each(casesVariant)('renderiza variant=$input', ({ input, expected }) => {
-        const root = mountButton({ props: { variant: input } }).get('[data-test-button-root]')
+      it.each(casesSeverityVariant)(
+        'renderiza severity=$severity con variant=$variant',
+        ({ severity, variant, expectedNormal, expectedHover, expectedFocus }) => {
+          const root = mountButton({ props: { severity, variant } }).get('[data-test-button-root]')
+          const classes = root.classes()
 
-        expect(root.classes()).toEqual(expect.arrayContaining(expected))
-      })
+          expect(classes).toEqual(expect.arrayContaining(expectedNormal))
+          expect(classes).toEqual(expect.arrayContaining(expectedHover))
+          expect(classes).toEqual(expect.arrayContaining(expectedFocus))
+        },
+      )
     })
 
     describe('raised', () => {
@@ -94,16 +349,6 @@ describe('Button', () => {
           expect(root.classes().includes('shadow-sm')).toBe(expected)
         },
       )
-    })
-
-    describe('severity', () => {
-      it.each(casesSeverity)('renderiza severity=%s', (severity) => {
-        const root = mountButton({ props: { severity } }).get('[data-test-button-root]')
-
-        expect(root.classes()).toContain(
-          severity === 'secondary' ? 'bg-secondary' : `bg-${severity}`,
-        )
-      })
     })
 
     describe('shape', () => {

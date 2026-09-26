@@ -37,7 +37,7 @@ async function copyCode() {
 
 <template>
   <article
-    class="w-full max-w-full min-w-0 overflow-hidden rounded-xl border bg-card text-card-foreground"
+    class="w-full max-w-full min-w-0 overflow-hidden rounded-xl border text-card-foreground"
   >
     <header class="flex flex-wrap items-start justify-between gap-3 border-b p-4 sm:p-5">
       <div class="grid gap-1">
