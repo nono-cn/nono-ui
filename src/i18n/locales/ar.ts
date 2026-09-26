@@ -29,4 +29,6 @@ export default {
   fileUploadMaxSize: 'لا يمكن أن يتجاوز الحجم الإجمالي {size}.',
   tagInputRemove: 'إزالة الوسم',
   tagInputClear: 'مسح الوسوم',
+  colorAreaRoleDescription: 'منتقي الألوان',
+  colorAreaThumbRoleDescription: 'مقبض منتقي الألوان',
 } satisfies Messages

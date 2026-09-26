@@ -29,4 +29,6 @@ export default {
   fileUploadMaxSize: 'The total size cannot exceed {size}.',
   tagInputRemove: 'Remove tag',
   tagInputClear: 'Clear tags',
+  colorAreaRoleDescription: 'Color picker',
+  colorAreaThumbRoleDescription: 'Color thumb',
 } satisfies Messages

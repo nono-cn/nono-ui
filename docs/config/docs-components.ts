@@ -12,6 +12,7 @@ import buttonGroup from './components/button-group'
 import card from './components/card'
 import checkboxConfig from './components/checkbox'
 import chip from './components/chip'
+import colorArea from './components/color-area'
 import empty from './components/empty'
 import fieldSet from './components/field-set'
 import icon from './components/icon'
@@ -51,6 +52,7 @@ export const docsComponents = [
   card,
   checkboxConfig,
   chip,
+  colorArea,
   empty,
   fieldSet,
   icon,
