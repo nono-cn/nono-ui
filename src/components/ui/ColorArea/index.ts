@@ -27,7 +27,7 @@ export const colorAreaRootVariants = cva('relative overflow-hidden data-[disable
 export type ColorAreaSize = NonNullable<VariantProps<typeof colorAreaRootVariants>['size']>
 
 export const colorAreaThumbVariants = cva(
-  'block size-5 rounded-full border-2 border-white shadow-md ring-1 ring-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+  'block size-5 rounded-full border-2 border-black/60 bg-white shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
 )
 
 export type ColorAreaValue = string | Color
