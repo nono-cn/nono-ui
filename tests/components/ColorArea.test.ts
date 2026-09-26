@@ -40,6 +40,18 @@ const casesXChannel = [
   { input: undefined, expected: 'hue' },
 ]
 
+const casesYChannel = [
+  { input: 'red' as const, expected: 'red' },
+  { input: 'green' as const, expected: 'green' },
+  { input: 'blue' as const, expected: 'blue' },
+  { input: 'hue' as const, expected: 'hue' },
+  { input: 'saturation' as const, expected: 'saturation' },
+  { input: 'lightness' as const, expected: 'lightness' },
+  { input: 'brightness' as const, expected: 'brightness' },
+  { input: 'alpha' as const, expected: 'alpha' },
+  { input: undefined, expected: 'saturation' },
+]
+
 function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
   return mount(ColorArea, options)
 }
@@ -75,6 +87,17 @@ describe('ColorArea', () => {
           const wrapper = mountColorArea({ props: { xChannel: input } })
 
           expect(wrapper.getComponent(ColorAreaRoot).props('xChannel')).toBe(expected)
+        },
+      )
+    })
+
+    describe('yChannel', () => {
+      it.each(casesYChannel)(
+        'pasa yChannel=$input a ColorAreaRoot como $expected',
+        ({ input, expected }) => {
+          const wrapper = mountColorArea({ props: { yChannel: input } })
+
+          expect(wrapper.getComponent(ColorAreaRoot).props('yChannel')).toBe(expected)
         },
       )
     })

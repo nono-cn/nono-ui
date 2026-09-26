@@ -1,7 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
 import ColorAreaBasicExample from '../../components/examples/color-area/ColorAreaBasicExample.vue'
 import ColorAreaValueExample from '../../components/examples/color-area/ColorAreaValueExample.vue'
-import ColorAreaXChannelExample from '../../components/examples/color-area/ColorAreaXChannelExample.vue'
+import ColorAreaChannelsExample from '../../components/examples/color-area/ColorAreaChannelsExample.vue'
 
 const colorAreaConfig: ComponentDocConfig = {
   slug: 'color-area',
@@ -23,9 +23,9 @@ const colorAreaConfig: ComponentDocConfig = {
       component: ColorAreaValueExample,
     },
     {
-      title: 'Horizontal channel',
-      description: 'Compare the HSL channels that can change from left to right.',
-      component: ColorAreaXChannelExample,
+      title: 'Channels',
+      description: 'Compare HSL channel pairs mapped to the horizontal and vertical axes.',
+      component: ColorAreaChannelsExample,
     },
   ],
   accessibility: [
@@ -55,6 +55,13 @@ const colorAreaConfig: ComponentDocConfig = {
         default: "'hue'",
         description:
           'Color channel controlled by horizontal movement from its minimum on the left to its maximum on the right.',
+      },
+      {
+        name: 'yChannel',
+        type: "'red' | 'green' | 'blue' | 'hue' | 'saturation' | 'lightness' | 'brightness' | 'alpha'",
+        default: "'saturation'",
+        description:
+          'Color channel controlled by vertical movement from its minimum at the bottom to its maximum at the top.',
       },
     ],
     emits: [

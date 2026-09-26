@@ -20,6 +20,7 @@ const rootProps = computed(() => ({
   ...attrs,
   colorSpace: props.colorSpace,
   xChannel: props.xChannel,
+  yChannel: props.yChannel,
   class: cn(colorAreaRootVariants(), attrs.class),
   style: attrs.style,
 }))

@@ -15,4 +15,5 @@ export interface ColorAreaProps {
   value?: ColorAreaValue
   colorSpace?: ColorSpace
   xChannel?: ColorChannel
+  yChannel?: ColorChannel
 }
