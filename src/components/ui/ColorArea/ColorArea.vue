@@ -10,12 +10,14 @@ import {
 import { colorAreaDefaults } from './defaults'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/composables/useUi'
+import { useI18n } from '@/i18n'
 
 defineOptions({ inheritAttrs: false })
 
 const attrs = useAttrs()
 const props = withDefaults(defineProps<ColorAreaProps>(), colorAreaDefaults)
 const value = defineModel<ColorAreaValue>('value', { default: colorAreaDefaults.value })
+const { t } = useI18n()
 
 const rootProps = computed(() => ({
   ...attrs,
@@ -37,6 +39,7 @@ const areaProps = computed(() => {
 
   return {
     ...ui,
+    'aria-roledescription': t('colorAreaRoleDescription'),
     class: cn('size-full', ui.class),
     style: ui.style,
   }
@@ -47,6 +50,7 @@ const thumbProps = computed(() => {
 
   return {
     ...ui,
+    'aria-roledescription': t('colorAreaThumbRoleDescription'),
     class: cn(colorAreaThumbVariants(), ui.class),
     style: ui.style,
   }

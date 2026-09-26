@@ -2,6 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { ColorAreaRoot, type Color } from 'reka-ui'
 
+import { i18n } from '@/i18n'
 import { ColorArea, type ColorAreaProps, type ColorAreaValue } from '@/components/ui/ColorArea'
 import { testAttrs } from '../utils/testAttrs'
 
@@ -72,7 +73,10 @@ const casesAxisName = [
 ]
 
 function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
-  return mount(ColorArea, options)
+  return mount(ColorArea, {
+    global: { plugins: [i18n], ...options.global },
+    ...options,
+  })
 }
 
 describe('ColorArea', () => {
@@ -189,6 +193,24 @@ describe('ColorArea', () => {
       text: 'pasa atributos arbitrarios, clase y estilo a ColorAreaRoot',
       id: '[data-test-color-area-root]',
       mount: (attrs) => mountColorArea({ attrs }),
+    })
+  })
+
+  describe('aria-roledescription', () => {
+    it('usa la clave i18n de ColorAreaArea', () => {
+      const wrapper = mountColorArea()
+
+      expect(wrapper.get('[data-test-color-area-area]').attributes('aria-roledescription')).toBe(
+        i18n.global.t('colorAreaRoleDescription'),
+      )
+    })
+
+    it('usa la clave i18n de ColorAreaThumb', () => {
+      const wrapper = mountColorArea()
+
+      expect(wrapper.get('[data-test-color-area-thumb]').attributes('aria-roledescription')).toBe(
+        i18n.global.t('colorAreaThumbRoleDescription'),
+      )
     })
   })
 
