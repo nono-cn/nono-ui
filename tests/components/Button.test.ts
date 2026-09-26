@@ -305,6 +305,56 @@ const casesClick = [
   { loading: false, ariaDisabled: true, expected: 0 },
 ]
 
+const casesColorVariant = [
+  {
+    variant: 'solid',
+    expected: [
+      'bg-(--button-color)',
+      'text-(--button-color-foreground)',
+      'hover:bg-(--button-color)/90',
+      'active:bg-(--button-color)/80',
+    ],
+  },
+  {
+    variant: 'outline',
+    expected: [
+      'border-(--button-color)/40',
+      'text-(--button-color)',
+      'hover:bg-(--button-color)/10',
+      'active:border-(--button-color)/60',
+      'active:bg-(--button-color)/20',
+    ],
+  },
+  {
+    variant: 'plain',
+    expected: [
+      'text-(--button-color)',
+      'hover:bg-(--button-color)/10',
+      'active:bg-(--button-color)/20',
+    ],
+  },
+  {
+    variant: 'subtle',
+    expected: [
+      'border-(--button-color)/20',
+      'bg-(--button-color)/10',
+      'text-(--button-color)',
+      'hover:bg-(--button-color)/15',
+      'active:bg-(--button-color)/25',
+    ],
+  },
+  {
+    variant: 'soft',
+    expected: [
+      'bg-(--button-color)/10',
+      'text-(--button-color)',
+      'hover:bg-(--button-color)/20',
+      'active:bg-(--button-color)/30',
+    ],
+  },
+  { variant: 'link', expected: ['text-(--button-color)'] },
+] satisfies { variant: ButtonVariant; expected: string[] }[]
+
 describe('Button', () => {
   describe('props', () => {
     describe('label', () => {
@@ -434,13 +484,18 @@ describe('Button', () => {
     })
 
     describe('color', () => {
-      it('aplica un color personalizado', () => {
-        const root = mountButton({ props: { color: '#ff0000' } }).get('[data-test-button-root]')
+      it.each(casesColorVariant)(
+        'aplica un color personalizado con variant=$variant',
+        ({ variant, expected }) => {
+          const root = mountButton({
+            props: { color: '#ff0000', variant },
+          }).get('[data-test-button-root]')
 
-        expect(root.attributes('style')).toContain('--button-color: #ff0000')
-        expect(root.attributes('style')).toContain('--button-color-foreground: #09090b')
-        expect(root.classes()).toContain('bg-(--button-color)')
-      })
+          expect(root.attributes('style')).toContain('--button-color: #ff0000')
+          expect(root.attributes('style')).toContain('--button-color-foreground: #09090b')
+          expect(root.classes()).toEqual(expect.arrayContaining(expected))
+        },
+      )
     })
 
     describe('as', () => {
