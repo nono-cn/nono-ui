@@ -191,4 +191,24 @@ describe('ColorArea', () => {
       mount: (attrs) => mountColorArea({ attrs }),
     })
   })
+
+  describe('configuración de la raíz', () => {
+    it('usa una raíz div sin asChild', () => {
+      const wrapper = mountColorArea()
+      const root = wrapper.getComponent(ColorAreaRoot)
+
+      expect(root.props('as')).toBe('div')
+      expect(root.props('asChild')).toBe(false)
+      expect(wrapper.get('[data-test-color-area-root]').element.tagName).toBe('DIV')
+    })
+
+    it('mantiene fija la raíz aunque se pasen los atributos as y asChild', () => {
+      const wrapper = mountColorArea({ attrs: { as: 'section', asChild: true } })
+      const root = wrapper.getComponent(ColorAreaRoot)
+
+      expect(root.props('as')).toBe('div')
+      expect(root.props('asChild')).toBe(false)
+      expect(wrapper.get('[data-test-color-area-root]').element.tagName).toBe('DIV')
+    })
+  })
 })
