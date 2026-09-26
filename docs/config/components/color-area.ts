@@ -96,6 +96,16 @@ const colorAreaConfig: ComponentDocConfig = {
         description:
           'Name of the hidden form field submitted with the current vertical channel value.',
       },
+      {
+        name: 'ui',
+        type: `{
+  area?: () => HTMLAttributes
+  thumb?: () => HTMLAttributes
+}`,
+        typePre: true,
+        default: 'undefined',
+        description: 'Resolvers for customizing attributes on the area and thumb.',
+      },
     ],
     emits: [
       {

@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { ColorAreaRoot, type Color } from 'reka-ui'
 
 import { ColorArea, type ColorAreaProps, type ColorAreaValue } from '@/components/ui/ColorArea'
+import { testAttrs } from '../utils/testAttrs'
 
 const casesValue: Array<{ input: ColorAreaValue | undefined; expected: ColorAreaValue }> = [
   { input: '#56d799', expected: '#56d799' },
@@ -145,6 +146,32 @@ describe('ColorArea', () => {
           expect(wrapper.getComponent(ColorAreaRoot).props('yName')).toBe(expected)
         },
       )
+    })
+
+    describe('ui', () => {
+      describe('area', () => {
+        testAttrs({
+          text: 'pasa atributos, clase y estilo mediante ui.area',
+          id: '[data-test-color-area-area]',
+          mount: (attrs) => mountColorArea({ props: { ui: { area: () => attrs } } }),
+        })
+      })
+
+      describe('thumb', () => {
+        testAttrs({
+          text: 'pasa atributos, clase y estilo mediante ui.thumb',
+          id: '[data-test-color-area-thumb]',
+          mount: (attrs) => mountColorArea({ props: { ui: { thumb: () => attrs } } }),
+        })
+      })
+    })
+  })
+
+  describe('attrs', () => {
+    testAttrs({
+      text: 'pasa atributos arbitrarios, clase y estilo a ColorAreaRoot',
+      id: '[data-test-color-area-root]',
+      mount: (attrs) => mountColorArea({ attrs }),
     })
   })
 })

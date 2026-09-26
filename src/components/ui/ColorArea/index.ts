@@ -1,5 +1,6 @@
 import { cva } from 'class-variance-authority'
 import type { Color, ColorChannel, ColorSpace } from 'reka-ui'
+import type { HTMLAttributes } from 'vue'
 
 export { default as ColorArea } from './ColorArea.vue'
 
@@ -13,6 +14,13 @@ export const colorAreaThumbVariants = cva(
 
 export type ColorAreaValue = string | Color
 
+export type ColorAreaFn<T> = () => T
+
+export interface ColorAreaUI {
+  area?: ColorAreaFn<HTMLAttributes>
+  thumb?: ColorAreaFn<HTMLAttributes>
+}
+
 export interface ColorAreaProps {
   value?: ColorAreaValue
   colorSpace?: ColorSpace
@@ -21,4 +29,5 @@ export interface ColorAreaProps {
   disabled?: boolean
   xName?: string
   yName?: string
+  ui?: ColorAreaUI
 }

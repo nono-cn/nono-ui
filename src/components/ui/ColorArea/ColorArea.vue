@@ -9,6 +9,7 @@ import {
 } from '.'
 import { colorAreaDefaults } from './defaults'
 import { cn } from '@/lib/utils'
+import { useUi } from '@/composables/useUi'
 
 defineOptions({ inheritAttrs: false })
 
@@ -28,18 +29,30 @@ const rootProps = computed(() => ({
   style: attrs.style,
 }))
 
-const areaProps = computed(() => ({
-  class: 'size-full',
-}))
+const areaProps = computed(() => {
+  const ui = useUi(props.ui?.area, undefined)
 
-const thumbProps = computed(() => ({
-  class: colorAreaThumbVariants(),
-}))
+  return {
+    ...ui,
+    class: cn('size-full', ui.class),
+    style: ui.style,
+  }
+})
+
+const thumbProps = computed(() => {
+  const ui = useUi(props.ui?.thumb, undefined)
+
+  return {
+    ...ui,
+    class: cn(colorAreaThumbVariants(), ui.class),
+    style: ui.style,
+  }
+})
 </script>
 
 <template>
   <ColorAreaRoot v-slot="{ style }" v-model="value" v-bind="rootProps" data-test-color-area-root>
-    <ColorAreaArea v-bind="areaProps" :style="style" data-test-color-area-area>
+    <ColorAreaArea v-bind="areaProps" :style="[style, areaProps.style]" data-test-color-area-area>
       <ColorAreaThumb v-bind="thumbProps" data-test-color-area-thumb />
     </ColorAreaArea>
   </ColorAreaRoot>
