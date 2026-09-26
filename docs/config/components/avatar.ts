@@ -1,9 +1,11 @@
 import type { ComponentDocConfig } from '../component-docs'
+import AvatarColorExample from '../../components/examples/avatar/AvatarColorExample.vue'
 import AvatarDelayMsExample from '../../components/examples/avatar/AvatarDelayMsExample.vue'
 import AvatarFallbackExample from '../../components/examples/avatar/AvatarFallbackExample.vue'
 import AvatarIconExample from '../../components/examples/avatar/AvatarIconExample.vue'
 import AvatarLabelExample from '../../components/examples/avatar/AvatarLabelExample.vue'
 import AvatarShapeExample from '../../components/examples/avatar/AvatarShapeExample.vue'
+import AvatarSeverityExample from '../../components/examples/avatar/AvatarSeverityExample.vue'
 import AvatarSizeExample from '../../components/examples/avatar/AvatarSizeExample.vue'
 import AvatarSrcExample from '../../components/examples/avatar/AvatarSrcExample.vue'
 import AvatarUsageExample from '../../components/examples/avatar/AvatarUsageExample.vue'
@@ -36,6 +38,17 @@ const avatarConfig: ComponentDocConfig = {
       title: 'Shape',
       description: 'Choose between a circular or square shape.',
       component: AvatarShapeExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Choose the text and icon color plus a soft background tint.',
+      component: AvatarSeverityExample,
+    },
+    {
+      title: 'Color',
+      description:
+        'Apply a custom background color while keeping the severity text and icon color.',
+      component: AvatarColorExample,
     },
     {
       title: 'DelayMs',
@@ -90,6 +103,20 @@ const avatarConfig: ComponentDocConfig = {
         type: "'rounded' | 'square'",
         default: "'rounded'",
         description: 'Visual shape of the avatar: circular or square.',
+      },
+      {
+        name: 'severity',
+        type: "'primary' | 'secondary' | 'neutral' | 'warning' | 'success' | 'error'",
+        default: "'neutral'",
+        description:
+          'Semantic color used for text and icons in the avatar fallback, with a soft background tint.',
+      },
+      {
+        name: 'color',
+        type: 'string',
+        default: 'undefined',
+        description:
+          'Custom CSS background color. The text and icon color continue to follow severity.',
       },
       {
         name: 'delayMs',

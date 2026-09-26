@@ -2,8 +2,9 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { h, nextTick } from 'vue'
 
-import { Avatar, type AvatarProps } from '@/components/ui/Avatar'
+import { Avatar, type AvatarProps, type AvatarSeverity } from '@/components/ui/Avatar'
 import { testAttrs } from '../utils/testAttrs'
+import { testColor } from '../utils/testColor'
 import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountAvatar(options: MountingOptions<AvatarProps> = {}) {
@@ -23,6 +24,65 @@ const casesShape = [
   { input: 'square' as const, expected: 'rounded-none' },
   { input: undefined, expected: 'rounded-full' },
 ]
+
+const casesSeverity = [
+  {
+    input: 'primary' as const,
+    expected: [
+      '[--avatar-foreground:var(--primary)]',
+      '[--avatar-background:var(--primary)]',
+      'bg-(--avatar-background,var(--color-muted))/10',
+    ],
+  },
+  {
+    input: 'secondary' as const,
+    expected: [
+      '[--avatar-foreground:var(--secondary-foreground)]',
+      '[--avatar-background:var(--secondary-foreground)]',
+      'bg-(--avatar-background,var(--color-muted))/10',
+    ],
+  },
+  {
+    input: 'neutral' as const,
+    expected: [
+      '[--avatar-foreground:var(--muted-foreground)]',
+      '[--avatar-background:var(--muted-foreground)]',
+      'bg-(--avatar-background,var(--color-muted))/10',
+    ],
+  },
+  {
+    input: 'warning' as const,
+    expected: [
+      '[--avatar-foreground:var(--warning)]',
+      '[--avatar-background:var(--warning)]',
+      'bg-(--avatar-background,var(--color-muted))/10',
+    ],
+  },
+  {
+    input: 'success' as const,
+    expected: [
+      '[--avatar-foreground:var(--success)]',
+      '[--avatar-background:var(--success)]',
+      'bg-(--avatar-background,var(--color-muted))/10',
+    ],
+  },
+  {
+    input: 'error' as const,
+    expected: [
+      '[--avatar-foreground:var(--error)]',
+      '[--avatar-background:var(--error)]',
+      'bg-(--avatar-background,var(--color-muted))/10',
+    ],
+  },
+  {
+    input: undefined,
+    expected: [
+      '[--avatar-foreground:var(--muted-foreground)]',
+      '[--avatar-background:var(--muted-foreground)]',
+      'bg-(--avatar-background,var(--color-muted))/10',
+    ],
+  },
+] satisfies { input: AvatarSeverity | undefined; expected: string[] }[]
 
 const casesLabel = [
   { input: 'AL', expected: 'AL' },
@@ -44,6 +104,45 @@ describe('Avatar', () => {
         const root = mountAvatar({ props: { shape: input } }).get('[data-test-avatar-root]')
 
         expect(root.classes()).toContain(expected)
+      })
+    })
+
+    describe('severity', () => {
+      it.each(casesSeverity)('renderiza severity=$input', ({ input, expected }) => {
+        const root = mountAvatar({ props: { severity: input } }).get('[data-test-avatar-root]')
+
+        expect(root.classes()).toEqual(expect.arrayContaining(expected))
+      })
+    })
+
+    describe('color', () => {
+      testColor({
+        text: 'aplica color personalizado',
+        id: '[data-test-avatar-root]',
+        varColor: '--avatar-color',
+        mount: (color) => mountAvatar({ props: { color } }),
+      })
+
+      it('usa el fondo suave de severity cuando no hay color personalizado', () => {
+        const root = mountAvatar({ props: { severity: 'success' } }).get('[data-test-avatar-root]')
+
+        expect(root.classes()).toContain('bg-(--avatar-background,var(--color-muted))/10')
+        expect(root.classes()).not.toContain('bg-(--avatar-color)')
+      })
+
+      it('combina el fondo personalizado con el texto de severity', () => {
+        const root = mountAvatar({
+          props: { color: '#ff0000', severity: 'success', label: 'AL' },
+        }).get('[data-test-avatar-root]')
+
+        expect(root.attributes('style')).toContain('--avatar-color: #ff0000')
+        expect(root.classes()).toEqual(
+          expect.arrayContaining([
+            '[--avatar-foreground:var(--success)]',
+            '[--avatar-background:var(--success)]',
+            'bg-(--avatar-color)',
+          ]),
+        )
       })
     })
 
