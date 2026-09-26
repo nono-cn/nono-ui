@@ -2,14 +2,110 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Bubble, type BubbleProps } from '@/components/ui/Bubble'
+import {
+  Bubble,
+  type BubbleProps,
+  type BubbleSeverity,
+  type BubbleVariant,
+} from '@/components/ui/Bubble'
 import BubbleReactions from '@/components/ui/Bubble/BubbleReactions.vue'
 import { testAttrs } from '../utils/testAttrs'
-import { testColor } from '../utils/testColor'
 
 function mountBubble(options: MountingOptions<BubbleProps> = {}) {
   return mount(Bubble, options)
 }
+
+const casesVariant = [
+  {
+    variant: 'solid',
+    expected: ['border-transparent', 'bg-(--bubble-solid)', 'text-(--bubble-solid-foreground)'],
+  },
+  {
+    variant: 'outline',
+    expected: ['border-(--bubble-color)/40', 'bg-transparent', 'text-(--bubble-color)'],
+  },
+  { variant: 'plain', expected: ['border-transparent', 'bg-transparent', 'text-(--bubble-color)'] },
+  {
+    variant: 'subtle',
+    expected: ['border-(--bubble-color)/20', 'bg-(--bubble-color)/10', 'text-(--bubble-color)'],
+  },
+  {
+    variant: 'soft',
+    expected: ['border-transparent', 'bg-(--bubble-color)/10', 'text-(--bubble-color)'],
+  },
+] satisfies { variant: BubbleVariant; expected: string[] }[]
+
+const casesSeverity = [
+  {
+    severity: 'primary',
+    expected: [
+      '[--bubble-color:var(--primary)]',
+      '[--bubble-solid:var(--primary)]',
+      '[--bubble-solid-foreground:var(--primary-foreground)]',
+    ],
+  },
+  {
+    severity: 'neutral',
+    expected: [
+      '[--bubble-color:var(--foreground)]',
+      '[--bubble-solid:var(--foreground)]',
+      '[--bubble-solid-foreground:var(--background)]',
+    ],
+  },
+  {
+    severity: 'secondary',
+    expected: [
+      '[--bubble-color:var(--secondary-foreground)]',
+      '[--bubble-solid:var(--secondary)]',
+      '[--bubble-solid-foreground:var(--secondary-foreground)]',
+    ],
+  },
+  {
+    severity: 'warning',
+    expected: [
+      '[--bubble-color:var(--warning)]',
+      '[--bubble-solid:var(--warning)]',
+      '[--bubble-solid-foreground:var(--warning-foreground)]',
+    ],
+  },
+  {
+    severity: 'success',
+    expected: [
+      '[--bubble-color:var(--success)]',
+      '[--bubble-solid:var(--success)]',
+      '[--bubble-solid-foreground:var(--success-foreground)]',
+    ],
+  },
+  {
+    severity: 'error',
+    expected: [
+      '[--bubble-color:var(--error)]',
+      '[--bubble-solid:var(--error)]',
+      '[--bubble-solid-foreground:var(--error-foreground)]',
+    ],
+  },
+] satisfies { severity: BubbleSeverity; expected: string[] }[]
+
+const casesSeverityVariant = casesSeverity.flatMap(({ severity, expected: severityClasses }) =>
+  casesVariant.map(({ variant, expected: variantClasses }) => ({
+    severity,
+    variant,
+    expected: [...severityClasses, ...variantClasses],
+  })),
+)
+
+const casesColorVariant = casesVariant.map(({ variant, expected: variantClasses }) => ({
+  variant,
+  expected: [
+    ...variantClasses,
+    ...(variant === 'solid'
+      ? [
+          '[--bubble-solid:var(--bubble-color)]',
+          '[--bubble-solid-foreground:var(--bubble-color-foreground)]',
+        ]
+      : []),
+  ],
+}))
 
 describe('Bubble', () => {
   describe('props', () => {
@@ -25,39 +121,64 @@ describe('Bubble', () => {
     })
 
     describe('variant', () => {
-      it.each([
-        ['solid', 'bg-(--bubble-solid)'],
-        ['outline', 'border-(--bubble-color)/40'],
-        ['plain', 'bg-transparent'],
-        ['subtle', 'bg-(--bubble-color)/10'],
-        ['soft', 'bg-(--bubble-color)/10'],
-        ['muted', 'bg-muted'],
-      ] as const)('renderiza %s', (variant, expected) => {
-        expect(
-          mountBubble({ props: { variant } }).get('[data-test-bubble-surface]').classes(),
-        ).toContain(expected)
+      it.each(casesSeverityVariant)(
+        'combina severity=$severity con variant=$variant',
+        ({ severity, variant, expected }) => {
+          const surface = mountBubble({ props: { severity, variant } }).get(
+            '[data-test-bubble-surface]',
+          )
+
+          expect(surface.classes()).toEqual(expect.arrayContaining(expected))
+        },
+      )
+
+      it('usa subtle y neutral por defecto', () => {
+        const surface = mountBubble().get('[data-test-bubble-surface]')
+
+        expect(surface.classes()).toEqual(
+          expect.arrayContaining([
+            'border-(--bubble-color)/20',
+            'bg-(--bubble-color)/10',
+            'text-(--bubble-color)',
+            '[--bubble-color:var(--foreground)]',
+            '[--bubble-solid:var(--foreground)]',
+            '[--bubble-solid-foreground:var(--background)]',
+          ]),
+        )
       })
     })
 
-    describe('severity', () => {
-      it.each(['primary', 'secondary', 'warning', 'success', 'error'] as const)(
-        '%s define su color',
-        (severity) => {
-          const expected =
-            severity === 'secondary' ? 'var(--secondary-foreground)' : `var(--${severity})`
-          expect(
-            mountBubble({ props: { severity } }).get('[data-test-bubble-surface]').classes(),
-          ).toContain(`[--bubble-color:${expected}]`)
+    describe('color', () => {
+      it.each(casesColorVariant)(
+        'combina color personalizado y severity=success con variant=$variant',
+        ({ variant, expected }) => {
+          const surface = mountBubble({
+            props: { color: '#ff0000', severity: 'success', variant },
+          }).get('[data-test-bubble-surface]')
+
+          expect(surface.attributes('style')).toContain('--bubble-color: #ff0000')
+          expect(surface.attributes('style')).toContain('--bubble-color-foreground: #09090b')
+          expect(surface.classes()).toContain('[--bubble-color:var(--success)]')
+          expect(surface.classes()).toEqual(expect.arrayContaining(expected))
         },
       )
-    })
 
-    describe('color', () => {
-      testColor({
-        text: 'aplica color personalizado',
-        id: '[data-test-bubble-surface]',
-        varColor: '--bubble-color',
-        mount: (color) => mountBubble({ props: { color } }),
+      it('prioriza color personalizado sobre severity en la variante solid', () => {
+        const surface = mountBubble({
+          props: { color: '#ff0000', severity: 'success', variant: 'solid' },
+        }).get('[data-test-bubble-surface]')
+
+        expect(surface.classes()).toEqual(
+          expect.arrayContaining([
+            '[--bubble-color:var(--success)]',
+            '[--bubble-solid:var(--bubble-color)]',
+            '[--bubble-solid-foreground:var(--bubble-color-foreground)]',
+            'bg-(--bubble-solid)',
+            'text-(--bubble-solid-foreground)',
+          ]),
+        )
+        expect(surface.attributes('style')).toContain('--bubble-color: #ff0000')
+        expect(surface.attributes('style')).toContain('--bubble-color-foreground: #09090b')
       })
     })
 

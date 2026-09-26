@@ -19,11 +19,12 @@ export const bubbleVariants = cva('block w-full rounded-2xl border px-4 py-2.5 t
       plain: 'border-transparent bg-transparent text-(--bubble-color)',
       subtle: 'border-(--bubble-color)/20 bg-(--bubble-color)/10 text-(--bubble-color)',
       soft: 'border-transparent bg-(--bubble-color)/10 text-(--bubble-color)',
-      muted: 'border-muted bg-muted text-muted-foreground',
     },
     severity: {
       primary:
         '[--bubble-color:var(--primary)] [--bubble-solid:var(--primary)] [--bubble-solid-foreground:var(--primary-foreground)]',
+      neutral:
+        '[--bubble-color:var(--foreground)] [--bubble-solid:var(--foreground)] [--bubble-solid-foreground:var(--background)]',
       secondary:
         '[--bubble-color:var(--secondary-foreground)] [--bubble-solid:var(--secondary)] [--bubble-solid-foreground:var(--secondary-foreground)]',
       warning:
@@ -38,7 +39,7 @@ export const bubbleVariants = cva('block w-full rounded-2xl border px-4 py-2.5 t
       false: '',
     },
   },
-  defaultVariants: { variant: 'solid', severity: 'primary', color: false },
+  defaultVariants: { variant: 'subtle', severity: 'neutral', color: false },
 })
 
 export type BubbleVariants = VariantProps<typeof bubbleVariants>

@@ -8,17 +8,17 @@ import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
 ${scriptEnd}
 
 <template>
-  <Bubble color="#8b5cf6">Bubble with a custom color</Bubble>
+  <Bubble color="#8b5cf6" severity="success">Bubble with a custom color</Bubble>
 </template>`
 </script>
 
 <template>
   <ComponentExample
     title="Color"
-    description="Apply a custom CSS color."
+    description="Apply a custom CSS color that takes precedence over the semantic severity color."
     :code="code"
     :show-reset="false"
   >
-    <Bubble color="#8b5cf6">Bubble with a custom color</Bubble>
+    <Bubble color="#8b5cf6" severity="success">Bubble with a custom color</Bubble>
   </ComponentExample>
 </template>

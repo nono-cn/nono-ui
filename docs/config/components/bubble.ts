@@ -15,7 +15,7 @@ const bubbleConfig: ComponentDocConfig = {
   usage: [
     {
       title: 'Basic usage',
-      description: 'Show a message with the default visual style.',
+      description: 'Show a message with the subtle variant and neutral severity by default.',
       component: BubbleBasicExample,
     },
   ],
@@ -32,7 +32,7 @@ const bubbleConfig: ComponentDocConfig = {
     },
     {
       title: 'Severity',
-      description: 'Compare the available semantic severities.',
+      description: 'Compare the available semantic severities, including neutral.',
       component: BubbleSeverityExample,
     },
     {
@@ -63,14 +63,14 @@ const bubbleConfig: ComponentDocConfig = {
       },
       {
         name: 'variant',
-        type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft' | 'muted'",
-        default: "'solid'",
+        type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft'",
+        default: "'subtle'",
         description: 'Visual style of the surface.',
       },
       {
         name: 'severity',
-        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'primary'",
+        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
+        default: "'neutral'",
         description: 'Severity used to choose the colors.',
       },
       {

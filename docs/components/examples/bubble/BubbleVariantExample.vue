@@ -3,11 +3,11 @@ import { Bubble } from '@/components/ui/Bubble'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants = ['solid', 'outline', 'plain', 'subtle', 'soft', 'muted'] as const
+const variants = ['solid', 'outline', 'plain', 'subtle', 'soft'] as const
 const code = `<script setup lang="ts">
 import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
 
-const variants = ['solid', 'outline', 'plain', 'subtle', 'soft', 'muted'] as const
+const variants = ['solid', 'outline', 'plain', 'subtle', 'soft'] as const
 ${scriptEnd}
 
 <template>
