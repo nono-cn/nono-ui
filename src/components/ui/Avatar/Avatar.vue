@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs, type ImgHTMLAttributes } from 'vue'
+import { computed, useAttrs, type CSSProperties, type ImgHTMLAttributes } from 'vue'
 import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
@@ -10,16 +10,28 @@ defineOptions({ inheritAttrs: false })
 const props = withDefaults(defineProps<AvatarProps>(), {
   size: 'md',
   shape: 'rounded',
+  severity: 'neutral',
   icon: undefined,
   label: undefined,
 })
 defineSlots<AvatarSlots>()
 
 const attrs = useAttrs()
+const colorStyle = computed<CSSProperties | undefined>(() =>
+  props.color ? { '--avatar-color': props.color } : undefined,
+)
 type AvatarImageProps = ImgHTMLAttributes & { src: string }
 const rootProps = computed(() => {
   return {
-    class: cn(avatarVariants({ size: props.size, shape: props.shape })),
+    class: cn(
+      avatarVariants({
+        size: props.size,
+        shape: props.shape,
+        severity: props.severity,
+        color: Boolean(props.color),
+      }),
+    ),
+    style: colorStyle.value,
   }
 })
 
@@ -35,7 +47,7 @@ const fallbackProps = computed(() => {
   return {
     ...attrs,
     delayMs: props.delayMs,
-    class: cn('flex size-full items-center justify-center bg-muted', attrs.class),
+    class: cn('flex size-full items-center justify-center', attrs.class),
   }
 })
 
