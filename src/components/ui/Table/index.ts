@@ -34,6 +34,7 @@ import {
   sortFns,
   tableFeatures,
 } from '@tanstack/vue-table'
+import { cva } from 'class-variance-authority'
 import type {
   Cell,
   Column,
@@ -89,6 +90,67 @@ export const tableFeatureSet = tableFeatures({
 
 export type TableFeatures = typeof tableFeatureSet
 
+export const tableVariants = {
+  root: cva('w-full min-w-0 rounded-md border border-border', {
+    variants: {
+      sticky: {
+        true: 'max-h-64 overflow-auto',
+        false: 'overflow-x-auto',
+      },
+    },
+    defaultVariants: { sticky: false },
+  }),
+  table: cva('w-max min-w-full table-fixed caption-bottom text-sm'),
+  top: cva('border-b border-border px-3 py-2'),
+  bottom: cva('border-t border-border px-3 py-2'),
+  trHead: cva('border-b'),
+  trBody: cva('border-b'),
+  th: cva('h-10 px-3 text-left align-middle font-bold relative', {
+    variants: {
+      sticky: {
+        true: 'sticky top-0 z-20 bg-card',
+        false: '',
+      },
+      pinned: {
+        true: 'sticky z-20 bg-card',
+        false: '',
+      },
+    },
+    defaultVariants: { sticky: false, pinned: false },
+  }),
+  filterTh: cva('px-3 py-2 text-left align-middle font-normal', {
+    variants: {
+      sticky: {
+        true: 'sticky top-10 z-20 bg-card',
+        false: '',
+      },
+      pinned: {
+        true: 'sticky z-20 bg-card',
+        false: '',
+      },
+    },
+    defaultVariants: { sticky: false, pinned: false },
+  }),
+  td: cva('p-3 align-middle', {
+    variants: {
+      pinned: {
+        true: 'sticky z-10 bg-card',
+        false: '',
+      },
+    },
+    defaultVariants: { pinned: false },
+  }),
+  resize: cva(
+    'absolute inset-y-0 right-0 z-30 w-1 cursor-col-resize touch-none select-none bg-transparent hover:bg-primary/50 focus-visible:bg-primary focus-visible:outline-none',
+  ),
+  pin: cva(
+    'inline-flex size-6 shrink-0 items-center justify-center rounded hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+  ),
+  sort: cva(
+    'inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+  ),
+}
+
 export { default as Table } from './Table.vue'
 export { default as TableColumnVisibility } from './TableColumnVisibility.vue'
 export type { TableColumnVisibilityOption } from './TableColumnVisibility.vue'
@@ -96,6 +158,7 @@ export type { TableColumnVisibilityOption } from './TableColumnVisibility.vue'
 export type TableColumnDef<TData extends RowData> = ColumnDef<typeof tableFeatureSet, TData>
 
 export type TableProps<TData extends RowData> = {
+  sticky?: boolean
   data?: TData[]
   columns?: TableOptions<typeof tableFeatureSet, TData>['columns']
   columnFilters?: ColumnFiltersState
@@ -107,6 +170,8 @@ export type TableProps<TData extends RowData> = {
 }
 
 export interface TableSlots<TData extends RowData> {
+  top?(): unknown
+  bottom?(): unknown
   sort?(props: { sorted: false | 'asc' | 'desc' }): unknown
   [name: `header-${string}`]:
     | ((props: {

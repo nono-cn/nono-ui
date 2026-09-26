@@ -12,6 +12,8 @@ import TableGlobalFilteringExample from '../../components/examples/table/TableGl
 import TableCustomGlobalFilterExample from '../../components/examples/table/TableCustomGlobalFilterExample.vue'
 import TableServerGlobalFilterExample from '../../components/examples/table/TableServerGlobalFilterExample.vue'
 import TableFacetingExample from '../../components/examples/table/TableFacetingExample.vue'
+import TableStickyExample from '../../components/examples/table/TableStickyExample.vue'
+import TableTopBottomExample from '../../components/examples/table/TableTopBottomExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -28,6 +30,17 @@ const tableConfig: ComponentDocConfig = {
     },
   ],
   examples: [
+    {
+      title: 'Top and bottom slots',
+      description: 'Use the top and bottom slots to place content around the table.',
+      component: TableTopBottomExample,
+    },
+    {
+      title: 'Sticky header',
+      description:
+        'Set sticky to keep the header visible while scrolling vertically inside a container with a bounded height.',
+      component: TableStickyExample,
+    },
     {
       title: 'Sorting',
       description:
@@ -104,6 +117,13 @@ const tableConfig: ComponentDocConfig = {
   accessibility: [],
   api: {
     props: [
+      {
+        name: 'sticky',
+        type: 'boolean',
+        default: 'false',
+        description:
+          'Keeps the table header visible while scrolling vertically. Place the table inside a container with a bounded height and vertical overflow.',
+      },
       {
         name: 'columns',
         type: 'TableColumnDef<TData>[]',
@@ -285,6 +305,16 @@ const tableConfig: ComponentDocConfig = {
     ],
     emits: [],
     slots: [
+      {
+        name: 'top',
+        type: '() => unknown',
+        description: 'Renders content above the table in a padded area with a bottom border.',
+      },
+      {
+        name: 'bottom',
+        type: '() => unknown',
+        description: 'Renders content below the table in a padded area with a top border.',
+      },
       {
         name: 'header-{column.id}',
         type: '{ header, column, table }',

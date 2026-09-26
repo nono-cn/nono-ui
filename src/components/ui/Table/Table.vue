@@ -11,13 +11,13 @@ import type {
   RowData,
   SortingState,
 } from '@tanstack/vue-table'
-import { computed, ref, useAttrs } from 'vue'
+import { computed, ref, useAttrs, useSlots } from 'vue'
 import { cn } from '@/lib/utils'
 import { Icon } from '@/components/ui/Icon'
 import { useI18n } from '@/i18n'
 import type { TableProps } from '.'
 import type { TableSlots } from '.'
-import { tableFeatureSet } from '.'
+import { tableFeatureSet, tableVariants } from '.'
 import { tableDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })
@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<TableProps<TData>>(), tableDefaults)
 defineSlots<TableSlots<TData>>()
 
 const attrs = useAttrs()
+const slots = useSlots()
 const { t } = useI18n()
 const sorting = ref<SortingState>([])
 const columnFilters = defineModel<ColumnFiltersState>('columnFilters', {
@@ -43,25 +44,24 @@ const columnVisibility = defineModel<ColumnVisibilityState>('columnVisibility', 
 
 const rootProps = computed(() => ({
   ...attrs,
-  class: cn('w-full min-w-0 overflow-x-auto rounded-md border border-border', attrs.class),
+  class: cn(tableVariants.root({ sticky: props.sticky }), attrs.class),
 }))
 
 const tableProps = computed(() => ({
-  class: cn('w-max min-w-full table-fixed caption-bottom text-sm'),
+  class: cn(tableVariants.table()),
   style: { width: `${table.getTotalSize()}px` },
 }))
+
 const trHeadProps = computed(() => ({
-  class: cn('border-b'),
+  class: cn(tableVariants.trHead()),
 }))
+
 const thProps = (header: Header<typeof tableFeatureSet, TData>) => {
   const sorted = header.column.getIsSorted()
   const pinned = Boolean(header.column.getIsPinned())
 
   return {
-    class: cn(
-      'h-10 px-3 text-left align-middle font-medium relative',
-      pinned && 'sticky z-20 bg-card',
-    ),
+    class: cn(tableVariants.th({ sticky: props.sticky, pinned })),
     style: pinned ? getPinningOffset(header.column) : getColumnWidth(header.column),
     'aria-sort': sorted === 'asc' ? 'ascending' : sorted === 'desc' ? 'descending' : undefined,
   }
@@ -70,13 +70,15 @@ const filterThProps = (header: Header<typeof tableFeatureSet, TData>) => {
   const pinned = Boolean(header.column.getIsPinned())
 
   return {
-    class: cn('px-3 py-2 text-left align-middle font-normal', pinned && 'sticky z-20 bg-card'),
+    class: cn(tableVariants.filterTh({ sticky: props.sticky, pinned })),
     style: pinned ? getPinningOffset(header.column) : getColumnWidth(header.column),
   }
 }
+
 const trBodyProps = computed(() => ({
-  class: cn('border-b'),
+  class: cn(tableVariants.trBody()),
 }))
+
 const getPinningOffset = (column: Column<typeof tableFeatureSet, TData, unknown>) => {
   const pinnedColumns =
     column.getIsPinned() === 'start'
@@ -109,7 +111,7 @@ const tdProps = (cell: Cell<typeof tableFeatureSet, TData, unknown>) => {
   const pinned = Boolean(column.getIsPinned())
 
   return {
-    class: cn('p-3 align-middle', pinned && 'sticky z-10 bg-card'),
+    class: cn(tableVariants.td({ pinned })),
     style: pinned ? getPinningOffset(column) : getColumnWidth(column),
     rowspan: cell.getRowSpan(),
     colspan: cell.getColSpan(),
@@ -135,8 +137,7 @@ const resizeHandleProps = (header: Header<typeof tableFeatureSet, TData>) => ({
   'aria-valuenow': header.getSize(),
   'aria-valuemin': header.column.columnDef.minSize ?? 20,
   'aria-valuemax': header.column.columnDef.maxSize ?? Number.MAX_SAFE_INTEGER,
-  class:
-    'absolute inset-y-0 right-0 z-30 w-1 cursor-col-resize touch-none select-none bg-transparent hover:bg-primary/50 focus-visible:bg-primary focus-visible:outline-none',
+  class: cn(tableVariants.resize()),
   onMousedown: (event: MouseEvent) => {
     event.stopPropagation()
     header.getResizeHandler()?.(event)
@@ -165,8 +166,7 @@ const toggleColumnSorting = (column: Column<typeof tableFeatureSet, TData, unkno
 
 const buttonPinProps = (header: Header<typeof tableFeatureSet, TData>) => ({
   type: 'button' as const,
-  class:
-    'inline-flex size-6 shrink-0 items-center justify-center rounded hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+  class: cn(tableVariants.pin()),
   'aria-labelledby': `${header.id}-pin-action ${header.id}-header-label`,
   'aria-pressed': Boolean(header.column.getIsPinned()),
   onClick: (event: MouseEvent) => {
@@ -183,8 +183,7 @@ const pinActionLabel = (column: Column<typeof tableFeatureSet, TData, unknown>) 
 
 const buttonSortProps = (column: Column<typeof tableFeatureSet, TData, unknown>) => ({
   type: 'button' as const,
-  class:
-    'inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+  class: cn(tableVariants.sort()),
   onClick: () => toggleColumnSorting(column),
 })
 
@@ -248,6 +247,9 @@ const table = useTable({
 
 <template>
   <div v-bind="rootProps">
+    <div v-if="slots.top" :class="tableVariants.top()">
+      <slot name="top" />
+    </div>
     <table v-bind="tableProps">
       <thead>
         <template v-for="(group, groupIndex) in table.getHeaderGroups()" :key="group.id">
@@ -344,5 +346,8 @@ const table = useTable({
         </tr>
       </tbody>
     </table>
+    <div v-if="slots.bottom" :class="tableVariants.bottom()">
+      <slot name="bottom" />
+    </div>
   </div>
 </template>
