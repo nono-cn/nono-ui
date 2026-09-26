@@ -59,6 +59,12 @@ const casesDisabled = [
   { input: undefined, expected: false },
 ]
 
+const casesRequired = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: undefined },
+]
+
 const casesAxisName = [
   { input: 'hue', expected: 'hue' },
   { input: '', expected: '' },
@@ -122,6 +128,17 @@ describe('ColorArea', () => {
           const wrapper = mountColorArea({ props: { disabled: input } })
 
           expect(wrapper.getComponent(ColorAreaRoot).props('disabled')).toBe(expected)
+        },
+      )
+    })
+
+    describe('required', () => {
+      it.each(casesRequired)(
+        'pasa required=$input a ColorAreaRoot como $expected',
+        ({ input, expected }) => {
+          const wrapper = mountColorArea({ props: { required: input } })
+
+          expect(wrapper.getComponent(ColorAreaRoot).props('required')).toBe(expected)
         },
       )
     })

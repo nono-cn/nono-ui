@@ -83,6 +83,12 @@ const colorAreaConfig: ComponentDocConfig = {
         description: 'Prevents pointer and keyboard interaction with the color area.',
       },
       {
+        name: 'required',
+        type: 'boolean',
+        default: 'undefined',
+        description: 'Passes the required form field flag to ColorAreaRoot.',
+      },
+      {
         name: 'xName',
         type: 'string',
         default: 'undefined',
