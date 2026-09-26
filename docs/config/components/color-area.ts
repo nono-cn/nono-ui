@@ -37,6 +37,12 @@ const colorAreaConfig: ComponentDocConfig = {
         default: "'#ff0000'",
         description: 'Selected color. Can also be bound with v-model:value.',
       },
+      {
+        name: 'colorSpace',
+        type: "'hsl' | 'hsb' | 'rgb'",
+        default: "'hsl'",
+        description: 'Color space used to calculate and display the selected color.',
+      },
     ],
     emits: [
       {

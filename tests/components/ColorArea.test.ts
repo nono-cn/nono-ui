@@ -21,6 +21,13 @@ const casesValue: Array<{ input: ColorAreaValue | undefined; expected: ColorArea
   { input: undefined, expected: '#ff0000' },
 ]
 
+const casesColorSpace = [
+  { input: 'hsl' as const, expected: 'hsl' },
+  { input: 'hsb' as const, expected: 'hsb' },
+  { input: 'rgb' as const, expected: 'rgb' },
+  { input: undefined, expected: 'hsl' },
+]
+
 function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
   return mount(ColorArea, options)
 }
@@ -34,6 +41,17 @@ describe('ColorArea', () => {
           const wrapper = mountColorArea({ props: { value: input } })
 
           expect(wrapper.getComponent(ColorAreaRoot).props('modelValue')).toEqual(expected)
+        },
+      )
+    })
+
+    describe('colorSpace', () => {
+      it.each(casesColorSpace)(
+        'pasa colorSpace=$input a ColorAreaRoot como $expected',
+        ({ input, expected }) => {
+          const wrapper = mountColorArea({ props: { colorSpace: input } })
+
+          expect(wrapper.getComponent(ColorAreaRoot).props('colorSpace')).toBe(expected)
         },
       )
     })

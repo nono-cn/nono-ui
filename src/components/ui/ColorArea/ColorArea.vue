@@ -1,17 +1,24 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 import { ColorAreaArea, ColorAreaRoot, ColorAreaThumb } from 'reka-ui'
-import { colorAreaRootVariants, colorAreaThumbVariants, type ColorAreaValue } from '.'
+import {
+  colorAreaRootVariants,
+  colorAreaThumbVariants,
+  type ColorAreaProps,
+  type ColorAreaValue,
+} from '.'
 import { colorAreaDefaults } from './defaults'
 import { cn } from '@/lib/utils'
 
 defineOptions({ inheritAttrs: false })
 
 const attrs = useAttrs()
+const props = withDefaults(defineProps<ColorAreaProps>(), colorAreaDefaults)
 const value = defineModel<ColorAreaValue>('value', { default: colorAreaDefaults.value })
 
 const rootProps = computed(() => ({
   ...attrs,
+  colorSpace: props.colorSpace,
   class: cn(colorAreaRootVariants(), attrs.class),
   style: attrs.style,
 }))

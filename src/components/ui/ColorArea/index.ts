@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority'
-import type { Color } from 'reka-ui'
+import type { Color, ColorSpace } from 'reka-ui'
 
 export { default as ColorArea } from './ColorArea.vue'
 
@@ -13,4 +13,5 @@ export type ColorAreaValue = string | Color
 
 export interface ColorAreaProps {
   value?: ColorAreaValue
+  colorSpace?: ColorSpace
 }
