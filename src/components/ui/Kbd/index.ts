@@ -15,170 +15,34 @@ export const kbdVariants = cva(
         lg: 'h-6 min-w-6 px-1 text-xs',
       },
       variant: {
-        solid: '',
-        outline: 'bg-transparent',
-        soft: '',
-        subtle: 'border',
+        solid: 'border-transparent bg-(--kbd-solid) text-(--kbd-solid-foreground)',
+        outline: 'border-(--kbd-color)/40 bg-transparent text-(--kbd-color)',
+        soft: 'border-transparent bg-(--kbd-color)/10 text-(--kbd-color)',
+        subtle: 'border-(--kbd-color)/20 bg-(--kbd-color)/10 text-(--kbd-color)',
       },
       severity: {
-        primary: '',
-        neutral: '',
-        secondary: '',
-        warning: '',
-        success: '',
-        error: '',
+        primary:
+          '[--kbd-color:var(--primary)] [--kbd-solid:var(--primary)] [--kbd-solid-foreground:var(--primary-foreground)]',
+        neutral:
+          '[--kbd-color:var(--foreground)] [--kbd-solid:var(--foreground)] [--kbd-solid-foreground:var(--background)]',
+        secondary:
+          '[--kbd-color:var(--secondary-foreground)] [--kbd-solid:var(--secondary)] [--kbd-solid-foreground:var(--secondary-foreground)]',
+        warning:
+          '[--kbd-color:var(--warning)] [--kbd-solid:var(--warning)] [--kbd-solid-foreground:var(--warning-foreground)]',
+        success:
+          '[--kbd-color:var(--success)] [--kbd-solid:var(--success)] [--kbd-solid-foreground:var(--success-foreground)]',
+        error:
+          '[--kbd-color:var(--error)] [--kbd-solid:var(--error)] [--kbd-solid-foreground:var(--error-foreground)]',
       },
       color: {
-        true: '',
+        true: '[--kbd-solid:var(--kbd-color)] [--kbd-solid-foreground:var(--kbd-color-foreground)]',
         false: '',
       },
     },
-    compoundVariants: [
-      {
-        variant: 'solid',
-        severity: 'primary',
-        class: 'border-transparent bg-primary text-primary-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'primary',
-        class: 'border-primary/40 text-primary',
-      },
-      {
-        variant: 'soft',
-        severity: 'primary',
-        class: 'border-transparent bg-primary/10 text-primary',
-      },
-      {
-        variant: 'subtle',
-        severity: 'primary',
-        class: 'border-primary/20 bg-primary/10 text-primary',
-      },
-      {
-        variant: 'solid',
-        severity: 'neutral',
-        class: 'border-transparent bg-foreground text-background',
-      },
-      {
-        variant: 'outline',
-        severity: 'neutral',
-        class: 'border-foreground/30 text-foreground',
-      },
-      {
-        variant: 'soft',
-        severity: 'neutral',
-        class: 'border-transparent bg-muted text-foreground',
-      },
-      {
-        variant: 'subtle',
-        severity: 'neutral',
-        class: 'border-border bg-muted text-foreground',
-      },
-      {
-        variant: 'solid',
-        severity: 'secondary',
-        class: 'border-transparent bg-secondary text-secondary-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'secondary',
-        class: 'border-secondary-foreground/30 text-secondary-foreground',
-      },
-      {
-        variant: 'soft',
-        severity: 'secondary',
-        class: 'border-transparent bg-secondary/60 text-secondary-foreground',
-      },
-      {
-        variant: 'subtle',
-        severity: 'secondary',
-        class: 'border-secondary-foreground/15 bg-secondary/60 text-secondary-foreground',
-      },
-      {
-        variant: 'solid',
-        severity: 'warning',
-        class: 'border-transparent bg-warning text-warning-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'warning',
-        class: 'border-warning/40 text-warning',
-      },
-      {
-        variant: 'soft',
-        severity: 'warning',
-        class: 'border-transparent bg-warning/10 text-warning',
-      },
-      {
-        variant: 'subtle',
-        severity: 'warning',
-        class: 'border-warning/20 bg-warning/10 text-warning',
-      },
-      {
-        variant: 'solid',
-        severity: 'success',
-        class: 'border-transparent bg-success text-success-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'success',
-        class: 'border-success/40 text-success',
-      },
-      {
-        variant: 'soft',
-        severity: 'success',
-        class: 'border-transparent bg-success/10 text-success',
-      },
-      {
-        variant: 'subtle',
-        severity: 'success',
-        class: 'border-success/20 bg-success/10 text-success',
-      },
-      {
-        variant: 'solid',
-        severity: 'error',
-        class: 'border-transparent bg-error text-error-foreground',
-      },
-      {
-        variant: 'outline',
-        severity: 'error',
-        class: 'border-error/40 text-error',
-      },
-      {
-        variant: 'soft',
-        severity: 'error',
-        class: 'border-transparent bg-error/10 text-error',
-      },
-      {
-        variant: 'subtle',
-        severity: 'error',
-        class: 'border-error/20 bg-error/10 text-error',
-      },
-      {
-        color: true,
-        variant: 'solid',
-        class: 'border-transparent bg-(--kbd-color) text-(--kbd-color-foreground)',
-      },
-      {
-        color: true,
-        variant: 'outline',
-        class: 'border-(--kbd-color)/40 bg-transparent text-(--kbd-color)',
-      },
-      {
-        color: true,
-        variant: 'soft',
-        class: 'border-transparent bg-(--kbd-color)/10 text-(--kbd-color)',
-      },
-      {
-        color: true,
-        variant: 'subtle',
-        class: 'border-(--kbd-color)/20 bg-(--kbd-color)/10 text-(--kbd-color)',
-      },
-    ],
     defaultVariants: {
       size: 'md',
-      variant: 'soft',
-      severity: 'secondary',
+      variant: 'subtle',
+      severity: 'neutral',
       color: false,
     },
   },

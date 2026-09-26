@@ -21,12 +21,12 @@ const kbdConfig: ComponentDocConfig = {
   examples: [
     {
       title: 'Variant',
-      description: 'Compare the key’s visual variants.',
+      description: 'Compare the key’s visual variants using the default neutral severity.',
       component: KbdVariantExample,
     },
     {
       title: 'Severity',
-      description: 'Compare the key’s severity levels.',
+      description: 'Compare severity levels using the subtle variant.',
       component: KbdSeverityExample,
     },
     {
@@ -64,13 +64,13 @@ const kbdConfig: ComponentDocConfig = {
       {
         name: 'variant',
         type: "'solid' | 'outline' | 'soft' | 'subtle'",
-        default: "'soft'",
+        default: "'subtle'",
         description: 'Visual style applied to the key.',
       },
       {
         name: 'severity',
         type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'secondary'",
+        default: "'neutral'",
         description: 'Severity used to choose the colors for the visual style.',
       },
       {

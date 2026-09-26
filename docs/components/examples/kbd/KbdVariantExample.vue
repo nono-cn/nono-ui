@@ -9,10 +9,10 @@ ${scriptEnd}
 
 <template>
   <div class="flex flex-wrap items-center gap-3">
-    <Kbd label="Ctrl" variant="solid" severity="secondary" />
-    <Kbd label="Alt" variant="outline" severity="secondary" />
-    <Kbd label="Shift" variant="soft" severity="secondary" />
-    <Kbd label="Enter" variant="subtle" severity="secondary" />
+    <Kbd label="Ctrl" variant="solid" severity="neutral" />
+    <Kbd label="Alt" variant="outline" severity="neutral" />
+    <Kbd label="Shift" variant="soft" severity="neutral" />
+    <Kbd label="Enter" variant="subtle" severity="neutral" />
   </div>
 </template>`
 </script>
@@ -20,15 +20,15 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Variant"
-    description="Compare visual variants using the same severity level."
+    description="Compare visual variants using the default neutral severity."
     :code="code"
     :show-reset="false"
   >
     <div class="flex flex-wrap items-center gap-3">
-      <Kbd label="Ctrl" variant="solid" severity="secondary" />
-      <Kbd label="Alt" variant="outline" severity="secondary" />
-      <Kbd label="Shift" variant="soft" severity="secondary" />
-      <Kbd label="Enter" variant="subtle" severity="secondary" />
+      <Kbd label="Ctrl" variant="solid" severity="neutral" />
+      <Kbd label="Alt" variant="outline" severity="neutral" />
+      <Kbd label="Shift" variant="soft" severity="neutral" />
+      <Kbd label="Enter" variant="subtle" severity="neutral" />
     </div>
   </ComponentExample>
 </template>
