@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
-import { ColorAreaArea, ColorAreaRoot, ColorAreaThumb } from 'reka-ui'
+import { ColorAreaArea, ColorAreaRoot, ColorAreaThumb, type Color } from 'reka-ui'
 import {
   colorAreaRootVariants,
   colorAreaThumbVariants,
@@ -17,6 +17,11 @@ defineOptions({ inheritAttrs: false })
 const attrs = useAttrs()
 const props = withDefaults(defineProps<ColorAreaProps>(), colorAreaDefaults)
 const value = defineModel<ColorAreaValue>('value', { default: colorAreaDefaults.value })
+const emit = defineEmits<{
+  change: [value: string]
+  changeEnd: [value: string]
+  'update:color': [value: Color]
+}>()
 const { t } = useI18n()
 
 const rootProps = computed(() => ({
@@ -58,7 +63,15 @@ const thumbProps = computed(() => {
 </script>
 
 <template>
-  <ColorAreaRoot v-slot="{ style }" v-model="value" v-bind="rootProps" data-test-color-area-root>
+  <ColorAreaRoot
+    v-slot="{ style }"
+    v-model="value"
+    v-bind="rootProps"
+    data-test-color-area-root
+    @change="emit('change', $event)"
+    @change-end="emit('changeEnd', $event)"
+    @update:color="emit('update:color', $event)"
+  >
     <ColorAreaArea v-bind="areaProps" :style="[style, areaProps.style]" data-test-color-area-area>
       <ColorAreaThumb v-bind="thumbProps" data-test-color-area-thumb />
     </ColorAreaArea>

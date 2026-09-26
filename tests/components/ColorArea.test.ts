@@ -1,6 +1,7 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { ColorAreaRoot, type Color } from 'reka-ui'
+import { nextTick } from 'vue'
 
 import { i18n } from '@/i18n'
 import { ColorArea, type ColorAreaProps, type ColorAreaValue } from '@/components/ui/ColorArea'
@@ -77,6 +78,9 @@ const casesAxisName = [
   { input: '', expected: '' },
   { input: undefined, expected: undefined },
 ]
+
+const emittedValue = '#56d799'
+const emittedColor = { space: 'rgb', r: 86, g: 215, b: 153, alpha: 1 } satisfies Color
 
 function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
   return mount(ColorArea, {
@@ -209,6 +213,51 @@ describe('ColorArea', () => {
       text: 'pasa atributos arbitrarios, clase y estilo a ColorAreaRoot',
       id: '[data-test-color-area-root]',
       mount: (attrs) => mountColorArea({ attrs }),
+    })
+  })
+
+  describe('emits', () => {
+    describe('change', () => {
+      it('reenvía change de ColorAreaRoot', async () => {
+        const wrapper = mountColorArea()
+
+        await wrapper.getComponent(ColorAreaRoot).vm.$emit('change', emittedValue)
+
+        expect(wrapper.emitted('change')).toEqual([[emittedValue]])
+      })
+    })
+
+    describe('changeEnd', () => {
+      it('reenvía changeEnd de ColorAreaRoot', async () => {
+        const wrapper = mountColorArea()
+
+        await wrapper.getComponent(ColorAreaRoot).vm.$emit('changeEnd', emittedValue)
+
+        expect(wrapper.emitted('changeEnd')).toEqual([[emittedValue]])
+      })
+    })
+
+    describe('update:color', () => {
+      it('reenvía update:color de ColorAreaRoot', async () => {
+        const wrapper = mountColorArea()
+
+        await wrapper.getComponent(ColorAreaRoot).vm.$emit('update:color', emittedColor)
+
+        expect(wrapper.emitted('update:color')).toEqual([[emittedColor]])
+      })
+    })
+
+    describe('update:value', () => {
+      it('sincroniza v-model:value cuando ColorAreaRoot emite update:modelValue', async () => {
+        const wrapper = mountColorArea()
+        const root = wrapper.getComponent(ColorAreaRoot)
+
+        await root.vm.$emit('update:modelValue', emittedValue)
+        await nextTick()
+
+        expect(wrapper.emitted('update:value')).toEqual([[emittedValue]])
+        expect(root.props('modelValue')).toBe(emittedValue)
+      })
     })
   })
 

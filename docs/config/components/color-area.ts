@@ -127,6 +127,21 @@ const colorAreaConfig: ComponentDocConfig = {
     ],
     emits: [
       {
+        name: 'change',
+        type: '[value: string]',
+        description: 'Emitted when the selected color changes.',
+      },
+      {
+        name: 'changeEnd',
+        type: '[value: string]',
+        description: 'Emitted when color interaction ends.',
+      },
+      {
+        name: 'update:color',
+        type: '[value: Color]',
+        description: 'Emitted with the selected color object when the color changes.',
+      },
+      {
         name: 'update:value',
         type: '[value: string]',
         description: 'Emitted when the selected color changes.',
