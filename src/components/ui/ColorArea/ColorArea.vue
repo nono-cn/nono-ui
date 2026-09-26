@@ -35,7 +35,7 @@ const rootProps = computed(() => ({
   required: props.required,
   xName: props.xName,
   yName: props.yName,
-  class: cn(colorAreaRootVariants({ rounded: props.rounded }), attrs.class),
+  class: cn(colorAreaRootVariants({ size: props.size, rounded: props.rounded }), attrs.class),
   style: attrs.style,
 }))
 

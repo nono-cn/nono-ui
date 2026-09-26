@@ -73,6 +73,15 @@ const casesRounded = [
   { input: undefined, expected: 'rounded-md' },
 ]
 
+const casesSize = [
+  { input: 'xs' as const, expected: 'size-32' },
+  { input: 'sm' as const, expected: 'size-40' },
+  { input: 'md' as const, expected: 'size-48' },
+  { input: 'lg' as const, expected: 'size-56' },
+  { input: 'xl' as const, expected: 'size-64' },
+  { input: undefined, expected: 'size-48' },
+]
+
 const casesAxisName = [
   { input: 'hue', expected: 'hue' },
   { input: '', expected: '' },
@@ -162,6 +171,14 @@ describe('ColorArea', () => {
         const root = mountColorArea({ props: { rounded: input } }).get(
           '[data-test-color-area-root]',
         )
+
+        expect(root.classes()).toContain(expected)
+      })
+    })
+
+    describe('size', () => {
+      it.each(casesSize)('aplica $expected con size=$input', ({ input, expected }) => {
+        const root = mountColorArea({ props: { size: input } }).get('[data-test-color-area-root]')
 
         expect(root.classes()).toContain(expected)
       })

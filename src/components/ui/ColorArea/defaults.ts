@@ -4,5 +4,6 @@ export const colorAreaDefaults = {
   xChannel: 'hue' as const,
   yChannel: 'saturation' as const,
   disabled: false,
+  size: 'md' as const,
   rounded: true,
 }

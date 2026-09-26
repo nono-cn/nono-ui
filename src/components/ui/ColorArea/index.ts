@@ -1,23 +1,30 @@
-import { cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import type { Color, ColorChannel, ColorSpace } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 
 export { default as ColorArea } from './ColorArea.vue'
 
-export const colorAreaRootVariants = cva(
-  'relative h-48 w-48 overflow-hidden data-[disabled]:opacity-50',
-  {
-    variants: {
-      rounded: {
-        true: 'rounded-md',
-        false: 'rounded-none',
-      },
+export const colorAreaRootVariants = cva('relative overflow-hidden data-[disabled]:opacity-50', {
+  variants: {
+    size: {
+      xs: 'size-32',
+      sm: 'size-40',
+      md: 'size-48',
+      lg: 'size-56',
+      xl: 'size-64',
     },
-    defaultVariants: {
-      rounded: true,
+    rounded: {
+      true: 'rounded-md',
+      false: 'rounded-none',
     },
   },
-)
+  defaultVariants: {
+    size: 'md',
+    rounded: true,
+  },
+})
+
+export type ColorAreaSize = NonNullable<VariantProps<typeof colorAreaRootVariants>['size']>
 
 export const colorAreaThumbVariants = cva(
   'block size-5 rounded-full border-2 border-white shadow-md ring-1 ring-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
@@ -38,6 +45,7 @@ export interface ColorAreaProps {
   xChannel?: ColorChannel
   yChannel?: ColorChannel
   disabled?: boolean
+  size?: ColorAreaSize
   rounded?: boolean
   required?: boolean
   xName?: string

@@ -5,6 +5,7 @@ import ColorAreaChannelsExample from '../../components/examples/color-area/Color
 import ColorAreaDisabledExample from '../../components/examples/color-area/ColorAreaDisabledExample.vue'
 import ColorAreaNamesExample from '../../components/examples/color-area/ColorAreaNamesExample.vue'
 import ColorAreaRoundedExample from '../../components/examples/color-area/ColorAreaRoundedExample.vue'
+import ColorAreaSizeExample from '../../components/examples/color-area/ColorAreaSizeExample.vue'
 
 const colorAreaConfig: ComponentDocConfig = {
   slug: 'color-area',
@@ -39,6 +40,11 @@ const colorAreaConfig: ComponentDocConfig = {
       title: 'Rounded',
       description: 'Compare rounded and square color areas.',
       component: ColorAreaRoundedExample,
+    },
+    {
+      title: 'Size',
+      description: 'Compare the available ColorArea dimensions.',
+      component: ColorAreaSizeExample,
     },
     {
       title: 'Form field names',
@@ -99,6 +105,12 @@ const colorAreaConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'true',
         description: 'Applies rounded corners to the color area when true.',
+      },
+      {
+        name: 'size',
+        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+        default: "'md'",
+        description: 'Controls the width and height of the color area.',
       },
       {
         name: 'required',
