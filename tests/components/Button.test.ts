@@ -334,12 +334,12 @@ describe('Button', () => {
         mount: (size) => mountButton({ props: { size, icon: { name: 'save' } } }),
       })
 
-      it('mantiene el tamaño de Button aunque icon configure otro tamaño', () => {
+      it('permite personalizar el tamaño de icon', () => {
         const button = mountButton({
           props: { size: 'lg', icon: { name: 'save', size: 'xs' } },
         })
 
-        expect(button.getComponent('[data-test-button-icon]').props('size')).toBe('lg')
+        expect(button.getComponent('[data-test-button-icon]').props('size')).toBe('xs')
       })
     })
 
@@ -365,7 +365,7 @@ describe('Button', () => {
         mount: (size) => mountButton({ props: { size, trailingIcon: { name: 'chevronRight' } } }),
       })
 
-      it('mantiene el tamaño de Button aunque trailingIcon configure otro tamaño', () => {
+      it('permite personalizar el tamaño del icono final', () => {
         const button = mountButton({
           props: {
             size: 'lg',
@@ -373,7 +373,7 @@ describe('Button', () => {
           },
         })
 
-        expect(button.getComponent('[data-test-button-trailing-icon]').props('size')).toBe('lg')
+        expect(button.getComponent('[data-test-button-trailing-icon]').props('size')).toBe('xs')
       })
     })
 

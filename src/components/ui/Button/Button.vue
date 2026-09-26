@@ -54,13 +54,13 @@ const rootProps = computed(() => {
 const iconProps = computed(() => {
   const icon = props.icon
 
-  return { ...icon, size: props.size }
+  return { ...icon, size: icon?.size ?? props.size }
 })
 
 const trailingIconProps = computed(() => {
   const icon = props.trailingIcon
 
-  return { ...icon, size: props.size }
+  return { ...icon, size: icon?.size ?? props.size }
 })
 
 const loadingIconProps = computed(() => {
