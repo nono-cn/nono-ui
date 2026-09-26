@@ -5,7 +5,18 @@ import type { HTMLAttributes } from 'vue'
 export { default as ColorArea } from './ColorArea.vue'
 
 export const colorAreaRootVariants = cva(
-  'relative h-48 w-48 overflow-hidden rounded-md data-[disabled]:opacity-50',
+  'relative h-48 w-48 overflow-hidden data-[disabled]:opacity-50',
+  {
+    variants: {
+      rounded: {
+        true: 'rounded-md',
+        false: 'rounded-none',
+      },
+    },
+    defaultVariants: {
+      rounded: true,
+    },
+  },
 )
 
 export const colorAreaThumbVariants = cva(
@@ -27,6 +38,7 @@ export interface ColorAreaProps {
   xChannel?: ColorChannel
   yChannel?: ColorChannel
   disabled?: boolean
+  rounded?: boolean
   required?: boolean
   xName?: string
   yName?: string

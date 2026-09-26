@@ -4,6 +4,7 @@ import ColorAreaValueExample from '../../components/examples/color-area/ColorAre
 import ColorAreaChannelsExample from '../../components/examples/color-area/ColorAreaChannelsExample.vue'
 import ColorAreaDisabledExample from '../../components/examples/color-area/ColorAreaDisabledExample.vue'
 import ColorAreaNamesExample from '../../components/examples/color-area/ColorAreaNamesExample.vue'
+import ColorAreaRoundedExample from '../../components/examples/color-area/ColorAreaRoundedExample.vue'
 
 const colorAreaConfig: ComponentDocConfig = {
   slug: 'color-area',
@@ -33,6 +34,11 @@ const colorAreaConfig: ComponentDocConfig = {
       title: 'Disabled',
       description: 'Disable interaction with the color area.',
       component: ColorAreaDisabledExample,
+    },
+    {
+      title: 'Rounded',
+      description: 'Compare rounded and square color areas.',
+      component: ColorAreaRoundedExample,
     },
     {
       title: 'Form field names',
@@ -81,6 +87,12 @@ const colorAreaConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'false',
         description: 'Prevents pointer and keyboard interaction with the color area.',
+      },
+      {
+        name: 'rounded',
+        type: 'boolean',
+        default: 'true',
+        description: 'Applies rounded corners to the color area when true.',
       },
       {
         name: 'required',

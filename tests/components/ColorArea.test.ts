@@ -66,6 +66,12 @@ const casesRequired = [
   { input: undefined, expected: undefined },
 ]
 
+const casesRounded = [
+  { input: true, expected: 'rounded-md' },
+  { input: false, expected: 'rounded-none' },
+  { input: undefined, expected: 'rounded-md' },
+]
+
 const casesAxisName = [
   { input: 'hue', expected: 'hue' },
   { input: '', expected: '' },
@@ -145,6 +151,16 @@ describe('ColorArea', () => {
           expect(wrapper.getComponent(ColorAreaRoot).props('required')).toBe(expected)
         },
       )
+    })
+
+    describe('rounded', () => {
+      it.each(casesRounded)('aplica $expected con rounded=$input', ({ input, expected }) => {
+        const root = mountColorArea({ props: { rounded: input } }).get(
+          '[data-test-color-area-root]',
+        )
+
+        expect(root.classes()).toContain(expected)
+      })
     })
 
     describe('xName', () => {
