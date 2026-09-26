@@ -52,6 +52,12 @@ const casesYChannel = [
   { input: undefined, expected: 'saturation' },
 ]
 
+const casesDisabled = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: false },
+]
+
 function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
   return mount(ColorArea, options)
 }
@@ -98,6 +104,17 @@ describe('ColorArea', () => {
           const wrapper = mountColorArea({ props: { yChannel: input } })
 
           expect(wrapper.getComponent(ColorAreaRoot).props('yChannel')).toBe(expected)
+        },
+      )
+    })
+
+    describe('disabled', () => {
+      it.each(casesDisabled)(
+        'pasa disabled=$input a ColorAreaRoot como $expected',
+        ({ input, expected }) => {
+          const wrapper = mountColorArea({ props: { disabled: input } })
+
+          expect(wrapper.getComponent(ColorAreaRoot).props('disabled')).toBe(expected)
         },
       )
     })

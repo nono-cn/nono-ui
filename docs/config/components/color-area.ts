@@ -2,6 +2,7 @@ import type { ComponentDocConfig } from '../component-docs'
 import ColorAreaBasicExample from '../../components/examples/color-area/ColorAreaBasicExample.vue'
 import ColorAreaValueExample from '../../components/examples/color-area/ColorAreaValueExample.vue'
 import ColorAreaChannelsExample from '../../components/examples/color-area/ColorAreaChannelsExample.vue'
+import ColorAreaDisabledExample from '../../components/examples/color-area/ColorAreaDisabledExample.vue'
 
 const colorAreaConfig: ComponentDocConfig = {
   slug: 'color-area',
@@ -26,6 +27,11 @@ const colorAreaConfig: ComponentDocConfig = {
       title: 'Channels',
       description: 'Compare HSL channel pairs mapped to the horizontal and vertical axes.',
       component: ColorAreaChannelsExample,
+    },
+    {
+      title: 'Disabled',
+      description: 'Disable interaction with the color area.',
+      component: ColorAreaDisabledExample,
     },
   ],
   accessibility: [
@@ -62,6 +68,12 @@ const colorAreaConfig: ComponentDocConfig = {
         default: "'saturation'",
         description:
           'Color channel controlled by vertical movement from its minimum at the bottom to its maximum at the top.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        default: 'false',
+        description: 'Prevents pointer and keyboard interaction with the color area.',
       },
     ],
     emits: [

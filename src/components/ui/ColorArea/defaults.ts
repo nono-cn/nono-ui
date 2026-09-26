@@ -3,4 +3,5 @@ export const colorAreaDefaults = {
   colorSpace: 'hsl' as const,
   xChannel: 'hue' as const,
   yChannel: 'saturation' as const,
+  disabled: false,
 }
