@@ -58,6 +58,12 @@ const casesDisabled = [
   { input: undefined, expected: false },
 ]
 
+const casesAxisName = [
+  { input: 'hue', expected: 'hue' },
+  { input: '', expected: '' },
+  { input: undefined, expected: undefined },
+]
+
 function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
   return mount(ColorArea, options)
 }
@@ -115,6 +121,28 @@ describe('ColorArea', () => {
           const wrapper = mountColorArea({ props: { disabled: input } })
 
           expect(wrapper.getComponent(ColorAreaRoot).props('disabled')).toBe(expected)
+        },
+      )
+    })
+
+    describe('xName', () => {
+      it.each(casesAxisName)(
+        'pasa xName=$input a ColorAreaRoot como $expected',
+        ({ input, expected }) => {
+          const wrapper = mountColorArea({ props: { xName: input } })
+
+          expect(wrapper.getComponent(ColorAreaRoot).props('xName')).toBe(expected)
+        },
+      )
+    })
+
+    describe('yName', () => {
+      it.each(casesAxisName)(
+        'pasa yName=$input a ColorAreaRoot como $expected',
+        ({ input, expected }) => {
+          const wrapper = mountColorArea({ props: { yName: input } })
+
+          expect(wrapper.getComponent(ColorAreaRoot).props('yName')).toBe(expected)
         },
       )
     })

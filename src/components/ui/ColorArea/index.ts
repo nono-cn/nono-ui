@@ -19,4 +19,6 @@ export interface ColorAreaProps {
   xChannel?: ColorChannel
   yChannel?: ColorChannel
   disabled?: boolean
+  xName?: string
+  yName?: string
 }

@@ -3,6 +3,7 @@ import ColorAreaBasicExample from '../../components/examples/color-area/ColorAre
 import ColorAreaValueExample from '../../components/examples/color-area/ColorAreaValueExample.vue'
 import ColorAreaChannelsExample from '../../components/examples/color-area/ColorAreaChannelsExample.vue'
 import ColorAreaDisabledExample from '../../components/examples/color-area/ColorAreaDisabledExample.vue'
+import ColorAreaNamesExample from '../../components/examples/color-area/ColorAreaNamesExample.vue'
 
 const colorAreaConfig: ComponentDocConfig = {
   slug: 'color-area',
@@ -32,6 +33,12 @@ const colorAreaConfig: ComponentDocConfig = {
       title: 'Disabled',
       description: 'Disable interaction with the color area.',
       component: ColorAreaDisabledExample,
+    },
+    {
+      title: 'Form field names',
+      description:
+        'Submit the current horizontal and vertical channel values with their own field names.',
+      component: ColorAreaNamesExample,
     },
   ],
   accessibility: [
@@ -74,6 +81,20 @@ const colorAreaConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'false',
         description: 'Prevents pointer and keyboard interaction with the color area.',
+      },
+      {
+        name: 'xName',
+        type: 'string',
+        default: 'undefined',
+        description:
+          'Name of the hidden form field submitted with the current horizontal channel value.',
+      },
+      {
+        name: 'yName',
+        type: 'string',
+        default: 'undefined',
+        description:
+          'Name of the hidden form field submitted with the current vertical channel value.',
       },
     ],
     emits: [
