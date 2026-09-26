@@ -1,0 +1,15 @@
+export const buttonDefaults = {
+  as: 'button' as const,
+  asChild: false,
+  label: undefined,
+  variant: 'solid' as const,
+  severity: 'primary' as const,
+  size: 'md' as const,
+  rounded: false,
+  square: false,
+  raised: false,
+  loading: false,
+  color: undefined,
+  icon: undefined,
+  trailingIcon: undefined,
+}

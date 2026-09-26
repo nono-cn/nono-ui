@@ -5,24 +5,11 @@ import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
 import { useColor } from '@/composables'
 import { buttonVariants, type ButtonEmits, type ButtonProps, type ButtonSlots } from '.'
+import { buttonDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<ButtonProps>(), {
-  as: 'button',
-  asChild: false,
-  label: undefined,
-  variant: 'solid',
-  severity: 'primary',
-  size: 'md',
-  rounded: false,
-  square: false,
-  raised: false,
-  loading: false,
-  color: undefined,
-  icon: undefined,
-  trailingIcon: undefined,
-})
+const props = withDefaults(defineProps<ButtonProps>(), buttonDefaults)
 const emit = defineEmits<ButtonEmits>()
 defineSlots<ButtonSlots>()
 
@@ -59,11 +46,7 @@ const rootProps = computed(() => {
     asChild: props.asChild,
     'aria-busy': ariaBusy.value,
     'aria-disabled': ariaDisabled.value,
-    class: cn(
-      'inline-flex shrink-0 items-center justify-center gap-2 rounded-md border border-transparent text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
-      calculatedVariants.value,
-      attrs.class,
-    ),
+    class: cn(calculatedVariants.value, attrs.class),
     style: [colorStyle.value, attrs.style],
   }
 })
@@ -71,13 +54,13 @@ const rootProps = computed(() => {
 const iconProps = computed(() => {
   const icon = props.icon
 
-  return { ...icon, size: icon?.size ?? props.size }
+  return { ...icon, size: props.size }
 })
 
 const trailingIconProps = computed(() => {
   const icon = props.trailingIcon
 
-  return { ...icon, size: icon?.size ?? props.size }
+  return { ...icon, size: props.size }
 })
 
 const loadingIconProps = computed(() => {

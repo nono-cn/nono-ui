@@ -185,8 +185,15 @@ const casesSeverityVariant = casesSeverity.flatMap(
 )
 
 const casesShape = [
-  { prop: 'rounded' as const, expected: 'rounded-full' },
-  { prop: 'square' as const, expected: 'size-9' },
+  { prop: 'rounded' as const, expected: ['rounded-full'] },
+  { prop: 'square' as const, expected: ['size-(--button-square-size)', 'p-0', 'has-[>svg]:p-0'] },
+]
+
+const casesSquareSize = [
+  { size: 'xs' as const, expected: '[--button-square-size:calc(var(--spacing)*7)]' },
+  { size: 'sm' as const, expected: '[--button-square-size:calc(var(--spacing)*8)]' },
+  { size: 'md' as const, expected: '[--button-square-size:calc(var(--spacing)*9)]' },
+  { size: 'lg' as const, expected: '[--button-square-size:calc(var(--spacing)*10)]' },
 ]
 
 const casesLoading = [
@@ -283,8 +290,17 @@ describe('Button', () => {
       it.each(casesShape)('renderiza $prop=true', ({ prop, expected }) => {
         const root = mountButton({ props: { [prop]: true } }).get('[data-test-button-root]')
 
-        expect(root.classes()).toContain(expected)
+        expect(root.classes()).toEqual(expect.arrayContaining(expected))
       })
+
+      it.each(casesSquareSize)(
+        'usa el tamaño cuadrado correcto en size=$size',
+        ({ size, expected }) => {
+          const root = mountButton({ props: { size, square: true } }).get('[data-test-button-root]')
+
+          expect(root.classes()).toContain(expected)
+        },
+      )
     })
 
     describe('loading', () => {
@@ -318,12 +334,12 @@ describe('Button', () => {
         mount: (size) => mountButton({ props: { size, icon: { name: 'save' } } }),
       })
 
-      it('prioriza un tamaño explícito de icon', () => {
+      it('mantiene el tamaño de Button aunque icon configure otro tamaño', () => {
         const button = mountButton({
           props: { size: 'lg', icon: { name: 'save', size: 'xs' } },
         })
 
-        expect(button.getComponent('[data-test-button-icon]').props('size')).toBe('xs')
+        expect(button.getComponent('[data-test-button-icon]').props('size')).toBe('lg')
       })
     })
 
@@ -349,7 +365,7 @@ describe('Button', () => {
         mount: (size) => mountButton({ props: { size, trailingIcon: { name: 'chevronRight' } } }),
       })
 
-      it('prioriza un tamaño explícito del icono final', () => {
+      it('mantiene el tamaño de Button aunque trailingIcon configure otro tamaño', () => {
         const button = mountButton({
           props: {
             size: 'lg',
@@ -357,16 +373,16 @@ describe('Button', () => {
           },
         })
 
-        expect(button.getComponent('[data-test-button-trailing-icon]').props('size')).toBe('xs')
+        expect(button.getComponent('[data-test-button-trailing-icon]').props('size')).toBe('lg')
       })
     })
 
     describe('color', () => {
       it.each(casesColorVariant)(
-        'aplica un color personalizado con variant=$variant',
+        'combina color personalizado con variant=$variant y severity=success',
         ({ variant, expected }) => {
           const root = mountButton({
-            props: { color: '#ff0000', variant },
+            props: { color: '#ff0000', severity: 'success', variant },
           }).get('[data-test-button-root]')
 
           expect(root.attributes('style')).toContain('--button-color: #ff0000')
@@ -374,6 +390,24 @@ describe('Button', () => {
           expect(root.classes()).toEqual(expect.arrayContaining(expected))
         },
       )
+
+      it('prioriza color personalizado sobre severity en la variante solid', () => {
+        const root = mountButton({
+          props: { color: '#ff0000', severity: 'success', variant: 'solid' },
+        }).get('[data-test-button-root]')
+
+        expect(root.classes()).toEqual(
+          expect.arrayContaining([
+            '[--button-color:var(--success)]',
+            '[--button-solid:var(--button-color)]',
+            '[--button-solid-foreground:var(--button-color-foreground)]',
+            'bg-(--button-solid)',
+            'text-(--button-solid-foreground)',
+          ]),
+        )
+        expect(root.attributes('style')).toContain('--button-color: #ff0000')
+        expect(root.attributes('style')).toContain('--button-color-foreground: #09090b')
+      })
     })
 
     describe('as', () => {
