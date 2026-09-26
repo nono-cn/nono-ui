@@ -81,7 +81,7 @@ const badgeConfig: ComponentDocConfig = {
       },
       {
         name: 'severity',
-        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
+        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
         default: "'primary'",
         description: 'Semantic severity used to choose the badge color.',
       },

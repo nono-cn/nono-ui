@@ -69,7 +69,7 @@ const kbdConfig: ComponentDocConfig = {
       },
       {
         name: 'severity',
-        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
+        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
         default: "'secondary'",
         description: 'Severity used to choose the colors for the visual style.',
       },
