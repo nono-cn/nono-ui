@@ -6,24 +6,87 @@ import type { EmitsAsProps } from '@/types/emits'
 
 export { default as Button } from './Button.vue'
 
-export const buttonVariants = cva('', {
+const buttonStateVariables = [
+  '[--button-solid-hover:color-mix(in_oklab,var(--button-solid)_90%,transparent)]',
+  '[--button-solid-active:color-mix(in_oklab,var(--button-solid)_80%,transparent)]',
+  '[--button-outline-border:color-mix(in_oklab,var(--button-color)_40%,transparent)]',
+  '[--button-outline-hover:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+  '[--button-outline-active-border:color-mix(in_oklab,var(--button-color)_60%,transparent)]',
+  '[--button-outline-active:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+  '[--button-plain-hover:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+  '[--button-plain-active:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+  '[--button-subtle-border:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+  '[--button-subtle-bg:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+  '[--button-subtle-hover:color-mix(in_oklab,var(--button-color)_15%,transparent)]',
+  '[--button-subtle-active:color-mix(in_oklab,var(--button-color)_25%,transparent)]',
+  '[--button-soft-bg:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+  '[--button-soft-hover:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+  '[--button-soft-active:color-mix(in_oklab,var(--button-color)_30%,transparent)]',
+].join(' ')
+
+export const buttonVariants = cva(buttonStateVariables, {
   variants: {
     variant: {
-      solid: '',
-      outline: 'border bg-transparent',
-      plain: 'bg-transparent',
-      subtle: 'border',
-      soft: '',
-      link: 'bg-transparent underline underline-offset-4 hover:no-underline',
+      solid:
+        'bg-(--button-solid) text-(--button-solid-foreground) hover:bg-(--button-solid-hover) active:bg-(--button-solid-active)',
+      outline:
+        'border bg-transparent border-(--button-outline-border) text-(--button-color) hover:bg-(--button-outline-hover) active:border-(--button-outline-active-border) active:bg-(--button-outline-active)',
+      plain:
+        'bg-transparent text-(--button-color) hover:bg-(--button-plain-hover) active:bg-(--button-plain-active)',
+      subtle:
+        'border border-(--button-subtle-border) bg-(--button-subtle-bg) text-(--button-color) hover:bg-(--button-subtle-hover) active:bg-(--button-subtle-active)',
+      soft: 'bg-(--button-soft-bg) text-(--button-color) hover:bg-(--button-soft-hover) active:bg-(--button-soft-active)',
+      link: 'bg-transparent underline underline-offset-4 hover:no-underline text-(--button-color)',
     },
     severity: {
-      primary: 'focus-visible:border-primary focus-visible:ring-primary/30',
-      neutral: 'focus-visible:border-foreground focus-visible:ring-foreground/30',
-      secondary:
+      primary:
+        'focus-visible:border-primary focus-visible:ring-primary/30 [--button-color:var(--primary)] [--button-solid:var(--primary)] [--button-solid-foreground:var(--primary-foreground)]',
+      neutral: [
+        'focus-visible:border-foreground focus-visible:ring-foreground/30',
+        '[--button-color:var(--foreground)]',
+        '[--button-solid:var(--foreground)]',
+        '[--button-solid-foreground:var(--background)]',
+        '[--button-outline-border:color-mix(in_oklab,var(--foreground)_30%,transparent)]',
+        '[--button-outline-hover:var(--muted)]',
+        '[--button-outline-active-border:var(--button-outline-border)]',
+        '[--button-outline-active:color-mix(in_oklab,var(--muted)_80%,transparent)]',
+        '[--button-plain-hover:var(--muted)]',
+        '[--button-plain-active:color-mix(in_oklab,var(--muted)_80%,transparent)]',
+        '[--button-subtle-border:var(--border)]',
+        '[--button-subtle-bg:var(--muted)]',
+        '[--button-subtle-hover:color-mix(in_oklab,var(--muted)_80%,transparent)]',
+        '[--button-subtle-active:color-mix(in_oklab,var(--muted)_70%,transparent)]',
+        '[--button-soft-bg:var(--muted)]',
+        '[--button-soft-hover:color-mix(in_oklab,var(--muted)_80%,transparent)]',
+        '[--button-soft-active:color-mix(in_oklab,var(--muted)_70%,transparent)]',
+      ].join(' '),
+      secondary: [
         'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/20',
-      warning: 'focus-visible:border-warning focus-visible:ring-warning/30',
-      success: 'focus-visible:border-success focus-visible:ring-success/30',
-      error: 'focus-visible:border-error focus-visible:ring-error/30',
+        '[--button-color:var(--secondary-foreground)]',
+        '[--button-solid:var(--secondary)]',
+        '[--button-solid-foreground:var(--secondary-foreground)]',
+        '[--button-solid-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
+        '[--button-solid-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
+        '[--button-outline-border:color-mix(in_oklab,var(--secondary-foreground)_30%,transparent)]',
+        '[--button-outline-hover:var(--secondary)]',
+        '[--button-outline-active-border:var(--button-outline-border)]',
+        '[--button-outline-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
+        '[--button-plain-hover:var(--secondary)]',
+        '[--button-plain-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
+        '[--button-subtle-border:color-mix(in_oklab,var(--secondary-foreground)_15%,transparent)]',
+        '[--button-subtle-bg:color-mix(in_oklab,var(--secondary)_60%,transparent)]',
+        '[--button-subtle-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
+        '[--button-subtle-active:var(--secondary)]',
+        '[--button-soft-bg:color-mix(in_oklab,var(--secondary)_60%,transparent)]',
+        '[--button-soft-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
+        '[--button-soft-active:var(--secondary)]',
+      ].join(' '),
+      warning:
+        'focus-visible:border-warning focus-visible:ring-warning/30 [--button-color:var(--warning)] [--button-solid:var(--warning)] [--button-solid-foreground:var(--warning-foreground)]',
+      success:
+        'focus-visible:border-success focus-visible:ring-success/30 [--button-color:var(--success)] [--button-solid:var(--success)] [--button-solid-foreground:var(--success-foreground)]',
+      error:
+        'focus-visible:border-error focus-visible:ring-error/30 [--button-color:var(--error)] [--button-solid:var(--error)] [--button-solid-foreground:var(--error-foreground)]',
     },
     size: {
       xs: 'h-7 gap-1 px-2.5 text-xs has-[>svg]:px-2',
@@ -44,7 +107,12 @@ export const buttonVariants = cva('', {
       false: '',
     },
     color: {
-      true: 'focus-visible:border-(--button-color) focus-visible:ring-(--button-color)/30',
+      true: [
+        'focus-visible:border-(--button-color) focus-visible:ring-(--button-color)/30',
+        '[--button-solid:var(--button-color)]',
+        '[--button-solid-foreground:var(--button-color-foreground)]',
+        buttonStateVariables,
+      ].join(' '),
       false: '',
     },
   },
@@ -53,229 +121,6 @@ export const buttonVariants = cva('', {
     { square: true, size: 'sm', class: 'size-8 p-0' },
     { square: true, size: 'md', class: 'size-9 p-0' },
     { square: true, size: 'lg', class: 'size-10 p-0' },
-    {
-      variant: 'solid',
-      severity: 'primary',
-      class: 'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80',
-    },
-    {
-      variant: 'outline',
-      severity: 'primary',
-      class:
-        'border-primary/40 text-primary hover:bg-primary/10 active:border-primary/60 active:bg-primary/20',
-    },
-    {
-      variant: 'plain',
-      severity: 'primary',
-      class: 'text-primary hover:bg-primary/10 active:bg-primary/20',
-    },
-    {
-      variant: 'subtle',
-      severity: 'primary',
-      class:
-        'border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 active:bg-primary/25',
-    },
-    {
-      variant: 'soft',
-      severity: 'primary',
-      class: 'bg-primary/10 text-primary hover:bg-primary/20 active:bg-primary/30',
-    },
-    {
-      variant: 'link',
-      severity: 'primary',
-      class: 'text-primary',
-    },
-    {
-      variant: 'solid',
-      severity: 'secondary',
-      class: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70',
-    },
-    {
-      variant: 'outline',
-      severity: 'secondary',
-      class:
-        'border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary active:bg-secondary/70',
-    },
-    {
-      variant: 'plain',
-      severity: 'secondary',
-      class: 'text-secondary-foreground hover:bg-secondary active:bg-secondary/70',
-    },
-    {
-      variant: 'subtle',
-      severity: 'secondary',
-      class:
-        'border-secondary-foreground/15 bg-secondary/60 text-secondary-foreground hover:bg-secondary/80 active:bg-secondary',
-    },
-    {
-      variant: 'soft',
-      severity: 'secondary',
-      class: 'bg-secondary/60 text-secondary-foreground hover:bg-secondary/80 active:bg-secondary',
-    },
-    {
-      variant: 'link',
-      severity: 'secondary',
-      class: 'text-secondary-foreground',
-    },
-    {
-      variant: 'solid',
-      severity: 'neutral',
-      class: 'bg-foreground text-background hover:bg-foreground/90 active:bg-foreground/80',
-    },
-    {
-      variant: 'outline',
-      severity: 'neutral',
-      class: 'border-foreground/30 text-foreground hover:bg-muted active:bg-muted/80',
-    },
-    {
-      variant: 'plain',
-      severity: 'neutral',
-      class: 'text-foreground hover:bg-muted active:bg-muted/80',
-    },
-    {
-      variant: 'subtle',
-      severity: 'neutral',
-      class: 'border-border bg-muted text-foreground hover:bg-muted/80 active:bg-muted/70',
-    },
-    {
-      variant: 'soft',
-      severity: 'neutral',
-      class: 'bg-muted text-foreground hover:bg-muted/80 active:bg-muted/70',
-    },
-    {
-      variant: 'link',
-      severity: 'neutral',
-      class: 'text-foreground',
-    },
-    {
-      variant: 'solid',
-      severity: 'warning',
-      class: 'bg-warning text-warning-foreground hover:bg-warning/90 active:bg-warning/80',
-    },
-    {
-      variant: 'outline',
-      severity: 'warning',
-      class:
-        'border-warning/40 text-warning hover:bg-warning/10 active:border-warning/60 active:bg-warning/20',
-    },
-    {
-      variant: 'plain',
-      severity: 'warning',
-      class: 'text-warning hover:bg-warning/10 active:bg-warning/20',
-    },
-    {
-      variant: 'subtle',
-      severity: 'warning',
-      class:
-        'border-warning/20 bg-warning/10 text-warning hover:bg-warning/15 active:bg-warning/25',
-    },
-    {
-      variant: 'soft',
-      severity: 'warning',
-      class: 'bg-warning/10 text-warning hover:bg-warning/20 active:bg-warning/30',
-    },
-    {
-      variant: 'link',
-      severity: 'warning',
-      class: 'text-warning',
-    },
-    {
-      variant: 'solid',
-      severity: 'success',
-      class: 'bg-success text-success-foreground hover:bg-success/90 active:bg-success/80',
-    },
-    {
-      variant: 'outline',
-      severity: 'success',
-      class:
-        'border-success/40 text-success hover:bg-success/10 active:border-success/60 active:bg-success/20',
-    },
-    {
-      variant: 'plain',
-      severity: 'success',
-      class: 'text-success hover:bg-success/10 active:bg-success/20',
-    },
-    {
-      variant: 'subtle',
-      severity: 'success',
-      class:
-        'border-success/20 bg-success/10 text-success hover:bg-success/15 active:bg-success/25',
-    },
-    {
-      variant: 'soft',
-      severity: 'success',
-      class: 'bg-success/10 text-success hover:bg-success/20 active:bg-success/30',
-    },
-    {
-      variant: 'link',
-      severity: 'success',
-      class: 'text-success',
-    },
-    {
-      variant: 'solid',
-      severity: 'error',
-      class: 'bg-error text-error-foreground hover:bg-error/90 active:bg-error/80',
-    },
-    {
-      variant: 'outline',
-      severity: 'error',
-      class:
-        'border-error/40 text-error hover:bg-error/10 active:border-error/60 active:bg-error/20',
-    },
-    {
-      variant: 'plain',
-      severity: 'error',
-      class: 'text-error hover:bg-error/10 active:bg-error/20',
-    },
-    {
-      variant: 'subtle',
-      severity: 'error',
-      class: 'border-error/20 bg-error/10 text-error hover:bg-error/15 active:bg-error/25',
-    },
-    {
-      variant: 'soft',
-      severity: 'error',
-      class: 'bg-error/10 text-error hover:bg-error/20 active:bg-error/30',
-    },
-    {
-      variant: 'link',
-      severity: 'error',
-      class: 'text-error',
-    },
-    {
-      color: true,
-      variant: 'solid',
-      class:
-        'bg-(--button-color) text-(--button-color-foreground) hover:bg-(--button-color)/90 active:bg-(--button-color)/80',
-    },
-    {
-      color: true,
-      variant: 'outline',
-      class:
-        'border-(--button-color)/40 text-(--button-color) hover:bg-(--button-color)/10 active:border-(--button-color)/60 active:bg-(--button-color)/20',
-    },
-    {
-      color: true,
-      variant: 'plain',
-      class: 'text-(--button-color) hover:bg-(--button-color)/10 active:bg-(--button-color)/20',
-    },
-    {
-      color: true,
-      variant: 'subtle',
-      class:
-        'border-(--button-color)/20 bg-(--button-color)/10 text-(--button-color) hover:bg-(--button-color)/15 active:bg-(--button-color)/25',
-    },
-    {
-      color: true,
-      variant: 'soft',
-      class:
-        'bg-(--button-color)/10 text-(--button-color) hover:bg-(--button-color)/20 active:bg-(--button-color)/30',
-    },
-    {
-      color: true,
-      variant: 'link',
-      class: 'text-(--button-color)',
-    },
   ],
   defaultVariants: {
     variant: 'solid',

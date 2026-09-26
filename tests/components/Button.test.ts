@@ -33,259 +33,155 @@ const casesRaised = [
   { input: undefined, expected: false },
 ]
 
-const casesSeverityVariant = (
-  [
-    {
-      severity: 'primary',
-      expectedFocus: ['focus-visible:border-primary', 'focus-visible:ring-primary/30'],
-      variants: [
-        {
-          variant: 'solid',
-          expectedNormal: ['bg-primary', 'text-primary-foreground'],
-          expectedHover: ['hover:bg-primary/90'],
-        },
-        {
-          variant: 'outline',
-          expectedNormal: ['border', 'bg-transparent', 'border-primary/40', 'text-primary'],
-          expectedHover: ['hover:bg-primary/10'],
-        },
-        {
-          variant: 'plain',
-          expectedNormal: ['bg-transparent', 'text-primary'],
-          expectedHover: ['hover:bg-primary/10'],
-        },
-        {
-          variant: 'subtle',
-          expectedNormal: ['border', 'border-primary/20', 'bg-primary/10', 'text-primary'],
-          expectedHover: ['hover:bg-primary/15'],
-        },
-        {
-          variant: 'soft',
-          expectedNormal: ['bg-primary/10', 'text-primary'],
-          expectedHover: ['hover:bg-primary/20'],
-        },
-        {
-          variant: 'link',
-          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-primary'],
-          expectedHover: ['hover:no-underline'],
-        },
-      ],
-    },
-    {
-      severity: 'neutral',
-      expectedFocus: ['focus-visible:border-foreground', 'focus-visible:ring-foreground/30'],
-      variants: [
-        {
-          variant: 'solid',
-          expectedNormal: ['bg-foreground', 'text-background'],
-          expectedHover: ['hover:bg-foreground/90'],
-        },
-        {
-          variant: 'outline',
-          expectedNormal: ['border', 'bg-transparent', 'border-foreground/30', 'text-foreground'],
-          expectedHover: ['hover:bg-muted'],
-        },
-        {
-          variant: 'plain',
-          expectedNormal: ['bg-transparent', 'text-foreground'],
-          expectedHover: ['hover:bg-muted'],
-        },
-        {
-          variant: 'subtle',
-          expectedNormal: ['border', 'border-border', 'bg-muted', 'text-foreground'],
-          expectedHover: ['hover:bg-muted/80'],
-        },
-        {
-          variant: 'soft',
-          expectedNormal: ['bg-muted', 'text-foreground'],
-          expectedHover: ['hover:bg-muted/80'],
-        },
-        {
-          variant: 'link',
-          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-foreground'],
-          expectedHover: ['hover:no-underline'],
-        },
-      ],
-    },
-    {
-      severity: 'secondary',
-      expectedFocus: [
-        'focus-visible:border-secondary-foreground',
-        'focus-visible:ring-secondary-foreground/20',
-      ],
-      variants: [
-        {
-          variant: 'solid',
-          expectedNormal: ['bg-secondary', 'text-secondary-foreground'],
-          expectedHover: ['hover:bg-secondary/80'],
-        },
-        {
-          variant: 'outline',
-          expectedNormal: [
-            'border',
-            'bg-transparent',
-            'border-secondary-foreground/30',
-            'text-secondary-foreground',
-          ],
-          expectedHover: ['hover:bg-secondary'],
-        },
-        {
-          variant: 'plain',
-          expectedNormal: ['bg-transparent', 'text-secondary-foreground'],
-          expectedHover: ['hover:bg-secondary'],
-        },
-        {
-          variant: 'subtle',
-          expectedNormal: [
-            'border',
-            'border-secondary-foreground/15',
-            'bg-secondary/60',
-            'text-secondary-foreground',
-          ],
-          expectedHover: ['hover:bg-secondary/80'],
-        },
-        {
-          variant: 'soft',
-          expectedNormal: ['bg-secondary/60', 'text-secondary-foreground'],
-          expectedHover: ['hover:bg-secondary/80'],
-        },
-        {
-          variant: 'link',
-          expectedNormal: [
-            'bg-transparent',
-            'underline',
-            'underline-offset-4',
-            'text-secondary-foreground',
-          ],
-          expectedHover: ['hover:no-underline'],
-        },
-      ],
-    },
-    {
-      severity: 'warning',
-      expectedFocus: ['focus-visible:border-warning', 'focus-visible:ring-warning/30'],
-      variants: [
-        {
-          variant: 'solid',
-          expectedNormal: ['bg-warning', 'text-warning-foreground'],
-          expectedHover: ['hover:bg-warning/90'],
-        },
-        {
-          variant: 'outline',
-          expectedNormal: ['border', 'bg-transparent', 'border-warning/40', 'text-warning'],
-          expectedHover: ['hover:bg-warning/10'],
-        },
-        {
-          variant: 'plain',
-          expectedNormal: ['bg-transparent', 'text-warning'],
-          expectedHover: ['hover:bg-warning/10'],
-        },
-        {
-          variant: 'subtle',
-          expectedNormal: ['border', 'border-warning/20', 'bg-warning/10', 'text-warning'],
-          expectedHover: ['hover:bg-warning/15'],
-        },
-        {
-          variant: 'soft',
-          expectedNormal: ['bg-warning/10', 'text-warning'],
-          expectedHover: ['hover:bg-warning/20'],
-        },
-        {
-          variant: 'link',
-          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-warning'],
-          expectedHover: ['hover:no-underline'],
-        },
-      ],
-    },
-    {
-      severity: 'success',
-      expectedFocus: ['focus-visible:border-success', 'focus-visible:ring-success/30'],
-      variants: [
-        {
-          variant: 'solid',
-          expectedNormal: ['bg-success', 'text-success-foreground'],
-          expectedHover: ['hover:bg-success/90'],
-        },
-        {
-          variant: 'outline',
-          expectedNormal: ['border', 'bg-transparent', 'border-success/40', 'text-success'],
-          expectedHover: ['hover:bg-success/10'],
-        },
-        {
-          variant: 'plain',
-          expectedNormal: ['bg-transparent', 'text-success'],
-          expectedHover: ['hover:bg-success/10'],
-        },
-        {
-          variant: 'subtle',
-          expectedNormal: ['border', 'border-success/20', 'bg-success/10', 'text-success'],
-          expectedHover: ['hover:bg-success/15'],
-        },
-        {
-          variant: 'soft',
-          expectedNormal: ['bg-success/10', 'text-success'],
-          expectedHover: ['hover:bg-success/20'],
-        },
-        {
-          variant: 'link',
-          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-success'],
-          expectedHover: ['hover:no-underline'],
-        },
-      ],
-    },
-    {
-      severity: 'error',
-      expectedFocus: ['focus-visible:border-error', 'focus-visible:ring-error/30'],
-      variants: [
-        {
-          variant: 'solid',
-          expectedNormal: ['bg-error', 'text-error-foreground'],
-          expectedHover: ['hover:bg-error/90'],
-        },
-        {
-          variant: 'outline',
-          expectedNormal: ['border', 'bg-transparent', 'border-error/40', 'text-error'],
-          expectedHover: ['hover:bg-error/10'],
-        },
-        {
-          variant: 'plain',
-          expectedNormal: ['bg-transparent', 'text-error'],
-          expectedHover: ['hover:bg-error/10'],
-        },
-        {
-          variant: 'subtle',
-          expectedNormal: ['border', 'border-error/20', 'bg-error/10', 'text-error'],
-          expectedHover: ['hover:bg-error/15'],
-        },
-        {
-          variant: 'soft',
-          expectedNormal: ['bg-error/10', 'text-error'],
-          expectedHover: ['hover:bg-error/20'],
-        },
-        {
-          variant: 'link',
-          expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-error'],
-          expectedHover: ['hover:no-underline'],
-        },
-      ],
-    },
-  ] satisfies {
-    severity: ButtonSeverity
-    expectedFocus: string[]
-    variants: {
-      variant: ButtonVariant
-      expectedNormal: string[]
-      expectedHover: string[]
-    }[]
-  }[]
-).flatMap(({ severity, expectedFocus, variants }) =>
-  variants.map(({ variant, expectedNormal, expectedHover }) => ({
-    severity,
-    variant,
-    expectedNormal,
-    expectedHover,
-    expectedFocus,
-  })),
+const casesVariantStyles = [
+  {
+    variant: 'solid' as const,
+    expectedNormal: ['bg-(--button-solid)', 'text-(--button-solid-foreground)'],
+    expectedHover: ['hover:bg-(--button-solid-hover)', 'active:bg-(--button-solid-active)'],
+  },
+  {
+    variant: 'outline' as const,
+    expectedNormal: [
+      'border',
+      'bg-transparent',
+      'border-(--button-outline-border)',
+      'text-(--button-color)',
+    ],
+    expectedHover: [
+      'hover:bg-(--button-outline-hover)',
+      'active:border-(--button-outline-active-border)',
+      'active:bg-(--button-outline-active)',
+    ],
+  },
+  {
+    variant: 'plain' as const,
+    expectedNormal: ['bg-transparent', 'text-(--button-color)'],
+    expectedHover: ['hover:bg-(--button-plain-hover)', 'active:bg-(--button-plain-active)'],
+  },
+  {
+    variant: 'subtle' as const,
+    expectedNormal: [
+      'border',
+      'border-(--button-subtle-border)',
+      'bg-(--button-subtle-bg)',
+      'text-(--button-color)',
+    ],
+    expectedHover: ['hover:bg-(--button-subtle-hover)', 'active:bg-(--button-subtle-active)'],
+  },
+  {
+    variant: 'soft' as const,
+    expectedNormal: ['bg-(--button-soft-bg)', 'text-(--button-color)'],
+    expectedHover: ['hover:bg-(--button-soft-hover)', 'active:bg-(--button-soft-active)'],
+  },
+  {
+    variant: 'link' as const,
+    expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-(--button-color)'],
+    expectedHover: ['hover:no-underline'],
+  },
+]
+
+const casesSeverity = [
+  {
+    severity: 'primary',
+    expectedFocus: ['focus-visible:border-primary', 'focus-visible:ring-primary/30'],
+    expectedSeverity: [
+      '[--button-color:var(--primary)]',
+      '[--button-solid:var(--primary)]',
+      '[--button-solid-foreground:var(--primary-foreground)]',
+    ],
+  },
+  {
+    severity: 'neutral',
+    expectedFocus: ['focus-visible:border-foreground', 'focus-visible:ring-foreground/30'],
+    expectedSeverity: [
+      '[--button-color:var(--foreground)]',
+      '[--button-solid:var(--foreground)]',
+      '[--button-solid-foreground:var(--background)]',
+      '[--button-outline-border:color-mix(in_oklab,var(--foreground)_30%,transparent)]',
+      '[--button-outline-hover:var(--muted)]',
+      '[--button-outline-active-border:var(--button-outline-border)]',
+      '[--button-outline-active:color-mix(in_oklab,var(--muted)_80%,transparent)]',
+      '[--button-plain-hover:var(--muted)]',
+      '[--button-plain-active:color-mix(in_oklab,var(--muted)_80%,transparent)]',
+      '[--button-subtle-border:var(--border)]',
+      '[--button-subtle-bg:var(--muted)]',
+      '[--button-subtle-hover:color-mix(in_oklab,var(--muted)_80%,transparent)]',
+      '[--button-subtle-active:color-mix(in_oklab,var(--muted)_70%,transparent)]',
+      '[--button-soft-bg:var(--muted)]',
+      '[--button-soft-hover:color-mix(in_oklab,var(--muted)_80%,transparent)]',
+      '[--button-soft-active:color-mix(in_oklab,var(--muted)_70%,transparent)]',
+    ],
+  },
+  {
+    severity: 'secondary',
+    expectedFocus: [
+      'focus-visible:border-secondary-foreground',
+      'focus-visible:ring-secondary-foreground/20',
+    ],
+    expectedSeverity: [
+      '[--button-color:var(--secondary-foreground)]',
+      '[--button-solid:var(--secondary)]',
+      '[--button-solid-foreground:var(--secondary-foreground)]',
+      '[--button-solid-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
+      '[--button-solid-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
+      '[--button-outline-border:color-mix(in_oklab,var(--secondary-foreground)_30%,transparent)]',
+      '[--button-outline-hover:var(--secondary)]',
+      '[--button-outline-active-border:var(--button-outline-border)]',
+      '[--button-outline-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
+      '[--button-plain-hover:var(--secondary)]',
+      '[--button-plain-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
+      '[--button-subtle-border:color-mix(in_oklab,var(--secondary-foreground)_15%,transparent)]',
+      '[--button-subtle-bg:color-mix(in_oklab,var(--secondary)_60%,transparent)]',
+      '[--button-subtle-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
+      '[--button-subtle-active:var(--secondary)]',
+      '[--button-soft-bg:color-mix(in_oklab,var(--secondary)_60%,transparent)]',
+      '[--button-soft-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
+      '[--button-soft-active:var(--secondary)]',
+    ],
+  },
+  {
+    severity: 'warning',
+    expectedFocus: ['focus-visible:border-warning', 'focus-visible:ring-warning/30'],
+    expectedSeverity: [
+      '[--button-color:var(--warning)]',
+      '[--button-solid:var(--warning)]',
+      '[--button-solid-foreground:var(--warning-foreground)]',
+    ],
+  },
+  {
+    severity: 'success',
+    expectedFocus: ['focus-visible:border-success', 'focus-visible:ring-success/30'],
+    expectedSeverity: [
+      '[--button-color:var(--success)]',
+      '[--button-solid:var(--success)]',
+      '[--button-solid-foreground:var(--success-foreground)]',
+    ],
+  },
+  {
+    severity: 'error',
+    expectedFocus: ['focus-visible:border-error', 'focus-visible:ring-error/30'],
+    expectedSeverity: [
+      '[--button-color:var(--error)]',
+      '[--button-solid:var(--error)]',
+      '[--button-solid-foreground:var(--error-foreground)]',
+    ],
+  },
+] satisfies {
+  severity: ButtonSeverity
+  expectedFocus: string[]
+  expectedSeverity: string[]
+}[]
+
+const casesSeverityVariant = casesSeverity.flatMap(
+  ({ severity, expectedFocus, expectedSeverity }) =>
+    casesVariantStyles.map(({ variant, expectedNormal, expectedHover }) => ({
+      severity,
+      variant,
+      expectedFocus,
+      expectedSeverity,
+      expectedNormal,
+      expectedHover,
+    })),
 )
 
 const casesShape = [
@@ -305,55 +201,36 @@ const casesClick = [
   { loading: false, ariaDisabled: true, expected: 0 },
 ]
 
-const casesColorVariant = [
-  {
-    variant: 'solid',
-    expected: [
-      'bg-(--button-color)',
-      'text-(--button-color-foreground)',
-      'hover:bg-(--button-color)/90',
-      'active:bg-(--button-color)/80',
-    ],
-  },
-  {
-    variant: 'outline',
-    expected: [
-      'border-(--button-color)/40',
-      'text-(--button-color)',
-      'hover:bg-(--button-color)/10',
-      'active:border-(--button-color)/60',
-      'active:bg-(--button-color)/20',
-    ],
-  },
-  {
-    variant: 'plain',
-    expected: [
-      'text-(--button-color)',
-      'hover:bg-(--button-color)/10',
-      'active:bg-(--button-color)/20',
-    ],
-  },
-  {
-    variant: 'subtle',
-    expected: [
-      'border-(--button-color)/20',
-      'bg-(--button-color)/10',
-      'text-(--button-color)',
-      'hover:bg-(--button-color)/15',
-      'active:bg-(--button-color)/25',
-    ],
-  },
-  {
-    variant: 'soft',
-    expected: [
-      'bg-(--button-color)/10',
-      'text-(--button-color)',
-      'hover:bg-(--button-color)/20',
-      'active:bg-(--button-color)/30',
-    ],
-  },
-  { variant: 'link', expected: ['text-(--button-color)'] },
-] satisfies { variant: ButtonVariant; expected: string[] }[]
+const expectedColorStateVariables = [
+  '[--button-solid-hover:color-mix(in_oklab,var(--button-solid)_90%,transparent)]',
+  '[--button-solid-active:color-mix(in_oklab,var(--button-solid)_80%,transparent)]',
+  '[--button-outline-border:color-mix(in_oklab,var(--button-color)_40%,transparent)]',
+  '[--button-outline-hover:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+  '[--button-outline-active-border:color-mix(in_oklab,var(--button-color)_60%,transparent)]',
+  '[--button-outline-active:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+  '[--button-plain-hover:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+  '[--button-plain-active:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+  '[--button-subtle-border:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+  '[--button-subtle-bg:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+  '[--button-subtle-hover:color-mix(in_oklab,var(--button-color)_15%,transparent)]',
+  '[--button-subtle-active:color-mix(in_oklab,var(--button-color)_25%,transparent)]',
+  '[--button-soft-bg:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+  '[--button-soft-hover:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+  '[--button-soft-active:color-mix(in_oklab,var(--button-color)_30%,transparent)]',
+]
+
+const casesColorVariant = casesVariantStyles.map(({ variant, expectedNormal, expectedHover }) => ({
+  variant,
+  expected: [
+    ...expectedNormal,
+    ...expectedHover,
+    'focus-visible:border-(--button-color)',
+    'focus-visible:ring-(--button-color)/30',
+    '[--button-solid:var(--button-color)]',
+    '[--button-solid-foreground:var(--button-color-foreground)]',
+    ...expectedColorStateVariables,
+  ],
+})) satisfies { variant: ButtonVariant; expected: string[] }[]
 
 describe('Button', () => {
   describe('props', () => {
@@ -379,13 +256,14 @@ describe('Button', () => {
     describe('variant', () => {
       it.each(casesSeverityVariant)(
         'renderiza severity=$severity con variant=$variant',
-        ({ severity, variant, expectedNormal, expectedHover, expectedFocus }) => {
+        ({ severity, variant, expectedNormal, expectedHover, expectedFocus, expectedSeverity }) => {
           const root = mountButton({ props: { severity, variant } }).get('[data-test-button-root]')
           const classes = root.classes()
 
           expect(classes).toEqual(expect.arrayContaining(expectedNormal))
           expect(classes).toEqual(expect.arrayContaining(expectedHover))
           expect(classes).toEqual(expect.arrayContaining(expectedFocus))
+          expect(classes).toEqual(expect.arrayContaining(expectedSeverity))
         },
       )
     })
