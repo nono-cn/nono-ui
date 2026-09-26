@@ -3,6 +3,7 @@ import ChipColorExample from '../../components/examples/chip/ChipColorExample.vu
 import ChipDefaultExample from '../../components/examples/chip/ChipDefaultExample.vue'
 import ChipInsetExample from '../../components/examples/chip/ChipInsetExample.vue'
 import ChipPositionExample from '../../components/examples/chip/ChipPositionExample.vue'
+import ChipSeverityExample from '../../components/examples/chip/ChipSeverityExample.vue'
 import ChipShowExample from '../../components/examples/chip/ChipShowExample.vue'
 import ChipSizeExample from '../../components/examples/chip/ChipSizeExample.vue'
 import ChipStandaloneExample from '../../components/examples/chip/ChipStandaloneExample.vue'
@@ -26,6 +27,11 @@ const chipConfig: ComponentDocConfig = {
       title: 'Default',
       description: 'Use the default slot to position the chip over an element.',
       component: ChipDefaultExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Choose a semantic color for the chip indicator.',
+      component: ChipSeverityExample,
     },
     {
       title: 'Color',
@@ -71,7 +77,13 @@ const chipConfig: ComponentDocConfig = {
         name: 'color',
         type: 'string',
         default: 'undefined',
-        description: 'Custom CSS color for the chip.',
+        description: 'Custom CSS color for the chip, overriding severity colors.',
+      },
+      {
+        name: 'severity',
+        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
+        default: "'primary'",
+        description: 'Semantic color used for the chip indicator when no custom color is set.',
       },
       {
         name: 'size',

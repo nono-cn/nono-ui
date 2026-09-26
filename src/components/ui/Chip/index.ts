@@ -63,9 +63,17 @@ export const chipBaseVariants = cva(
         '2xl': 'h-3 min-w-3 text-[11px]',
         '3xl': 'h-3 min-w-3 text-xs',
       },
+      severity: {
+        primary: 'bg-primary text-primary-foreground',
+        neutral: 'bg-foreground text-background',
+        secondary: 'bg-secondary text-secondary-foreground',
+        warning: 'bg-warning text-warning-foreground',
+        success: 'bg-success text-success-foreground',
+        error: 'bg-error text-error-foreground',
+      },
       color: {
         true: 'bg-(--chip-color) text-(--chip-color-foreground)',
-        false: 'bg-primary text-primary-foreground',
+        false: '',
       },
       position: {
         'top-right': 'top-0 right-0',
@@ -107,6 +115,7 @@ export const chipBaseVariants = cva(
     defaultVariants: {
       size: '3xl',
       color: false,
+      severity: 'primary',
     },
   },
 )
@@ -114,10 +123,12 @@ export const chipBaseVariants = cva(
 export type ChipRootVariants = VariantProps<typeof chipRootVariants>
 export type ChipBaseVariants = VariantProps<typeof chipBaseVariants>
 export type ChipSize = NonNullable<ChipBaseVariants['size']>
+export type ChipSeverity = NonNullable<ChipBaseVariants['severity']>
 export type ChipPosition = NonNullable<ChipRootVariants['position']>
 
 export interface ChipProps {
   color?: string
+  severity?: ChipSeverity
   size?: ChipSize
   position?: ChipPosition
   show?: boolean

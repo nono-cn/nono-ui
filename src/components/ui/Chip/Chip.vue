@@ -41,6 +41,7 @@ const baseProps = computed(() => {
       chipBaseVariants({
         size: props.size,
         color: Boolean(props.color),
+        severity: props.severity,
         position: hasDefaultSlot.value && !props.standalone ? props.position : undefined,
         inset: hasDefaultSlot.value ? props.inset : undefined,
         standalone: hasDefaultSlot.value ? props.standalone : undefined,

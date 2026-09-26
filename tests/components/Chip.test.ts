@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Chip, type ChipProps } from '@/components/ui/Chip'
+import { Chip, type ChipProps, type ChipSeverity } from '@/components/ui/Chip'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 
@@ -21,6 +21,16 @@ const casesSize = [
   { input: '2xl' as const, expected: ['h-3', 'min-w-3', 'text-[11px]'] },
   { input: '3xl' as const, expected: ['h-3', 'min-w-3', 'text-xs'] },
 ]
+
+const casesSeverity = [
+  { input: 'primary', expected: ['bg-primary', 'text-primary-foreground'] },
+  { input: 'neutral', expected: ['bg-foreground', 'text-background'] },
+  { input: 'secondary', expected: ['bg-secondary', 'text-secondary-foreground'] },
+  { input: 'warning', expected: ['bg-warning', 'text-warning-foreground'] },
+  { input: 'success', expected: ['bg-success', 'text-success-foreground'] },
+  { input: 'error', expected: ['bg-error', 'text-error-foreground'] },
+  { input: undefined, expected: ['bg-primary', 'text-primary-foreground'] },
+] satisfies Array<{ input: ChipSeverity | undefined; expected: string[] }>
 
 const casesPosition = [
   {
@@ -54,6 +64,27 @@ describe('Chip', () => {
         const base = mountChip({ props: { size: input } }).get('[data-test-chip-base]')
 
         expect(base.classes()).toEqual(expect.arrayContaining(expected))
+      })
+    })
+
+    describe('severity', () => {
+      it.each(casesSeverity)('renderiza severity=$input', ({ input, expected }) => {
+        const base = mountChip({ props: { severity: input } }).get('[data-test-chip-base]')
+
+        expect(base.classes()).toEqual(expect.arrayContaining(expected))
+      })
+
+      it('da prioridad al color personalizado sobre severity', () => {
+        const base = mountChip({ props: { color: '#8b5cf6', severity: 'error' } }).get(
+          '[data-test-chip-base]',
+        )
+
+        expect(base.classes()).toEqual(
+          expect.arrayContaining(['bg-(--chip-color)', 'text-(--chip-color-foreground)']),
+        )
+        expect(base.classes()).not.toEqual(
+          expect.arrayContaining(['bg-error', 'text-error-foreground']),
+        )
       })
     })
 
