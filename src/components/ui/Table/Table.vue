@@ -15,6 +15,7 @@ import { computed, ref, useAttrs, useSlots } from 'vue'
 import { cn } from '@/lib/utils'
 import { Icon } from '@/components/ui/Icon'
 import { useI18n } from '@/i18n'
+import { useColor } from '@/composables'
 import type { TableProps } from '.'
 import type { TableSlots } from '.'
 import { tableFeatureSet, tableVariants } from '.'
@@ -28,6 +29,10 @@ defineSlots<TableSlots<TData>>()
 const attrs = useAttrs()
 const slots = useSlots()
 const { t } = useI18n()
+const { colorStyle } = useColor(
+  computed(() => props.color),
+  'table',
+)
 const sorting = ref<SortingState>([])
 const columnFilters = defineModel<ColumnFiltersState>('columnFilters', {
   default: () => [],
@@ -45,6 +50,7 @@ const columnVisibility = defineModel<ColumnVisibilityState>('columnVisibility', 
 const rootProps = computed(() => ({
   ...attrs,
   class: cn(tableVariants.root({ sticky: props.sticky }), attrs.class),
+  style: [colorStyle.value, attrs.style],
 }))
 
 const tableProps = computed(() => ({
@@ -61,7 +67,14 @@ const thProps = (header: Header<typeof tableFeatureSet, TData>) => {
   const pinned = Boolean(header.column.getIsPinned())
 
   return {
-    class: cn(tableVariants.th({ sticky: props.sticky, pinned })),
+    class: cn(
+      tableVariants.th({
+        sticky: props.sticky,
+        pinned,
+        severity: props.severity,
+        color: Boolean(props.color),
+      }),
+    ),
     style: pinned ? getPinningOffset(header.column) : getColumnWidth(header.column),
     'aria-sort': sorted === 'asc' ? 'ascending' : sorted === 'desc' ? 'descending' : undefined,
   }

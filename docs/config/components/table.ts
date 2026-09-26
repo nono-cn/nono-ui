@@ -14,6 +14,7 @@ import TableServerGlobalFilterExample from '../../components/examples/table/Tabl
 import TableFacetingExample from '../../components/examples/table/TableFacetingExample.vue'
 import TableStickyExample from '../../components/examples/table/TableStickyExample.vue'
 import TableTopBottomExample from '../../components/examples/table/TableTopBottomExample.vue'
+import TableColorExample from '../../components/examples/table/TableColorExample.vue'
 
 const tableConfig: ComponentDocConfig = {
   slug: 'table',
@@ -30,6 +31,11 @@ const tableConfig: ComponentDocConfig = {
     },
   ],
   examples: [
+    {
+      title: 'Header color',
+      description: 'Set the header color with a theme severity or a custom CSS color.',
+      component: TableColorExample,
+    },
     {
       title: 'Top and bottom slots',
       description: 'Use the top and bottom slots to place content around the table.',
@@ -117,6 +123,18 @@ const tableConfig: ComponentDocConfig = {
   accessibility: [],
   api: {
     props: [
+      {
+        name: 'severity',
+        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
+        default: "'secondary'",
+        description: 'Sets the table header background and its contrasting text color.',
+      },
+      {
+        name: 'color',
+        type: 'string',
+        description:
+          'Overrides the table header background with a custom CSS color and uses a contrasting text color.',
+      },
       {
         name: 'sticky',
         type: 'boolean',

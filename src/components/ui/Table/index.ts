@@ -34,7 +34,7 @@ import {
   sortFns,
   tableFeatures,
 } from '@tanstack/vue-table'
-import { cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import type {
   Cell,
   Column,
@@ -105,27 +105,38 @@ export const tableVariants = {
   bottom: cva('border-t border-border px-3 py-2'),
   trHead: cva('border-b'),
   trBody: cva('border-b'),
-  th: cva('h-10 px-3 text-left align-middle font-bold relative', {
+  th: cva('h-10 px-3 text-left align-middle font-bold relative bg-card', {
     variants: {
       sticky: {
-        true: 'sticky top-0 z-20 bg-card',
+        true: 'sticky top-0 z-20',
         false: '',
       },
       pinned: {
-        true: 'sticky z-20 bg-card',
+        true: 'sticky z-20',
+        false: '',
+      },
+      severity: {
+        primary: 'bg-primary text-primary-foreground',
+        secondary: 'bg-secondary text-secondary-foreground',
+        warning: 'bg-warning text-warning-foreground',
+        success: 'bg-success text-success-foreground',
+        error: 'bg-error text-error-foreground',
+      },
+      color: {
+        true: 'bg-(--table-color) text-(--table-color-foreground)',
         false: '',
       },
     },
-    defaultVariants: { sticky: false, pinned: false },
+    defaultVariants: { sticky: false, pinned: false, severity: 'secondary', color: false },
   }),
-  filterTh: cva('px-3 py-2 text-left align-middle font-normal', {
+  filterTh: cva('px-3 py-2 text-left align-middle font-normal bg-card', {
     variants: {
       sticky: {
-        true: 'sticky top-10 z-20 bg-card',
+        true: 'sticky top-10 z-20',
         false: '',
       },
       pinned: {
-        true: 'sticky z-20 bg-card',
+        true: 'sticky z-20',
         false: '',
       },
     },
@@ -156,9 +167,12 @@ export { default as TableColumnVisibility } from './TableColumnVisibility.vue'
 export type { TableColumnVisibilityOption } from './TableColumnVisibility.vue'
 
 export type TableColumnDef<TData extends RowData> = ColumnDef<typeof tableFeatureSet, TData>
+export type TableSeverity = NonNullable<VariantProps<typeof tableVariants.th>['severity']>
 
 export type TableProps<TData extends RowData> = {
   sticky?: boolean
+  severity?: TableSeverity
+  color?: string
   data?: TData[]
   columns?: TableOptions<typeof tableFeatureSet, TData>['columns']
   columnFilters?: ColumnFiltersState
