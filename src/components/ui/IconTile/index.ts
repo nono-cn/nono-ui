@@ -29,6 +29,7 @@ export const iconTileVariants = cva(
       },
       severity: {
         primary: 'text-primary',
+        neutral: 'text-foreground',
         secondary: 'text-secondary-foreground',
         warning: 'text-warning',
         success: 'text-success',
@@ -45,6 +46,12 @@ export const iconTileVariants = cva(
         severity: 'primary',
         color: false,
         class: 'bg-primary text-primary-foreground',
+      },
+      {
+        variant: 'solid',
+        severity: 'neutral',
+        color: false,
+        class: 'bg-foreground text-background',
       },
       {
         variant: 'solid',
@@ -83,6 +90,12 @@ export const iconTileVariants = cva(
       },
       {
         variant: 'elevated',
+        severity: 'neutral',
+        color: false,
+        class: 'bg-muted ring-foreground/20',
+      },
+      {
+        variant: 'elevated',
         severity: 'secondary',
         color: false,
         class: 'bg-secondary/60 ring-secondary-foreground/20',
@@ -110,7 +123,7 @@ export const iconTileVariants = cva(
       variant: 'outline',
       size: 'md',
       shape: 'rounded',
-      severity: 'primary',
+      severity: 'neutral',
       color: false,
     },
   },

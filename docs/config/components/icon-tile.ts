@@ -82,8 +82,8 @@ const iconTileConfig: ComponentDocConfig = {
       },
       {
         name: 'severity',
-        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'primary'",
+        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
+        default: "'neutral'",
         description: 'Semantic tone applied to the icon and tile surface.',
       },
       {

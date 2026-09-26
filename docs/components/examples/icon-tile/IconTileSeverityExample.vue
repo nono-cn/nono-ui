@@ -10,6 +10,7 @@ ${scriptEnd}
 <template>
   <div class="flex flex-wrap items-center gap-4">
     <IconTile icon-name="info" variant="solid" severity="primary" />
+    <IconTile icon-name="info" variant="solid" severity="neutral" />
     <IconTile icon-name="info" variant="solid" severity="secondary" />
     <IconTile icon-name="warning" variant="solid" severity="warning" />
     <IconTile icon-name="check" variant="solid" severity="success" />
@@ -27,6 +28,7 @@ ${scriptEnd}
   >
     <div class="flex flex-wrap items-center gap-4">
       <IconTile icon-name="info" variant="solid" severity="primary" />
+      <IconTile icon-name="info" variant="solid" severity="neutral" />
       <IconTile icon-name="info" variant="solid" severity="secondary" />
       <IconTile icon-name="warning" variant="solid" severity="warning" />
       <IconTile icon-name="check" variant="solid" severity="success" />
