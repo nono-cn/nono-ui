@@ -105,7 +105,7 @@ const buttonConfig: ComponentDocConfig = {
       },
       {
         name: 'severity',
-        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
+        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
         default: "'primary'",
         description: 'Severity used to choose the button colors.',
       },

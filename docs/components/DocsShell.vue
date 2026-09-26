@@ -5,23 +5,45 @@ import { RouterLink, useRoute } from 'vue-router'
 import packageJson from '../../package.json'
 import DocsComponentsSidebar from './DocsComponentsSidebar.vue'
 import ComponentDocsPage from './ComponentDocsPage.vue'
-import { ConfigProvider } from '@/components/provider'
+import { ConfigProvider, neutralColors, type NeutralColor } from '@/components/provider'
 import { docsComponentsBySlug } from '../config/docs-components'
 import { exampleAnchor } from '../config/docs-anchors'
 
 const route = useRoute()
-const dark = ref(false)
+const savedNeutral =
+  typeof localStorage === 'undefined' ? null : localStorage.getItem('nono-ui-neutral')
+const neutral = ref<NeutralColor>(
+  neutralColors.find((color) => color === savedNeutral) ?? 'neutral',
+)
+const dark = ref(
+  typeof localStorage !== 'undefined' && localStorage.getItem('nono-ui-dark') === 'true',
+)
 const themeOpen = ref(false)
 const pageOpen = ref(false)
+const neutralOptions = neutralColors.map((value) => ({
+  value,
+  label: value.charAt(0).toUpperCase() + value.slice(1),
+}))
 const variables = ref([
   { name: '--primary', value: 'oklch(0.51 0.11 248)' },
   { name: '--radius', value: '0.625rem' },
   { name: '--background', value: 'oklch(1 0 0)' },
   { name: '--foreground', value: 'oklch(0.145 0 0)' },
 ])
+
+if (typeof document !== 'undefined') {
+  document.documentElement.classList.toggle('dark', dark.value)
+}
+
 function toggleTheme() {
   dark.value = !dark.value
   document.documentElement.classList.toggle('dark', dark.value)
+  localStorage.setItem('nono-ui-dark', String(dark.value))
+}
+
+function setNeutral(value: NeutralColor) {
+  neutral.value = value
+  localStorage.setItem('nono-ui-neutral', value)
 }
 
 const component = computed(() => docsComponentsBySlug[String(route.params.slug)])
@@ -94,7 +116,7 @@ watch(pageTitle, (value) => (document.title = value), { immediate: true })
 </script>
 
 <template>
-  <ConfigProvider>
+  <ConfigProvider :neutral="neutral">
     <div class="docs-shell">
       <header class="docs-topbar">
         <RouterLink to="/components/icon" class="docs-brand"
@@ -111,6 +133,28 @@ watch(pageTitle, (value) => (document.title = value), { immediate: true })
                 <div><strong>Personalizar tema</strong><small>Variables CSS del diseño</small></div>
                 <button class="docs-close" @click="themeOpen = false">×</button>
               </div>
+              <fieldset class="docs-neutral-picker">
+                <legend>Escala neutral</legend>
+                <div class="docs-neutral-options">
+                  <button
+                    v-for="option in neutralOptions"
+                    :key="option.value"
+                    type="button"
+                    class="docs-neutral-option"
+                    :aria-label="option.label"
+                    :aria-pressed="neutral === option.value"
+                    @click="setNeutral(option.value)"
+                  >
+                    <span
+                      class="docs-neutral-swatch"
+                      :style="{
+                        background: `linear-gradient(135deg, var(--color-${option.value}-100) 50%, var(--color-${option.value}-800) 50%)`,
+                      }"
+                    />
+                    <span>{{ option.label }}</span>
+                  </button>
+                </div>
+              </fieldset>
               <label v-for="variable in variables" :key="variable.name"
                 ><span>{{ variable.name }}</span
                 ><input

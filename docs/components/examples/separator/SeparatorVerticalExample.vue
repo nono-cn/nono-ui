@@ -8,7 +8,7 @@ import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
 ${scriptEnd}
 
 <template>
-  <div class="flex h-16 w-full max-w-md items-center justify-center gap-4 rounded-lg border bg-card px-4">
+  <div class="flex h-16 w-full max-w-md items-center justify-center gap-4 rounded-lg border px-4">
     <span>General</span>
     <Separator orientation="vertical" />
     <span>Privacy</span>
@@ -26,7 +26,7 @@ ${scriptEnd}
     :show-reset="false"
   >
     <div
-      class="flex h-16 w-full max-w-md items-center justify-center gap-4 rounded-lg border bg-card px-4"
+      class="flex h-16 w-full max-w-md items-center justify-center gap-4 rounded-lg border px-4"
     >
       <span>General</span>
       <Separator orientation="vertical" />
