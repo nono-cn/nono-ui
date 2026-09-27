@@ -1,5 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
 import AlertDialogBasicExample from '../../components/examples/alert-dialog/AlertDialogBasicExample.vue'
+import AlertDialogTitleExample from '../../components/examples/alert-dialog/AlertDialogTitleExample.vue'
+import AlertDialogDescriptionExample from '../../components/examples/alert-dialog/AlertDialogDescriptionExample.vue'
 import AlertDialogIconExample from '../../components/examples/alert-dialog/AlertDialogIconExample.vue'
 import AlertDialogActionsExample from '../../components/examples/alert-dialog/AlertDialogActionsExample.vue'
 
@@ -18,13 +20,23 @@ const alertDialogConfig: ComponentDocConfig = {
   ],
   examples: [
     {
+      title: 'Title',
+      description: 'Customize the title shown in the confirmation dialog.',
+      component: AlertDialogTitleExample,
+    },
+    {
+      title: 'Description',
+      description: 'Customize the title and supporting description.',
+      component: AlertDialogDescriptionExample,
+    },
+    {
       title: 'Icon',
-      description: 'Add an icon to reinforce the context of the action.',
+      description: 'Choose an icon to reinforce the context of the action.',
       component: AlertDialogIconExample,
     },
     {
-      title: 'Custom actions',
-      description: 'Configure the action and cancel buttons with props.',
+      title: 'Custom Actions',
+      description: 'Customize the labels and appearance of the dialog actions.',
       component: AlertDialogActionsExample,
     },
   ],
