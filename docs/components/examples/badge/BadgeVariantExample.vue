@@ -1,36 +1,42 @@
 <script setup lang="ts">
-import { Badge } from '@/components/ui/Badge'
+import { computed, ref } from 'vue'
+import { Badge, type BadgeVariant } from '@/components/ui/Badge'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
-import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
+const variants: BadgeVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft']
+const variant = ref<BadgeVariant>('solid')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Badge, type BadgeVariant } from '__DOCS_PACKAGE__/components/ui/Badge'
+
+const variant = ref<BadgeVariant>('${variant.value}')
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-3">
-    <Badge label="Solid" variant="solid" severity="primary" />
-    <Badge label="Outline" variant="outline" severity="primary" />
-    <Badge label="Plain" variant="plain" severity="primary" />
-    <Badge label="Subtle" variant="subtle" severity="primary" />
-    <Badge label="Soft" variant="soft" severity="primary" />
-  </div>
-</template>`
+  <Badge label="Active" :variant="variant" />
+</template>`,
+)
+
+function reset() {
+  variant.value = 'solid'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Variant"
-    description="Compare the badge’s visual variants using the same severity."
+    description="Choose the visual style applied to the badge."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-3">
-      <Badge label="Solid" variant="solid" severity="primary" />
-      <Badge label="Outline" variant="outline" severity="primary" />
-      <Badge label="Plain" variant="plain" severity="primary" />
-      <Badge label="Subtle" variant="subtle" severity="primary" />
-      <Badge label="Soft" variant="soft" severity="primary" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+      </div>
+    </template>
+    <Badge label="Active" :variant="variant" />
   </ComponentExample>
 </template>

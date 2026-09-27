@@ -1,24 +1,44 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Badge } from '@/components/ui/Badge'
+import type { IconName } from '@/components/ui/Icon'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const icons: IconName[] = ['check', 'info', 'warning', 'star', 'user']
+const iconName = ref<IconName>('check')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import type { IconName } from '__DOCS_PACKAGE__/components/ui/Icon'
 import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
+
+const iconName = ref<IconName>('${iconName.value}')
 ${scriptEnd}
 
 <template>
-  <Badge label="Verified" :icon="{ name: 'check' }" />
-</template>`
+  <Badge label="Verified" :icon="{ name: iconName }" />
+</template>`,
+)
+
+function reset() {
+  iconName.value = 'check'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Icon"
-    description="Add an icon at the start of the badge."
+    description="Choose a leading icon for the badge."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <Badge label="Verified" :icon="{ name: 'check' }" />
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="iconName" label="Icon" :options="icons" />
+      </div>
+    </template>
+    <Badge label="Verified" :icon="{ name: iconName }" />
   </ComponentExample>
 </template>
