@@ -1,30 +1,24 @@
 import type { ComponentDocConfig } from '../component-docs'
 import AspectRatioBasicExample from '../../components/examples/aspect-ratio/AspectRatioBasicExample.vue'
-import AspectRatioVideoExample from '../../components/examples/aspect-ratio/AspectRatioVideoExample.vue'
 import AspectRatioRatiosExample from '../../components/examples/aspect-ratio/AspectRatioRatiosExample.vue'
 
 const aspectRatioConfig: ComponentDocConfig = {
   slug: 'aspect-ratio',
   title: 'AspectRatio',
   language: 'en',
-  description: 'Maintains a consistent aspect ratio for images, videos, and responsive content.',
+  description: 'Maintains a consistent aspect ratio for images, videos, and other content.',
   importPath: '@nono-ui/components/ui/AspectRatio',
   usage: [
     {
-      title: 'Responsive content',
-      description: 'Keep a square ratio for visual content.',
+      title: 'Basic usage',
+      description: 'Set a ratio to keep content within consistent proportions.',
       component: AspectRatioBasicExample,
     },
   ],
   examples: [
     {
-      title: 'Widescreen format',
-      description: 'Use a 16:9 ratio for videos and audiovisual content.',
-      component: AspectRatioVideoExample,
-    },
-    {
-      title: 'Different aspect ratios',
-      description: 'Compare several aspect ratios to choose the best fit.',
+      title: 'Aspect ratio',
+      description: 'Choose a common ratio and see how it shapes the content area.',
       component: AspectRatioRatiosExample,
     },
   ],
