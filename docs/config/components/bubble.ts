@@ -5,6 +5,7 @@ import BubbleVariantExample from '../../components/examples/bubble/BubbleVariant
 import BubbleSeverityExample from '../../components/examples/bubble/BubbleSeverityExample.vue'
 import BubbleColorExample from '../../components/examples/bubble/BubbleColorExample.vue'
 import BubbleReactionsExample from '../../components/examples/bubble/BubbleReactionsExample.vue'
+import BubbleElementExample from '../../components/examples/bubble/BubbleElementExample.vue'
 
 const bubbleConfig: ComponentDocConfig = {
   slug: 'bubble',
@@ -22,28 +23,33 @@ const bubbleConfig: ComponentDocConfig = {
   examples: [
     {
       title: 'Align',
-      description: 'Align the bubble at the start or end of its container.',
+      description: 'Place the bubble at the start or end of its container.',
       component: BubbleAlignExample,
     },
     {
       title: 'Variant',
-      description: 'Change the visual style of the surface.',
+      description: 'Choose the visual style applied to the bubble.',
       component: BubbleVariantExample,
     },
     {
       title: 'Severity',
-      description: 'Compare the available semantic severities, including neutral.',
+      description: 'Choose the semantic color and visual style of the bubble.',
       component: BubbleSeverityExample,
     },
     {
       title: 'Color',
-      description: 'Apply a custom CSS color to the bubble.',
+      description: 'Choose a custom color and see how each variant applies it.',
       component: BubbleColorExample,
     },
     {
       title: 'Reactions',
-      description: 'Add reactions above or below the bubble.',
+      description: 'Choose where reactions appear around the bubble.',
       component: BubbleReactionsExample,
+    },
+    {
+      title: 'Element',
+      description: 'Render the surface as a chosen element or merge it onto the child element.',
+      component: BubbleElementExample,
     },
   ],
   accessibility: [

@@ -1,30 +1,46 @@
 <script setup lang="ts">
-import { Bubble } from '@/components/ui/Bubble'
+import { computed, ref } from 'vue'
+import { Bubble, type BubbleAlign } from '@/components/ui/Bubble'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
-import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
+const alignments: BubbleAlign[] = ['start', 'end']
+const align = ref<BubbleAlign>('start')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Bubble, type BubbleAlign } from '__DOCS_PACKAGE__/components/ui/Bubble'
+
+const align = ref<BubbleAlign>('${align.value}')
 ${scriptEnd}
 
 <template>
   <div class="flex w-full flex-col gap-3">
-    <Bubble align="start">Received message</Bubble>
-    <Bubble align="end">Sent message</Bubble>
+    <Bubble :align="align">A message aligned at the selected side.</Bubble>
   </div>
-</template>`
+</template>`,
+)
+
+function reset() {
+  align.value = 'start'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Align"
-    description="Place the bubble at the start or end of the container."
+    description="Place the bubble at the start or end of its container."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="align" label="Align" :options="alignments" />
+      </div>
+    </template>
     <div class="flex w-full flex-col gap-3">
-      <Bubble align="start">Received message</Bubble>
-      <Bubble align="end">Sent message</Bubble>
+      <Bubble :align="align">A message aligned at the selected side.</Bubble>
     </div>
   </ComponentExample>
 </template>

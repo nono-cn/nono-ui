@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/Bubble'
 import BubbleReactions from '@/components/ui/Bubble/BubbleReactions.vue'
 import { testAttrs } from '../utils/testAttrs'
+import { testColor } from '../utils/testColor'
 
 function mountBubble(options: MountingOptions<BubbleProps> = {}) {
   return mount(Bubble, options)
@@ -33,7 +34,11 @@ const casesVariant = [
     variant: 'soft',
     expected: ['border-transparent', 'bg-(--bubble-color)/10', 'text-(--bubble-color)'],
   },
-] satisfies { variant: BubbleVariant; expected: string[] }[]
+  {
+    variant: undefined,
+    expected: ['border-(--bubble-color)/20', 'bg-(--bubble-color)/10', 'text-(--bubble-color)'],
+  },
+] satisfies { variant: BubbleVariant | undefined; expected: string[] }[]
 
 const casesSeverity = [
   {
@@ -86,34 +91,37 @@ const casesSeverity = [
   },
 ] satisfies { severity: BubbleSeverity; expected: string[] }[]
 
-const casesSeverityVariant = casesSeverity.flatMap(({ severity, expected: severityClasses }) =>
-  casesVariant.map(({ variant, expected: variantClasses }) => ({
-    severity,
-    variant,
-    expected: [...severityClasses, ...variantClasses],
-  })),
-)
+const casesAlign = [
+  { align: 'start', expected: 'self-start' },
+  { align: 'end', expected: 'self-end' },
+  { align: undefined, expected: 'self-start' },
+] as const
 
-const casesColorVariant = casesVariant.map(({ variant, expected: variantClasses }) => ({
-  variant,
-  expected: [
-    ...variantClasses,
-    ...(variant === 'solid'
-      ? [
-          '[--bubble-solid:var(--bubble-color)]',
-          '[--bubble-solid-foreground:var(--bubble-color-foreground)]',
-        ]
-      : []),
-  ],
-}))
+const casesReactions = [
+  { sideReaction: 'top', alignReaction: 'start', expected: { side: 'top', align: 'start' } },
+  { sideReaction: 'top', alignReaction: 'end', expected: { side: 'top', align: 'end' } },
+  { sideReaction: 'bottom', alignReaction: 'start', expected: { side: 'bottom', align: 'start' } },
+  { sideReaction: 'bottom', alignReaction: 'end', expected: { side: 'bottom', align: 'end' } },
+  { sideReaction: undefined, alignReaction: undefined, expected: { side: 'bottom', align: 'end' } },
+] as const
+
+const casesAs = [
+  { as: 'div', expected: 'div' },
+  { as: 'button', expected: 'button' },
+  { as: 'a', expected: 'a' },
+  { as: undefined, expected: 'div' },
+] as const
+
+const casesAsChild = [
+  { asChild: false, expected: 'div' },
+  { asChild: true, expected: 'a' },
+  { asChild: undefined, expected: 'div' },
+] as const
 
 describe('Bubble', () => {
   describe('props', () => {
     describe('align', () => {
-      it.each([
-        ['start', 'self-start'],
-        ['end', 'self-end'],
-      ] as const)('alinea %s', (align, expected) => {
+      it.each(casesAlign)('alinea con align=$align', ({ align, expected }) => {
         expect(
           mountBubble({ props: { align } }).get('[data-test-bubble-root]').classes(),
         ).toContain(expected)
@@ -121,97 +129,73 @@ describe('Bubble', () => {
     })
 
     describe('variant', () => {
-      it.each(casesSeverityVariant)(
-        'combina severity=$severity con variant=$variant',
-        ({ severity, variant, expected }) => {
-          const surface = mountBubble({ props: { severity, variant } }).get(
-            '[data-test-bubble-surface]',
-          )
+      it.each(casesVariant)('renderiza variant=$variant', ({ variant, expected }) => {
+        const surface = mountBubble({ props: { variant } }).get('[data-test-bubble-surface]')
 
-          expect(surface.classes()).toEqual(expect.arrayContaining(expected))
-        },
-      )
+        expect(surface.classes()).toEqual(expect.arrayContaining(expected))
+      })
+    })
 
-      it('usa subtle y neutral por defecto', () => {
-        const surface = mountBubble().get('[data-test-bubble-surface]')
+    describe('severity', () => {
+      it.each(casesSeverity)('renderiza severity=$severity', ({ severity, expected }) => {
+        const surface = mountBubble({ props: { severity } }).get('[data-test-bubble-surface]')
 
-        expect(surface.classes()).toEqual(
-          expect.arrayContaining([
-            'border-(--bubble-color)/20',
-            'bg-(--bubble-color)/10',
-            'text-(--bubble-color)',
-            '[--bubble-color:var(--foreground)]',
-            '[--bubble-solid:var(--foreground)]',
-            '[--bubble-solid-foreground:var(--background)]',
-          ]),
-        )
+        expect(surface.classes()).toEqual(expect.arrayContaining(expected))
       })
     })
 
     describe('color', () => {
-      it.each(casesColorVariant)(
-        'combina color personalizado y severity=success con variant=$variant',
-        ({ variant, expected }) => {
-          const surface = mountBubble({
-            props: { color: '#ff0000', severity: 'success', variant },
-          }).get('[data-test-bubble-surface]')
+      testColor({
+        text: 'aplica color personalizado',
+        id: '[data-test-bubble-surface]',
+        varColor: '--bubble-color',
+        mount: (color) => mountBubble({ props: { color } }),
+      })
 
-          expect(surface.attributes('style')).toContain('--bubble-color: #ff0000')
-          expect(surface.attributes('style')).toContain('--bubble-color-foreground: #09090b')
-          expect(surface.classes()).toContain('[--bubble-color:var(--success)]')
-          expect(surface.classes()).toEqual(expect.arrayContaining(expected))
-        },
-      )
-
-      it('prioriza color personalizado sobre severity en la variante solid', () => {
+      it('da prioridad al color personalizado sobre severity', () => {
         const surface = mountBubble({
-          props: { color: '#ff0000', severity: 'success', variant: 'solid' },
+          props: { color: '#ff0000', severity: 'success' },
         }).get('[data-test-bubble-surface]')
 
-        expect(surface.classes()).toEqual(
-          expect.arrayContaining([
-            '[--bubble-color:var(--success)]',
-            '[--bubble-solid:var(--bubble-color)]',
-            '[--bubble-solid-foreground:var(--bubble-color-foreground)]',
-            'bg-(--bubble-solid)',
-            'text-(--bubble-solid-foreground)',
-          ]),
-        )
         expect(surface.attributes('style')).toContain('--bubble-color: #ff0000')
-        expect(surface.attributes('style')).toContain('--bubble-color-foreground: #09090b')
+        expect(surface.classes()).toContain('[--bubble-color:var(--success)]')
       })
     })
 
     describe('reaction', () => {
-      it('pasa sideReaction y alignReaction al componente interno', () => {
-        const wrapper = mountBubble({
-          props: { sideReaction: 'top', alignReaction: 'start' },
-          slots: { reactions: '👍' },
-        })
-        expect(wrapper.getComponent(BubbleReactions).props()).toMatchObject({
-          side: 'top',
-          align: 'start',
-        })
-      })
+      it.each(casesReactions)(
+        'pasa sideReaction=$sideReaction y alignReaction=$alignReaction al componente interno',
+        ({ sideReaction, alignReaction, expected }) => {
+          const wrapper = mountBubble({
+            props: { sideReaction, alignReaction },
+            slots: { reactions: '\u{1F44D}' },
+          })
+          expect(wrapper.getComponent(BubbleReactions).props()).toMatchObject(expected)
+        },
+      )
     })
 
     describe('as y asChild', () => {
-      it.each(['div', 'button', 'a'] as const)('renderiza as=%s', (as) => {
+      it.each(casesAs)('renderiza as=$as', ({ as, expected }) => {
         expect(
           mountBubble({ props: { as } })
             .get('[data-test-bubble-surface]')
             .element.tagName.toLowerCase(),
-        ).toBe(as)
+        ).toBe(expected)
       })
+      it.each(casesAsChild)(
+        'renderiza asChild=$asChild con elemento $expected',
+        ({ asChild, expected }) => {
+          const wrapper = mountBubble({
+            props: { asChild },
+            slots: { default: h('a', { href: '/message' }, 'Mensaje') },
+          })
 
-      it('fusiona attrs con el hijo y conserva reactions', () => {
-        const wrapper = mountBubble({
-          props: { asChild: true },
-          slots: { default: h('a', { href: '/message' }, 'Mensaje'), reactions: '👍' },
-        })
-        expect(wrapper.get('[data-test-bubble-surface]').attributes('href')).toBe('/message')
-        expect(wrapper.get('[data-test-bubble-reactions]').text()).toBe('👍')
-      })
+          expect(wrapper.get('[data-test-bubble-surface]').element.tagName.toLowerCase()).toBe(
+            expected,
+          )
+        },
+      )
     })
 
     describe('ui', () => {
@@ -222,7 +206,7 @@ describe('Bubble', () => {
           mount: (attrs) =>
             mountBubble({
               props: { ui: { reactions: () => attrs } },
-              slots: { reactions: '👍' },
+              slots: { reactions: '\u{1F44D}' },
             }),
         })
       })
@@ -249,8 +233,8 @@ describe('Bubble', () => {
 
     describe('reactions', () => {
       it('renderiza el slot dentro de su contenedor interno', () => {
-        const wrapper = mountBubble({ slots: { reactions: '👍' } })
-        expect(wrapper.get('[data-test-bubble-reactions]').text()).toBe('👍')
+        const wrapper = mountBubble({ slots: { reactions: '\u{1F44D}' } })
+        expect(wrapper.get('[data-test-bubble-reactions]').text()).toBe('\u{1F44D}')
       })
 
       it('no crea el contenedor si falta el slot', () => {

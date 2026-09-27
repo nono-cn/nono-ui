@@ -1,31 +1,42 @@
 <script setup lang="ts">
-import { Bubble } from '@/components/ui/Bubble'
+import { computed, ref } from 'vue'
+import { Bubble, type BubbleVariant } from '@/components/ui/Bubble'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants = ['solid', 'outline', 'plain', 'subtle', 'soft'] as const
-const code = `<script setup lang="ts">
-import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
+const variants: BubbleVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft']
+const variant = ref<BubbleVariant>('subtle')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Bubble, type BubbleVariant } from '__DOCS_PACKAGE__/components/ui/Bubble'
 
-const variants = ['solid', 'outline', 'plain', 'subtle', 'soft'] as const
+const variant = ref<BubbleVariant>('${variant.value}')
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full gap-3">
-    <Bubble v-for="variant in variants" :key="variant" :variant="variant">{{ variant }}</Bubble>
-  </div>
-</template>`
+  <Bubble :variant="variant">A message with the selected visual style.</Bubble>
+</template>`,
+)
+
+function reset() {
+  variant.value = 'subtle'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Variant"
-    description="Compare the available visual styles."
+    description="Choose the visual style applied to the bubble."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid w-full gap-3">
-      <Bubble v-for="variant in variants" :key="variant" :variant="variant">{{ variant }}</Bubble>
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+      </div>
+    </template>
+    <Bubble :variant="variant">A message with the selected visual style.</Bubble>
   </ComponentExample>
 </template>

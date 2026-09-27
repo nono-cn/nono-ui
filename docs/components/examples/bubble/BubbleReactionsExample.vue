@@ -1,59 +1,63 @@
 <script setup lang="ts">
-import { Bubble } from '@/components/ui/Bubble'
+import { computed, ref } from 'vue'
+import { Bubble, type BubbleReactionsAlign, type BubbleReactionsSide } from '@/components/ui/Bubble'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const combinations = [
-  { label: 'Top / start', side: 'top', align: 'start' },
-  { label: 'Top / end', side: 'top', align: 'end' },
-  { label: 'Bottom / start', side: 'bottom', align: 'start' },
-  { label: 'Bottom / end', side: 'bottom', align: 'end' },
-] as const
+const sides: BubbleReactionsSide[] = ['top', 'bottom']
+const alignments: BubbleReactionsAlign[] = ['start', 'end']
+const sideReaction = ref<BubbleReactionsSide>('bottom')
+const alignReaction = ref<BubbleReactionsAlign>('end')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import {
+  Bubble,
+  type BubbleReactionsAlign,
+  type BubbleReactionsSide,
+} from '__DOCS_PACKAGE__/components/ui/Bubble'
 
-const code = `<script setup lang="ts">
-import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
+const sideReaction = ref<BubbleReactionsSide>('${sideReaction.value}')
+const alignReaction = ref<BubbleReactionsAlign>('${alignReaction.value}')
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full gap-8 sm:grid-cols-2">
-    <Bubble side-reaction="top" align-reaction="start">
-      Top / start
-      <template #reactions><span aria-label="Like">👍</span><span aria-label="Celebrate">🎉</span></template>
-    </Bubble>
-    <Bubble side-reaction="top" align-reaction="end">
-      Top / end
-      <template #reactions><span aria-label="Like">👍</span><span aria-label="Celebrate">🎉</span></template>
-    </Bubble>
-    <Bubble side-reaction="bottom" align-reaction="start">
-      Bottom / start
-      <template #reactions><span aria-label="Like">👍</span><span aria-label="Celebrate">🎉</span></template>
-    </Bubble>
-    <Bubble side-reaction="bottom" align-reaction="end">
-      Bottom / end
-      <template #reactions><span aria-label="Like">👍</span><span aria-label="Celebrate">🎉</span></template>
-    </Bubble>
-  </div>
-</template>`
+  <Bubble :side-reaction="sideReaction" :align-reaction="alignReaction">
+    Message with reactions
+    <template #reactions>
+      <span role="img" aria-label="Like">👍</span>
+      <span role="img" aria-label="Celebrate">🎉</span>
+    </template>
+  </Bubble>
+</template>`,
+)
+
+function reset() {
+  sideReaction.value = 'bottom'
+  alignReaction.value = 'end'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Reactions"
-    description="Compare all side and alignment combinations."
+    description="Choose where reactions appear around the bubble."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid w-full gap-8 sm:grid-cols-2">
-      <Bubble
-        v-for="combination in combinations"
-        :key="combination.label"
-        :side-reaction="combination.side"
-        :align-reaction="combination.align"
-      >
-        {{ combination.label }}
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="sideReaction" label="Side" :options="sides" />
+        <ExampleSelectControl v-model="alignReaction" label="Alignment" :options="alignments" />
+      </div>
+    </template>
+    <div class="flex w-full flex-col gap-8 py-4">
+      <Bubble :side-reaction="sideReaction" :align-reaction="alignReaction">
+        Message with reactions
         <template #reactions>
-          <span aria-label="Like">👍</span>
-          <span aria-label="Celebrate">🎉</span>
+          <span role="img" aria-label="Like">👍</span>
+          <span role="img" aria-label="Celebrate">🎉</span>
         </template>
       </Bubble>
     </div>

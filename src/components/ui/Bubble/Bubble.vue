@@ -18,9 +18,11 @@ const { colorStyle } = useColor(
   computed(() => props.color),
   'bubble',
 )
+
 const wrapperProps = computed(() => ({
   class: bubbleWrapperVariants({ align: props.align }),
 }))
+
 const surfaceProps = computed(() => {
   return {
     ...attrs,
@@ -37,6 +39,7 @@ const surfaceProps = computed(() => {
     style: [colorStyle.value, attrs.style],
   }
 })
+
 const reactionProps = computed(() => {
   const ui = useUi(props.ui?.reactions, undefined)
   return {
