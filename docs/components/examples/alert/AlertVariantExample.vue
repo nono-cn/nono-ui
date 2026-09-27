@@ -1,46 +1,53 @@
 <script setup lang="ts">
-import { Alert } from '@/components/ui/Alert'
+import { computed, ref } from 'vue'
+import { Alert, type AlertVariant } from '@/components/ui/Alert'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const variants: AlertVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft']
+const variant = ref<AlertVariant>('soft')
+
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Alert } from '__DOCS_PACKAGE__/components/ui/Alert'
+
+const variant = ref('${variant.value}' as const)
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full max-w-2xl gap-3">
-    <Alert label="Solid" description="Solid style." variant="solid" severity="success" />
-    <Alert label="Outline" description="Outlined style." variant="outline" severity="success" />
-    <Alert label="Plain" description="No background or border." variant="plain" severity="success" />
-    <Alert label="Subtle" description="Subtle background and border." variant="subtle" severity="success" />
-    <Alert label="Soft" description="Subtle background." variant="soft" severity="success" />
-  </div>
-</template>`
+  <Alert
+    label="Account update"
+    description="Your account settings were updated successfully."
+    :variant="variant"
+  />
+</template>`,
+)
+
+function reset() {
+  variant.value = 'soft'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Variant"
-    description="Compare the five available visual styles."
+    description="Choose the alert’s visual style."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid w-full max-w-2xl gap-3">
-      <Alert label="Solid" description="Solid style." variant="solid" severity="success" />
-      <Alert label="Outline" description="Outlined style." variant="outline" severity="success" />
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+      </div>
+    </template>
+    <div class="w-full max-w-2xl">
       <Alert
-        label="Plain"
-        description="No background or border."
-        variant="plain"
-        severity="success"
+        label="Account update"
+        description="Your account settings were updated successfully."
+        :variant="variant"
       />
-      <Alert
-        label="Subtle"
-        description="Subtle background and border."
-        variant="subtle"
-        severity="success"
-      />
-      <Alert label="Soft" description="Subtle background." variant="soft" severity="success" />
     </div>
   </ComponentExample>
 </template>

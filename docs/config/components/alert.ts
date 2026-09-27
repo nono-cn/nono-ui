@@ -2,11 +2,12 @@ import type { ComponentDocConfig } from '../component-docs'
 import AlertBasicExample from '../../components/examples/alert/AlertBasicExample.vue'
 import AlertVariantExample from '../../components/examples/alert/AlertVariantExample.vue'
 import AlertSeverityExample from '../../components/examples/alert/AlertSeverityExample.vue'
+import AlertTitleExample from '../../components/examples/alert/AlertTitleExample.vue'
+import AlertDescriptionExample from '../../components/examples/alert/AlertDescriptionExample.vue'
 import AlertColorExample from '../../components/examples/alert/AlertColorExample.vue'
 import AlertIconExample from '../../components/examples/alert/AlertIconExample.vue'
 import AlertClosableExample from '../../components/examples/alert/AlertClosableExample.vue'
 import AlertCloseButtonExample from '../../components/examples/alert/AlertCloseButtonExample.vue'
-import AlertDecorativeExample from '../../components/examples/alert/AlertDecorativeExample.vue'
 
 const alertConfig: ComponentDocConfig = {
   slug: 'alert',
@@ -23,13 +24,28 @@ const alertConfig: ComponentDocConfig = {
   ],
   examples: [
     {
+      title: 'Title',
+      description: 'Edit the title displayed in the alert.',
+      component: AlertTitleExample,
+    },
+    {
+      title: 'Description',
+      description: 'Edit both the alert title and its supporting description.',
+      component: AlertDescriptionExample,
+    },
+    {
+      title: 'Icon',
+      description: 'Choose the leading icon displayed in the alert.',
+      component: AlertIconExample,
+    },
+    {
       title: 'Variant',
-      description: 'Compare the five available visual styles.',
+      description: 'Choose the alert’s visual style.',
       component: AlertVariantExample,
     },
     {
       title: 'Severity',
-      description: 'Compare the available semantic colors.',
+      description: 'Choose the alert’s semantic color and visual style.',
       component: AlertSeverityExample,
     },
     {
@@ -38,24 +54,14 @@ const alertConfig: ComponentDocConfig = {
       component: AlertColorExample,
     },
     {
-      title: 'Icon',
-      description: 'Display a leading icon using the icon prop.',
-      component: AlertIconExample,
-    },
-    {
       title: 'Closable',
       description: 'Allow the alert to be dismissed with the default close button.',
       component: AlertClosableExample,
     },
     {
-      title: 'CloseButton',
-      description: 'Customize the close button configuration.',
+      title: 'Close button',
+      description: 'Customize the Alert’s close button.',
       component: AlertCloseButtonExample,
-    },
-    {
-      title: 'Decorative',
-      description: 'Compare the default alert role with decorative mode.',
-      component: AlertDecorativeExample,
     },
   ],
   accessibility: [

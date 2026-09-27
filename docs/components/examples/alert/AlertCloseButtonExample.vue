@@ -20,8 +20,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="CloseButton"
-    description="Customize the close button’s size, variant, and severity."
+    title="Close button"
+    description="Customize the Alert’s close button."
     :code="code"
     :show-reset="false"
   >
