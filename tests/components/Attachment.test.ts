@@ -15,6 +15,18 @@ const casesOrientation = [
   { input: 'vertical' as const, expected: 'w-40' },
 ]
 
+const casesLabel = [
+  { input: 'informe.pdf', expected: 'informe.pdf', exists: true },
+  { input: '', expected: undefined, exists: false },
+  { input: undefined, expected: undefined, exists: false },
+]
+
+const casesDescription = [
+  { input: '2.4 MB · PDF', expected: '2.4 MB · PDF', exists: true },
+  { input: '', expected: undefined, exists: false },
+  { input: undefined, expected: undefined, exists: false },
+]
+
 const casesSize = [
   {
     input: 'md' as const,
@@ -41,27 +53,82 @@ const casesSize = [
 ]
 
 const casesState = [
-  { input: 'idle' as const, expected: 'border-dashed' },
-  { input: 'uploading' as const, expected: 'animate-pulse' },
-  { input: 'processing' as const, expected: 'animate-pulse' },
-  { input: 'error' as const, expected: 'text-error' },
+  {
+    input: 'idle' as const,
+    expected: {
+      root: ['border-dashed'],
+      label: [],
+      description: [],
+      media: [],
+      icon: 'fileText',
+      spinning: false,
+    },
+  },
+  {
+    input: 'uploading' as const,
+    expected: {
+      root: [],
+      label: ['animate-pulse'],
+      description: [],
+      media: [],
+      icon: 'spinner',
+      spinning: true,
+    },
+  },
+  {
+    input: 'processing' as const,
+    expected: {
+      root: [],
+      label: ['animate-pulse'],
+      description: [],
+      media: [],
+      icon: 'fileText',
+      spinning: false,
+    },
+  },
+  {
+    input: 'error' as const,
+    expected: {
+      root: ['border-error/50', 'bg-error/5', 'text-error'],
+      label: [],
+      description: ['text-error'],
+      media: ['bg-error/10', 'text-error'],
+      icon: 'fileText',
+      spinning: false,
+    },
+  },
+  {
+    input: 'done' as const,
+    expected: {
+      root: [],
+      label: [],
+      description: [],
+      media: [],
+      icon: 'fileText',
+      spinning: false,
+    },
+  },
 ]
 
 describe('Attachment', () => {
   describe('props', () => {
     describe('label', () => {
-      it('renderiza label', () => {
-        const attachment = mountAttachment({ props: { label: 'informe.pdf' } })
+      it.each(casesLabel)('renderiza label=$input', ({ input, expected, exists }) => {
+        const attachment = mountAttachment({ props: { label: input } })
+        const label = attachment.find('[data-test-attachment-label]')
 
-        expect(attachment.get('[data-test-attachment-label]').text()).toBe('informe.pdf')
+        expect(label.exists()).toBe(exists)
+        if (expected) expect(label.text()).toBe(expected)
       })
     })
 
     describe('description', () => {
-      it('renderiza description', () => {
-        const attachment = mountAttachment({ props: { description: '2.4 MB' } })
+      it.each(casesDescription)('renderiza description=$input', ({ input, expected, exists }) => {
+        const attachment = mountAttachment({ props: { description: input } })
+        const description = attachment.find('[data-test-attachment-description]')
 
-        expect(attachment.get('[data-test-attachment-description]').text()).toBe('2.4 MB')
+        expect(description.exists()).toBe(exists)
+        if (expected) expect(description.text()).toBe(expected)
       })
     })
 
@@ -96,23 +163,41 @@ describe('Attachment', () => {
     })
 
     describe('state', () => {
-      it.each(casesState)('renderiza state=$input', ({ input, expected }) => {
-        const attachment = mountAttachment({
-          props: { state: input, label: 'informe.pdf', description: '2.4 MB' },
-        })
-        const root = attachment.get('[data-test-attachment-root]')
-        const label = attachment.get('[data-test-attachment-label]')
+      it.each(casesState)(
+        'renderiza state=$input con sus estilos asociados',
+        ({ input, expected }) => {
+          const attachment = mountAttachment({
+            props: {
+              state: input,
+              label: 'informe.pdf',
+              description: '2.4 MB',
+              icon: { name: 'fileText' },
+            },
+          })
+          const root = attachment.get('[data-test-attachment-root]')
+          const rootClasses = root.classes()
+          const labelClasses = attachment.get('[data-test-attachment-label]').classes()
+          const descriptionClasses = attachment.get('[data-test-attachment-description]').classes()
+          const mediaClasses = attachment.get('[data-test-attachment-media]').classes()
+          const iconComponent = attachment.getComponent('[data-test-attachment-icon]')
 
-        expect(root.classes().concat(label.classes())).toContain(expected)
-      })
-
-      it('renderiza state=done', () => {
-        const root = mountAttachment({
-          props: { state: 'done', label: 'informe.pdf', description: '2.4 MB' },
-        }).get('[data-test-attachment-root]')
-
-        expect(root.classes()).not.toContain('border-dashed')
-      })
+          for (const className of expected.root) expect(rootClasses).toContain(className)
+          for (const className of expected.label) expect(labelClasses).toContain(className)
+          for (const className of expected.description) {
+            expect(descriptionClasses).toContain(className)
+          }
+          for (const className of expected.media) expect(mediaClasses).toContain(className)
+          expect(root.attributes('data-state')).toBe(input)
+          expect(rootClasses.includes('border-dashed')).toBe(input === 'idle')
+          expect(labelClasses.includes('animate-pulse')).toBe(
+            input === 'uploading' || input === 'processing',
+          )
+          expect(descriptionClasses.includes('text-error')).toBe(input === 'error')
+          expect(mediaClasses.includes('bg-error/10')).toBe(input === 'error')
+          expect(iconComponent.props('name')).toBe(expected.icon)
+          expect(iconComponent.classes().includes('animate-spin')).toBe(expected.spinning)
+        },
+      )
     })
 
     describe('icon', () => {
@@ -126,15 +211,6 @@ describe('Attachment', () => {
         text: 'hereda el size de Attachment en icon',
         id: '[data-test-attachment-icon]',
         mount: (size) => mountAttachment({ props: { size, icon: { name: 'fileText' } } }),
-      })
-
-      it('renderiza un spinner animado durante la subida', () => {
-        const icon = mountAttachment({ props: { state: 'uploading' } }).getComponent(
-          '[data-test-attachment-icon]',
-        )
-
-        expect(icon.props('name')).toBe('spinner')
-        expect(icon.classes()).toContain('animate-spin')
       })
     })
 
