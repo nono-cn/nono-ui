@@ -1,58 +1,61 @@
 <script setup lang="ts">
-import { Attachment } from '@/components/ui/Attachment'
+import { computed, ref } from 'vue'
+import { Attachment, type AttachmentState } from '@/components/ui/Attachment'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const states = [
-  { value: 'idle', label: 'Idle', description: 'Ready to start' },
-  { value: 'uploading', label: 'Uploading', description: 'Uploading file' },
-  { value: 'processing', label: 'Processing', description: 'Preparing file' },
-  { value: 'error', label: 'Error', description: 'Could not process the file' },
-  { value: 'done', label: 'Complete', description: 'File ready' },
-] as const
+const stateOptions: AttachmentState[] = ['idle', 'uploading', 'processing', 'error', 'done']
+const state = ref<AttachmentState>('idle')
+const descriptions: Record<AttachmentState, string> = {
+  idle: 'Ready to upload · PDF · 2.4 MB',
+  uploading: 'Uploading file · PDF · 2.4 MB',
+  processing: 'Preparing file · PDF · 2.4 MB',
+  error: 'Could not process the file',
+  done: 'Upload complete · PDF · 2.4 MB',
+}
+const description = computed(() => descriptions[state.value])
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Attachment, type AttachmentState } from '__DOCS_PACKAGE__/components/ui/Attachment'
 
-const code = `<script setup lang="ts">
-import { Attachment } from '__DOCS_PACKAGE__/components/ui/Attachment'
-
-const states = [
-  { value: 'idle', label: 'Idle', description: 'Ready to start' },
-  { value: 'uploading', label: 'Uploading', description: 'Uploading file' },
-  { value: 'processing', label: 'Processing', description: 'Preparing file' },
-  { value: 'error', label: 'Error', description: 'Could not process the file' },
-  { value: 'done', label: 'Complete', description: 'File ready' },
-] as const
+const state = ref<AttachmentState>('${state.value}')
+const description = ref(${JSON.stringify(description.value)})
 ${scriptEnd}
 
 <template>
-  <div class="grid gap-3">
-    <Attachment
-      v-for="state in states"
-      :key="state.value"
-      :state="state.value"
-      :label="state.label"
-      :description="state.description"
-      :icon="{ name: 'file' }"
-    />
-  </div>
-</template>`
+  <Attachment
+    label="document.pdf"
+    :description="description"
+    :state="state"
+    :icon="{ name: 'fileText' }"
+  />
+</template>`,
+)
+
+function reset() {
+  state.value = 'idle'
+}
 </script>
 
 <template>
   <ComponentExample
-    title="States"
-    description="Each state changes the file's visual presentation."
+    title="State"
+    description="Choose the visual state shown for the file."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid w-full gap-3">
-      <Attachment
-        v-for="state in states"
-        :key="state.value"
-        :state="state.value"
-        :label="state.label"
-        :description="state.description"
-        :icon="{ name: 'file' }"
-      />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="state" label="State" :options="stateOptions" />
+      </div>
+    </template>
+    <Attachment
+      label="document.pdf"
+      :description="description"
+      :state="state"
+      :icon="{ name: 'fileText' }"
+    />
   </ComponentExample>
 </template>

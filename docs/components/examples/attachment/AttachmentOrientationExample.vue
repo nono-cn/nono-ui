@@ -1,50 +1,52 @@
 <script setup lang="ts">
-import { Attachment } from '@/components/ui/Attachment'
+import { computed, ref } from 'vue'
+import { Attachment, type AttachmentOrientation } from '@/components/ui/Attachment'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
-import { Attachment } from '__DOCS_PACKAGE__/components/ui/Attachment'
+const orientations: AttachmentOrientation[] = ['horizontal', 'vertical']
+const orientation = ref<AttachmentOrientation>('horizontal')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Attachment, type AttachmentOrientation } from '__DOCS_PACKAGE__/components/ui/Attachment'
+
+const orientation = ref<AttachmentOrientation>('${orientation.value}')
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-start gap-4">
-    <Attachment
-      label="Horizontal"
-      description="2.4 MB"
-      orientation="horizontal"
-      :icon="{ name: 'file' }"
-    />
-    <Attachment
-      label="Vertical"
-      description="2.4 MB"
-      orientation="vertical"
-      :icon="{ name: 'file' }"
-    />
-  </div>
-</template>`
+  <Attachment
+    label="document.pdf"
+    description="PDF · 2.4 MB"
+    :orientation="orientation"
+    :icon="{ name: 'fileText' }"
+  />
+</template>`,
+)
+
+function reset() {
+  orientation.value = 'horizontal'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Orientation"
-    description="Choose a horizontal or vertical layout."
+    description="Choose a horizontal or vertical layout for the attachment."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-start gap-4">
-      <Attachment
-        label="Horizontal"
-        description="2.4 MB"
-        orientation="horizontal"
-        :icon="{ name: 'file' }"
-      />
-      <Attachment
-        label="Vertical"
-        description="2.4 MB"
-        orientation="vertical"
-        :icon="{ name: 'file' }"
-      />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="orientation" label="Orientation" :options="orientations" />
+      </div>
+    </template>
+    <Attachment
+      label="document.pdf"
+      description="PDF · 2.4 MB"
+      :orientation="orientation"
+      :icon="{ name: 'fileText' }"
+    />
   </ComponentExample>
 </template>

@@ -1,8 +1,9 @@
 import type { ComponentDocConfig } from '../component-docs'
 import AttachmentBasicExample from '../../components/examples/attachment/AttachmentBasicExample.vue'
+import AttachmentTitleExample from '../../components/examples/attachment/AttachmentTitleExample.vue'
+import AttachmentDescriptionExample from '../../components/examples/attachment/AttachmentDescriptionExample.vue'
 import AttachmentIconExample from '../../components/examples/attachment/AttachmentIconExample.vue'
 import AttachmentOrientationExample from '../../components/examples/attachment/AttachmentOrientationExample.vue'
-import AttachmentSizesExample from '../../components/examples/attachment/AttachmentSizesExample.vue'
 import AttachmentStateExample from '../../components/examples/attachment/AttachmentStateExample.vue'
 import AttachmentMediaVariantExample from '../../components/examples/attachment/AttachmentMediaVariantExample.vue'
 
@@ -21,28 +22,33 @@ const attachmentConfig: ComponentDocConfig = {
   ],
   examples: [
     {
+      title: 'Title',
+      description: 'Customize the file name or title displayed in the attachment.',
+      component: AttachmentTitleExample,
+    },
+    {
+      title: 'Description',
+      description: 'Edit the attachment title and its supporting details.',
+      component: AttachmentDescriptionExample,
+    },
+    {
       title: 'Icon',
-      description: 'Add an icon to identify the file type visually.',
+      description: 'Choose an icon to identify the file type.',
       component: AttachmentIconExample,
     },
     {
       title: 'Orientation',
-      description: 'Arrange the media and details horizontally or vertically.',
+      description: 'Choose a horizontal or vertical layout for the attachment.',
       component: AttachmentOrientationExample,
     },
     {
-      title: 'Size',
-      description: 'Compare the md, sm, and xs sizes.',
-      component: AttachmentSizesExample,
-    },
-    {
-      title: 'States',
-      description: 'Compare the available visual states for a file.',
+      title: 'State',
+      description: 'Choose the visual state shown for the file.',
       component: AttachmentStateExample,
     },
     {
       title: 'Media variant',
-      description: 'Switch between icon and image media.',
+      description: 'Choose between an icon and custom image media.',
       component: AttachmentMediaVariantExample,
     },
   ],
