@@ -1,6 +1,8 @@
 import type { ComponentDocConfig } from '../component-docs'
 import AnnouncerBasicExample from '../../components/examples/announcer/AnnouncerBasicExample.vue'
+import AnnouncerMessageExample from '../../components/examples/announcer/AnnouncerMessageExample.vue'
 import AnnouncerPolitenessExample from '../../components/examples/announcer/AnnouncerPolitenessExample.vue'
+import AnnouncerAtomicExample from '../../components/examples/announcer/AnnouncerAtomicExample.vue'
 import AnnouncerSlotExample from '../../components/examples/announcer/AnnouncerSlotExample.vue'
 
 const announcerConfig: ComponentDocConfig = {
@@ -18,13 +20,23 @@ const announcerConfig: ComponentDocConfig = {
   ],
   examples: [
     {
+      title: 'Message',
+      description: 'Customize the message announced to screen readers.',
+      component: AnnouncerMessageExample,
+    },
+    {
       title: 'Politeness',
-      description: 'Choose the announcement priority level.',
+      description: 'Choose how urgently the message is announced.',
       component: AnnouncerPolitenessExample,
     },
     {
+      title: 'Atomic announcements',
+      description: 'Control whether assistive technology announces the entire region.',
+      component: AnnouncerAtomicExample,
+    },
+    {
       title: 'Custom content',
-      description: 'Use the default slot when you need control over the announced content.',
+      description: 'Use the default slot to announce formatted content.',
       component: AnnouncerSlotExample,
     },
   ],

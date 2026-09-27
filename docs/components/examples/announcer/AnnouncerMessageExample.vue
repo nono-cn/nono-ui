@@ -5,7 +5,7 @@ import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const message = ref('Sync complete.')
+const message = ref('Your changes have been saved.')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -15,21 +15,19 @@ const message = ref(${JSON.stringify(message.value)})
 ${scriptEnd}
 
 <template>
-  <Announcer politeness="polite">
-    <strong>{{ message }}</strong>
-  </Announcer>
+  <Announcer :message="message" />
 </template>`,
 )
 
 function reset() {
-  message.value = 'Sync complete.'
+  message.value = 'Your changes have been saved.'
 }
 </script>
 
 <template>
   <ComponentExample
-    title="Custom content"
-    description="Use the default slot to announce formatted content."
+    title="Message"
+    description="Edit the message announced to screen readers."
     :code="code"
     @reset="reset"
   >
@@ -38,17 +36,14 @@ function reset() {
         <ExampleTextInputControl
           v-model="message"
           label="Message"
-          placeholder="Announcement content"
+          placeholder="Announcement message"
         />
       </div>
     </template>
     <div class="grid gap-2 text-sm">
-      <Announcer politeness="polite">
-        <strong>{{ message }}</strong>
-      </Announcer>
-      <p class="text-xs text-muted-foreground">
-        Slot content is visible in the page and replaces the <code>message</code> prop.
-      </p>
+      <Announcer :message="message" />
+      <p><span class="font-medium">Announcement:</span> {{ message }}</p>
+      <p class="text-xs text-muted-foreground">The live region is visually hidden.</p>
     </div>
   </ComponentExample>
 </template>

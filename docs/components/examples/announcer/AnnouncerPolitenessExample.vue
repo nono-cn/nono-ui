@@ -1,33 +1,61 @@
 <script setup lang="ts">
-import { Announcer } from '@/components/ui/Announcer'
+import { computed, ref } from 'vue'
+import { Announcer, type AnnouncerPoliteness } from '@/components/ui/Announcer'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
-import { Announcer } from '__DOCS_PACKAGE__/components/ui/Announcer'
+const politenessOptions: AnnouncerPoliteness[] = ['polite', 'assertive', 'off']
+const politeness = ref<AnnouncerPoliteness>('polite')
+const role = computed(() => {
+  if (politeness.value === 'assertive') return 'alert'
+  if (politeness.value === 'polite') return 'status'
+  return 'none'
+})
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Announcer, type AnnouncerPoliteness } from '__DOCS_PACKAGE__/components/ui/Announcer'
+
+const politeness = ref<AnnouncerPoliteness>('${politeness.value}')
 ${scriptEnd}
 
 <template>
-  <div class="grid gap-2">
-    <Announcer message="Informational update" politeness="polite" />
-    <Announcer message="Urgent alert" politeness="assertive" />
-    <Announcer message="No announcement" politeness="off" />
-  </div>
-</template>`
+  <Announcer message="Your changes have been saved." :politeness="politeness" />
+</template>`,
+)
+
+function reset() {
+  politeness.value = 'polite'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Politeness"
-    description="Compare polite, assertive, and off."
+    description="Choose how urgently the message is announced."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid gap-2 text-sm text-muted-foreground">
-      <Announcer message="Informational update" politeness="polite" />
-      <Announcer message="Urgent alert" politeness="assertive" />
-      <Announcer message="No announcement" politeness="off" />
-      <span>Announcements remain visually hidden.</span>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl
+          v-model="politeness"
+          label="Politeness"
+          :options="politenessOptions"
+        />
+      </div>
+    </template>
+    <div class="grid gap-2 text-sm">
+      <Announcer message="Your changes have been saved." :politeness="politeness" />
+      <p class="text-muted-foreground">
+        <code>aria-live="{{ politeness }}"</code>
+        <span aria-hidden="true"> · </span>
+        <code>role="{{ role }}"</code>
+      </p>
+      <p class="text-xs text-muted-foreground">
+        The announcement region is visually hidden; the values above describe its semantics.
+      </p>
     </div>
   </ComponentExample>
 </template>
