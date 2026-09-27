@@ -1,13 +1,12 @@
 import type { ComponentDocConfig } from '../component-docs'
-import AvatarColorExample from '../../components/examples/avatar/AvatarColorExample.vue'
-import AvatarDelayMsExample from '../../components/examples/avatar/AvatarDelayMsExample.vue'
-import AvatarFallbackExample from '../../components/examples/avatar/AvatarFallbackExample.vue'
-import AvatarIconExample from '../../components/examples/avatar/AvatarIconExample.vue'
-import AvatarLabelExample from '../../components/examples/avatar/AvatarLabelExample.vue'
+import AvatarSrcExample from '../../components/examples/avatar/AvatarSrcExample.vue'
+import AvatarSizeExample from '../../components/examples/avatar/AvatarSizeExample.vue'
 import AvatarShapeExample from '../../components/examples/avatar/AvatarShapeExample.vue'
 import AvatarSeverityExample from '../../components/examples/avatar/AvatarSeverityExample.vue'
-import AvatarSizeExample from '../../components/examples/avatar/AvatarSizeExample.vue'
-import AvatarSrcExample from '../../components/examples/avatar/AvatarSrcExample.vue'
+import AvatarColorExample from '../../components/examples/avatar/AvatarColorExample.vue'
+import AvatarDelayMsExample from '../../components/examples/avatar/AvatarDelayMsExample.vue'
+import AvatarIconExample from '../../components/examples/avatar/AvatarIconExample.vue'
+import AvatarLabelExample from '../../components/examples/avatar/AvatarLabelExample.vue'
 import AvatarUsageExample from '../../components/examples/avatar/AvatarUsageExample.vue'
 
 const avatarConfig: ComponentDocConfig = {
@@ -26,49 +25,43 @@ const avatarConfig: ComponentDocConfig = {
   examples: [
     {
       title: 'Src',
-      description: 'Load the profile image from a URL.',
+      description: 'Set the URL of the profile image.',
       component: AvatarSrcExample,
     },
     {
       title: 'Size',
-      description: 'Adjust the avatar’s visual size.',
+      description: 'Choose the avatar size.',
       component: AvatarSizeExample,
     },
     {
       title: 'Shape',
-      description: 'Choose between a circular or square shape.',
+      description: 'Choose the avatar shape.',
       component: AvatarShapeExample,
     },
     {
       title: 'Severity',
-      description: 'Choose the text and icon color plus a soft background tint.',
+      description: 'Choose the semantic color used by the avatar fallback.',
       component: AvatarSeverityExample,
     },
     {
       title: 'Color',
-      description:
-        'Apply a custom background color while keeping the severity text and icon color.',
+      description: 'Set a custom background color for the avatar.',
       component: AvatarColorExample,
     },
     {
       title: 'DelayMs',
-      description: 'Delay the appearance of the fallback content.',
+      description: 'Choose how long to wait before showing the fallback.',
       component: AvatarDelayMsExample,
     },
     {
       title: 'Icon',
-      description: 'Show an icon in the avatar fallback.',
+      description: 'Choose the icon displayed in the avatar fallback.',
       component: AvatarIconExample,
     },
     {
       title: 'Label',
-      description: 'Show text in the avatar fallback.',
+      description: 'Set the text shown in the avatar fallback.',
       component: AvatarLabelExample,
-    },
-    {
-      title: 'Fallback',
-      description: 'Replace the avatar’s fallback content entirely.',
-      component: AvatarFallbackExample,
     },
   ],
   accessibility: [

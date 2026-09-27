@@ -1,38 +1,49 @@
 <script setup lang="ts">
-import { Avatar } from '@/components/ui/Avatar'
+import { computed, ref } from 'vue'
+import { Avatar, type AvatarSeverity } from '@/components/ui/Avatar'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
-import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
+const severities: AvatarSeverity[] = [
+  'primary',
+  'secondary',
+  'neutral',
+  'warning',
+  'success',
+  'error',
+]
+const severity = ref<AvatarSeverity>('neutral')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Avatar, type AvatarSeverity } from '__DOCS_PACKAGE__/components/ui/Avatar'
+
+const severity = ref<AvatarSeverity>('${severity.value}')
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-4">
-    <Avatar severity="primary" label="PR" />
-    <Avatar severity="secondary" label="SE" />
-    <Avatar severity="neutral" label="NE" />
-    <Avatar severity="warning" label="WA" />
-    <Avatar severity="success" label="SU" />
-    <Avatar severity="error" label="ER" />
-  </div>
-</template>`
+  <Avatar :severity="severity" label="JD" />
+</template>`,
+)
+
+function reset() {
+  severity.value = 'neutral'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Severity"
-    description="Choose the text and icon color plus a soft background tint."
+    description="Choose the semantic color used by the avatar fallback."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-4">
-      <Avatar severity="primary" label="PR" />
-      <Avatar severity="secondary" label="SE" />
-      <Avatar severity="neutral" label="NE" />
-      <Avatar severity="warning" label="WA" />
-      <Avatar severity="success" label="SU" />
-      <Avatar severity="error" label="ER" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="severity" label="Severity" :options="severities" />
+      </div>
+    </template>
+    <Avatar :severity="severity" label="JD" />
   </ComponentExample>
 </template>

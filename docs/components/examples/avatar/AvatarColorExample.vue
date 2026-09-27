@@ -1,32 +1,39 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Avatar } from '@/components/ui/Avatar'
+import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const color = ref('#dbeafe')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
+
+const color = ref('${color.value}')
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-4">
-    <Avatar color="#fef3c7" severity="warning" label="WA" />
-    <Avatar color="#dcfce7" severity="success" label="SU" />
-    <Avatar color="#dbeafe" severity="primary" label="PR" />
-  </div>
-</template>`
+  <Avatar :color="color" severity="primary" label="JD" />
+</template>`,
+)
+
+function reset() {
+  color.value = '#dbeafe'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Color"
-    description="Apply a custom background color while keeping the severity text and icon color."
+    description="Set a custom background color for the avatar."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-4">
-      <Avatar color="#fef3c7" severity="warning" label="WA" />
-      <Avatar color="#dcfce7" severity="success" label="SU" />
-      <Avatar color="#dbeafe" severity="primary" label="PR" />
-    </div>
+    <template #controls>
+      <ExampleColorControl v-model="color" label="Background color" />
+    </template>
+    <Avatar :color="color" severity="primary" label="JD" />
   </ComponentExample>
 </template>
