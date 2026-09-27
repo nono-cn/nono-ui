@@ -10,16 +10,19 @@ const rootDisabledItems = [
     value: 'account',
     label: 'Account',
     description: 'This entire accordion is disabled.',
+    icon: { name: 'user' },
   },
   {
     value: 'security',
     label: 'Security',
     description: 'This entire accordion is disabled.',
+    icon: { name: 'warning' },
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'This entire accordion is disabled.',
+    icon: { name: 'info' },
   },
 ]
 
@@ -33,16 +36,19 @@ const rootDisabledItems = [
     value: 'account',
     label: 'Account',
     description: 'This entire accordion is disabled.',
+    icon: { name: 'user' },
   },
   {
     value: 'security',
     label: 'Security',
     description: 'This entire accordion is disabled.',
+    icon: { name: 'warning' },
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'This entire accordion is disabled.',
+    icon: { name: 'info' },
   },
 ]
 ${scriptEnd}

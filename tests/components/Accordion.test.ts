@@ -7,6 +7,7 @@ import {
   createAccordionItemContext,
   type AccordionItemContext,
   type AccordionProps,
+  type AccordionVariant,
   type AccordionValue,
 } from '@/components/ui/Accordion'
 import { testAttrs } from '../utils/testAttrs'
@@ -58,6 +59,72 @@ const casesType = [
   { input: 'single' as const, expected: 'single' },
   { input: 'multiple' as const, expected: 'multiple' },
   { input: undefined, expected: 'single' },
+]
+
+const casesVariantStyles = [
+  {
+    input: 'default' as const,
+    root: [],
+    item: ['border-b', 'last:border-b-0'],
+    trigger: ['font-bold', 'hover:underline'],
+    content: ['text-muted-foreground', 'pl-6'],
+  },
+  {
+    input: 'separated' as const,
+    root: ['space-y-2'],
+    item: ['rounded-md', 'border', 'px-4'],
+    trigger: ['font-bold', 'hover:no-underline'],
+    content: ['text-muted-foreground', 'pl-6'],
+  },
+  {
+    input: 'bordered' as const,
+    root: ['rounded-md', 'border', 'px-4'],
+    item: ['border-b', 'last:border-b-0'],
+    trigger: ['font-bold', 'hover:no-underline'],
+    content: ['text-muted-foreground', 'pl-6'],
+  },
+  {
+    input: 'frame' as const,
+    root: [
+      'relative',
+      'overflow-hidden',
+      'rounded-xl',
+      'border',
+      'border-border',
+      'bg-muted',
+      'p-1',
+      'shadow-sm',
+      'before:pointer-events-none',
+      'before:absolute',
+      'before:inset-1',
+      'before:z-10',
+      'before:rounded-lg',
+      'before:border',
+      'before:border-border',
+    ],
+    item: ['bg-background'],
+    trigger: ['font-bold', 'gap-3', 'rounded-none', 'px-4', 'py-3', 'focus-visible:rounded-md'],
+    content: ['text-muted-foreground', 'pb-3', 'pl-10', 'pr-3'],
+  },
+  {
+    input: undefined,
+    root: [],
+    item: ['border-b', 'last:border-b-0'],
+    trigger: ['font-bold', 'hover:underline'],
+    content: ['text-muted-foreground', 'pl-6'],
+  },
+] satisfies {
+  input: AccordionVariant | undefined
+  root: string[]
+  item: string[]
+  trigger: string[]
+  content: string[]
+}[]
+
+const casesHighlight = [
+  { input: true, expected: ['data-[state=open]:bg-muted'] },
+  { input: false, expected: [] },
+  { input: undefined, expected: [] },
 ]
 
 const casesValue = [
@@ -259,6 +326,47 @@ describe('Accordion', () => {
 
         expect(accordion.getComponent('[data-test-accordion-root]').props('type')).toBe(expected)
       })
+    })
+
+    describe('variant', () => {
+      it.each(casesVariantStyles)(
+        'renderiza variant=$input en cada nodo',
+        ({ input, ...expected }) => {
+          const accordion = mountAccordion({
+            props: {
+              variant: input,
+              value: 'first',
+            },
+          })
+          const root = accordion.get('[data-test-accordion-root]')
+          const item = accordion.get('[data-test-accordion-item="first"]')
+          const trigger = accordion.get('[data-test-accordion-trigger="first"]')
+          const content = accordion.get('[data-test-accordion-content="first"]')
+
+          expect(root.classes()).toEqual(expect.arrayContaining(expected.root))
+          expect(item.classes()).toEqual(expect.arrayContaining(expected.item))
+          expect(trigger.classes()).toEqual(expect.arrayContaining(expected.trigger))
+          expect(content.classes()).toEqual(expect.arrayContaining(expected.content))
+        },
+      )
+    })
+
+    describe('highlight', () => {
+      it.each(casesHighlight)(
+        'applies highlight=$input to the selected item',
+        ({ input, expected }) => {
+          const accordion = mountAccordion({
+            props: {
+              highlight: input,
+              value: 'first',
+            },
+          })
+          const item = accordion.get('[data-test-accordion-item="first"]')
+
+          expect(item.classes()).toEqual(expect.arrayContaining(expected))
+          if (!input) expect(item.classes()).not.toContain('data-[state=open]:bg-muted/60')
+        },
+      )
     })
 
     describe('value', () => {

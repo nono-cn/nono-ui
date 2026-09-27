@@ -7,6 +7,8 @@ import AccordionDisabledExample from '../../components/examples/accordion/Accord
 import AccordionItemsExample from '../../components/examples/accordion/AccordionItemsExample.vue'
 import AccordionIconDropDownExample from '../../components/examples/accordion/AccordionIconDropDownExample.vue'
 import AccordionSlotsExample from '../../components/examples/accordion/AccordionSlotsExample.vue'
+import AccordionVariantExample from '../../components/examples/accordion/AccordionVariantExample.vue'
+import AccordionHighlightExample from '../../components/examples/accordion/AccordionHighlightExample.vue'
 
 const accordionConfig: ComponentDocConfig = {
   slug: 'accordion',
@@ -22,6 +24,16 @@ const accordionConfig: ComponentDocConfig = {
     },
   ],
   examples: [
+    {
+      title: 'Highlight',
+      description: 'Highlight the open item with a neutral background.',
+      component: AccordionHighlightExample,
+    },
+    {
+      title: 'Variant',
+      description: 'Choose the visual treatment for the accordion items.',
+      component: AccordionVariantExample,
+    },
     {
       title: 'Type',
       description: 'Allow one or multiple sections to stay open at the same time.',
@@ -73,6 +85,18 @@ const accordionConfig: ComponentDocConfig = {
   ],
   api: {
     props: [
+      {
+        name: 'variant',
+        type: "'default' | 'separated' | 'bordered' | 'frame'",
+        default: "'default'",
+        description: 'Visual style applied to the accordion and its items.',
+      },
+      {
+        name: 'highlight',
+        type: 'boolean',
+        default: 'false',
+        description: 'Highlights the currently open item across all visual variants.',
+      },
       {
         name: 'type',
         type: "'single' | 'multiple'",

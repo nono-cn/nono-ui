@@ -10,7 +10,16 @@ import {
 import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import type { AccordionItemContext, AccordionProps, AccordionSlots, AccordionValue } from '.'
+import {
+  accordionContentVariants,
+  accordionItemVariants,
+  accordionTriggerVariants,
+  accordionVariants,
+  type AccordionItemContext,
+  type AccordionProps,
+  type AccordionSlots,
+  type AccordionValue,
+} from '.'
 import { createAccordionItemContext } from '.'
 import { accordionDefaults } from './default'
 
@@ -34,7 +43,7 @@ const rootProps = computed(() => {
     unmountOnHide: props.unmountOnHide,
     as: 'div' as const,
     asChild: false,
-    class: cn(attrs.class),
+    class: cn(accordionVariants({ variant: props.variant }), attrs.class),
     style: attrs.style,
   }
 })
@@ -53,19 +62,20 @@ function getItemProps(context: AccordionItemContext) {
     value: context.item.value,
     disabled: context.item.disabled,
     unmountOnHide: context.item.unmountOnHide ?? props.unmountOnHide,
-    class: cn('border-b last:border-b-0', itemUI.class),
+    class: cn(
+      accordionItemVariants({ variant: props.variant, highlight: props.highlight }),
+      itemUI.class,
+    ),
     style: itemUI.style,
   }
 }
 
 function getTriggerProps(context: AccordionItemContext) {
   const ui = useUi(props.ui?.trigger, context)
+
   return {
     ...ui,
-    class: cn(
-      'flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50',
-      ui.class,
-    ),
+    class: cn(accordionTriggerVariants({ variant: props.variant }), ui.class),
     style: ui.style,
   }
 }
@@ -75,7 +85,7 @@ function getContentProps(context: AccordionItemContext) {
   return {
     ...ui,
     class: cn(
-      'pt-0 pb-4 overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
+      accordionContentVariants({ variant: props.variant, hasIcon: Boolean(context.item.icon) }),
       ui.class,
     ),
     style: ui.style,

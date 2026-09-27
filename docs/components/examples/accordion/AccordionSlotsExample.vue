@@ -8,17 +8,20 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
+    icon: { name: 'user' },
     slot: 'account',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
+    icon: { name: 'warning' },
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
+    icon: { name: 'info' },
   },
 ]
 
@@ -30,17 +33,20 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
+    icon: { name: 'user' },
     slot: 'account',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
+    icon: { name: 'warning' },
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
+    icon: { name: 'info' },
   },
 ]
 ${scriptEnd}
