@@ -5,8 +5,16 @@ import type { IconName } from '@/components/ui/Icon'
 
 export { default as Rating } from './Rating.vue'
 
-export const ratingRootVariants = cva('flex data-[disabled]:opacity-50', {
+export const ratingRootVariants = cva('flex', {
   variants: {
+    disabled: {
+      true: 'opacity-50',
+      false: '',
+    },
+    readonly: {
+      true: 'opacity-100',
+      false: '',
+    },
     size: {
       xs: 'gap-0.5',
       sm: 'gap-0.5',
@@ -20,6 +28,8 @@ export const ratingRootVariants = cva('flex data-[disabled]:opacity-50', {
     },
   },
   defaultVariants: {
+    disabled: false,
+    readonly: false,
     size: 'md',
     orientation: 'horizontal',
   },
@@ -98,6 +108,7 @@ export type RatingProps = Pick<
   | 'step'
   | 'orientation'
 > & {
+  readonly?: boolean
   size?: RatingSize
   severity?: RatingSeverity
   color?: string

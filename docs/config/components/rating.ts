@@ -4,6 +4,7 @@ import RatingClearableExample from '../../components/examples/rating/RatingClear
 import RatingHoverableExample from '../../components/examples/rating/RatingHoverableExample.vue'
 import RatingLoopExample from '../../components/examples/rating/RatingLoopExample.vue'
 import RatingDisabledExample from '../../components/examples/rating/RatingDisabledExample.vue'
+import RatingReadonlyExample from '../../components/examples/rating/RatingReadonlyExample.vue'
 import RatingStepExample from '../../components/examples/rating/RatingStepExample.vue'
 import RatingOrientationExample from '../../components/examples/rating/RatingOrientationExample.vue'
 import RatingSizeExample from '../../components/examples/rating/RatingSizeExample.vue'
@@ -46,6 +47,11 @@ const ratingConfig: ComponentDocConfig = {
       title: 'Disabled',
       description: 'Display a rating without allowing changes.',
       component: RatingDisabledExample,
+    },
+    {
+      title: 'Readonly',
+      description: 'Prevent changes while keeping the rating at full opacity.',
+      component: RatingReadonlyExample,
     },
     {
       title: 'Step',
@@ -137,6 +143,12 @@ const ratingConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'false',
         description: 'Prevents interaction with the rating.',
+      },
+      {
+        name: 'readonly',
+        type: 'boolean',
+        default: 'false',
+        description: 'Prevents changes without the faded disabled appearance.',
       },
       {
         name: 'required',

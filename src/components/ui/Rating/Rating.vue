@@ -33,13 +33,22 @@ const rootProps = computed(() => ({
   clearable: props.clearable,
   hoverable: props.hoverable,
   loop: props.loop,
-  disabled: props.disabled,
+  disabled: props.disabled || props.readonly,
+  'aria-readonly': props.readonly || undefined,
   required: props.required,
   name: props.name,
   step: props.step,
   orientation: props.orientation,
   'data-test-rating-root': '',
-  class: cn(ratingRootVariants({ orientation: props.orientation, size: props.size }), attrs.class),
+  class: cn(
+    ratingRootVariants({
+      orientation: props.orientation,
+      size: props.size,
+      disabled: props.disabled,
+      readonly: props.readonly && !props.disabled,
+    }),
+    attrs.class,
+  ),
   style: [colorStyle.value, attrs.style],
 }))
 
@@ -49,7 +58,10 @@ function getItemProps(item: number) {
     ...ui,
     item,
     'data-test-rating-item': '',
-    class: cn(ratingItemVariants({ disabled: props.disabled, size: props.size }), ui.class),
+    class: cn(
+      ratingItemVariants({ disabled: props.disabled || props.readonly, size: props.size }),
+      ui.class,
+    ),
     style: ui.style,
   }
 }

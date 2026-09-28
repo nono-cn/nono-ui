@@ -4,6 +4,7 @@ export const ratingDefaults = {
   hoverable: false,
   loop: false,
   disabled: false,
+  readonly: false,
   required: false,
   name: undefined,
   step: 1 as const,

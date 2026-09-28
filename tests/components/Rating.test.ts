@@ -47,6 +47,12 @@ const casesDisabled = [
   { input: true, expected: true },
 ]
 
+const casesReadonly = [
+  { input: undefined, expected: false },
+  { input: false, expected: false },
+  { input: true, expected: true },
+]
+
 const casesRequired = [
   { input: undefined, expected: false },
   { input: false, expected: false },
@@ -239,6 +245,37 @@ describe('Rating', () => {
           expect(root.props('disabled')).toBe(expected)
         },
       )
+    })
+
+    describe('readonly', () => {
+      it.each(casesReadonly)(
+        'bloquea cambios con readonly=$input sin atenuar',
+        ({ input, expected }) => {
+          const wrapper = mountRating({ props: { readonly: input, modelValue: 3 } })
+          const root = wrapper.get('[data-test-rating-root]')
+
+          expect(wrapper.getComponent(RekaRatingRoot).props('disabled')).toBe(expected)
+          expect(root.attributes('aria-readonly')).toBe(expected ? 'true' : undefined)
+          expect(root.classes()).not.toContain('opacity-50')
+          expect(wrapper.get('[data-test-rating-item]').classes().includes('hover:z-10')).toBe(
+            !expected,
+          )
+        },
+      )
+
+      it('conserva el estilo disabled cuando ambas props son true', () => {
+        const wrapper = mountRating({ props: { readonly: true, disabled: true } })
+
+        expect(wrapper.get('[data-test-rating-root]').classes()).toContain('opacity-50')
+      })
+
+      it('no emite cambios al seleccionar otro valor', async () => {
+        const wrapper = mountRating({ props: { readonly: true, modelValue: 3 } })
+
+        await wrapper.findAll('[data-test-rating-item-indicator]')[3]?.trigger('click')
+
+        expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+      })
     })
 
     describe('required', () => {
