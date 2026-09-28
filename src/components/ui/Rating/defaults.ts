@@ -9,5 +9,7 @@ export const ratingDefaults = {
   step: 1 as const,
   orientation: 'horizontal' as const,
   size: 'md' as const,
+  severity: 'primary' as const,
+  color: undefined,
   icon: 'star' as const,
 }

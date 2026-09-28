@@ -3,8 +3,15 @@ import { h } from 'vue'
 import { describe, expect, it } from 'vitest'
 import { RatingRoot as RekaRatingRoot } from 'reka-ui'
 
-import { Rating, type RatingProps, type RatingSize } from '@/components/ui/Rating'
+import {
+  Rating,
+  type RatingProps,
+  type RatingSeverity,
+  type RatingSize,
+} from '@/components/ui/Rating'
 import { Icon } from '@/components/ui/Icon'
+import { testColor } from '../utils/testColor'
+import { testAttrs } from '../utils/testAttrs'
 
 const casesLength = [
   { input: undefined, expected: 5 },
@@ -83,6 +90,28 @@ const casesSize: {
   { input: 'md', itemClass: 'size-8', iconClass: 'size-6', gapClass: 'gap-1' },
   { input: 'lg', itemClass: 'size-10', iconClass: 'size-8', gapClass: 'gap-1.5' },
   { input: 'xl', itemClass: 'size-12', iconClass: 'size-10', gapClass: 'gap-2' },
+]
+
+const casesSeverity: {
+  input: RatingSeverity | undefined
+  textClass: string
+  focusClass: string
+}[] = [
+  { input: undefined, textClass: 'text-primary', focusClass: 'focus-visible:ring-primary/60' },
+  { input: 'primary', textClass: 'text-primary', focusClass: 'focus-visible:ring-primary/60' },
+  {
+    input: 'secondary',
+    textClass: 'text-secondary-foreground',
+    focusClass: 'focus-visible:ring-secondary-foreground/60',
+  },
+  {
+    input: 'neutral',
+    textClass: 'text-foreground',
+    focusClass: 'focus-visible:ring-foreground/60',
+  },
+  { input: 'warning', textClass: 'text-warning', focusClass: 'focus-visible:ring-warning/60' },
+  { input: 'success', textClass: 'text-success', focusClass: 'focus-visible:ring-success/60' },
+  { input: 'error', textClass: 'text-error', focusClass: 'focus-visible:ring-error/60' },
 ]
 
 function mountRating(options: MountingOptions<RatingProps> = {}) {
@@ -216,6 +245,42 @@ describe('Rating', () => {
       )
     })
 
+    describe('severity', () => {
+      it.each(casesSeverity)(
+        'aplica severity=$input al indicador y al foco',
+        ({ input, textClass, focusClass }) => {
+          const indicator = mountRating({ props: { severity: input } }).get(
+            '[data-test-rating-item-indicator]',
+          )
+
+          expect(indicator.classes()).toContain(textClass)
+          expect(indicator.classes()).toContain(focusClass)
+        },
+      )
+    })
+
+    describe('color', () => {
+      testColor({
+        text: 'aplica un color personalizado',
+        id: '[data-test-rating-root]',
+        varColor: '--rating-color',
+        mount: (color) => mountRating({ props: { color } }),
+      })
+
+      it('da prioridad a color sobre severity en el indicador y el foco', () => {
+        const wrapper = mountRating({ props: { color: '#8b5cf6', severity: 'error' } })
+        const indicator = wrapper.get('[data-test-rating-item-indicator]')
+
+        expect(indicator.classes()).toContain('text-(--rating-color)')
+        expect(indicator.classes()).toContain('focus-visible:ring-(--rating-color)/60')
+        expect(indicator.classes()).not.toContain('text-error')
+        expect(indicator.classes()).not.toContain('focus-visible:ring-error/60')
+        expect(wrapper.get('[data-test-rating-root]').attributes('style')).toContain(
+          '--rating-color: #8b5cf6',
+        )
+      })
+    })
+
     describe('icon', () => {
       it('renderiza star por defecto y permite sustituirlo por otro IconName', () => {
         const defaultRating = mountRating()
@@ -225,6 +290,14 @@ describe('Rating', () => {
         expect(customRating.getComponent(Icon).props('name')).toBe('heart')
         expect(customRating.findAll('[data-test-rating-icon]')).toHaveLength(5)
       })
+    })
+  })
+
+  describe('attrs', () => {
+    testAttrs({
+      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
+      id: '[data-test-rating-root]',
+      mount: (attrs) => mountRating({ attrs }),
     })
   })
 

@@ -9,6 +9,8 @@ import RatingOrientationExample from '../../components/examples/rating/RatingOri
 import RatingSizeExample from '../../components/examples/rating/RatingSizeExample.vue'
 import RatingIconExample from '../../components/examples/rating/RatingIconExample.vue'
 import RatingIndicatorExample from '../../components/examples/rating/RatingIndicatorExample.vue'
+import RatingSeverityExample from '../../components/examples/rating/RatingSeverityExample.vue'
+import RatingColorExample from '../../components/examples/rating/RatingColorExample.vue'
 
 const ratingConfig: ComponentDocConfig = {
   slug: 'rating',
@@ -63,6 +65,16 @@ const ratingConfig: ComponentDocConfig = {
       title: 'Icon',
       description: 'Use another icon instead of the star.',
       component: RatingIconExample,
+    },
+    {
+      title: 'Severity',
+      description: 'Choose a semantic color for the rating and its focus ring.',
+      component: RatingSeverityExample,
+    },
+    {
+      title: 'Color',
+      description: 'Use a custom CSS color instead of the semantic severity.',
+      component: RatingColorExample,
     },
     {
       title: 'Indicator slot',
@@ -149,6 +161,18 @@ const ratingConfig: ComponentDocConfig = {
         type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
         default: "'md'",
         description: 'Size of each rating item and the space between items.',
+      },
+      {
+        name: 'severity',
+        type: "'primary' | 'secondary' | 'neutral' | 'warning' | 'success' | 'error'",
+        default: "'primary'",
+        description: 'Semantic color of the rating and its focus ring.',
+      },
+      {
+        name: 'color',
+        type: 'string',
+        default: 'undefined',
+        description: 'Custom CSS color. Takes precedence over severity.',
       },
       {
         name: 'icon',

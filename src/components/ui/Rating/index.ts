@@ -45,7 +45,24 @@ export const ratingItemVariants = cva('relative inline-flex transition-transform
 })
 
 export const ratingIndicatorVariants = cva(
-  'group absolute inset-y-0 left-0 z-[var(--reka-rating-item-step-z-index)] flex w-[var(--reka-rating-item-step-width)] items-center overflow-hidden text-foreground opacity-[var(--reka-rating-item-step-opacity)] outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  'group absolute inset-y-0 left-0 z-[var(--reka-rating-item-step-z-index)] flex w-[var(--reka-rating-item-step-width)] items-center overflow-hidden rounded-md opacity-[var(--reka-rating-item-step-opacity)] outline-none focus-visible:ring-2',
+  {
+    variants: {
+      severity: {
+        primary: 'text-primary focus-visible:ring-primary/60',
+        secondary: 'text-secondary-foreground focus-visible:ring-secondary-foreground/60',
+        neutral: 'text-foreground focus-visible:ring-foreground/60',
+        warning: 'text-warning focus-visible:ring-warning/60',
+        success: 'text-success focus-visible:ring-success/60',
+        error: 'text-error focus-visible:ring-error/60',
+      },
+      color: {
+        true: 'text-(--rating-color) focus-visible:ring-(--rating-color)/60',
+        false: '',
+      },
+    },
+    defaultVariants: { severity: 'primary', color: false },
+  },
 )
 
 export const ratingIconVariants = cva(
@@ -65,6 +82,7 @@ export const ratingIconVariants = cva(
 )
 
 export type RatingSize = NonNullable<VariantProps<typeof ratingItemVariants>['size']>
+export type RatingSeverity = NonNullable<VariantProps<typeof ratingIndicatorVariants>['severity']>
 
 export type RatingProps = Pick<
   RatingRootProps,
@@ -80,6 +98,8 @@ export type RatingProps = Pick<
   | 'orientation'
 > & {
   size?: RatingSize
+  severity?: RatingSeverity
+  color?: string
   icon?: IconName
 }
 

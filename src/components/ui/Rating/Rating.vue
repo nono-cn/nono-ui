@@ -2,6 +2,7 @@
 import { computed, useAttrs } from 'vue'
 import { RatingItem, RatingItemIndicator, RatingRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
+import { useColor } from '@/composables'
 import { cn } from '@/lib/utils'
 import {
   ratingIconVariants,
@@ -18,6 +19,10 @@ const props = withDefaults(defineProps<Omit<RatingProps, 'modelValue'>>(), ratin
 defineSlots<RatingSlots>()
 const model = defineModel<number>()
 const attrs = useAttrs()
+const { colorStyle } = useColor(
+  computed(() => props.color),
+  'rating',
+)
 
 const rootProps = computed(() => ({
   ...attrs,
@@ -32,7 +37,7 @@ const rootProps = computed(() => ({
   orientation: props.orientation,
   'data-test-rating-root': '',
   class: cn(ratingRootVariants({ orientation: props.orientation, size: props.size }), attrs.class),
-  style: attrs.style,
+  style: [colorStyle.value, attrs.style],
 }))
 
 function getItemProps(item: number) {
@@ -48,7 +53,10 @@ function getIndicatorProps(step: number) {
     step,
     'aria-label': `${step} of ${props.length}`,
     'data-test-rating-item-indicator': '',
-    class: ratingIndicatorVariants(),
+    class: ratingIndicatorVariants({
+      severity: props.color ? null : props.severity,
+      color: Boolean(props.color),
+    }),
   }
 }
 </script>
