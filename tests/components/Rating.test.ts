@@ -30,6 +30,12 @@ const casesLoop = [
   { input: true, expected: true },
 ]
 
+const casesDisabled = [
+  { input: undefined, expected: false },
+  { input: false, expected: false },
+  { input: true, expected: true },
+]
+
 const casesModelValue = [
   { input: undefined, expected: undefined },
   { input: 0, expected: 0 },
@@ -96,6 +102,17 @@ describe('Rating', () => {
 
         expect(root.props('loop')).toBe(expected)
       })
+    })
+
+    describe('disabled', () => {
+      it.each(casesDisabled)(
+        'pasa disabled=$input como $expected a RatingRoot',
+        ({ input, expected }) => {
+          const root = mountRating({ props: { disabled: input } }).getComponent(RekaRatingRoot)
+
+          expect(root.props('disabled')).toBe(expected)
+        },
+      )
     })
   })
 

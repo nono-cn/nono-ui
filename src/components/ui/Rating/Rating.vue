@@ -18,8 +18,9 @@ const rootProps = computed(() => ({
   clearable: props.clearable,
   hoverable: props.hoverable,
   loop: props.loop,
+  disabled: props.disabled,
   'data-test-rating-root': '',
-  class: cn('flex gap-1', attrs.class),
+  class: cn('flex gap-1 data-[disabled]:opacity-50', attrs.class),
   style: attrs.style,
 }))
 

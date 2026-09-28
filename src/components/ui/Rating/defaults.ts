@@ -3,4 +3,5 @@ export const ratingDefaults = {
   clearable: false,
   hoverable: false,
   loop: true,
+  disabled: false,
 }

@@ -3,6 +3,7 @@ import RatingBasicExample from '../../components/examples/rating/RatingBasicExam
 import RatingClearableExample from '../../components/examples/rating/RatingClearableExample.vue'
 import RatingHoverableExample from '../../components/examples/rating/RatingHoverableExample.vue'
 import RatingLoopExample from '../../components/examples/rating/RatingLoopExample.vue'
+import RatingDisabledExample from '../../components/examples/rating/RatingDisabledExample.vue'
 
 const ratingConfig: ComponentDocConfig = {
   slug: 'rating',
@@ -32,6 +33,11 @@ const ratingConfig: ComponentDocConfig = {
       title: 'Loop',
       description: 'Wrap keyboard navigation from the last star to the first.',
       component: RatingLoopExample,
+    },
+    {
+      title: 'Disabled',
+      description: 'Display a rating without allowing changes.',
+      component: RatingDisabledExample,
     },
   ],
   accessibility: [
@@ -77,6 +83,12 @@ const ratingConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'true',
         description: 'Wraps keyboard navigation from the last rating item to the first.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        default: 'false',
+        description: 'Prevents interaction with the rating.',
       },
     ],
     emits: [
