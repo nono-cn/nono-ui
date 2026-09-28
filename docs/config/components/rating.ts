@@ -1,5 +1,6 @@
 import type { ComponentDocConfig } from '../component-docs'
 import RatingBasicExample from '../../components/examples/rating/RatingBasicExample.vue'
+import RatingClearableExample from '../../components/examples/rating/RatingClearableExample.vue'
 
 const ratingConfig: ComponentDocConfig = {
   slug: 'rating',
@@ -14,7 +15,13 @@ const ratingConfig: ComponentDocConfig = {
       component: RatingBasicExample,
     },
   ],
-  examples: [],
+  examples: [
+    {
+      title: 'Clearable',
+      description: 'Click the selected rating again to clear it.',
+      component: RatingClearableExample,
+    },
+  ],
   accessibility: [
     {
       title: 'Accessible label',
@@ -35,6 +42,12 @@ const ratingConfig: ComponentDocConfig = {
         type: 'number',
         default: '5',
         description: 'Number of rating items rendered.',
+      },
+      {
+        name: 'clearable',
+        type: 'boolean',
+        default: 'false',
+        description: 'Clicking the selected rating again resets the value to zero.',
       },
     ],
     emits: [],

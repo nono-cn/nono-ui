@@ -3,14 +3,19 @@ import { describe, expect, it } from 'vitest'
 import { RatingRoot as RekaRatingRoot } from 'reka-ui'
 
 import { Rating, type RatingProps } from '@/components/ui/Rating'
-import { ratingDefaults } from '@/components/ui/Rating/defaults'
 
 const casesLength = [
-  { input: undefined, expected: ratingDefaults.length },
+  { input: undefined, expected: 5 },
   { input: 0, expected: 0 },
   { input: 1, expected: 1 },
   { input: 3, expected: 3 },
   { input: 10, expected: 10 },
+]
+
+const casesClearable = [
+  { input: undefined, expected: false },
+  { input: false, expected: false },
+  { input: true, expected: true },
 ]
 
 function mountRating(options: MountingOptions<RatingProps> = {}) {
@@ -29,6 +34,17 @@ describe('Rating', () => {
           expect(wrapper.find('[data-test-rating-root]').exists()).toBe(true)
           expect(wrapper.findAll('[data-test-rating-item]')).toHaveLength(expected)
           expect(wrapper.findAll('[data-test-rating-item-indicator]')).toHaveLength(expected)
+        },
+      )
+    })
+
+    describe('clearable', () => {
+      it.each(casesClearable)(
+        'pasa clearable=$input como $expected a RatingRoot',
+        ({ input, expected }) => {
+          const root = mountRating({ props: { clearable: input } }).getComponent(RekaRatingRoot)
+
+          expect(root.props('clearable')).toBe(expected)
         },
       )
     })
