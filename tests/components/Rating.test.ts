@@ -18,6 +18,12 @@ const casesClearable = [
   { input: true, expected: true },
 ]
 
+const casesHoverable = [
+  { input: undefined, expected: false },
+  { input: false, expected: false },
+  { input: true, expected: true },
+]
+
 function mountRating(options: MountingOptions<RatingProps> = {}) {
   return mount(Rating, options)
 }
@@ -45,6 +51,17 @@ describe('Rating', () => {
           const root = mountRating({ props: { clearable: input } }).getComponent(RekaRatingRoot)
 
           expect(root.props('clearable')).toBe(expected)
+        },
+      )
+    })
+
+    describe('hoverable', () => {
+      it.each(casesHoverable)(
+        'pasa hoverable=$input como $expected a RatingRoot',
+        ({ input, expected }) => {
+          const root = mountRating({ props: { hoverable: input } }).getComponent(RekaRatingRoot)
+
+          expect(root.props('hoverable')).toBe(expected)
         },
       )
     })

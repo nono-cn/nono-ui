@@ -15,6 +15,7 @@ const rootProps = computed(() => ({
   ...attrs,
   length: props.length,
   clearable: props.clearable,
+  hoverable: props.hoverable,
   'data-test-rating-root': '',
   class: cn('flex gap-1', attrs.class),
   style: attrs.style,

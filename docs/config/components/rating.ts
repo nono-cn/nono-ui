@@ -1,6 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
 import RatingBasicExample from '../../components/examples/rating/RatingBasicExample.vue'
 import RatingClearableExample from '../../components/examples/rating/RatingClearableExample.vue'
+import RatingHoverableExample from '../../components/examples/rating/RatingHoverableExample.vue'
 
 const ratingConfig: ComponentDocConfig = {
   slug: 'rating',
@@ -20,6 +21,11 @@ const ratingConfig: ComponentDocConfig = {
       title: 'Clearable',
       description: 'Click the selected rating again to clear it.',
       component: RatingClearableExample,
+    },
+    {
+      title: 'Hoverable',
+      description: 'Preview a rating by hovering over its stars.',
+      component: RatingHoverableExample,
     },
   ],
   accessibility: [
@@ -48,6 +54,12 @@ const ratingConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'false',
         description: 'Clicking the selected rating again resets the value to zero.',
+      },
+      {
+        name: 'hoverable',
+        type: 'boolean',
+        default: 'false',
+        description: 'Previews the rating under the pointer before selection.',
       },
     ],
     emits: [],
