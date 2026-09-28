@@ -25,6 +25,7 @@ import masonry from './components/masonry'
 import message from './components/message'
 import popover from './components/popover'
 import progress from './components/progress'
+import rating from './components/rating'
 import ribbon from './components/ribbon'
 import scrollArea from './components/scroll-area'
 import search from './components/search'
@@ -65,6 +66,7 @@ export const docsComponents = [
   message,
   popover,
   progress,
+  rating,
   ribbon,
   scrollArea,
   search,
