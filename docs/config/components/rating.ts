@@ -2,6 +2,7 @@ import type { ComponentDocConfig } from '../component-docs'
 import RatingBasicExample from '../../components/examples/rating/RatingBasicExample.vue'
 import RatingClearableExample from '../../components/examples/rating/RatingClearableExample.vue'
 import RatingHoverableExample from '../../components/examples/rating/RatingHoverableExample.vue'
+import RatingLoopExample from '../../components/examples/rating/RatingLoopExample.vue'
 
 const ratingConfig: ComponentDocConfig = {
   slug: 'rating',
@@ -26,6 +27,11 @@ const ratingConfig: ComponentDocConfig = {
       title: 'Hoverable',
       description: 'Preview a rating by hovering over its stars.',
       component: RatingHoverableExample,
+    },
+    {
+      title: 'Loop',
+      description: 'Wrap keyboard navigation from the last star to the first.',
+      component: RatingLoopExample,
     },
   ],
   accessibility: [
@@ -60,6 +66,12 @@ const ratingConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'false',
         description: 'Previews the rating under the pointer before selection.',
+      },
+      {
+        name: 'loop',
+        type: 'boolean',
+        default: 'true',
+        description: 'Wraps keyboard navigation from the last rating item to the first.',
       },
     ],
     emits: [],

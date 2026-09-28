@@ -24,6 +24,12 @@ const casesHoverable = [
   { input: true, expected: true },
 ]
 
+const casesLoop = [
+  { input: undefined, expected: true },
+  { input: false, expected: false },
+  { input: true, expected: true },
+]
+
 function mountRating(options: MountingOptions<RatingProps> = {}) {
   return mount(Rating, options)
 }
@@ -64,6 +70,14 @@ describe('Rating', () => {
           expect(root.props('hoverable')).toBe(expected)
         },
       )
+    })
+
+    describe('loop', () => {
+      it.each(casesLoop)('pasa loop=$input como $expected a RatingRoot', ({ input, expected }) => {
+        const root = mountRating({ props: { loop: input } }).getComponent(RekaRatingRoot)
+
+        expect(root.props('loop')).toBe(expected)
+      })
     })
   })
 })
