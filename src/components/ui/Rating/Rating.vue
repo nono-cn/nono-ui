@@ -3,7 +3,12 @@ import { computed, useAttrs } from 'vue'
 import { RatingItem, RatingItemIndicator, RatingRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
-import { ratingItemVariants } from '.'
+import {
+  ratingIconVariants,
+  ratingIndicatorVariants,
+  ratingItemVariants,
+  ratingRootVariants,
+} from '.'
 import { ratingDefaults } from './defaults'
 import type { RatingProps } from '.'
 
@@ -22,8 +27,10 @@ const rootProps = computed(() => ({
   disabled: props.disabled,
   required: props.required,
   name: props.name,
+  step: props.step,
+  orientation: props.orientation,
   'data-test-rating-root': '',
-  class: cn('flex gap-1 data-[disabled]:opacity-50', attrs.class),
+  class: cn(ratingRootVariants({ orientation: props.orientation }), attrs.class),
   style: attrs.style,
 }))
 
@@ -40,8 +47,7 @@ function getIndicatorProps(step: number) {
     step,
     'aria-label': `${step} of ${props.length}`,
     'data-test-rating-item-indicator': '',
-    class:
-      'group inline-flex size-8 items-center justify-center text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring',
+    class: ratingIndicatorVariants(),
   }
 }
 </script>
@@ -50,11 +56,7 @@ function getIndicatorProps(step: number) {
   <RatingRoot v-slot="{ items }" v-model="model" v-bind="rootProps">
     <RatingItem v-for="item in items" v-slot="{ steps }" :key="item" v-bind="getItemProps(item)">
       <RatingItemIndicator v-for="step in steps" :key="step" v-bind="getIndicatorProps(step)">
-        <Icon
-          name="star"
-          class="size-6 fill-transparent group-data-[state=active]:fill-current"
-          aria-hidden="true"
-        />
+        <Icon name="star" :class="ratingIconVariants()" aria-hidden="true" />
       </RatingItemIndicator>
     </RatingItem>
   </RatingRoot>

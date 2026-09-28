@@ -4,6 +4,8 @@ import RatingClearableExample from '../../components/examples/rating/RatingClear
 import RatingHoverableExample from '../../components/examples/rating/RatingHoverableExample.vue'
 import RatingLoopExample from '../../components/examples/rating/RatingLoopExample.vue'
 import RatingDisabledExample from '../../components/examples/rating/RatingDisabledExample.vue'
+import RatingStepExample from '../../components/examples/rating/RatingStepExample.vue'
+import RatingOrientationExample from '../../components/examples/rating/RatingOrientationExample.vue'
 
 const ratingConfig: ComponentDocConfig = {
   slug: 'rating',
@@ -38,6 +40,16 @@ const ratingConfig: ComponentDocConfig = {
       title: 'Disabled',
       description: 'Display a rating without allowing changes.',
       component: RatingDisabledExample,
+    },
+    {
+      title: 'Step',
+      description: 'Choose the increment between rating values.',
+      component: RatingStepExample,
+    },
+    {
+      title: 'Orientation',
+      description: 'Arrange rating items horizontally or vertically.',
+      component: RatingOrientationExample,
     },
   ],
   accessibility: [
@@ -81,7 +93,7 @@ const ratingConfig: ComponentDocConfig = {
       {
         name: 'loop',
         type: 'boolean',
-        default: 'true',
+        default: 'false',
         description: 'Wraps keyboard navigation from the last rating item to the first.',
       },
       {
@@ -101,6 +113,18 @@ const ratingConfig: ComponentDocConfig = {
         type: 'string',
         default: 'undefined',
         description: 'Name used to submit the rating value with its form.',
+      },
+      {
+        name: 'step',
+        type: '1 | 0.5 | 0.25 | 0.1',
+        default: '1',
+        description: 'Granularity of each rating item, including fractional values.',
+      },
+      {
+        name: 'orientation',
+        type: "'horizontal' | 'vertical'",
+        default: "'horizontal'",
+        description: 'Direction in which rating items are arranged.',
       },
     ],
     emits: [

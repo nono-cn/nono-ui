@@ -25,7 +25,7 @@ const casesHoverable = [
 ]
 
 const casesLoop = [
-  { input: undefined, expected: true },
+  { input: undefined, expected: false },
   { input: false, expected: false },
   { input: true, expected: true },
 ]
@@ -53,6 +53,20 @@ const casesModelValue = [
   { input: 0, expected: 0 },
   { input: 3, expected: 3 },
   { input: 5, expected: 5 },
+]
+
+const casesStep = [
+  { input: undefined, expected: 1, indicators: 5, width: '100%' },
+  { input: 1 as const, expected: 1, indicators: 5, width: '100%' },
+  { input: 0.5 as const, expected: 0.5, indicators: 10, width: '50%' },
+  { input: 0.25 as const, expected: 0.25, indicators: 20, width: '25%' },
+  { input: 0.1 as const, expected: 0.1, indicators: 50, width: '10%' },
+]
+
+const casesOrientation = [
+  { input: undefined, expected: 'horizontal', rootClass: 'flex-row' },
+  { input: 'horizontal' as const, expected: 'horizontal', rootClass: 'flex-row' },
+  { input: 'vertical' as const, expected: 'vertical', rootClass: 'flex-col' },
 ]
 
 function mountRating(options: MountingOptions<RatingProps> = {}) {
@@ -144,6 +158,33 @@ describe('Rating', () => {
 
         expect(root.props('name')).toBe(expected)
       })
+    })
+
+    describe('step', () => {
+      it.each(casesStep)(
+        'pasa step=$input y renderiza $indicators indicadores',
+        ({ input, expected, indicators, width }) => {
+          const wrapper = mountRating({ props: { step: input } })
+
+          expect(wrapper.getComponent(RekaRatingRoot).props('step')).toBe(expected)
+          expect(wrapper.findAll('[data-test-rating-item-indicator]')).toHaveLength(indicators)
+          expect(wrapper.get('[data-test-rating-item-indicator]').attributes('style')).toContain(
+            `--reka-rating-item-step-width: ${width}`,
+          )
+        },
+      )
+    })
+
+    describe('orientation', () => {
+      it.each(casesOrientation)(
+        'pasa orientation=$input y aplica $rootClass',
+        ({ input, expected, rootClass }) => {
+          const wrapper = mountRating({ props: { orientation: input } })
+
+          expect(wrapper.getComponent(RekaRatingRoot).props('orientation')).toBe(expected)
+          expect(wrapper.get('[data-test-rating-root]').classes()).toContain(rootClass)
+        },
+      )
     })
   })
 

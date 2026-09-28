@@ -5,14 +5,13 @@ import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const options = ['true', 'false'] as const
-const selectedLoop = ref<(typeof options)[number]>('true')
-const loop = computed(() => selectedLoop.value === 'true')
-const rating = ref(5)
+const orientations = ['horizontal', 'vertical'] as const
+const orientation = ref<(typeof orientations)[number]>('vertical')
+const rating = ref(3)
 
 function reset() {
-  selectedLoop.value = 'true'
-  rating.value = 5
+  orientation.value = 'vertical'
+  rating.value = 3
 }
 
 const code = computed(
@@ -24,26 +23,26 @@ const rating = ref(${rating.value})
 ${scriptEnd}
 
 <template>
-  <Rating v-model="rating" :loop="${loop.value}" aria-label="Rating" />
+  <Rating v-model="rating" orientation="${orientation.value}" aria-label="Rating" />
 </template>`,
 )
 </script>
 
 <template>
   <ComponentExample
-    title="Loop"
-    description="Focus the last star and press the Right Arrow key to return to the first."
+    title="Orientation"
+    description="Arrange rating items horizontally or vertically."
     :code="code"
     @reset="reset"
   >
     <template #controls>
       <ExampleSelectControl
-        v-model="selectedLoop"
-        label="Loop"
-        :options="options"
-        class="w-28 [&_select]:min-w-0"
+        v-model="orientation"
+        label="Orientation"
+        :options="orientations"
+        class="w-32 [&_select]:min-w-0"
       />
     </template>
-    <Rating v-model="rating" :loop="loop" aria-label="Rating" />
+    <Rating v-model="rating" :orientation="orientation" aria-label="Rating" />
   </ComponentExample>
 </template>
