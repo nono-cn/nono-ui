@@ -50,6 +50,11 @@ const ratingConfig: ComponentDocConfig = {
   api: {
     props: [
       {
+        name: 'modelValue',
+        type: 'number | undefined',
+        description: 'Selected rating. Bind it with v-model.',
+      },
+      {
         name: 'length',
         type: 'number',
         default: '5',
@@ -74,7 +79,13 @@ const ratingConfig: ComponentDocConfig = {
         description: 'Wraps keyboard navigation from the last rating item to the first.',
       },
     ],
-    emits: [],
+    emits: [
+      {
+        name: 'update:modelValue',
+        type: 'number',
+        description: 'Emitted when the selected rating changes.',
+      },
+    ],
     slots: [],
     expose: [],
   },

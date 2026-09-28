@@ -30,12 +30,30 @@ const casesLoop = [
   { input: true, expected: true },
 ]
 
+const casesModelValue = [
+  { input: undefined, expected: undefined },
+  { input: 0, expected: 0 },
+  { input: 3, expected: 3 },
+  { input: 5, expected: 5 },
+]
+
 function mountRating(options: MountingOptions<RatingProps> = {}) {
   return mount(Rating, options)
 }
 
 describe('Rating', () => {
   describe('props', () => {
+    describe('modelValue', () => {
+      it.each(casesModelValue)(
+        'pasa modelValue=$input como $expected a RatingRoot',
+        ({ input, expected }) => {
+          const root = mountRating({ props: { modelValue: input } }).getComponent(RekaRatingRoot)
+
+          expect(root.props('modelValue')).toBe(expected)
+        },
+      )
+    })
+
     describe('length', () => {
       it.each(casesLength)(
         'pasa length=$input a RatingRoot y renderiza $expected items',
@@ -77,6 +95,18 @@ describe('Rating', () => {
         const root = mountRating({ props: { loop: input } }).getComponent(RekaRatingRoot)
 
         expect(root.props('loop')).toBe(expected)
+      })
+    })
+  })
+
+  describe('emits', () => {
+    describe('update:modelValue', () => {
+      it('reenvía el valor emitido por RatingRoot', async () => {
+        const wrapper = mountRating({ props: { modelValue: 2 } })
+
+        await wrapper.getComponent(RekaRatingRoot).vm.$emit('update:modelValue', 4)
+
+        expect(wrapper.emitted('update:modelValue')).toEqual([[4]])
       })
     })
   })

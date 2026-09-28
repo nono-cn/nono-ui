@@ -8,7 +8,8 @@ import type { RatingProps } from '.'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<RatingProps>(), ratingDefaults)
+const props = withDefaults(defineProps<Omit<RatingProps, 'modelValue'>>(), ratingDefaults)
+const model = defineModel<number>()
 const attrs = useAttrs()
 
 const rootProps = computed(() => ({
@@ -42,7 +43,7 @@ function getIndicatorProps(step: number) {
 </script>
 
 <template>
-  <RatingRoot v-slot="{ items }" v-bind="rootProps">
+  <RatingRoot v-slot="{ items }" v-model="model" v-bind="rootProps">
     <RatingItem v-for="item in items" v-slot="{ steps }" :key="item" v-bind="getItemProps(item)">
       <RatingItemIndicator v-for="step in steps" :key="step" v-bind="getIndicatorProps(step)">
         <Icon
