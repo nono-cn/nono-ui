@@ -8,7 +8,8 @@ import RatingStepExample from '../../components/examples/rating/RatingStepExampl
 import RatingOrientationExample from '../../components/examples/rating/RatingOrientationExample.vue'
 import RatingSizeExample from '../../components/examples/rating/RatingSizeExample.vue'
 import RatingIconExample from '../../components/examples/rating/RatingIconExample.vue'
-import RatingIndicatorExample from '../../components/examples/rating/RatingIndicatorExample.vue'
+import RatingItemExample from '../../components/examples/rating/RatingItemExample.vue'
+import RatingUiExample from '../../components/examples/rating/RatingUiExample.vue'
 import RatingSeverityExample from '../../components/examples/rating/RatingSeverityExample.vue'
 import RatingColorExample from '../../components/examples/rating/RatingColorExample.vue'
 
@@ -77,9 +78,14 @@ const ratingConfig: ComponentDocConfig = {
       component: RatingColorExample,
     },
     {
-      title: 'Indicator slot',
+      title: 'Item slot',
       description: 'Customize the icon for each rating item.',
-      component: RatingIndicatorExample,
+      component: RatingItemExample,
+    },
+    {
+      title: 'UI',
+      description: 'Customize the item and indicator elements.',
+      component: RatingUiExample,
     },
   ],
   accessibility: [
@@ -181,6 +187,17 @@ const ratingConfig: ComponentDocConfig = {
         default: "'star'",
         description: 'Icon used by the default indicator.',
       },
+      {
+        name: 'ui',
+        type: `{
+  item?: (context: RatingItemContext) => HTMLAttributes
+  indicator?: (context: RatingItemContext) => HTMLAttributes
+}`,
+        typePre: true,
+        default: 'undefined',
+        description:
+          'Resolvers for attributes and classes on each item and indicator. item receives the context of its full step; indicator receives the context of each step.',
+      },
     ],
     configs: [
       {
@@ -188,7 +205,7 @@ const ratingConfig: ComponentDocConfig = {
         title: 'RatingItemContext',
         typeLabel: 'slotProps',
         showDefault: false,
-        description: 'Context passed to the indicator slot for each rating step.',
+        description: 'Context passed to the item slot and UI resolvers for each rating step.',
         rows: [
           { name: 'item', type: 'number', description: 'One-based rating item number.' },
           { name: 'step', type: 'number', description: 'Rating value represented by this step.' },
@@ -214,7 +231,7 @@ const ratingConfig: ComponentDocConfig = {
     ],
     slots: [
       {
-        name: 'indicator',
+        name: 'item',
         type: 'RatingItemContext',
         typeLink: '#rating-item-context',
         description:

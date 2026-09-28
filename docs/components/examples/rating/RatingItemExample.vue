@@ -17,7 +17,7 @@ ${scriptEnd}
 
 <template>
   <Rating v-model="rating" aria-label="Rating">
-    <template #indicator="{ item, percentage, iconClass }">
+    <template #item="{ item, percentage, iconClass }">
       <Icon :name="item === 5 ? 'heart' : 'star'" :class="iconClass" :data-percentage="percentage" />
     </template>
   </Rating>
@@ -26,13 +26,13 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Indicator slot"
+    title="Item slot"
     description="Customize the icon for each rating item."
     :code="code"
     :show-reset="false"
   >
     <Rating v-model="rating" aria-label="Rating">
-      <template #indicator="{ item, percentage, iconClass }">
+      <template #item="{ item, percentage, iconClass }">
         <Icon
           :name="item === 5 ? 'heart' : 'star'"
           :class="iconClass"

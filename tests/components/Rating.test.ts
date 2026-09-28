@@ -167,7 +167,10 @@ const casesItemContext: { name: string; props: RatingProps; expected: RatingItem
 ]
 
 function mountRating(options: MountingOptions<RatingProps> = {}) {
-  return mount(Rating, options)
+  return mount(Rating, {
+    ...options,
+    global: { ...options.global, plugins: [i18n, ...(options.global?.plugins ?? [])] },
+  })
 }
 
 describe('Rating', () => {
@@ -343,6 +346,22 @@ describe('Rating', () => {
         expect(customRating.findAll('[data-test-rating-icon]')).toHaveLength(5)
       })
     })
+
+    describe('ui.item', () => {
+      testAttrs({
+        text: 'aplica los atributos de ui.item a cada RatingItem',
+        id: '[data-test-rating-item]',
+        mount: (attrs) => mountRating({ props: { ui: { item: () => attrs } } }),
+      })
+    })
+
+    describe('ui.indicator', () => {
+      testAttrs({
+        text: 'aplica los atributos de ui.indicator a cada RatingItemIndicator',
+        id: '[data-test-rating-item-indicator]',
+        mount: (attrs) => mountRating({ props: { ui: { indicator: () => attrs } } }),
+      })
+    })
   })
 
   describe('attrs', () => {
@@ -376,11 +395,11 @@ describe('Rating', () => {
   })
 
   describe('slots', () => {
-    describe('indicator', () => {
+    describe('item', () => {
       it('renderiza el contenido del slot en lugar del icono por defecto', () => {
         const wrapper = mountRating({
           slots: {
-            indicator: () => h('span', { 'data-test-custom-indicator': '' }, 'Custom indicator'),
+            item: () => h('span', { 'data-test-custom-indicator': '' }, 'Custom indicator'),
           },
         })
 
@@ -398,7 +417,7 @@ describe('Rating', () => {
         mountRating({
           props,
           slots: {
-            indicator: (slotContext: RatingItemContext) => {
+            item: (slotContext: RatingItemContext) => {
               const context = { ...slotContext } as RatingItemContext & {
                 ref_for?: boolean
               }
@@ -410,6 +429,32 @@ describe('Rating', () => {
         })
 
         expect(contexts).toEqual(expected)
+      })
+
+      it('pasa el contexto a ui.item y ui.indicator', () => {
+        const itemContexts: RatingItemContext[] = []
+        const indicatorContexts: RatingItemContext[] = []
+        mountRating({
+          props: {
+            length: 2,
+            step: 0.5,
+            size: 'lg',
+            ui: {
+              item: (context) => {
+                itemContexts.push(context)
+                return {}
+              },
+              indicator: (context) => {
+                indicatorContexts.push(context)
+                return {}
+              },
+            },
+          },
+        })
+
+        const expected = casesItemContext[1]?.expected ?? []
+        expect(itemContexts).toEqual(expected.filter((context) => context.step === context.item))
+        expect(indicatorContexts).toEqual(expected)
       })
     })
   })

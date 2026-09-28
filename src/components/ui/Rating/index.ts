@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { RatingRootProps } from 'reka-ui'
+import type { HTMLAttributes } from 'vue'
 import type { IconName } from '@/components/ui/Icon'
 
 export { default as Rating } from './Rating.vue'
@@ -101,6 +102,7 @@ export type RatingProps = Pick<
   severity?: RatingSeverity
   color?: string
   icon?: IconName
+  ui?: RatingUI
 }
 
 export interface RatingItemContext {
@@ -110,6 +112,13 @@ export interface RatingItemContext {
   iconClass: string
 }
 
+export type RatingFn<T> = (context: RatingItemContext) => T
+
+export interface RatingUI {
+  item?: RatingFn<HTMLAttributes>
+  indicator?: RatingFn<HTMLAttributes>
+}
+
 export interface RatingSlots {
-  indicator(props: RatingItemContext): unknown
+  item(props: RatingItemContext): unknown
 }

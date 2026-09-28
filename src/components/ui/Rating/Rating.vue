@@ -3,6 +3,7 @@ import { computed, useAttrs } from 'vue'
 import { RatingItem, RatingItemIndicator, RatingRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
 import { useColor } from '@/composables'
+import { useUi } from '@/composables/useUi'
 import { useI18n } from '@/i18n'
 import { cn } from '@/lib/utils'
 import {
@@ -43,22 +44,31 @@ const rootProps = computed(() => ({
 }))
 
 function getItemProps(item: number) {
+  const ui = useUi(props.ui?.item, getItemContext(item, item))
   return {
+    ...ui,
     item,
     'data-test-rating-item': '',
-    class: ratingItemVariants({ disabled: props.disabled, size: props.size }),
+    class: cn(ratingItemVariants({ disabled: props.disabled, size: props.size }), ui.class),
+    style: ui.style,
   }
 }
 
-function getIndicatorProps(step: number) {
+function getIndicatorProps(item: number, step: number) {
+  const ui = useUi(props.ui?.indicator, getItemContext(item, step))
   return {
+    ...ui,
     step,
-    'aria-label': t('ratingItemLabel', { step, length: props.length }),
+    'aria-label': ui['aria-label'] ?? t('ratingItemLabel', { step, length: props.length }),
     'data-test-rating-item-indicator': '',
-    class: ratingIndicatorVariants({
-      severity: props.color ? null : props.severity,
-      color: Boolean(props.color),
-    }),
+    class: cn(
+      ratingIndicatorVariants({
+        severity: props.color ? null : props.severity,
+        color: Boolean(props.color),
+      }),
+      ui.class,
+    ),
+    style: ui.style,
   }
 }
 
@@ -75,8 +85,8 @@ function getItemContext(item: number, step: number): RatingItemContext {
 <template>
   <RatingRoot v-slot="{ items }" v-model="model" v-bind="rootProps">
     <RatingItem v-for="item in items" v-slot="{ steps }" :key="item" v-bind="getItemProps(item)">
-      <RatingItemIndicator v-for="step in steps" :key="step" v-bind="getIndicatorProps(step)">
-        <slot name="indicator" v-bind="getItemContext(item, step)">
+      <RatingItemIndicator v-for="step in steps" :key="step" v-bind="getIndicatorProps(item, step)">
+        <slot name="item" v-bind="getItemContext(item, step)">
           <Icon
             :name="props.icon"
             :class="ratingIconVariants({ size: props.size })"
