@@ -86,7 +86,7 @@ const ratingConfig: ComponentDocConfig = {
     {
       title: 'Accessible label',
       description:
-        'Provide an accessible label so screen reader users understand what the rating input represents.',
+        'Provide an accessible label so screen reader users understand what the rating input represents. Each rating step has a localized label.',
       links: [
         {
           label: 'Read the Reka UI Rating accessibility guide',
@@ -182,6 +182,29 @@ const ratingConfig: ComponentDocConfig = {
         description: 'Icon used by the default indicator.',
       },
     ],
+    configs: [
+      {
+        id: 'rating-item-context',
+        title: 'RatingItemContext',
+        typeLabel: 'slotProps',
+        showDefault: false,
+        description: 'Context passed to the indicator slot for each rating step.',
+        rows: [
+          { name: 'item', type: 'number', description: 'One-based rating item number.' },
+          { name: 'step', type: 'number', description: 'Rating value represented by this step.' },
+          {
+            name: 'percentage',
+            type: 'number',
+            description: 'Width of this step within its item, from 0 to 100.',
+          },
+          {
+            name: 'iconClass',
+            type: 'string',
+            description: 'Classes that size and position the icon and style its selected state.',
+          },
+        ],
+      },
+    ],
     emits: [
       {
         name: 'update:modelValue',
@@ -192,9 +215,10 @@ const ratingConfig: ComponentDocConfig = {
     slots: [
       {
         name: 'indicator',
-        type: '{ item: number; step: number; percentage: number; iconClass: string }',
+        type: 'RatingItemContext',
+        typeLink: '#rating-item-context',
         description:
-          'Replaces the default icon in each indicator. percentage is the width of that step within its item (0–100). Apply iconClass to preserve the selected and fractional styles.',
+          'Replaces the default icon in each indicator. Apply iconClass to preserve the selected and fractional styles.',
       },
     ],
     expose: [],

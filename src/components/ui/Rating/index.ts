@@ -103,6 +103,13 @@ export type RatingProps = Pick<
   icon?: IconName
 }
 
+export interface RatingItemContext {
+  item: number
+  step: number
+  percentage: number
+  iconClass: string
+}
+
 export interface RatingSlots {
-  indicator(props: { item: number; step: number; percentage: number; iconClass: string }): unknown
+  indicator(props: RatingItemContext): unknown
 }

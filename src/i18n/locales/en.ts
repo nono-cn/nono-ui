@@ -31,4 +31,5 @@ export default {
   tagInputClear: 'Clear tags',
   colorAreaRoleDescription: 'Color picker',
   colorAreaThumbRoleDescription: 'Color thumb',
+  ratingItemLabel: '{step} of {length}',
 } satisfies Messages

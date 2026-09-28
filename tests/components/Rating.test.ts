@@ -5,11 +5,13 @@ import { RatingRoot as RekaRatingRoot } from 'reka-ui'
 
 import {
   Rating,
+  type RatingItemContext,
   type RatingProps,
   type RatingSeverity,
   type RatingSize,
 } from '@/components/ui/Rating'
 import { Icon } from '@/components/ui/Icon'
+import { i18n } from '@/i18n'
 import { testColor } from '../utils/testColor'
 import { testAttrs } from '../utils/testAttrs'
 
@@ -112,6 +114,56 @@ const casesSeverity: {
   { input: 'warning', textClass: 'text-warning', focusClass: 'focus-visible:ring-warning/60' },
   { input: 'success', textClass: 'text-success', focusClass: 'focus-visible:ring-success/60' },
   { input: 'error', textClass: 'text-error', focusClass: 'focus-visible:ring-error/60' },
+]
+
+const casesItemContext: { name: string; props: RatingProps; expected: RatingItemContext[] }[] = [
+  {
+    name: 'paso completo',
+    props: { length: 1 },
+    expected: [
+      {
+        item: 1,
+        step: 1,
+        percentage: 100,
+        iconClass:
+          'absolute fill-transparent group-data-[state=active]:fill-current top-1 left-1 size-6',
+      },
+    ],
+  },
+  {
+    name: 'medios pasos en dos items',
+    props: { length: 2, step: 0.5, size: 'lg' },
+    expected: [
+      {
+        item: 1,
+        step: 0.5,
+        percentage: 50,
+        iconClass:
+          'absolute fill-transparent group-data-[state=active]:fill-current top-1 left-1 size-8',
+      },
+      {
+        item: 1,
+        step: 1,
+        percentage: 100,
+        iconClass:
+          'absolute fill-transparent group-data-[state=active]:fill-current top-1 left-1 size-8',
+      },
+      {
+        item: 2,
+        step: 1.5,
+        percentage: 50,
+        iconClass:
+          'absolute fill-transparent group-data-[state=active]:fill-current top-1 left-1 size-8',
+      },
+      {
+        item: 2,
+        step: 2,
+        percentage: 100,
+        iconClass:
+          'absolute fill-transparent group-data-[state=active]:fill-current top-1 left-1 size-8',
+      },
+    ],
+  },
 ]
 
 function mountRating(options: MountingOptions<RatingProps> = {}) {
@@ -299,6 +351,16 @@ describe('Rating', () => {
       id: '[data-test-rating-root]',
       mount: (attrs) => mountRating({ attrs }),
     })
+
+    describe('aria-label del indicador', () => {
+      it('usa la clave ratingItemLabel con el paso y la longitud', () => {
+        const wrapper = mountRating({ props: { length: 3 } })
+
+        expect(wrapper.get('[data-test-rating-item-indicator]').attributes('aria-label')).toBe(
+          i18n.global.t('ratingItemLabel', { step: 1, length: 3 }),
+        )
+      })
+    })
   })
 
   describe('emits', () => {
@@ -326,29 +388,28 @@ describe('Rating', () => {
         expect(wrapper.get('[data-test-custom-indicator]').text()).toBe('Custom indicator')
         expect(wrapper.find('[data-test-rating-icon]').exists()).toBe(false)
       })
+    })
+  })
 
-      it('expone item, step, percentage e iconClass en los slotProps', () => {
-        const wrapper = mountRating({
-          props: { length: 2, step: 0.5, size: 'lg' },
+  describe('context contract', () => {
+    describe('RatingItemContext', () => {
+      it.each(casesItemContext)('pasa el contrato completo para $name', ({ props, expected }) => {
+        const contexts: RatingItemContext[] = []
+        mountRating({
+          props,
           slots: {
-            indicator: ({ item, step, percentage, iconClass }) =>
-              h(
-                'span',
-                { 'data-test-custom-indicator': '', class: iconClass },
-                `${item}:${step}:${percentage}`,
-              ),
+            indicator: (slotContext: RatingItemContext) => {
+              const context = { ...slotContext } as RatingItemContext & {
+                ref_for?: boolean
+              }
+              delete context.ref_for
+              contexts.push(context)
+              return h('span')
+            },
           },
         })
 
-        const indicators = wrapper.findAll('[data-test-custom-indicator]')
-        expect(indicators).toHaveLength(4)
-        expect(indicators.map((indicator) => indicator.text())).toEqual([
-          '1:0.5:50',
-          '1:1:100',
-          '2:1.5:50',
-          '2:2:100',
-        ])
-        expect(indicators[0]?.classes()).toContain('size-8')
+        expect(contexts).toEqual(expected)
       })
     })
   })

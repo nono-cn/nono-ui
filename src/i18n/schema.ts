@@ -29,4 +29,5 @@ export interface Messages {
   tagInputClear: string
   colorAreaRoleDescription: string
   colorAreaThumbRoleDescription: string
+  ratingItemLabel: string
 }
