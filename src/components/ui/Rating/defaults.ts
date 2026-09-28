@@ -8,4 +8,6 @@ export const ratingDefaults = {
   name: undefined,
   step: 1 as const,
   orientation: 'horizontal' as const,
+  size: 'md' as const,
+  icon: 'star' as const,
 }

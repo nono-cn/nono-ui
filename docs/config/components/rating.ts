@@ -6,6 +6,9 @@ import RatingLoopExample from '../../components/examples/rating/RatingLoopExampl
 import RatingDisabledExample from '../../components/examples/rating/RatingDisabledExample.vue'
 import RatingStepExample from '../../components/examples/rating/RatingStepExample.vue'
 import RatingOrientationExample from '../../components/examples/rating/RatingOrientationExample.vue'
+import RatingSizeExample from '../../components/examples/rating/RatingSizeExample.vue'
+import RatingIconExample from '../../components/examples/rating/RatingIconExample.vue'
+import RatingIndicatorExample from '../../components/examples/rating/RatingIndicatorExample.vue'
 
 const ratingConfig: ComponentDocConfig = {
   slug: 'rating',
@@ -50,6 +53,21 @@ const ratingConfig: ComponentDocConfig = {
       title: 'Orientation',
       description: 'Arrange rating items horizontally or vertically.',
       component: RatingOrientationExample,
+    },
+    {
+      title: 'Size',
+      description: 'Change the size of the rating items.',
+      component: RatingSizeExample,
+    },
+    {
+      title: 'Icon',
+      description: 'Use another icon instead of the star.',
+      component: RatingIconExample,
+    },
+    {
+      title: 'Indicator slot',
+      description: 'Customize the icon for each rating item.',
+      component: RatingIndicatorExample,
     },
   ],
   accessibility: [
@@ -126,6 +144,19 @@ const ratingConfig: ComponentDocConfig = {
         default: "'horizontal'",
         description: 'Direction in which rating items are arranged.',
       },
+      {
+        name: 'size',
+        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+        default: "'md'",
+        description: 'Size of each rating item and the space between items.',
+      },
+      {
+        name: 'icon',
+        type: 'IconName',
+        typeLink: '/components/icon#props',
+        default: "'star'",
+        description: 'Icon used by the default indicator.',
+      },
     ],
     emits: [
       {
@@ -134,7 +165,14 @@ const ratingConfig: ComponentDocConfig = {
         description: 'Emitted when the selected rating changes.',
       },
     ],
-    slots: [],
+    slots: [
+      {
+        name: 'indicator',
+        type: '{ item: number; step: number; percentage: number; iconClass: string }',
+        description:
+          'Replaces the default icon in each indicator. percentage is the width of that step within its item (0–100). Apply iconClass to preserve the selected and fractional styles.',
+      },
+    ],
     expose: [],
   },
 }

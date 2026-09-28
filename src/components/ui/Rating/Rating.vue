@@ -10,11 +10,12 @@ import {
   ratingRootVariants,
 } from '.'
 import { ratingDefaults } from './defaults'
-import type { RatingProps } from '.'
+import type { RatingProps, RatingSlots } from '.'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<Omit<RatingProps, 'modelValue'>>(), ratingDefaults)
+defineSlots<RatingSlots>()
 const model = defineModel<number>()
 const attrs = useAttrs()
 
@@ -30,7 +31,7 @@ const rootProps = computed(() => ({
   step: props.step,
   orientation: props.orientation,
   'data-test-rating-root': '',
-  class: cn(ratingRootVariants({ orientation: props.orientation }), attrs.class),
+  class: cn(ratingRootVariants({ orientation: props.orientation, size: props.size }), attrs.class),
   style: attrs.style,
 }))
 
@@ -38,7 +39,7 @@ function getItemProps(item: number) {
   return {
     item,
     'data-test-rating-item': '',
-    class: ratingItemVariants({ disabled: props.disabled }),
+    class: ratingItemVariants({ disabled: props.disabled, size: props.size }),
   }
 }
 
@@ -56,7 +57,20 @@ function getIndicatorProps(step: number) {
   <RatingRoot v-slot="{ items }" v-model="model" v-bind="rootProps">
     <RatingItem v-for="item in items" v-slot="{ steps }" :key="item" v-bind="getItemProps(item)">
       <RatingItemIndicator v-for="step in steps" :key="step" v-bind="getIndicatorProps(step)">
-        <Icon name="star" :class="ratingIconVariants()" aria-hidden="true" />
+        <slot
+          name="indicator"
+          :item="item"
+          :step="step"
+          :percentage="(step % 1 || 1) * 100"
+          :icon-class="ratingIconVariants({ size: props.size })"
+        >
+          <Icon
+            :name="props.icon"
+            :class="ratingIconVariants({ size: props.size })"
+            aria-hidden="true"
+            data-test-rating-icon
+          />
+        </slot>
       </RatingItemIndicator>
     </RatingItem>
   </RatingRoot>

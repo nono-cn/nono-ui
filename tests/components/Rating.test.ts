@@ -1,8 +1,10 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
+import { h } from 'vue'
 import { describe, expect, it } from 'vitest'
 import { RatingRoot as RekaRatingRoot } from 'reka-ui'
 
-import { Rating, type RatingProps } from '@/components/ui/Rating'
+import { Rating, type RatingProps, type RatingSize } from '@/components/ui/Rating'
+import { Icon } from '@/components/ui/Icon'
 
 const casesLength = [
   { input: undefined, expected: 5 },
@@ -67,6 +69,20 @@ const casesOrientation = [
   { input: undefined, expected: 'horizontal', rootClass: 'flex-row' },
   { input: 'horizontal' as const, expected: 'horizontal', rootClass: 'flex-row' },
   { input: 'vertical' as const, expected: 'vertical', rootClass: 'flex-col' },
+]
+
+const casesSize: {
+  input: RatingSize | undefined
+  itemClass: string
+  iconClass: string
+  gapClass: string
+}[] = [
+  { input: undefined, itemClass: 'size-8', iconClass: 'size-6', gapClass: 'gap-1' },
+  { input: 'xs', itemClass: 'size-5', iconClass: 'size-4', gapClass: 'gap-0.5' },
+  { input: 'sm', itemClass: 'size-6', iconClass: 'size-5', gapClass: 'gap-0.5' },
+  { input: 'md', itemClass: 'size-8', iconClass: 'size-6', gapClass: 'gap-1' },
+  { input: 'lg', itemClass: 'size-10', iconClass: 'size-8', gapClass: 'gap-1.5' },
+  { input: 'xl', itemClass: 'size-12', iconClass: 'size-10', gapClass: 'gap-2' },
 ]
 
 function mountRating(options: MountingOptions<RatingProps> = {}) {
@@ -186,6 +202,30 @@ describe('Rating', () => {
         },
       )
     })
+
+    describe('size', () => {
+      it.each(casesSize)(
+        'aplica size=$input a items, iconos y espacio',
+        ({ input, itemClass, iconClass, gapClass }) => {
+          const wrapper = mountRating({ props: { size: input } })
+
+          expect(wrapper.get('[data-test-rating-root]').classes()).toContain(gapClass)
+          expect(wrapper.get('[data-test-rating-item]').classes()).toContain(itemClass)
+          expect(wrapper.get('[data-test-rating-icon]').classes()).toContain(iconClass)
+        },
+      )
+    })
+
+    describe('icon', () => {
+      it('renderiza star por defecto y permite sustituirlo por otro IconName', () => {
+        const defaultRating = mountRating()
+        const customRating = mountRating({ props: { icon: 'heart' } })
+
+        expect(defaultRating.getComponent(Icon).props('name')).toBe('star')
+        expect(customRating.getComponent(Icon).props('name')).toBe('heart')
+        expect(customRating.findAll('[data-test-rating-icon]')).toHaveLength(5)
+      })
+    })
   })
 
   describe('emits', () => {
@@ -196,6 +236,46 @@ describe('Rating', () => {
         await wrapper.getComponent(RekaRatingRoot).vm.$emit('update:modelValue', 4)
 
         expect(wrapper.emitted('update:modelValue')).toEqual([[4]])
+      })
+    })
+  })
+
+  describe('slots', () => {
+    describe('indicator', () => {
+      it('renderiza el contenido del slot en lugar del icono por defecto', () => {
+        const wrapper = mountRating({
+          slots: {
+            indicator: () => h('span', { 'data-test-custom-indicator': '' }, 'Custom indicator'),
+          },
+        })
+
+        expect(wrapper.findAll('[data-test-custom-indicator]')).toHaveLength(5)
+        expect(wrapper.get('[data-test-custom-indicator]').text()).toBe('Custom indicator')
+        expect(wrapper.find('[data-test-rating-icon]').exists()).toBe(false)
+      })
+
+      it('expone item, step, percentage e iconClass en los slotProps', () => {
+        const wrapper = mountRating({
+          props: { length: 2, step: 0.5, size: 'lg' },
+          slots: {
+            indicator: ({ item, step, percentage, iconClass }) =>
+              h(
+                'span',
+                { 'data-test-custom-indicator': '', class: iconClass },
+                `${item}:${step}:${percentage}`,
+              ),
+          },
+        })
+
+        const indicators = wrapper.findAll('[data-test-custom-indicator]')
+        expect(indicators).toHaveLength(4)
+        expect(indicators.map((indicator) => indicator.text())).toEqual([
+          '1:0.5:50',
+          '1:1:100',
+          '2:1.5:50',
+          '2:2:100',
+        ])
+        expect(indicators[0]?.classes()).toContain('size-8')
       })
     })
   })
