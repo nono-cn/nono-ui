@@ -90,6 +90,18 @@ const ratingConfig: ComponentDocConfig = {
         default: 'false',
         description: 'Prevents interaction with the rating.',
       },
+      {
+        name: 'required',
+        type: 'boolean',
+        default: 'false',
+        description: 'Marks the rating as required when used in a form.',
+      },
+      {
+        name: 'name',
+        type: 'string',
+        default: 'undefined',
+        description: 'Name used to submit the rating value with its form.',
+      },
     ],
     emits: [
       {

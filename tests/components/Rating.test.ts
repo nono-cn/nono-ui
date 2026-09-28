@@ -36,6 +36,18 @@ const casesDisabled = [
   { input: true, expected: true },
 ]
 
+const casesRequired = [
+  { input: undefined, expected: false },
+  { input: false, expected: false },
+  { input: true, expected: true },
+]
+
+const casesName = [
+  { input: undefined, expected: undefined },
+  { input: '', expected: '' },
+  { input: 'review-rating', expected: 'review-rating' },
+]
+
 const casesModelValue = [
   { input: undefined, expected: undefined },
   { input: 0, expected: 0 },
@@ -113,6 +125,25 @@ describe('Rating', () => {
           expect(root.props('disabled')).toBe(expected)
         },
       )
+    })
+
+    describe('required', () => {
+      it.each(casesRequired)(
+        'pasa required=$input como $expected a RatingRoot',
+        ({ input, expected }) => {
+          const root = mountRating({ props: { required: input } }).getComponent(RekaRatingRoot)
+
+          expect(root.props('required')).toBe(expected)
+        },
+      )
+    })
+
+    describe('name', () => {
+      it.each(casesName)('pasa name=$input a RatingRoot', ({ input, expected }) => {
+        const root = mountRating({ props: { name: input } }).getComponent(RekaRatingRoot)
+
+        expect(root.props('name')).toBe(expected)
+      })
     })
   })
 

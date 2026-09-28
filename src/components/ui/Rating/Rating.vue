@@ -3,6 +3,7 @@ import { computed, useAttrs } from 'vue'
 import { RatingItem, RatingItemIndicator, RatingRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
+import { ratingItemVariants } from '.'
 import { ratingDefaults } from './defaults'
 import type { RatingProps } from '.'
 
@@ -19,6 +20,8 @@ const rootProps = computed(() => ({
   hoverable: props.hoverable,
   loop: props.loop,
   disabled: props.disabled,
+  required: props.required,
+  name: props.name,
   'data-test-rating-root': '',
   class: cn('flex gap-1 data-[disabled]:opacity-50', attrs.class),
   style: attrs.style,
@@ -28,7 +31,7 @@ function getItemProps(item: number) {
   return {
     item,
     'data-test-rating-item': '',
-    class: 'inline-flex',
+    class: ratingItemVariants({ disabled: props.disabled }),
   }
 }
 
