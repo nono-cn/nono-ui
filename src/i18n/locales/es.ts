@@ -31,4 +31,5 @@ export default {
   tagInputClear: 'Limpiar etiquetas',
   colorAreaRoleDescription: 'Selector de color',
   colorAreaThumbRoleDescription: 'Control deslizante de color',
+  ratingItemLabel: '{step} de {length}',
 } satisfies Messages

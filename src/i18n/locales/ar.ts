@@ -31,4 +31,5 @@ export default {
   tagInputClear: 'مسح الوسوم',
   colorAreaRoleDescription: 'منتقي الألوان',
   colorAreaThumbRoleDescription: 'مقبض منتقي الألوان',
+  ratingItemLabel: '{step} من {length}',
 } satisfies Messages
