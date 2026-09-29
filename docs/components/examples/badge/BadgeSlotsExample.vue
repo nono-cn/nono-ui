@@ -10,8 +10,8 @@ ${scriptEnd}
 <template>
   <Badge
     label="Fallback label"
-    :icon="{ name: 'info' }"
-    :trailing-icon="{ name: 'chevronRight' }"
+    icon="info"
+    trailing-icon="chevronRight"
   >
     <template #leading>
       <span aria-hidden="true">●</span>
@@ -33,11 +33,7 @@ ${scriptEnd}
     :code="code"
     :show-reset="false"
   >
-    <Badge
-      label="Fallback label"
-      :icon="{ name: 'info' }"
-      :trailing-icon="{ name: 'chevronRight' }"
-    >
+    <Badge label="Fallback label" icon="info" trailing-icon="chevronRight">
       <template #leading>
         <span aria-hidden="true">●</span>
       </template>

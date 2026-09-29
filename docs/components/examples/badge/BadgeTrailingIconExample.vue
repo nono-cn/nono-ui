@@ -18,7 +18,7 @@ const iconName = ref<IconName>('${iconName.value}')
 ${scriptEnd}
 
 <template>
-  <Badge label="Next" :trailing-icon="{ name: iconName }" />
+  <Badge label="Next" :trailing-icon="iconName" />
 </template>`,
 )
 
@@ -39,6 +39,6 @@ function reset() {
         <ExampleSelectControl v-model="iconName" label="Trailing icon" :options="icons" />
       </div>
     </template>
-    <Badge label="Next" :trailing-icon="{ name: iconName }" />
+    <Badge label="Next" :trailing-icon="iconName" />
   </ComponentExample>
 </template>

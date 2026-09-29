@@ -6,37 +6,50 @@ import {
   Badge,
   type BadgeProps,
   type BadgeSeverity,
+  type BadgeSize,
   type BadgeVariant,
 } from '@/components/ui/Badge'
+import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconConfig, testIconSize } from '../utils/testIconConfig'
+import { testColor } from '../utils/testColor'
 
 function mountBadge(options: MountingOptions<BadgeProps> = {}) {
   return mount(Badge, options)
 }
 
+const casesSize = [
+  { input: 'sm', expected: ['gap-0.5', 'px-0.5', 'text-sm'] },
+  { input: 'md', expected: ['gap-1', 'px-1', 'text-base'] },
+  { input: 'lg', expected: ['gap-1.5', 'px-2', 'text-lg'] },
+  { input: undefined, expected: ['gap-1', 'px-1', 'text-base'] },
+] satisfies { input: BadgeSize | undefined; expected: string[] }[]
+
 const casesVariant = [
   {
-    variant: 'solid',
+    input: 'solid',
     expected: ['border-transparent', 'bg-(--badge-solid)', 'text-(--badge-solid-foreground)'],
   },
   {
-    variant: 'outline',
+    input: 'outline',
     expected: ['border-(--badge-color)/40', 'bg-transparent', 'text-(--badge-color)'],
   },
   {
-    variant: 'plain',
+    input: 'plain',
     expected: ['border-transparent', 'bg-transparent', 'text-(--badge-color)'],
   },
   {
-    variant: 'subtle',
+    input: 'subtle',
     expected: ['border-(--badge-color)/20', 'bg-(--badge-color)/10', 'text-(--badge-color)'],
   },
   {
-    variant: 'soft',
+    input: 'soft',
     expected: ['border-transparent', 'bg-(--badge-color)/10', 'text-(--badge-color)'],
   },
-] satisfies { variant: BadgeVariant; expected: string[] }[]
+  {
+    input: undefined,
+    expected: ['border-transparent', 'bg-(--badge-solid)', 'text-(--badge-solid-foreground)'],
+  },
+] satisfies { input: BadgeVariant | undefined; expected: string[] }[]
 
 const casesSeverity = [
   {
@@ -99,30 +112,27 @@ const casesSeverity = [
       'focus-visible:ring-error/30',
     ],
   },
-] satisfies { severity: BadgeSeverity; expected: string[] }[]
+  {
+    severity: undefined,
+    expected: [
+      '[--badge-color:var(--primary)]',
+      '[--badge-solid:var(--primary)]',
+      '[--badge-solid-foreground:var(--primary-foreground)]',
+      'focus-visible:border-primary',
+      'focus-visible:ring-primary/30',
+    ],
+  },
+] satisfies { severity: BadgeSeverity | undefined; expected: string[] }[]
 
-const casesSeverityVariant = casesSeverity.flatMap(({ severity, expected: severityClasses }) =>
-  casesVariant.map(({ variant, expected: variantClasses }) => ({
-    severity,
-    variant,
-    expected: [...severityClasses, ...variantClasses],
-  })),
-)
+const casesIcon = [
+  { input: 'check' as const, expected: 'check' },
+  { input: undefined, expected: undefined },
+]
 
-const casesColorVariant = casesVariant.map(({ variant, expected: variantClasses }) => ({
-  variant,
-  expected: [
-    ...variantClasses,
-    'focus-visible:border-(--badge-color)',
-    'focus-visible:ring-(--badge-color)/30',
-    ...(variant === 'solid'
-      ? [
-          '[--badge-solid:var(--badge-color)]',
-          '[--badge-solid-foreground:var(--badge-color-foreground)]',
-        ]
-      : []),
-  ],
-}))
+const casesTrailingIcon = [
+  { input: 'chevronRight' as const, expected: 'chevronRight' },
+  { input: undefined, expected: undefined },
+]
 
 describe('Badge', () => {
   describe('props', () => {
@@ -138,95 +148,62 @@ describe('Badge', () => {
     })
 
     describe('size', () => {
-      it.each([
-        { input: 'sm' as const, expected: ['gap-0.5', 'px-0.5', 'text-sm'] },
-        { input: 'md' as const, expected: ['gap-1', 'px-1', 'text-base'] },
-        { input: 'lg' as const, expected: ['gap-1.5', 'px-2', 'text-lg'] },
-      ])('renderiza size=$input', ({ input, expected }) => {
-        const root = mountBadge({ props: { size: input } }).get('[data-test-badge-root]')
+      it.each(casesSize)('renderiza size=$input', ({ input, expected }) => {
+        const badge = mountBadge({
+          props: { size: input, icon: 'check', trailingIcon: 'chevronRight' },
+        })
+        const root = badge.get('[data-test-badge-root]')
+
+        expect(root.classes()).toEqual(expect.arrayContaining(expected))
+        expect(badge.findAllComponents(Icon).map((icon) => icon.props('size'))).toEqual([
+          input ?? 'md',
+          input ?? 'md',
+        ])
+      })
+    })
+
+    describe('variant', () => {
+      it.each(casesVariant)('renderiza variant=$input', ({ input, expected }) => {
+        const root = mountBadge({ props: { variant: input } }).get('[data-test-badge-root]')
 
         expect(root.classes()).toEqual(expect.arrayContaining(expected))
       })
     })
 
-    describe('variant', () => {
-      it.each(casesSeverityVariant)(
-        'renderiza severity=$severity con variant=$variant',
-        ({ severity, variant, expected }) => {
-          const root = mountBadge({ props: { severity, variant } }).get('[data-test-badge-root]')
+    describe('severity', () => {
+      it.each(casesSeverity)('renderiza severity=$severity', ({ severity, expected }) => {
+        const root = mountBadge({ props: { severity } }).get('[data-test-badge-root]')
 
-          expect(root.classes()).toEqual(expect.arrayContaining(expected))
-          expect(root.classes()).toContain(
-            `focus-visible:border-${
-              severity === 'neutral'
-                ? 'foreground'
-                : severity === 'secondary'
-                  ? 'secondary-foreground'
-                  : severity
-            }`,
-          )
-        },
-      )
+        expect(root.classes()).toEqual(expect.arrayContaining(expected))
+      })
     })
 
     describe('color', () => {
-      it.each(casesColorVariant)(
-        'aplica un color personalizado con variant=$variant',
-        ({ variant, expected }) => {
-          const root = mountBadge({
-            props: { color: '#ff0000', variant },
-          }).get('[data-test-badge-root]')
-
-          expect(root.attributes('style')).toContain('--badge-color: #ff0000')
-          expect(root.attributes('style')).toContain('--badge-color-foreground: #09090b')
-          expect(root.classes()).toEqual(
-            expect.arrayContaining([...expected, 'focus-visible:border-(--badge-color)']),
-          )
-        },
-      )
+      testColor({
+        text: 'aplica color personalizado',
+        id: '[data-test-badge-root]',
+        varColor: '--badge-color',
+        mount: (color) => mountBadge({ props: { color } }),
+      })
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa las props de icon',
-        id: '[data-test-badge-icon]',
-        mount: (input) => mountBadge({ props: { icon: input } }),
-      })
+      it.each(casesIcon)('renderiza icon=$input', ({ input, expected }) => {
+        const badge = mountBadge({ props: { icon: input } })
+        const icon = badge.findComponent(Icon)
 
-      testIconSize({
-        text: 'hace que icon herede el tamaño de Badge',
-        id: '[data-test-badge-icon]',
-        mount: (size) => mountBadge({ props: { size, icon: { name: 'check' } } }),
-      })
-
-      it('prioriza el tamaño explícito de icon sobre el tamaño de Badge', () => {
-        const badge = mountBadge({
-          props: { size: 'lg', icon: { name: 'check', size: 'sm' } },
-        })
-
-        expect(badge.getComponent('[data-test-badge-icon]').props('size')).toBe('sm')
+        expect(icon.exists()).toBe(expected !== undefined)
+        if (expected) expect(icon.props('name')).toBe(expected)
       })
     })
 
     describe('trailingIcon', () => {
-      testIconConfig({
-        text: 'pasa las props de trailingIcon',
-        id: '[data-test-badge-trailing-icon]',
-        mount: (input) => mountBadge({ props: { trailingIcon: input } }),
-      })
+      it.each(casesTrailingIcon)('renderiza trailingIcon=$input', ({ input, expected }) => {
+        const badge = mountBadge({ props: { trailingIcon: input } })
+        const icon = badge.findComponent(Icon)
 
-      testIconSize({
-        text: 'hace que el icono final herede el tamaño de Badge',
-        id: '[data-test-badge-trailing-icon]',
-        mount: (size) => mountBadge({ props: { size, trailingIcon: { name: 'chevronRight' } } }),
-      })
-
-      it('prioriza el tamaño explícito del icono final sobre el tamaño de Badge', () => {
-        const badge = mountBadge({
-          props: { size: 'lg', trailingIcon: { name: 'chevronRight', size: 'sm' } },
-        })
-
-        expect(badge.getComponent('[data-test-badge-trailing-icon]').props('size')).toBe('sm')
+        expect(icon.exists()).toBe(expected !== undefined)
+        if (expected) expect(icon.props('name')).toBe(expected)
       })
     })
   })
@@ -255,7 +232,7 @@ describe('Badge', () => {
     describe('leading', () => {
       it('renderiza el slot inicial y oculta el icono alternativo', () => {
         const badge = mountBadge({
-          props: { icon: { name: 'check' } },
+          props: { icon: 'check' },
           slots: { leading: () => h('span', { 'data-test-badge-slot': 'leading' }, 'Leading') },
         })
 
@@ -267,7 +244,7 @@ describe('Badge', () => {
     describe('trailing', () => {
       it('renderiza el slot final y oculta el icono alternativo', () => {
         const badge = mountBadge({
-          props: { trailingIcon: { name: 'chevronRight' } },
+          props: { trailingIcon: 'chevronRight' },
           slots: {
             trailing: () => h('span', { 'data-test-badge-slot': 'trailing' }, 'Trailing'),
           },

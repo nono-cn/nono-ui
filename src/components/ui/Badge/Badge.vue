@@ -39,14 +39,14 @@ const rootProps = computed(() => {
 })
 
 const iconProps = computed(() => {
-  const icon = props.icon
+  if (!props.icon) return undefined
 
-  return { ...icon, size: icon?.size ?? props.size }
+  return { name: props.icon, size: props.size }
 })
 const trailingIconProps = computed(() => {
-  const icon = props.trailingIcon
+  if (!props.trailingIcon) return undefined
 
-  return { ...icon, size: icon?.size ?? props.size }
+  return { name: props.trailingIcon, size: props.size }
 })
 </script>
 

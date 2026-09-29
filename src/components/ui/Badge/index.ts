@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 
 export { default as Badge } from './Badge.vue'
 
@@ -58,8 +58,8 @@ export interface BadgeProps {
   variant?: BadgeVariant
   severity?: BadgeSeverity
   color?: string
-  icon?: IconConfig
-  trailingIcon?: IconConfig
+  icon?: IconName
+  trailingIcon?: IconName
 }
 
 export interface BadgeSlots {
