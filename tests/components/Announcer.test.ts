@@ -83,15 +83,20 @@ describe('Announcer', () => {
   })
 
   describe('slots', () => {
-    it('renderiza visiblemente el slot predeterminado', () => {
-      const announcer = mountAnnouncer({
-        slots: {
-          default: () => h('span', { 'data-test-announcer-slot': '' }, 'Anuncio personalizado'),
-        },
-      })
+    describe('default', () => {
+      it('renderiza visiblemente el slot y sustituye message', () => {
+        const announcer = mountAnnouncer({
+          props: { message: 'Mensaje alternativo' },
+          slots: {
+            default: () => h('span', { 'data-test-announcer-slot': '' }, 'Anuncio personalizado'),
+          },
+        })
+        const root = announcer.get('[data-test-announcer-root]')
 
-      expect(announcer.get('[data-test-announcer-slot]').text()).toBe('Anuncio personalizado')
-      expect(announcer.get('[data-test-announcer-root]').classes()).not.toContain('sr-only')
+        expect(announcer.get('[data-test-announcer-slot]').text()).toBe('Anuncio personalizado')
+        expect(root.text()).not.toContain('Mensaje alternativo')
+        expect(root.classes()).not.toContain('sr-only')
+      })
     })
   })
 })

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Announcer } from '@/components/ui/Announcer'
-import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const atomic = ref(true)
+const booleanOptions = ['true', 'false'] as const
+const selectedAtomic = ref<(typeof booleanOptions)[number]>('true')
+const atomic = computed(() => selectedAtomic.value === 'true')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -20,7 +22,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  atomic.value = true
+  selectedAtomic.value = 'true'
 }
 </script>
 
@@ -32,7 +34,9 @@ function reset() {
     @reset="reset"
   >
     <template #controls>
-      <ExampleCheckboxControl v-model="atomic" label="Announce the entire region" />
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="selectedAtomic" label="Atomic" :options="booleanOptions" />
+      </div>
     </template>
     <div class="grid gap-2 text-sm">
       <Announcer message="Upload complete." :atomic="atomic" />
