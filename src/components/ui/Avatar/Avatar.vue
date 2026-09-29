@@ -51,7 +51,11 @@ const fallbackProps = computed(() => {
   }
 })
 
-const iconProps = computed(() => props.icon)
+const iconProps = computed(() => {
+  if (!props.icon) return undefined
+
+  return { name: props.icon, size: props.size }
+})
 </script>
 
 <template>

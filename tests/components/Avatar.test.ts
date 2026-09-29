@@ -3,9 +3,9 @@ import { describe, expect, it, vi } from 'vitest'
 import { h, nextTick } from 'vue'
 
 import { Avatar, type AvatarProps, type AvatarSeverity } from '@/components/ui/Avatar'
+import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
-import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountAvatar(options: MountingOptions<AvatarProps> = {}) {
   return mount(Avatar, options)
@@ -89,13 +89,20 @@ const casesLabel = [
   { input: undefined, expected: '' },
 ]
 
+const casesIcon = [
+  { input: 'user' as const, expected: 'user' },
+  { input: undefined, expected: undefined },
+]
+
 describe('Avatar', () => {
   describe('props', () => {
     describe('size', () => {
       it.each(casesSize)('renderiza size=$input', ({ input, expected }) => {
-        const root = mountAvatar({ props: { size: input } }).get('[data-test-avatar-root]')
+        const avatar = mountAvatar({ props: { size: input, icon: 'user' } })
+        const root = avatar.get('[data-test-avatar-root]')
 
         expect(root.classes()).toEqual(expect.arrayContaining(expected))
+        expect(avatar.getComponent(Icon).props('size')).toBe(input ?? 'md')
       })
     })
 
@@ -181,17 +188,12 @@ describe('Avatar', () => {
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa las props del objeto icon',
-        id: '[data-test-avatar-icon]',
-        mount: (input) => mountAvatar({ props: { icon: input } }),
-      })
+      it.each(casesIcon)('renderiza icon=$input', ({ input, expected }) => {
+        const avatar = mountAvatar({ props: { icon: input } })
+        const icon = avatar.findComponent(Icon)
 
-      testIconSize({
-        text: 'pasa el tamaño de icon',
-        id: '[data-test-avatar-icon]',
-        input: 'sm',
-        mount: (size) => mountAvatar({ props: { icon: { name: 'info', size } } }),
+        expect(icon.exists()).toBe(expected !== undefined)
+        if (expected) expect(icon.props('name')).toBe(expected)
       })
     })
   })
@@ -245,3 +247,6 @@ describe('Avatar', () => {
     })
   })
 })
+
+
+

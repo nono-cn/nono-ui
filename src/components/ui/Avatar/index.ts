@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 
 export { default as Avatar } from './Avatar.vue'
 
@@ -52,7 +52,7 @@ export interface AvatarProps {
   severity?: AvatarSeverity
   color?: string
   delayMs?: number
-  icon?: IconConfig
+  icon?: IconName
   label?: string
 }
 

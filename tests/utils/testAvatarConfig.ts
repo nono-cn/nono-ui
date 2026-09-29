@@ -15,6 +15,7 @@ export function testAvatarConfig({ text, mount }: TestAvatarConfigOptions) {
       size: 'lg',
       shape: 'square',
       delayMs: 300,
+      icon: 'user',
       label: 'AL',
     }
 

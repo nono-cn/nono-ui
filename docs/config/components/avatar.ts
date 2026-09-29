@@ -119,11 +119,11 @@ const avatarConfig: ComponentDocConfig = {
       },
       {
         name: 'icon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
+        type: 'IconName',
+        typeLink: '/components/icon#props',
         default: 'undefined',
         description:
-          'Icon configuration displayed in the fallback when the fallback slot is not provided.',
+          'Name of the icon displayed in the fallback when the fallback slot is not provided.',
       },
       {
         name: 'label',
@@ -131,6 +131,14 @@ const avatarConfig: ComponentDocConfig = {
         default: 'undefined',
         description:
           'Text displayed in the fallback when neither icon nor the fallback slot is provided.',
+      },
+    ],
+    emits: [],
+    slots: [
+      {
+        name: 'fallback',
+        type: '-',
+        description: 'Replaces the avatar’s fallback content entirely.',
       },
     ],
     configs: [
@@ -147,14 +155,6 @@ const avatarConfig: ComponentDocConfig = {
             description: 'Includes Avatar’s public props.',
           },
         ],
-      },
-    ],
-    emits: [],
-    slots: [
-      {
-        name: 'fallback',
-        type: '-',
-        description: 'Replaces the avatar’s fallback content entirely.',
       },
     ],
     expose: [],

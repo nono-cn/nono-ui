@@ -18,7 +18,7 @@ const iconName = ref<IconName>('${iconName.value}')
 ${scriptEnd}
 
 <template>
-  <Avatar :icon="{ name: iconName }" />
+  <Avatar :icon="iconName" />
 </template>`,
 )
 
@@ -39,6 +39,6 @@ function reset() {
         <ExampleSelectControl v-model="iconName" label="Icon" :options="icons" />
       </div>
     </template>
-    <Avatar :icon="{ name: iconName }" />
+    <Avatar :icon="iconName" />
   </ComponentExample>
 </template>
