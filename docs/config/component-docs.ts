@@ -27,9 +27,9 @@ export interface ApiTableConfig {
 
 export interface ComponentApiConfig {
   props: ApiTableRow[]
-  configs?: ApiTableConfig[]
   emits: ApiTableRow[]
   slots: ApiTableRow[]
+  configs?: ApiTableConfig[]
   expose: ApiTableRow[]
 }
 

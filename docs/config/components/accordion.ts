@@ -41,7 +41,7 @@ const accordionConfig: ComponentDocConfig = {
     },
     {
       title: 'Value',
-      description: 'Control the open section with v-model:value.',
+      description: 'Control the open section with v-model.',
       component: AccordionValueExample,
     },
     {
@@ -104,7 +104,7 @@ const accordionConfig: ComponentDocConfig = {
         description: 'Whether one or multiple sections can stay open.',
       },
       {
-        name: 'value',
+        name: 'modelValue',
         type: 'string | string[] | undefined',
         description: 'Open section value in single mode or open section values in multiple mode.',
       },
@@ -136,15 +136,15 @@ const accordionConfig: ComponentDocConfig = {
       },
       {
         name: 'iconDropDownOpen',
-        type: 'IconConfig',
-        default: "{ name: 'chevronUp' }",
-        description: 'Configuration for the icon shown when an item is open.',
+        type: 'IconName',
+        default: "'chevronUp'",
+        description: 'Name of the icon shown when an item is open.',
       },
       {
         name: 'iconDropDownClose',
-        type: 'IconConfig',
-        default: "{ name: 'chevronDown' }",
-        description: 'Configuration for the icon shown when an item is closed.',
+        type: 'IconName',
+        default: "'chevronDown'",
+        description: 'Name of the icon shown when an item is closed.',
       },
       {
         name: 'ui',
@@ -185,8 +185,7 @@ const accordionConfig: ComponentDocConfig = {
           },
           {
             name: 'icon',
-            type: 'IconConfig',
-            typeLink: '/components/icon#icon-config',
+            type: 'IconName',
             default: 'undefined',
             description: 'Icon shown before the label.',
           },
@@ -249,7 +248,7 @@ const accordionConfig: ComponentDocConfig = {
     ],
     emits: [
       {
-        name: 'update:value',
+        name: 'update:modelValue',
         type: 'string | string[] | undefined',
         description: 'Emitted when the open value changes.',
       },

@@ -10,19 +10,19 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 
@@ -36,30 +36,30 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 ${scriptEnd}
 
 <template>
   <Accordion
-    v-model:value="value"
+    v-model="value"
     collapsible
     :items="items"
-    :icon-drop-down-open="{ name: 'minus' }"
-    :icon-drop-down-close="{ name: 'plus' }"
+    icon-drop-down-open="minus"
+    icon-drop-down-close="plus"
   />
 </template>`
 </script>
@@ -73,11 +73,11 @@ ${scriptEnd}
   >
     <div class="w-full max-w-2xl">
       <Accordion
-        v-model:value="value"
+        v-model="value"
         collapsible
         :items="items"
-        :icon-drop-down-open="{ name: 'minus' }"
-        :icon-drop-down-close="{ name: 'plus' }"
+        icon-drop-down-open="minus"
+        icon-drop-down-close="plus"
       />
     </div>
   </ComponentExample>

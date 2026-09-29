@@ -10,22 +10,22 @@ import {
   type AccordionVariant,
   type AccordionValue,
 } from '@/components/ui/Accordion'
+import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconConfig } from '../utils/testIconConfig'
 
 const items = [
   {
     value: 'first',
     label: 'Primero',
     description: 'Descripción del primero',
-    icon: { name: 'info' },
+    icon: 'info' as const,
     unmountOnHide: true,
   },
   {
     value: 'second',
     label: 'Segundo',
     description: 'Descripción del segundo',
-    icon: { name: 'error', color: 'green ' },
+    icon: 'error' as const,
     unmountOnHide: false,
   },
   {
@@ -230,18 +230,21 @@ const casesUpdateValue = [
 ]
 
 const slotCases = [
-  { input: 'trigger' as const, expected: 'trigger' },
-  { input: 'leading' as const, expected: 'leading' },
-  { input: 'label' as const, expected: 'label' },
-  { input: 'iconDropdown' as const, expected: 'iconDropdown' },
-  { input: 'content' as const, expected: 'content' },
+  { input: 'trigger' as const, replaced: '[data-test-accordion-label="item"]' },
+  { input: 'leading' as const, replaced: '[data-test-accordion-icon="item"]' },
+  { input: 'label' as const, replaced: '[data-test-accordion-label="item"]' },
+  {
+    input: 'iconDropdown' as const,
+    replaced: '[data-test-accordion-icon-dropdown="item"]',
+  },
+  { input: 'content' as const, replaced: '[data-test-accordion-description="item"]' },
 ]
 
 const itemSlotCases = [
-  { input: 'trigger' as const, expected: 'trigger' },
-  { input: 'leading' as const, expected: 'leading' },
-  { input: 'label' as const, expected: 'label' },
-  { input: 'content' as const, expected: 'content' },
+  { input: 'trigger' as const, replaced: '[data-test-accordion-label="item"]' },
+  { input: 'leading' as const, replaced: '[data-test-accordion-icon="item"]' },
+  { input: 'label' as const, replaced: '[data-test-accordion-label="item"]' },
+  { input: 'content' as const, replaced: '[data-test-accordion-description="item"]' },
 ]
 
 function mountAccordion(options: MountingOptions<AccordionProps> = {}) {
@@ -250,8 +253,8 @@ function mountAccordion(options: MountingOptions<AccordionProps> = {}) {
     props: {
       items,
       ...options.props,
-      'onUpdate:value': async (value: AccordionValue) => {
-        await wrapper.setProps({ value })
+      'onUpdate:modelValue': async (modelValue: AccordionValue) => {
+        await wrapper.setProps({ modelValue })
       },
     },
   })
@@ -335,7 +338,7 @@ describe('Accordion', () => {
           const accordion = mountAccordion({
             props: {
               variant: input,
-              value: 'first',
+              modelValue: 'first',
             },
           })
           const root = accordion.get('[data-test-accordion-root]')
@@ -358,7 +361,7 @@ describe('Accordion', () => {
           const accordion = mountAccordion({
             props: {
               highlight: input,
-              value: 'first',
+              modelValue: 'first',
             },
           })
           const item = accordion.get('[data-test-accordion-item="first"]')
@@ -369,11 +372,11 @@ describe('Accordion', () => {
       )
     })
 
-    describe('value', () => {
-      it.each(casesValue)('pasa value=$input a la raíz', ({ input, expected }) => {
+    describe('modelValue', () => {
+      it.each(casesValue)('pasa modelValue=$input a la raíz', ({ input, expected }) => {
         const accordion = mountAccordion({
           props: {
-            value: input,
+            modelValue: input,
             type: Array.isArray(input) ? 'multiple' : 'single',
             items: [{ value: 'first' }, { value: 'second' }],
           },
@@ -386,34 +389,28 @@ describe('Accordion', () => {
     })
 
     describe('iconDropDownOpen', () => {
-      testIconConfig({
-        text: 'pasa las props de iconDropDownOpen',
-        id: '[data-test-accordion-icon-dropdown="item"]',
-        default: 'chevronUp',
-        mount: (input) =>
-          mountAccordion({
-            props: {
-              value: 'item',
-              items: [{ value: 'item' }],
-              iconDropDownOpen: input,
-            },
-          }),
+      it.each([
+        { input: 'minus' as const, expected: 'minus' },
+        { input: undefined, expected: 'chevronUp' },
+      ])('renderiza iconDropDownOpen=$input como $expected', ({ input, expected }) => {
+        const accordion = mountAccordion({
+          props: { modelValue: 'item', items: [{ value: 'item' }], iconDropDownOpen: input },
+        })
+
+        expect(accordion.getComponent(Icon).props('name')).toBe(expected)
       })
     })
 
     describe('iconDropDownClose', () => {
-      testIconConfig({
-        text: 'pasa las props de iconDropDownClose',
-        id: '[data-test-accordion-icon-dropdown="item"]',
-        default: 'chevronDown',
-        mount: (input) =>
-          mountAccordion({
-            props: {
-              value: undefined,
-              items: [{ value: 'item' }],
-              iconDropDownClose: input,
-            },
-          }),
+      it.each([
+        { input: 'plus' as const, expected: 'plus' },
+        { input: undefined, expected: 'chevronDown' },
+      ])('renderiza iconDropDownClose=$input como $expected', ({ input, expected }) => {
+        const accordion = mountAccordion({
+          props: { items: [{ value: 'item' }], iconDropDownClose: input },
+        })
+
+        expect(accordion.getComponent(Icon).props('name')).toBe(expected)
       })
     })
 
@@ -496,7 +493,7 @@ describe('Accordion', () => {
         it.each(casesDescription)('renderiza la descripción para $name', ({ input, expected }) => {
           const accordion = mountAccordion({
             props: {
-              value: input.open ? 'item' : undefined,
+              modelValue: input.open ? 'item' : undefined,
               unmountOnHide: input.rootUnmountOnHide,
               items: [
                 {
@@ -516,15 +513,17 @@ describe('Accordion', () => {
       })
 
       describe('icon', () => {
-        testIconConfig({
-          text: 'pasa las props de item.icon',
-          id: '[data-test-accordion-icon="item"]',
-          mount: (input) =>
-            mountAccordion({
-              props: {
-                items: [{ value: 'item', icon: input }],
-              },
-            }),
+        it.each([
+          { input: 'info' as const, expected: true },
+          { input: undefined, expected: false },
+        ])('renderiza item.icon=$input cuando expected=$expected', ({ input, expected }) => {
+          const accordion = mountAccordion({
+            props: { items: [{ value: 'item', icon: input }] },
+          })
+          const icon = accordion.find('[data-test-accordion-icon="item"]')
+
+          expect(icon.exists()).toBe(expected)
+          if (expected) expect(accordion.getComponent(Icon).props('name')).toBe(input)
         })
       })
     })
@@ -566,7 +565,7 @@ describe('Accordion', () => {
           mount: (attrs) =>
             mountAccordion({
               props: {
-                value: 'item',
+                modelValue: 'item',
                 items: [{ value: 'item' }],
                 ui: { content: () => attrs },
               },
@@ -581,6 +580,83 @@ describe('Accordion', () => {
       text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
       id: '[data-test-accordion-root]',
       mount: (attrs) => mountAccordion({ attrs }),
+    })
+  })
+
+  describe('emits', () => {
+    describe('update:modelValue', () => {
+      it.each(casesUpdateValue)('$name', async ({ input, expected }) => {
+        const accordion = mountAccordion({
+          props: {
+            type: input.type,
+            modelValue: input.value,
+            collapsible: input.collapsible,
+            items: [
+              { value: 'first', label: '1' },
+              { value: 'second', label: '2' },
+            ],
+          },
+        })
+
+        await accordion.get('[data-test-accordion-trigger="first"]').trigger('click')
+
+        expect(accordion.emitted('update:modelValue')).toEqual([[expected]])
+      })
+    })
+  })
+
+  describe('slots', () => {
+    describe('global', () => {
+      it.each(slotCases)(
+        'renderiza el slot $input en lugar del contenido por defecto',
+        ({ input, replaced }) => {
+          const accordion = mountAccordion({
+            props: { modelValue: 'item', items: [{ value: 'item', icon: 'info' }] },
+            slots: {
+              [input]: () => h('span', { 'data-test-accordion-slot': input }, `Slot ${input}`),
+            },
+          })
+
+          expect(accordion.get(`[data-test-accordion-slot="${input}"]`).text()).toBe(
+            `Slot ${input}`,
+          )
+          expect(accordion.find(replaced).exists()).toBe(false)
+        },
+      )
+
+      it('prioriza el slot global cuando el item también tiene slot', () => {
+        const accordion = mountAccordion({
+          props: { modelValue: 'item', items: [{ value: 'item', slot: 'custom' }] },
+          slots: {
+            trigger: () => h('span', { 'data-test-accordion-slot': 'trigger' }, 'Trigger global'),
+          },
+        })
+
+        expect(accordion.get('[data-test-accordion-slot="trigger"]').text()).toBe('Trigger global')
+      })
+    })
+
+    describe('item-specific', () => {
+      it.each(itemSlotCases)(
+        'renderiza el slot $input-{item.slot} en lugar del contenido por defecto',
+        ({ input, replaced }) => {
+          const slotName = `${input}-custom`
+          const accordion = mountAccordion({
+            props: {
+              modelValue: 'item',
+              items: [{ value: 'item', slot: 'custom', icon: 'info' }],
+            },
+            slots: {
+              [slotName]: () => h('span', { 'data-test-accordion-slot': input }, `Slot ${input}`),
+            },
+          })
+
+          expect(accordion.get(`[data-test-accordion-slot="${input}"]`).text()).toBe(
+            `Slot ${input}`,
+          )
+          expect(accordion.find(replaced).exists()).toBe(false)
+        },
+      )
     })
   })
 
@@ -601,73 +677,6 @@ describe('Accordion', () => {
           index: input.index,
           ...expected,
         } satisfies AccordionItemContext)
-      })
-    })
-  })
-
-  describe('emits', () => {
-    describe('update:value', () => {
-      it.each(casesUpdateValue)('$name', async ({ input, expected }) => {
-        const accordion = mountAccordion({
-          props: {
-            type: input.type,
-            value: input.value,
-            collapsible: input.collapsible,
-            items: [
-              { value: 'first', label: '1' },
-              { value: 'second', label: '2' },
-            ],
-          },
-        })
-
-        await accordion.get('[data-test-accordion-trigger="first"]').trigger('click')
-
-        expect(accordion.emitted('update:value')).toEqual([[expected]])
-      })
-    })
-  })
-
-  describe('slots', () => {
-    describe('global', () => {
-      it.each(slotCases)('renderiza el slot $input', ({ input, expected }) => {
-        const accordion = mountAccordion({
-          props: { value: 'item', items: [{ value: 'item' }] },
-          slots: {
-            [input]: () => h('span', { 'data-test-accordion-slot': expected }, `Slot ${expected}`),
-          },
-        })
-
-        expect(accordion.get(`[data-test-accordion-slot="${expected}"]`).text()).toBe(
-          `Slot ${expected}`,
-        )
-      })
-
-      it('prioriza el slot global cuando el item también tiene slot', () => {
-        const accordion = mountAccordion({
-          props: { value: 'item', items: [{ value: 'item', slot: 'custom' }] },
-          slots: {
-            trigger: () => h('span', { 'data-test-accordion-slot': 'trigger' }, 'Trigger global'),
-          },
-        })
-
-        expect(accordion.get('[data-test-accordion-slot="trigger"]').text()).toBe('Trigger global')
-      })
-    })
-
-    describe('item-specific', () => {
-      it.each(itemSlotCases)('renderiza el slot $input-{item.slot}', ({ input, expected }) => {
-        const slotName = `${input}-custom`
-        const accordion = mountAccordion({
-          props: { value: 'item', items: [{ value: 'item', slot: 'custom' }] },
-          slots: {
-            [slotName]: () =>
-              h('span', { 'data-test-accordion-slot': expected }, `Slot ${expected}`),
-          },
-        })
-
-        expect(accordion.get(`[data-test-accordion-slot="${expected}"]`).text()).toBe(
-          `Slot ${expected}`,
-        )
       })
     })
   })

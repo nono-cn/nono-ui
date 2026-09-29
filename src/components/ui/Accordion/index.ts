@@ -4,7 +4,7 @@ import type {
   AccordionRootProps as RekaAccordionRootProps,
 } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 
 export { default as Accordion } from './Accordion.vue'
 
@@ -101,7 +101,7 @@ export interface AccordionItem extends Pick<
   slot?: string
   label?: string
   description?: string
-  icon?: IconConfig
+  icon?: IconName
 }
 
 // Props
@@ -111,10 +111,10 @@ export interface AccordionProps extends Pick<
 > {
   variant?: AccordionVariant
   highlight?: boolean
-  value?: AccordionValue
+  modelValue?: AccordionValue
   items?: AccordionItem[]
-  iconDropDownOpen?: IconConfig
-  iconDropDownClose?: IconConfig
+  iconDropDownOpen?: IconName
+  iconDropDownClose?: IconName
   ui?: AccordionUI
 }
 
@@ -153,7 +153,7 @@ export function createAccordionItemContext(
 
 // Emits
 export interface AccordionEmits {
-  'update:value': [value: AccordionValue]
+  'update:modelValue': [value: AccordionValue]
 }
 
 // Slots

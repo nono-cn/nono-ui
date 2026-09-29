@@ -56,7 +56,7 @@ ${scriptEnd}
     <input v-model="highlight" type="checkbox" />
     Highlight open item
   </label>
-  <Accordion v-model:value="value" :highlight="highlight" :items="items" />
+  <Accordion v-model="value" :highlight="highlight" :items="items" />
 </template>`,
 )
 
@@ -77,7 +77,7 @@ function reset() {
       <ExampleCheckboxControl v-model="highlight" label="Highlight open item" />
     </template>
     <div class="w-full max-w-3xl">
-      <Accordion v-model:value="value" :highlight="highlight" :items="items" />
+      <Accordion v-model="value" :highlight="highlight" :items="items" />
     </div>
   </ComponentExample>
 </template>

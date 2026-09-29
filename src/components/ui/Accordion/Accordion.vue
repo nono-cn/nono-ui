@@ -25,10 +25,10 @@ import { accordionDefaults } from './default'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<AccordionProps>(), accordionDefaults)
+const props = withDefaults(defineProps<Omit<AccordionProps, 'modelValue'>>(), accordionDefaults)
 defineSlots<AccordionSlots>()
 
-const model = defineModel<AccordionValue>('value')
+const model = defineModel<AccordionValue>()
 const attrs = useAttrs()
 
 const rootProps = computed(() => {
@@ -136,7 +136,7 @@ function getIconDropdownProps(context: AccordionItemContext) {
                   <slot name="leading" v-bind="context">
                     <Icon
                       v-if="getIconProps(context)"
-                      v-bind="getIconProps(context)!"
+                      :name="getIconProps(context)!"
                       :data-test-accordion-icon="context.item.value"
                     />
                   </slot>
@@ -154,7 +154,7 @@ function getIconDropdownProps(context: AccordionItemContext) {
           <slot name="iconDropdown" v-bind="context">
             <Icon
               v-if="getIconDropdownProps(context)"
-              v-bind="getIconDropdownProps(context)!"
+              :name="getIconDropdownProps(context)!"
               :data-test-accordion-icon-dropdown="context.item.value"
             />
           </slot>

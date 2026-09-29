@@ -8,7 +8,7 @@ export const accordionDefaults = {
   disabled: false,
   unmountOnHide: true,
   items: () => [] as AccordionItem[],
-  iconDropDownOpen: () => ({ name: 'chevronUp' as const }),
-  iconDropDownClose: () => ({ name: 'chevronDown' as const }),
+  iconDropDownOpen: 'chevronUp' as const,
+  iconDropDownClose: 'chevronDown' as const,
   ui: undefined,
 }

@@ -139,20 +139,6 @@ function publicImportPath(importPath: string) {
           :language="component.language"
           :empty-text="content.emptyProps"
         />
-        <template v-for="table in component.api.configs ?? []" :key="table.id">
-          <p v-if="table.description" class="text-sm leading-6 text-muted-foreground">
-            {{ table.description }}
-          </p>
-          <ApiTable
-            v-if="table.rows.length"
-            :id="table.id"
-            :title="table.title"
-            :rows="table.rows"
-            :language="component.language"
-            :type-label="table.typeLabel"
-            :show-default="table.showDefault"
-          />
-        </template>
         <ApiTable
           v-if="component.api.emits.length"
           id="emits"
@@ -172,6 +158,20 @@ function publicImportPath(importPath: string) {
           :show-default="false"
           :empty-text="content.emptySlots"
         />
+        <template v-for="table in component.api.configs ?? []" :key="table.id">
+          <p v-if="table.description" class="text-sm leading-6 text-muted-foreground">
+            {{ table.description }}
+          </p>
+          <ApiTable
+            v-if="table.rows.length"
+            :id="table.id"
+            :title="table.title"
+            :rows="table.rows"
+            :language="component.language"
+            :type-label="table.typeLabel"
+            :show-default="table.showDefault"
+          />
+        </template>
         <ApiTable
           v-if="component.api.expose.length"
           id="expose"

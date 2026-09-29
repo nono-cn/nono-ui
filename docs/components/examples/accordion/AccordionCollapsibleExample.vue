@@ -9,19 +9,19 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 const collapsibleValue = ref<string | undefined>('security')
@@ -35,19 +35,19 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 const collapsibleValue = ref<string | undefined>('security')
@@ -55,7 +55,7 @@ ${scriptEnd}
 
 <template>
   <div class="w-full max-w-2xl">
-    <Accordion v-model:value="collapsibleValue" type="single" collapsible :items="items" />
+    <Accordion v-model="collapsibleValue" type="single" collapsible :items="items" />
   </div>
 </template>`
 </script>
@@ -68,7 +68,7 @@ ${scriptEnd}
     :show-reset="false"
   >
     <div class="w-full max-w-2xl">
-      <Accordion v-model:value="collapsibleValue" type="single" collapsible :items="items" />
+      <Accordion v-model="collapsibleValue" type="single" collapsible :items="items" />
     </div>
   </ComponentExample>
 </template>

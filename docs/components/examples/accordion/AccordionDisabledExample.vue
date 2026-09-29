@@ -10,19 +10,19 @@ const rootDisabledItems = [
     value: 'account',
     label: 'Account',
     description: 'This entire accordion is disabled.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'This entire accordion is disabled.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'This entire accordion is disabled.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 
@@ -36,26 +36,26 @@ const rootDisabledItems = [
     value: 'account',
     label: 'Account',
     description: 'This entire accordion is disabled.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'This entire accordion is disabled.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'This entire accordion is disabled.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 ${scriptEnd}
 
 <template>
   <div class="w-full max-w-2xl">
-    <Accordion v-model:value="rootDisabledValue" :items="rootDisabledItems" disabled />
+    <Accordion v-model="rootDisabledValue" :items="rootDisabledItems" disabled />
   </div>
 </template>`
 </script>
@@ -68,7 +68,7 @@ ${scriptEnd}
     :show-reset="false"
   >
     <div class="w-full max-w-2xl">
-      <Accordion v-model:value="rootDisabledValue" :items="rootDisabledItems" disabled />
+      <Accordion v-model="rootDisabledValue" :items="rootDisabledItems" disabled />
     </div>
   </ComponentExample>
 </template>

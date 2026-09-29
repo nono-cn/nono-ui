@@ -101,11 +101,11 @@ const tocTree = computed<DocsTocItem[]>(() => {
 
   const apiChildren: DocsTocItem[] = []
   if (currentComponent.api.props.length) apiChildren.push({ id: 'props', label: 'Props' })
+  if (currentComponent.api.emits.length) apiChildren.push({ id: 'emits', label: 'Emits' })
+  if (currentComponent.api.slots.length) apiChildren.push({ id: 'slots', label: 'Slots' })
   for (const table of currentComponent.api.configs ?? []) {
     if (table.rows.length) apiChildren.push({ id: table.id, label: table.title })
   }
-  if (currentComponent.api.emits.length) apiChildren.push({ id: 'emits', label: 'Emits' })
-  if (currentComponent.api.slots.length) apiChildren.push({ id: 'slots', label: 'Slots' })
   if (currentComponent.api.expose.length) apiChildren.push({ id: 'expose', label: 'Expose' })
 
   items.push({ id: 'api', label: 'API', children: apiChildren })

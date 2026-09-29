@@ -10,19 +10,19 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 
@@ -36,26 +36,26 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 ${scriptEnd}
 
 <template>
   <div class="grid w-full max-w-2xl gap-3">
-    <Accordion v-model:value="value" :items="items" />
+    <Accordion v-model="value" :items="items" />
     <output class="text-sm text-muted-foreground">
       Open section: {{ value ?? 'none' }}
     </output>
@@ -71,7 +71,7 @@ ${scriptEnd}
     :show-reset="false"
   >
     <div class="grid w-full max-w-2xl gap-3">
-      <Accordion v-model:value="value" :items="items" />
+      <Accordion v-model="value" :items="items" />
       <output class="text-sm text-muted-foreground"> Open section: {{ value ?? 'none' }} </output>
     </div>
   </ComponentExample>

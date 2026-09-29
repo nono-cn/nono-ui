@@ -13,19 +13,19 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 
@@ -39,19 +39,19 @@ const items = [
     value: 'account',
     label: 'Account',
     description: 'Manage your personal details and preferences.',
-    icon: { name: 'user' },
+    icon: 'user',
   },
   {
     value: 'security',
     label: 'Security',
     description: 'Update your password and authentication settings.',
-    icon: { name: 'warning' },
+    icon: 'warning',
   },
   {
     value: 'notifications',
     label: 'Notifications',
     description: 'Choose which notifications you want to receive.',
-    icon: { name: 'info' },
+    icon: 'info',
   },
 ]
 ${scriptEnd}
