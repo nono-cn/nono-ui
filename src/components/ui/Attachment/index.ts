@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 
 export { default as Attachment } from './Attachment.vue'
 
@@ -112,20 +112,18 @@ export type AttachmentState = NonNullable<AttachmentVariants['state']>
 export type AttachmentMediaVariant = 'icon' | 'image'
 export type AttachmentLabel = string
 export type AttachmentDescription = string
-export type AttachmentFn<T> = () => T
 
-export interface AttachmentUI {
-  media?: AttachmentFn<HTMLAttributes>
-  content?: AttachmentFn<HTMLAttributes>
-  label?: AttachmentFn<HTMLAttributes>
-  description?: AttachmentFn<HTMLAttributes>
-  actions?: AttachmentFn<HTMLAttributes>
+export interface AttachmentContext {
+  state: AttachmentState
 }
 
+export type AttachmentFn<T> = (context: AttachmentContext) => T
+
+// Props
 export interface AttachmentProps {
   label?: AttachmentLabel
   description?: AttachmentDescription
-  icon?: IconConfig
+  icon?: IconName
   orientation?: AttachmentOrientation
   size?: AttachmentSize
   state?: AttachmentState
@@ -133,9 +131,19 @@ export interface AttachmentProps {
   ui?: AttachmentUI
 }
 
+// Slots
 export interface AttachmentSlots {
-  media?(): unknown
-  label?(): unknown
-  description?(): unknown
-  actions?(): unknown
+  media?(props: AttachmentContext): unknown
+  label?(props: AttachmentContext): unknown
+  description?(props: AttachmentContext): unknown
+  actions?(props: AttachmentContext): unknown
+}
+
+// UI
+export interface AttachmentUI {
+  media?: AttachmentFn<HTMLAttributes>
+  content?: AttachmentFn<HTMLAttributes>
+  label?: AttachmentFn<HTMLAttributes>
+  description?: AttachmentFn<HTMLAttributes>
+  actions?: AttachmentFn<HTMLAttributes>
 }

@@ -11,6 +11,7 @@ ${scriptEnd}
   <Attachment
     label="document.pdf"
     description="2.4 MB · PDF"
+    icon="fileText"
   />
 </template>`
 </script>
@@ -22,6 +23,6 @@ ${scriptEnd}
     :code="code"
     :show-reset="false"
   >
-    <Attachment label="document.pdf" description="2.4 MB · PDF" />
+    <Attachment label="document.pdf" description="2.4 MB · PDF" icon="fileText" />
   </ComponentExample>
 </template>

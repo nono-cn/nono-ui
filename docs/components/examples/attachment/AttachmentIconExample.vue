@@ -21,7 +21,7 @@ ${scriptEnd}
   <Attachment
     label="document.pdf"
     description="PDF · 2.4 MB"
-    :icon="{ name: icon }"
+    :icon="icon"
   />
 </template>`,
 )
@@ -43,6 +43,6 @@ function reset() {
         <ExampleSelectControl v-model="icon" label="Icon" :options="iconOptions" />
       </div>
     </template>
-    <Attachment label="document.pdf" description="PDF · 2.4 MB" :icon="{ name: icon }" />
+    <Attachment label="document.pdf" description="PDF · 2.4 MB" :icon="icon" />
   </ComponentExample>
 </template>

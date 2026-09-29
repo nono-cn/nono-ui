@@ -15,7 +15,7 @@ const label = ref(${JSON.stringify(label.value)})
 ${scriptEnd}
 
 <template>
-  <Attachment :label="label" description="PDF · 2.4 MB" :icon="{ name: 'fileText' }" />
+  <Attachment :label="label" description="PDF · 2.4 MB" icon="fileText" />
 </template>`,
 )
 
@@ -36,6 +36,6 @@ function reset() {
         <ExampleTextInputControl v-model="label" label="Title" placeholder="File name" />
       </div>
     </template>
-    <Attachment :label="label" description="PDF · 2.4 MB" :icon="{ name: 'fileText' }" />
+    <Attachment :label="label" description="PDF · 2.4 MB" icon="fileText" />
   </ComponentExample>
 </template>

@@ -20,7 +20,7 @@ ${scriptEnd}
     label="landscape.jpg"
     description="JPG · 1.8 MB"
     :media-variant="mediaVariant"
-    :icon="{ name: 'image' }"
+    icon="image"
   >
     <template #media>
       <div class="size-full bg-gradient-to-br from-sky-400 to-indigo-600" role="img" aria-label="Landscape preview" />
@@ -54,7 +54,7 @@ function reset() {
       label="landscape.jpg"
       description="JPG · 1.8 MB"
       :media-variant="mediaVariant"
-      :icon="{ name: 'image' }"
+      icon="image"
     >
       <template #media>
         <div

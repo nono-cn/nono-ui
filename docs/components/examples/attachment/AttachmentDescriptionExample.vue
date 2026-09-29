@@ -17,7 +17,7 @@ const description = ref(${JSON.stringify(description.value)})
 ${scriptEnd}
 
 <template>
-  <Attachment :label="label" :description="description" :icon="{ name: 'fileText' }" />
+  <Attachment :label="label" :description="description" icon="fileText" />
 </template>`,
 )
 
@@ -44,6 +44,6 @@ function reset() {
         />
       </div>
     </template>
-    <Attachment :label="label" :description="description" :icon="{ name: 'fileText' }" />
+    <Attachment :label="label" :description="description" icon="fileText" />
   </ComponentExample>
 </template>

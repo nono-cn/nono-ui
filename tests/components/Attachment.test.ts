@@ -2,9 +2,16 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Attachment, type AttachmentProps } from '@/components/ui/Attachment'
+import {
+  Attachment,
+  type AttachmentContext,
+  type AttachmentProps,
+  type AttachmentSlots,
+  type AttachmentState,
+  type AttachmentUI,
+} from '@/components/ui/Attachment'
+import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconConfig, testIconSize } from '../utils/testIconConfig'
 
 function mountAttachment(options: MountingOptions<AttachmentProps> = {}) {
   return mount(Attachment, options)
@@ -13,6 +20,7 @@ function mountAttachment(options: MountingOptions<AttachmentProps> = {}) {
 const casesOrientation = [
   { input: 'horizontal' as const, expected: 'w-fit' },
   { input: 'vertical' as const, expected: 'w-40' },
+  { input: undefined, expected: 'w-fit' },
 ]
 
 const casesLabel = [
@@ -25,6 +33,11 @@ const casesDescription = [
   { input: '2.4 MB · PDF', expected: '2.4 MB · PDF', exists: true },
   { input: '', expected: undefined, exists: false },
   { input: undefined, expected: undefined, exists: false },
+]
+
+const casesIcon = [
+  { input: 'fileText' as const, expected: 'fileText' },
+  { input: undefined, expected: undefined },
 ]
 
 const casesSize = [
@@ -50,6 +63,16 @@ const casesSize = [
       description: 'text-[11px]',
     },
   },
+  {
+    input: undefined,
+    expected: { root: 'p-3', media: 'size-10', label: 'text-sm', description: 'text-xs' },
+  },
+]
+
+const casesMediaVariant = [
+  { input: 'icon' as const, expected: 'icon' },
+  { input: 'image' as const, expected: 'image' },
+  { input: undefined, expected: 'icon' },
 ]
 
 const casesState = [
@@ -108,6 +131,30 @@ const casesState = [
       spinning: false,
     },
   },
+  {
+    input: undefined,
+    expected: {
+      root: ['border-dashed'],
+      label: [],
+      description: [],
+      media: [],
+      icon: 'fileText',
+      spinning: false,
+    },
+  },
+]
+
+const casesAttachmentContext: {
+  name: string
+  state: AttachmentState | undefined
+  expected: AttachmentContext
+}[] = [
+  { name: 'idle', state: 'idle', expected: { state: 'idle' } },
+  { name: 'uploading', state: 'uploading', expected: { state: 'uploading' } },
+  { name: 'processing', state: 'processing', expected: { state: 'processing' } },
+  { name: 'error', state: 'error', expected: { state: 'error' } },
+  { name: 'done', state: 'done', expected: { state: 'done' } },
+  { name: 'idle predeterminado', state: undefined, expected: { state: 'idle' } },
 ]
 
 describe('Attachment', () => {
@@ -147,7 +194,7 @@ describe('Attachment', () => {
         const attachment = mountAttachment({
           props: {
             size: input,
-            icon: { name: 'fileText' },
+            icon: 'fileText',
             label: 'informe.pdf',
             description: '2.4 MB',
           },
@@ -159,6 +206,7 @@ describe('Attachment', () => {
         expect(attachment.get('[data-test-attachment-description]').classes()).toContain(
           expected.description,
         )
+        expect(attachment.getComponent(Icon).props('size')).toBe(input ?? 'md')
       })
     })
 
@@ -171,7 +219,7 @@ describe('Attachment', () => {
               state: input,
               label: 'informe.pdf',
               description: '2.4 MB',
-              icon: { name: 'fileText' },
+              icon: 'fileText',
             },
           })
           const root = attachment.get('[data-test-attachment-root]')
@@ -187,8 +235,10 @@ describe('Attachment', () => {
             expect(descriptionClasses).toContain(className)
           }
           for (const className of expected.media) expect(mediaClasses).toContain(className)
-          expect(root.attributes('data-state')).toBe(input)
-          expect(rootClasses.includes('border-dashed')).toBe(input === 'idle')
+          expect(root.attributes('data-state')).toBe(input ?? 'idle')
+          expect(rootClasses.includes('border-dashed')).toBe(
+            input === 'idle' || input === undefined,
+          )
           expect(labelClasses.includes('animate-pulse')).toBe(
             input === 'uploading' || input === 'processing',
           )
@@ -201,16 +251,37 @@ describe('Attachment', () => {
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa las props de icon',
-        id: '[data-test-attachment-icon]',
-        mount: (input) => mountAttachment({ props: { icon: input } }),
+      it.each(casesIcon)('renderiza icon=$input', ({ input, expected }) => {
+        const attachment = mountAttachment({ props: { icon: input } })
+        const icon = attachment.findComponent(Icon)
+
+        expect(icon.exists()).toBe(expected !== undefined)
+        if (expected) expect(icon.props('name')).toBe(expected)
       })
 
-      testIconSize({
-        text: 'hereda el size de Attachment en icon',
-        id: '[data-test-attachment-icon]',
-        mount: (size) => mountAttachment({ props: { size, icon: { name: 'fileText' } } }),
+      it('muestra el spinner durante la subida aunque no se defina icon', () => {
+        const attachment = mountAttachment({ props: { state: 'uploading' } })
+
+        expect(attachment.getComponent(Icon).props('name')).toBe('spinner')
+        expect(attachment.getComponent(Icon).classes()).toContain('animate-spin')
+      })
+    })
+
+    describe('mediaVariant', () => {
+      it.each(casesMediaVariant)('renderiza mediaVariant=$input', ({ input, expected }) => {
+        const attachment = mountAttachment({
+          props: { mediaVariant: input, icon: 'fileText' },
+          slots: {
+            media: () => h('span', { 'data-test-attachment-slot': 'media' }, 'Vista previa'),
+          },
+        })
+        const media = attachment.get('[data-test-attachment-media]')
+
+        expect(media.attributes('data-variant')).toBe(expected)
+        expect(attachment.findComponent(Icon).exists()).toBe(expected === 'icon')
+        expect(attachment.find('[data-test-attachment-slot="media"]').exists()).toBe(
+          expected === 'image',
+        )
       })
     })
 
@@ -290,7 +361,7 @@ describe('Attachment', () => {
     describe('media', () => {
       it('no usa el slot media para icon', () => {
         const attachment = mountAttachment({
-          props: { icon: { name: 'fileText' } },
+          props: { icon: 'fileText' },
           slots: { media: () => h('span', { 'data-test-image-slot': '' }, 'Imagen') },
         })
 
@@ -310,6 +381,12 @@ describe('Attachment', () => {
         expect(attachment.get('[data-test-attachment-slot="media"]').text()).toBe(
           'Contenido multimedia',
         )
+      })
+
+      it('omite la media image cuando no se proporciona el slot', () => {
+        const attachment = mountAttachment({ props: { mediaVariant: 'image' } })
+
+        expect(attachment.find('[data-test-attachment-media]').exists()).toBe(false)
       })
     })
 
@@ -356,6 +433,88 @@ describe('Attachment', () => {
 
         expect(attachment.get('[data-test-attachment-slot="actions"]').text()).toBe('Acciones')
       })
+    })
+  })
+
+  describe('context contract', () => {
+    describe('AttachmentContext', () => {
+      function mountWithContext(state: AttachmentState | undefined) {
+        const uiContexts: Partial<Record<keyof AttachmentUI, AttachmentContext>> = {}
+        const slotContexts: Partial<Record<keyof AttachmentSlots, AttachmentContext>> = {}
+        const ui: AttachmentUI = {
+          media: (context) => {
+            uiContexts.media = context
+            return {}
+          },
+          content: (context) => {
+            uiContexts.content = context
+            return {}
+          },
+          label: (context) => {
+            uiContexts.label = context
+            return {}
+          },
+          description: (context) => {
+            uiContexts.description = context
+            return {}
+          },
+          actions: (context) => {
+            uiContexts.actions = context
+            return {}
+          },
+        }
+        const slots: AttachmentSlots = {
+          media: (context) => {
+            slotContexts.media = context
+            return h('span')
+          },
+          label: (context) => {
+            slotContexts.label = context
+            return h('span')
+          },
+          description: (context) => {
+            slotContexts.description = context
+            return h('span')
+          },
+          actions: (context) => {
+            slotContexts.actions = context
+            return h('span')
+          },
+        }
+        mountAttachment({
+          props: {
+            state,
+            label: 'informe.pdf',
+            description: '2.4 MB',
+            mediaVariant: 'image',
+            ui,
+          },
+          slots,
+        })
+
+        return { uiContexts, slotContexts }
+      }
+
+      it.each(casesAttachmentContext)(
+        'pasa el contrato AttachmentContext para $name a cada resolver ui y slot',
+        ({ state, expected }) => {
+          const { uiContexts, slotContexts } = mountWithContext(state)
+
+          expect(uiContexts).toEqual({
+            media: expected,
+            content: expected,
+            label: expected,
+            description: expected,
+            actions: expected,
+          })
+          expect(slotContexts).toEqual({
+            media: expected,
+            label: expected,
+            description: expected,
+            actions: expected,
+          })
+        },
+      )
     })
   })
 })

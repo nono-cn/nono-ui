@@ -10,6 +10,7 @@ import {
   attachmentLabelVariants,
   attachmentMediaVariants,
   attachmentVariants,
+  type AttachmentContext,
   type AttachmentProps,
   type AttachmentSlots,
 } from '.'
@@ -22,6 +23,7 @@ defineSlots<AttachmentSlots>()
 
 const attrs = useAttrs()
 const slots = useSlots()
+const attachmentContext = computed<AttachmentContext>(() => ({ state: props.state }))
 
 const rootProps = computed(() => {
   return {
@@ -42,7 +44,7 @@ const rootProps = computed(() => {
 })
 
 const mediaProps = computed(() => {
-  const ui = useUi(props.ui?.media, undefined)
+  const ui = useUi(props.ui?.media, attachmentContext.value)
 
   return {
     ...ui,
@@ -59,28 +61,26 @@ const mediaProps = computed(() => {
 })
 
 const mediaIconProps = computed(() => {
-  const icon = props.icon
-  const size = props.size
-
   if (props.state === 'uploading') {
     return {
-      ...icon,
       name: 'spinner' as const,
-      size,
-      class: cn(icon?.class, 'animate-spin'),
+      size: props.size,
+      class: 'animate-spin',
     }
   }
 
-  return { ...icon, size, name: icon?.name }
+  if (!props.icon) return undefined
+
+  return { name: props.icon, size: props.size }
 })
 
 const hasMedia = computed(() => {
   if (props.mediaVariant === 'image') return Boolean(slots.media)
-  return props.state === 'uploading' || Boolean(mediaIconProps.value.name)
+  return Boolean(mediaIconProps.value?.name)
 })
 
 const contentProps = computed(() => {
-  const ui = useUi(props.ui?.content, undefined)
+  const ui = useUi(props.ui?.content, attachmentContext.value)
   return {
     ...ui,
     class: cn(attachmentContentVariants({ orientation: props.orientation }), ui.class),
@@ -88,7 +88,7 @@ const contentProps = computed(() => {
 })
 
 const labelProps = computed(() => {
-  const ui = useUi(props.ui?.label, undefined)
+  const ui = useUi(props.ui?.label, attachmentContext.value)
   return {
     ...ui,
     class: cn(attachmentLabelVariants({ size: props.size, state: props.state }), ui.class),
@@ -96,7 +96,7 @@ const labelProps = computed(() => {
 })
 
 const descriptionProps = computed(() => {
-  const ui = useUi(props.ui?.description, undefined)
+  const ui = useUi(props.ui?.description, attachmentContext.value)
   return {
     ...ui,
     class: cn(attachmentDescriptionVariants({ size: props.size, state: props.state }), ui.class),
@@ -104,7 +104,7 @@ const descriptionProps = computed(() => {
 })
 
 const actionsProps = computed(() => {
-  const ui = useUi(props.ui?.actions, undefined)
+  const ui = useUi(props.ui?.actions, attachmentContext.value)
   return {
     ...ui,
     class: cn(
@@ -123,7 +123,7 @@ const actionsProps = computed(() => {
       data-test-attachment-media
       :data-variant="props.mediaVariant"
     >
-      <slot v-if="props.mediaVariant === 'image'" name="media" />
+      <slot v-if="props.mediaVariant === 'image'" name="media" v-bind="attachmentContext" />
       <Icon v-else-if="mediaIconProps?.name" v-bind="mediaIconProps" data-test-attachment-icon />
     </div>
 
@@ -133,19 +133,19 @@ const actionsProps = computed(() => {
       data-test-attachment-content
     >
       <div v-if="props.label || $slots.label" v-bind="labelProps" data-test-attachment-label>
-        <slot name="label">{{ props.label }}</slot>
+        <slot name="label" v-bind="attachmentContext">{{ props.label }}</slot>
       </div>
       <div
         v-if="props.description || $slots.description"
         v-bind="descriptionProps"
         data-test-attachment-description
       >
-        <slot name="description">{{ props.description }}</slot>
+        <slot name="description" v-bind="attachmentContext">{{ props.description }}</slot>
       </div>
     </div>
 
     <div v-if="$slots.actions" v-bind="actionsProps" data-test-attachment-actions>
-      <slot name="actions" />
+      <slot name="actions" v-bind="attachmentContext" />
     </div>
   </div>
 </template>

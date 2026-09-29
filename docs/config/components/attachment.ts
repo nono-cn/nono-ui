@@ -4,8 +4,10 @@ import AttachmentTitleExample from '../../components/examples/attachment/Attachm
 import AttachmentDescriptionExample from '../../components/examples/attachment/AttachmentDescriptionExample.vue'
 import AttachmentIconExample from '../../components/examples/attachment/AttachmentIconExample.vue'
 import AttachmentOrientationExample from '../../components/examples/attachment/AttachmentOrientationExample.vue'
+import AttachmentSizeExample from '../../components/examples/attachment/AttachmentSizeExample.vue'
 import AttachmentStateExample from '../../components/examples/attachment/AttachmentStateExample.vue'
 import AttachmentMediaVariantExample from '../../components/examples/attachment/AttachmentMediaVariantExample.vue'
+import AttachmentUiExample from '../../components/examples/attachment/AttachmentUiExample.vue'
 
 const attachmentConfig: ComponentDocConfig = {
   slug: 'attachment',
@@ -42,6 +44,11 @@ const attachmentConfig: ComponentDocConfig = {
       component: AttachmentOrientationExample,
     },
     {
+      title: 'Size',
+      description: 'Choose the size of the media and file details.',
+      component: AttachmentSizeExample,
+    },
+    {
       title: 'State',
       description: 'Choose the visual state shown for the file.',
       component: AttachmentStateExample,
@@ -50,6 +57,11 @@ const attachmentConfig: ComponentDocConfig = {
       title: 'Media variant',
       description: 'Choose between an icon and custom image media.',
       component: AttachmentMediaVariantExample,
+    },
+    {
+      title: 'UI',
+      description: 'Customize the media, file details, and actions containers.',
+      component: AttachmentUiExample,
     },
   ],
   accessibility: [
@@ -80,10 +92,10 @@ const attachmentConfig: ComponentDocConfig = {
       },
       {
         name: 'icon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
+        type: 'IconName',
+        typeLink: '/components/icon#props',
         default: 'undefined',
-        description: 'Media icon configuration when mediaVariant is icon.',
+        description: 'Name of the media icon when mediaVariant is icon.',
       },
       {
         name: 'orientation',
@@ -112,39 +124,73 @@ const attachmentConfig: ComponentDocConfig = {
       {
         name: 'ui',
         type: `{
-  media?: () => HTMLAttributes
-  content?: () => HTMLAttributes
-  label?: () => HTMLAttributes
-  description?: () => HTMLAttributes
-  actions?: () => HTMLAttributes
+  media?: (context: AttachmentContext) => HTMLAttributes
+  content?: (context: AttachmentContext) => HTMLAttributes
+  label?: (context: AttachmentContext) => HTMLAttributes
+  description?: (context: AttachmentContext) => HTMLAttributes
+  actions?: (context: AttachmentContext) => HTMLAttributes
 }`,
         typePre: true,
+        typeParts: [
+          { text: '{\n  media?: (context: ' },
+          { text: 'AttachmentContext', link: '#attachment-context' },
+          { text: ') => HTMLAttributes\n  content?: (context: ' },
+          { text: 'AttachmentContext', link: '#attachment-context' },
+          { text: ') => HTMLAttributes\n  label?: (context: ' },
+          { text: 'AttachmentContext', link: '#attachment-context' },
+          { text: ') => HTMLAttributes\n  description?: (context: ' },
+          { text: 'AttachmentContext', link: '#attachment-context' },
+          { text: ') => HTMLAttributes\n  actions?: (context: ' },
+          { text: 'AttachmentContext', link: '#attachment-context' },
+          { text: ') => HTMLAttributes\n}' },
+        ],
         default: 'undefined',
         description:
-          'Resolvers for applying attributes, class, style, and ARIA to media, content, label, description, and actions.',
+          'Resolvers for applying attributes, class, style, and ARIA to media, content, label, description, and actions. Every resolver receives the current AttachmentContext.',
       },
     ],
     emits: [],
     slots: [
       {
         name: 'media',
-        type: '-',
-        description: 'Media content when mediaVariant is image.',
+        type: 'AttachmentContext',
+        typeLink: '#attachment-context',
+        description: 'Media content when mediaVariant is image; receives the current state.',
       },
       {
         name: 'label',
-        type: '-',
-        description: 'Custom content that replaces label.',
+        type: 'AttachmentContext',
+        typeLink: '#attachment-context',
+        description: 'Custom content that replaces label; receives the current state.',
       },
       {
         name: 'description',
-        type: '-',
-        description: 'Custom content that replaces description.',
+        type: 'AttachmentContext',
+        typeLink: '#attachment-context',
+        description: 'Custom content that replaces description; receives the current state.',
       },
       {
         name: 'actions',
-        type: '-',
-        description: 'Actions rendered beside the file details.',
+        type: 'AttachmentContext',
+        typeLink: '#attachment-context',
+        description: 'Actions rendered beside the file details; receives the current state.',
+      },
+    ],
+    configs: [
+      {
+        id: 'attachment-context',
+        title: 'AttachmentContext',
+        typeLabel: 'Context',
+        showDefault: false,
+        description:
+          'Shared context passed to each named slot as slot props and to every UI resolver.',
+        rows: [
+          {
+            name: 'state',
+            type: "'idle' | 'uploading' | 'processing' | 'error' | 'done'",
+            description: 'Current visual state of the attachment; defaults to idle.',
+          },
+        ],
       },
     ],
     expose: [],

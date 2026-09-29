@@ -29,7 +29,7 @@ ${scriptEnd}
     label="document.pdf"
     :description="description"
     :state="state"
-    :icon="{ name: 'fileText' }"
+    icon="fileText"
   />
 </template>`,
 )
@@ -51,11 +51,6 @@ function reset() {
         <ExampleSelectControl v-model="state" label="State" :options="stateOptions" />
       </div>
     </template>
-    <Attachment
-      label="document.pdf"
-      :description="description"
-      :state="state"
-      :icon="{ name: 'fileText' }"
-    />
+    <Attachment label="document.pdf" :description="description" :state="state" icon="fileText" />
   </ComponentExample>
 </template>

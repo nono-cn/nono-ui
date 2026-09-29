@@ -20,7 +20,7 @@ ${scriptEnd}
     label="document.pdf"
     description="PDF · 2.4 MB"
     :orientation="orientation"
-    :icon="{ name: 'fileText' }"
+    icon="fileText"
   />
 </template>`,
 )
@@ -46,7 +46,7 @@ function reset() {
       label="document.pdf"
       description="PDF · 2.4 MB"
       :orientation="orientation"
-      :icon="{ name: 'fileText' }"
+      icon="fileText"
     />
   </ComponentExample>
 </template>
