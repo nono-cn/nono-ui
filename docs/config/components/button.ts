@@ -5,7 +5,6 @@ import ButtonDisabledExample from '../../components/examples/button/ButtonDisabl
 import ButtonLoadingExample from '../../components/examples/button/ButtonLoadingExample.vue'
 import ButtonRaisedExample from '../../components/examples/button/ButtonRaisedExample.vue'
 import ButtonRoundedExample from '../../components/examples/button/ButtonRoundedExample.vue'
-import ButtonSeverityExample from '../../components/examples/button/ButtonSeverityExample.vue'
 import ButtonSquareExample from '../../components/examples/button/ButtonSquareExample.vue'
 import ButtonSizeExample from '../../components/examples/button/ButtonSizeExample.vue'
 import ButtonTrailingIconExample from '../../components/examples/button/ButtonTrailingIconExample.vue'
@@ -32,9 +31,9 @@ const buttonConfig: ComponentDocConfig = {
       component: ButtonVariantsExample,
     },
     {
-      title: 'Severity',
-      description: 'Choose the button’s semantic color and visual style.',
-      component: ButtonSeverityExample,
+      title: 'Color',
+      description: 'Choose a theme token or custom hexadecimal color and visual style.',
+      component: ButtonColorExample,
     },
     {
       title: 'Size',
@@ -67,11 +66,6 @@ const buttonConfig: ComponentDocConfig = {
       component: ButtonDisabledExample,
     },
     {
-      title: 'Color',
-      description: 'Choose a custom CSS color and visual style for the button.',
-      component: ButtonColorExample,
-    },
-    {
       title: 'Icon',
       description: 'Choose the icon displayed before the button’s content.',
       component: ButtonIconExample,
@@ -102,12 +96,6 @@ const buttonConfig: ComponentDocConfig = {
         type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft' | 'link'",
         default: "'solid'",
         description: 'Visual style applied to the button.',
-      },
-      {
-        name: 'severity',
-        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'primary'",
-        description: 'Severity used to choose the button colors.',
       },
       {
         name: 'size',
@@ -144,8 +132,9 @@ const buttonConfig: ComponentDocConfig = {
       {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Custom CSS color applied to the button style.',
+        default: "'primary'",
+        description:
+          'Theme token name such as primary, neutral or secondary, or a CSS color such as #6366f1. Named colors use --<name> and --<name>-foreground, with primary as fallback. Hexadecimal colors use a computed foreground.',
       },
       {
         name: 'icon',

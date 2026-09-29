@@ -15,7 +15,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Basic usage"
-    description="Start with a button using the default severity and size."
+    description="Start with a button using the default primary color and size."
     :code="code"
     :show-reset="false"
   >

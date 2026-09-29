@@ -2,12 +2,8 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import {
-  Button,
-  type ButtonProps,
-  type ButtonSeverity,
-  type ButtonVariant,
-} from '@/components/ui/Button'
+import { Button, type ButtonProps, type ButtonVariant } from '@/components/ui/Button'
+import { themeColors } from '../../docs/config/constants'
 import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
@@ -91,107 +87,6 @@ const casesVariantStyles = [
   expectedHover: string[]
 }[]
 
-const casesSeverity = [
-  {
-    severity: 'primary',
-    expectedFocus: ['focus-visible:border-primary', 'focus-visible:ring-primary/30'],
-    expectedSeverity: [
-      '[--button-color:var(--primary)]',
-      '[--button-solid:var(--primary)]',
-      '[--button-solid-foreground:var(--primary-foreground)]',
-    ],
-  },
-  {
-    severity: 'neutral',
-    expectedFocus: ['focus-visible:border-foreground', 'focus-visible:ring-foreground/30'],
-    expectedSeverity: [
-      '[--button-color:var(--foreground)]',
-      '[--button-solid:var(--foreground)]',
-      '[--button-solid-foreground:var(--background)]',
-      '[--button-outline-border:color-mix(in_oklab,var(--foreground)_30%,transparent)]',
-      '[--button-outline-hover:var(--muted)]',
-      '[--button-outline-active-border:var(--button-outline-border)]',
-      '[--button-outline-active:color-mix(in_oklab,var(--muted)_80%,transparent)]',
-      '[--button-plain-hover:var(--muted)]',
-      '[--button-plain-active:color-mix(in_oklab,var(--muted)_80%,transparent)]',
-      '[--button-subtle-border:var(--border)]',
-      '[--button-subtle-bg:var(--muted)]',
-      '[--button-subtle-hover:color-mix(in_oklab,var(--muted)_80%,transparent)]',
-      '[--button-subtle-active:color-mix(in_oklab,var(--muted)_70%,transparent)]',
-      '[--button-soft-bg:var(--muted)]',
-      '[--button-soft-hover:color-mix(in_oklab,var(--muted)_80%,transparent)]',
-      '[--button-soft-active:color-mix(in_oklab,var(--muted)_70%,transparent)]',
-    ],
-  },
-  {
-    severity: 'secondary',
-    expectedFocus: [
-      'focus-visible:border-secondary-foreground',
-      'focus-visible:ring-secondary-foreground/20',
-    ],
-    expectedSeverity: [
-      '[--button-color:var(--secondary-foreground)]',
-      '[--button-solid:var(--secondary)]',
-      '[--button-solid-foreground:var(--secondary-foreground)]',
-      '[--button-solid-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
-      '[--button-solid-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
-      '[--button-outline-border:color-mix(in_oklab,var(--secondary-foreground)_30%,transparent)]',
-      '[--button-outline-hover:var(--secondary)]',
-      '[--button-outline-active-border:var(--button-outline-border)]',
-      '[--button-outline-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
-      '[--button-plain-hover:var(--secondary)]',
-      '[--button-plain-active:color-mix(in_oklab,var(--secondary)_70%,transparent)]',
-      '[--button-subtle-border:color-mix(in_oklab,var(--secondary-foreground)_15%,transparent)]',
-      '[--button-subtle-bg:color-mix(in_oklab,var(--secondary)_60%,transparent)]',
-      '[--button-subtle-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
-      '[--button-subtle-active:var(--secondary)]',
-      '[--button-soft-bg:color-mix(in_oklab,var(--secondary)_60%,transparent)]',
-      '[--button-soft-hover:color-mix(in_oklab,var(--secondary)_80%,transparent)]',
-      '[--button-soft-active:var(--secondary)]',
-    ],
-  },
-  {
-    severity: 'warning',
-    expectedFocus: ['focus-visible:border-warning', 'focus-visible:ring-warning/30'],
-    expectedSeverity: [
-      '[--button-color:var(--warning)]',
-      '[--button-solid:var(--warning)]',
-      '[--button-solid-foreground:var(--warning-foreground)]',
-    ],
-  },
-  {
-    severity: 'success',
-    expectedFocus: ['focus-visible:border-success', 'focus-visible:ring-success/30'],
-    expectedSeverity: [
-      '[--button-color:var(--success)]',
-      '[--button-solid:var(--success)]',
-      '[--button-solid-foreground:var(--success-foreground)]',
-    ],
-  },
-  {
-    severity: 'error',
-    expectedFocus: ['focus-visible:border-error', 'focus-visible:ring-error/30'],
-    expectedSeverity: [
-      '[--button-color:var(--error)]',
-      '[--button-solid:var(--error)]',
-      '[--button-solid-foreground:var(--error-foreground)]',
-    ],
-  },
-  {
-    severity: undefined,
-    expectedFocus: ['focus-visible:border-primary', 'focus-visible:ring-primary/30'],
-    expectedSeverity: [
-      '[--button-color:var(--primary)]',
-      '[--button-solid:var(--primary)]',
-      '[--button-solid-foreground:var(--primary-foreground)]',
-    ],
-  },
-] satisfies {
-  severity: ButtonSeverity | undefined
-  expectedFocus: string[]
-  expectedSeverity: string[]
-}[]
-
 const casesRounded = [
   { input: true, expected: true },
   { input: false, expected: false },
@@ -269,20 +164,6 @@ describe('Button', () => {
 
           expect(classes).toEqual(expect.arrayContaining(expectedNormal))
           expect(classes).toEqual(expect.arrayContaining(expectedHover))
-        },
-      )
-    })
-
-    describe('severity', () => {
-      it.each(casesSeverity)(
-        'renderiza severity=$severity',
-        ({ severity, expectedFocus, expectedSeverity }) => {
-          const classes = mountButton({ props: { severity } })
-            .get('[data-test-button-root]')
-            .classes()
-
-          expect(classes).toEqual(expect.arrayContaining(expectedFocus))
-          expect(classes).toEqual(expect.arrayContaining(expectedSeverity))
         },
       )
     })
@@ -374,9 +255,16 @@ describe('Button', () => {
 
     describe('color', () => {
       testColor({
-        text: 'aplica color personalizado',
+        text: 'resuelve el color',
         id: '[data-test-button-root]',
         varColor: '--button-color',
+        defaultColor: 'var(--primary, var(--primary))',
+        theme: {
+          colors: themeColors,
+          foregroundVar: '--button-color-foreground',
+          solidVar: '--button-solid',
+          solidForegroundVar: '--button-solid-foreground',
+        },
         mount: (color) => mountButton({ props: { color } }),
       })
     })

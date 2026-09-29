@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Button, type ButtonVariant } from '@/components/ui/Button'
+import { themeColors } from '../../../config/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
+const colors = [...themeColors, 'custom']
 const variants: ButtonVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft', 'link']
-const color = ref('#6366f1')
+const selectedColor = ref<string>(themeColors[0])
+const customColor = ref('#6366f1')
+const color = computed(() =>
+  selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
+)
 const variant = ref<ButtonVariant>('solid')
 const code = computed(
   () => `<script setup lang="ts">
@@ -24,7 +30,8 @@ ${scriptEnd}
 )
 
 function reset() {
-  color.value = '#6366f1'
+  selectedColor.value = themeColors[0]
+  customColor.value = '#6366f1'
   variant.value = 'solid'
 }
 </script>
@@ -32,13 +39,18 @@ function reset() {
 <template>
   <ComponentExample
     title="Color"
-    description="Choose a custom CSS color and visual style for the button."
+    description="Choose a theme token or a custom hexadecimal color, then select a visual style."
     :code="code"
     @reset="reset"
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleColorControl v-model="color" label="Color" />
+        <ExampleSelectControl v-model="selectedColor" label="Color" :options="colors" />
+        <ExampleColorControl
+          v-if="selectedColor === 'custom'"
+          v-model="customColor"
+          label="Custom color"
+        />
         <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
       </div>
     </template>
