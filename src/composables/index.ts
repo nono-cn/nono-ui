@@ -1,5 +1,5 @@
 export { getContrastColor, useColor } from './useColor'
-export { getThemeColorStyle } from './themeColor'
+export { useTheme } from './useTheme'
 export { setLocale } from '@/i18n'
 export * from './useDates'
 export * from './useFilter'

@@ -3,10 +3,12 @@ import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
 import { Button, type ButtonProps, type ButtonVariant } from '@/components/ui/Button'
-import { themeColors } from '../../docs/config/constants'
+import { themeColors, themeRadii, themeShadows } from '../../docs/config/constants'
 import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
+import { testRadius } from '../utils/testRadius'
+import { testShadow } from '../utils/testShadow'
 
 function mountButton(options: MountingOptions<ButtonProps> & Record<string, unknown> = {}) {
   return mount(Button, options)
@@ -23,12 +25,6 @@ const casesSize = [
   { input: 'md' as const, expected: ['h-9', 'text-base'] },
   { input: 'lg' as const, expected: ['h-10', 'text-lg'] },
   { input: undefined, expected: ['h-9', 'text-base'] },
-]
-
-const casesRaised = [
-  { input: true, expected: true },
-  { input: false, expected: false },
-  { input: undefined, expected: false },
 ]
 
 const casesVariantStyles = [
@@ -86,12 +82,6 @@ const casesVariantStyles = [
   expectedNormal: string[]
   expectedHover: string[]
 }[]
-
-const casesRounded = [
-  { input: true, expected: true },
-  { input: false, expected: false },
-  { input: undefined, expected: false },
-]
 
 const casesSquare = [
   { input: true, expected: true },
@@ -168,24 +158,27 @@ describe('Button', () => {
       )
     })
 
-    describe('raised', () => {
-      it.each(casesRaised)(
-        'renderiza raised=$input como shadow=$expected',
-        ({ input, expected }) => {
-          const root = mountButton({ props: { raised: input } }).get('[data-test-button-root]')
-
-          expect(root.classes().includes('shadow-sm')).toBe(expected)
-        },
-      )
+    describe('shadow', () => {
+      testShadow({
+        text: 'resuelve la sombra',
+        id: '[data-test-button-root]',
+        varShadow: '--button-shadow',
+        defaultShadow: 'none',
+        shadows: themeShadows,
+        className: 'shadow-(--button-shadow)',
+        mount: (shadow) => mountButton({ props: { shadow } }),
+      })
     })
 
-    describe('rounded', () => {
-      it.each(casesRounded)('renderiza rounded=$input como $expected', ({ input, expected }) => {
-        const classes = mountButton({ props: { rounded: input } })
-          .get('[data-test-button-root]')
-          .classes()
-
-        expect(classes.includes('rounded-full')).toBe(expected)
+    describe('radius', () => {
+      testRadius({
+        text: 'resuelve el radio',
+        id: '[data-test-button-root]',
+        varRadius: '--button-radius',
+        defaultRadius: 'md',
+        radii: themeRadii,
+        className: 'rounded-(--button-radius)',
+        mount: (radius) => mountButton({ props: { radius } }),
       })
     })
 

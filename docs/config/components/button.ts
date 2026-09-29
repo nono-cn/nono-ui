@@ -3,8 +3,8 @@ import ButtonColorExample from '../../components/examples/button/ButtonColorExam
 import ButtonIconExample from '../../components/examples/button/ButtonIconExample.vue'
 import ButtonDisabledExample from '../../components/examples/button/ButtonDisabledExample.vue'
 import ButtonLoadingExample from '../../components/examples/button/ButtonLoadingExample.vue'
-import ButtonRaisedExample from '../../components/examples/button/ButtonRaisedExample.vue'
-import ButtonRoundedExample from '../../components/examples/button/ButtonRoundedExample.vue'
+import ButtonShadowExample from '../../components/examples/button/ButtonShadowExample.vue'
+import ButtonRadiusExample from '../../components/examples/button/ButtonRadiusExample.vue'
 import ButtonSquareExample from '../../components/examples/button/ButtonSquareExample.vue'
 import ButtonSizeExample from '../../components/examples/button/ButtonSizeExample.vue'
 import ButtonTrailingIconExample from '../../components/examples/button/ButtonTrailingIconExample.vue'
@@ -41,9 +41,9 @@ const buttonConfig: ComponentDocConfig = {
       component: ButtonSizeExample,
     },
     {
-      title: 'Rounded',
-      description: 'Toggle the button’s fully rounded shape.',
-      component: ButtonRoundedExample,
+      title: 'Radius',
+      description: 'Choose a theme radius or a custom radius token or CSS length.',
+      component: ButtonRadiusExample,
     },
     {
       title: 'Square',
@@ -51,9 +51,9 @@ const buttonConfig: ComponentDocConfig = {
       component: ButtonSquareExample,
     },
     {
-      title: 'Raised',
-      description: 'Toggle the button’s visual elevation.',
-      component: ButtonRaisedExample,
+      title: 'Shadow',
+      description: 'Choose a shadow from the theme scale.',
+      component: ButtonShadowExample,
     },
     {
       title: 'Loading',
@@ -104,10 +104,11 @@ const buttonConfig: ComponentDocConfig = {
         description: 'Visual size of the button.',
       },
       {
-        name: 'rounded',
-        type: 'boolean',
-        default: 'false',
-        description: 'Applies a fully rounded shape.',
+        name: 'radius',
+        type: 'string',
+        default: "'md'",
+        description:
+          'Theme radius name such as md, full or eval, resolved from --radius-<name> with md as fallback. Also accepts a CSS length such as 1rem.',
       },
       {
         name: 'square',
@@ -117,10 +118,11 @@ const buttonConfig: ComponentDocConfig = {
           'Sets equal width and height to create a square button, typically with an icon.',
       },
       {
-        name: 'raised',
-        type: 'boolean',
-        default: 'false',
-        description: 'Adds a subtle shadow to visually raise the button.',
+        name: 'shadow',
+        type: 'string',
+        default: "'none'",
+        description:
+          'Theme shadow name such as lg or eval, resolved from --shadow-<name> with none as fallback. Also accepts a CSS box-shadow value.',
       },
       {
         name: 'loading',

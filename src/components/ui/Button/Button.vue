@@ -3,7 +3,7 @@ import { computed, useAttrs } from 'vue'
 import { Primitive } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
-import { getThemeColorStyle } from '@/composables'
+import { useTheme } from '@/composables'
 import { buttonVariants, type ButtonEmits, type ButtonProps, type ButtonSlots } from '.'
 import { buttonDefaults } from './defaults'
 
@@ -14,16 +14,22 @@ const emit = defineEmits<ButtonEmits>()
 defineSlots<ButtonSlots>()
 
 const attrs = useAttrs()
-const colorStyle = computed(() => getThemeColorStyle(props.color, 'button', buttonDefaults.color))
+const { colorStyle, radiusStyle, shadowStyle } = useTheme({
+  color: () => props.color,
+  radius: () => props.radius,
+  shadow: () => props.shadow,
+  prefix: 'button',
+  defaultColor: buttonDefaults.color,
+  defaultRadius: buttonDefaults.radius,
+  defaultShadow: buttonDefaults.shadow,
+})
 const ariaDisabled = computed(() => props.loading || attrs['aria-disabled'])
 const ariaBusy = computed(() => props.loading || attrs['aria-busy'])
 const calculatedVariants = computed(() => {
   const classes = buttonVariants({
     variant: props.variant,
     size: props.size,
-    rounded: props.rounded,
     square: props.square,
-    raised: props.raised,
   })
 
   if (props.as === 'button' || props.as === 'a') return classes
@@ -41,12 +47,8 @@ const rootProps = computed(() => {
     asChild: props.asChild,
     'aria-busy': ariaBusy.value,
     'aria-disabled': ariaDisabled.value,
-    class: cn(
-      calculatedVariants.value,
-      'focus-visible:border-(--button-color) focus-visible:ring-(--button-color)/30',
-      attrs.class,
-    ),
-    style: [colorStyle.value, attrs.style],
+    class: cn(calculatedVariants.value, attrs.class),
+    style: [colorStyle.value, radiusStyle.value, shadowStyle.value, attrs.style],
   }
 })
 

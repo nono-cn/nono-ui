@@ -26,7 +26,7 @@ const buttonStateVariables = [
 
 export const buttonVariants = cva(
   [
-    'inline-flex shrink-0 items-center justify-center gap-2 rounded-md border border-transparent text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
+    'inline-flex shrink-0 items-center justify-center gap-2 rounded-(--button-radius) border border-transparent shadow-(--button-shadow) text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:border-(--button-color) focus-visible:ring-[3px] focus-visible:ring-(--button-color)/30 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
     buttonStateVariables,
   ].join(' '),
   {
@@ -49,25 +49,15 @@ export const buttonVariants = cva(
         md: 'h-9 px-4 py-2 text-base has-[>svg]:px-3 [--button-square-size:calc(var(--spacing)*9)]',
         lg: 'h-10 px-6 text-lg has-[>svg]:px-4 [--button-square-size:calc(var(--spacing)*10)]',
       },
-      rounded: {
-        true: 'rounded-full',
-        false: '',
-      },
       square: {
         true: 'size-(--button-square-size) p-0 has-[>svg]:p-0',
-        false: '',
-      },
-      raised: {
-        true: 'shadow-sm',
         false: '',
       },
     },
     defaultVariants: {
       variant: 'solid',
       size: 'md',
-      rounded: false,
       square: false,
-      raised: false,
     },
   },
 )
@@ -82,9 +72,9 @@ export interface ButtonProps extends Pick<PrimitiveProps, 'as' | 'asChild'> {
   label?: string
   variant?: ButtonVariant
   size?: ButtonSize
-  rounded?: ButtonVariants['rounded'] | boolean
+  radius?: string
   square?: ButtonVariants['square'] | boolean
-  raised?: ButtonVariants['raised'] | boolean
+  shadow?: string
   loading?: boolean
   color?: string
   icon?: IconName
