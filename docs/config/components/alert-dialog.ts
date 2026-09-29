@@ -80,10 +80,9 @@ const alertDialogConfig: ComponentDocConfig = {
       },
       {
         name: 'icon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
+        type: 'IconName',
         default: 'undefined',
-        description: 'Icon displayed before the label when its configuration includes name.',
+        description: 'Name of the icon displayed before the label.',
       },
       {
         name: 'actionButton',

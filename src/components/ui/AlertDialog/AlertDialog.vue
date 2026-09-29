@@ -157,7 +157,7 @@ const actionButtonProps = computed(() => ({
                 v-bind="labelProps"
                 data-test-alert-dialog-label
               >
-                <Icon v-if="iconProps?.name" v-bind="iconProps" data-test-alert-dialog-icon />
+                <Icon v-if="iconProps" :name="iconProps" data-test-alert-dialog-icon />
                 <slot name="label">
                   {{ props.label }}
                 </slot>

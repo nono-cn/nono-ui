@@ -56,7 +56,7 @@ function reset() {
     @reset="reset"
   >
     <template #controls>
-      <div class="grid w-full gap-4 sm:grid-cols-3">
+      <div class="flex flex-wrap gap-4">
         <ExampleTextInputControl v-model="actionLabel" label="Action label" />
         <ExampleTextInputControl v-model="cancelLabel" label="Cancel label" />
         <ExampleSelectControl

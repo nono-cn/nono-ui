@@ -5,7 +5,7 @@ import type {
 } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import type { NormalizeButtonProps } from '@/components/ui/Button'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 
 export { default as AlertDialog } from './AlertDialog.vue'
 
@@ -23,28 +23,10 @@ export interface AlertDialogProps extends AlertDialogRootProps, AlertDialogConte
   open?: boolean
   label?: string
   description?: string
-  icon?: IconConfig
+  icon?: IconName
   actionButton?: NormalizeButtonProps
   cancelButton?: NormalizeButtonProps
   ui?: AlertDialogUI
-}
-
-// Expose
-export interface AlertDialogExpose {
-  /** Closes the alert dialog through the exposed component API. */
-  close: () => void
-}
-
-// UI
-export interface AlertDialogUI {
-  trigger?: AlertDialogFn<HTMLAttributes>
-  overlay?: AlertDialogFn<HTMLAttributes>
-  content?: AlertDialogFn<HTMLAttributes>
-  header?: AlertDialogFn<HTMLAttributes>
-  label?: AlertDialogFn<HTMLAttributes>
-  description?: AlertDialogFn<HTMLAttributes>
-  body?: AlertDialogFn<HTMLAttributes>
-  footer?: AlertDialogFn<HTMLAttributes>
 }
 
 // Emits
@@ -63,4 +45,22 @@ export interface AlertDialogSlots {
   footer?(props: { close: () => void }): unknown
   action?(props: { close: () => void }): unknown
   cancel?(props: { close: () => void }): unknown
+}
+
+// Expose
+export interface AlertDialogExpose {
+  /** Closes the alert dialog through the exposed component API. */
+  close: () => void
+}
+
+// UI
+export interface AlertDialogUI {
+  trigger?: AlertDialogFn<HTMLAttributes>
+  overlay?: AlertDialogFn<HTMLAttributes>
+  content?: AlertDialogFn<HTMLAttributes>
+  header?: AlertDialogFn<HTMLAttributes>
+  label?: AlertDialogFn<HTMLAttributes>
+  description?: AlertDialogFn<HTMLAttributes>
+  body?: AlertDialogFn<HTMLAttributes>
+  footer?: AlertDialogFn<HTMLAttributes>
 }

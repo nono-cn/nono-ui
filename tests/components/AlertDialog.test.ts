@@ -9,11 +9,10 @@ import {
   AlertDialogTitle,
 } from 'reka-ui'
 import { AlertDialog, type AlertDialogProps } from '@/components/ui/AlertDialog'
-import { Button } from '@/components/ui/Button'
+import { Icon } from '@/components/ui/Icon'
 import { i18n } from '@/i18n'
 import { testButtonConfig } from '../utils/testButtonConfig'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconConfig } from '../utils/testIconConfig'
 
 afterEach(() => {
   document.body.innerHTML = ''
@@ -41,6 +40,11 @@ const casesLabel = [{ input: 'Eliminar proyecto', expected: 'Eliminar proyecto' 
 
 const casesDescription = [
   { input: 'Esta acción no se puede deshacer.', expected: 'Esta acción no se puede deshacer.' },
+]
+
+const casesIcon = [
+  { input: 'warning' as const, expected: true },
+  { input: undefined, expected: false },
 ]
 
 const casesUnmountOnHide = [
@@ -133,16 +137,15 @@ describe('AlertDialog', () => {
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa las props de icon',
-        id: '[data-test-alert-dialog-icon]',
-        mount: async (input) => {
-          const alertDialog = mountAlertDialog({
-            props: { open: true, label: 'Advertencia', icon: input },
-          })
-          await nextTick()
-          return alertDialog
-        },
+      it.each(casesIcon)('renderiza icon=$input', async ({ input, expected }) => {
+        const alertDialog = mountAlertDialog({
+          props: { open: true, label: 'Advertencia', icon: input },
+        })
+        await nextTick()
+        const icon = alertDialog.findComponent(Icon)
+
+        expect(icon.exists()).toBe(expected)
+        if (expected) expect(icon.props('name')).toBe(input)
       })
     })
 
@@ -323,6 +326,32 @@ describe('AlertDialog', () => {
     })
   })
 
+  describe('emits', () => {
+    describe('action', () => {
+      it('emite action desde el botón de acción', async () => {
+        const alertDialog = mountAlertDialog({ props: { open: true } })
+        await nextTick()
+        const actionButton = alertDialog.getComponent('[data-test-alert-dialog-action-button]')
+
+        await actionButton.trigger('click')
+
+        expect(alertDialog.emitted('action')).toEqual([[expect.any(Event)]])
+      })
+    })
+
+    describe('cancel', () => {
+      it('emite cancel desde el botón de cancelación', async () => {
+        const alertDialog = mountAlertDialog({ props: { open: true } })
+        await nextTick()
+        const cancelButton = alertDialog.getComponent('[data-test-alert-dialog-cancel-button]')
+
+        await cancelButton.trigger('click')
+
+        expect(alertDialog.emitted('cancel')).toEqual([[expect.any(Event)]])
+      })
+    })
+  })
+
   describe('slots', () => {
     describe('default', () => {
       it('renderiza el slot predeterminado en el trigger', () => {
@@ -476,29 +505,13 @@ describe('AlertDialog', () => {
     })
   })
 
-  describe('emits', () => {
-    describe('action', () => {
-      it('emite action desde el botón de acción', async () => {
-        const alertDialog = mountAlertDialog({ props: { open: true } })
-        await nextTick()
-        const actionButton = alertDialog.getComponent('[data-test-alert-dialog-action-button]')
+  describe('expose', () => {
+    it('expone close para cerrar el diálogo', () => {
+      const alertDialog = mountAlertDialog({ props: { open: true } })
 
-        await actionButton.trigger('click')
+      alertDialog.vm.close()
 
-        expect(alertDialog.emitted('action')).toEqual([[expect.any(Event)]])
-      })
-    })
-
-    describe('cancel', () => {
-      it('emite cancel desde el botón de cancelación', async () => {
-        const alertDialog = mountAlertDialog({ props: { open: true } })
-        await nextTick()
-        const cancelButton = alertDialog.getComponent('[data-test-alert-dialog-cancel-button]')
-
-        await cancelButton.trigger('click')
-
-        expect(alertDialog.emitted('cancel')).toEqual([[expect.any(Event)]])
-      })
+      expect(alertDialog.emitted('update:open')).toEqual([[false]])
     })
   })
 })

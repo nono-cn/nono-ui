@@ -16,14 +16,14 @@ import type { IconName } from '__DOCS_PACKAGE__/components/ui/Icon'
 import { AlertDialog } from '__DOCS_PACKAGE__/components/ui/AlertDialog'
 import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 
-const iconName = ref<IconName>('${icon.value}')
+const icon = ref<IconName>('${icon.value}')
 ${scriptEnd}
 
 <template>
   <AlertDialog
     label="Unsaved changes"
     description="Do you want to leave without saving your changes?"
-    :icon="{ name: iconName }"
+    :icon="icon"
   >
     <Button label="Leave" variant="outline" />
   </AlertDialog>
@@ -50,7 +50,7 @@ function reset() {
     <AlertDialog
       label="Unsaved changes"
       description="Do you want to leave without saving your changes?"
-      :icon="{ name: icon }"
+      :icon="icon"
     >
       <Button label="Leave" variant="outline" />
     </AlertDialog>
