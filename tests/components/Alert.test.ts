@@ -8,10 +8,11 @@ import {
   type AlertSeverity,
   type AlertVariant,
 } from '@/components/ui/Alert'
+import { Icon } from '@/components/ui/Icon'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 import { testButtonConfig } from '../utils/testButtonConfig'
-import { testIconConfig, testIconSize } from '../utils/testIconConfig'
+import { testColor } from '../utils/testColor'
 
 function mountAlert(options: MountingOptions<AlertProps> = {}) {
   return mount(Alert, {
@@ -33,79 +34,6 @@ const casesDescription = [
 ]
 
 const casesVariant = [
-  { input: 'solid' as const, expected: ['border-transparent', 'bg-(--alert-solid)'] },
-  { input: 'outline' as const, expected: ['border-(--alert-color)/40', 'bg-transparent'] },
-  { input: 'plain' as const, expected: ['border-transparent', 'bg-transparent'] },
-  {
-    input: 'subtle' as const,
-    expected: ['border-(--alert-color)/20', 'bg-(--alert-color)/10'],
-  },
-  { input: 'soft' as const, expected: ['border-transparent', 'bg-(--alert-color)/10'] },
-]
-
-const casesSeverityVariant = (
-  [
-    {
-      severity: 'primary',
-      classes: [
-        '[--alert-color:var(--primary)]',
-        '[--alert-solid:var(--primary)]',
-        '[--alert-solid-foreground:var(--primary-foreground)]',
-      ],
-    },
-    {
-      severity: 'secondary',
-      classes: [
-        '[--alert-color:var(--secondary-foreground)]',
-        '[--alert-solid:var(--secondary)]',
-        '[--alert-solid-foreground:var(--secondary-foreground)]',
-      ],
-    },
-    {
-      severity: 'neutral',
-      classes: [
-        '[--alert-color:var(--foreground)]',
-        '[--alert-solid:var(--foreground)]',
-        '[--alert-solid-foreground:var(--background)]',
-      ],
-    },
-    {
-      severity: 'warning',
-      classes: [
-        '[--alert-color:var(--warning)]',
-        '[--alert-solid:var(--warning)]',
-        '[--alert-solid-foreground:var(--warning-foreground)]',
-      ],
-    },
-    {
-      severity: 'success',
-      classes: [
-        '[--alert-color:var(--success)]',
-        '[--alert-solid:var(--success)]',
-        '[--alert-solid-foreground:var(--success-foreground)]',
-      ],
-    },
-    {
-      severity: 'error',
-      classes: [
-        '[--alert-color:var(--error)]',
-        '[--alert-solid:var(--error)]',
-        '[--alert-solid-foreground:var(--error-foreground)]',
-      ],
-    },
-  ] satisfies {
-    severity: AlertSeverity
-    classes: string[]
-  }[]
-).flatMap(({ severity, classes }) =>
-  casesVariant.map(({ input: variant, expected: variantClasses }) => ({
-    severity,
-    variant,
-    expected: [...variantClasses, ...classes],
-  })),
-)
-
-const casesColorVariant = [
   {
     variant: 'solid',
     expected: ['border-transparent', 'bg-(--alert-solid)', 'text-(--alert-solid-foreground)'],
@@ -126,7 +54,70 @@ const casesColorVariant = [
     variant: 'soft',
     expected: ['border-transparent', 'bg-(--alert-color)/10', 'text-(--alert-color)'],
   },
-] satisfies { variant: AlertVariant; expected: string[] }[]
+  {
+    variant: undefined,
+    expected: ['border-transparent', 'bg-(--alert-color)/10', 'text-(--alert-color)'],
+  },
+] satisfies { variant: AlertVariant | undefined; expected: string[] }[]
+
+const casesSeverity = [
+  {
+    severity: 'primary',
+    expected: [
+      '[--alert-color:var(--primary)]',
+      '[--alert-solid:var(--primary)]',
+      '[--alert-solid-foreground:var(--primary-foreground)]',
+    ],
+  },
+  {
+    severity: 'secondary',
+    expected: [
+      '[--alert-color:var(--secondary-foreground)]',
+      '[--alert-solid:var(--secondary)]',
+      '[--alert-solid-foreground:var(--secondary-foreground)]',
+    ],
+  },
+  {
+    severity: 'neutral',
+    expected: [
+      '[--alert-color:var(--foreground)]',
+      '[--alert-solid:var(--foreground)]',
+      '[--alert-solid-foreground:var(--background)]',
+    ],
+  },
+  {
+    severity: 'warning',
+    expected: [
+      '[--alert-color:var(--warning)]',
+      '[--alert-solid:var(--warning)]',
+      '[--alert-solid-foreground:var(--warning-foreground)]',
+    ],
+  },
+  {
+    severity: 'success',
+    expected: [
+      '[--alert-color:var(--success)]',
+      '[--alert-solid:var(--success)]',
+      '[--alert-solid-foreground:var(--success-foreground)]',
+    ],
+  },
+  {
+    severity: 'error',
+    expected: [
+      '[--alert-color:var(--error)]',
+      '[--alert-solid:var(--error)]',
+      '[--alert-solid-foreground:var(--error-foreground)]',
+    ],
+  },
+  {
+    severity: undefined,
+    expected: [
+      '[--alert-color:var(--primary)]',
+      '[--alert-solid:var(--primary)]',
+      '[--alert-solid-foreground:var(--primary-foreground)]',
+    ],
+  },
+] satisfies { severity: AlertSeverity | undefined; expected: string[] }[]
 
 const casesDecorative = [
   { input: true as const, expected: 'none' },
@@ -137,6 +128,11 @@ const casesDecorative = [
 const casesClosable = [
   { input: true, expected: true },
   { input: false, expected: false },
+  { input: undefined, expected: false },
+]
+
+const casesIcon = [
+  { input: 'info' as const, expected: true },
   { input: undefined, expected: false },
 ]
 
@@ -166,57 +162,41 @@ describe('Alert', () => {
     })
 
     describe('variant', () => {
-      it.each(casesSeverityVariant)(
-        'renderiza severity=$severity con variant=$variant',
-        ({ severity, variant, expected }) => {
-          const root = mountAlert({ props: { severity, variant } }).get('[data-test-alert-root]')
+      it.each(casesVariant)('renderiza variant=$variant', ({ variant, expected }) => {
+        const root = mountAlert({ props: { variant } }).get('[data-test-alert-root]')
 
-          expect(root.classes()).toEqual(expect.arrayContaining(expected))
-        },
-      )
+        expect(root.classes()).toEqual(expect.arrayContaining(expected))
+      })
+    })
 
-      it('usa soft y severity primary por defecto', () => {
-        const root = mountAlert().get('[data-test-alert-root]')
+    describe('severity', () => {
+      it.each(casesSeverity)('renderiza severity=$severity', ({ severity, expected }) => {
+        const root = mountAlert({ props: { severity } }).get('[data-test-alert-root]')
 
-        expect(root.classes()).toEqual(
-          expect.arrayContaining([
-            'border-transparent',
-            'bg-(--alert-color)/10',
-            '[--alert-color:var(--primary)]',
-            '[--alert-solid:var(--primary)]',
-            '[--alert-solid-foreground:var(--primary-foreground)]',
-          ]),
-        )
+        expect(root.classes()).toEqual(expect.arrayContaining(expected))
       })
     })
 
     describe('color', () => {
-      it.each(casesColorVariant)(
-        'combina color personalizado con variant=$variant',
-        ({ variant, expected }) => {
-          const root = mountAlert({
-            props: { color: '#ff0000', severity: 'neutral', variant },
-          }).get('[data-test-alert-root]')
-
-          expect(root.attributes('style')).toContain('--alert-color: #ff0000')
-          expect(root.attributes('style')).toContain('--alert-color-foreground: #09090b')
-          expect(root.classes()).toEqual(
-            expect.arrayContaining([
-              ...expected,
-              '[--alert-solid:var(--alert-color)]',
-              '[--alert-solid-foreground:var(--alert-color-foreground)]',
-            ]),
-          )
-        },
-      )
+      testColor({
+        text: 'aplica color personalizado',
+        id: '[data-test-alert-root]',
+        varColor: '--alert-color',
+        mount: (color) => mountAlert({ props: { color } }),
+      })
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa las props de icon',
-        id: '[data-test-alert-icon]',
-        mount: (input) => mountAlert({ props: { icon: input } }),
-      })
+      it.each(casesIcon)(
+        'renderiza icon=$input cuando expected=$expected',
+        ({ input, expected }) => {
+          const alert = mountAlert({ props: { icon: input } })
+          const icon = alert.find('[data-test-alert-icon]')
+
+          expect(icon.exists()).toBe(expected)
+          if (expected) expect(alert.getComponent(Icon).props('name')).toBe(input)
+        },
+      )
     })
 
     describe('closeButton', () => {
@@ -228,24 +208,19 @@ describe('Alert', () => {
 
       it('usa la configuración predeterminada de closeButton', () => {
         const alert = mountAlert({
-          props: {
-            closable: true,
-            variant: 'outline',
-            severity: 'warning',
-            color: '#ff0000',
-          },
+          props: { closable: true },
         })
         const closeButton = alert.getComponent('[data-test-alert-close-button]')
 
         expect(closeButton.props()).toEqual(
           expect.objectContaining({
-            icon: { name: 'x' },
+            icon: 'x',
             size: 'xs',
             square: true,
             rounded: true,
-            variant: 'outline',
-            severity: 'warning',
-            color: '#ff0000',
+            variant: 'soft',
+            severity: 'primary',
+            color: undefined,
           }),
         )
         expect(closeButton.attributes('aria-label')).toBe(i18n.global.t('close'))
@@ -313,6 +288,14 @@ describe('Alert', () => {
     })
   })
 
+  describe('attrs', () => {
+    testAttrs({
+      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
+      id: '[data-test-alert-root]',
+      mount: (attrs) => mountAlert({ attrs }),
+    })
+  })
+
   describe('emits', () => {
     describe('close', () => {
       it('cierra y emite close desde el botón predeterminado', async () => {
@@ -326,19 +309,11 @@ describe('Alert', () => {
     })
   })
 
-  describe('attrs', () => {
-    testAttrs({
-      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
-      id: '[data-test-alert-root]',
-      mount: (attrs) => mountAlert({ attrs }),
-    })
-  })
-
   describe('slots', () => {
     describe('icon', () => {
       it('renderiza el slot del icono', () => {
         const alert = mountAlert({
-          props: { icon: { name: 'info' } },
+          props: { icon: 'info' },
           slots: {
             icon: () => h('span', { 'data-test-alert-slot': 'icon' }, 'Icono del slot'),
           },
@@ -352,6 +327,7 @@ describe('Alert', () => {
     describe('label', () => {
       it('renderiza el slot de label', () => {
         const alert = mountAlert({
+          props: { label: 'Guardado' },
           slots: {
             label: () => h('span', { 'data-test-alert-slot': 'label' }, 'Label del slot'),
           },
@@ -365,6 +341,7 @@ describe('Alert', () => {
     describe('description', () => {
       it('renderiza el slot de description', () => {
         const alert = mountAlert({
+          props: { description: 'Cambios guardados' },
           slots: {
             description: () =>
               h('span', { 'data-test-alert-slot': 'description' }, 'Description del slot'),

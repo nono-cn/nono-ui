@@ -84,7 +84,7 @@ const closeButtonProps = computed(() => {
     variant: button?.variant ?? props.variant,
     severity: button?.severity ?? props.severity,
     color: button?.color ?? props.color,
-    icon: button?.icon ?? { name: 'x' },
+    icon: button?.icon ?? 'x',
   }
 })
 
@@ -96,7 +96,7 @@ function close() {
 <template>
   <div v-if="visible" v-bind="rootProps" data-test-alert-root>
     <slot name="icon">
-      <Icon v-if="iconProps?.name" v-bind="iconProps" data-test-alert-icon />
+      <Icon v-if="iconProps" :name="iconProps" data-test-alert-icon />
     </slot>
 
     <div v-if="props.label || slots.label" v-bind="labelProps" data-test-alert-label>

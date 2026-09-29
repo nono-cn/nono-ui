@@ -87,10 +87,9 @@ const alertConfig: ComponentDocConfig = {
       },
       {
         name: 'icon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
+        type: 'IconName',
         default: 'undefined',
-        description: 'Icon configuration displayed at the start when the icon slot is not used.',
+        description: 'Name of the icon displayed at the start when the icon slot is not used.',
       },
       {
         name: 'closeButton',

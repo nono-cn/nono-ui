@@ -14,14 +14,14 @@ const code = computed(
 import { ref } from 'vue'
 import { Alert } from '__DOCS_PACKAGE__/components/ui/Alert'
 
-const iconName = ref('${icon.value}' as const)
+const icon = ref('${icon.value}' as const)
 ${scriptEnd}
 
 <template>
   <Alert
     label="Sync complete"
     description="All changes are up to date."
-    :icon="{ name: iconName }"
+    :icon="icon"
     severity="success"
   />
 </template>`,
@@ -48,7 +48,7 @@ function reset() {
       <Alert
         label="Sync complete"
         description="All changes are up to date."
-        :icon="{ name: icon }"
+        :icon="icon"
         severity="success"
       />
     </div>
