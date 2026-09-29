@@ -1,7 +1,7 @@
 import { h } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import {
   Breadcrumb,
@@ -9,19 +9,21 @@ import {
   type BreadcrumbItem,
   type BreadcrumbItemContext,
   type BreadcrumbProps,
+  type BreadcrumbVariant,
 } from '@/components/ui/Breadcrumb'
+import { Icon } from '@/components/ui/Icon'
 import { Link } from '@/components/ui/Link'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconConfig } from '../utils/testIconConfig'
 
 const items: BreadcrumbItem[] = [
   { slot: 'home', label: 'Inicio', to: '/' },
   { slot: 'library', label: 'Biblioteca', to: '/library' },
-  { slot: 'current', label: 'Actual', icon: { name: 'check' } },
+  { slot: 'current', label: 'Actual', icon: 'check' },
 ]
 
 const casesSlot = [{ input: 'home' }, { input: 'section' }]
+const casesVariant: BreadcrumbVariant[] = ['plain', 'outlined', 'frame']
 
 const casesEllipsisIndex = [
   { input: undefined, visible: false },
@@ -74,42 +76,193 @@ describe('Breadcrumb', () => {
         })
       })
 
-      describe('item', () => {
-        it.each(items)('pasa los campos del item slot=$slot a Link', (item) => {
-          const wrapper = mountBreadcrumb({ props: { items: [item] } })
-          const link = wrapper.getComponent(Link)
-
-          expect(link.props()).toMatchObject({
-            label: item.label,
-            icon: item.icon,
-            to: item.to,
+      describe('label', () => {
+        it('pasa el texto al Link', () => {
+          const wrapper = mountBreadcrumb({
+            props: { items: [{ slot: 'current', label: 'Actual' }] },
           })
+          expect(wrapper.getComponent(Link).props('label')).toBe('Actual')
         })
       })
 
-      describe('command', () => {
-        it('ejecuta command al hacer clic en un item enlazado', async () => {
-          const command = vi.fn()
+      describe('icon', () => {
+        it('pasa el nombre del icono como string al Link', () => {
           const wrapper = mountBreadcrumb({
-            props: { items: [{ ...items[0], command }] },
+            props: { items: [{ slot: 'current', icon: 'check' }] },
           })
+          expect(wrapper.getComponent(Link).props('icon')).toBe('check')
+        })
+      })
 
-          await wrapper.get('[data-test-breadcrumb-link]').trigger('click')
-
-          expect(command).toHaveBeenCalledTimes(1)
-          expect(command).toHaveBeenCalledWith(expect.any(Event))
+      describe('to', () => {
+        it('pasa la ruta al Link', () => {
+          const wrapper = mountBreadcrumb({ props: { items: [{ slot: 'home', to: '/' }] } })
+          expect(wrapper.getComponent(Link).props('to')).toBe('/')
+          expect(
+            wrapper.get('[data-test-breadcrumb-item="home"] > a[data-test-link-root]').exists(),
+          ).toBe(true)
         })
 
-        it('no ejecuta command en el item de la página actual', async () => {
-          const command = vi.fn()
-          const wrapper = mountBreadcrumb({
-            props: { items: [{ ...items[2], command }] },
-          })
-
-          await wrapper.get('[data-test-breadcrumb-page]').trigger('click')
-
-          expect(command).not.toHaveBeenCalled()
+        it('renderiza un Link sin navegación cuando no hay to', () => {
+          const wrapper = mountBreadcrumb({ props: { items: [{ slot: 'current' }] } })
+          expect(
+            wrapper
+              .get('[data-test-breadcrumb-item="current"] > div[data-test-link-root]')
+              .exists(),
+          ).toBe(true)
         })
+      })
+
+      describe('size', () => {
+        it('pasa el tamaño al Link', () => {
+          const wrapper = mountBreadcrumb({
+            props: { items: [{ slot: 'home', size: 'sm' }] },
+          })
+          expect(wrapper.getComponent(Link).props('size')).toBe('sm')
+        })
+      })
+
+      describe('replace', () => {
+        it('pasa replace al Link', () => {
+          const wrapper = mountBreadcrumb({
+            props: { items: [{ slot: 'home', to: '/', replace: true }] },
+          })
+          expect(wrapper.getComponent(Link).props('replace')).toBe(true)
+        })
+      })
+
+      describe('trailingIcon', () => {
+        it('pasa el icono final al Link', () => {
+          const wrapper = mountBreadcrumb({
+            props: { items: [{ slot: 'home', trailingIcon: 'chevronRight' }] },
+          })
+          expect(wrapper.getComponent(Link).props('trailingIcon')).toBe('chevronRight')
+        })
+      })
+
+      describe('rounded', () => {
+        it('pasa rounded al Link', () => {
+          const wrapper = mountBreadcrumb({
+            props: { items: [{ slot: 'home', rounded: true }] },
+          })
+          expect(wrapper.getComponent(Link).props('rounded')).toBe(true)
+        })
+      })
+
+      describe('square', () => {
+        it('pasa square al Link', () => {
+          const wrapper = mountBreadcrumb({
+            props: { items: [{ slot: 'home', square: true }] },
+          })
+          expect(wrapper.getComponent(Link).props('square')).toBe(true)
+        })
+      })
+
+      describe('raised', () => {
+        it('pasa raised al Link', () => {
+          const wrapper = mountBreadcrumb({
+            props: { items: [{ slot: 'home', raised: true }] },
+          })
+          expect(wrapper.getComponent(Link).props('raised')).toBe(true)
+        })
+      })
+
+      it('no pasa slot como atributo del Link', () => {
+        const wrapper = mountBreadcrumb({ props: { items: [{ slot: 'home', to: '/' }] } })
+        expect(wrapper.getComponent(Link).attributes('slot')).toBeUndefined()
+      })
+
+      it('mantiene el mismo espaciado con y sin icono, sin destacar el último item en negrita', () => {
+        const wrapper = mountBreadcrumb({ props: { items } })
+        const links = wrapper.findAllComponents(Link)
+
+        expect(links.map((link) => link.classes().includes('px-2'))).toEqual([true, true, true])
+        expect(links.map((link) => link.classes().includes('has-[>svg]:px-2'))).toEqual([
+          true,
+          true,
+          true,
+        ])
+        expect(wrapper.get('[data-test-breadcrumb-page]').classes()).not.toContain('font-bold')
+      })
+    })
+
+    describe('link variant', () => {
+      it('usa plain en todos los items', () => {
+        const wrapper = mountBreadcrumb({ props: { items } })
+        expect(wrapper.findAllComponents(Link).map((link) => link.props('variant'))).toEqual([
+          'plain',
+          'plain',
+          'plain',
+        ])
+      })
+    })
+
+    describe('variant', () => {
+      it('usa plain sin borde visible y con el mismo tamaño que outlined', () => {
+        const wrapper = mountBreadcrumb({ props: { items } })
+        const root = wrapper.get('[data-test-breadcrumb-root]')
+
+        expect(root.classes()).toContain('border-transparent')
+        expect(root.classes()).toContain('px-3')
+        expect(root.classes()).toContain('py-2')
+        expect(root.classes()).not.toContain('bg-muted/50')
+        expect(wrapper.get('[data-test-breadcrumb-link]').classes()).toContain('px-2')
+      })
+
+      it.each(casesVariant)('mantiene Link plain con variant=%s', (variant) => {
+        const wrapper = mountBreadcrumb({ props: { items, variant } })
+        expect(wrapper.findAllComponents(Link).map((link) => link.props('variant'))).toEqual([
+          'plain',
+          'plain',
+          'plain',
+        ])
+      })
+
+      it('outlined añade un borde al contenedor', () => {
+        const wrapper = mountBreadcrumb({ props: { items, variant: 'outlined' } })
+        const root = wrapper.get('[data-test-breadcrumb-root]')
+
+        expect(root.classes()).toContain('border')
+        expect(root.classes()).toContain('rounded-xl')
+        expect(wrapper.get('[data-test-breadcrumb-link]').classes()).toContain('px-2')
+      })
+
+      it('frame añade un borde exterior y otro interior sin destacar el Link', () => {
+        const wrapper = mountBreadcrumb({ props: { items, variant: 'frame' } })
+        const root = wrapper.get('[data-test-breadcrumb-root]')
+        const list = wrapper.get('[data-test-breadcrumb-list]')
+
+        expect(root.classes()).toContain('rounded-xl')
+        expect(root.classes()).toContain('border')
+        expect(root.classes()).toContain('bg-muted')
+        expect(list.classes()).toContain('rounded-lg')
+        expect(list.classes()).toContain('border')
+        expect(list.classes()).toContain('bg-background')
+        expect(wrapper.get('[data-test-breadcrumb-link]').classes()).toContain('px-2')
+        expect(wrapper.get('[data-test-breadcrumb-page]').classes()).not.toContain('bg-background')
+      })
+    })
+
+    describe('estilos de los items', () => {
+      it('muestra los enlaces en gris y los oscurece al hover, con foco gris', () => {
+        const wrapper = mountBreadcrumb({ props: { items } })
+        const link = wrapper.get('[data-test-breadcrumb-link]')
+
+        expect(link.classes()).toContain('text-muted-foreground')
+        expect(link.classes()).toContain('hover:text-foreground')
+        expect(link.classes()).toContain('hover:bg-transparent')
+        expect(link.classes()).toContain('focus-visible:border-muted-foreground')
+        expect(link.classes()).toContain('focus-visible:ring-0')
+        expect(wrapper.findAllComponents(Link)[0].props('severity')).toBe('neutral')
+        expect(wrapper.findAllComponents(Link)[0].props('color')).toBeUndefined()
+      })
+
+      it('muestra el item sin enlace en color de texto base', () => {
+        const wrapper = mountBreadcrumb({ props: { items } })
+        const page = wrapper.get('[data-test-breadcrumb-page]')
+
+        expect(page.classes()).toContain('text-foreground')
+        expect(page.classes()).not.toContain('text-muted-foreground')
       })
     })
 
@@ -136,23 +289,36 @@ describe('Breadcrumb', () => {
     })
 
     describe('ellipsisIcon', () => {
-      testIconConfig({
-        text: 'renderiza ellipsisIcon',
-        id: '[data-test-breadcrumb-ellipsis] [data-test-icon-root]',
-        default: 'moreHorizontal',
-        mount: (input) =>
-          mountBreadcrumb({
-            props: { items, ellipsisIndex: [0, 1], ellipsisIcon: input },
-          }),
+      it('usa moreHorizontal por defecto', () => {
+        const wrapper = mountBreadcrumb({ props: { items, ellipsisIndex: [0, 1] } })
+        expect(
+          wrapper.get('[data-test-breadcrumb-ellipsis]').getComponent(Icon).props('name'),
+        ).toBe('moreHorizontal')
+      })
+
+      it('acepta el nombre del icono como string', () => {
+        const wrapper = mountBreadcrumb({
+          props: { items, ellipsisIndex: [0, 1], ellipsisIcon: 'info' },
+        })
+        expect(
+          wrapper.get('[data-test-breadcrumb-ellipsis]').getComponent(Icon).props('name'),
+        ).toBe('info')
       })
     })
 
     describe('separatorIcon', () => {
-      testIconConfig({
-        text: 'renderiza separatorIcon',
-        id: '[data-test-breadcrumb-separator] [data-test-icon-root]',
-        default: 'chevronRight',
-        mount: (input) => mountBreadcrumb({ props: { items, separatorIcon: input } }),
+      it('usa chevronRight por defecto', () => {
+        const wrapper = mountBreadcrumb({ props: { items } })
+        expect(
+          wrapper.get('[data-test-breadcrumb-separator]').getComponent(Icon).props('name'),
+        ).toBe('chevronRight')
+      })
+
+      it('acepta el nombre del icono como string', () => {
+        const wrapper = mountBreadcrumb({ props: { items, separatorIcon: 'minus' } })
+        expect(
+          wrapper.get('[data-test-breadcrumb-separator]').getComponent(Icon).props('name'),
+        ).toBe('minus')
       })
     })
 
@@ -303,6 +469,18 @@ describe('Breadcrumb', () => {
       })
 
       expect(wrapper.get('[data-test-breadcrumb-slot="item-home"]').text()).toBe('Slot de inicio')
+    })
+
+    it('prioriza el slot específico sobre el slot item', () => {
+      const wrapper = mountBreadcrumb({
+        props: { items: [items[0]] },
+        slots: {
+          item: () => h('span', 'Genérico'),
+          'item-home': () => h('span', 'Específico'),
+        },
+      })
+
+      expect(wrapper.get('[data-test-breadcrumb-item="home"]').text()).toBe('Específico')
     })
   })
 })

@@ -12,6 +12,7 @@ import type {
   BreadcrumbProps,
   BreadcrumbSlots,
 } from '.'
+import { breadcrumbListVariants, breadcrumbVariants } from '.'
 import { breadcrumbDefaults } from './default'
 
 defineOptions({ inheritAttrs: false })
@@ -44,17 +45,17 @@ const ellipsisContext = computed<BreadcrumbEllipsisContext>(() => {
 })
 
 const rootProps = computed(() => {
-  return attrs
+  return {
+    ...attrs,
+    class: cn(breadcrumbVariants({ variant: props.variant }), attrs.class),
+  }
 })
 
 const listProps = computed(() => {
   const ui = useUi(props.ui?.list, undefined)
   return {
     ...ui,
-    class: cn(
-      'flex flex-wrap items-center gap-1.5 text-sm break-words text-muted-foreground sm:gap-2.5',
-      ui.class,
-    ),
+    class: cn(breadcrumbListVariants({ variant: props.variant }), ui.class),
     style: ui.style,
   }
 })
@@ -73,9 +74,6 @@ const separatorContainerProps = computed(() => {
   const ui = useUi(props.ui?.separatorContainer, undefined)
   return { role: 'presentation', 'aria-hidden': true, ...ui }
 })
-
-const ellipsisIconProps = computed(() => props.ellipsisIcon)
-const separatorIconProps = computed(() => props.separatorIcon)
 
 function getItemContext(item: BreadcrumbItem, index: number): BreadcrumbItemContext | undefined {
   const [start, end] = ellipsisRange.value
@@ -127,15 +125,17 @@ function getItemProps(context: BreadcrumbItemContext) {
 }
 
 function getLinkProps(context: BreadcrumbItemContext) {
+  const { slot, ...linkProps } = context.item
+  void slot
   return {
-    label: context.item.label,
-    icon: context.item.icon,
-    to: context.item.to,
-    ...(!context.linked ? { variant: 'plain' as const } : {}),
+    ...linkProps,
+    variant: 'plain' as const,
+    severity: 'neutral' as const,
     class: cn(
+      'h-auto px-2 py-0 has-[>svg]:px-2',
       context.linked
-        ? 'h-auto gap-1 p-0 text-sm font-normal transition-colors hover:text-muted-foreground'
-        : 'h-auto gap-1 rounded-none border-0 bg-transparent p-0 text-sm font-normal text-foreground no-underline shadow-none hover:bg-transparent hover:text-foreground hover:no-underline active:bg-transparent active:text-foreground',
+        ? 'text-muted-foreground hover:bg-transparent hover:text-foreground focus-visible:border-muted-foreground focus-visible:ring-0'
+        : 'text-foreground',
     ),
   }
 }
@@ -147,7 +147,7 @@ function getLinkProps(context: BreadcrumbItemContext) {
       <template v-for="context in itemContexts" :key="getKey(context)">
         <li v-if="context.ellipsis" v-bind="ellipsisContainerProps" data-test-breadcrumb-ellipsis>
           <slot name="ellipsis" v-bind="ellipsisContext">
-            <Icon v-if="ellipsisIconProps?.name" v-bind="ellipsisIconProps" />
+            <Icon v-if="props.ellipsisIcon" :name="props.ellipsisIcon" />
           </slot>
         </li>
 
@@ -158,7 +158,6 @@ function getLinkProps(context: BreadcrumbItemContext) {
                 v-bind="getLinkProps(context)"
                 :data-test-breadcrumb-link="context.linked ? '' : undefined"
                 :data-test-breadcrumb-page="context.linked ? undefined : ''"
-                @click="context.linked ? context.item.command?.($event) : undefined"
               />
             </slot>
           </slot>
@@ -167,7 +166,7 @@ function getLinkProps(context: BreadcrumbItemContext) {
         <template v-if="!context.last">
           <li v-bind="separatorContainerProps" data-test-breadcrumb-separator>
             <slot name="separator">
-              <Icon v-if="separatorIconProps?.name" v-bind="separatorIconProps" />
+              <Icon v-if="props.separatorIcon" :name="props.separatorIcon" />
             </slot>
           </li>
         </template>

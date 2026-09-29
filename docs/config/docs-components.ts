@@ -6,6 +6,7 @@ import attachment from './components/attachment'
 import aspectRatio from './components/aspect-ratio'
 import avatar from './components/avatar'
 import badge from './components/badge'
+import breadcrumb from './components/breadcrumb'
 import bubble from './components/bubble'
 import button from './components/button'
 import buttonGroup from './components/button-group'
@@ -47,6 +48,7 @@ export const docsComponents = [
   aspectRatio,
   avatar,
   badge,
+  breadcrumb,
   bubble,
   button,
   buttonGroup,

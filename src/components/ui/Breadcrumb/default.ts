@@ -1,6 +1,7 @@
 export const breadcrumbDefaults = {
   items: () => [],
-  ellipsisIcon: { name: 'moreHorizontal' },
-  separatorIcon: { name: 'chevronRight' },
+  ellipsisIcon: 'moreHorizontal' as const,
+  separatorIcon: 'chevronRight' as const,
+  variant: 'plain' as const,
   ui: undefined,
 }
