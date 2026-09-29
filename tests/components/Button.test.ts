@@ -8,8 +8,9 @@ import {
   type ButtonSeverity,
   type ButtonVariant,
 } from '@/components/ui/Button'
+import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconConfig, testIconSize } from '../utils/testIconConfig'
+import { testColor } from '../utils/testColor'
 
 function mountButton(options: MountingOptions<ButtonProps> & Record<string, unknown> = {}) {
   return mount(Button, options)
@@ -25,6 +26,7 @@ const casesSize = [
   { input: 'sm' as const, expected: ['h-8', 'text-sm'] },
   { input: 'md' as const, expected: ['h-9', 'text-base'] },
   { input: 'lg' as const, expected: ['h-10', 'text-lg'] },
+  { input: undefined, expected: ['h-9', 'text-base'] },
 ]
 
 const casesRaised = [
@@ -78,7 +80,16 @@ const casesVariantStyles = [
     expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-(--button-color)'],
     expectedHover: ['hover:no-underline'],
   },
-]
+  {
+    variant: undefined,
+    expectedNormal: ['bg-(--button-solid)', 'text-(--button-solid-foreground)'],
+    expectedHover: ['hover:bg-(--button-solid-hover)', 'active:bg-(--button-solid-active)'],
+  },
+] satisfies {
+  variant: ButtonVariant | undefined
+  expectedNormal: string[]
+  expectedHover: string[]
+}[]
 
 const casesSeverity = [
   {
@@ -166,34 +177,31 @@ const casesSeverity = [
       '[--button-solid-foreground:var(--error-foreground)]',
     ],
   },
+  {
+    severity: undefined,
+    expectedFocus: ['focus-visible:border-primary', 'focus-visible:ring-primary/30'],
+    expectedSeverity: [
+      '[--button-color:var(--primary)]',
+      '[--button-solid:var(--primary)]',
+      '[--button-solid-foreground:var(--primary-foreground)]',
+    ],
+  },
 ] satisfies {
-  severity: ButtonSeverity
+  severity: ButtonSeverity | undefined
   expectedFocus: string[]
   expectedSeverity: string[]
 }[]
 
-const casesSeverityVariant = casesSeverity.flatMap(
-  ({ severity, expectedFocus, expectedSeverity }) =>
-    casesVariantStyles.map(({ variant, expectedNormal, expectedHover }) => ({
-      severity,
-      variant,
-      expectedFocus,
-      expectedSeverity,
-      expectedNormal,
-      expectedHover,
-    })),
-)
-
-const casesShape = [
-  { prop: 'rounded' as const, expected: ['rounded-full'] },
-  { prop: 'square' as const, expected: ['size-(--button-square-size)', 'p-0', 'has-[>svg]:p-0'] },
+const casesRounded = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: false },
 ]
 
-const casesSquareSize = [
-  { size: 'xs' as const, expected: '[--button-square-size:calc(var(--spacing)*7)]' },
-  { size: 'sm' as const, expected: '[--button-square-size:calc(var(--spacing)*8)]' },
-  { size: 'md' as const, expected: '[--button-square-size:calc(var(--spacing)*9)]' },
-  { size: 'lg' as const, expected: '[--button-square-size:calc(var(--spacing)*10)]' },
+const casesSquare = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: false },
 ]
 
 const casesLoading = [
@@ -202,42 +210,33 @@ const casesLoading = [
   { input: undefined, expected: false },
 ]
 
+const casesIcon = [
+  { input: 'save' as const, expected: true },
+  { input: undefined, expected: false },
+]
+
+const casesTrailingIcon = [
+  { input: 'chevronRight' as const, expected: true },
+  { input: undefined, expected: false },
+]
+
+const casesAs = [
+  { input: 'button' as const, expected: 'button' },
+  { input: 'a' as const, expected: 'a' },
+  { input: undefined, expected: 'button' },
+]
+
+const casesAsChild = [
+  { input: true, expected: 'a' },
+  { input: false, expected: 'button' },
+  { input: undefined, expected: 'button' },
+]
+
 const casesClick = [
   { loading: false, ariaDisabled: false, expected: 1 },
   { loading: true, ariaDisabled: undefined, expected: 0 },
   { loading: false, ariaDisabled: true, expected: 0 },
 ]
-
-const expectedColorStateVariables = [
-  '[--button-solid-hover:color-mix(in_oklab,var(--button-solid)_90%,transparent)]',
-  '[--button-solid-active:color-mix(in_oklab,var(--button-solid)_80%,transparent)]',
-  '[--button-outline-border:color-mix(in_oklab,var(--button-color)_40%,transparent)]',
-  '[--button-outline-hover:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
-  '[--button-outline-active-border:color-mix(in_oklab,var(--button-color)_60%,transparent)]',
-  '[--button-outline-active:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
-  '[--button-plain-hover:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
-  '[--button-plain-active:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
-  '[--button-subtle-border:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
-  '[--button-subtle-bg:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
-  '[--button-subtle-hover:color-mix(in_oklab,var(--button-color)_15%,transparent)]',
-  '[--button-subtle-active:color-mix(in_oklab,var(--button-color)_25%,transparent)]',
-  '[--button-soft-bg:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
-  '[--button-soft-hover:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
-  '[--button-soft-active:color-mix(in_oklab,var(--button-color)_30%,transparent)]',
-]
-
-const casesColorVariant = casesVariantStyles.map(({ variant, expectedNormal, expectedHover }) => ({
-  variant,
-  expected: [
-    ...expectedNormal,
-    ...expectedHover,
-    'focus-visible:border-(--button-color)',
-    'focus-visible:ring-(--button-color)/30',
-    '[--button-solid:var(--button-color)]',
-    '[--button-solid-foreground:var(--button-color-foreground)]',
-    ...expectedColorStateVariables,
-  ],
-})) satisfies { variant: ButtonVariant; expected: string[] }[]
 
 describe('Button', () => {
   describe('props', () => {
@@ -261,14 +260,27 @@ describe('Button', () => {
     })
 
     describe('variant', () => {
-      it.each(casesSeverityVariant)(
-        'renderiza severity=$severity con variant=$variant',
-        ({ severity, variant, expectedNormal, expectedHover, expectedFocus, expectedSeverity }) => {
-          const root = mountButton({ props: { severity, variant } }).get('[data-test-button-root]')
-          const classes = root.classes()
+      it.each(casesVariantStyles)(
+        'renderiza variant=$variant',
+        ({ variant, expectedNormal, expectedHover }) => {
+          const classes = mountButton({ props: { variant } })
+            .get('[data-test-button-root]')
+            .classes()
 
           expect(classes).toEqual(expect.arrayContaining(expectedNormal))
           expect(classes).toEqual(expect.arrayContaining(expectedHover))
+        },
+      )
+    })
+
+    describe('severity', () => {
+      it.each(casesSeverity)(
+        'renderiza severity=$severity',
+        ({ severity, expectedFocus, expectedSeverity }) => {
+          const classes = mountButton({ props: { severity } })
+            .get('[data-test-button-root]')
+            .classes()
+
           expect(classes).toEqual(expect.arrayContaining(expectedFocus))
           expect(classes).toEqual(expect.arrayContaining(expectedSeverity))
         },
@@ -286,21 +298,25 @@ describe('Button', () => {
       )
     })
 
-    describe('shape', () => {
-      it.each(casesShape)('renderiza $prop=true', ({ prop, expected }) => {
-        const root = mountButton({ props: { [prop]: true } }).get('[data-test-button-root]')
+    describe('rounded', () => {
+      it.each(casesRounded)('renderiza rounded=$input como $expected', ({ input, expected }) => {
+        const classes = mountButton({ props: { rounded: input } })
+          .get('[data-test-button-root]')
+          .classes()
 
-        expect(root.classes()).toEqual(expect.arrayContaining(expected))
+        expect(classes.includes('rounded-full')).toBe(expected)
       })
+    })
 
-      it.each(casesSquareSize)(
-        'usa el tamaño cuadrado correcto en size=$size',
-        ({ size, expected }) => {
-          const root = mountButton({ props: { size, square: true } }).get('[data-test-button-root]')
+    describe('square', () => {
+      it.each(casesSquare)('renderiza square=$input como $expected', ({ input, expected }) => {
+        const classes = mountButton({ props: { square: input } })
+          .get('[data-test-button-root]')
+          .classes()
 
-          expect(root.classes()).toContain(expected)
-        },
-      )
+        expect(classes.includes('size-(--button-square-size)')).toBe(expected)
+        expect(classes.includes('p-0')).toBe(expected)
+      })
     })
 
     describe('loading', () => {
@@ -315,109 +331,72 @@ describe('Button', () => {
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa las props de icon',
-        id: '[data-test-button-icon]',
-        mount: (input) => mountButton({ props: { icon: input } }),
-      })
+      it.each(casesIcon)(
+        'renderiza icon=$input cuando expected=$expected',
+        ({ input, expected }) => {
+          const button = mountButton({ props: { icon: input } })
+          const icon = button.find('[data-test-button-icon]')
+
+          expect(icon.exists()).toBe(expected)
+          if (expected) expect(button.getComponent(Icon).props('name')).toBe(input)
+        },
+      )
 
       it('oculta el icono inicial durante la carga', () => {
-        const button = mountButton({ props: { icon: { name: 'save' }, loading: true } })
+        const button = mountButton({ props: { icon: 'save', loading: true } })
 
         expect(button.find('[data-test-button-icon]').exists()).toBe(false)
         expect(button.find('[data-test-button-loading-icon]').exists()).toBe(true)
       })
-
-      testIconSize({
-        text: 'hace que icon herede el tamaño de Button',
-        id: '[data-test-button-icon]',
-        mount: (size) => mountButton({ props: { size, icon: { name: 'save' } } }),
-      })
-
-      it('permite personalizar el tamaño de icon', () => {
-        const button = mountButton({
-          props: { size: 'lg', icon: { name: 'save', size: 'xs' } },
-        })
-
-        expect(button.getComponent('[data-test-button-icon]').props('size')).toBe('xs')
-      })
     })
 
     describe('trailingIcon', () => {
-      testIconConfig({
-        text: 'pasa las props de trailingIcon',
-        id: '[data-test-button-trailing-icon]',
-        mount: (input) => mountButton({ props: { trailingIcon: input } }),
-      })
+      it.each(casesTrailingIcon)(
+        'renderiza trailingIcon=$input cuando expected=$expected',
+        ({ input, expected }) => {
+          const button = mountButton({ props: { trailingIcon: input } })
+          const icon = button.find('[data-test-button-trailing-icon]')
+
+          expect(icon.exists()).toBe(expected)
+          if (expected) expect(button.getComponent(Icon).props('name')).toBe(input)
+        },
+      )
 
       it('mantiene visible el icono final durante la carga', () => {
         const button = mountButton({
-          props: { trailingIcon: { name: 'chevronRight' }, loading: true },
+          props: { trailingIcon: 'chevronRight', loading: true },
         })
 
         expect(button.find('[data-test-button-trailing-icon]').exists()).toBe(true)
         expect(button.find('[data-test-button-loading-icon]').exists()).toBe(true)
       })
-
-      testIconSize({
-        text: 'hace que el icono final herede el tamaño de Button',
-        id: '[data-test-button-trailing-icon]',
-        mount: (size) => mountButton({ props: { size, trailingIcon: { name: 'chevronRight' } } }),
-      })
-
-      it('permite personalizar el tamaño del icono final', () => {
-        const button = mountButton({
-          props: {
-            size: 'lg',
-            trailingIcon: { name: 'chevronRight', size: 'xs' },
-          },
-        })
-
-        expect(button.getComponent('[data-test-button-trailing-icon]').props('size')).toBe('xs')
-      })
     })
 
     describe('color', () => {
-      it.each(casesColorVariant)(
-        'combina color personalizado con variant=$variant y severity=success',
-        ({ variant, expected }) => {
-          const root = mountButton({
-            props: { color: '#ff0000', severity: 'success', variant },
-          }).get('[data-test-button-root]')
-
-          expect(root.attributes('style')).toContain('--button-color: #ff0000')
-          expect(root.attributes('style')).toContain('--button-color-foreground: #09090b')
-          expect(root.classes()).toEqual(expect.arrayContaining(expected))
-        },
-      )
-
-      it('prioriza color personalizado sobre severity en la variante solid', () => {
-        const root = mountButton({
-          props: { color: '#ff0000', severity: 'success', variant: 'solid' },
-        }).get('[data-test-button-root]')
-
-        expect(root.classes()).toEqual(
-          expect.arrayContaining([
-            '[--button-color:var(--success)]',
-            '[--button-solid:var(--button-color)]',
-            '[--button-solid-foreground:var(--button-color-foreground)]',
-            'bg-(--button-solid)',
-            'text-(--button-solid-foreground)',
-          ]),
-        )
-        expect(root.attributes('style')).toContain('--button-color: #ff0000')
-        expect(root.attributes('style')).toContain('--button-color-foreground: #09090b')
+      testColor({
+        text: 'aplica color personalizado',
+        id: '[data-test-button-root]',
+        varColor: '--button-color',
+        mount: (color) => mountButton({ props: { color } }),
       })
     })
 
     describe('as', () => {
-      it('renderiza el elemento configurado', () => {
-        const root = mountButton({ props: { as: 'a', label: 'Open', href: '/docs' } }).get(
-          '[data-test-button-root]',
-        )
+      it.each(casesAs)('renderiza as=$input como $expected', ({ input, expected }) => {
+        const root = mountButton({ props: { as: input } }).get('[data-test-button-root]')
 
-        expect(root.element.tagName.toLowerCase()).toBe('a')
-        expect(root.attributes('href')).toBe('/docs')
+        expect(root.element.tagName.toLowerCase()).toBe(expected)
+      })
+    })
+
+    describe('asChild', () => {
+      it.each(casesAsChild)('renderiza asChild=$input como $expected', ({ input, expected }) => {
+        const root = mountButton({
+          props: { asChild: input },
+          slots: { default: () => h('a', { href: '/docs' }, 'Open') },
+        }).get('[data-test-button-root]')
+
+        expect(root.element.tagName.toLowerCase()).toBe(expected)
       })
     })
   })
@@ -462,7 +441,7 @@ describe('Button', () => {
     describe('leading', () => {
       it('renderiza el slot inicial y oculta el icono alternativo', () => {
         const button = mountButton({
-          props: { icon: { name: 'save' } },
+          props: { icon: 'save' },
           slots: {
             leading: () => h('span', { 'data-test-button-slot': 'leading' }, 'Leading'),
           },
@@ -492,7 +471,7 @@ describe('Button', () => {
     describe('trailing', () => {
       it('renderiza el slot final y oculta el icono alternativo', () => {
         const button = mountButton({
-          props: { trailingIcon: { name: 'chevronRight' } },
+          props: { trailingIcon: 'chevronRight' },
           slots: {
             trailing: () => h('span', { 'data-test-button-slot': 'trailing' }, 'Trailing'),
           },

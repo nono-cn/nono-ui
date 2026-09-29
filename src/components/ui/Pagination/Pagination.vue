@@ -11,6 +11,7 @@ import {
   PaginationRoot,
 } from 'reka-ui'
 import { Button } from '@/components/ui/Button'
+import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { useI18n } from '@/i18n'
 import { cn } from '@/lib/utils'
@@ -186,13 +187,14 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
       <PaginationFirst v-if="props.showControls" v-bind="firstProps" data-test-pagination-first>
         <slot name="first" v-bind="paginationContext">
           <Button
-            :icon="firstIconProps"
             :color="props.color"
             :variant="props.variant"
             :severity="props.severity"
             :size="props.size"
             square
-          />
+          >
+            <template #leading><Icon v-bind="firstIconProps" /></template>
+          </Button>
         </slot>
       </PaginationFirst>
 
@@ -203,13 +205,14 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
       >
         <slot name="previous" v-bind="paginationContext">
           <Button
-            :icon="previousIconProps"
             :color="props.color"
             :variant="props.variant"
             :severity="props.severity"
             :size="props.size"
             square
-          />
+          >
+            <template #leading><Icon v-bind="previousIconProps" /></template>
+          </Button>
         </slot>
       </PaginationPrev>
 
@@ -244,14 +247,15 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
           <slot :name="getEllipsisSlotName(itemContext)" v-bind="itemContext">
             <slot name="ellipsis" v-bind="itemContext">
               <Button
-                :icon="ellipsisIconProps"
                 :color="props.color"
                 :variant="props.variant"
                 :severity="props.severity"
                 :size="props.size"
                 as="span"
                 square
-              />
+              >
+                <template #leading><Icon v-bind="ellipsisIconProps" /></template>
+              </Button>
             </slot>
           </slot>
         </PaginationEllipsis>
@@ -260,26 +264,28 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
       <PaginationNext v-if="props.showControls" v-bind="nextProps" data-test-pagination-next>
         <slot name="next" v-bind="paginationContext">
           <Button
-            :icon="nextIconProps"
             :color="props.color"
             :variant="props.variant"
             :severity="props.severity"
             :size="props.size"
             square
-          />
+          >
+            <template #leading><Icon v-bind="nextIconProps" /></template>
+          </Button>
         </slot>
       </PaginationNext>
 
       <PaginationLast v-if="props.showControls" v-bind="lastProps" data-test-pagination-last>
         <slot name="last" v-bind="paginationContext">
           <Button
-            :icon="lastIconProps"
             :color="props.color"
             :variant="props.variant"
             :severity="props.severity"
             :size="props.size"
             square
-          />
+          >
+            <template #leading><Icon v-bind="lastIconProps" /></template>
+          </Button>
         </slot>
       </PaginationLast>
 

@@ -1,38 +1,43 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/Button'
+import { computed, ref } from 'vue'
+import { Button, type ButtonVariant } from '@/components/ui/Button'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const variants: ButtonVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft', 'link']
+const variant = ref<ButtonVariant>('solid')
+
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+
+const variant = ref('${variant.value}' as const)
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-3">
-    <Button label="Solid" variant="solid" severity="primary" />
-    <Button label="Outline" variant="outline" severity="primary" />
-    <Button label="Plain" variant="plain" severity="primary" />
-    <Button label="Subtle" variant="subtle" severity="primary" />
-    <Button label="Soft" variant="soft" severity="primary" />
-    <Button label="Link" variant="link" severity="primary" />
-  </div>
-</template>`
+  <Button label="Save changes" :variant="variant" />
+</template>`,
+)
+
+function reset() {
+  variant.value = 'solid'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Variant"
-    description="Compare the button’s visual variants using the same severity."
+    description="Choose the button’s visual style."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-3">
-      <Button label="Solid" variant="solid" severity="primary" />
-      <Button label="Outline" variant="outline" severity="primary" />
-      <Button label="Plain" variant="plain" severity="primary" />
-      <Button label="Subtle" variant="subtle" severity="primary" />
-      <Button label="Soft" variant="soft" severity="primary" />
-      <Button label="Link" variant="link" severity="primary" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+      </div>
+    </template>
+    <Button label="Save changes" :variant="variant" />
   </ComponentExample>
 </template>

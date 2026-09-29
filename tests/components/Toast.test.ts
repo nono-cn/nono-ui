@@ -202,7 +202,7 @@ describe('Toast', () => {
         async (closeButton) => {
           const button = (await mountToast({ props: { closeButton } })).getComponent(Button)
           expect(button.props('size')).toBe('xs')
-          expect(button.props('icon')).toEqual({ name: 'x' })
+          expect(button.props('icon')).toBe('x')
           expect(button.props('label')).toBe(closeButton?.label)
           expect(button.attributes('disabled') !== undefined).toBe(closeButton?.disabled ?? false)
           expect(button.attributes('aria-label')).toBeTruthy()

@@ -1,38 +1,54 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/Button'
+import { computed, ref } from 'vue'
+import { Button, type ButtonSeverity, type ButtonVariant } from '@/components/ui/Button'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const severities: ButtonSeverity[] = [
+  'primary',
+  'neutral',
+  'secondary',
+  'warning',
+  'success',
+  'error',
+]
+const variants: ButtonVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft', 'link']
+const severity = ref<ButtonSeverity>('primary')
+const variant = ref<ButtonVariant>('solid')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+
+const severity = ref('${severity.value}' as const)
+const variant = ref('${variant.value}' as const)
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-3">
-    <Button label="Primary" variant="solid" severity="primary" />
-    <Button label="Neutral" variant="solid" severity="neutral" />
-    <Button label="Secondary" variant="solid" severity="secondary" />
-    <Button label="Warning" variant="solid" severity="warning" />
-    <Button label="Success" variant="solid" severity="success" />
-    <Button label="Error" variant="solid" severity="error" />
-  </div>
-</template>`
+  <Button label="Save changes" :severity="severity" :variant="variant" />
+</template>`,
+)
+
+function reset() {
+  severity.value = 'primary'
+  variant.value = 'solid'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Severity"
-    description="Compare button severity levels using the same visual variant."
+    description="Choose the button’s semantic color and visual style."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-3">
-      <Button label="Primary" variant="solid" severity="primary" />
-      <Button label="Neutral" variant="solid" severity="neutral" />
-      <Button label="Secondary" variant="solid" severity="secondary" />
-      <Button label="Warning" variant="solid" severity="warning" />
-      <Button label="Success" variant="solid" severity="success" />
-      <Button label="Error" variant="solid" severity="error" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="severity" label="Severity" :options="severities" />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+      </div>
+    </template>
+    <Button label="Save changes" :severity="severity" :variant="variant" />
   </ComponentExample>
 </template>

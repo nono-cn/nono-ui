@@ -114,7 +114,7 @@ const closeButtonProps = computed(() => {
     variant: button?.variant ?? props.variant,
     severity: button?.severity ?? props.severity,
     color: button?.color ?? props.color,
-    icon: button?.icon ?? { name: 'x' as const },
+    icon: button?.icon ?? ('x' as const),
   }
 })
 

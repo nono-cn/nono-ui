@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 import type { PrimitiveProps } from 'reka-ui'
 import type { EmitsAsProps } from '@/types/emits'
 
@@ -150,8 +150,8 @@ export interface ButtonProps extends Pick<PrimitiveProps, 'as' | 'asChild'> {
   raised?: ButtonVariants['raised'] | boolean
   loading?: boolean
   color?: string
-  icon?: IconConfig
-  trailingIcon?: IconConfig
+  icon?: IconName
+  trailingIcon?: IconName
 }
 
 // Emits

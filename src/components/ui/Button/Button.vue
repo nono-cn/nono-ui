@@ -51,18 +51,6 @@ const rootProps = computed(() => {
   }
 })
 
-const iconProps = computed(() => {
-  const icon = props.icon
-
-  return { ...icon, size: icon?.size ?? props.size }
-})
-
-const trailingIconProps = computed(() => {
-  const icon = props.trailingIcon
-
-  return { ...icon, size: icon?.size ?? props.size }
-})
-
 const loadingIconProps = computed(() => {
   return {
     name: 'spinner' as const,
@@ -93,7 +81,7 @@ function handleClick(event: PointerEvent) {
       </template>
       <template v-else>
         <slot name="leading">
-          <Icon v-if="iconProps.name" v-bind="iconProps" data-test-button-icon />
+          <Icon v-if="props.icon" :name="props.icon" :size="props.size" data-test-button-icon />
         </slot>
       </template>
 
@@ -101,8 +89,9 @@ function handleClick(event: PointerEvent) {
 
       <slot name="trailing">
         <Icon
-          v-if="trailingIconProps.name"
-          v-bind="trailingIconProps"
+          v-if="props.trailingIcon"
+          :name="props.trailingIcon"
+          :size="props.size"
           data-test-button-trailing-icon
         />
       </slot>
