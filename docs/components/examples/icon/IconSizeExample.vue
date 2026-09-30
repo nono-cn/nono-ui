@@ -1,34 +1,38 @@
 <script setup lang="ts">
-import { Icon } from '@/components/ui/Icon'
+import { computed, ref } from 'vue'
+import { Icon, iconSizes, type IconSize } from '@/components/ui/Icon'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const size = ref<IconSize>('md')
+const code = computed(
+  () => `<script setup lang="ts">
 import { Icon } from '__DOCS_PACKAGE__/components/ui/Icon'
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-end gap-5">
-    <Icon name="check" size="xs" />
-    <Icon name="check" size="sm" />
-    <Icon name="check" size="md" />
-    <Icon name="check" size="lg" />
-  </div>
-</template>`
+  <Icon name="check" size="${size.value}" />
+</template>`,
+)
+
+function reset() {
+  size.value = 'md'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Size"
-    description="Adjust the icon’s visual size."
+    description="Choose the icon’s visual size."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-end gap-5">
-      <Icon name="check" size="xs" />
-      <Icon name="check" size="sm" />
-      <Icon name="check" size="md" />
-      <Icon name="check" size="lg" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="size" label="Size" :options="iconSizes" />
+      </div>
+    </template>
+    <Icon name="check" :size="size" />
   </ComponentExample>
 </template>

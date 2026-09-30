@@ -1,7 +1,9 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { iconSizes } from '@/components/ui/Icon'
 import IconColorExample from '../../components/examples/icon/IconColorExample.vue'
 import IconNameExample from '../../components/examples/icon/IconNameExample.vue'
 import IconSizeExample from '../../components/examples/icon/IconSizeExample.vue'
+import IconStrokeExample from '../../components/examples/icon/IconStrokeExample.vue'
 import IconUsageExample from '../../components/examples/icon/IconUsageExample.vue'
 
 const iconConfig: ComponentDocConfig = {
@@ -30,8 +32,13 @@ const iconConfig: ComponentDocConfig = {
     },
     {
       title: 'Color',
-      description: 'Apply a custom CSS color to the icon.',
+      description: 'Choose a palette token, inherit currentColor, or use a hexadecimal color.',
       component: IconColorExample,
+    },
+    {
+      title: 'Stroke',
+      description: 'Set the width of the icon’s lines.',
+      component: IconStrokeExample,
     },
   ],
   accessibility: [
@@ -51,7 +58,7 @@ const iconConfig: ComponentDocConfig = {
       },
       {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg'",
+        type: iconSizes.map((size) => `'${size}'`).join(' | '),
         default: "'md'",
         description: 'Visual size of the icon.',
       },
@@ -59,7 +66,14 @@ const iconConfig: ComponentDocConfig = {
         name: 'color',
         type: 'string',
         default: "'currentColor'",
-        description: 'CSS color applied to the icon.',
+        description:
+          'Theme token such as primary or success, a custom token, or a CSS color such as #6366f1. Named tokens fall back to primary. currentColor inherits the surrounding text color.',
+      },
+      {
+        name: 'stroke',
+        type: 'number',
+        default: '2',
+        description: 'SVG stroke width. The line scales with the rendered icon size.',
       },
     ],
     configs: [
@@ -74,7 +88,7 @@ const iconConfig: ComponentDocConfig = {
             name: 'IconProps',
             type: 'IconProps',
             typeLink: '#props',
-            description: 'Includes the Icon component’s name, size, and color props.',
+            description: 'Includes the Icon component’s name, size, color, and stroke props.',
           },
           {
             name: 'HTMLAttributes',
