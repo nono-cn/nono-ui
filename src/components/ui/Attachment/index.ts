@@ -1,22 +1,37 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
 import type { IconName } from '@/components/ui/Icon'
+import {
+  attachmentMediaVariantNames,
+  attachmentOrientationNames,
+  attachmentSizes,
+  attachmentStateNames,
+} from './constants'
 
 export { default as Attachment } from './Attachment.vue'
+export {
+  attachmentMediaVariantNames,
+  attachmentOrientationNames,
+  attachmentSizes,
+  attachmentStateNames,
+} from './constants'
 
 export const attachmentVariants = cva(
   'group/attachment relative flex min-w-0 items-center overflow-hidden rounded-lg border bg-background text-foreground transition-colors',
   {
     variants: {
-      orientation: { horizontal: 'w-fit max-w-full', vertical: 'w-40 flex-col items-stretch' },
-      size: { md: '', sm: '', xs: '' },
+      orientation: {
+        horizontal: 'w-fit max-w-full',
+        vertical: 'w-40 flex-col items-stretch',
+      } satisfies Record<(typeof attachmentOrientationNames)[number], string>,
+      size: { md: '', sm: '', xs: '' } satisfies Record<(typeof attachmentSizes)[number], string>,
       state: {
         idle: 'border-dashed',
         uploading: '',
         processing: '',
         error: 'border-error/50 bg-error/5 text-error',
         done: '',
-      },
+      } satisfies Record<(typeof attachmentStateNames)[number], string>,
     },
     compoundVariants: [
       { orientation: 'horizontal', size: 'md', class: 'gap-3 p-3' },
@@ -33,20 +48,26 @@ export const attachmentMediaVariants = cva(
   'relative z-10 flex shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted text-muted-foreground [&_svg]:shrink-0',
   {
     variants: {
-      orientation: { horizontal: '', vertical: '' },
+      orientation: { horizontal: '', vertical: '' } satisfies Record<
+        (typeof attachmentOrientationNames)[number],
+        string
+      >,
       size: {
         md: 'size-10 [&_svg:not([class*=size-])]:size-5',
         sm: 'size-8 [&_svg:not([class*=size-])]:size-4',
         xs: 'size-6 [&_svg:not([class*=size-])]:size-3.5',
-      },
-      variant: { icon: '', image: '[&_img]:size-full [&_img]:object-cover' },
+      } satisfies Record<(typeof attachmentSizes)[number], string>,
+      variant: { icon: '', image: '[&_img]:size-full [&_img]:object-cover' } satisfies Record<
+        (typeof attachmentMediaVariantNames)[number],
+        string
+      >,
       state: {
         idle: '',
         uploading: '',
         processing: '',
         error: 'bg-error/10 text-error',
         done: '',
-      },
+      } satisfies Record<(typeof attachmentStateNames)[number], string>,
     },
     compoundVariants: [
       { orientation: 'vertical', variant: 'image', class: 'aspect-video h-auto w-full' },
@@ -109,7 +130,7 @@ export type AttachmentMediaVariants = VariantProps<typeof attachmentMediaVariant
 export type AttachmentOrientation = NonNullable<AttachmentVariants['orientation']>
 export type AttachmentSize = NonNullable<AttachmentVariants['size']>
 export type AttachmentState = NonNullable<AttachmentVariants['state']>
-export type AttachmentMediaVariant = 'icon' | 'image'
+export type AttachmentMediaVariant = (typeof attachmentMediaVariantNames)[number]
 export type AttachmentLabel = string
 export type AttachmentDescription = string
 

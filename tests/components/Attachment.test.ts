@@ -283,6 +283,28 @@ describe('Attachment', () => {
           expected === 'image',
         )
       })
+
+      it.each(['icon', 'image'] as const)(
+        'muestra el spinner durante la subida con mediaVariant=%s',
+        (mediaVariant) => {
+          const attachment = mountAttachment({
+            props: { mediaVariant, state: 'uploading', icon: 'fileText' },
+            slots: {
+              media: () => h('span', { 'data-test-attachment-slot': 'media' }, 'Vista previa'),
+            },
+          })
+
+          const spinner = attachment.getComponent('[data-test-attachment-icon]')
+          expect(spinner.props('name')).toBe('spinner')
+          expect(spinner.classes()).toContain('animate-spin')
+          expect(attachment.find('[data-test-attachment-slot="media"]').exists()).toBe(
+            mediaVariant === 'image',
+          )
+          expect(attachment.find('[data-test-attachment-uploading-overlay]').exists()).toBe(
+            mediaVariant === 'image',
+          )
+        },
+      )
     })
 
     describe('ui', () => {

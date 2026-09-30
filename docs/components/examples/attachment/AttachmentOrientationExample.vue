@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment, type AttachmentOrientation } from '@/components/ui/Attachment'
+import {
+  Attachment,
+  attachmentOrientationNames,
+  type AttachmentOrientation,
+} from '@/components/ui/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const orientations: AttachmentOrientation[] = ['horizontal', 'vertical']
 const orientation = ref<AttachmentOrientation>('horizontal')
 const code = computed(
   () => `<script setup lang="ts">
@@ -39,7 +42,11 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="orientation" label="Orientation" :options="orientations" />
+        <ExampleSelectControl
+          v-model="orientation"
+          label="Orientation"
+          :options="attachmentOrientationNames"
+        />
       </div>
     </template>
     <Attachment

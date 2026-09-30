@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment, type AttachmentState, type AttachmentUI } from '@/components/ui/Attachment'
+import {
+  Attachment,
+  attachmentStateNames,
+  type AttachmentState,
+  type AttachmentUI,
+} from '@/components/ui/Attachment'
 import { Button } from '@/components/ui/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const stateOptions: AttachmentState[] = ['idle', 'uploading', 'processing', 'error', 'done']
 const state = ref<AttachmentState>('idle')
 const ui: AttachmentUI = {
   media: ({ state }) => ({
@@ -76,7 +80,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="state" label="State" :options="stateOptions" />
+        <ExampleSelectControl v-model="state" label="State" :options="attachmentStateNames" />
       </div>
     </template>
     <Attachment

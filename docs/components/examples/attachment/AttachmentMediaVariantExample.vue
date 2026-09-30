@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment, type AttachmentMediaVariant } from '@/components/ui/Attachment'
+import {
+  Attachment,
+  attachmentMediaVariantNames,
+  attachmentStateNames,
+  type AttachmentMediaVariant,
+  type AttachmentState,
+} from '@/components/ui/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const mediaVariants: AttachmentMediaVariant[] = ['icon', 'image']
 const mediaVariant = ref<AttachmentMediaVariant>('icon')
+const state = ref<AttachmentState>('idle')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Attachment, type AttachmentMediaVariant } from '__DOCS_PACKAGE__/components/ui/Attachment'
+import { Attachment, type AttachmentMediaVariant, type AttachmentState } from '__DOCS_PACKAGE__/components/ui/Attachment'
 
 const mediaVariant = ref<AttachmentMediaVariant>('${mediaVariant.value}')
+const state = ref<AttachmentState>('${state.value}')
 ${scriptEnd}
 
 <template>
@@ -20,6 +27,7 @@ ${scriptEnd}
     label="landscape.jpg"
     description="JPG · 1.8 MB"
     :media-variant="mediaVariant"
+    :state="state"
     icon="image"
   >
     <template #media>
@@ -31,6 +39,7 @@ ${scriptEnd}
 
 function reset() {
   mediaVariant.value = 'icon'
+  state.value = 'idle'
 }
 </script>
 
@@ -46,14 +55,16 @@ function reset() {
         <ExampleSelectControl
           v-model="mediaVariant"
           label="Media variant"
-          :options="mediaVariants"
+          :options="attachmentMediaVariantNames"
         />
+        <ExampleSelectControl v-model="state" label="State" :options="attachmentStateNames" />
       </div>
     </template>
     <Attachment
       label="landscape.jpg"
       description="JPG · 1.8 MB"
       :media-variant="mediaVariant"
+      :state="state"
       icon="image"
     >
       <template #media>

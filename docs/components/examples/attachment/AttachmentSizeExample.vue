@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment, type AttachmentSize } from '@/components/ui/Attachment'
+import { Attachment, attachmentSizes, type AttachmentSize } from '@/components/ui/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const sizes: AttachmentSize[] = ['md', 'sm', 'xs']
 const size = ref<AttachmentSize>('md')
 const code = computed(
   () => `<script setup lang="ts">
@@ -39,7 +38,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="size" label="Size" :options="sizes" />
+        <ExampleSelectControl v-model="size" label="Size" :options="attachmentSizes" />
       </div>
     </template>
     <Attachment label="document.pdf" description="PDF · 2.4 MB" :size="size" icon="fileText" />

@@ -123,7 +123,16 @@ const actionsProps = computed(() => {
       data-test-attachment-media
       :data-variant="props.mediaVariant"
     >
-      <slot v-if="props.mediaVariant === 'image'" name="media" v-bind="attachmentContext" />
+      <template v-if="props.mediaVariant === 'image'">
+        <slot name="media" v-bind="attachmentContext" />
+        <span
+          v-if="props.state === 'uploading'"
+          class="absolute inset-0 flex items-center justify-center bg-background/60"
+          data-test-attachment-uploading-overlay
+        >
+          <Icon name="spinner" :size="props.size" class="animate-spin" data-test-attachment-icon />
+        </span>
+      </template>
       <Icon v-else-if="mediaIconProps?.name" v-bind="mediaIconProps" data-test-attachment-icon />
     </div>
 
