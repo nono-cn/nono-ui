@@ -10,7 +10,7 @@ import {
   PaginationPrev,
   PaginationRoot,
 } from 'reka-ui'
-import { Button } from '@/components/ui/Button'
+import { Button, toIconButtonSize } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { useI18n } from '@/i18n'
@@ -28,6 +28,7 @@ import { paginationDefaults } from './default'
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<PaginationProps>(), paginationDefaults)
+const iconSize = computed(() => toIconButtonSize(props.size))
 defineEmits<PaginationEmits>()
 defineSlots<PaginationSlots>()
 
@@ -190,8 +191,7 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
             :color="props.color"
             :variant="props.variant"
             :severity="props.severity"
-            :size="props.size"
-            square
+            :size="iconSize"
           >
             <template #leading><Icon v-bind="firstIconProps" /></template>
           </Button>
@@ -208,8 +208,7 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
             :color="props.color"
             :variant="props.variant"
             :severity="props.severity"
-            :size="props.size"
-            square
+            :size="iconSize"
           >
             <template #leading><Icon v-bind="previousIconProps" /></template>
           </Button>
@@ -232,8 +231,7 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
                   itemContext.active ? (props.activeVariant ?? props.variant) : props.variant
                 "
                 :severity="props.severity"
-                :size="props.size"
-                square
+                :size="iconSize"
               />
             </slot>
           </slot>
@@ -250,9 +248,8 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
                 :color="props.color"
                 :variant="props.variant"
                 :severity="props.severity"
-                :size="props.size"
+                :size="iconSize"
                 as="span"
-                square
               >
                 <template #leading><Icon v-bind="ellipsisIconProps" /></template>
               </Button>
@@ -267,8 +264,7 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
             :color="props.color"
             :variant="props.variant"
             :severity="props.severity"
-            :size="props.size"
-            square
+            :size="iconSize"
           >
             <template #leading><Icon v-bind="nextIconProps" /></template>
           </Button>
@@ -281,8 +277,7 @@ function getEllipsisSlotName(context: PaginationItemContext): `ellipsis-${string
             :color="props.color"
             :variant="props.variant"
             :severity="props.severity"
-            :size="props.size"
-            square
+            :size="iconSize"
           >
             <template #leading><Icon v-bind="lastIconProps" /></template>
           </Button>

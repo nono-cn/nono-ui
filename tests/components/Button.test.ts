@@ -27,6 +27,15 @@ const casesSize = [
   { input: undefined, expected: ['h-9', 'text-base'] },
 ]
 
+const casesIconSize = [
+  { input: 'icon-xs' as const, expected: 'size-7', iconSize: 'xs' },
+  { input: 'icon-sm' as const, expected: 'size-8', iconSize: 'sm' },
+  { input: 'icon' as const, expected: 'size-9', iconSize: 'md' },
+  { input: 'icon-lg' as const, expected: 'size-10', iconSize: 'lg' },
+  { input: 'icon-xl' as const, expected: 'size-11', iconSize: 'xl' },
+  { input: undefined, expected:  expected: 'size-9', iconSize: 'md' },
+]
+
 const casesVariantStyles = [
   {
     variant: 'solid' as const,
@@ -114,15 +123,6 @@ const casesVariantStyles = [
   expectedHover: string[]
 }[]
 
-const casesSquare = [
-  { size: 'xs' as const, expected: 'size-7' },
-  { size: 'sm' as const, expected: 'size-8' },
-  { size: 'md' as const, expected: 'size-9' },
-  { size: 'lg' as const, expected: 'size-10' },
-  { size: 'xl' as const, expected: 'size-11' },
-  { size: undefined, expected: 'size-9' },
-]
-
 const casesLoading = [
   { input: true, expected: true },
   { input: false, expected: false },
@@ -197,21 +197,18 @@ describe('Button', () => {
       )
     })
 
-    describe('square', () => {
-      it.each(casesSquare)('aplica $expected con size=$size', ({ size, expected }) => {
-        const root = mountButton({ props: { size, square: true } }).get('[data-test-button-root]')
+    describe('icon size', () => {
+      it.each(casesIconSize)(
+        'aplica $expected con size=$input',
+        ({ input, expected, iconSize }) => {
+          const button = mountButton({ props: { size: input, icon: 'plus' } })
+          const root = button.get('[data-test-button-root]')
 
-        expect(root.classes()).toContain(expected)
-        expect(root.classes()).toContain('p-0')
-        expect(root.classes()).toContain('has-[>svg]:p-0')
-      })
-
-      it.each([false, undefined])('no aplica tamaño cuadrado con square=%s', (square) => {
-        const classes = mountButton({ props: { square } }).get('[data-test-button-root]').classes()
-
-        expect(classes).toContain('h-9')
-        expect(classes).not.toContain('size-9')
-      })
+          expect(root.classes()).toContain(expected)
+          expect(root.classes()).toContain('p-0')
+          expect(button.getComponent(Icon).props('size')).toBe(iconSize)
+        },
+      )
     })
 
     describe('radius', () => {

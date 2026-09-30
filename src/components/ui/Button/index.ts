@@ -3,10 +3,10 @@ import type { HTMLAttributes } from 'vue'
 import type { IconName } from '@/components/ui/Icon'
 import type { PrimitiveProps } from 'reka-ui'
 import type { EmitsAsProps } from '@/types/emits'
-import { buttonSizes, buttonVariantNames } from './constants'
+import { buttonIconSizes, buttonSizes, buttonVariantNames } from './constants'
 
 export { default as Button } from './Button.vue'
-export { buttonSizes, buttonVariantNames } from './constants'
+export { buttonIconSizes, buttonSizes, buttonTextSizes, buttonVariantNames } from './constants'
 
 export const buttonVariants = cva(
   'inline-flex shrink-0 items-center justify-center gap-2 rounded-(--button-radius) border border-transparent font-medium whitespace-nowrap transition-colors outline-none focus-visible:border-(--button-color) focus-visible:ring-[3px] focus-visible:ring-(--button-color)/30 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
@@ -51,23 +51,16 @@ export const buttonVariants = cva(
         md: 'h-9 px-4 py-2 text-base has-[>svg]:px-3',
         lg: 'h-10 px-6 text-lg has-[>svg]:px-4',
         xl: 'h-11 px-7 text-xl has-[>svg]:px-5',
+        'icon-xs': 'size-7 p-0',
+        'icon-sm': 'size-8 p-0',
+        icon: 'size-9 p-0',
+        'icon-lg': 'size-10 p-0',
+        'icon-xl': 'size-11 p-0',
       } satisfies Record<(typeof buttonSizes)[number], string>,
-      square: {
-        true: 'p-0 has-[>svg]:p-0',
-        false: '',
-      },
     },
-    compoundVariants: [
-      { size: 'xs', square: true, class: 'size-7' },
-      { size: 'sm', square: true, class: 'size-8' },
-      { size: 'md', square: true, class: 'size-9' },
-      { size: 'lg', square: true, class: 'size-10' },
-      { size: 'xl', square: true, class: 'size-11' },
-    ],
     defaultVariants: {
       variant: 'solid',
       size: 'md',
-      square: false,
     },
   },
 )
@@ -76,13 +69,18 @@ export const buttonVariants = cva(
 export type ButtonVariants = VariantProps<typeof buttonVariants>
 export type ButtonVariant = NonNullable<ButtonVariants['variant']>
 export type ButtonSize = NonNullable<ButtonVariants['size']>
+export type IconButtonSize = (typeof buttonIconSizes)[number]
+
+export function toIconButtonSize(size: ButtonSize = 'md'): IconButtonSize {
+  if (size === 'icon' || size === 'md') return 'icon'
+  return size.startsWith('icon-') ? (size as IconButtonSize) : (`icon-${size}` as IconButtonSize)
+}
 
 // Props
 export interface ButtonProps extends Pick<PrimitiveProps, 'as' | 'asChild'> {
   label?: string
   variant?: ButtonVariant
   size?: ButtonSize
-  square?: boolean
   radius?: string | number
   loading?: boolean
   color?: string

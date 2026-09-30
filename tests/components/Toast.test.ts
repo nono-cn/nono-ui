@@ -201,7 +201,7 @@ describe('Toast', () => {
         'normaliza %s',
         async (closeButton) => {
           const button = (await mountToast({ props: { closeButton } })).getComponent(Button)
-          expect(button.props('size')).toBe('xs')
+          expect(button.props('size')).toBe('icon-xs')
           expect(button.classes()).toContain('size-7')
           expect(button.props('icon')).toBe('x')
           expect(button.props('label')).toBe(closeButton?.label)
@@ -209,11 +209,12 @@ describe('Toast', () => {
           expect(button.attributes('aria-label')).toBeTruthy()
         },
       )
-      it('ajusta el botón cuadrado al tamaño configurado', async () => {
+      it('ajusta el botón de icono al tamaño configurado', async () => {
         const button = (await mountToast({ props: { closeButton: { size: 'lg' } } })).getComponent(
           Button,
         )
 
+        expect(button.props('size')).toBe('icon-lg')
         expect(button.classes()).toContain('size-10')
       })
       it('hereda props visuales y permite sobrescrituras locales', async () => {

@@ -14,7 +14,7 @@ ${scriptEnd}
 <template>
   <div class="flex flex-wrap items-center gap-4">
     <Button label="Save changes" radius="${radius.value}" />
-    <Button icon="plus" square radius="${radius.value}" aria-label="Add item" />
+    <Button icon="plus" size="icon" radius="${radius.value}" aria-label="Add item" />
     <Button label="12px radius" :radius="12" />
   </div>
 </template>`,
@@ -28,7 +28,7 @@ function reset() {
 <template>
   <ComponentExample
     title="Radius"
-    description="Use a Tailwind radius token, a CSS value, or a number of pixels. Combine full with square for a circular button."
+    description="Use a Tailwind radius token, a CSS value, or a number of pixels. Combine full with an icon size for a circular button."
     :code="code"
     @reset="reset"
   >
@@ -37,7 +37,7 @@ function reset() {
     </template>
     <div class="flex flex-wrap items-center gap-4">
       <Button label="Save changes" :radius="radius" />
-      <Button icon="plus" square :radius="radius" aria-label="Add item" />
+      <Button icon="plus" size="icon" :radius="radius" aria-label="Add item" />
       <Button label="12px radius" :radius="12" />
     </div>
   </ComponentExample>

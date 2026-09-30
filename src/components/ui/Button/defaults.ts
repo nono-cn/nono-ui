@@ -4,7 +4,6 @@ export const buttonDefaults = {
   label: undefined,
   variant: 'solid' as const,
   size: 'md' as const,
-  square: false,
   radius: 'md' as const,
   loading: false,
   color: 'primary',

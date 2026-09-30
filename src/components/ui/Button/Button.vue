@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 import { Primitive } from 'reka-ui'
-import { Icon } from '@/components/ui/Icon'
+import { Icon, type IconSize } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/composables'
 import { buttonVariants, type ButtonEmits, type ButtonProps, type ButtonSlots } from '.'
@@ -23,11 +23,14 @@ const { colorStyle, radiusStyle } = useTheme({
 })
 const ariaDisabled = computed(() => props.loading || attrs['aria-disabled'])
 const ariaBusy = computed(() => props.loading || attrs['aria-busy'])
+const iconSize = computed<IconSize>(() => {
+  if (props.size === 'icon') return 'md'
+  return props.size.startsWith('icon-') ? (props.size.slice(5) as IconSize) : props.size
+})
 const calculatedVariants = computed(() => {
   const classes = buttonVariants({
     variant: props.variant,
     size: props.size,
-    square: props.square,
   })
 
   if (props.as === 'button' || props.as === 'a') return classes
@@ -53,7 +56,7 @@ const rootProps = computed(() => {
 const loadingIconProps = computed(() => {
   return {
     name: 'spinner' as const,
-    size: props.size,
+    size: iconSize.value,
     class: 'animate-spin',
   }
 })
@@ -80,7 +83,7 @@ function handleClick(event: PointerEvent) {
       </template>
       <template v-else>
         <slot name="leading">
-          <Icon v-if="props.icon" :name="props.icon" :size="props.size" data-test-button-icon />
+          <Icon v-if="props.icon" :name="props.icon" :size="iconSize" data-test-button-icon />
         </slot>
       </template>
 
@@ -90,7 +93,7 @@ function handleClick(event: PointerEvent) {
         <Icon
           v-if="props.trailingIcon"
           :name="props.trailingIcon"
-          :size="props.size"
+          :size="iconSize"
           data-test-button-trailing-icon
         />
       </slot>

@@ -9,7 +9,7 @@ import {
   ToastTitle,
   ToastViewport,
 } from 'reka-ui'
-import { Button } from '@/components/ui/Button'
+import { Button, toIconButtonSize } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import { useColor } from '@/composables'
 import { useUi } from '@/composables/useUi'
@@ -108,9 +108,8 @@ const closeButtonProps = computed(() => {
   const button = props.closeButton
   return {
     ...button,
-    size: button?.size ?? ('xs' as const),
-    square: button?.square ?? true,
-    rounded: button?.rounded ?? true,
+    size: toIconButtonSize(button?.size ?? 'xs'),
+    radius: button?.radius ?? 'full',
     variant: button?.variant ?? props.variant,
     severity: button?.severity ?? props.severity,
     color: button?.color ?? props.color,

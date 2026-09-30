@@ -4,8 +4,7 @@ import ButtonColorExample from '../../components/examples/button/ButtonColorExam
 import ButtonIconExample from '../../components/examples/button/ButtonIconExample.vue'
 import ButtonDisabledExample from '../../components/examples/button/ButtonDisabledExample.vue'
 import ButtonLoadingExample from '../../components/examples/button/ButtonLoadingExample.vue'
-import ButtonClassExample from '../../components/examples/button/ButtonClassExample.vue'
-import ButtonSquareExample from '../../components/examples/button/ButtonSquareExample.vue'
+import ButtonIconSizeExample from '../../components/examples/button/ButtonIconSizeExample.vue'
 import ButtonRadiusExample from '../../components/examples/button/ButtonRadiusExample.vue'
 import ButtonSizeExample from '../../components/examples/button/ButtonSizeExample.vue'
 import ButtonTrailingIconExample from '../../components/examples/button/ButtonTrailingIconExample.vue'
@@ -42,14 +41,9 @@ const buttonConfig: ComponentDocConfig = {
       component: ButtonSizeExample,
     },
     {
-      title: 'Class',
-      description: 'Apply Tailwind classes to customize the button radius and shadow.',
-      component: ButtonClassExample,
-    },
-    {
-      title: 'Square',
-      description: 'Give an icon button equal width and height at each size.',
-      component: ButtonSquareExample,
+      title: 'Icon size',
+      description: 'Choose a square size for an icon-only button.',
+      component: ButtonIconSizeExample,
     },
     {
       title: 'Radius',
@@ -102,20 +96,15 @@ const buttonConfig: ComponentDocConfig = {
         name: 'size',
         type: buttonSizes.map((size) => `'${size}'`).join(' | '),
         default: "'md'",
-        description: 'Visual size of the button.',
-      },
-      {
-        name: 'square',
-        type: 'boolean',
-        default: 'false',
-        description: 'Sets equal width and height based on size and removes padding.',
+        description:
+          'Text button size from xs to xl, or square icon size from icon-xs to icon-xl. Icon is the medium icon size.',
       },
       {
         name: 'radius',
         type: 'string | number',
         default: "'md'",
         description:
-          'Tailwind radius token, CSS border-radius value, or a number of pixels. Combine full with square for a circular button.',
+          'Tailwind radius token, CSS border-radius value, or a number of pixels. Combine full with an icon size for a circular button.',
       },
       {
         name: 'loading',

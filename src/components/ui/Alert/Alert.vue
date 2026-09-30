@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs, useSlots } from 'vue'
-import { Button } from '@/components/ui/Button'
+import { Button, toIconButtonSize } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
@@ -73,9 +73,8 @@ const closeButtonProps = computed(() => {
   return {
     ...button,
     'aria-label': t('close'),
-    size: button?.size ?? ('xs' as const),
-    square: button?.square ?? true,
-    rounded: button?.rounded ?? true,
+    size: toIconButtonSize(button?.size ?? 'xs'),
+    radius: button?.radius ?? 'full',
     variant: button?.variant ?? props.variant,
     severity: button?.severity ?? props.severity,
     color: button?.color ?? props.color,

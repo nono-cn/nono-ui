@@ -166,8 +166,9 @@ describe('Pagination', () => {
 
     describe('size', () => {
       it.each([
-        { input: undefined, expected: 'md', expectedClass: 'size-9' },
-        { input: 'sm', expected: 'sm', expectedClass: 'size-8' },
+        { input: undefined, expected: 'icon', expectedClass: 'size-9' },
+        { input: 'sm', expected: 'icon-sm', expectedClass: 'size-8' },
+        { input: 'icon-lg', expected: 'icon-lg', expectedClass: 'size-10' },
       ])(
         'pasa input=$input como expected=$expected a los botones',
         ({ input, expected, expectedClass }) => {

@@ -349,8 +349,7 @@ function handleDrop(event: DragEvent) {
                 type="button"
                 variant="plain"
                 severity="secondary"
-                size="xs"
-                square
+                size="icon-xs"
                 :aria-label="t('fileUploadRemove', { name: file.name })"
                 icon="x"
                 @click="removeFile(index)"

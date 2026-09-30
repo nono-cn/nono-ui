@@ -215,8 +215,8 @@ describe('Alert', () => {
         expect(closeButton.props()).toEqual(
           expect.objectContaining({
             icon: 'x',
-            size: 'xs',
-            square: true,
+            size: 'icon-xs',
+            radius: 'full',
             variant: 'soft',
             color: 'primary',
           }),
