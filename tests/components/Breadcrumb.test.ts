@@ -28,6 +28,8 @@ const casesVariant: BreadcrumbVariant[] = ['plain', 'outlined', 'frame']
 const casesEllipsisIndex = [
   { input: undefined, visible: false },
   { input: [0, 1] as [number, number], visible: true },
+  { input: [0, 0] as [number, number], visible: false },
+  { input: [0, 2] as [number, number], visible: false },
   { input: [-1, 1] as [number, number], visible: false },
   { input: [2, 1] as [number, number], visible: false },
   { input: [3, 3] as [number, number], visible: false },
@@ -140,31 +142,25 @@ describe('Breadcrumb', () => {
         })
       })
 
-      describe('rounded', () => {
-        it('pasa rounded al Link', () => {
+      describe('radius', () => {
+        it('pasa radius al Link', () => {
           const wrapper = mountBreadcrumb({
-            props: { items: [{ slot: 'home', rounded: true }] },
+            props: { items: [{ slot: 'home', radius: 'lg' }] },
           })
-          expect(wrapper.getComponent(Link).props('rounded')).toBe(true)
+          expect(wrapper.getComponent(Link).props('radius')).toBe('lg')
         })
       })
 
-      describe('square', () => {
-        it('pasa square al Link', () => {
-          const wrapper = mountBreadcrumb({
-            props: { items: [{ slot: 'home', square: true }] },
-          })
-          expect(wrapper.getComponent(Link).props('square')).toBe(true)
-        })
-      })
+      it('marca solo la página actual con aria-current="page"', () => {
+        const wrapper = mountBreadcrumb({ props: { items, ellipsisIndex: [0, 1] } })
 
-      describe('raised', () => {
-        it('pasa raised al Link', () => {
-          const wrapper = mountBreadcrumb({
-            props: { items: [{ slot: 'home', raised: true }] },
-          })
-          expect(wrapper.getComponent(Link).props('raised')).toBe(true)
-        })
+        expect(wrapper.get('[data-test-breadcrumb-page]').attributes('aria-current')).toBe('page')
+        expect(
+          wrapper.get('[data-test-breadcrumb-item="current"]').attributes('aria-current'),
+        ).toBeUndefined()
+        expect(
+          wrapper.find('[data-test-breadcrumb-ellipsis]').attributes('aria-current'),
+        ).toBeUndefined()
       })
 
       it('no pasa slot como atributo del Link', () => {
@@ -253,8 +249,7 @@ describe('Breadcrumb', () => {
         expect(link.classes()).toContain('hover:bg-transparent')
         expect(link.classes()).toContain('focus-visible:border-muted-foreground')
         expect(link.classes()).toContain('focus-visible:ring-0')
-        expect(wrapper.findAllComponents(Link)[0].props('severity')).toBe('neutral')
-        expect(wrapper.findAllComponents(Link)[0].props('color')).toBeUndefined()
+        expect(wrapper.findAllComponents(Link)[0].props('color')).toBe('neutral')
       })
 
       it('muestra el item sin enlace en color de texto base', () => {
@@ -285,6 +280,13 @@ describe('Breadcrumb', () => {
         expect(wrapper.find('[data-test-breadcrumb-item="home"]').exists()).toBe(false)
         expect(wrapper.find('[data-test-breadcrumb-item="library"]').exists()).toBe(false)
         expect(wrapper.find('[data-test-breadcrumb-item="current"]').exists()).toBe(true)
+      })
+
+      it('mantiene visible la página actual si el rango intenta ocultarla', () => {
+        const wrapper = mountBreadcrumb({ props: { items, ellipsisIndex: [0, 2] } })
+
+        expect(wrapper.find('[data-test-breadcrumb-ellipsis]').exists()).toBe(false)
+        expect(wrapper.get('[data-test-breadcrumb-page]').text()).toBe('Actual')
       })
     })
 

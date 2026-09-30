@@ -1,4 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { breadcrumbVariantNames } from '@/components/ui/Breadcrumb'
 import BreadcrumbUsageExample from '../../components/examples/breadcrumb/BreadcrumbUsageExample.vue'
 import BreadcrumbEllipsisExample from '../../components/examples/breadcrumb/BreadcrumbEllipsisExample.vue'
 import BreadcrumbSeparatorIconExample from '../../components/examples/breadcrumb/BreadcrumbSeparatorIconExample.vue'
@@ -61,7 +62,7 @@ const breadcrumbConfig: ComponentDocConfig = {
     {
       title: 'Current page and collapsed levels',
       description:
-        'The last visible item receives aria-current. Keep its label meaningful, and give custom ellipsis content an accessible description of the hidden levels.',
+        'The current page receives aria-current="page" on its default Link. If you replace an item with a custom slot, apply aria-current="page" to its current-page element. Keep its label meaningful and describe hidden levels in custom ellipsis content.',
     },
   ],
   api: {
@@ -78,7 +79,7 @@ const breadcrumbConfig: ComponentDocConfig = {
         type: '[start: number, end: number]',
         default: 'undefined',
         description:
-          'Replaces the item at start with an ellipsis and hides items from start + 1 through end (inclusive).',
+          'Replaces the item at start with an ellipsis and hides items from start + 1 through end (inclusive). The range must hide at least one item and leave the current page visible.',
       },
       {
         name: 'ellipsisIcon',
@@ -96,7 +97,7 @@ const breadcrumbConfig: ComponentDocConfig = {
       },
       {
         name: 'variant',
-        type: "'plain' | 'outlined' | 'frame'",
+        type: breadcrumbVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: "'plain'",
         description:
           'Layout of the breadcrumb container: unframed, outlined, or framed with two subtle borders.',
@@ -156,7 +157,7 @@ const breadcrumbConfig: ComponentDocConfig = {
         typeLabel: 'Item',
         showDefault: false,
         description:
-          'Each item is a slot key plus LinkProps except variant, severity, and color. Links use muted text that becomes foreground on hover, while items without a destination use foreground text.',
+          'Each item is a slot key plus LinkProps except variant and color. Links use muted text that becomes foreground on hover, while items without a destination use foreground text.',
         rows: [
           {
             name: 'slot',
@@ -166,9 +167,9 @@ const breadcrumbConfig: ComponentDocConfig = {
           },
           {
             name: '...LinkProps',
-            type: "Omit<LinkProps, 'variant' | 'severity' | 'color'>",
+            type: "Omit<LinkProps, 'variant' | 'color'>",
             description:
-              'Passed to Link, including label, icon, trailingIcon, to, replace, size, rounded, square, and raised. Every item uses plain Link variant; without to, Link renders a non-navigating div.',
+              'Passed to Link, including label, icon, trailingIcon, to, replace, size, and radius. Every item uses the plain Link variant and neutral color; without to, Link renders a non-navigating div.',
           },
         ],
       },

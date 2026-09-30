@@ -9,7 +9,6 @@ export type LinkProps = Omit<ButtonProps, 'as' | 'asChild' | 'loading'> &
   Partial<Pick<RouterLinkProps, 'to' | 'replace'>>
 
 export type LinkVariant = NonNullable<ButtonProps['variant']>
-export type LinkSeverity = NonNullable<ButtonProps['severity']>
 export type LinkSize = NonNullable<ButtonProps['size']>
 
 // Emits

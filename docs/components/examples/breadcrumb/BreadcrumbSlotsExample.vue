@@ -28,12 +28,14 @@ ${scriptEnd}
       <span :aria-label="hiddenItems.length + ' hidden levels'">+{{ hiddenItems.length }}</span>
     </template>
     <template #separator><span aria-hidden="true">/</span></template>
-    <template #item="{ item, linked }">
-      <Link :to="item.to" :label="item.label" variant="plain" severity="neutral"
+    <template #item="{ item, linked, last }">
+      <Link :to="item.to" :label="item.label" variant="plain" color="neutral"
+        :aria-current="last ? 'page' : undefined"
         :class="linked ? 'text-muted-foreground hover:bg-transparent hover:text-foreground' : 'text-foreground'" />
     </template>
-    <template #item-home="{ item }">
-      <Link :to="item.to" :label="item.label" icon="home" variant="plain" severity="neutral"
+    <template #item-home="{ item, last }">
+      <Link :to="item.to" :label="item.label" icon="home" variant="plain" color="neutral"
+        :aria-current="last ? 'page' : undefined"
         class="text-muted-foreground hover:bg-transparent hover:text-foreground" />
     </template>
   </Breadcrumb>
@@ -52,12 +54,13 @@ ${scriptEnd}
         <span :aria-label="hiddenItems.length + ' hidden levels'">+{{ hiddenItems.length }}</span>
       </template>
       <template #separator><span aria-hidden="true">/</span></template>
-      <template #item="{ item, linked }">
+      <template #item="{ item, linked, last }">
         <Link
           :to="item.to"
           :label="item.label"
           variant="plain"
-          severity="neutral"
+          color="neutral"
+          :aria-current="last ? 'page' : undefined"
           :class="
             linked
               ? 'text-muted-foreground hover:bg-transparent hover:text-foreground'
@@ -65,13 +68,14 @@ ${scriptEnd}
           "
         />
       </template>
-      <template #item-home="{ item }">
+      <template #item-home="{ item, last }">
         <Link
           :to="item.to"
           :label="item.label"
           icon="home"
           variant="plain"
-          severity="neutral"
+          color="neutral"
+          :aria-current="last ? 'page' : undefined"
           class="text-muted-foreground hover:bg-transparent hover:text-foreground"
         />
       </template>

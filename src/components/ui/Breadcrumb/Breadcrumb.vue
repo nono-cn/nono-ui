@@ -29,8 +29,8 @@ const hasEllipsis = computed(() => {
     start !== undefined &&
     end !== undefined &&
     start >= 0 &&
-    end >= start &&
-    start < props.items.length
+    end > start &&
+    end < props.items.length - 1
   )
 })
 
@@ -92,7 +92,7 @@ function getItemContext(item: BreadcrumbItem, index: number): BreadcrumbItemCont
     item,
     index,
     first: index === 0,
-    last: index === props.items.length - 1 || (ellipsis && end === props.items.length - 1),
+    last: index === props.items.length - 1,
     linked: !ellipsis && item.to !== undefined,
     ellipsis,
   }
@@ -117,7 +117,6 @@ function getSlotNames(context: BreadcrumbItemContext) {
 function getItemProps(context: BreadcrumbItemContext) {
   const ui = useUi(props.ui?.item, context)
   return {
-    'aria-current': context.last,
     ...ui,
     class: cn('inline-flex items-center gap-1.5', ui.class),
     style: ui.style,
@@ -130,7 +129,8 @@ function getLinkProps(context: BreadcrumbItemContext) {
   return {
     ...linkProps,
     variant: 'plain' as const,
-    severity: 'neutral' as const,
+    color: 'neutral',
+    'aria-current': context.last ? 'page' : undefined,
     class: cn(
       'h-auto px-2 py-0 has-[>svg]:px-2',
       context.linked

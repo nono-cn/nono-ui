@@ -2,8 +2,11 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
 import type { LinkProps } from '@/components/ui/Link'
 import type { IconName } from '@/components/ui/Icon'
+import { breadcrumbVariantNames } from './constants'
+import { breadcrumbDefaults } from './default'
 
 export { default as Breadcrumb } from './Breadcrumb.vue'
+export { breadcrumbVariantNames } from './constants'
 
 export const breadcrumbVariants = cva('', {
   variants: {
@@ -11,10 +14,10 @@ export const breadcrumbVariants = cva('', {
       plain: 'inline-flex rounded-xl border border-transparent px-3 py-2',
       outlined: 'inline-flex rounded-xl border border-border px-3 py-2',
       frame: 'inline-flex rounded-xl border border-border bg-muted p-1 shadow-sm',
-    },
+    } satisfies Record<(typeof breadcrumbVariantNames)[number], string>,
   },
   defaultVariants: {
-    variant: 'plain',
+    variant: breadcrumbDefaults.variant,
   },
 })
 
@@ -26,10 +29,10 @@ export const breadcrumbListVariants = cva(
         plain: '',
         outlined: '',
         frame: 'rounded-lg border border-border bg-background px-2 py-1',
-      },
+      } satisfies Record<(typeof breadcrumbVariantNames)[number], string>,
     },
     defaultVariants: {
-      variant: 'plain',
+      variant: breadcrumbDefaults.variant,
     },
   },
 )
@@ -38,7 +41,7 @@ export type BreadcrumbVariants = VariantProps<typeof breadcrumbVariants>
 export type BreadcrumbVariant = NonNullable<BreadcrumbVariants['variant']>
 
 // Item
-export type BreadcrumbItem = { slot: string } & Omit<LinkProps, 'variant' | 'severity' | 'color'>
+export type BreadcrumbItem = { slot: string } & Omit<LinkProps, 'variant' | 'color'>
 
 // Props
 export interface BreadcrumbProps {

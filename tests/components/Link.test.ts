@@ -93,6 +93,13 @@ describe('Link', () => {
     })
 
     describe('button configuration', () => {
+      it('usa los valores actuales de color y radius por defecto', () => {
+        const button = mountLink().getComponent(Button)
+
+        expect(button.props('color')).toBe('primary')
+        expect(button.props('radius')).toBe('md')
+      })
+
       it.each(casesAs)('pasa as=$expected a Button para to=$to', ({ to, expected }) => {
         const button = mountLink({ props: { to } }).getComponent(Button)
 
