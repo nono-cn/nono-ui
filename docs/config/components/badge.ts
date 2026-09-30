@@ -1,8 +1,9 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { badgeSizes, badgeVariantNames } from '@/components/ui/Badge'
 import BadgeLabelExample from '../../components/examples/badge/BadgeLabelExample.vue'
 import BadgeColorExample from '../../components/examples/badge/BadgeColorExample.vue'
 import BadgeIconExample from '../../components/examples/badge/BadgeIconExample.vue'
-import BadgeSeverityExample from '../../components/examples/badge/BadgeSeverityExample.vue'
+import BadgeRadiusExample from '../../components/examples/badge/BadgeRadiusExample.vue'
 import BadgeSizeExample from '../../components/examples/badge/BadgeSizeExample.vue'
 import BadgeTrailingIconExample from '../../components/examples/badge/BadgeTrailingIconExample.vue'
 import BadgeSlotsExample from '../../components/examples/badge/BadgeSlotsExample.vue'
@@ -34,18 +35,18 @@ const badgeConfig: ComponentDocConfig = {
       component: BadgeVariantExample,
     },
     {
-      title: 'Severity',
-      description: 'Choose the semantic color and visual style of the badge.',
-      component: BadgeSeverityExample,
-    },
-    {
       title: 'Size',
-      description: 'Choose the badge size and internal spacing.',
+      description: 'Choose the badge size, internal spacing, and icon size.',
       component: BadgeSizeExample,
     },
     {
+      title: 'Radius',
+      description: 'Choose the corner radius of the badge.',
+      component: BadgeRadiusExample,
+    },
+    {
       title: 'Color',
-      description: 'Choose a custom color and see how each variant applies it.',
+      description: 'Choose a theme token or custom color and see how each variant applies it.',
       component: BadgeColorExample,
     },
     {
@@ -81,27 +82,27 @@ const badgeConfig: ComponentDocConfig = {
       },
       {
         name: 'size',
-        type: "'sm' | 'md' | 'lg'",
+        type: badgeSizes.map((size) => `'${size}'`).join(' | '),
         default: "'md'",
-        description: 'Visual size and internal spacing of the badge.',
+        description: 'Visual size and internal spacing of the badge and its icons.',
       },
       {
         name: 'variant',
-        type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft'",
+        type: badgeVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: "'solid'",
         description: 'Visual style applied to the badge.',
       },
       {
-        name: 'severity',
-        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'primary'",
-        description: 'Semantic severity used to choose the badge color.',
+        name: 'radius',
+        type: 'string | number',
+        default: "'md'",
+        description: 'Tailwind radius token, CSS border-radius value, or a number of pixels.',
       },
       {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Custom CSS color with a calculated contrasting text color.',
+        default: "'primary'",
+        description: 'Theme token or CSS color used by the badge variants.',
       },
       {
         name: 'icon',

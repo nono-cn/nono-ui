@@ -2,39 +2,33 @@
 import { computed, useAttrs } from 'vue'
 import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import { badgeVariants, type BadgeProps, type BadgeSlots } from '.'
+import { badgeDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<BadgeProps>(), {
-  label: undefined,
-  size: 'md',
-  variant: 'solid',
-  severity: 'primary',
-  color: undefined,
-  icon: undefined,
-  trailingIcon: undefined,
-})
+const props = withDefaults(defineProps<BadgeProps>(), badgeDefaults)
 defineSlots<BadgeSlots>()
 
 const attrs = useAttrs()
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'badge',
-)
+const { colorStyle, radiusStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'badge',
+  defaultColor: badgeDefaults.color,
+  radius: () => props.radius,
+  defaultRadius: badgeDefaults.radius,
+})
 const rootProps = computed(() => {
   const calculatedVariants = badgeVariants({
     size: props.size,
     variant: props.variant,
-    severity: props.severity,
-    color: Boolean(props.color),
   })
 
   return {
     ...attrs,
     class: cn(calculatedVariants, attrs.class),
-    style: [colorStyle.value, attrs.style],
+    style: [colorStyle.value, radiusStyle.value, attrs.style],
   }
 })
 

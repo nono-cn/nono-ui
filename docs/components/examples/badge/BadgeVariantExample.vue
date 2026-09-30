@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge, type BadgeVariant } from '@/components/ui/Badge'
+import { Badge, badgeVariantNames, type BadgeVariant } from '@/components/ui/Badge'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants: BadgeVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft']
 const variant = ref<BadgeVariant>('solid')
 const code = computed(
   () => `<script setup lang="ts">
@@ -34,7 +33,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="badgeVariantNames" />
       </div>
     </template>
     <Badge label="Active" :variant="variant" />

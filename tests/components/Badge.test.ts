@@ -2,25 +2,28 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import {
-  Badge,
-  type BadgeProps,
-  type BadgeSeverity,
-  type BadgeSize,
-  type BadgeVariant,
-} from '@/components/ui/Badge'
+import { Badge, type BadgeProps, type BadgeSize, type BadgeVariant } from '@/components/ui/Badge'
+import { themeColors } from '@/components/ui/constants'
 import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
+import { testRadius } from '../utils/testRadius'
 
 function mountBadge(options: MountingOptions<BadgeProps> = {}) {
   return mount(Badge, options)
 }
 
+const casesLabel = [
+  { input: 'Status', expected: 'Status' },
+  { input: undefined, expected: '' },
+]
+
 const casesSize = [
+  { input: 'xs', expected: ['gap-0.5', 'px-0.5', 'text-xs'] },
   { input: 'sm', expected: ['gap-0.5', 'px-0.5', 'text-sm'] },
   { input: 'md', expected: ['gap-1', 'px-1', 'text-base'] },
   { input: 'lg', expected: ['gap-1.5', 'px-2', 'text-lg'] },
+  { input: 'xl', expected: ['gap-2', 'px-2.5', 'text-xl'] },
   { input: undefined, expected: ['gap-1', 'px-1', 'text-base'] },
 ] satisfies { input: BadgeSize | undefined; expected: string[] }[]
 
@@ -51,79 +54,6 @@ const casesVariant = [
   },
 ] satisfies { input: BadgeVariant | undefined; expected: string[] }[]
 
-const casesSeverity = [
-  {
-    severity: 'primary',
-    expected: [
-      '[--badge-color:var(--primary)]',
-      '[--badge-solid:var(--primary)]',
-      '[--badge-solid-foreground:var(--primary-foreground)]',
-      'focus-visible:border-primary',
-      'focus-visible:ring-primary/30',
-    ],
-  },
-  {
-    severity: 'neutral',
-    expected: [
-      '[--badge-color:var(--foreground)]',
-      '[--badge-solid:var(--foreground)]',
-      '[--badge-solid-foreground:var(--background)]',
-      'focus-visible:border-foreground',
-      'focus-visible:ring-foreground/30',
-    ],
-  },
-  {
-    severity: 'secondary',
-    expected: [
-      '[--badge-color:var(--secondary-foreground)]',
-      '[--badge-solid:var(--secondary)]',
-      '[--badge-solid-foreground:var(--secondary-foreground)]',
-      'focus-visible:border-secondary-foreground',
-      'focus-visible:ring-secondary-foreground/20',
-    ],
-  },
-  {
-    severity: 'warning',
-    expected: [
-      '[--badge-color:var(--warning)]',
-      '[--badge-solid:var(--warning)]',
-      '[--badge-solid-foreground:var(--warning-foreground)]',
-      'focus-visible:border-warning',
-      'focus-visible:ring-warning/30',
-    ],
-  },
-  {
-    severity: 'success',
-    expected: [
-      '[--badge-color:var(--success)]',
-      '[--badge-solid:var(--success)]',
-      '[--badge-solid-foreground:var(--success-foreground)]',
-      'focus-visible:border-success',
-      'focus-visible:ring-success/30',
-    ],
-  },
-  {
-    severity: 'error',
-    expected: [
-      '[--badge-color:var(--error)]',
-      '[--badge-solid:var(--error)]',
-      '[--badge-solid-foreground:var(--error-foreground)]',
-      'focus-visible:border-error',
-      'focus-visible:ring-error/30',
-    ],
-  },
-  {
-    severity: undefined,
-    expected: [
-      '[--badge-color:var(--primary)]',
-      '[--badge-solid:var(--primary)]',
-      '[--badge-solid-foreground:var(--primary-foreground)]',
-      'focus-visible:border-primary',
-      'focus-visible:ring-primary/30',
-    ],
-  },
-] satisfies { severity: BadgeSeverity | undefined; expected: string[] }[]
-
 const casesIcon = [
   { input: 'check' as const, expected: 'check' },
   { input: undefined, expected: undefined },
@@ -137,10 +67,7 @@ const casesTrailingIcon = [
 describe('Badge', () => {
   describe('props', () => {
     describe('label', () => {
-      it.each([
-        { input: 'Status', expected: 'Status' },
-        { input: undefined, expected: '' },
-      ])('renderiza label=$input como "$expected"', ({ input, expected }) => {
+      it.each(casesLabel)('renderiza label=$input como "$expected"', ({ input, expected }) => {
         const badge = mountBadge({ props: { label: input } })
 
         expect(badge.get('[data-test-badge-root]').text()).toBe(expected)
@@ -170,19 +97,27 @@ describe('Badge', () => {
       })
     })
 
-    describe('severity', () => {
-      it.each(casesSeverity)('renderiza severity=$severity', ({ severity, expected }) => {
-        const root = mountBadge({ props: { severity } }).get('[data-test-badge-root]')
-
-        expect(root.classes()).toEqual(expect.arrayContaining(expected))
+    describe('radius', () => {
+      testRadius({
+        id: '[data-test-badge-root]',
+        variable: '--badge-radius',
+        defaultValue: 'var(--radius-md)',
+        mount: (radius) => mountBadge({ props: { radius } }),
       })
     })
 
     describe('color', () => {
       testColor({
-        text: 'aplica color personalizado',
+        text: 'resuelve el color',
         id: '[data-test-badge-root]',
         varColor: '--badge-color',
+        defaultColor: 'var(--primary, var(--primary))',
+        theme: {
+          colors: themeColors,
+          foregroundVar: '--badge-color-foreground',
+          solidVar: '--badge-solid',
+          solidForegroundVar: '--badge-solid-foreground',
+        },
         mount: (color) => mountBadge({ props: { color } }),
       })
     })

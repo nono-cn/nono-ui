@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge, type BadgeVariant } from '@/components/ui/Badge'
+import { Badge, badgeVariantNames, type BadgeVariant } from '@/components/ui/Badge'
+import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants: BadgeVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft']
-const color = ref('#6366f1')
+const colors = [...themeColors, 'custom']
+const selectedColor = ref<string>('primary')
+const customColor = ref('#6366f1')
+const color = computed(() =>
+  selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
+)
 const variant = ref<BadgeVariant>('solid')
 const code = computed(
   () => `<script setup lang="ts">
@@ -19,12 +24,13 @@ const variant = ref<BadgeVariant>('${variant.value}')
 ${scriptEnd}
 
 <template>
-  <Badge label="Custom color" :color="color" :variant="variant" />
+  <Badge label="Notice" :color="color" :variant="variant" />
 </template>`,
 )
 
 function reset() {
-  color.value = '#6366f1'
+  selectedColor.value = 'primary'
+  customColor.value = '#6366f1'
   variant.value = 'solid'
 }
 </script>
@@ -32,16 +38,21 @@ function reset() {
 <template>
   <ComponentExample
     title="Color"
-    description="Choose a custom color and see how each variant applies it."
+    description="Choose a theme token or custom color, then select a visual style."
     :code="code"
     @reset="reset"
   >
     <template #controls>
-      <div class="flex flex-wrap items-end gap-4">
-        <ExampleColorControl v-model="color" label="Color" />
-        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="selectedColor" label="Color" :options="colors" />
+        <ExampleColorControl
+          v-if="selectedColor === 'custom'"
+          v-model="customColor"
+          label="Custom color"
+        />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="badgeVariantNames" />
       </div>
     </template>
-    <Badge label="Custom color" :color="color" :variant="variant" />
+    <Badge label="Notice" :color="color" :variant="variant" />
   </ComponentExample>
 </template>
