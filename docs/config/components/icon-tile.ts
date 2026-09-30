@@ -1,10 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { iconTileShapes, iconTileSizes, iconTileVariantNames } from '@/components/ui/IconTile'
+import { iconTileSizes, iconTileVariantNames } from '@/components/ui/IconTile'
 import IconTileIconExample from '../../components/examples/icon-tile/IconTileIconExample.vue'
 import IconTileUsageExample from '../../components/examples/icon-tile/IconTileUsageExample.vue'
 import IconTileVariantExample from '../../components/examples/icon-tile/IconTileVariantExample.vue'
 import IconTileSizeExample from '../../components/examples/icon-tile/IconTileSizeExample.vue'
-import IconTileShapeExample from '../../components/examples/icon-tile/IconTileShapeExample.vue'
+import IconTileRadiusExample from '../../components/examples/icon-tile/IconTileRadiusExample.vue'
 import IconTileColorExample from '../../components/examples/icon-tile/IconTileColorExample.vue'
 
 const iconTileConfig: ComponentDocConfig = {
@@ -37,9 +37,9 @@ const iconTileConfig: ComponentDocConfig = {
       component: IconTileSizeExample,
     },
     {
-      title: 'Shape',
-      description: 'Use a rounded square or circular tile.',
-      component: IconTileShapeExample,
+      title: 'Radius',
+      description: 'Choose a Tailwind radius or set a custom radius in pixels.',
+      component: IconTileRadiusExample,
     },
     {
       title: 'Color',
@@ -76,10 +76,11 @@ const iconTileConfig: ComponentDocConfig = {
         description: 'Tile size from 24px to 64px. The default icon scales with the tile.',
       },
       {
-        name: 'shape',
-        type: iconTileShapes.map((shape) => `'${shape}'`).join(' | '),
-        default: "'rounded'",
-        description: 'Rounded-square or circular tile shape.',
+        name: 'radius',
+        type: 'string | number',
+        default: "'sm'",
+        description:
+          'Tailwind radius token, CSS border-radius value, or a number of pixels such as 12.',
       },
       {
         name: 'color',

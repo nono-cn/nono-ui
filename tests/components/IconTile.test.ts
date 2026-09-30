@@ -5,6 +5,7 @@ import { IconTile, type IconTileProps, type IconTileVariant } from '@/components
 import { themeColors } from '@/components/ui/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
+import { testRadius } from '../utils/testRadius'
 
 function mountIconTile(options: MountingOptions<IconTileProps> = {}) {
   return mount(IconTile, options)
@@ -17,7 +18,7 @@ const casesVariant = [
   },
   {
     variant: 'elevated',
-    expected: ['bg-background', 'ring-(--icon-tile-color)/5', 'shadow-sm'],
+    expected: ['bg-muted', 'ring-background', 'shadow-sm'],
   },
   {
     variant: 'soft',
@@ -29,7 +30,7 @@ const casesVariant = [
   },
   {
     variant: 'frame',
-    expected: ['border-(--icon-tile-color)/40', 'p-1', 'text-(--icon-tile-color)'],
+    expected: ['bg-muted', 'p-1', 'before:bg-background', 'text-(--icon-tile-color)'],
   },
 ] satisfies { variant: IconTileVariant; expected: string[] }[]
 
@@ -40,12 +41,6 @@ const casesSize = [
   { input: 'lg' as const, expected: ['size-12', '[&>svg]:size-6'] },
   { input: 'xl' as const, expected: ['size-16', '[&>svg]:size-8'] },
   { input: undefined, expected: ['size-10', '[&>svg]:size-5'] },
-]
-
-const casesShape = [
-  { input: 'rounded' as const, expected: 'rounded-lg' },
-  { input: 'full' as const, expected: 'rounded-full' },
-  { input: undefined, expected: 'rounded-lg' },
 ]
 
 describe('IconTile', () => {
@@ -93,13 +88,13 @@ describe('IconTile', () => {
       })
     })
 
-    describe('shape', () => {
-      it.each(casesShape)('renders shape=$input', ({ input, expected }) => {
-        const root = mountIconTile({ props: { icon: 'info', shape: input } }).get(
-          '[data-test-icon-tile-root]',
-        )
-
-        expect(root.classes()).toContain(expected)
+    describe('radius', () => {
+      testRadius({
+        id: '[data-test-icon-tile-root]',
+        variable: '--icon-tile-radius',
+        defaultValue: 'var(--radius-sm, 0.25rem)',
+        mount: (radius) =>
+          mountIconTile({ props: { icon: 'info', radius: radius as IconTileProps['radius'] } }),
       })
     })
 

@@ -11,10 +11,12 @@ defineOptions({ inheritAttrs: false })
 const props = withDefaults(defineProps<IconTileProps>(), iconTileDefaults)
 
 const attrs = useAttrs()
-const { colorStyle } = useTheme({
+const { colorStyle, radiusStyle } = useTheme({
   color: () => props.color,
   prefix: 'icon-tile',
   defaultColor: iconTileDefaults.color,
+  radius: () => props.radius,
+  defaultRadius: iconTileDefaults.radius,
 })
 const rootProps = computed(() => ({
   ...attrs,
@@ -22,11 +24,10 @@ const rootProps = computed(() => ({
     iconTileVariants({
       variant: props.variant,
       size: props.size,
-      shape: props.shape,
     }),
     attrs.class,
   ),
-  style: [colorStyle.value, attrs.style],
+  style: [colorStyle.value, radiusStyle.value, attrs.style],
 }))
 </script>
 
