@@ -1,32 +1,54 @@
 <script setup lang="ts">
-import { IconTile } from '@/components/ui/IconTile'
+import { computed, ref } from 'vue'
+import { IconTile, iconTileVariantNames, type IconTileVariant } from '@/components/ui/IconTile'
+import { themeColors } from '@/components/ui/constants'
+import ExampleColorControl from '../../controls/ExampleColorControl.vue'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const colors = [...themeColors, 'custom']
+const selectedColor = ref<string>('neutral')
+const customColor = ref('#7c3aed')
+const color = computed(() =>
+  selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
+)
+const variant = ref<IconTileVariant>('solid')
+const code = computed(
+  () => `<script setup lang="ts">
 import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-4">
-    <IconTile icon-name="info" variant="solid" color="#7c3aed" />
-    <IconTile icon-name="check" variant="solid" color="#0891b2" />
-    <IconTile icon-name="warning" variant="solid" color="#ea580c" />
-  </div>
-</template>`
+  <IconTile icon="info" variant="${variant.value}" color="${color.value}" />
+</template>`,
+)
+
+function reset() {
+  selectedColor.value = 'neutral'
+  customColor.value = '#7c3aed'
+  variant.value = 'solid'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Color"
-    description="Set different custom colors on individual tiles."
+    description="Choose a theme token or a custom hexadecimal color for any variant."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-4">
-      <IconTile icon-name="info" variant="solid" color="#7c3aed" />
-      <IconTile icon-name="check" variant="solid" color="#0891b2" />
-      <IconTile icon-name="warning" variant="solid" color="#ea580c" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="selectedColor" label="Color" :options="colors" />
+        <ExampleColorControl
+          v-if="selectedColor === 'custom'"
+          v-model="customColor"
+          label="Custom color"
+        />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="iconTileVariantNames" />
+      </div>
+    </template>
+    <IconTile icon="info" :variant="variant" :color="color" />
   </ComponentExample>
 </template>

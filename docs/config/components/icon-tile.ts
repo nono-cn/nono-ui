@@ -1,9 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { iconTileShapes, iconTileSizes, iconTileVariantNames } from '@/components/ui/IconTile'
+import IconTileIconExample from '../../components/examples/icon-tile/IconTileIconExample.vue'
 import IconTileUsageExample from '../../components/examples/icon-tile/IconTileUsageExample.vue'
 import IconTileVariantExample from '../../components/examples/icon-tile/IconTileVariantExample.vue'
 import IconTileSizeExample from '../../components/examples/icon-tile/IconTileSizeExample.vue'
 import IconTileShapeExample from '../../components/examples/icon-tile/IconTileShapeExample.vue'
-import IconTileSeverityExample from '../../components/examples/icon-tile/IconTileSeverityExample.vue'
 import IconTileColorExample from '../../components/examples/icon-tile/IconTileColorExample.vue'
 
 const iconTileConfig: ComponentDocConfig = {
@@ -21,12 +22,17 @@ const iconTileConfig: ComponentDocConfig = {
   ],
   examples: [
     {
-      title: 'Variants',
-      description: 'Choose a solid, outline, elevated, or framed surface.',
+      title: 'Icon',
+      description: 'Choose the icon shown inside the tile.',
+      component: IconTileIconExample,
+    },
+    {
+      title: 'Variant',
+      description: 'Choose an outline, elevated, soft, solid, or framed surface.',
       component: IconTileVariantExample,
     },
     {
-      title: 'Sizes',
+      title: 'Size',
       description: 'Scale the tile and its default icon together.',
       component: IconTileSizeExample,
     },
@@ -36,13 +42,8 @@ const iconTileConfig: ComponentDocConfig = {
       component: IconTileShapeExample,
     },
     {
-      title: 'Severity',
-      description: 'Choose a semantic tone for the icon and tile.',
-      component: IconTileSeverityExample,
-    },
-    {
       title: 'Color',
-      description: 'Set a custom color for the icon and tile.',
+      description: 'Choose a theme token or a custom hexadecimal color.',
       component: IconTileColorExample,
     },
   ],
@@ -56,7 +57,7 @@ const iconTileConfig: ComponentDocConfig = {
   api: {
     props: [
       {
-        name: 'iconName',
+        name: 'icon',
         type: 'IconName',
         typeLink: '/components/icon#props',
         required: true,
@@ -64,33 +65,28 @@ const iconTileConfig: ComponentDocConfig = {
       },
       {
         name: 'variant',
-        type: "'solid' | 'outline' | 'elevated' | 'frame'",
+        type: iconTileVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: "'outline'",
         description: 'Surface treatment of the tile.',
       },
       {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+        type: iconTileSizes.map((size) => `'${size}'`).join(' | '),
         default: "'md'",
         description: 'Tile size from 24px to 64px. The default icon scales with the tile.',
       },
       {
         name: 'shape',
-        type: "'rounded' | 'full'",
+        type: iconTileShapes.map((shape) => `'${shape}'`).join(' | '),
         default: "'rounded'",
         description: 'Rounded-square or circular tile shape.',
       },
       {
-        name: 'severity',
-        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'neutral'",
-        description: 'Semantic tone applied to the icon and tile surface.',
-      },
-      {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Custom color that overrides the semantic severity tone.',
+        default: "'neutral'",
+        description:
+          'Theme token such as primary, neutral, or success, a custom token, or a CSS color such as #7c3aed. Named tokens fall back to neutral.',
       },
     ],
     emits: [],

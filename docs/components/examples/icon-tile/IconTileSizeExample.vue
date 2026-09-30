@@ -1,36 +1,38 @@
 <script setup lang="ts">
-import { IconTile } from '@/components/ui/IconTile'
+import { computed, ref } from 'vue'
+import { IconTile, iconTileSizes, type IconTileSize } from '@/components/ui/IconTile'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const size = ref<IconTileSize>('md')
+const code = computed(
+  () => `<script setup lang="ts">
 import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-4">
-    <IconTile icon-name="info" size="xs" />
-    <IconTile icon-name="info" size="sm" />
-    <IconTile icon-name="info" size="md" />
-    <IconTile icon-name="info" size="lg" />
-    <IconTile icon-name="info" size="xl" />
-  </div>
-</template>`
+  <IconTile icon="info" size="${size.value}" />
+</template>`,
+)
+
+function reset() {
+  size.value = 'md'
+}
 </script>
 
 <template>
   <ComponentExample
-    title="Sizes"
+    title="Size"
     description="Scale the tile and icon together."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-4">
-      <IconTile icon-name="info" size="xs" />
-      <IconTile icon-name="info" size="sm" />
-      <IconTile icon-name="info" size="md" />
-      <IconTile icon-name="info" size="lg" />
-      <IconTile icon-name="info" size="xl" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="size" label="Size" :options="iconTileSizes" />
+      </div>
+    </template>
+    <IconTile icon="info" :size="size" />
   </ComponentExample>
 </template>

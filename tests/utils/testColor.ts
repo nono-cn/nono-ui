@@ -7,6 +7,7 @@ interface TestColorOptions {
   varColor: string
   mount: (color: string | undefined) => VueWrapper
   defaultColor?: string
+  fallbackColor?: string
   theme?: {
     colors: readonly string[]
     foregroundVar: string
@@ -15,7 +16,7 @@ interface TestColorOptions {
   }
 }
 
-export function testColor({ text, id, varColor, mount, defaultColor, theme }: TestColorOptions) {
+export function testColor({ text, id, varColor, mount, defaultColor, fallbackColor = 'primary', theme }: TestColorOptions) {
   it.each([
     { input: '#ff0000', expected: `${varColor}: #ff0000` },
     { input: undefined, expected: defaultColor && `${varColor}: ${defaultColor}` },
@@ -31,8 +32,8 @@ export function testColor({ text, id, varColor, mount, defaultColor, theme }: Te
       `${text} resuelve el token %s y su foreground`,
       (color) => {
         const style = mount(color).get(id).attributes('style')
-        const base = `var(--${color}, var(--primary))`
-        const foreground = `var(--${color}-foreground, var(--primary-foreground))`
+        const base = `var(--${color}, var(--${fallbackColor}))`
+        const foreground = `var(--${color}-foreground, var(--${fallbackColor}-foreground))`
 
         expect(style).toContain(`${varColor}: ${base}`)
         expect(style).toContain(`${theme.solidVar}: ${base}`)

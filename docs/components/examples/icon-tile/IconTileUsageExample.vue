@@ -8,7 +8,7 @@ import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
 ${scriptEnd}
 
 <template>
-  <IconTile icon-name="info" />
+  <IconTile icon="info" />
 </template>`
 </script>
 
@@ -19,6 +19,6 @@ ${scriptEnd}
     :code="code"
     :show-reset="false"
   >
-    <IconTile icon-name="info" />
+    <IconTile icon="info" />
   </ComponentExample>
 </template>

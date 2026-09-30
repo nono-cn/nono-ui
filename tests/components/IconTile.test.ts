@@ -1,75 +1,37 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import {
-  IconTile,
-  type IconTileProps,
-  type IconTileSeverity,
-  type IconTileVariant,
-} from '@/components/ui/IconTile'
+import { IconTile, type IconTileProps, type IconTileVariant } from '@/components/ui/IconTile'
+import { themeColors } from '@/components/ui/constants'
 import { testAttrs } from '../utils/testAttrs'
+import { testColor } from '../utils/testColor'
 
 function mountIconTile(options: MountingOptions<IconTileProps> = {}) {
   return mount(IconTile, options)
 }
 
-const casesSeverityVariant = (
-  [
-    {
-      severity: 'primary',
-      text: 'text-primary',
-      solid: ['bg-primary', 'text-primary-foreground'],
-      elevated: ['bg-primary/10', 'ring-primary/20'],
-    },
-    {
-      severity: 'neutral',
-      text: 'text-foreground',
-      solid: ['bg-foreground', 'text-background'],
-      elevated: ['bg-muted', 'ring-foreground/20'],
-    },
-    {
-      severity: 'secondary',
-      text: 'text-secondary-foreground',
-      solid: ['bg-secondary', 'text-secondary-foreground'],
-      elevated: ['bg-secondary/60', 'ring-secondary-foreground/20'],
-    },
-    {
-      severity: 'warning',
-      text: 'text-warning',
-      solid: ['bg-warning', 'text-warning-foreground'],
-      elevated: ['bg-warning/10', 'ring-warning/20'],
-    },
-    {
-      severity: 'success',
-      text: 'text-success',
-      solid: ['bg-success', 'text-success-foreground'],
-      elevated: ['bg-success/10', 'ring-success/20'],
-    },
-    {
-      severity: 'error',
-      text: 'text-error',
-      solid: ['bg-error', 'text-error-foreground'],
-      elevated: ['bg-error/10', 'ring-error/20'],
-    },
-  ] satisfies {
-    severity: IconTileSeverity
-    text: string
-    solid: string[]
-    elevated: string[]
-  }[]
-).flatMap(({ severity, text, solid, elevated }) =>
-  (
-    [
-      { variant: 'solid', expected: solid },
-      {
-        variant: 'outline',
-        expected: ['border', 'bg-(--icon-tile-surface,transparent)', text],
-      },
-      { variant: 'elevated', expected: ['border', 'shadow-sm', text, ...elevated] },
-      { variant: 'frame', expected: ['border', 'p-1', text] },
-    ] satisfies { variant: IconTileVariant; expected: string[] }[]
-  ).map(({ variant, expected }) => ({ severity, variant, expected })),
-)
+const casesVariant = [
+  {
+    variant: 'outline',
+    expected: ['border', 'border-(--icon-tile-color)/40', 'text-(--icon-tile-color)'],
+  },
+  {
+    variant: 'elevated',
+    expected: ['bg-background', 'ring-(--icon-tile-color)/5', 'shadow-sm'],
+  },
+  {
+    variant: 'soft',
+    expected: ['bg-(--icon-tile-color)/10', 'border-(--icon-tile-color)/20'],
+  },
+  {
+    variant: 'solid',
+    expected: ['bg-(--icon-tile-solid)', 'text-(--icon-tile-solid-foreground)'],
+  },
+  {
+    variant: 'frame',
+    expected: ['border-(--icon-tile-color)/40', 'p-1', 'text-(--icon-tile-color)'],
+  },
+] satisfies { variant: IconTileVariant; expected: string[] }[]
 
 const casesSize = [
   { input: 'xs' as const, expected: ['size-6', '[&>svg]:size-3'] },
@@ -86,76 +48,44 @@ const casesShape = [
   { input: undefined, expected: 'rounded-lg' },
 ]
 
-const casesColorVariant = [
-  {
-    variant: 'solid',
-    expected: ['bg-(--icon-tile-color)', 'text-(--icon-tile-color-foreground)'],
-  },
-  {
-    variant: 'outline',
-    expected: [
-      'border-(--icon-tile-color)/40',
-      'bg-(--icon-tile-surface,transparent)',
-      'text-(--icon-tile-color)',
-    ],
-  },
-  {
-    variant: 'elevated',
-    expected: [
-      'border-(--icon-tile-color)/40',
-      'bg-(--icon-tile-color)/10',
-      'ring-(--icon-tile-color)/20',
-      'text-(--icon-tile-color)',
-    ],
-  },
-  {
-    variant: 'frame',
-    expected: ['border-(--icon-tile-color)/40', 'p-1', 'text-(--icon-tile-color)'],
-  },
-] satisfies { variant: IconTileVariant; expected: string[] }[]
-
 describe('IconTile', () => {
   describe('props', () => {
-    describe('iconName', () => {
+    describe('icon', () => {
       it('renders the named icon', () => {
-        const icon = mountIconTile({ props: { iconName: 'info' } }).get(
-          '[data-test-icon-tile-icon]',
-        )
+        const icon = mountIconTile({ props: { icon: 'info' } }).get('[data-test-icon-tile-icon]')
 
         expect(icon.classes()).toContain('lucide-info')
       })
     })
 
     describe('variant', () => {
-      it.each(casesSeverityVariant)(
-        'renders severity=$severity with variant=$variant',
-        ({ severity, variant, expected }) => {
-          const root = mountIconTile({ props: { iconName: 'info', severity, variant } }).get(
+      it.each(casesVariant)(
+        'renders variant=$variant with the selected color',
+        ({ variant, expected }) => {
+          const root = mountIconTile({ props: { icon: 'info', color: 'success', variant } }).get(
             '[data-test-icon-tile-root]',
           )
 
           expect(root.classes()).toEqual(expect.arrayContaining(expected))
+          expect(root.attributes('style')).toContain(
+            '--icon-tile-color: var(--success, var(--neutral))',
+          )
         },
       )
 
-      it('uses outline with neutral severity by default', () => {
-        const root = mountIconTile({ props: { iconName: 'info' } }).get(
-          '[data-test-icon-tile-root]',
-        )
+      it('uses outline with neutral color by default', () => {
+        const root = mountIconTile({ props: { icon: 'info' } }).get('[data-test-icon-tile-root]')
 
-        expect(root.classes()).toEqual(
-          expect.arrayContaining([
-            'border',
-            'bg-(--icon-tile-surface,transparent)',
-            'text-foreground',
-          ]),
+        expect(root.classes()).toEqual(expect.arrayContaining(casesVariant[0].expected))
+        expect(root.attributes('style')).toContain(
+          '--icon-tile-color: var(--neutral, var(--neutral))',
         )
       })
     })
 
     describe('size', () => {
       it.each(casesSize)('renders size=$input', ({ input, expected }) => {
-        const root = mountIconTile({ props: { iconName: 'info', size: input } }).get(
+        const root = mountIconTile({ props: { icon: 'info', size: input } }).get(
           '[data-test-icon-tile-root]',
         )
 
@@ -165,7 +95,7 @@ describe('IconTile', () => {
 
     describe('shape', () => {
       it.each(casesShape)('renders shape=$input', ({ input, expected }) => {
-        const root = mountIconTile({ props: { iconName: 'info', shape: input } }).get(
+        const root = mountIconTile({ props: { icon: 'info', shape: input } }).get(
           '[data-test-icon-tile-root]',
         )
 
@@ -174,18 +104,20 @@ describe('IconTile', () => {
     })
 
     describe('color', () => {
-      it.each(casesColorVariant)(
-        'applies the custom color with variant=$variant',
-        ({ variant, expected }) => {
-          const root = mountIconTile({
-            props: { iconName: 'info', color: '#123456', variant },
-          }).get('[data-test-icon-tile-root]')
-
-          expect(root.classes()).toEqual(expect.arrayContaining(expected))
-          expect(root.attributes('style')).toContain('--icon-tile-color: #123456')
-          expect(root.attributes('style')).toContain('--icon-tile-color-foreground: #ffffff')
+      testColor({
+        text: 'resuelve el color',
+        id: '[data-test-icon-tile-root]',
+        varColor: '--icon-tile-color',
+        defaultColor: 'var(--neutral, var(--neutral))',
+        fallbackColor: 'neutral',
+        mount: (color) => mountIconTile({ props: { icon: 'info', color } }),
+        theme: {
+          colors: themeColors,
+          foregroundVar: '--icon-tile-color-foreground',
+          solidVar: '--icon-tile-solid',
+          solidForegroundVar: '--icon-tile-solid-foreground',
         },
-      )
+      })
     })
   })
 
@@ -193,7 +125,7 @@ describe('IconTile', () => {
     testAttrs({
       text: 'forwards arbitrary attrs, class and style to root',
       id: '[data-test-icon-tile-root]',
-      mount: (attrs) => mountIconTile({ props: { iconName: 'info' }, attrs }),
+      mount: (attrs) => mountIconTile({ props: { icon: 'info' }, attrs }),
     })
   })
 })

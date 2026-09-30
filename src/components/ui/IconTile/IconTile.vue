@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 import { Icon } from '@/components/ui/Icon'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { iconTileVariants, type IconTileProps } from '.'
-import { iconTileDefaults } from './default'
+import { iconTileDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<IconTileProps>(), iconTileDefaults)
 
 const attrs = useAttrs()
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'icon-tile',
-)
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'icon-tile',
+  defaultColor: iconTileDefaults.color,
+})
 const rootProps = computed(() => ({
   ...attrs,
   class: cn(
@@ -22,8 +23,6 @@ const rootProps = computed(() => ({
       variant: props.variant,
       size: props.size,
       shape: props.shape,
-      severity: props.severity,
-      color: Boolean(props.color),
     }),
     attrs.class,
   ),
@@ -33,6 +32,6 @@ const rootProps = computed(() => ({
 
 <template>
   <div v-bind="rootProps" data-test-icon-tile-root>
-    <Icon :name="props.iconName" class="relative z-10" data-test-icon-tile-icon />
+    <Icon :name="props.icon" class="relative z-10" data-test-icon-tile-icon />
   </div>
 </template>
