@@ -22,7 +22,7 @@ ${scriptEnd}
     label="Sync complete"
     description="All changes are up to date."
     :icon="icon"
-    severity="success"
+    color="success"
   />
 </template>`,
 )
@@ -49,7 +49,7 @@ function reset() {
         label="Sync complete"
         description="All changes are up to date."
         :icon="icon"
-        severity="success"
+        color="success"
       />
     </div>
   </ComponentExample>

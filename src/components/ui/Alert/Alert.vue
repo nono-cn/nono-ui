@@ -4,7 +4,7 @@ import { Button, toIconButtonSize } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import { useI18n } from '@/i18n'
 import { alertVariants, type AlertEmits, type AlertProps, type AlertSlots } from '.'
 import { alertDefaults } from './defaults'
@@ -19,16 +19,15 @@ const attrs = useAttrs()
 const slots = useSlots()
 const visible = ref(true)
 const { t } = useI18n()
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'alert',
-)
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'alert',
+  defaultColor: alertDefaults.color,
+})
 
 const rootProps = computed(() => {
   const calculatedVariants = alertVariants({
     variant: props.variant,
-    severity: props.severity,
-    color: Boolean(props.color),
   })
   return {
     ...attrs,
@@ -76,7 +75,6 @@ const closeButtonProps = computed(() => {
     size: toIconButtonSize(button?.size ?? 'xs'),
     radius: button?.radius ?? 'full',
     variant: button?.variant ?? props.variant,
-    severity: button?.severity ?? props.severity,
     color: button?.color ?? props.color,
     icon: button?.icon ?? 'x',
   }

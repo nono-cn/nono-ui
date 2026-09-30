@@ -11,9 +11,9 @@ ${scriptEnd}
   <Alert
     label="Unstable connection"
     description="The close button inherits the alert’s style unless you customize it."
-    severity="warning"
+    color="warning"
     :closable="true"
-    :close-button="{ size: 'sm', variant: 'outline', severity: 'secondary' }"
+    :close-button="{ size: 'sm', variant: 'outline', color: 'secondary' }"
   />
 </template>`
 </script>
@@ -29,9 +29,9 @@ ${scriptEnd}
       <Alert
         label="Unstable connection"
         description="The close button inherits the alert’s style unless you customize it."
-        severity="warning"
+        color="warning"
         :closable="true"
-        :close-button="{ size: 'sm', variant: 'outline', severity: 'secondary' }"
+        :close-button="{ size: 'sm', variant: 'outline', color: 'secondary' }"
       />
     </div>
   </ComponentExample>

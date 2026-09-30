@@ -2,8 +2,10 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
 import type { NormalizeButtonProps } from '@/components/ui/Button'
 import type { IconName } from '@/components/ui/Icon'
+import { alertVariantNames } from './constants'
 
 export { default as Alert } from './Alert.vue'
+export { alertVariantNames } from './constants'
 
 export const alertVariants = cva('', {
   variants: {
@@ -13,36 +15,15 @@ export const alertVariants = cva('', {
       plain: 'border-transparent bg-transparent text-(--alert-color)',
       subtle: 'border-(--alert-color)/20 bg-(--alert-color)/10 text-(--alert-color)',
       soft: 'border-transparent bg-(--alert-color)/10 text-(--alert-color)',
-    },
-    severity: {
-      primary:
-        '[--alert-color:var(--primary)] [--alert-solid:var(--primary)] [--alert-solid-foreground:var(--primary-foreground)]',
-      secondary:
-        '[--alert-color:var(--secondary-foreground)] [--alert-solid:var(--secondary)] [--alert-solid-foreground:var(--secondary-foreground)]',
-      neutral:
-        '[--alert-color:var(--foreground)] [--alert-solid:var(--foreground)] [--alert-solid-foreground:var(--background)]',
-      warning:
-        '[--alert-color:var(--warning)] [--alert-solid:var(--warning)] [--alert-solid-foreground:var(--warning-foreground)]',
-      success:
-        '[--alert-color:var(--success)] [--alert-solid:var(--success)] [--alert-solid-foreground:var(--success-foreground)]',
-      error:
-        '[--alert-color:var(--error)] [--alert-solid:var(--error)] [--alert-solid-foreground:var(--error-foreground)]',
-    },
-    color: {
-      true: '[--alert-solid:var(--alert-color)] [--alert-solid-foreground:var(--alert-color-foreground)]',
-      false: '',
-    },
+    } satisfies Record<(typeof alertVariantNames)[number], string>,
   },
   defaultVariants: {
     variant: 'soft',
-    severity: 'primary',
-    color: false,
   },
 })
 
 export type AlertVariants = VariantProps<typeof alertVariants>
 export type AlertVariant = NonNullable<AlertVariants['variant']>
-export type AlertSeverity = NonNullable<AlertVariants['severity']>
 
 // Fn
 export type AlertFn<T> = () => T
@@ -54,7 +35,6 @@ export interface AlertProps {
   icon?: IconName
   closeButton?: NormalizeButtonProps
   variant?: AlertVariant
-  severity?: AlertSeverity
   color?: string
   closable?: boolean
   decorative?: boolean

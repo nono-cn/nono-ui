@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Alert, type AlertVariant } from '@/components/ui/Alert'
+import { Alert, alertVariantNames, type AlertVariant } from '@/components/ui/Alert'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants: AlertVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft']
 const variant = ref<AlertVariant>('soft')
 
 const code = computed(
@@ -39,7 +38,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="alertVariantNames" />
       </div>
     </template>
     <div class="w-full max-w-2xl">

@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Alert, type AlertVariant } from '@/components/ui/Alert'
+import { Alert, alertVariantNames, type AlertVariant } from '@/components/ui/Alert'
+import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants: AlertVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft']
-const color = ref('#7c3aed')
+const colors = [...themeColors, 'custom']
+const selectedColor = ref<string>('primary')
+const customColor = ref('#7c3aed')
+const color = computed(() =>
+  selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
+)
 const variant = ref<AlertVariant>('soft')
 
 const code = computed(
@@ -21,8 +26,10 @@ ${scriptEnd}
 
 <template>
   <Alert
-    label="Custom theme"
-    description="Choose a custom color and alert style."
+    label="System notice"
+    description="Review this information about your account."
+    icon="info"
+    :closable="true"
     :color="color"
     :variant="variant"
   />
@@ -30,7 +37,8 @@ ${scriptEnd}
 )
 
 function reset() {
-  color.value = '#7c3aed'
+  selectedColor.value = 'primary'
+  customColor.value = '#7c3aed'
   variant.value = 'soft'
 }
 </script>
@@ -38,20 +46,27 @@ function reset() {
 <template>
   <ComponentExample
     title="Color"
-    description="Choose a custom alert color and visual style."
+    description="Choose a theme token or custom color, then select a visual style."
     :code="code"
     @reset="reset"
   >
     <template #controls>
-      <div class="flex flex-wrap items-end gap-4">
-        <ExampleColorControl v-model="color" label="Color" />
-        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="selectedColor" label="Color" :options="colors" />
+        <ExampleColorControl
+          v-if="selectedColor === 'custom'"
+          v-model="customColor"
+          label="Custom color"
+        />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="alertVariantNames" />
       </div>
     </template>
     <div class="w-full max-w-2xl">
       <Alert
-        label="Custom theme"
-        description="Choose a custom color and alert style."
+        label="System notice"
+        description="Review this information about your account."
+        icon="info"
+        :closable="true"
         :color="color"
         :variant="variant"
       />

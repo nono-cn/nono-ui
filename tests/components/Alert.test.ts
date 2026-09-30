@@ -2,12 +2,9 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import {
-  Alert,
-  type AlertProps,
-  type AlertSeverity,
-  type AlertVariant,
-} from '@/components/ui/Alert'
+import { Alert, type AlertProps, type AlertVariant } from '@/components/ui/Alert'
+import { themeColors } from '@/components/ui/constants'
+import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
@@ -60,65 +57,6 @@ const casesVariant = [
   },
 ] satisfies { variant: AlertVariant | undefined; expected: string[] }[]
 
-const casesSeverity = [
-  {
-    severity: 'primary',
-    expected: [
-      '[--alert-color:var(--primary)]',
-      '[--alert-solid:var(--primary)]',
-      '[--alert-solid-foreground:var(--primary-foreground)]',
-    ],
-  },
-  {
-    severity: 'secondary',
-    expected: [
-      '[--alert-color:var(--secondary-foreground)]',
-      '[--alert-solid:var(--secondary)]',
-      '[--alert-solid-foreground:var(--secondary-foreground)]',
-    ],
-  },
-  {
-    severity: 'neutral',
-    expected: [
-      '[--alert-color:var(--foreground)]',
-      '[--alert-solid:var(--foreground)]',
-      '[--alert-solid-foreground:var(--background)]',
-    ],
-  },
-  {
-    severity: 'warning',
-    expected: [
-      '[--alert-color:var(--warning)]',
-      '[--alert-solid:var(--warning)]',
-      '[--alert-solid-foreground:var(--warning-foreground)]',
-    ],
-  },
-  {
-    severity: 'success',
-    expected: [
-      '[--alert-color:var(--success)]',
-      '[--alert-solid:var(--success)]',
-      '[--alert-solid-foreground:var(--success-foreground)]',
-    ],
-  },
-  {
-    severity: 'error',
-    expected: [
-      '[--alert-color:var(--error)]',
-      '[--alert-solid:var(--error)]',
-      '[--alert-solid-foreground:var(--error-foreground)]',
-    ],
-  },
-  {
-    severity: undefined,
-    expected: [
-      '[--alert-color:var(--primary)]',
-      '[--alert-solid:var(--primary)]',
-      '[--alert-solid-foreground:var(--primary-foreground)]',
-    ],
-  },
-] satisfies { severity: AlertSeverity | undefined; expected: string[] }[]
-
 const casesDecorative = [
   { input: true as const, expected: 'none' },
   { input: false as const, expected: 'alert' },
@@ -169,19 +107,18 @@ describe('Alert', () => {
       })
     })
 
-    describe('severity', () => {
-      it.each(casesSeverity)('renderiza severity=$severity', ({ severity, expected }) => {
-        const root = mountAlert({ props: { severity } }).get('[data-test-alert-root]')
-
-        expect(root.classes()).toEqual(expect.arrayContaining(expected))
-      })
-    })
-
     describe('color', () => {
       testColor({
-        text: 'aplica color personalizado',
+        text: 'resuelve el color',
         id: '[data-test-alert-root]',
         varColor: '--alert-color',
+        defaultColor: 'var(--primary, var(--primary))',
+        theme: {
+          colors: themeColors,
+          foregroundVar: '--alert-color-foreground',
+          solidVar: '--alert-solid',
+          solidForegroundVar: '--alert-solid-foreground',
+        },
         mount: (color) => mountAlert({ props: { color } }),
       })
     })
@@ -223,6 +160,16 @@ describe('Alert', () => {
         )
         expect(closeButton.attributes('aria-label')).toBe(i18n.global.t('close'))
         expect(closeButton.classes()).toContain('size-7')
+      })
+
+      it('hereda el color de Alert y permite sobrescribirlo', () => {
+        const inherited = mountAlert({ props: { closable: true, color: 'success' } })
+        const overridden = mountAlert({
+          props: { closable: true, color: 'success', closeButton: { color: 'warning' } },
+        })
+
+        expect(inherited.getComponent(Button).props('color')).toBe('success')
+        expect(overridden.getComponent(Button).props('color')).toBe('warning')
       })
     })
 

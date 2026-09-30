@@ -1,7 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { alertVariantNames } from '@/components/ui/Alert'
 import AlertBasicExample from '../../components/examples/alert/AlertBasicExample.vue'
 import AlertVariantExample from '../../components/examples/alert/AlertVariantExample.vue'
-import AlertSeverityExample from '../../components/examples/alert/AlertSeverityExample.vue'
 import AlertTitleExample from '../../components/examples/alert/AlertTitleExample.vue'
 import AlertDescriptionExample from '../../components/examples/alert/AlertDescriptionExample.vue'
 import AlertColorExample from '../../components/examples/alert/AlertColorExample.vue'
@@ -44,13 +44,8 @@ const alertConfig: ComponentDocConfig = {
       component: AlertVariantExample,
     },
     {
-      title: 'Severity',
-      description: 'Choose the alert’s semantic color and visual style.',
-      component: AlertSeverityExample,
-    },
-    {
       title: 'Color',
-      description: 'Apply a custom CSS color to the alert style.',
+      description: 'Choose a theme token or custom CSS color.',
       component: AlertColorExample,
     },
     {
@@ -68,7 +63,7 @@ const alertConfig: ComponentDocConfig = {
     {
       title: 'Informative and decorative alerts',
       description:
-        'Alert uses role="alert" by default. Set decorative=true only for visual content that should not be announced. Give informative icons an accessible name (aria-label / aria-labelledby) and ensure custom close controls have a clear accessible name. Do not rely on color alone to communicate severity.',
+        'Alert uses role="alert" by default. Set decorative=true only for visual content that should not be announced. Give informative icons an accessible name (aria-label / aria-labelledby) and ensure custom close controls have a clear accessible name. Do not rely on color alone to communicate meaning.',
     },
   ],
   api: {
@@ -101,21 +96,15 @@ const alertConfig: ComponentDocConfig = {
       },
       {
         name: 'variant',
-        type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft'",
+        type: alertVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: "'soft'",
         description: 'Visual style applied to the alert.',
       },
       {
-        name: 'severity',
-        type: "'primary' | 'secondary' | 'neutral' | 'warning' | 'success' | 'error'",
-        default: "'primary'",
-        description: 'Severity used to choose the alert colors.',
-      },
-      {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Custom CSS color applied to the alert style.',
+        default: "'primary'",
+        description: 'Theme token or CSS color applied to the alert style.',
       },
       {
         name: 'closable',
