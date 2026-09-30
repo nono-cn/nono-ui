@@ -56,6 +56,10 @@ export const buttonVariants = cva(
         true: 'p-0 has-[>svg]:p-0',
         false: '',
       },
+      rounded: {
+        true: 'rounded-full',
+        false: '',
+      },
     },
     compoundVariants: [
       { size: 'xs', square: true, class: 'size-7' },
@@ -68,6 +72,7 @@ export const buttonVariants = cva(
       variant: 'solid',
       size: 'md',
       square: false,
+      rounded: false,
     },
   },
 )
@@ -83,6 +88,7 @@ export interface ButtonProps extends Pick<PrimitiveProps, 'as' | 'asChild'> {
   variant?: ButtonVariant
   size?: ButtonSize
   square?: boolean
+  rounded?: boolean
   loading?: boolean
   color?: string
   icon?: IconName

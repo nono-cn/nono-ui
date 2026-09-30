@@ -26,6 +26,7 @@ const calculatedVariants = computed(() => {
     variant: props.variant,
     size: props.size,
     square: props.square,
+    rounded: props.rounded,
   })
 
   if (props.as === 'button' || props.as === 'a') return classes

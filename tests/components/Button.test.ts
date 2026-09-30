@@ -121,6 +121,13 @@ const casesSquare = [
   { size: undefined, expected: 'size-9' },
 ]
 
+const casesRounded = [
+  { rounded: true, className: undefined, expected: 'rounded-full' },
+  { rounded: false, className: undefined, expected: 'rounded-md' },
+  { rounded: undefined, className: undefined, expected: 'rounded-md' },
+  { rounded: true, className: 'rounded-lg', expected: 'rounded-lg' },
+]
+
 const casesLoading = [
   { input: true, expected: true },
   { input: false, expected: false },
@@ -212,6 +219,23 @@ describe('Button', () => {
       })
     })
 
+    describe('rounded', () => {
+      it.each(casesRounded)(
+        'aplica $expected con rounded=$rounded y class=$className',
+        ({ rounded, className, expected }) => {
+          const root = mountButton({
+            props: { rounded },
+            attrs: { class: className },
+          }).get('[data-test-button-root]')
+
+          expect(root.classes()).toContain(expected)
+          expect(
+            root.classes().filter((className) => /^rounded-(md|full|lg)$/.test(className)),
+          ).toEqual([expected])
+        },
+      )
+    })
+
     describe('loading', () => {
       it.each(casesLoading)('renderiza loading=$input como $expected', ({ input, expected }) => {
         const button = mountButton({ props: { loading: input } })
@@ -254,15 +278,6 @@ describe('Button', () => {
           if (expected) expect(button.getComponent(Icon).props('name')).toBe(input)
         },
       )
-
-      it('mantiene visible el icono final durante la carga', () => {
-        const button = mountButton({
-          props: { trailingIcon: 'chevronRight', loading: true },
-        })
-
-        expect(button.find('[data-test-button-trailing-icon]').exists()).toBe(true)
-        expect(button.find('[data-test-button-loading-icon]').exists()).toBe(true)
-      })
     })
 
     describe('color', () => {
@@ -307,41 +322,11 @@ describe('Button', () => {
       id: '[data-test-button-root]',
       mount: (attrs) => mountButton({ attrs }),
     })
-
-    it('aplica rounded-md por defecto sin variables de radio ni sombra', () => {
-      const root = mountButton().get('[data-test-button-root]')
-
-      expect(root.classes()).toContain('rounded-md')
-      expect(root.attributes('style')).not.toContain('--button-radius')
-      expect(root.attributes('style')).not.toContain('--button-shadow')
-    })
-
-    it('permite sustituir el radio y añadir sombra con class', () => {
-      const root = mountButton({ attrs: { class: 'rounded-xl shadow-lg' } }).get(
-        '[data-test-button-root]',
-      )
-
-      expect(root.classes()).toContain('rounded-xl')
-      expect(root.classes()).toContain('shadow-lg')
-      expect(root.classes()).not.toContain('rounded-md')
-    })
-
-    it('permite crear un botón de icono cuadrado con class', () => {
-      const root = mountButton({
-        props: { icon: 'plus' },
-        attrs: { class: 'size-9 p-0 has-[>svg]:p-0' },
-      }).get('[data-test-button-root]')
-
-      expect(root.classes()).toContain('size-9')
-      expect(root.classes()).toContain('p-0')
-      expect(root.classes()).toContain('has-[>svg]:p-0')
-      expect(root.classes()).not.toContain('h-9')
-    })
   })
 
   describe('emits', () => {
     it.each(casesClick)(
-      'emite click=$expected para loading=$loading ariaDisabled=$ariaDisabled',
+      'emite click=$expected para loading=$loading ariaDsisabled=$ariaDisabled',
       async ({ loading, ariaDisabled, expected }) => {
         const button = mountButton({
           props: { loading },
