@@ -3,12 +3,10 @@ import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
 import { Button, type ButtonProps, type ButtonVariant } from '@/components/ui/Button'
-import { themeColors, themeRadii, themeShadows } from '../../docs/config/constants'
+import { themeColors } from '@/components/ui/constants'
 import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
-import { testRadius } from '../utils/testRadius'
-import { testShadow } from '../utils/testShadow'
 
 function mountButton(options: MountingOptions<ButtonProps> & Record<string, unknown> = {}) {
   return mount(Button, options)
@@ -30,11 +28,21 @@ const casesSize = [
 const casesVariantStyles = [
   {
     variant: 'solid' as const,
+    expectedStateVariables: [
+      '[--button-solid-hover:color-mix(in_oklab,var(--button-solid)_90%,transparent)]',
+      '[--button-solid-active:color-mix(in_oklab,var(--button-solid)_80%,transparent)]',
+    ],
     expectedNormal: ['bg-(--button-solid)', 'text-(--button-solid-foreground)'],
     expectedHover: ['hover:bg-(--button-solid-hover)', 'active:bg-(--button-solid-active)'],
   },
   {
     variant: 'outline' as const,
+    expectedStateVariables: [
+      '[--button-outline-border:color-mix(in_oklab,var(--button-color)_40%,transparent)]',
+      '[--button-outline-hover:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+      '[--button-outline-active-border:color-mix(in_oklab,var(--button-color)_60%,transparent)]',
+      '[--button-outline-active:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+    ],
     expectedNormal: [
       'border',
       'bg-transparent',
@@ -49,11 +57,21 @@ const casesVariantStyles = [
   },
   {
     variant: 'plain' as const,
+    expectedStateVariables: [
+      '[--button-plain-hover:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+      '[--button-plain-active:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+    ],
     expectedNormal: ['bg-transparent', 'text-(--button-color)'],
     expectedHover: ['hover:bg-(--button-plain-hover)', 'active:bg-(--button-plain-active)'],
   },
   {
     variant: 'subtle' as const,
+    expectedStateVariables: [
+      '[--button-subtle-border:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+      '[--button-subtle-bg:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+      '[--button-subtle-hover:color-mix(in_oklab,var(--button-color)_15%,transparent)]',
+      '[--button-subtle-active:color-mix(in_oklab,var(--button-color)_25%,transparent)]',
+    ],
     expectedNormal: [
       'border',
       'border-(--button-subtle-border)',
@@ -64,29 +82,43 @@ const casesVariantStyles = [
   },
   {
     variant: 'soft' as const,
+    expectedStateVariables: [
+      '[--button-soft-bg:color-mix(in_oklab,var(--button-color)_10%,transparent)]',
+      '[--button-soft-hover:color-mix(in_oklab,var(--button-color)_20%,transparent)]',
+      '[--button-soft-active:color-mix(in_oklab,var(--button-color)_30%,transparent)]',
+    ],
     expectedNormal: ['bg-(--button-soft-bg)', 'text-(--button-color)'],
     expectedHover: ['hover:bg-(--button-soft-hover)', 'active:bg-(--button-soft-active)'],
   },
   {
     variant: 'link' as const,
+    expectedStateVariables: [],
     expectedNormal: ['bg-transparent', 'underline', 'underline-offset-4', 'text-(--button-color)'],
     expectedHover: ['hover:no-underline'],
   },
   {
     variant: undefined,
+    expectedStateVariables: [
+      '[--button-solid-hover:color-mix(in_oklab,var(--button-solid)_90%,transparent)]',
+      '[--button-solid-active:color-mix(in_oklab,var(--button-solid)_80%,transparent)]',
+    ],
     expectedNormal: ['bg-(--button-solid)', 'text-(--button-solid-foreground)'],
     expectedHover: ['hover:bg-(--button-solid-hover)', 'active:bg-(--button-solid-active)'],
   },
 ] satisfies {
   variant: ButtonVariant | undefined
+  expectedStateVariables: string[]
   expectedNormal: string[]
   expectedHover: string[]
 }[]
 
 const casesSquare = [
-  { input: true, expected: true },
-  { input: false, expected: false },
-  { input: undefined, expected: false },
+  { size: 'xs' as const, expected: 'size-7' },
+  { size: 'sm' as const, expected: 'size-8' },
+  { size: 'md' as const, expected: 'size-9' },
+  { size: 'lg' as const, expected: 'size-10' },
+  { size: 'xl' as const, expected: 'size-11' },
+  { size: undefined, expected: 'size-9' },
 ]
 
 const casesLoading = [
@@ -147,49 +179,36 @@ describe('Button', () => {
     describe('variant', () => {
       it.each(casesVariantStyles)(
         'renderiza variant=$variant',
-        ({ variant, expectedNormal, expectedHover }) => {
+        ({ variant, expectedStateVariables, expectedNormal, expectedHover }) => {
           const classes = mountButton({ props: { variant } })
             .get('[data-test-button-root]')
             .classes()
 
           expect(classes).toEqual(expect.arrayContaining(expectedNormal))
           expect(classes).toEqual(expect.arrayContaining(expectedHover))
+          expect(
+            classes.filter((className) =>
+              /^\[--button-(solid|outline|plain|subtle|soft)-/.test(className),
+            ),
+          ).toEqual(expectedStateVariables)
         },
       )
     })
 
-    describe('shadow', () => {
-      testShadow({
-        text: 'resuelve la sombra',
-        id: '[data-test-button-root]',
-        varShadow: '--button-shadow',
-        defaultShadow: 'none',
-        shadows: themeShadows,
-        className: 'shadow-(--button-shadow)',
-        mount: (shadow) => mountButton({ props: { shadow } }),
-      })
-    })
-
-    describe('radius', () => {
-      testRadius({
-        text: 'resuelve el radio',
-        id: '[data-test-button-root]',
-        varRadius: '--button-radius',
-        defaultRadius: 'md',
-        radii: themeRadii,
-        className: 'rounded-(--button-radius)',
-        mount: (radius) => mountButton({ props: { radius } }),
-      })
-    })
-
     describe('square', () => {
-      it.each(casesSquare)('renderiza square=$input como $expected', ({ input, expected }) => {
-        const classes = mountButton({ props: { square: input } })
-          .get('[data-test-button-root]')
-          .classes()
+      it.each(casesSquare)('aplica $expected con size=$size', ({ size, expected }) => {
+        const root = mountButton({ props: { size, square: true } }).get('[data-test-button-root]')
 
-        expect(classes.includes('size-(--button-square-size)')).toBe(expected)
-        expect(classes.includes('p-0')).toBe(expected)
+        expect(root.classes()).toContain(expected)
+        expect(root.classes()).toContain('p-0')
+        expect(root.classes()).toContain('has-[>svg]:p-0')
+      })
+
+      it.each([false, undefined])('no aplica tamaño cuadrado con square=%s', (square) => {
+        const classes = mountButton({ props: { square } }).get('[data-test-button-root]').classes()
+
+        expect(classes).toContain('h-9')
+        expect(classes).not.toContain('size-9')
       })
     })
 
@@ -287,6 +306,36 @@ describe('Button', () => {
       text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
       id: '[data-test-button-root]',
       mount: (attrs) => mountButton({ attrs }),
+    })
+
+    it('aplica rounded-md por defecto sin variables de radio ni sombra', () => {
+      const root = mountButton().get('[data-test-button-root]')
+
+      expect(root.classes()).toContain('rounded-md')
+      expect(root.attributes('style')).not.toContain('--button-radius')
+      expect(root.attributes('style')).not.toContain('--button-shadow')
+    })
+
+    it('permite sustituir el radio y añadir sombra con class', () => {
+      const root = mountButton({ attrs: { class: 'rounded-xl shadow-lg' } }).get(
+        '[data-test-button-root]',
+      )
+
+      expect(root.classes()).toContain('rounded-xl')
+      expect(root.classes()).toContain('shadow-lg')
+      expect(root.classes()).not.toContain('rounded-md')
+    })
+
+    it('permite crear un botón de icono cuadrado con class', () => {
+      const root = mountButton({
+        props: { icon: 'plus' },
+        attrs: { class: 'size-9 p-0 has-[>svg]:p-0' },
+      }).get('[data-test-button-root]')
+
+      expect(root.classes()).toContain('size-9')
+      expect(root.classes()).toContain('p-0')
+      expect(root.classes()).toContain('has-[>svg]:p-0')
+      expect(root.classes()).not.toContain('h-9')
     })
   })
 

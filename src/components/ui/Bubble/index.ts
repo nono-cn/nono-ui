@@ -11,7 +11,7 @@ export const bubbleWrapperVariants = cva('relative flex w-fit max-w-[80%]', {
   defaultVariants: { align: 'start' },
 })
 
-export const bubbleVariants = cva('block w-full rounded-2xl border px-4 py-2.5 text-sm shadow-sm', {
+export const bubbleVariants = cva('block w-full rounded-xl border px-4 py-2.5 text-sm shadow-sm', {
   variants: {
     variant: {
       solid: 'border-transparent bg-(--bubble-solid) text-(--bubble-solid-foreground)',

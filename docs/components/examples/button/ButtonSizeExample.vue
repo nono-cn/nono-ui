@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button, type ButtonSize } from '@/components/ui/Button'
+import { Button, buttonSizes, type ButtonSize } from '@/components/ui/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const sizes: ButtonSize[] = ['xs', 'sm', 'md', 'lg']
 const size = ref<ButtonSize>('md')
 const code = computed(
   () => `<script setup lang="ts">
@@ -34,7 +33,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="size" label="Size" :options="sizes" />
+        <ExampleSelectControl v-model="size" label="Size" :options="buttonSizes" />
       </div>
     </template>
     <Button label="Save changes" :size="size" />

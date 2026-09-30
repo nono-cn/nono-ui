@@ -26,7 +26,6 @@ const neutralOptions = neutralColors.map((value) => ({
 }))
 const variables = ref([
   { name: '--primary', value: 'oklch(0.51 0.11 248)' },
-  { name: '--radius', value: '0.625rem' },
   { name: '--background', value: 'oklch(1 0 0)' },
   { name: '--foreground', value: 'oklch(0.145 0 0)' },
 ])

@@ -1,10 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { buttonSizes, buttonVariantNames } from '@/components/ui/Button'
 import ButtonColorExample from '../../components/examples/button/ButtonColorExample.vue'
 import ButtonIconExample from '../../components/examples/button/ButtonIconExample.vue'
 import ButtonDisabledExample from '../../components/examples/button/ButtonDisabledExample.vue'
 import ButtonLoadingExample from '../../components/examples/button/ButtonLoadingExample.vue'
-import ButtonShadowExample from '../../components/examples/button/ButtonShadowExample.vue'
-import ButtonRadiusExample from '../../components/examples/button/ButtonRadiusExample.vue'
+import ButtonClassExample from '../../components/examples/button/ButtonClassExample.vue'
 import ButtonSquareExample from '../../components/examples/button/ButtonSquareExample.vue'
 import ButtonSizeExample from '../../components/examples/button/ButtonSizeExample.vue'
 import ButtonTrailingIconExample from '../../components/examples/button/ButtonTrailingIconExample.vue'
@@ -41,19 +41,14 @@ const buttonConfig: ComponentDocConfig = {
       component: ButtonSizeExample,
     },
     {
-      title: 'Radius',
-      description: 'Choose a theme radius or a custom radius token or CSS length.',
-      component: ButtonRadiusExample,
+      title: 'Class',
+      description: 'Apply Tailwind classes to customize the button radius and shadow.',
+      component: ButtonClassExample,
     },
     {
       title: 'Square',
-      description: 'Toggle equal width and height for an icon button.',
+      description: 'Give an icon button equal width and height at each size.',
       component: ButtonSquareExample,
-    },
-    {
-      title: 'Shadow',
-      description: 'Choose a shadow from the theme scale.',
-      component: ButtonShadowExample,
     },
     {
       title: 'Loading',
@@ -93,36 +88,21 @@ const buttonConfig: ComponentDocConfig = {
       },
       {
         name: 'variant',
-        type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft' | 'link'",
+        type: buttonVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: "'solid'",
         description: 'Visual style applied to the button.',
       },
       {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg'",
+        type: buttonSizes.map((size) => `'${size}'`).join(' | '),
         default: "'md'",
         description: 'Visual size of the button.',
-      },
-      {
-        name: 'radius',
-        type: 'string',
-        default: "'md'",
-        description:
-          'Theme radius name such as md, full or eval, resolved from --radius-<name> with md as fallback. Also accepts a CSS length such as 1rem.',
       },
       {
         name: 'square',
         type: 'boolean',
         default: 'false',
-        description:
-          'Sets equal width and height to create a square button, typically with an icon.',
-      },
-      {
-        name: 'shadow',
-        type: 'string',
-        default: "'none'",
-        description:
-          'Theme shadow name such as lg or eval, resolved from --shadow-<name> with none as fallback. Also accepts a CSS box-shadow value.',
+        description: 'Sets equal width and height based on size and removes padding.',
       },
       {
         name: 'loading',

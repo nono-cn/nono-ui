@@ -23,6 +23,10 @@
       "import": "./dist/index.js"
     },
     "./style.css": "./dist/style.css",
+    "./components/ui/constants": {
+      "types": "./dist/components/ui/constants.d.ts",
+      "import": "./dist/components/ui/constants.js"
+    },
     "./components/ui/*": {
       "types": "./dist/components/ui/*/index.d.ts",
       "import": "./dist/components/ui/*/index.js"

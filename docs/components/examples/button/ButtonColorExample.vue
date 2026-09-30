@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button, type ButtonVariant } from '@/components/ui/Button'
-import { themeColors } from '../../../config/constants'
+import { Button, buttonVariantNames, type ButtonVariant } from '@/components/ui/Button'
+import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const colors = [...themeColors, 'custom']
-const variants: ButtonVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft', 'link']
 const selectedColor = ref<string>(themeColors[0])
 const customColor = ref('#6366f1')
 const color = computed(() =>
@@ -51,7 +50,7 @@ function reset() {
           v-model="customColor"
           label="Custom color"
         />
-        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="buttonVariantNames" />
       </div>
     </template>
     <Button label="Save changes" :color="color" :variant="variant" />

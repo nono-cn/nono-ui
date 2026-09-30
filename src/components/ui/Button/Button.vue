@@ -14,14 +14,10 @@ const emit = defineEmits<ButtonEmits>()
 defineSlots<ButtonSlots>()
 
 const attrs = useAttrs()
-const { colorStyle, radiusStyle, shadowStyle } = useTheme({
+const { colorStyle } = useTheme({
   color: () => props.color,
-  radius: () => props.radius,
-  shadow: () => props.shadow,
   prefix: 'button',
   defaultColor: buttonDefaults.color,
-  defaultRadius: buttonDefaults.radius,
-  defaultShadow: buttonDefaults.shadow,
 })
 const ariaDisabled = computed(() => props.loading || attrs['aria-disabled'])
 const ariaBusy = computed(() => props.loading || attrs['aria-busy'])
@@ -48,7 +44,7 @@ const rootProps = computed(() => {
     'aria-busy': ariaBusy.value,
     'aria-disabled': ariaDisabled.value,
     class: cn(calculatedVariants.value, attrs.class),
-    style: [colorStyle.value, radiusStyle.value, shadowStyle.value, attrs.style],
+    style: [colorStyle.value, attrs.style],
   }
 })
 

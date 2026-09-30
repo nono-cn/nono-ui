@@ -6,12 +6,7 @@ import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import { useColor } from '@/composables'
 import { useI18n } from '@/i18n'
-import {
-  alertVariants,
-  type AlertEmits,
-  type AlertProps,
-  type AlertSlots,
-} from '.'
+import { alertVariants, type AlertEmits, type AlertProps, type AlertSlots } from '.'
 import { alertDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })

@@ -12,6 +12,7 @@ const uiRoot = path.join(sourceRoot, 'components/ui')
 const entries = {
   index: path.join(sourceRoot, 'index.js'),
   'components/provider/index': path.join(sourceRoot, 'components/provider/index.ts'),
+  'components/ui/constants': path.join(uiRoot, 'constants.ts'),
   ...Object.fromEntries(
     readdirSync(uiRoot, { withFileTypes: true })
       .filter((entry) => entry.isDirectory())

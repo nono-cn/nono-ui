@@ -88,15 +88,18 @@ describe('Pagination', () => {
         { input: undefined, expectedFirst: true, expectedLast: true },
         { input: true, expectedFirst: true, expectedLast: true },
         { input: false, expectedFirst: false, expectedLast: false },
-      ])('renderiza las paginas de los extremos para input=$input', ({ input, expectedFirst, expectedLast }) => {
-        const wrapper = mountPagination({
-          props: { total: 100, page: 5, siblingCount: 1, showEdges: input },
-        })
-        const values = wrapper.findAll('[data-test-pagination-item]').map((item) => item.text())
+      ])(
+        'renderiza las paginas de los extremos para input=$input',
+        ({ input, expectedFirst, expectedLast }) => {
+          const wrapper = mountPagination({
+            props: { total: 100, page: 5, siblingCount: 1, showEdges: input },
+          })
+          const values = wrapper.findAll('[data-test-pagination-item]').map((item) => item.text())
 
-        expect(values.includes('1')).toBe(expectedFirst)
-        expect(values.includes('10')).toBe(expectedLast)
-      })
+          expect(values.includes('1')).toBe(expectedFirst)
+          expect(values.includes('10')).toBe(expectedLast)
+        },
+      )
     })
 
     describe('disabled', () => {
@@ -163,13 +166,17 @@ describe('Pagination', () => {
 
     describe('size', () => {
       it.each([
-        { input: undefined, expected: 'md' },
-        { input: 'sm', expected: 'sm' },
-      ])('pasa input=$input como expected=$expected a los botones', ({ input, expected }) => {
-        const wrapper = mountPagination({ props: { total: 100, size: input } })
+        { input: undefined, expected: 'md', expectedClass: 'size-9' },
+        { input: 'sm', expected: 'sm', expectedClass: 'size-8' },
+      ])(
+        'pasa input=$input como expected=$expected a los botones',
+        ({ input, expected, expectedClass }) => {
+          const wrapper = mountPagination({ props: { total: 100, size: input } })
 
-        expect(wrapper.getComponent(Button).props('size')).toBe(expected)
-      })
+          expect(wrapper.getComponent(Button).props('size')).toBe(expected)
+          expect(wrapper.getComponent(Button).classes()).toContain(expectedClass)
+        },
+      )
     })
 
     describe('severity', () => {
@@ -413,7 +420,8 @@ describe('Pagination', () => {
         const wrapper = mountPagination({
           props: { total: 100, page: 2 },
           slots: {
-            default: () => h('span', { 'data-test-pagination-slot': 'default' }, 'Slot por defecto'),
+            default: () =>
+              h('span', { 'data-test-pagination-slot': 'default' }, 'Slot por defecto'),
           },
         })
 

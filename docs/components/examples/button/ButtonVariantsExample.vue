@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button, type ButtonVariant } from '@/components/ui/Button'
+import { Button, buttonVariantNames, type ButtonVariant } from '@/components/ui/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants: ButtonVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft', 'link']
 const variant = ref<ButtonVariant>('solid')
 
 const code = computed(
@@ -35,7 +34,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="buttonVariantNames" />
       </div>
     </template>
     <Button label="Save changes" :variant="variant" />

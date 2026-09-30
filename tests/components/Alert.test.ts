@@ -217,13 +217,12 @@ describe('Alert', () => {
             icon: 'x',
             size: 'xs',
             square: true,
-            rounded: true,
             variant: 'soft',
-            severity: 'primary',
-            color: undefined,
+            color: 'primary',
           }),
         )
         expect(closeButton.attributes('aria-label')).toBe(i18n.global.t('close'))
+        expect(closeButton.classes()).toContain('size-7')
       })
     })
 
