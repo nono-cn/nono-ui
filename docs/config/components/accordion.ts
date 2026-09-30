@@ -1,4 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { accordionVariantNames } from '@/components/ui/Accordion'
 import AccordionBasicExample from '../../components/examples/accordion/AccordionBasicExample.vue'
 import AccordionTypeExample from '../../components/examples/accordion/AccordionTypeExample.vue'
 import AccordionValueExample from '../../components/examples/accordion/AccordionValueExample.vue'
@@ -87,7 +88,7 @@ const accordionConfig: ComponentDocConfig = {
     props: [
       {
         name: 'variant',
-        type: "'default' | 'separated' | 'bordered' | 'frame'",
+        type: accordionVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: "'default'",
         description: 'Visual style applied to the accordion and its items.',
       },

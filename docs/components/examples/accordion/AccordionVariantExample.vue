@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Accordion, type AccordionVariant } from '@/components/ui/Accordion'
+import { Accordion, accordionVariantNames, type AccordionVariant } from '@/components/ui/Accordion'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants: AccordionVariant[] = ['default', 'separated', 'bordered', 'frame']
 const types = ['single', 'multiple'] as const
 const variant = ref<AccordionVariant>('frame')
 const type = ref<(typeof types)[number]>('single')
@@ -91,7 +90,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="accordionVariantNames" />
         <ExampleSelectControl v-model="type" label="Type" :options="types" />
         <ExampleCheckboxControl v-model="highlight" label="Highlight open item" />
       </div>

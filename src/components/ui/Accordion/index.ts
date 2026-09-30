@@ -5,8 +5,10 @@ import type {
 } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import type { IconName } from '@/components/ui/Icon'
+import { accordionVariantNames } from './constants'
 
 export { default as Accordion } from './Accordion.vue'
+export { accordionVariantNames } from './constants'
 
 export const accordionVariants = cva('', {
   variants: {
@@ -16,7 +18,7 @@ export const accordionVariants = cva('', {
       bordered: 'rounded-md border px-4',
       frame:
         'relative overflow-hidden rounded-xl border border-border bg-muted p-1 shadow-sm before:pointer-events-none before:absolute before:inset-1 before:z-10 before:rounded-lg before:border before:border-border',
-    },
+    } satisfies Record<(typeof accordionVariantNames)[number], string>,
   },
   defaultVariants: {
     variant: 'default',
