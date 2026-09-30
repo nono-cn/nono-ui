@@ -5,7 +5,7 @@ export const buttonDefaults = {
   variant: 'solid' as const,
   size: 'md' as const,
   square: false,
-  rounded: false,
+  radius: 'md' as const,
   loading: false,
   color: 'primary',
   icon: undefined,

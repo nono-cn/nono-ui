@@ -6,7 +6,7 @@ import ButtonDisabledExample from '../../components/examples/button/ButtonDisabl
 import ButtonLoadingExample from '../../components/examples/button/ButtonLoadingExample.vue'
 import ButtonClassExample from '../../components/examples/button/ButtonClassExample.vue'
 import ButtonSquareExample from '../../components/examples/button/ButtonSquareExample.vue'
-import ButtonRoundedExample from '../../components/examples/button/ButtonRoundedExample.vue'
+import ButtonRadiusExample from '../../components/examples/button/ButtonRadiusExample.vue'
 import ButtonSizeExample from '../../components/examples/button/ButtonSizeExample.vue'
 import ButtonTrailingIconExample from '../../components/examples/button/ButtonTrailingIconExample.vue'
 import ButtonUsageExample from '../../components/examples/button/ButtonUsageExample.vue'
@@ -52,9 +52,9 @@ const buttonConfig: ComponentDocConfig = {
       component: ButtonSquareExample,
     },
     {
-      title: 'Rounded',
-      description: 'Use fully rounded corners or override the radius with class.',
-      component: ButtonRoundedExample,
+      title: 'Radius',
+      description: 'Choose a Tailwind radius token, CSS value, or number of pixels.',
+      component: ButtonRadiusExample,
     },
     {
       title: 'Loading',
@@ -111,11 +111,11 @@ const buttonConfig: ComponentDocConfig = {
         description: 'Sets equal width and height based on size and removes padding.',
       },
       {
-        name: 'rounded',
-        type: 'boolean',
-        default: 'false',
+        name: 'radius',
+        type: 'string | number',
+        default: "'md'",
         description:
-          'Applies rounded-full instead of the default rounded-md. Combine with square for a circular button. Override the border radius with class.',
+          'Tailwind radius token, CSS border-radius value, or a number of pixels. Combine full with square for a circular button.',
       },
       {
         name: 'loading',

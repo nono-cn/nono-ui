@@ -7,6 +7,7 @@ import { themeColors } from '@/components/ui/constants'
 import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
+import { testRadius } from '../utils/testRadius'
 
 function mountButton(options: MountingOptions<ButtonProps> & Record<string, unknown> = {}) {
   return mount(Button, options)
@@ -22,6 +23,7 @@ const casesSize = [
   { input: 'sm' as const, expected: ['h-8', 'text-sm'] },
   { input: 'md' as const, expected: ['h-9', 'text-base'] },
   { input: 'lg' as const, expected: ['h-10', 'text-lg'] },
+  { input: 'xl' as const, expected: ['h-11', 'text-xl'] },
   { input: undefined, expected: ['h-9', 'text-base'] },
 ]
 
@@ -121,13 +123,6 @@ const casesSquare = [
   { size: undefined, expected: 'size-9' },
 ]
 
-const casesRounded = [
-  { rounded: true, className: undefined, expected: 'rounded-full' },
-  { rounded: false, className: undefined, expected: 'rounded-md' },
-  { rounded: undefined, className: undefined, expected: 'rounded-md' },
-  { rounded: true, className: 'rounded-lg', expected: 'rounded-lg' },
-]
-
 const casesLoading = [
   { input: true, expected: true },
   { input: false, expected: false },
@@ -219,21 +214,23 @@ describe('Button', () => {
       })
     })
 
-    describe('rounded', () => {
-      it.each(casesRounded)(
-        'aplica $expected con rounded=$rounded y class=$className',
-        ({ rounded, className, expected }) => {
-          const root = mountButton({
-            props: { rounded },
-            attrs: { class: className },
-          }).get('[data-test-button-root]')
+    describe('radius', () => {
+      testRadius({
+        id: '[data-test-button-root]',
+        variable: '--button-radius',
+        defaultValue: 'var(--radius-md)',
+        mount: (radius) => mountButton({ props: { radius } }),
+      })
 
-          expect(root.classes()).toContain(expected)
-          expect(
-            root.classes().filter((className) => /^rounded-(md|full|lg)$/.test(className)),
-          ).toEqual([expected])
-        },
-      )
+      it('allows a radius class to override the prop', () => {
+        const root = mountButton({
+          props: { radius: 'full' },
+          attrs: { class: 'rounded-lg' },
+        }).get('[data-test-button-root]')
+
+        expect(root.classes()).toContain('rounded-lg')
+        expect(root.classes()).not.toContain('rounded-(--button-radius)')
+      })
     })
 
     describe('loading', () => {
