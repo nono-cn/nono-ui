@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar, type AvatarSize } from '@/components/ui/Avatar'
+import { Avatar, avatarSizes, type AvatarSize } from '@/components/ui/Avatar'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const sizes: AvatarSize[] = ['xs', 'sm', 'md', 'lg']
 const size = ref<AvatarSize>('md')
 const code = computed(
   () => `<script setup lang="ts">
@@ -29,7 +28,7 @@ function reset() {
   <ComponentExample title="Size" description="Choose the avatar size." :code="code" @reset="reset">
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="size" label="Size" :options="sizes" />
+        <ExampleSelectControl v-model="size" label="Size" :options="avatarSizes" />
       </div>
     </template>
     <Avatar :size="size" label="JD" />

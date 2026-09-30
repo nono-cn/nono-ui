@@ -1,37 +1,34 @@
 <script setup lang="ts">
-import { computed, useAttrs, type CSSProperties, type ImgHTMLAttributes } from 'vue'
+import { computed, useAttrs, type ImgHTMLAttributes } from 'vue'
 import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
+import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { avatarVariants, type AvatarProps, type AvatarSlots } from '.'
+import { avatarDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<AvatarProps>(), {
-  size: 'md',
-  shape: 'rounded',
-  severity: 'neutral',
-  icon: undefined,
-  label: undefined,
-})
+const props = withDefaults(defineProps<AvatarProps>(), avatarDefaults)
 defineSlots<AvatarSlots>()
 
 const attrs = useAttrs()
-const colorStyle = computed<CSSProperties | undefined>(() =>
-  props.color ? { '--avatar-color': props.color } : undefined,
-)
+const { colorStyle, radiusStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'avatar',
+  defaultColor: avatarDefaults.color,
+  radius: () => props.radius,
+  defaultRadius: avatarDefaults.radius,
+})
 type AvatarImageProps = ImgHTMLAttributes & { src: string }
 const rootProps = computed(() => {
   return {
     class: cn(
       avatarVariants({
         size: props.size,
-        shape: props.shape,
-        severity: props.severity,
-        color: Boolean(props.color),
       }),
     ),
-    style: colorStyle.value,
+    style: [colorStyle.value, radiusStyle.value],
   }
 })
 
@@ -39,6 +36,7 @@ const imageProps = computed<AvatarImageProps>(() => {
   return {
     ...attrs,
     src: props.src ?? '',
+    alt: props.alt ?? '',
     class: cn('aspect-square size-full', attrs.class),
   } as AvatarImageProps
 })

@@ -1,55 +1,38 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { IconName } from '@/components/ui/Icon'
+import { avatarSizes } from './constants'
+import { avatarDefaults } from './defaults'
 
 export { default as Avatar } from './Avatar.vue'
+export { avatarSizes } from './constants'
 
 export const avatarVariants = cva(
-  'relative flex shrink-0 overflow-hidden bg-(--avatar-background,var(--color-muted))/10 text-(--avatar-foreground)',
+  'relative flex shrink-0 overflow-hidden rounded-(--avatar-radius) bg-(--avatar-color)/10 text-(--avatar-color)',
   {
     variants: {
-      severity: {
-        primary: '[--avatar-foreground:var(--primary)] [--avatar-background:var(--primary)]',
-        secondary:
-          '[--avatar-foreground:var(--secondary-foreground)] [--avatar-background:var(--secondary-foreground)]',
-        neutral:
-          '[--avatar-foreground:var(--muted-foreground)] [--avatar-background:var(--muted-foreground)]',
-        warning: '[--avatar-foreground:var(--warning)] [--avatar-background:var(--warning)]',
-        success: '[--avatar-foreground:var(--success)] [--avatar-background:var(--success)]',
-        error: '[--avatar-foreground:var(--error)] [--avatar-background:var(--error)]',
-      },
       size: {
         xs: 'size-6 text-xs',
         sm: 'size-8 text-sm',
         md: 'size-10 text-base',
         lg: 'size-12 text-lg',
-      },
-      shape: {
-        rounded: 'rounded-full',
-        square: 'rounded-none',
-      },
-      color: {
-        true: 'bg-(--avatar-color)',
-        false: '',
-      },
+        xl: 'size-16 text-xl',
+      } satisfies Record<(typeof avatarSizes)[number], string>,
     },
     defaultVariants: {
-      severity: 'neutral',
-      size: 'md',
-      shape: 'rounded',
+      size: avatarDefaults.size,
     },
   },
 )
 
 export type AvatarSize = NonNullable<VariantProps<typeof avatarVariants>['size']>
-export type AvatarShape = NonNullable<VariantProps<typeof avatarVariants>['shape']>
-export type AvatarSeverity = NonNullable<VariantProps<typeof avatarVariants>['severity']>
+export type AvatarRadius = string | number
 
 // Props
 export interface AvatarProps {
   src?: string
+  alt?: string
   size?: AvatarSize
-  shape?: AvatarShape
-  severity?: AvatarSeverity
+  radius?: AvatarRadius
   color?: string
   delayMs?: number
   icon?: IconName

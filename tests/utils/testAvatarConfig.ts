@@ -12,8 +12,10 @@ export function testAvatarConfig({ text, mount }: TestAvatarConfigOptions) {
   it(text, async () => {
     const input: AvatarProps = {
       src: 'avatar.png',
+      alt: 'Profile photo of AL',
       size: 'lg',
-      shape: 'square',
+      radius: 'none',
+      color: 'success',
       delayMs: 300,
       icon: 'user',
       label: 'AL',

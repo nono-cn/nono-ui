@@ -2,10 +2,12 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { h, nextTick } from 'vue'
 
-import { Avatar, type AvatarProps, type AvatarSeverity } from '@/components/ui/Avatar'
+import { Avatar, type AvatarProps } from '@/components/ui/Avatar'
+import { themeColors } from '@/components/ui/constants'
 import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
+import { testRadius } from '../utils/testRadius'
 
 function mountAvatar(options: MountingOptions<AvatarProps> = {}) {
   return mount(Avatar, options)
@@ -16,73 +18,15 @@ const casesSize = [
   { input: 'sm' as const, expected: ['size-8', 'text-sm'] },
   { input: 'md' as const, expected: ['size-10', 'text-base'] },
   { input: 'lg' as const, expected: ['size-12', 'text-lg'] },
+  { input: 'xl' as const, expected: ['size-16', 'text-xl'] },
   { input: undefined, expected: ['size-10', 'text-base'] },
 ]
 
-const casesShape = [
-  { input: 'rounded' as const, expected: 'rounded-full' },
-  { input: 'square' as const, expected: 'rounded-none' },
-  { input: undefined, expected: 'rounded-full' },
+const casesAlt = [
+  { input: 'Profile photo of NC', expected: 'Profile photo of NC' },
+  { input: '', expected: '' },
+  { input: undefined, expected: '' },
 ]
-
-const casesSeverity = [
-  {
-    input: 'primary' as const,
-    expected: [
-      '[--avatar-foreground:var(--primary)]',
-      '[--avatar-background:var(--primary)]',
-      'bg-(--avatar-background,var(--color-muted))/10',
-    ],
-  },
-  {
-    input: 'secondary' as const,
-    expected: [
-      '[--avatar-foreground:var(--secondary-foreground)]',
-      '[--avatar-background:var(--secondary-foreground)]',
-      'bg-(--avatar-background,var(--color-muted))/10',
-    ],
-  },
-  {
-    input: 'neutral' as const,
-    expected: [
-      '[--avatar-foreground:var(--muted-foreground)]',
-      '[--avatar-background:var(--muted-foreground)]',
-      'bg-(--avatar-background,var(--color-muted))/10',
-    ],
-  },
-  {
-    input: 'warning' as const,
-    expected: [
-      '[--avatar-foreground:var(--warning)]',
-      '[--avatar-background:var(--warning)]',
-      'bg-(--avatar-background,var(--color-muted))/10',
-    ],
-  },
-  {
-    input: 'success' as const,
-    expected: [
-      '[--avatar-foreground:var(--success)]',
-      '[--avatar-background:var(--success)]',
-      'bg-(--avatar-background,var(--color-muted))/10',
-    ],
-  },
-  {
-    input: 'error' as const,
-    expected: [
-      '[--avatar-foreground:var(--error)]',
-      '[--avatar-background:var(--error)]',
-      'bg-(--avatar-background,var(--color-muted))/10',
-    ],
-  },
-  {
-    input: undefined,
-    expected: [
-      '[--avatar-foreground:var(--muted-foreground)]',
-      '[--avatar-background:var(--muted-foreground)]',
-      'bg-(--avatar-background,var(--color-muted))/10',
-    ],
-  },
-] satisfies { input: AvatarSeverity | undefined; expected: string[] }[]
 
 const casesLabel = [
   { input: 'AL', expected: 'AL' },
@@ -106,50 +50,38 @@ describe('Avatar', () => {
       })
     })
 
-    describe('shape', () => {
-      it.each(casesShape)('renderiza shape=$input', ({ input, expected }) => {
-        const root = mountAvatar({ props: { shape: input } }).get('[data-test-avatar-root]')
-
-        expect(root.classes()).toContain(expected)
-      })
-    })
-
-    describe('severity', () => {
-      it.each(casesSeverity)('renderiza severity=$input', ({ input, expected }) => {
-        const root = mountAvatar({ props: { severity: input } }).get('[data-test-avatar-root]')
-
-        expect(root.classes()).toEqual(expect.arrayContaining(expected))
+    describe('radius', () => {
+      testRadius({
+        id: '[data-test-avatar-root]',
+        variable: '--avatar-radius',
+        defaultValue: '9999px',
+        mount: (radius) => mountAvatar({ props: { radius } }),
       })
     })
 
     describe('color', () => {
       testColor({
-        text: 'aplica color personalizado',
+        text: 'resuelve el color',
         id: '[data-test-avatar-root]',
         varColor: '--avatar-color',
+        defaultColor: 'var(--neutral, var(--neutral))',
+        fallbackColor: 'neutral',
+        theme: {
+          colors: themeColors,
+          foregroundVar: '--avatar-color-foreground',
+          solidVar: '--avatar-solid',
+          solidForegroundVar: '--avatar-solid-foreground',
+        },
         mount: (color) => mountAvatar({ props: { color } }),
       })
 
-      it('usa el fondo suave de severity cuando no hay color personalizado', () => {
-        const root = mountAvatar({ props: { severity: 'success' } }).get('[data-test-avatar-root]')
-
-        expect(root.classes()).toContain('bg-(--avatar-background,var(--color-muted))/10')
-        expect(root.classes()).not.toContain('bg-(--avatar-color)')
-      })
-
-      it('combina el fondo personalizado con el texto de severity', () => {
-        const root = mountAvatar({
-          props: { color: '#ff0000', severity: 'success', label: 'AL' },
-        }).get('[data-test-avatar-root]')
-
-        expect(root.attributes('style')).toContain('--avatar-color: #ff0000')
-        expect(root.classes()).toEqual(
-          expect.arrayContaining([
-            '[--avatar-foreground:var(--success)]',
-            '[--avatar-background:var(--success)]',
-            'bg-(--avatar-color)',
-          ]),
+      it('aplica el color al texto y al fondo suave', () => {
+        const root = mountAvatar({ props: { color: 'success', label: 'AL' } }).get(
+          '[data-test-avatar-root]',
         )
+
+        expect(root.classes()).toContain('bg-(--avatar-color)/10')
+        expect(root.classes()).toContain('text-(--avatar-color)')
       })
     })
 
@@ -161,6 +93,15 @@ describe('Avatar', () => {
         const image = avatar.get('[data-test-avatar-image]')
 
         expect(image.attributes('src')).toBe('avatar.png')
+      })
+    })
+
+    describe('alt', () => {
+      it.each(casesAlt)('aplica alt=$input solo a la imagen', ({ input, expected }) => {
+        const avatar = mountAvatar({ props: { src: 'avatar.png', alt: input, label: 'NC' } })
+
+        expect(avatar.get('[data-test-avatar-image]').attributes('alt')).toBe(expected)
+        expect(avatar.get('[data-test-avatar-fallback]').attributes('alt')).toBeUndefined()
       })
     })
 
@@ -247,6 +188,3 @@ describe('Avatar', () => {
     })
   })
 })
-
-
-

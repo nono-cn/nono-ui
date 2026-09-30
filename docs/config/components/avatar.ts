@@ -1,8 +1,8 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { avatarSizes } from '@/components/ui/Avatar'
 import AvatarSrcExample from '../../components/examples/avatar/AvatarSrcExample.vue'
 import AvatarSizeExample from '../../components/examples/avatar/AvatarSizeExample.vue'
-import AvatarShapeExample from '../../components/examples/avatar/AvatarShapeExample.vue'
-import AvatarSeverityExample from '../../components/examples/avatar/AvatarSeverityExample.vue'
+import AvatarRadiusExample from '../../components/examples/avatar/AvatarRadiusExample.vue'
 import AvatarColorExample from '../../components/examples/avatar/AvatarColorExample.vue'
 import AvatarDelayMsExample from '../../components/examples/avatar/AvatarDelayMsExample.vue'
 import AvatarIconExample from '../../components/examples/avatar/AvatarIconExample.vue'
@@ -25,7 +25,7 @@ const avatarConfig: ComponentDocConfig = {
   examples: [
     {
       title: 'Src',
-      description: 'Set the URL of the profile image.',
+      description: 'Set the URL and alternative text of the profile image.',
       component: AvatarSrcExample,
     },
     {
@@ -34,18 +34,13 @@ const avatarConfig: ComponentDocConfig = {
       component: AvatarSizeExample,
     },
     {
-      title: 'Shape',
-      description: 'Choose the avatar shape.',
-      component: AvatarShapeExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Choose the semantic color used by the avatar fallback.',
-      component: AvatarSeverityExample,
+      title: 'Radius',
+      description: 'Choose the corner radius of the avatar.',
+      component: AvatarRadiusExample,
     },
     {
       title: 'Color',
-      description: 'Set a custom background color for the avatar.',
+      description: 'Choose a theme token or custom color for the avatar fallback.',
       component: AvatarColorExample,
     },
     {
@@ -68,7 +63,7 @@ const avatarConfig: ComponentDocConfig = {
     {
       title: 'Alternative text',
       description:
-        'Pass alt as an attribute when src points to an informative image. Use label to provide a text fallback when the image is unavailable, and avoid relying on color or initials alone to communicate identity.',
+        'Set alt when src points to an informative image. Use label to provide a text fallback when the image is unavailable, and avoid relying on color or initials alone to communicate identity.',
     },
     {
       title: 'Icons and custom content',
@@ -86,30 +81,29 @@ const avatarConfig: ComponentDocConfig = {
           'Profile image URL. The fallback is rendered if the image cannot be displayed.',
       },
       {
+        name: 'alt',
+        type: 'string',
+        default: "''",
+        description:
+          'Alternative text for the profile image. An empty value marks it as decorative.',
+      },
+      {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg'",
+        type: avatarSizes.map((size) => `'${size}'`).join(' | '),
         default: "'md'",
         description: 'Visual size of the avatar.',
       },
       {
-        name: 'shape',
-        type: "'rounded' | 'square'",
-        default: "'rounded'",
-        description: 'Visual shape of the avatar: circular or square.',
-      },
-      {
-        name: 'severity',
-        type: "'primary' | 'secondary' | 'neutral' | 'warning' | 'success' | 'error'",
-        default: "'neutral'",
-        description:
-          'Semantic color used for text and icons in the avatar fallback, with a soft background tint.',
+        name: 'radius',
+        type: 'string | number',
+        default: "'full'",
+        description: 'Tailwind radius token, CSS border-radius value, or a number of pixels.',
       },
       {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description:
-          'Custom CSS background color. The text and icon color continue to follow severity.',
+        default: "'neutral'",
+        description: 'Theme token or CSS color used for the fallback text and soft background.',
       },
       {
         name: 'delayMs',

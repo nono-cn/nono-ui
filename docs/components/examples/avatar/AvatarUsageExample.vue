@@ -9,9 +9,9 @@ ${scriptEnd}
 
 <template>
   <Avatar
-    class="text-primary"
+    src="https://i.pravatar.cc/150?img=3"
     label="NC"
-    alt="Nono UI avatar"
+    alt="Profile photo of NC"
   />
 </template>`
 </script>
@@ -23,6 +23,6 @@ ${scriptEnd}
     :code="code"
     :show-reset="false"
   >
-    <Avatar class="text-primary" label="NC" alt="Nono UI avatar" />
+    <Avatar src="https://i.pravatar.cc/150?img=3" label="NC" alt="Profile photo of NC" />
   </ComponentExample>
 </template>

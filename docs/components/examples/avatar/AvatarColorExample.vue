@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Avatar } from '@/components/ui/Avatar'
+import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const color = ref('#dbeafe')
+const colors = [...themeColors, 'custom']
+const selectedColor = ref<string>('neutral')
+const customColor = ref('#7c3aed')
+const color = computed(() =>
+  selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
+)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -15,25 +22,33 @@ const color = ref('${color.value}')
 ${scriptEnd}
 
 <template>
-  <Avatar :color="color" severity="primary" label="JD" />
+  <Avatar :color="color" label="JD" />
 </template>`,
 )
 
 function reset() {
-  color.value = '#dbeafe'
+  selectedColor.value = 'neutral'
+  customColor.value = '#7c3aed'
 }
 </script>
 
 <template>
   <ComponentExample
     title="Color"
-    description="Set a custom background color for the avatar."
+    description="Choose a theme token or custom color for the avatar fallback."
     :code="code"
     @reset="reset"
   >
     <template #controls>
-      <ExampleColorControl v-model="color" label="Background color" />
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="selectedColor" label="Color" :options="colors" />
+        <ExampleColorControl
+          v-if="selectedColor === 'custom'"
+          v-model="customColor"
+          label="Custom color"
+        />
+      </div>
     </template>
-    <Avatar :color="color" severity="primary" label="JD" />
+    <Avatar :color="color" label="JD" />
   </ComponentExample>
 </template>
