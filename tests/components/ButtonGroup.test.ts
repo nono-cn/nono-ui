@@ -16,11 +16,12 @@ const casesOrientation = [
 ]
 
 const casesSize = [
-  { input: 'xs' as const, expected: ['h-7', 'px-2.5', 'text-xs'] },
-  { input: 'sm' as const, expected: ['h-8', 'px-3', 'text-sm'] },
-  { input: 'md' as const, expected: ['h-9', 'px-4', 'text-base'] },
-  { input: 'lg' as const, expected: ['h-10', 'px-6', 'text-lg'] },
-  { input: undefined, expected: ['h-9', 'px-4', 'text-base'] },
+  { input: 'xs' as const, expected: ['h-7', 'text-xs', 'size-3'] },
+  { input: 'sm' as const, expected: ['h-8', 'text-sm', 'size-4'] },
+  { input: 'md' as const, expected: ['h-9', 'text-base', 'size-5'] },
+  { input: 'lg' as const, expected: ['h-10', 'text-lg', 'size-6'] },
+  { input: 'xl' as const, expected: ['h-11', 'text-xl', 'size-7'] },
+  { input: undefined, expected: ['h-9', 'text-base', 'size-5'] },
 ]
 
 describe('ButtonGroup', () => {

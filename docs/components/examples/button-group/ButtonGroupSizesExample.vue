@@ -11,7 +11,7 @@ ${scriptEnd}
 
 <template>
   <div class="grid gap-4">
-    <ButtonGroup v-for="size in ['xs', 'sm', 'md', 'lg']" :key="size" :size="size" :aria-label="\`Actions, size \${size}\`">
+    <ButtonGroup v-for="size in ['xs', 'sm', 'md', 'lg', 'xl']" :key="size" :size="size" :aria-label="\`Actions, size \${size}\`">
       <Button label="Cancel" variant="outline" />
       <Button label="Apply" />
     </ButtonGroup>
@@ -28,7 +28,7 @@ ${scriptEnd}
   >
     <div class="grid gap-4">
       <ButtonGroup
-        v-for="size in ['xs', 'sm', 'md', 'lg']"
+        v-for="size in ['xs', 'sm', 'md', 'lg', 'xl']"
         :key="size"
         :size="size"
         :aria-label="`Actions, size ${size}`"

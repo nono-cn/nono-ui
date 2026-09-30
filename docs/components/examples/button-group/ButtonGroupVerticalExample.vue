@@ -13,7 +13,7 @@ ${scriptEnd}
   <ButtonGroup orientation="vertical" aria-label="Quick actions">
     <Button label="Edit" />
     <Button label="Duplicate" variant="outline" />
-    <Button label="Delete" variant="outline" severity="error" />
+    <Button label="Delete" variant="outline" color="error" />
   </ButtonGroup>
 </template>`
 </script>
@@ -28,7 +28,7 @@ ${scriptEnd}
     <ButtonGroup orientation="vertical" aria-label="Quick actions">
       <Button label="Edit" />
       <Button label="Duplicate" variant="outline" />
-      <Button label="Delete" variant="outline" severity="error" />
+      <Button label="Delete" variant="outline" color="error" />
     </ButtonGroup>
   </ComponentExample>
 </template>

@@ -45,7 +45,7 @@ const buttonGroupConfig: ComponentDocConfig = {
       },
       {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg'",
+        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
         default: "'md'",
         description: 'Size applied to descendant buttons.',
       },
