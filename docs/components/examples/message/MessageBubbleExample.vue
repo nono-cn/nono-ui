@@ -9,8 +9,8 @@ ${scriptEnd}
 
 <template>
   <div class="grid w-full gap-4">
-    <Message message="Informational message" :bubble="{ variant: 'outline', severity: 'primary' }" />
-    <Message message="Completed message" :bubble="{ variant: 'soft', severity: 'success' }" />
+    <Message message="Informational message" :bubble="{ variant: 'outline', color: 'primary' }" />
+    <Message message="Completed message" :bubble="{ variant: 'soft', color: 'success' }" />
   </div>
 </template>`
 </script>
@@ -23,11 +23,8 @@ ${scriptEnd}
     :show-reset="false"
   >
     <div class="grid w-full gap-4">
-      <Message
-        message="Informational message"
-        :bubble="{ variant: 'outline', severity: 'primary' }"
-      />
-      <Message message="Completed message" :bubble="{ variant: 'soft', severity: 'success' }" />
+      <Message message="Informational message" :bubble="{ variant: 'outline', color: 'primary' }" />
+      <Message message="Completed message" :bubble="{ variant: 'soft', color: 'success' }" />
     </div>
   </ComponentExample>
 </template>

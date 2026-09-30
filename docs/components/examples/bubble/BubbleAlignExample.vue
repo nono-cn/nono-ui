@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble, type BubbleAlign } from '@/components/ui/Bubble'
+import { Bubble, bubbleAlignments, type BubbleAlign } from '@/components/ui/Bubble'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const alignments: BubbleAlign[] = ['start', 'end']
 const align = ref<BubbleAlign>('start')
 const code = computed(
   () => `<script setup lang="ts">
@@ -36,7 +35,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="align" label="Align" :options="alignments" />
+        <ExampleSelectControl v-model="align" label="Align" :options="bubbleAlignments" />
       </div>
     </template>
     <div class="flex w-full flex-col gap-3">

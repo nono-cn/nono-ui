@@ -1,8 +1,14 @@
 import type { ComponentDocConfig } from '../component-docs'
+import {
+  bubbleAlignments,
+  bubbleReactionsAlignments,
+  bubbleReactionsSides,
+  bubbleVariantNames,
+} from '@/components/ui/Bubble'
 import BubbleBasicExample from '../../components/examples/bubble/BubbleBasicExample.vue'
 import BubbleAlignExample from '../../components/examples/bubble/BubbleAlignExample.vue'
 import BubbleVariantExample from '../../components/examples/bubble/BubbleVariantExample.vue'
-import BubbleSeverityExample from '../../components/examples/bubble/BubbleSeverityExample.vue'
+import BubbleRadiusExample from '../../components/examples/bubble/BubbleRadiusExample.vue'
 import BubbleColorExample from '../../components/examples/bubble/BubbleColorExample.vue'
 import BubbleReactionsExample from '../../components/examples/bubble/BubbleReactionsExample.vue'
 import BubbleElementExample from '../../components/examples/bubble/BubbleElementExample.vue'
@@ -16,7 +22,7 @@ const bubbleConfig: ComponentDocConfig = {
   usage: [
     {
       title: 'Basic usage',
-      description: 'Show a message with the subtle variant and neutral severity by default.',
+      description: 'Show a message with the subtle variant and neutral color by default.',
       component: BubbleBasicExample,
     },
   ],
@@ -32,14 +38,14 @@ const bubbleConfig: ComponentDocConfig = {
       component: BubbleVariantExample,
     },
     {
-      title: 'Severity',
-      description: 'Choose the semantic color and visual style of the bubble.',
-      component: BubbleSeverityExample,
+      title: 'Color',
+      description: 'Choose a theme token or custom color and see how each variant applies it.',
+      component: BubbleColorExample,
     },
     {
-      title: 'Color',
-      description: 'Choose a custom color and see how each variant applies it.',
-      component: BubbleColorExample,
+      title: 'Radius',
+      description: 'Choose the corner radius of the bubble.',
+      component: BubbleRadiusExample,
     },
     {
       title: 'Reactions',
@@ -63,37 +69,37 @@ const bubbleConfig: ComponentDocConfig = {
     props: [
       {
         name: 'align',
-        type: "'start' | 'end'",
+        type: bubbleAlignments.map((align) => `'${align}'`).join(' | '),
         default: "'start'",
         description: 'Alignment of the bubble within its container.',
       },
       {
         name: 'variant',
-        type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft'",
+        type: bubbleVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: "'subtle'",
         description: 'Visual style of the surface.',
       },
       {
-        name: 'severity',
-        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'neutral'",
-        description: 'Severity used to choose the colors.',
+        name: 'radius',
+        type: 'string | number',
+        default: "'xl'",
+        description: 'Tailwind radius token, CSS border-radius value, or a number of pixels.',
       },
       {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Custom CSS color.',
+        default: "'neutral'",
+        description: 'Theme token or CSS color used by the bubble variants.',
       },
       {
         name: 'sideReaction',
-        type: "'top' | 'bottom'",
+        type: bubbleReactionsSides.map((side) => `'${side}'`).join(' | '),
         default: "'bottom'",
         description: 'Side where reactions appear.',
       },
       {
         name: 'alignReaction',
-        type: "'start' | 'end'",
+        type: bubbleReactionsAlignments.map((align) => `'${align}'`).join(' | '),
         default: "'end'",
         description: 'Alignment of the reactions.',
       },

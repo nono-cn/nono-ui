@@ -1,53 +1,54 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
 import type { PrimitiveProps } from 'reka-ui'
+import {
+  bubbleAlignments,
+  bubbleReactionsAlignments,
+  bubbleReactionsSides,
+  bubbleVariantNames,
+} from './constants'
+import { bubbleDefaults } from './defaults'
 
 export { default as Bubble } from './Bubble.vue'
+export {
+  bubbleAlignments,
+  bubbleReactionsAlignments,
+  bubbleReactionsSides,
+  bubbleVariantNames,
+} from './constants'
 
 export const bubbleWrapperVariants = cva('relative flex w-fit max-w-[80%]', {
   variants: {
-    align: { start: 'self-start', end: 'self-end' },
+    align: { start: 'self-start', end: 'self-end' } satisfies Record<
+      (typeof bubbleAlignments)[number],
+      string
+    >,
   },
-  defaultVariants: { align: 'start' },
+  defaultVariants: { align: bubbleDefaults.align },
 })
 
-export const bubbleVariants = cva('block w-full rounded-xl border px-4 py-2.5 text-sm shadow-sm', {
-  variants: {
-    variant: {
-      solid: 'border-transparent bg-(--bubble-solid) text-(--bubble-solid-foreground)',
-      outline: 'border-(--bubble-color)/40 bg-transparent text-(--bubble-color)',
-      plain: 'border-transparent bg-transparent text-(--bubble-color)',
-      subtle: 'border-(--bubble-color)/20 bg-(--bubble-color)/10 text-(--bubble-color)',
-      soft: 'border-transparent bg-(--bubble-color)/10 text-(--bubble-color)',
+export const bubbleVariants = cva(
+  'block w-full rounded-(--bubble-radius) border px-4 py-2.5 text-sm shadow-sm',
+  {
+    variants: {
+      variant: {
+        solid: 'border-transparent bg-(--bubble-solid) text-(--bubble-solid-foreground)',
+        outline: 'border-(--bubble-color)/40 bg-transparent text-(--bubble-color)',
+        plain: 'border-transparent bg-transparent text-(--bubble-color)',
+        subtle: 'border-(--bubble-color)/20 bg-(--bubble-color)/10 text-(--bubble-color)',
+        soft: 'border-transparent bg-(--bubble-color)/10 text-(--bubble-color)',
+      } satisfies Record<(typeof bubbleVariantNames)[number], string>,
     },
-    severity: {
-      primary:
-        '[--bubble-color:var(--primary)] [--bubble-solid:var(--primary)] [--bubble-solid-foreground:var(--primary-foreground)]',
-      neutral:
-        '[--bubble-color:var(--foreground)] [--bubble-solid:var(--foreground)] [--bubble-solid-foreground:var(--background)]',
-      secondary:
-        '[--bubble-color:var(--secondary-foreground)] [--bubble-solid:var(--secondary)] [--bubble-solid-foreground:var(--secondary-foreground)]',
-      warning:
-        '[--bubble-color:var(--warning)] [--bubble-solid:var(--warning)] [--bubble-solid-foreground:var(--warning-foreground)]',
-      success:
-        '[--bubble-color:var(--success)] [--bubble-solid:var(--success)] [--bubble-solid-foreground:var(--success-foreground)]',
-      error:
-        '[--bubble-color:var(--error)] [--bubble-solid:var(--error)] [--bubble-solid-foreground:var(--error-foreground)]',
-    },
-    color: {
-      true: '[--bubble-solid:var(--bubble-color)] [--bubble-solid-foreground:var(--bubble-color-foreground)]',
-      false: '',
-    },
+    defaultVariants: { variant: bubbleDefaults.variant },
   },
-  defaultVariants: { variant: 'subtle', severity: 'neutral', color: false },
-})
+)
 
 export type BubbleVariants = VariantProps<typeof bubbleVariants>
 export type BubbleAlign = NonNullable<VariantProps<typeof bubbleWrapperVariants>['align']>
 export type BubbleVariant = NonNullable<BubbleVariants['variant']>
-export type BubbleSeverity = NonNullable<BubbleVariants['severity']>
-export type BubbleReactionsSide = 'top' | 'bottom'
-export type BubbleReactionsAlign = 'start' | 'end'
+export type BubbleRadius = string | number
+export type BubbleReactionsSide = (typeof bubbleReactionsSides)[number]
+export type BubbleReactionsAlign = (typeof bubbleReactionsAlignments)[number]
 
 export interface BubbleReactionsProps {
   side?: BubbleReactionsSide
@@ -63,7 +64,7 @@ export interface BubbleUI {
 export interface BubbleProps extends Pick<PrimitiveProps, 'as' | 'asChild'> {
   align?: BubbleAlign
   variant?: BubbleVariant
-  severity?: BubbleSeverity
+  radius?: BubbleRadius
   color?: string
   sideReaction?: BubbleReactionsSide
   alignReaction?: BubbleReactionsAlign

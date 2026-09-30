@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble, type BubbleReactionsAlign, type BubbleReactionsSide } from '@/components/ui/Bubble'
+import {
+  Bubble,
+  bubbleReactionsAlignments,
+  bubbleReactionsSides,
+  type BubbleReactionsAlign,
+  type BubbleReactionsSide,
+} from '@/components/ui/Bubble'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const sides: BubbleReactionsSide[] = ['top', 'bottom']
-const alignments: BubbleReactionsAlign[] = ['start', 'end']
 const sideReaction = ref<BubbleReactionsSide>('bottom')
 const alignReaction = ref<BubbleReactionsAlign>('end')
 const code = computed(
@@ -48,8 +52,12 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="sideReaction" label="Side" :options="sides" />
-        <ExampleSelectControl v-model="alignReaction" label="Alignment" :options="alignments" />
+        <ExampleSelectControl v-model="sideReaction" label="Side" :options="bubbleReactionsSides" />
+        <ExampleSelectControl
+          v-model="alignReaction"
+          label="Alignment"
+          :options="bubbleReactionsAlignments"
+        />
       </div>
     </template>
     <div class="flex w-full flex-col gap-8 py-4">

@@ -13,10 +13,10 @@ export function testBubbleConfig({ text, mount }: TestBubbleConfigOptions) {
     const input: BubbleProps = {
       align: 'end',
       variant: 'soft',
-      severity: 'secondary',
+      radius: 'lg',
       sideReaction: 'top',
       alignReaction: 'start',
-      color: '#7c3aed',
+      color: 'secondary',
     }
 
     const wrapper = await mount(input)

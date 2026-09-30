@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble, type BubbleVariant } from '@/components/ui/Bubble'
+import { Bubble, bubbleVariantNames, type BubbleVariant } from '@/components/ui/Bubble'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants: BubbleVariant[] = ['solid', 'outline', 'plain', 'subtle', 'soft']
 const variant = ref<BubbleVariant>('subtle')
 const code = computed(
   () => `<script setup lang="ts">
@@ -34,7 +33,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="variant" label="Variant" :options="variants" />
+        <ExampleSelectControl v-model="variant" label="Variant" :options="bubbleVariantNames" />
       </div>
     </template>
     <Bubble :variant="variant">A message with the selected visual style.</Bubble>

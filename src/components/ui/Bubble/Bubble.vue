@@ -2,7 +2,7 @@
 import { computed, useAttrs } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { bubbleVariants, bubbleWrapperVariants, type BubbleProps, type BubbleSlots } from '.'
 import BubbleReactions from './BubbleReactions.vue'
@@ -14,10 +14,13 @@ const props = withDefaults(defineProps<BubbleProps>(), bubbleDefaults)
 defineSlots<BubbleSlots>()
 
 const attrs = useAttrs()
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'bubble',
-)
+const { colorStyle, radiusStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'bubble',
+  defaultColor: bubbleDefaults.color,
+  radius: () => props.radius,
+  defaultRadius: bubbleDefaults.radius,
+})
 
 const wrapperProps = computed(() => ({
   class: bubbleWrapperVariants({ align: props.align }),
@@ -31,12 +34,10 @@ const surfaceProps = computed(() => {
     class: cn(
       bubbleVariants({
         variant: props.variant,
-        severity: props.severity,
-        color: Boolean(props.color),
       }),
       attrs.class,
     ),
-    style: [colorStyle.value, attrs.style],
+    style: [colorStyle.value, radiusStyle.value, attrs.style],
   }
 })
 
