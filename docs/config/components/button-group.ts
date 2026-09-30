@@ -18,13 +18,13 @@ const buttonGroupConfig: ComponentDocConfig = {
   ],
   examples: [
     {
-      title: 'Vertical',
-      description: 'Changes the orientation when actions need to be stacked.',
+      title: 'Orientation',
+      description: 'Choose a horizontal or vertical layout for the button group.',
       component: ButtonGroupVerticalExample,
     },
     {
       title: 'Size',
-      description: 'Applies a shared size to every button in the group.',
+      description: 'Passes a shared size to buttons in the group.',
       component: ButtonGroupSizesExample,
     },
   ],
@@ -47,7 +47,8 @@ const buttonGroupConfig: ComponentDocConfig = {
         name: 'size',
         type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
         default: "'md'",
-        description: 'Size applied to descendant buttons.',
+        description:
+          'Default size provided to descendant Buttons; an explicit Button size takes priority.',
       },
     ],
     emits: [],

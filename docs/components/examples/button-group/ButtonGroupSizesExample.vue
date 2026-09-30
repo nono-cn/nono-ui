@@ -1,41 +1,49 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/Button'
-import { ButtonGroup } from '@/components/ui/ButtonGroup'
+import { computed, ref } from 'vue'
+import { Button, buttonTextSizes } from '@/components/ui/Button'
+import { ButtonGroup, type ButtonGroupSize } from '@/components/ui/ButtonGroup'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const size = ref<ButtonGroupSize>('md')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { ButtonGroup } from '__DOCS_PACKAGE__/components/ui/ButtonGroup'
+import { ButtonGroup, type ButtonGroupSize } from '__DOCS_PACKAGE__/components/ui/ButtonGroup'
+
+const size = ref<ButtonGroupSize>('${size.value}')
 ${scriptEnd}
 
 <template>
-  <div class="grid gap-4">
-    <ButtonGroup v-for="size in ['xs', 'sm', 'md', 'lg', 'xl']" :key="size" :size="size" :aria-label="\`Actions, size \${size}\`">
-      <Button label="Cancel" variant="outline" />
-      <Button label="Apply" />
-    </ButtonGroup>
-  </div>
-</template>`
+  <ButtonGroup :size="size" aria-label="Document actions">
+    <Button label="Cancel" variant="outline" icon="x" />
+    <Button label="Apply" icon="check" />
+  </ButtonGroup>
+</template>`,
+)
+
+function reset() {
+  size.value = 'md'
+}
 </script>
 
 <template>
   <ComponentExample
     title="Size"
-    description="Applies the selected size to every button in the group."
+    description="Provides a default size to the buttons in the group."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid gap-4">
-      <ButtonGroup
-        v-for="size in ['xs', 'sm', 'md', 'lg', 'xl']"
-        :key="size"
-        :size="size"
-        :aria-label="`Actions, size ${size}`"
-      >
-        <Button label="Cancel" variant="outline" />
-        <Button label="Apply" />
-      </ButtonGroup>
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="size" label="Size" :options="buttonTextSizes" />
+      </div>
+    </template>
+    <ButtonGroup :size="size" aria-label="Document actions">
+      <Button label="Cancel" variant="outline" icon="x" />
+      <Button label="Apply" icon="check" />
+    </ButtonGroup>
   </ComponentExample>
 </template>

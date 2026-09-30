@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, provide, useAttrs } from 'vue'
 import { cn } from '@/lib/utils'
-import { buttonGroupVariants, type ButtonGroupProps, type ButtonGroupSlots } from '.'
-import { buttonGroupDefaults } from './default'
+import {
+  buttonGroupDefaults,
+  buttonGroupSizeKey,
+  buttonGroupVariants,
+  type ButtonGroupProps,
+  type ButtonGroupSlots,
+} from '.'
 
 defineOptions({ inheritAttrs: false })
 
@@ -10,14 +15,15 @@ const props = withDefaults(defineProps<ButtonGroupProps>(), buttonGroupDefaults)
 defineSlots<ButtonGroupSlots>()
 
 const attrs = useAttrs()
+provide(
+  buttonGroupSizeKey,
+  computed(() => props.size ?? buttonGroupDefaults.size),
+)
 const rootProps = computed(() => {
   return {
     ...attrs,
     role: 'group',
-    class: cn(
-      buttonGroupVariants({ orientation: props.orientation, size: props.size }),
-      attrs.class,
-    ),
+    class: cn(buttonGroupVariants({ orientation: props.orientation }), attrs.class),
     style: attrs.style,
   }
 })

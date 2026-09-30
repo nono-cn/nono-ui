@@ -1,8 +1,8 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { h } from 'vue'
+import { defineComponent, h, inject } from 'vue'
 
-import { ButtonGroup, type ButtonGroupProps } from '@/components/ui/ButtonGroup'
+import { ButtonGroup, buttonGroupSizeKey, type ButtonGroupProps } from '@/components/ui/ButtonGroup'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountButtonGroup(options: MountingOptions<ButtonGroupProps> = {}) {
@@ -15,14 +15,12 @@ const casesOrientation = [
   { input: undefined, expected: ['flex-row', 'rounded-l-none', 'border-l-0'] },
 ]
 
-const casesSize = [
-  { input: 'xs' as const, expected: ['h-7', 'text-xs', 'size-3'] },
-  { input: 'sm' as const, expected: ['h-8', 'text-sm', 'size-4'] },
-  { input: 'md' as const, expected: ['h-9', 'text-base', 'size-5'] },
-  { input: 'lg' as const, expected: ['h-10', 'text-lg', 'size-6'] },
-  { input: 'xl' as const, expected: ['h-11', 'text-xl', 'size-7'] },
-  { input: undefined, expected: ['h-9', 'text-base', 'size-5'] },
-]
+const SizeConsumer = defineComponent({
+  setup() {
+    const size = inject(buttonGroupSizeKey)
+    return () => h('span', { 'data-test-button-group-size': '' }, size?.value ?? 'missing')
+  },
+})
 
 describe('ButtonGroup', () => {
   describe('props', () => {
@@ -35,19 +33,6 @@ describe('ButtonGroup', () => {
         expect(root.classes().join(' ')).toEqual(expect.stringContaining(expected[0]))
         expect(root.classes().join(' ')).toEqual(expect.stringContaining(expected[1]))
         expect(root.classes().join(' ')).toEqual(expect.stringContaining(expected[2]))
-      })
-    })
-
-    describe('size', () => {
-      it.each(casesSize)('renderiza size=$input', ({ input, expected }) => {
-        const classes = mountButtonGroup({ props: { size: input } })
-          .get('[data-test-button-group-root]')
-          .classes()
-          .join(' ')
-
-        expect(classes).toEqual(expect.stringContaining(expected[0]))
-        expect(classes).toEqual(expect.stringContaining(expected[1]))
-        expect(classes).toEqual(expect.stringContaining(expected[2]))
       })
     })
   })
@@ -73,6 +58,36 @@ describe('ButtonGroup', () => {
       })
 
       expect(group.get('[data-test-button-group-item]').text()).toBe('Acción')
+    })
+  })
+
+  describe('provides', () => {
+    describe('buttonGroupSizeKey', () => {
+      it('proporciona props.size', () => {
+        const group = mountButtonGroup({
+          props: { size: 'lg' },
+          slots: { default: () => h(SizeConsumer) },
+        })
+
+        expect(group.get('[data-test-button-group-size]').text()).toBe('lg')
+      })
+
+      it('proporciona md por defecto', () => {
+        const group = mountButtonGroup({ slots: { default: () => h(SizeConsumer) } })
+
+        expect(group.get('[data-test-button-group-size]').text()).toBe('md')
+      })
+
+      it('actualiza el tamaño proporcionado cuando cambia la prop', async () => {
+        const group = mountButtonGroup({
+          props: { size: 'xs' },
+          slots: { default: () => h(SizeConsumer) },
+        })
+
+        await group.setProps({ size: 'xl' })
+
+        expect(group.get('[data-test-button-group-size]').text()).toBe('xl')
+      })
     })
   })
 })

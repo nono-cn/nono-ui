@@ -1,19 +1,22 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, inject, useAttrs } from 'vue'
 import { Primitive } from 'reka-ui'
 import { Icon, type IconSize } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/composables'
 import { buttonVariants, type ButtonEmits, type ButtonProps, type ButtonSlots } from '.'
 import { buttonDefaults } from './defaults'
+import { buttonGroupSizeKey } from '@/components/ui/ButtonGroup'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<ButtonProps>(), buttonDefaults)
+const props = withDefaults(defineProps<ButtonProps>(), { ...buttonDefaults, size: undefined })
 const emit = defineEmits<ButtonEmits>()
 defineSlots<ButtonSlots>()
 
 const attrs = useAttrs()
+const groupSize = inject(buttonGroupSizeKey, undefined)
+const size = computed(() => props.size ?? groupSize?.value ?? buttonDefaults.size)
 const { colorStyle, radiusStyle } = useTheme({
   color: () => props.color,
   prefix: 'button',
@@ -24,13 +27,13 @@ const { colorStyle, radiusStyle } = useTheme({
 const ariaDisabled = computed(() => props.loading || attrs['aria-disabled'])
 const ariaBusy = computed(() => props.loading || attrs['aria-busy'])
 const iconSize = computed<IconSize>(() => {
-  if (props.size === 'icon') return 'md'
-  return props.size.startsWith('icon-') ? (props.size.slice(5) as IconSize) : props.size
+  if (size.value === 'icon') return 'md'
+  return size.value.startsWith('icon-') ? (size.value.slice(5) as IconSize) : size.value
 })
 const calculatedVariants = computed(() => {
   const classes = buttonVariants({
     variant: props.variant,
-    size: props.size,
+    size: size.value,
   })
 
   if (props.as === 'button' || props.as === 'a') return classes
