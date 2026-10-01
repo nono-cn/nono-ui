@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { breadcrumbVariantNames } from '@/components/ui/Breadcrumb'
+import { breadcrumbDefaults, breadcrumbVariantNames } from '@/components/ui/Breadcrumb'
 import BreadcrumbUsageExample from '../../components/examples/breadcrumb/BreadcrumbUsageExample.vue'
 import BreadcrumbEllipsisExample from '../../components/examples/breadcrumb/BreadcrumbEllipsisExample.vue'
 import BreadcrumbSeparatorIconExample from '../../components/examples/breadcrumb/BreadcrumbSeparatorIconExample.vue'
@@ -71,13 +71,13 @@ const breadcrumbConfig: ComponentDocConfig = {
         name: 'items',
         type: 'BreadcrumbItem[]',
         typeLink: '#breadcrumb-item',
-        default: '[]',
+        default: JSON.stringify(breadcrumbDefaults.items()),
         description: 'Ordered items in the navigation hierarchy.',
       },
       {
         name: 'ellipsisIndex',
         type: '[start: number, end: number]',
-        default: 'undefined',
+        default: String(breadcrumbDefaults.ellipsisIndex),
         description:
           'Replaces the item at start with an ellipsis and hides items from start + 1 through end (inclusive). The range must hide at least one item and leave the current page visible.',
       },
@@ -85,20 +85,20 @@ const breadcrumbConfig: ComponentDocConfig = {
         name: 'ellipsisIcon',
         type: 'IconName',
         typeLink: '/components/icon#props',
-        default: "'moreHorizontal'",
+        default: `'${breadcrumbDefaults.ellipsisIcon}'`,
         description: 'Icon name used by the ellipsis fallback.',
       },
       {
         name: 'separatorIcon',
         type: 'IconName',
         typeLink: '/components/icon#props',
-        default: "'chevronRight'",
+        default: `'${breadcrumbDefaults.separatorIcon}'`,
         description: 'Icon name used by the separator fallback.',
       },
       {
         name: 'variant',
         type: breadcrumbVariantNames.map((variant) => `'${variant}'`).join(' | '),
-        default: "'plain'",
+        default: `'${breadcrumbDefaults.variant}'`,
         description:
           'Layout of the breadcrumb container: unframed, outlined, or framed with two subtle borders.',
       },
@@ -118,7 +118,7 @@ const breadcrumbConfig: ComponentDocConfig = {
           { text: 'BreadcrumbItemContext', link: '#breadcrumb-item-context' },
           { text: ') => HTMLAttributes\n}' },
         ],
-        default: 'undefined',
+        default: String(breadcrumbDefaults.ui),
         description:
           'Attribute resolvers for the list, ellipsis container, separator container, and each visible item. Only item receives a context.',
       },

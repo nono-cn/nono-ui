@@ -2,11 +2,10 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
 import type { LinkProps } from '@/components/ui/Link'
 import type { IconName } from '@/components/ui/Icon'
-import { breadcrumbVariantNames } from './constants'
-import { breadcrumbDefaults } from './default'
+import { breadcrumbDefaults, breadcrumbVariantNames } from './constants'
 
 export { default as Breadcrumb } from './Breadcrumb.vue'
-export { breadcrumbVariantNames } from './constants'
+export { breadcrumbDefaults, breadcrumbVariantNames } from './constants'
 
 export const breadcrumbVariants = cva('', {
   variants: {

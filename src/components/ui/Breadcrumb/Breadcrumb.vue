@@ -13,7 +13,7 @@ import type {
   BreadcrumbSlots,
 } from '.'
 import { breadcrumbListVariants, breadcrumbVariants } from '.'
-import { breadcrumbDefaults } from './default'
+import { breadcrumbDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

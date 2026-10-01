@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/Breadcrumb'
+import { Breadcrumb, breadcrumbDefaults, type BreadcrumbItem } from '@/components/ui/Breadcrumb'
 import type { IconName } from '@/components/ui/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -12,7 +12,7 @@ const items: BreadcrumbItem[] = [
   { slot: 'breadcrumb', label: 'Breadcrumb' },
 ]
 const separatorOptions: IconName[] = ['chevronRight', 'minus', 'chevronsRight']
-const separatorIcon = ref<IconName>('chevronRight')
+const separatorIcon = ref<IconName>(breadcrumbDefaults.separatorIcon)
 const code = computed(
   () => `<script setup lang="ts">
 import { Breadcrumb, type BreadcrumbItem } from '__DOCS_PACKAGE__/components/ui/Breadcrumb'
@@ -30,7 +30,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  separatorIcon.value = 'chevronRight'
+  separatorIcon.value = breadcrumbDefaults.separatorIcon
 }
 </script>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/Breadcrumb'
+import { Breadcrumb, breadcrumbDefaults, type BreadcrumbItem } from '@/components/ui/Breadcrumb'
 import type { IconName } from '@/components/ui/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -15,7 +15,7 @@ const items: BreadcrumbItem[] = [
 const rangeOptions = ['none', '0–2', '1–2'] as const
 const range = ref<(typeof rangeOptions)[number]>('0–2')
 const ellipsisIconOptions: IconName[] = ['moreHorizontal', 'plus', 'info']
-const ellipsisIcon = ref<IconName>('moreHorizontal')
+const ellipsisIcon = ref<IconName>(breadcrumbDefaults.ellipsisIcon)
 const ellipsisIndex = computed<[number, number] | undefined>(() =>
   range.value === 'none' ? undefined : range.value === '0–2' ? [0, 2] : [1, 2],
 )
@@ -39,7 +39,7 @@ ${scriptEnd}
 
 function reset() {
   range.value = '0–2'
-  ellipsisIcon.value = 'moreHorizontal'
+  ellipsisIcon.value = breadcrumbDefaults.ellipsisIcon
 }
 </script>
 

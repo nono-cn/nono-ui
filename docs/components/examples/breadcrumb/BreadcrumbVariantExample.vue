@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import {
   Breadcrumb,
+  breadcrumbDefaults,
   breadcrumbVariantNames,
   type BreadcrumbItem,
   type BreadcrumbVariant,
@@ -15,7 +16,7 @@ const items: BreadcrumbItem[] = [
   { slot: 'components', label: 'Components', to: '/components' },
   { slot: 'breadcrumb', label: 'Breadcrumb' },
 ]
-const variant = ref<BreadcrumbVariant>('plain')
+const variant = ref<BreadcrumbVariant>(breadcrumbDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { Breadcrumb, type BreadcrumbItem } from '__DOCS_PACKAGE__/components/ui/Breadcrumb'
@@ -33,7 +34,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  variant.value = 'plain'
+  variant.value = breadcrumbDefaults.variant
 }
 </script>
 
