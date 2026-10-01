@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ColorArea } from '@/components/ui/ColorArea'
+import { ColorArea, colorAreaDefaults } from '@/components/ui/ColorArea'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -13,7 +13,7 @@ function handleSubmit(event: SubmitEvent) {
 
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { ColorArea } from '__DOCS_PACKAGE__/components/ui/ColorArea'
+import { ColorArea, colorAreaDefaults } from '__DOCS_PACKAGE__/components/ui/ColorArea'
 
 const submittedValues = ref('Submit the form to inspect the channel values.')
 
@@ -26,11 +26,11 @@ ${scriptEnd}
 <template>
   <form class="grid justify-items-start gap-4" @submit.prevent="handleSubmit">
     <ColorArea
-      color-space="hsl"
-      x-channel="hue"
-      y-channel="saturation"
-      x-name="hue"
-      y-name="saturation"
+      :color-space="colorAreaDefaults.colorSpace"
+      :x-channel="colorAreaDefaults.xChannel"
+      :y-channel="colorAreaDefaults.yChannel"
+      :x-name="colorAreaDefaults.xChannel"
+      :y-name="colorAreaDefaults.yChannel"
     />
     <button type="submit" class="rounded-md border px-3 py-2 text-sm font-medium">
       Submit color channels
@@ -49,11 +49,11 @@ ${scriptEnd}
   >
     <form class="grid justify-items-start gap-4" @submit.prevent="handleSubmit">
       <ColorArea
-        color-space="hsl"
-        x-channel="hue"
-        y-channel="saturation"
-        x-name="hue"
-        y-name="saturation"
+        :color-space="colorAreaDefaults.colorSpace"
+        :x-channel="colorAreaDefaults.xChannel"
+        :y-channel="colorAreaDefaults.yChannel"
+        :x-name="colorAreaDefaults.xChannel"
+        :y-name="colorAreaDefaults.yChannel"
       />
       <button type="submit" class="rounded-md border px-3 py-2 text-sm font-medium">
         Submit color channels

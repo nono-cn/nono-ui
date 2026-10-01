@@ -4,7 +4,15 @@ import { ColorAreaRoot, type Color } from 'reka-ui'
 import { nextTick } from 'vue'
 
 import { i18n } from '@/i18n'
-import { ColorArea, type ColorAreaProps, type ColorAreaValue } from '@/components/ui/ColorArea'
+import {
+  ColorArea,
+  colorAreaDefaults,
+  type ColorAreaChannel,
+  type ColorAreaColorSpace,
+  type ColorAreaProps,
+  type ColorAreaSize,
+  type ColorAreaValue,
+} from '@/components/ui/ColorArea'
 import { testAttrs } from '../utils/testAttrs'
 
 const casesValue: Array<{ input: ColorAreaValue | undefined; expected: ColorAreaValue }> = [
@@ -21,15 +29,15 @@ const casesValue: Array<{ input: ColorAreaValue | undefined; expected: ColorArea
     input: { space: 'hsb', h: 150, s: 60, b: 84, alpha: 1 } satisfies Color,
     expected: { space: 'hsb', h: 150, s: 60, b: 84, alpha: 1 },
   },
-  { input: undefined, expected: '#ff0000' },
+  { input: undefined, expected: colorAreaDefaults.value },
 ]
 
 const casesColorSpace = [
   { input: 'hsl' as const, expected: 'hsl' },
   { input: 'hsb' as const, expected: 'hsb' },
   { input: 'rgb' as const, expected: 'rgb' },
-  { input: undefined, expected: 'hsl' },
-]
+  { input: undefined, expected: colorAreaDefaults.colorSpace },
+] satisfies { input: ColorAreaColorSpace | undefined; expected: ColorAreaColorSpace }[]
 
 const casesXChannel = [
   { input: 'red' as const, expected: 'red' },
@@ -40,8 +48,8 @@ const casesXChannel = [
   { input: 'lightness' as const, expected: 'lightness' },
   { input: 'brightness' as const, expected: 'brightness' },
   { input: 'alpha' as const, expected: 'alpha' },
-  { input: undefined, expected: 'hue' },
-]
+  { input: undefined, expected: colorAreaDefaults.xChannel },
+] satisfies { input: ColorAreaChannel | undefined; expected: ColorAreaChannel }[]
 
 const casesYChannel = [
   { input: 'red' as const, expected: 'red' },
@@ -52,13 +60,13 @@ const casesYChannel = [
   { input: 'lightness' as const, expected: 'lightness' },
   { input: 'brightness' as const, expected: 'brightness' },
   { input: 'alpha' as const, expected: 'alpha' },
-  { input: undefined, expected: 'saturation' },
-]
+  { input: undefined, expected: colorAreaDefaults.yChannel },
+] satisfies { input: ColorAreaChannel | undefined; expected: ColorAreaChannel }[]
 
 const casesDisabled = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: colorAreaDefaults.disabled },
 ]
 
 const casesRequired = [
@@ -70,8 +78,11 @@ const casesRequired = [
 const casesRounded = [
   { input: true, expected: 'rounded-md' },
   { input: false, expected: 'rounded-none' },
-  { input: undefined, expected: 'rounded-md' },
-]
+  {
+    input: undefined,
+    expected: colorAreaDefaults.rounded ? 'rounded-md' : 'rounded-none',
+  },
+] satisfies { input: boolean | undefined; expected: string }[]
 
 const casesSize = [
   { input: 'xs' as const, expected: 'size-32' },
@@ -80,7 +91,7 @@ const casesSize = [
   { input: 'lg' as const, expected: 'size-56' },
   { input: 'xl' as const, expected: 'size-64' },
   { input: undefined, expected: 'size-48' },
-]
+] satisfies { input: ColorAreaSize | undefined; expected: string }[]
 
 const casesAxisName = [
   { input: 'hue', expected: 'hue' },
@@ -90,6 +101,9 @@ const casesAxisName = [
 
 const emittedValue = '#56d799'
 const emittedColor = { space: 'rgb', r: 86, g: 215, b: 153, alpha: 1 } satisfies Color
+const casesUpdateValue = [{ input: emittedValue }, { input: emittedColor }] satisfies {
+  input: ColorAreaValue
+}[]
 
 function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
   return mount(ColorArea, {
@@ -265,16 +279,19 @@ describe('ColorArea', () => {
     })
 
     describe('update:value', () => {
-      it('sincroniza v-model:value cuando ColorAreaRoot emite update:modelValue', async () => {
-        const wrapper = mountColorArea()
-        const root = wrapper.getComponent(ColorAreaRoot)
+      it.each(casesUpdateValue)(
+        'sincroniza v-model:value cuando ColorAreaRoot emite update:modelValue=$input',
+        async ({ input }) => {
+          const wrapper = mountColorArea()
+          const root = wrapper.getComponent(ColorAreaRoot)
 
-        await root.vm.$emit('update:modelValue', emittedValue)
-        await nextTick()
+          await root.vm.$emit('update:modelValue', input)
+          await nextTick()
 
-        expect(wrapper.emitted('update:value')).toEqual([[emittedValue]])
-        expect(root.props('modelValue')).toBe(emittedValue)
-      })
+          expect(wrapper.emitted('update:value')).toEqual([[input]])
+          expect(root.props('modelValue')).toEqual(input)
+        },
+      )
     })
   })
 

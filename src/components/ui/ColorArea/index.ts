@@ -1,8 +1,20 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { Color, ColorChannel, ColorSpace } from 'reka-ui'
+import type { Color } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
+import {
+  colorAreaChannels,
+  colorAreaColorSpaces,
+  colorAreaDefaults,
+  colorAreaSizes,
+} from './constants'
 
 export { default as ColorArea } from './ColorArea.vue'
+export {
+  colorAreaChannels,
+  colorAreaColorSpaces,
+  colorAreaDefaults,
+  colorAreaSizes,
+} from './constants'
 
 export const colorAreaRootVariants = cva('relative overflow-hidden data-[disabled]:opacity-50', {
   variants: {
@@ -12,19 +24,21 @@ export const colorAreaRootVariants = cva('relative overflow-hidden data-[disable
       md: 'size-48',
       lg: 'size-56',
       xl: 'size-64',
-    },
+    } satisfies Record<(typeof colorAreaSizes)[number], string>,
     rounded: {
       true: 'rounded-md',
       false: 'rounded-none',
     },
   },
   defaultVariants: {
-    size: 'md',
-    rounded: true,
+    size: colorAreaDefaults.size,
+    rounded: colorAreaDefaults.rounded,
   },
 })
 
 export type ColorAreaSize = NonNullable<VariantProps<typeof colorAreaRootVariants>['size']>
+export type ColorAreaColorSpace = (typeof colorAreaColorSpaces)[number]
+export type ColorAreaChannel = (typeof colorAreaChannels)[number]
 
 export const colorAreaThumbVariants = cva(
   'block size-5 rounded-full border-2 border-black/60 bg-white shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
@@ -41,9 +55,9 @@ export interface ColorAreaUI {
 
 export interface ColorAreaProps {
   value?: ColorAreaValue
-  colorSpace?: ColorSpace
-  xChannel?: ColorChannel
-  yChannel?: ColorChannel
+  colorSpace?: ColorAreaColorSpace
+  xChannel?: ColorAreaChannel
+  yChannel?: ColorAreaChannel
   disabled?: boolean
   size?: ColorAreaSize
   rounded?: boolean

@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ColorArea } from '@/components/ui/ColorArea'
+import { ColorArea, colorAreaDefaults } from '@/components/ui/ColorArea'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const color = ref('#56d799')
+const color = ref(colorAreaDefaults.value)
+
+function reset() {
+  color.value = colorAreaDefaults.value
+}
 
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { ColorArea } from '__DOCS_PACKAGE__/components/ui/ColorArea'
+import { ColorArea, colorAreaDefaults } from '__DOCS_PACKAGE__/components/ui/ColorArea'
 
-const color = ref('#56d799')
+const color = ref(colorAreaDefaults.value)
 ${scriptEnd}
 
 <template>
@@ -26,7 +30,7 @@ ${scriptEnd}
     title="Value"
     description="Bind the selected color with v-model:value."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
     <div class="grid gap-3">
       <ColorArea v-model:value="color" />

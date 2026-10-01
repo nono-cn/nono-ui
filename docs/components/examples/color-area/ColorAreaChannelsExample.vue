@@ -1,56 +1,82 @@
 <script setup lang="ts">
-import { ColorArea } from '@/components/ui/ColorArea'
+import { computed, ref } from 'vue'
+import {
+  ColorArea,
+  colorAreaDefaults,
+  colorAreaColorSpaces,
+  colorAreaChannels,
+  type ColorAreaChannel,
+  type ColorAreaColorSpace,
+} from '@/components/ui/ColorArea'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const channels = [
-  { x: 'hue', y: 'saturation' },
-  { x: 'hue', y: 'lightness' },
-  { x: 'saturation', y: 'lightness' },
-  { x: 'lightness', y: 'saturation' },
-] as const
+const colorSpace = ref<ColorAreaColorSpace>(colorAreaDefaults.colorSpace)
+const xChannel = ref<ColorAreaChannel>(colorAreaDefaults.xChannel)
+const yChannel = ref<ColorAreaChannel>(colorAreaDefaults.yChannel)
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import {
+  ColorArea,
+  type ColorAreaChannel,
+  type ColorAreaColorSpace,
+} from '__DOCS_PACKAGE__/components/ui/ColorArea'
 
-const code = `<script setup lang="ts">
-import { ColorArea } from '__DOCS_PACKAGE__/components/ui/ColorArea'
-
-const channels = [
-  { x: 'hue', y: 'saturation' },
-  { x: 'hue', y: 'lightness' },
-  { x: 'saturation', y: 'lightness' },
-  { x: 'lightness', y: 'saturation' },
-] as const
+const colorSpace = ref<ColorAreaColorSpace>('${colorSpace.value}')
+const xChannel = ref<ColorAreaChannel>('${xChannel.value}')
+const yChannel = ref<ColorAreaChannel>('${yChannel.value}')
 ${scriptEnd}
 
 <template>
-  <div class="grid gap-6 sm:grid-cols-2">
-    <figure v-for="channel in channels" :key="channel.x + '-' + channel.y" class="grid gap-2">
-      <ColorArea
-        color-space="hsl"
-        :x-channel="channel.x"
-        :y-channel="channel.y"
-      />
-      <figcaption class="text-center text-sm">
-        Horizontal: {{ channel.x }} · Vertical: {{ channel.y }}
-      </figcaption>
-    </figure>
+  <div class="grid justify-items-center gap-3">
+    <ColorArea :color-space="colorSpace" :x-channel="xChannel" :y-channel="yChannel" />
+    <p class="text-center text-sm">
+      {{ colorSpace.toUpperCase() }} · Horizontal: {{ xChannel }} · Vertical: {{ yChannel }}
+    </p>
   </div>
-</template>`
+</template>`,
+)
+
+function reset() {
+  colorSpace.value = colorAreaDefaults.colorSpace
+  xChannel.value = colorAreaDefaults.xChannel
+  yChannel.value = colorAreaDefaults.yChannel
+}
 </script>
 
 <template>
   <ComponentExample
     title="Channels"
-    description="Compare HSL channel pairs mapped to the horizontal and vertical axes."
+    description="Choose a color space and the channels controlled by each axis."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid gap-6 sm:grid-cols-2">
-      <figure v-for="channel in channels" :key="channel.x + '-' + channel.y" class="grid gap-2">
-        <ColorArea color-space="hsl" :x-channel="channel.x" :y-channel="channel.y" />
-        <figcaption class="text-center text-sm">
-          Horizontal: {{ channel.x }} · Vertical: {{ channel.y }}
-        </figcaption>
-      </figure>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl
+          v-model="colorSpace"
+          label="Color space"
+          :options="colorAreaColorSpaces"
+        />
+        <ExampleSelectControl
+          v-model="xChannel"
+          label="Horizontal channel"
+          :options="colorAreaChannels"
+        />
+        <ExampleSelectControl
+          v-model="yChannel"
+          label="Vertical channel"
+          :options="colorAreaChannels"
+        />
+      </div>
+    </template>
+    <div class="grid justify-items-center gap-3">
+      <ColorArea :color-space="colorSpace" :x-channel="xChannel" :y-channel="yChannel" />
+      <p class="text-center text-sm">
+        {{ colorSpace.toUpperCase() }} · Horizontal: {{ xChannel }} · Vertical: {{ yChannel }}
+      </p>
     </div>
   </ComponentExample>
 </template>

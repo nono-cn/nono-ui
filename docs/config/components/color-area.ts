@@ -1,4 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
+import {
+  colorAreaChannels,
+  colorAreaColorSpaces,
+  colorAreaDefaults,
+  colorAreaSizes,
+} from '@/components/ui/ColorArea'
 import ColorAreaBasicExample from '../../components/examples/color-area/ColorAreaBasicExample.vue'
 import ColorAreaValueExample from '../../components/examples/color-area/ColorAreaValueExample.vue'
 import ColorAreaChannelsExample from '../../components/examples/color-area/ColorAreaChannelsExample.vue'
@@ -28,22 +34,22 @@ const colorAreaConfig: ComponentDocConfig = {
     },
     {
       title: 'Channels',
-      description: 'Compare HSL channel pairs mapped to the horizontal and vertical axes.',
+      description: 'Choose a color space and the channels controlled by each axis.',
       component: ColorAreaChannelsExample,
     },
     {
       title: 'Disabled',
-      description: 'Disable interaction with the color area.',
+      description: 'Toggle interaction with the color area.',
       component: ColorAreaDisabledExample,
     },
     {
       title: 'Rounded',
-      description: 'Compare rounded and square color areas.',
+      description: 'Toggle between rounded and square corners.',
       component: ColorAreaRoundedExample,
     },
     {
       title: 'Size',
-      description: 'Compare the available ColorArea dimensions.',
+      description: 'Choose the ColorArea dimensions.',
       component: ColorAreaSizeExample,
     },
     {
@@ -71,45 +77,45 @@ const colorAreaConfig: ComponentDocConfig = {
       {
         name: 'value',
         type: 'string | Color',
-        default: "'#ff0000'",
+        default: `'${colorAreaDefaults.value}'`,
         description: 'Selected color. Can also be bound with v-model:value.',
       },
       {
         name: 'colorSpace',
-        type: "'hsl' | 'hsb' | 'rgb'",
-        default: "'hsl'",
+        type: colorAreaColorSpaces.map((space) => `'${space}'`).join(' | '),
+        default: `'${colorAreaDefaults.colorSpace}'`,
         description: 'Color space used to calculate and display the selected color.',
       },
       {
         name: 'xChannel',
-        type: "'red' | 'green' | 'blue' | 'hue' | 'saturation' | 'lightness' | 'brightness' | 'alpha'",
-        default: "'hue'",
+        type: colorAreaChannels.map((channel) => `'${channel}'`).join(' | '),
+        default: `'${colorAreaDefaults.xChannel}'`,
         description:
           'Color channel controlled by horizontal movement from its minimum on the left to its maximum on the right.',
       },
       {
         name: 'yChannel',
-        type: "'red' | 'green' | 'blue' | 'hue' | 'saturation' | 'lightness' | 'brightness' | 'alpha'",
-        default: "'saturation'",
+        type: colorAreaChannels.map((channel) => `'${channel}'`).join(' | '),
+        default: `'${colorAreaDefaults.yChannel}'`,
         description:
           'Color channel controlled by vertical movement from its minimum at the bottom to its maximum at the top.',
       },
       {
         name: 'disabled',
         type: 'boolean',
-        default: 'false',
+        default: String(colorAreaDefaults.disabled),
         description: 'Prevents pointer and keyboard interaction with the color area.',
       },
       {
         name: 'rounded',
         type: 'boolean',
-        default: 'true',
+        default: String(colorAreaDefaults.rounded),
         description: 'Applies rounded corners to the color area when true.',
       },
       {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
-        default: "'md'",
+        type: colorAreaSizes.map((size) => `'${size}'`).join(' | '),
+        default: `'${colorAreaDefaults.size}'`,
         description: 'Controls the width and height of the color area.',
       },
       {
@@ -161,7 +167,7 @@ const colorAreaConfig: ComponentDocConfig = {
       },
       {
         name: 'update:value',
-        type: '[value: string]',
+        type: '[value: string | Color]',
         description: 'Emitted when the selected color changes.',
       },
     ],

@@ -7,7 +7,7 @@ import {
   type ColorAreaProps,
   type ColorAreaValue,
 } from '.'
-import { colorAreaDefaults } from './defaults'
+import { colorAreaDefaults } from './constants'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/composables/useUi'
 import { useI18n } from '@/i18n'
