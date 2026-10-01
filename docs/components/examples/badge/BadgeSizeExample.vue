@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge, badgeSizes, type BadgeSize } from '@/components/ui/Badge'
+import { Badge, badgeDefaults, badgeSizes, type BadgeSize } from '@/components/ui/Badge'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const size = ref<BadgeSize>('md')
+const size = ref<BadgeSize>(badgeDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -20,7 +20,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  size.value = 'md'
+  size.value = badgeDefaults.size
 }
 </script>
 

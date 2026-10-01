@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge } from '@/components/ui/Badge'
+import { Badge, badgeDefaults } from '@/components/ui/Badge'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const radius = ref('md')
+const radius = ref<string>(badgeDefaults.radius)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -20,7 +20,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  radius.value = 'md'
+  radius.value = badgeDefaults.radius
 }
 </script>
 

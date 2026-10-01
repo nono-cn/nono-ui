@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge, badgeVariantNames, type BadgeVariant } from '@/components/ui/Badge'
+import { Badge, badgeDefaults, badgeVariantNames, type BadgeVariant } from '@/components/ui/Badge'
 import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
@@ -8,12 +8,12 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const colors = [...themeColors, 'custom']
-const selectedColor = ref<string>('primary')
+const selectedColor = ref<string>(badgeDefaults.color)
 const customColor = ref('#6366f1')
 const color = computed(() =>
   selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
 )
-const variant = ref<BadgeVariant>('solid')
+const variant = ref<BadgeVariant>(badgeDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -29,9 +29,9 @@ ${scriptEnd}
 )
 
 function reset() {
-  selectedColor.value = 'primary'
+  selectedColor.value = badgeDefaults.color
   customColor.value = '#6366f1'
-  variant.value = 'solid'
+  variant.value = badgeDefaults.variant
 }
 </script>
 

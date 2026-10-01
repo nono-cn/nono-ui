@@ -1,10 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { IconName } from '@/components/ui/Icon'
-import { badgeSizes, badgeVariantNames } from './constants'
-import { badgeDefaults } from './defaults'
+import { badgeDefaults, badgeSizes, badgeVariantNames } from './constants'
 
 export { default as Badge } from './Badge.vue'
-export { badgeSizes, badgeVariantNames } from './constants'
+export { badgeDefaults, badgeSizes, badgeVariantNames } from './constants'
 
 export const badgeVariants = cva(
   'inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-(--badge-radius) border font-medium whitespace-nowrap transition-[color,box-shadow] aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none',

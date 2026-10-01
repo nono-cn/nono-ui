@@ -4,7 +4,7 @@ import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/composables'
 import { badgeVariants, type BadgeProps, type BadgeSlots } from '.'
-import { badgeDefaults } from './defaults'
+import { badgeDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

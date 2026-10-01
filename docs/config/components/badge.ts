@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { badgeSizes, badgeVariantNames } from '@/components/ui/Badge'
+import { badgeDefaults, badgeSizes, badgeVariantNames } from '@/components/ui/Badge'
 import BadgeLabelExample from '../../components/examples/badge/BadgeLabelExample.vue'
 import BadgeColorExample from '../../components/examples/badge/BadgeColorExample.vue'
 import BadgeIconExample from '../../components/examples/badge/BadgeIconExample.vue'
@@ -77,45 +77,45 @@ const badgeConfig: ComponentDocConfig = {
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(badgeDefaults.label),
         description: 'Text displayed when no content is provided in the default slot.',
       },
       {
         name: 'size',
         type: badgeSizes.map((size) => `'${size}'`).join(' | '),
-        default: "'md'",
+        default: `'${badgeDefaults.size}'`,
         description: 'Visual size and internal spacing of the badge and its icons.',
       },
       {
         name: 'variant',
         type: badgeVariantNames.map((variant) => `'${variant}'`).join(' | '),
-        default: "'solid'",
+        default: `'${badgeDefaults.variant}'`,
         description: 'Visual style applied to the badge.',
       },
       {
         name: 'radius',
         type: 'string | number',
-        default: "'md'",
+        default: `'${badgeDefaults.radius}'`,
         description: 'Tailwind radius token, CSS border-radius value, or a number of pixels.',
       },
       {
         name: 'color',
         type: 'string',
-        default: "'primary'",
+        default: `'${badgeDefaults.color}'`,
         description: 'Theme token or CSS color used by the badge variants.',
       },
       {
         name: 'icon',
         type: 'IconName',
         typeLink: '/components/icon#props',
-        default: 'undefined',
+        default: String(badgeDefaults.icon),
         description: 'Name of the icon displayed at the start when no leading slot is provided.',
       },
       {
         name: 'trailingIcon',
         type: 'IconName',
         typeLink: '/components/icon#props',
-        default: 'undefined',
+        default: String(badgeDefaults.trailingIcon),
         description: 'Name of the icon displayed at the end when no trailing slot is provided.',
       },
     ],
