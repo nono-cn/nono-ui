@@ -6,7 +6,7 @@ import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { bubbleVariants, bubbleWrapperVariants, type BubbleProps, type BubbleSlots } from '.'
 import BubbleReactions from './BubbleReactions.vue'
-import { bubbleDefaults } from './defaults'
+import { bubbleDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import {
   Bubble,
+  bubbleDefaults,
   bubbleReactionsAlignments,
   bubbleReactionsSides,
   type BubbleReactionsAlign,
@@ -11,8 +12,8 @@ import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const sideReaction = ref<BubbleReactionsSide>('bottom')
-const alignReaction = ref<BubbleReactionsAlign>('end')
+const sideReaction = ref<BubbleReactionsSide>(bubbleDefaults.sideReaction)
+const alignReaction = ref<BubbleReactionsAlign>(bubbleDefaults.alignReaction)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -38,8 +39,8 @@ ${scriptEnd}
 )
 
 function reset() {
-  sideReaction.value = 'bottom'
-  alignReaction.value = 'end'
+  sideReaction.value = bubbleDefaults.sideReaction
+  alignReaction.value = bubbleDefaults.alignReaction
 }
 </script>
 

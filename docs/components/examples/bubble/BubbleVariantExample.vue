@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble, bubbleVariantNames, type BubbleVariant } from '@/components/ui/Bubble'
+import {
+  Bubble,
+  bubbleDefaults,
+  bubbleVariantNames,
+  type BubbleVariant,
+} from '@/components/ui/Bubble'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variant = ref<BubbleVariant>('subtle')
+const variant = ref<BubbleVariant>(bubbleDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -20,7 +25,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  variant.value = 'subtle'
+  variant.value = bubbleDefaults.variant
 }
 </script>
 

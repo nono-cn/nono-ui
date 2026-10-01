@@ -3,15 +3,16 @@ import type { HTMLAttributes } from 'vue'
 import type { PrimitiveProps } from 'reka-ui'
 import {
   bubbleAlignments,
+  bubbleDefaults,
   bubbleReactionsAlignments,
   bubbleReactionsSides,
   bubbleVariantNames,
 } from './constants'
-import { bubbleDefaults } from './defaults'
 
 export { default as Bubble } from './Bubble.vue'
 export {
   bubbleAlignments,
+  bubbleDefaults,
   bubbleReactionsAlignments,
   bubbleReactionsSides,
   bubbleVariantNames,

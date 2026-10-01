@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble } from '@/components/ui/Bubble'
+import { Bubble, bubbleDefaults } from '@/components/ui/Bubble'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const radius = ref('xl')
+const radius = ref<string>(bubbleDefaults.radius)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -20,7 +20,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  radius.value = 'xl'
+  radius.value = bubbleDefaults.radius
 }
 </script>
 

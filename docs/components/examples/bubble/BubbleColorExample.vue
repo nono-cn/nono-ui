@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble, bubbleVariantNames, type BubbleVariant } from '@/components/ui/Bubble'
+import {
+  Bubble,
+  bubbleDefaults,
+  bubbleVariantNames,
+  type BubbleVariant,
+} from '@/components/ui/Bubble'
 import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
@@ -8,12 +13,12 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const colors = [...themeColors, 'custom']
-const selectedColor = ref<string>('neutral')
+const selectedColor = ref<string>(bubbleDefaults.color)
 const customColor = ref('#8b5cf6')
 const color = computed(() =>
   selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
 )
-const variant = ref<BubbleVariant>('subtle')
+const variant = ref<BubbleVariant>(bubbleDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -31,9 +36,9 @@ ${scriptEnd}
 )
 
 function reset() {
-  selectedColor.value = 'neutral'
+  selectedColor.value = bubbleDefaults.color
   customColor.value = '#8b5cf6'
-  variant.value = 'subtle'
+  variant.value = bubbleDefaults.variant
 }
 </script>
 

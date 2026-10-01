@@ -1,6 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
 import {
   bubbleAlignments,
+  bubbleDefaults,
   bubbleReactionsAlignments,
   bubbleReactionsSides,
   bubbleVariantNames,
@@ -70,49 +71,49 @@ const bubbleConfig: ComponentDocConfig = {
       {
         name: 'align',
         type: bubbleAlignments.map((align) => `'${align}'`).join(' | '),
-        default: "'start'",
+        default: `'${bubbleDefaults.align}'`,
         description: 'Alignment of the bubble within its container.',
       },
       {
         name: 'variant',
         type: bubbleVariantNames.map((variant) => `'${variant}'`).join(' | '),
-        default: "'subtle'",
+        default: `'${bubbleDefaults.variant}'`,
         description: 'Visual style of the surface.',
       },
       {
         name: 'radius',
         type: 'string | number',
-        default: "'xl'",
+        default: `'${bubbleDefaults.radius}'`,
         description: 'Tailwind radius token, CSS border-radius value, or a number of pixels.',
       },
       {
         name: 'color',
         type: 'string',
-        default: "'neutral'",
+        default: `'${bubbleDefaults.color}'`,
         description: 'Theme token or CSS color used by the bubble variants.',
       },
       {
         name: 'sideReaction',
         type: bubbleReactionsSides.map((side) => `'${side}'`).join(' | '),
-        default: "'bottom'",
+        default: `'${bubbleDefaults.sideReaction}'`,
         description: 'Side where reactions appear.',
       },
       {
         name: 'alignReaction',
         type: bubbleReactionsAlignments.map((align) => `'${align}'`).join(' | '),
-        default: "'end'",
+        default: `'${bubbleDefaults.alignReaction}'`,
         description: 'Alignment of the reactions.',
       },
       {
         name: 'as',
         type: 'AsTag | Component',
-        default: "'div'",
+        default: `'${bubbleDefaults.as}'`,
         description: 'Root element or component for the surface.',
       },
       {
         name: 'asChild',
         type: 'boolean',
-        default: 'false',
+        default: String(bubbleDefaults.asChild),
         description: 'Renders the surface on the element provided by the default slot.',
       },
       {
@@ -121,7 +122,7 @@ const bubbleConfig: ComponentDocConfig = {
   reactions?: () => HTMLAttributes
 }`,
         typePre: true,
-        default: 'undefined',
+        default: String(bubbleDefaults.ui),
         description: 'Resolver for customizing the reactions container attributes and classes.',
       },
     ],

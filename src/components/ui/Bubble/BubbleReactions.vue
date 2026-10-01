@@ -2,7 +2,7 @@
 import { computed, useAttrs } from 'vue'
 import { cn } from '@/lib/utils'
 import type { BubbleReactionsProps } from '.'
-import { bubbleReactionsDefaults } from './defaults'
+import { bubbleReactionsDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 const props = withDefaults(defineProps<BubbleReactionsProps>(), bubbleReactionsDefaults)
