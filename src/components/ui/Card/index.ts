@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from 'vue'
 
 export { default as Card } from './Card.vue'
+export { cardDefaults } from './constants'
 
 export type CardFn<T> = () => T
 

@@ -8,9 +8,9 @@ import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
 ${scriptEnd}
 
 <template>
-  <Card>
+  <Card class="w-full max-w-md">
     <template #header>
-      <div class="grid gap-1 px-6">
+      <div class="grid gap-1">
         <h3 class="font-semibold">Recent activity</h3>
         <p class="text-sm text-muted-foreground">Latest transactions on your account.</p>
       </div>
@@ -23,13 +23,13 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Custom header"
-    description="Use the header slot to control the entire header structure."
+    description="Use the header slot to replace the generated heading and description."
     :code="code"
     :show-reset="false"
   >
     <Card class="w-full max-w-md">
       <template #header>
-        <div class="grid gap-1 px-6">
+        <div class="grid gap-1">
           <h3 class="font-semibold">Recent activity</h3>
           <p class="text-sm text-muted-foreground">Latest transactions on your account.</p>
         </div>

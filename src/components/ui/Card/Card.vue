@@ -3,7 +3,7 @@ import { computed, useAttrs } from 'vue'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import type { CardProps, CardSlots } from '.'
-import { cardDefaults } from './defaults'
+import { cardDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

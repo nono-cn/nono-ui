@@ -10,7 +10,7 @@ import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
 ${scriptEnd}
 
 <template>
-  <Card label="Preferences" description="Manage your notification preferences.">
+  <Card label="Preferences" description="Manage your notification preferences." class="w-full max-w-md">
     <template #action>
       <Button label="Edit" variant="outline" size="sm" />
     </template>

@@ -44,28 +44,32 @@ describe('Card', () => {
     describe('ui', () => {
       const parts = ['header', 'label', 'description', 'action', 'content', 'footer'] as const
 
-      it.each(parts)('renders ui.%s attributes', (part) => {
-        const card = mountCard({
-          props: {
-            label: 'Account',
-            description: 'Account details',
-            ui: {
-              [part]: () => ({
-                class: `ui-${part}`,
-                style: 'opacity: 0.8',
-              }),
-            },
-          },
-          slots: {
-            default: () => 'Content',
-            action: () => 'Action',
-            footer: () => 'Footer',
-          },
+      for (const part of parts) {
+        testAttrs({
+          text: `forwards id, aria-label, class and style from ui.${part}`,
+          id: `[data-test-card-${part}]`,
+          mount: (attrs) =>
+            mountCard({
+              props: {
+                label: 'Account',
+                description: 'Account details',
+                ui: { [part]: () => attrs },
+              },
+              slots: {
+                default: () => 'Content',
+                action: () => 'Action',
+                footer: () => 'Footer',
+              },
+            }),
         })
-        const element = card.get(`[data-test-card-${part}]`)
+      }
 
-        expect(element.classes()).toContain(`ui-${part}`)
-        expect(element.attributes('style')).toContain('opacity: 0.8')
+      it('renders without ui', () => {
+        expect(
+          mountCard({ props: { ui: undefined } })
+            .get('[data-test-card-root]')
+            .exists(),
+        ).toBe(true)
       })
     })
   })
@@ -86,6 +90,13 @@ describe('Card', () => {
         })
 
         expect(card.get('[data-test-card-slot="default"]').text()).toBe('Default')
+        expect(
+          card.get('[data-test-card-content]').find('[data-test-card-slot="default"]').exists(),
+        ).toBe(true)
+      })
+
+      it('does not render an empty content region', () => {
+        expect(mountCard().find('[data-test-card-content]').exists()).toBe(false)
       })
     })
 
@@ -99,6 +110,18 @@ describe('Card', () => {
         expect(card.get('[data-test-card-slot="header"]').text()).toBe('Header')
         expect(card.find('[data-test-card-label]').exists()).toBe(false)
         expect(card.find('[data-test-card-description]').exists()).toBe(false)
+      })
+
+      it('keeps the action alongside a custom header', () => {
+        const card = mountCard({
+          slots: {
+            header: () => h('span', 'Header'),
+            action: () => h('button', 'Edit'),
+          },
+        })
+
+        expect(card.get('[data-test-card-header]').text()).toContain('Header')
+        expect(card.get('[data-test-card-action]').text()).toBe('Edit')
       })
     })
 
@@ -135,6 +158,7 @@ describe('Card', () => {
         })
 
         expect(card.get('[data-test-card-slot="action"]').text()).toBe('Action')
+        expect(card.get('[data-test-card-header]').exists()).toBe(true)
       })
     })
 
@@ -145,6 +169,10 @@ describe('Card', () => {
         })
 
         expect(card.get('[data-test-card-slot="footer"]').text()).toBe('Footer')
+      })
+
+      it('does not render an empty footer region', () => {
+        expect(mountCard().find('[data-test-card-footer]').exists()).toBe(false)
       })
     })
   })

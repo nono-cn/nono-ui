@@ -8,7 +8,7 @@ import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
 ${scriptEnd}
 
 <template>
-  <Card
+  <Card class="w-full max-w-md"
     label="Account overview"
     description="View the latest information about your account."
   >

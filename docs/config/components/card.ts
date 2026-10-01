@@ -1,7 +1,11 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { cardDefaults } from '@/components/ui/Card'
 import CardBasicExample from '../../components/examples/card/CardBasicExample.vue'
 import CardActionExample from '../../components/examples/card/CardActionExample.vue'
 import CardHeaderExample from '../../components/examples/card/CardHeaderExample.vue'
+import CardLabelDescriptionExample from '../../components/examples/card/CardLabelDescriptionExample.vue'
+import CardUiExample from '../../components/examples/card/CardUiExample.vue'
+import CardSlotsExample from '../../components/examples/card/CardSlotsExample.vue'
 
 const cardConfig: ComponentDocConfig = {
   slug: 'card',
@@ -19,14 +23,29 @@ const cardConfig: ComponentDocConfig = {
   ],
   examples: [
     {
+      title: 'Label and description',
+      description: 'Edit the generated heading and supporting text.',
+      component: CardLabelDescriptionExample,
+    },
+    {
       title: 'Action and footer',
       description: 'Add actions to the header and supporting content to the footer.',
       component: CardActionExample,
     },
     {
       title: 'Custom header',
-      description: 'Replace the generated header with the header slot.',
+      description: 'Replace the generated heading and description with the header slot.',
       component: CardHeaderExample,
+    },
+    {
+      title: 'Label and description slots',
+      description: 'Replace the generated heading and description content.',
+      component: CardSlotsExample,
+    },
+    {
+      title: 'UI',
+      description: 'Customize the attributes of each card region.',
+      component: CardUiExample,
     },
   ],
   accessibility: [
@@ -41,13 +60,13 @@ const cardConfig: ComponentDocConfig = {
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(cardDefaults.label),
         description: 'Card header text.',
       },
       {
         name: 'description',
         type: 'string',
-        default: 'undefined',
+        default: String(cardDefaults.description),
         description: 'Descriptive text displayed below the header.',
       },
       {
@@ -61,16 +80,30 @@ const cardConfig: ComponentDocConfig = {
   footer?: () => HTMLAttributes
 }`,
         typePre: true,
-        default: 'undefined',
-        description: 'Resolvers for customizing the attributes of the card regions.',
+        default: String(cardDefaults.ui),
+        description:
+          'Resolvers for header, label, description, action, content, and footer attributes, including class, style, and ARIA.',
       },
     ],
     emits: [],
     slots: [
       { name: 'default', type: '-', description: 'Main card content.' },
-      { name: 'header', type: '-', description: 'Replaces the entire header content.' },
-      { name: 'label', type: '-', description: 'Header content.' },
-      { name: 'description', type: '-', description: 'Descriptive header content.' },
+      {
+        name: 'header',
+        type: '-',
+        description:
+          'Replaces the generated heading and description inside the header; an action slot still renders alongside it.',
+      },
+      {
+        name: 'label',
+        type: '-',
+        description: 'Replaces the generated heading text inside the h3 element.',
+      },
+      {
+        name: 'description',
+        type: '-',
+        description: 'Replaces the generated description text inside the p element.',
+      },
       { name: 'action', type: '-', description: 'Action displayed in the header.' },
       { name: 'footer', type: '-', description: 'Card footer content.' },
     ],
