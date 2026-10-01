@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar, avatarSizes, type AvatarSize } from '@/components/ui/Avatar'
+import { Avatar, avatarDefaults, avatarSizes, type AvatarSize } from '@/components/ui/Avatar'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const size = ref<AvatarSize>('md')
+const size = ref<AvatarSize>(avatarDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -20,7 +20,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  size.value = 'md'
+  size.value = avatarDefaults.size
 }
 </script>
 

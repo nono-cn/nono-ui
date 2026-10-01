@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar } from '@/components/ui/Avatar'
+import { Avatar, avatarDefaults } from '@/components/ui/Avatar'
 import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
@@ -8,7 +8,7 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const colors = [...themeColors, 'custom']
-const selectedColor = ref<string>('neutral')
+const selectedColor = ref<string>(avatarDefaults.color)
 const customColor = ref('#7c3aed')
 const color = computed(() =>
   selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
@@ -27,7 +27,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  selectedColor.value = 'neutral'
+  selectedColor.value = avatarDefaults.color
   customColor.value = '#7c3aed'
 }
 </script>

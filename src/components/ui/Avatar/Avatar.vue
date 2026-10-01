@@ -5,7 +5,7 @@ import { Icon } from '@/components/ui/Icon'
 import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { avatarVariants, type AvatarProps, type AvatarSlots } from '.'
-import { avatarDefaults } from './defaults'
+import { avatarDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

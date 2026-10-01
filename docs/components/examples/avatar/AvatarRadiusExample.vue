@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar } from '@/components/ui/Avatar'
+import { Avatar, avatarDefaults } from '@/components/ui/Avatar'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const radius = ref('full')
+const radius = ref<string>(avatarDefaults.radius)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -20,7 +20,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  radius.value = 'full'
+  radius.value = avatarDefaults.radius
 }
 </script>
 

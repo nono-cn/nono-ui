@@ -1,10 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { IconName } from '@/components/ui/Icon'
-import { avatarSizes } from './constants'
-import { avatarDefaults } from './defaults'
+import { avatarDefaults, avatarSizes } from './constants'
 
 export { default as Avatar } from './Avatar.vue'
-export { avatarSizes } from './constants'
+export { avatarDefaults, avatarSizes } from './constants'
 
 export const avatarVariants = cva(
   'relative flex shrink-0 overflow-hidden rounded-(--avatar-radius) bg-(--avatar-color)/10 text-(--avatar-color)',

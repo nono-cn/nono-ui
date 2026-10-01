@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { avatarSizes } from '@/components/ui/Avatar'
+import { avatarDefaults, avatarSizes } from '@/components/ui/Avatar'
 import AvatarSrcExample from '../../components/examples/avatar/AvatarSrcExample.vue'
 import AvatarSizeExample from '../../components/examples/avatar/AvatarSizeExample.vue'
 import AvatarRadiusExample from '../../components/examples/avatar/AvatarRadiusExample.vue'
@@ -76,53 +76,53 @@ const avatarConfig: ComponentDocConfig = {
       {
         name: 'src',
         type: 'string',
-        default: 'undefined',
+        default: String(avatarDefaults.src),
         description:
           'Profile image URL. The fallback is rendered if the image cannot be displayed.',
       },
       {
         name: 'alt',
         type: 'string',
-        default: "''",
+        default: `'${avatarDefaults.alt}'`,
         description:
           'Alternative text for the profile image. An empty value marks it as decorative.',
       },
       {
         name: 'size',
         type: avatarSizes.map((size) => `'${size}'`).join(' | '),
-        default: "'md'",
+        default: `'${avatarDefaults.size}'`,
         description: 'Visual size of the avatar.',
       },
       {
         name: 'radius',
         type: 'string | number',
-        default: "'full'",
+        default: `'${avatarDefaults.radius}'`,
         description: 'Tailwind radius token, CSS border-radius value, or a number of pixels.',
       },
       {
         name: 'color',
         type: 'string',
-        default: "'neutral'",
+        default: `'${avatarDefaults.color}'`,
         description: 'Theme token or CSS color used for the fallback text and soft background.',
       },
       {
         name: 'delayMs',
         type: 'number',
-        default: 'undefined',
+        default: String(avatarDefaults.delayMs),
         description: 'Delay in milliseconds before showing the fallback content.',
       },
       {
         name: 'icon',
         type: 'IconName',
         typeLink: '/components/icon#props',
-        default: 'undefined',
+        default: String(avatarDefaults.icon),
         description:
           'Name of the icon displayed in the fallback when the fallback slot is not provided.',
       },
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(avatarDefaults.label),
         description:
           'Text displayed in the fallback when neither icon nor the fallback slot is provided.',
       },
