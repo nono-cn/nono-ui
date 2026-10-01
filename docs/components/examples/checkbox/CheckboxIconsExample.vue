@@ -1,29 +1,56 @@
 <script setup lang="ts">
-import { Checkbox } from '@/components/ui/Checkbox'
+import { computed, ref } from 'vue'
+import { Checkbox, checkboxDefaults } from '@/components/ui/Checkbox'
+import type { IconName } from '@/components/ui/Icon'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
-const code = `<script setup lang="ts">
+
+const icons: IconName[] = ['check', 'plus', 'star']
+const icon = ref<IconName>(checkboxDefaults.icon)
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
+import type { IconName } from '__DOCS_PACKAGE__/components/ui/Icon'
+
+const icon = ref<IconName>('${icon.value}')
 ${scriptEnd}
+
 <template>
-  <Checkbox
-    value="indeterminate"
-    :icon="{ name: 'plus' }"
-    :indeterminate-icon="{ name: 'x' }"
-    aria-label="Custom icons"
-  />
-</template>`
+  <div class="flex items-center gap-4">
+    <Checkbox :value="true" :icon="icon" aria-label="Selected with chosen icon" />
+    <Checkbox
+      value="indeterminate"
+      :indeterminate-icon="{ name: 'minus', class: 'rotate-45' }"
+      aria-label="Partial selection with custom icon"
+    />
+  </div>
+</template>`,
+)
+
+function reset() {
+  icon.value = checkboxDefaults.icon
+}
 </script>
+
 <template>
   <ComponentExample
-    title="Icon and indeterminateIcon"
-    description="Customize both icons."
+    title="Icons"
+    description="Use an icon name or an IconConfig object."
     :code="code"
-    :show-reset="false"
-    ><Checkbox
-      value="indeterminate"
-      :icon="{ name: 'plus' }"
-      :indeterminate-icon="{ name: 'x' }"
-      aria-label="Custom icons"
-  /></ComponentExample>
+    @reset="reset"
+  >
+    <template #controls>
+      <ExampleSelectControl v-model="icon" label="Checked icon" :options="icons" />
+    </template>
+    <div class="flex items-center gap-4">
+      <Checkbox :value="true" :icon="icon" aria-label="Selected with chosen icon" />
+      <Checkbox
+        value="indeterminate"
+        :indeterminate-icon="{ name: 'minus', class: 'rotate-45' }"
+        aria-label="Partial selection with custom icon"
+      />
+    </div>
+  </ComponentExample>
 </template>

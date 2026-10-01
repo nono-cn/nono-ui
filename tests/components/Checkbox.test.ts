@@ -2,12 +2,8 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { CheckboxRoot } from 'reka-ui'
 
-import {
-  Checkbox,
-  type CheckboxProps,
-  type CheckboxSeverity,
-  type CheckboxSize,
-} from '@/components/ui/Checkbox'
+import { Checkbox, type CheckboxProps, type CheckboxSize } from '@/components/ui/Checkbox'
+import { themeColors } from '@/components/ui/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 import { testIconConfig } from '../utils/testIconConfig'
@@ -28,6 +24,8 @@ const casesValue = [
   { input: undefined, trueValue: true, falseValue: false, expected: false },
   { input: 'yes', trueValue: 'yes', falseValue: 'no', expected: 'yes' },
   { input: 'no', trueValue: 'yes', falseValue: 'no', expected: 'no' },
+  { input: 1, trueValue: 1, falseValue: 0, expected: 1 },
+  { input: 0, trueValue: 1, falseValue: 0, expected: 0 },
   {
     input: 'indeterminate' as const,
     trueValue: 'yes',
@@ -41,6 +39,8 @@ const casesUpdateValue = [
   { value: false, trueValue: true, falseValue: false, expected: true },
   { value: true, trueValue: true, falseValue: false, expected: false },
   { value: 'off', trueValue: 'on', falseValue: 'off', expected: 'on' },
+  { value: 0, trueValue: 1, falseValue: 0, expected: 1 },
+  { value: 'indeterminate' as const, trueValue: true, falseValue: false, expected: true },
 ]
 
 const sizeCases = [
@@ -51,39 +51,6 @@ const sizeCases = [
   { size: 'xl', rootClass: 'size-6', iconClass: 'size-5' },
   { size: undefined, rootClass: 'size-4', iconClass: 'size-3.5' },
 ] satisfies Array<{ size: CheckboxSize | undefined; rootClass: string; iconClass: string }>
-
-const severityCases = [
-  {
-    severity: 'primary',
-    class: 'data-[state=checked]:bg-primary',
-    indeterminateClass: 'data-[state=indeterminate]:bg-primary',
-  },
-  {
-    severity: 'secondary',
-    class: 'data-[state=checked]:bg-secondary',
-    indeterminateClass: 'data-[state=indeterminate]:bg-secondary',
-  },
-  {
-    severity: 'warning',
-    class: 'data-[state=checked]:bg-warning',
-    indeterminateClass: 'data-[state=indeterminate]:bg-warning',
-  },
-  {
-    severity: 'success',
-    class: 'data-[state=checked]:bg-success',
-    indeterminateClass: 'data-[state=indeterminate]:bg-success',
-  },
-  {
-    severity: 'error',
-    class: 'data-[state=checked]:bg-error',
-    indeterminateClass: 'data-[state=indeterminate]:bg-error',
-  },
-  {
-    severity: undefined,
-    class: 'data-[state=checked]:bg-primary',
-    indeterminateClass: 'data-[state=indeterminate]:bg-primary',
-  },
-] satisfies Array<{ severity: CheckboxSeverity | undefined; class: string }>
 
 describe('Checkbox', () => {
   describe('props', () => {
@@ -106,6 +73,16 @@ describe('Checkbox', () => {
 
         expect(root.props('modelValue')).toBe('off')
       })
+
+      it('normaliza value si cambia el par trueValue/falseValue', async () => {
+        const checkbox = mountCheckbox({
+          props: { value: 'yes', trueValue: 'yes', falseValue: 'no' },
+        })
+
+        await checkbox.setProps({ trueValue: 'on', falseValue: 'off' })
+
+        expect(checkbox.getComponent(CheckboxRoot).props('modelValue')).toBe('off')
+      })
     })
 
     describe('trueValue', () => {
@@ -114,6 +91,14 @@ describe('Checkbox', () => {
 
         expect(root.props('trueValue')).toBe(true)
       })
+
+      it('pasa el valor personalizado a Reka UI', () => {
+        expect(
+          mountCheckbox({ props: { trueValue: 'yes', falseValue: 'no' } })
+            .getComponent(CheckboxRoot)
+            .props('trueValue'),
+        ).toBe('yes')
+      })
     })
 
     describe('falseValue', () => {
@@ -121,6 +106,14 @@ describe('Checkbox', () => {
         const root = mountCheckbox().getComponent(CheckboxRoot)
 
         expect(root.props('falseValue')).toBe(false)
+      })
+
+      it('pasa el valor personalizado a Reka UI', () => {
+        expect(
+          mountCheckbox({ props: { falseValue: 0, trueValue: 1 } })
+            .getComponent(CheckboxRoot)
+            .props('falseValue'),
+        ).toBe(0)
       })
     })
 
@@ -133,33 +126,27 @@ describe('Checkbox', () => {
       })
     })
 
-    describe('severity', () => {
-      it.each(severityCases)(
-        'renderiza severity=$severity en checked e indeterminate',
-        ({ severity, class: className, indeterminateClass }) => {
-          const checkbox = mountCheckbox({ props: { severity } })
-
-          expect(checkbox.get('[data-test-checkbox-root]').classes()).toContain(className)
-          expect(checkbox.get('[data-test-checkbox-root]').classes()).toContain(indeterminateClass)
-        },
-      )
-    })
-
     describe('color', () => {
       testColor({
-        text: 'aplica un color personalizado',
+        text: 'resuelve un color de tema o CSS',
         id: '[data-test-checkbox-root]',
         varColor: '--checkbox-color',
+        defaultColor: 'var(--primary, var(--primary))',
+        fallbackColor: 'primary',
+        theme: {
+          colors: themeColors,
+          foregroundVar: '--checkbox-color-foreground',
+          solidVar: '--checkbox-solid',
+          solidForegroundVar: '--checkbox-solid-foreground',
+        },
         mount: (color) => mountCheckbox({ props: { color } }),
       })
 
-      it('tiene prioridad sobre severity', () => {
-        const root = mountCheckbox({
-          props: { color: '#8b5cf6', severity: 'error' },
-        }).get('[data-test-checkbox-root]')
+      it('aplica el mismo color en checked, indeterminate y foco', () => {
+        const root = mountCheckbox({ props: { color: '#8b5cf6' } }).get('[data-test-checkbox-root]')
 
         expect(root.classes()).toContain('data-[state=checked]:bg-(--checkbox-color)')
-        expect(root.classes()).toContain('focus-visible:ring-(--checkbox-color)/50')
+        expect(root.classes()).toContain('focus-visible:ring-(--checkbox-color)/30')
         expect(root.classes()).toContain('data-[state=indeterminate]:bg-(--checkbox-color)')
       })
     })
@@ -169,26 +156,34 @@ describe('Checkbox', () => {
         text: 'pasa la configuración del icono',
         id: '[data-test-checkbox-icon]',
         default: 'check',
-        omit: ['size', 'color'],
         mount: (icon) => mountCheckbox({ props: { value: true, icon } }),
       })
 
-      it('siempre pasa size undefined al icono', () => {
+      it('acepta un nombre de icono', () => {
+        const icon = mountCheckbox({ props: { value: true, icon: 'plus' } }).getComponent(
+          '[data-test-checkbox-icon]',
+        )
+
+        expect(icon.props('name')).toBe('plus')
+        expect(icon.props('color')).toBe('currentColor')
+      })
+
+      it('respeta el tamaño explícito del icono', () => {
         const checkbox = mountCheckbox({
           props: { value: true, icon: { name: 'check', size: 'xl' } },
         })
         const icon = checkbox.getComponent('[data-test-checkbox-icon]')
 
-        expect(icon.vm.$.vnode.props?.size).toBeUndefined()
+        expect(icon.props('size')).toBe('xl')
       })
 
-      it('siempre pasa color undefined al icono', () => {
+      it('respeta el color explícito del icono', () => {
         const checkbox = mountCheckbox({
           props: { value: true, icon: { name: 'check', color: '#ff0000' } },
         })
         const icon = checkbox.getComponent('[data-test-checkbox-icon]')
 
-        expect(icon.vm.$.vnode.props?.color).toBeUndefined()
+        expect(icon.props('color')).toBe('#ff0000')
       })
 
       it('no renderiza el icono cuando no está checkeado', () => {
@@ -203,7 +198,6 @@ describe('Checkbox', () => {
         text: 'pasa la configuración del icono indeterminado',
         id: '[data-test-checkbox-icon]',
         default: 'minus',
-        omit: ['size', 'color'],
         mount: (icon) =>
           mountCheckbox({ props: { value: 'indeterminate', indeterminateIcon: icon } }),
       })
@@ -213,18 +207,19 @@ describe('Checkbox', () => {
         const icon = checkbox.getComponent('[data-test-checkbox-icon]')
 
         expect(icon.props('name')).toBe('minus')
+        expect(icon.props('color')).toBe('currentColor')
       })
 
-      it('siempre pasa size undefined al icono', () => {
+      it('respeta el tamaño explícito del icono indeterminado', () => {
         const checkbox = mountCheckbox({
           props: { value: 'indeterminate', indeterminateIcon: { name: 'minus', size: 'xl' } },
         })
         const icon = checkbox.getComponent('[data-test-checkbox-icon]')
 
-        expect(icon.vm.$.vnode.props?.size).toBeUndefined()
+        expect(icon.props('size')).toBe('xl')
       })
 
-      it('siempre pasa color undefined al icono', () => {
+      it('respeta el color explícito del icono indeterminado', () => {
         const checkbox = mountCheckbox({
           props: {
             value: 'indeterminate',
@@ -233,7 +228,15 @@ describe('Checkbox', () => {
         })
         const icon = checkbox.getComponent('[data-test-checkbox-icon]')
 
-        expect(icon.vm.$.vnode.props?.color).toBeUndefined()
+        expect(icon.props('color')).toBe('#ff0000')
+      })
+
+      it('acepta un nombre de icono indeterminado', () => {
+        const icon = mountCheckbox({
+          props: { value: 'indeterminate', indeterminateIcon: 'plus' },
+        }).getComponent('[data-test-checkbox-icon]')
+
+        expect(icon.props('name')).toBe('plus')
       })
     })
 
@@ -248,6 +251,27 @@ describe('Checkbox', () => {
               ui: { indicator: () => attrs },
             },
           }),
+      })
+
+      it.each([
+        { value: false, expected: false },
+        { value: true, expected: true },
+        { value: 'indeterminate' as const, expected: 'indeterminate' as const },
+      ])('recibe el contexto completo con value=$value', ({ value, expected }) => {
+        let received: unknown
+        mountCheckbox({
+          props: {
+            value,
+            ui: {
+              indicator: (context) => {
+                received = context
+                return {}
+              },
+            },
+          },
+        })
+
+        expect(received).toEqual({ state: expected })
       })
     })
   })
@@ -286,6 +310,14 @@ describe('Checkbox', () => {
           expect(checkbox.emitted('update:value')).toEqual([[expected]])
         },
       )
+
+      it('no emite cambios al hacer clic cuando está disabled', async () => {
+        const checkbox = mountCheckbox({ props: { value: false }, attrs: { disabled: true } })
+
+        await checkbox.get('[data-test-checkbox-root]').trigger('click')
+
+        expect(checkbox.emitted('update:value')).toBeUndefined()
+      })
     })
   })
 })

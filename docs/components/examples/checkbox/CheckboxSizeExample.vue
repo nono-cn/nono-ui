@@ -1,35 +1,44 @@
 <script setup lang="ts">
-import { Checkbox } from '@/components/ui/Checkbox'
+import { computed, ref } from 'vue'
+import {
+  Checkbox,
+  checkboxDefaults,
+  checkboxSizes,
+  type CheckboxSize,
+} from '@/components/ui/Checkbox'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
-const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
-const code = `<script setup lang="ts">
-import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
-const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+
+const size = ref<CheckboxSize>(checkboxDefaults.size)
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Checkbox, type CheckboxSize } from '__DOCS_PACKAGE__/components/ui/Checkbox'
+
+const size = ref<CheckboxSize>('${size.value}')
 ${scriptEnd}
+
 <template>
-  <Checkbox
-    v-for="size in sizes"
-    :key="size"
-    :size="size"
-    :value="true"
-    :aria-label="size"
-  />
-</template>`
+  <Checkbox :size="size" :value="true" aria-label="Selected" />
+</template>`,
+)
+
+function reset() {
+  size.value = checkboxDefaults.size
+}
 </script>
+
 <template>
   <ComponentExample
     title="Size"
-    description="Compare the available sizes."
+    description="Choose the checkbox’s visual size."
     :code="code"
-    :show-reset="false"
-    ><div class="flex items-center gap-4">
-      <Checkbox
-        v-for="size in sizes"
-        :key="size"
-        :size="size"
-        :value="true"
-        :aria-label="size"
-      /></div
-  ></ComponentExample>
+    @reset="reset"
+  >
+    <template #controls>
+      <ExampleSelectControl v-model="size" label="Size" :options="checkboxSizes" />
+    </template>
+    <Checkbox :size="size" :value="true" aria-label="Selected" />
+  </ComponentExample>
 </template>

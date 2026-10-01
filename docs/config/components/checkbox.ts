@@ -1,10 +1,12 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { checkboxDefaults, checkboxSizes } from '@/components/ui/Checkbox'
+import CheckboxBasicExample from '../../components/examples/checkbox/CheckboxBasicExample.vue'
 import CheckboxValuesExample from '../../components/examples/checkbox/CheckboxValuesExample.vue'
 import CheckboxIndeterminateExample from '../../components/examples/checkbox/CheckboxIndeterminateExample.vue'
 import CheckboxSizeExample from '../../components/examples/checkbox/CheckboxSizeExample.vue'
-import CheckboxSeverityExample from '../../components/examples/checkbox/CheckboxSeverityExample.vue'
 import CheckboxColorExample from '../../components/examples/checkbox/CheckboxColorExample.vue'
 import CheckboxIconsExample from '../../components/examples/checkbox/CheckboxIconsExample.vue'
+import CheckboxUiExample from '../../components/examples/checkbox/CheckboxUiExample.vue'
 
 const checkboxConfig: ComponentDocConfig = {
   slug: 'checkbox',
@@ -14,15 +16,20 @@ const checkboxConfig: ComponentDocConfig = {
   importPath: '@nono-ui/components/ui/Checkbox',
   usage: [
     {
-      title: 'trueValue and falseValue',
-      description: 'Use custom values for selected and unselected states.',
-      component: CheckboxValuesExample,
+      title: 'Basic usage',
+      description: 'Bind a boolean value to an accessible checkbox.',
+      component: CheckboxBasicExample,
     },
   ],
   examples: [
     {
+      title: 'Custom values',
+      description: 'Use custom values for selected and unselected states.',
+      component: CheckboxValuesExample,
+    },
+    {
       title: 'Indeterminate',
-      description: 'Represent a partial selection with the indeterminate value.',
+      description: 'Switch among unchecked, checked, and indeterminate states.',
       component: CheckboxIndeterminateExample,
     },
     {
@@ -31,19 +38,20 @@ const checkboxConfig: ComponentDocConfig = {
       component: CheckboxSizeExample,
     },
     {
-      title: 'Severity',
-      description: 'Apply a semantic color to the selected state.',
-      component: CheckboxSeverityExample,
-    },
-    {
       title: 'Color',
-      description: 'Use a custom CSS color.',
+      description: 'Choose a theme token or a custom CSS color.',
       component: CheckboxColorExample,
     },
     {
-      title: 'Icon and indeterminateIcon',
-      description: 'Customize the icons for selected and indeterminate states.',
+      title: 'Icons',
+      description:
+        'Choose icon names or pass a full IconConfig for checked and indeterminate states.',
       component: CheckboxIconsExample,
+    },
+    {
+      title: 'UI',
+      description: 'Customize the indicator using the current state.',
+      component: CheckboxUiExample,
     },
   ],
   accessibility: [
@@ -58,52 +66,54 @@ const checkboxConfig: ComponentDocConfig = {
       {
         name: 'value',
         type: "boolean | number | string | 'indeterminate'",
-        default: 'false',
+        default: String(checkboxDefaults.falseValue),
         description: 'Current value; updated with v-model:value.',
       },
       {
         name: 'trueValue',
         type: 'boolean | number | string',
-        default: 'true',
+        default: String(checkboxDefaults.trueValue),
         description: 'Value representing the selected state.',
       },
       {
         name: 'falseValue',
         type: 'boolean | number | string',
-        default: 'false',
+        default: String(checkboxDefaults.falseValue),
         description: 'Value representing the unselected state.',
       },
       {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
-        default: "'md'",
+        type: checkboxSizes.map((size) => `'${size}'`).join(' | '),
+        default: `'${checkboxDefaults.size}'`,
         description: 'Visual size of the checkbox and its icon.',
-      },
-      {
-        name: 'severity',
-        type: "'primary' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'primary'",
-        description: 'Semantic color of the selected state.',
       },
       {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Custom CSS color. Takes precedence over severity.',
+        default: `'${checkboxDefaults.color}'`,
+        description: 'Theme token or CSS color for checked, indeterminate, and focus states.',
       },
       {
         name: 'icon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
-        default: "{ name: 'check' }",
-        description: 'Configuration for the icon displayed inside the indicator.',
+        type: 'IconName | IconConfig',
+        typeParts: [
+          { text: 'IconName', link: '/components/icon#props' },
+          { text: ' | ' },
+          { text: 'IconConfig', link: '/components/icon#icon-config' },
+        ],
+        default: `'${checkboxDefaults.icon}'`,
+        description: 'Checked-state icon; a name or an icon configuration.',
       },
       {
         name: 'indeterminateIcon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
-        default: "{ name: 'minus' }",
-        description: 'Configuration for the icon displayed when value is indeterminate.',
+        type: 'IconName | IconConfig',
+        typeParts: [
+          { text: 'IconName', link: '/components/icon#props' },
+          { text: ' | ' },
+          { text: 'IconConfig', link: '/components/icon#icon-config' },
+        ],
+        default: `'${checkboxDefaults.indeterminateIcon}'`,
+        description: 'Indeterminate-state icon; a name or an icon configuration.',
       },
       {
         name: 'ui',
@@ -114,8 +124,8 @@ const checkboxConfig: ComponentDocConfig = {
           { text: ') => HTMLAttributes }' },
         ],
         typePre: true,
-        default: 'undefined',
-        description: 'Resolver for customizing the indicator’s attributes and classes.',
+        default: String(checkboxDefaults.ui),
+        description: 'Resolver for indicator attributes, classes, styles, and ARIA.',
       },
     ],
     emits: [
