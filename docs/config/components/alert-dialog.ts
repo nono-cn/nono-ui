@@ -1,4 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { alertDialogCancelButtonDefaults, alertDialogDefaults } from '@/components/ui/AlertDialog'
 import AlertDialogBasicExample from '../../components/examples/alert-dialog/AlertDialogBasicExample.vue'
 import AlertDialogTitleExample from '../../components/examples/alert-dialog/AlertDialogTitleExample.vue'
 import AlertDialogDescriptionExample from '../../components/examples/alert-dialog/AlertDialogDescriptionExample.vue'
@@ -69,26 +70,26 @@ const alertDialogConfig: ComponentDocConfig = {
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(alertDialogDefaults.label),
         description: 'Dialog title and primary accessible name when the label slot is not used.',
       },
       {
         name: 'description',
         type: 'string',
-        default: 'undefined',
+        default: String(alertDialogDefaults.description),
         description: 'Supporting text displayed below the label.',
       },
       {
         name: 'icon',
         type: 'IconName',
-        default: 'undefined',
+        default: String(alertDialogDefaults.icon),
         description: 'Name of the icon displayed before the label.',
       },
       {
         name: 'actionButton',
         type: 'ButtonConfig',
         typeLink: '/components/button#button-config',
-        default: 'undefined',
+        default: String(alertDialogDefaults.actionButton),
         description:
           'Configuration for the default action Button. Its label comes from i18n; provided values override the fallback.',
       },
@@ -96,14 +97,13 @@ const alertDialogConfig: ComponentDocConfig = {
         name: 'cancelButton',
         type: 'ButtonConfig',
         typeLink: '/components/button#button-config',
-        default: 'undefined',
-        description:
-          'Configuration for the default cancel Button. Uses the outline variant, secondary severity, and the i18n-provided label by default.',
+        default: String(alertDialogDefaults.cancelButton),
+        description: `Configuration for the default cancel Button. Uses the ${alertDialogCancelButtonDefaults.variant} variant, ${alertDialogCancelButtonDefaults.color} color, and the i18n-provided label by default.`,
       },
       {
         name: 'unmountOnHide',
         type: 'boolean',
-        default: 'true',
+        default: String(alertDialogDefaults.unmountOnHide),
         description:
           'Unmounts the content when the dialog is closed; when false, keeps it mounted and hidden.',
       },
@@ -117,7 +117,7 @@ const alertDialogConfig: ComponentDocConfig = {
       {
         name: 'disableOutsidePointerEvents',
         type: 'boolean',
-        default: 'true',
+        default: String(alertDialogDefaults.disableOutsidePointerEvents),
         description: 'Blocks pointer events outside the content while the dialog is open.',
       },
       {
@@ -133,7 +133,7 @@ const alertDialogConfig: ComponentDocConfig = {
   footer?: () => HTMLAttributes
 }`,
         typePre: true,
-        default: 'undefined',
+        default: String(alertDialogDefaults.ui),
         description: 'Resolvers for customizing the attributes and classes of internal parts.',
       },
     ],

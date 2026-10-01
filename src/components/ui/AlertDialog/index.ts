@@ -8,6 +8,7 @@ import type { NormalizeButtonProps } from '@/components/ui/Button'
 import type { IconName } from '@/components/ui/Icon'
 
 export { default as AlertDialog } from './AlertDialog.vue'
+export { alertDialogCancelButtonDefaults, alertDialogDefaults } from './constants'
 
 export type AlertDialogRootProps = Pick<RekaAlertDialogProps, 'unmountOnHide'>
 export type AlertDialogContentProps = Pick<

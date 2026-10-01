@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { AlertDialog } from '@/components/ui/AlertDialog'
-import { Button, type ButtonSeverity } from '@/components/ui/Button'
+import { Button } from '@/components/ui/Button'
+import { themeColors } from '@/components/ui/constants'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -9,15 +10,7 @@ import { scriptEnd } from '../example-code'
 
 const actionLabel = ref('Publish')
 const cancelLabel = ref('Review')
-const actionSeverity = ref<ButtonSeverity>('success')
-const severities: ButtonSeverity[] = [
-  'primary',
-  'neutral',
-  'secondary',
-  'warning',
-  'success',
-  'error',
-]
+const actionColor = ref<(typeof themeColors)[number]>('success')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -26,14 +19,14 @@ import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 
 const actionLabel = ref(${JSON.stringify(actionLabel.value)})
 const cancelLabel = ref(${JSON.stringify(cancelLabel.value)})
-const actionSeverity = ref('${actionSeverity.value}' as const)
+const actionColor = ref('${actionColor.value}' as const)
 ${scriptEnd}
 
 <template>
   <AlertDialog
     label="Publish changes"
     description="These changes will be available to everyone."
-    :action-button="{ label: actionLabel, severity: actionSeverity }"
+    :action-button="{ label: actionLabel, color: actionColor }"
     :cancel-button="{ label: cancelLabel, variant: 'outline' }"
   >
     <Button label="Publish" />
@@ -44,7 +37,7 @@ ${scriptEnd}
 function reset() {
   actionLabel.value = 'Publish'
   cancelLabel.value = 'Review'
-  actionSeverity.value = 'success'
+  actionColor.value = 'success'
 }
 </script>
 
@@ -59,17 +52,13 @@ function reset() {
       <div class="flex flex-wrap gap-4">
         <ExampleTextInputControl v-model="actionLabel" label="Action label" />
         <ExampleTextInputControl v-model="cancelLabel" label="Cancel label" />
-        <ExampleSelectControl
-          v-model="actionSeverity"
-          label="Action severity"
-          :options="severities"
-        />
+        <ExampleSelectControl v-model="actionColor" label="Action color" :options="themeColors" />
       </div>
     </template>
     <AlertDialog
       label="Publish changes"
       description="These changes will be available to everyone."
-      :action-button="{ label: actionLabel, severity: actionSeverity }"
+      :action-button="{ label: actionLabel, color: actionColor }"
       :cancel-button="{ label: cancelLabel, variant: 'outline' }"
     >
       <Button label="Publish" />

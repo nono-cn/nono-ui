@@ -11,7 +11,7 @@ ${scriptEnd}
 
 <template>
   <AlertDialog label="Delete this item?" description="This action cannot be undone.">
-    <Button label="Delete" severity="error" />
+    <Button label="Delete" color="error" />
   </AlertDialog>
 </template>`
 </script>
@@ -24,7 +24,7 @@ ${scriptEnd}
     :show-reset="false"
   >
     <AlertDialog label="Delete this item?" description="This action cannot be undone.">
-      <Button label="Delete" severity="error" />
+      <Button label="Delete" color="error" />
     </AlertDialog>
   </ComponentExample>
 </template>

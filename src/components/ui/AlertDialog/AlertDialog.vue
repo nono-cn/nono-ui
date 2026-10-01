@@ -22,7 +22,7 @@ import {
   type AlertDialogProps,
   type AlertDialogSlots,
 } from '.'
-import { alertDialogDefaults } from './defaults'
+import { alertDialogCancelButtonDefaults, alertDialogDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -123,8 +123,7 @@ const footerProps = computed(() => {
 
 const cancelButtonProps = computed(() => ({
   label: t('cancel'),
-  variant: 'outline' as const,
-  severity: 'secondary' as const,
+  ...alertDialogCancelButtonDefaults,
   ...props.cancelButton,
 }))
 

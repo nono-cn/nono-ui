@@ -8,3 +8,8 @@ export const alertDialogDefaults = {
   cancelButton: undefined,
   ui: undefined,
 }
+
+export const alertDialogCancelButtonDefaults = {
+  variant: 'outline' as const,
+  color: 'secondary',
+}
