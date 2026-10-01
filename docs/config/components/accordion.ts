@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { accordionVariantNames } from '@/components/ui/Accordion'
+import { accordionDefaults, accordionTypes, accordionVariantNames } from '@/components/ui/Accordion'
 import AccordionBasicExample from '../../components/examples/accordion/AccordionBasicExample.vue'
 import AccordionTypeExample from '../../components/examples/accordion/AccordionTypeExample.vue'
 import AccordionValueExample from '../../components/examples/accordion/AccordionValueExample.vue'
@@ -89,19 +89,19 @@ const accordionConfig: ComponentDocConfig = {
       {
         name: 'variant',
         type: accordionVariantNames.map((variant) => `'${variant}'`).join(' | '),
-        default: "'default'",
+        default: `'${accordionDefaults.variant}'`,
         description: 'Visual style applied to the accordion and its items.',
       },
       {
         name: 'highlight',
         type: 'boolean',
-        default: 'false',
+        default: String(accordionDefaults.highlight),
         description: 'Highlights the currently open item across all visual variants.',
       },
       {
         name: 'type',
-        type: "'single' | 'multiple'",
-        default: "'single'",
+        type: accordionTypes.map((type) => `'${type}'`).join(' | '),
+        default: `'${accordionDefaults.type}'`,
         description: 'Whether one or multiple sections can stay open.',
       },
       {
@@ -112,19 +112,19 @@ const accordionConfig: ComponentDocConfig = {
       {
         name: 'collapsible',
         type: 'boolean',
-        default: 'false',
+        default: String(accordionDefaults.collapsible),
         description: 'In single mode, allows the open section to be closed.',
       },
       {
         name: 'disabled',
         type: 'boolean',
-        default: 'false',
+        default: String(accordionDefaults.disabled),
         description: 'Disables all accordion items.',
       },
       {
         name: 'unmountOnHide',
         type: 'boolean',
-        default: 'true',
+        default: String(accordionDefaults.unmountOnHide),
         description:
           'Unmounts content when a section is closed, unless the item sets a different value.',
       },
@@ -132,19 +132,19 @@ const accordionConfig: ComponentDocConfig = {
         name: 'items',
         type: 'AccordionItem[]',
         typeLink: '#accordion-item',
-        default: '[]',
+        default: JSON.stringify(accordionDefaults.items()),
         description: 'Items to render, with value, label, description, icon, and per-item options.',
       },
       {
         name: 'iconDropDownOpen',
         type: 'IconName',
-        default: "'chevronUp'",
+        default: `'${accordionDefaults.iconDropDownOpen}'`,
         description: 'Name of the icon shown when an item is open.',
       },
       {
         name: 'iconDropDownClose',
         type: 'IconName',
-        default: "'chevronDown'",
+        default: `'${accordionDefaults.iconDropDownClose}'`,
         description: 'Name of the icon shown when an item is closed.',
       },
       {
@@ -155,7 +155,7 @@ const accordionConfig: ComponentDocConfig = {
   content?: (context: AccordionItemContext) => HTMLAttributes
 }`,
         typePre: true,
-        default: 'undefined',
+        default: String(accordionDefaults.ui),
         description:
           'Resolvers for adding attributes and classes to item, trigger, and content based on the item context.',
       },

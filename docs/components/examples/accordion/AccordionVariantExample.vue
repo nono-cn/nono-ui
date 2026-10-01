@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Accordion, accordionVariantNames, type AccordionVariant } from '@/components/ui/Accordion'
+import {
+  Accordion,
+  accordionDefaults,
+  accordionTypes,
+  accordionVariantNames,
+  type AccordionVariant,
+} from '@/components/ui/Accordion'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const types = ['single', 'multiple'] as const
 const variant = ref<AccordionVariant>('frame')
-const type = ref<(typeof types)[number]>('single')
-const highlight = ref(false)
+const type = ref<(typeof accordionTypes)[number]>(accordionDefaults.type)
+const highlight = ref(accordionDefaults.highlight)
 
 const items = [
   {
@@ -76,8 +81,8 @@ ${scriptEnd}
 
 function reset() {
   variant.value = 'frame'
-  type.value = 'single'
-  highlight.value = false
+  type.value = accordionDefaults.type
+  highlight.value = accordionDefaults.highlight
 }
 </script>
 
@@ -91,7 +96,7 @@ function reset() {
     <template #controls>
       <div class="flex flex-wrap gap-4">
         <ExampleSelectControl v-model="variant" label="Variant" :options="accordionVariantNames" />
-        <ExampleSelectControl v-model="type" label="Type" :options="types" />
+        <ExampleSelectControl v-model="type" label="Type" :options="accordionTypes" />
         <ExampleCheckboxControl v-model="highlight" label="Highlight open item" />
       </div>
     </template>

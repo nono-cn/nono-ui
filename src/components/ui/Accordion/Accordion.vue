@@ -21,7 +21,7 @@ import {
   type AccordionValue,
 } from '.'
 import { createAccordionItemContext } from '.'
-import { accordionDefaults } from './default'
+import { accordionDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

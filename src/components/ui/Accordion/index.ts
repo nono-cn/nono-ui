@@ -8,7 +8,7 @@ import type { IconName } from '@/components/ui/Icon'
 import { accordionVariantNames } from './constants'
 
 export { default as Accordion } from './Accordion.vue'
-export { accordionVariantNames } from './constants'
+export { accordionDefaults, accordionTypes, accordionVariantNames } from './constants'
 
 export const accordionVariants = cva('', {
   variants: {

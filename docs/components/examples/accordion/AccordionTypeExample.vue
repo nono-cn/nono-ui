@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Accordion } from '@/components/ui/Accordion'
+import { Accordion, accordionTypes } from '@/components/ui/Accordion'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const types = ['single', 'multiple'] as const
-const type = ref<(typeof types)[number]>('multiple')
+const type = ref<(typeof accordionTypes)[number]>('multiple')
 
 const items = [
   {
@@ -75,7 +74,7 @@ function reset() {
   >
     <template #controls>
       <div class="flex flex-wrap gap-4">
-        <ExampleSelectControl v-model="type" label="Type" :options="types" />
+        <ExampleSelectControl v-model="type" label="Type" :options="accordionTypes" />
       </div>
     </template>
     <div class="w-full max-w-3xl">
