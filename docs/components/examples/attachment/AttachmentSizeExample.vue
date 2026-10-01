@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment, attachmentSizes, type AttachmentSize } from '@/components/ui/Attachment'
+import {
+  Attachment,
+  attachmentDefaults,
+  attachmentSizes,
+  type AttachmentSize,
+} from '@/components/ui/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const size = ref<AttachmentSize>('md')
+const size = ref<AttachmentSize>(attachmentDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -25,7 +30,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  size.value = 'md'
+  size.value = attachmentDefaults.size
 }
 </script>
 

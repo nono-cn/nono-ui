@@ -14,7 +14,7 @@ import {
   type AttachmentProps,
   type AttachmentSlots,
 } from '.'
-import { attachmentDefaults } from './default'
+import { attachmentDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

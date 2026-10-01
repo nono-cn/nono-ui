@@ -1,4 +1,11 @@
 import type { ComponentDocConfig } from '../component-docs'
+import {
+  attachmentDefaults,
+  attachmentMediaVariantNames,
+  attachmentOrientationNames,
+  attachmentSizes,
+  attachmentStateNames,
+} from '@/components/ui/Attachment'
 import AttachmentBasicExample from '../../components/examples/attachment/AttachmentBasicExample.vue'
 import AttachmentTitleExample from '../../components/examples/attachment/AttachmentTitleExample.vue'
 import AttachmentDescriptionExample from '../../components/examples/attachment/AttachmentDescriptionExample.vue'
@@ -8,6 +15,9 @@ import AttachmentSizeExample from '../../components/examples/attachment/Attachme
 import AttachmentStateExample from '../../components/examples/attachment/AttachmentStateExample.vue'
 import AttachmentMediaVariantExample from '../../components/examples/attachment/AttachmentMediaVariantExample.vue'
 import AttachmentUiExample from '../../components/examples/attachment/AttachmentUiExample.vue'
+
+const optionType = (values: readonly string[]) => values.map((value) => `'${value}'`).join(' | ')
+const quotedDefault = (value: string) => `'${value}'`
 
 const attachmentConfig: ComponentDocConfig = {
   slug: 'attachment',
@@ -81,44 +91,44 @@ const attachmentConfig: ComponentDocConfig = {
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(attachmentDefaults.label),
         description: 'File name or title.',
       },
       {
         name: 'description',
         type: 'string',
-        default: 'undefined',
+        default: String(attachmentDefaults.description),
         description: 'Additional information, such as the file size or type.',
       },
       {
         name: 'icon',
         type: 'IconName',
         typeLink: '/components/icon#props',
-        default: 'undefined',
+        default: String(attachmentDefaults.icon),
         description: 'Name of the media icon when mediaVariant is icon.',
       },
       {
         name: 'orientation',
-        type: "'horizontal' | 'vertical'",
-        default: "'horizontal'",
+        type: optionType(attachmentOrientationNames),
+        default: quotedDefault(attachmentDefaults.orientation),
         description: 'Direction of the attachment layout.',
       },
       {
         name: 'size',
-        type: "'md' | 'sm' | 'xs'",
-        default: "'md'",
+        type: optionType(attachmentSizes),
+        default: quotedDefault(attachmentDefaults.size),
         description: 'Size of the media and file details.',
       },
       {
         name: 'state',
-        type: "'idle' | 'uploading' | 'processing' | 'error' | 'done'",
-        default: "'idle'",
+        type: optionType(attachmentStateNames),
+        default: quotedDefault(attachmentDefaults.state),
         description: 'Visual state of the file. A spinner is shown while uploading.',
       },
       {
         name: 'mediaVariant',
-        type: "'icon' | 'image'",
-        default: "'icon'",
+        type: optionType(attachmentMediaVariantNames),
+        default: quotedDefault(attachmentDefaults.mediaVariant),
         description: 'Media type to render: an icon or the content of the media slot.',
       },
       {
@@ -144,7 +154,7 @@ const attachmentConfig: ComponentDocConfig = {
           { text: 'AttachmentContext', link: '#attachment-context' },
           { text: ') => HTMLAttributes\n}' },
         ],
-        default: 'undefined',
+        default: String(attachmentDefaults.ui),
         description:
           'Resolvers for applying attributes, class, style, and ARIA to media, content, label, description, and actions. Every resolver receives the current AttachmentContext.',
       },
@@ -187,7 +197,7 @@ const attachmentConfig: ComponentDocConfig = {
         rows: [
           {
             name: 'state',
-            type: "'idle' | 'uploading' | 'processing' | 'error' | 'done'",
+            type: optionType(attachmentStateNames),
             description: 'Current visual state of the attachment; defaults to idle.',
           },
         ],

@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import {
   Attachment,
+  attachmentDefaults,
   attachmentOrientationNames,
   type AttachmentOrientation,
 } from '@/components/ui/Attachment'
@@ -9,7 +10,7 @@ import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const orientation = ref<AttachmentOrientation>('horizontal')
+const orientation = ref<AttachmentOrientation>(attachmentDefaults.orientation)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -29,7 +30,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  orientation.value = 'horizontal'
+  orientation.value = attachmentDefaults.orientation
 }
 </script>
 

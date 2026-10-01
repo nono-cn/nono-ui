@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import {
   Attachment,
+  attachmentDefaults,
   attachmentMediaVariantNames,
   attachmentStateNames,
   type AttachmentMediaVariant,
@@ -11,8 +12,8 @@ import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const mediaVariant = ref<AttachmentMediaVariant>('icon')
-const state = ref<AttachmentState>('idle')
+const mediaVariant = ref<AttachmentMediaVariant>(attachmentDefaults.mediaVariant)
+const state = ref<AttachmentState>(attachmentDefaults.state)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -38,8 +39,8 @@ ${scriptEnd}
 )
 
 function reset() {
-  mediaVariant.value = 'icon'
-  state.value = 'idle'
+  mediaVariant.value = attachmentDefaults.mediaVariant
+  state.value = attachmentDefaults.state
 }
 </script>
 

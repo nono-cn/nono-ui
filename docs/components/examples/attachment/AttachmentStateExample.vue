@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment, attachmentStateNames, type AttachmentState } from '@/components/ui/Attachment'
+import {
+  Attachment,
+  attachmentDefaults,
+  attachmentStateNames,
+  type AttachmentState,
+} from '@/components/ui/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const state = ref<AttachmentState>('idle')
+const state = ref<AttachmentState>(attachmentDefaults.state)
 const descriptions: Record<AttachmentState, string> = {
   idle: 'Ready to upload · PDF · 2.4 MB',
   uploading: 'Uploading file · PDF · 2.4 MB',
@@ -35,7 +40,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  state.value = 'idle'
+  state.value = attachmentDefaults.state
 }
 </script>
 

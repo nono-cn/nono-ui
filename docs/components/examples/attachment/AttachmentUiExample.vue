@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import {
   Attachment,
+  attachmentDefaults,
   attachmentStateNames,
   type AttachmentState,
   type AttachmentUI,
@@ -11,7 +12,7 @@ import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const state = ref<AttachmentState>('idle')
+const state = ref<AttachmentState>(attachmentDefaults.state)
 const ui: AttachmentUI = {
   media: ({ state }) => ({
     class:
@@ -67,7 +68,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  state.value = 'idle'
+  state.value = attachmentDefaults.state
 }
 </script>
 

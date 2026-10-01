@@ -10,6 +10,7 @@ import {
 
 export { default as Attachment } from './Attachment.vue'
 export {
+  attachmentDefaults,
   attachmentMediaVariantNames,
   attachmentOrientationNames,
   attachmentSizes,
