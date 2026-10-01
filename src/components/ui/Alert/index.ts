@@ -5,7 +5,7 @@ import type { IconName } from '@/components/ui/Icon'
 import { alertVariantNames } from './constants'
 
 export { default as Alert } from './Alert.vue'
-export { alertVariantNames } from './constants'
+export { alertDefaults, alertVariantNames } from './constants'
 
 export const alertVariants = cva('', {
   variants: {

@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { useTheme } from '@/composables'
 import { useI18n } from '@/i18n'
 import { alertVariants, type AlertEmits, type AlertProps, type AlertSlots } from '.'
-import { alertDefaults } from './defaults'
+import { alertDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

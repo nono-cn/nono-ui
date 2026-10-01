@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { alertVariantNames } from '@/components/ui/Alert'
+import { alertDefaults, alertVariantNames } from '@/components/ui/Alert'
 import AlertBasicExample from '../../components/examples/alert/AlertBasicExample.vue'
 import AlertVariantExample from '../../components/examples/alert/AlertVariantExample.vue'
 import AlertTitleExample from '../../components/examples/alert/AlertTitleExample.vue'
@@ -71,51 +71,51 @@ const alertConfig: ComponentDocConfig = {
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(alertDefaults.label),
         description: 'Short title displayed on the first line of the alert.',
       },
       {
         name: 'description',
         type: 'string',
-        default: 'undefined',
+        default: String(alertDefaults.description),
         description: 'Supporting text displayed below the label.',
       },
       {
         name: 'icon',
         type: 'IconName',
-        default: 'undefined',
+        default: String(alertDefaults.icon),
         description: 'Name of the icon displayed at the start when the icon slot is not used.',
       },
       {
         name: 'closeButton',
         type: 'ButtonConfig',
         typeLink: '/components/button#button-config',
-        default: 'undefined',
+        default: String(alertDefaults.closeButton),
         description:
           'Configuration for the default close button. Only shown when closable is true.',
       },
       {
         name: 'variant',
         type: alertVariantNames.map((variant) => `'${variant}'`).join(' | '),
-        default: "'soft'",
+        default: `'${alertDefaults.variant}'`,
         description: 'Visual style applied to the alert.',
       },
       {
         name: 'color',
         type: 'string',
-        default: "'primary'",
+        default: `'${alertDefaults.color}'`,
         description: 'Theme token or CSS color applied to the alert style.',
       },
       {
         name: 'closable',
         type: 'boolean',
-        default: 'false',
+        default: String(alertDefaults.closable),
         description: 'Shows the default close button or the close slot.',
       },
       {
         name: 'decorative',
         type: 'boolean',
-        default: 'false',
+        default: String(alertDefaults.decorative),
         description: 'Uses role="none" instead of role="alert" for purely visual content.',
       },
       {
@@ -126,7 +126,7 @@ const alertConfig: ComponentDocConfig = {
   closeButtonContainer?: () => HTMLAttributes
 }`,
         typePre: true,
-        default: 'undefined',
+        default: String(alertDefaults.ui),
         description:
           'Resolver object for customizing the attributes and classes of label, description, and closeButtonContainer.',
       },
