@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { computed, useAttrs, useSlots } from 'vue'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { chipBaseVariants, chipRootVariants, type ChipProps, type ChipSlots } from '.'
-import { chipDefaults } from './defaults'
+import { chipDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<ChipProps>(), chipDefaults)
 defineSlots<ChipSlots>()
 
-const show = defineModel<boolean>('show', { default: true })
+const show = defineModel<boolean>('show', { default: chipDefaults.show })
 const attrs = useAttrs()
 const slots = useSlots()
 const hasDefaultSlot = computed(() => Boolean(slots.default))
 
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'chip',
-)
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'chip',
+  defaultColor: chipDefaults.color,
+})
 
 const rootProps = computed(() => {
   return {
@@ -40,8 +41,6 @@ const baseProps = computed(() => {
     class: cn(
       chipBaseVariants({
         size: props.size,
-        color: Boolean(props.color),
-        severity: props.severity,
         position: hasDefaultSlot.value && !props.standalone ? props.position : undefined,
         inset: hasDefaultSlot.value ? props.inset : undefined,
         standalone: hasDefaultSlot.value ? props.standalone : undefined,

@@ -1,6 +1,8 @@
 import { cva, type VariantProps } from 'class-variance-authority'
+import { chipDefaults, chipPositions, chipSizes } from './constants'
 
 export { default as Chip } from './Chip.vue'
+export { chipDefaults, chipPositions, chipSizes } from './constants'
 
 export const chipRootVariants = cva('relative inline-flex shrink-0 items-center justify-center', {
   variants: {
@@ -8,8 +10,8 @@ export const chipRootVariants = cva('relative inline-flex shrink-0 items-center 
       'top-right': 'top-0 right-0',
       'bottom-right': 'right-0 bottom-0',
       'top-left': 'top-0 left-0',
-      'bottom-left': 'bottom-0 left-0',
-    },
+      'bottom-left': 'left-0 bottom-0',
+    } satisfies Record<(typeof chipPositions)[number], string>,
     inset: {
       true: '',
       false: '',
@@ -42,14 +44,14 @@ export const chipRootVariants = cva('relative inline-flex shrink-0 items-center 
     },
   ],
   defaultVariants: {
-    position: 'top-right',
-    inset: false,
-    standalone: false,
+    position: chipDefaults.position,
+    inset: chipDefaults.inset,
+    standalone: chipDefaults.standalone,
   },
 })
 
 export const chipBaseVariants = cva(
-  'flex items-center justify-center rounded-full ring-2 ring-background font-medium whitespace-nowrap',
+  'flex items-center justify-center rounded-full bg-(--chip-color) text-(--chip-color-foreground) ring-2 ring-background font-medium whitespace-nowrap',
   {
     variants: {
       size: {
@@ -62,25 +64,13 @@ export const chipBaseVariants = cva(
         xl: 'h-2.5 min-w-2.5 text-[10px]',
         '2xl': 'h-3 min-w-3 text-[11px]',
         '3xl': 'h-3 min-w-3 text-xs',
-      },
-      severity: {
-        primary: 'bg-primary text-primary-foreground',
-        neutral: 'bg-foreground text-background',
-        secondary: 'bg-secondary text-secondary-foreground',
-        warning: 'bg-warning text-warning-foreground',
-        success: 'bg-success text-success-foreground',
-        error: 'bg-error text-error-foreground',
-      },
-      color: {
-        true: 'bg-(--chip-color) text-(--chip-color-foreground)',
-        false: '',
-      },
+      } satisfies Record<(typeof chipSizes)[number], string>,
       position: {
         'top-right': 'top-0 right-0',
         'bottom-right': 'right-0 bottom-0',
         'top-left': 'top-0 left-0',
-        'bottom-left': 'bottom-0 left-0',
-      },
+        'bottom-left': 'left-0 bottom-0',
+      } satisfies Record<(typeof chipPositions)[number], string>,
       inset: {
         true: '',
         false: '',
@@ -113,9 +103,7 @@ export const chipBaseVariants = cva(
       },
     ],
     defaultVariants: {
-      size: '3xl',
-      color: false,
-      severity: 'primary',
+      size: chipDefaults.size,
     },
   },
 )
@@ -123,12 +111,10 @@ export const chipBaseVariants = cva(
 export type ChipRootVariants = VariantProps<typeof chipRootVariants>
 export type ChipBaseVariants = VariantProps<typeof chipBaseVariants>
 export type ChipSize = NonNullable<ChipBaseVariants['size']>
-export type ChipSeverity = NonNullable<ChipBaseVariants['severity']>
 export type ChipPosition = NonNullable<ChipRootVariants['position']>
 
 export interface ChipProps {
   color?: string
-  severity?: ChipSeverity
   size?: ChipSize
   position?: ChipPosition
   show?: boolean

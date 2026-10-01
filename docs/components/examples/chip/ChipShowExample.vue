@@ -1,44 +1,55 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Avatar } from '@/components/ui/Avatar'
-import { Chip } from '@/components/ui/Chip'
+import { Chip, chipDefaults } from '@/components/ui/Chip'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const showOptions = ['true', 'false'] as const
+const selectedShow = ref(String(chipDefaults.show))
+const show = computed(() => selectedShow.value === 'true')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
 import { Chip } from '__DOCS_PACKAGE__/components/ui/Chip'
+
+const show = ref(${show.value})
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-8">
-    <div class="grid justify-items-center gap-2">
-      <Chip :show="true"><Avatar label="ON" size="lg" /></Chip>
-      <span class="text-xs text-muted-foreground">Visible</span>
-    </div>
-    <div class="grid justify-items-center gap-2">
-      <Chip :show="false"><Avatar label="OFF" size="lg" /></Chip>
-      <span class="text-xs text-muted-foreground">Hidden</span>
-    </div>
+  <div class="grid justify-items-center gap-2">
+    <Chip :show="show">
+      <Avatar label="NC" size="lg" />
+    </Chip>
+    <span>{{ show ? 'Visible' : 'Hidden' }}</span>
   </div>
-</template>`
+</template>`,
+)
+
+function reset() {
+  selectedShow.value = String(chipDefaults.show)
+}
 </script>
 
 <template>
   <ComponentExample
     title="Show"
-    description="Control whether the chip is visible."
+    description="Choose whether the chip indicator is visible."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-8">
-      <div class="grid justify-items-center gap-2">
-        <Chip :show="true"><Avatar label="ON" size="lg" /></Chip>
-        <span class="text-xs text-muted-foreground">Visible</span>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="selectedShow" label="Show" :options="showOptions" />
       </div>
-      <div class="grid justify-items-center gap-2">
-        <Chip :show="false"><Avatar label="OFF" size="lg" /></Chip>
-        <span class="text-xs text-muted-foreground">Hidden</span>
-      </div>
+    </template>
+    <div class="grid justify-items-center gap-2">
+      <Chip :show="show">
+        <Avatar label="NC" size="lg" />
+      </Chip>
+      <span>{{ show ? 'Visible' : 'Hidden' }}</span>
     </div>
   </ComponentExample>
 </template>

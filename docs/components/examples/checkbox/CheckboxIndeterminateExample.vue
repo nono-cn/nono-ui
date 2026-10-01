@@ -40,7 +40,9 @@ function reset() {
     @reset="reset"
   >
     <template #controls>
-      <ExampleSelectControl v-model="state" label="State" :options="states" />
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="state" label="State" :options="states" />
+      </div>
     </template>
     <Checkbox :value="value" aria-label="Selection state" />
   </ComponentExample>

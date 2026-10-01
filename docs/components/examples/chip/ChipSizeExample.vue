@@ -1,46 +1,47 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Avatar } from '@/components/ui/Avatar'
-import { Chip } from '@/components/ui/Chip'
+import { Chip, chipDefaults, chipSizes, type ChipSize } from '@/components/ui/Chip'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const size = ref<ChipSize>(chipDefaults.size)
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
-import { Chip } from '__DOCS_PACKAGE__/components/ui/Chip'
+import { Chip, type ChipSize } from '__DOCS_PACKAGE__/components/ui/Chip'
+
+const size = ref<ChipSize>('${size.value}')
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-5">
-    <Chip size="3xs"><Avatar label="3" size="lg" /></Chip>
-    <Chip size="2xs"><Avatar label="2" size="lg" /></Chip>
-    <Chip size="xs"><Avatar label="X" size="lg" /></Chip>
-    <Chip size="sm"><Avatar label="S" size="lg" /></Chip>
-    <Chip size="md"><Avatar label="M" size="lg" /></Chip>
-    <Chip size="lg"><Avatar label="L" size="lg" /></Chip>
-    <Chip size="xl"><Avatar label="X" size="lg" /></Chip>
-    <Chip size="2xl"><Avatar label="2" size="lg" /></Chip>
-    <Chip size="3xl"><Avatar label="3" size="lg" /></Chip>
-  </div>
-</template>`
+  <Chip :size="size">
+    <Avatar label="NC" size="lg" />
+  </Chip>
+</template>`,
+)
+
+function reset() {
+  size.value = chipDefaults.size
+}
 </script>
 
 <template>
   <ComponentExample
     title="Size"
-    description="Adjust the chip’s size."
+    description="Choose the chip’s visual size."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-5">
-      <Chip size="3xs"><Avatar label="3" size="lg" /></Chip>
-      <Chip size="2xs"><Avatar label="2" size="lg" /></Chip>
-      <Chip size="xs"><Avatar label="X" size="lg" /></Chip>
-      <Chip size="sm"><Avatar label="S" size="lg" /></Chip>
-      <Chip size="md"><Avatar label="M" size="lg" /></Chip>
-      <Chip size="lg"><Avatar label="L" size="lg" /></Chip>
-      <Chip size="xl"><Avatar label="X" size="lg" /></Chip>
-      <Chip size="2xl"><Avatar label="2" size="lg" /></Chip>
-      <Chip size="3xl"><Avatar label="3" size="lg" /></Chip>
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="size" label="Size" :options="chipSizes" />
+      </div>
+    </template>
+    <Chip :size="size">
+      <Avatar label="NC" size="lg" />
+    </Chip>
   </ComponentExample>
 </template>

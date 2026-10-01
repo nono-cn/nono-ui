@@ -42,7 +42,9 @@ function reset() {
     @reset="reset"
   >
     <template #controls>
-      <ExampleSelectControl v-model="icon" label="Checked icon" :options="icons" />
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="icon" label="Checked icon" :options="icons" />
+      </div>
     </template>
     <div class="flex items-center gap-4">
       <Checkbox :value="true" :icon="icon" aria-label="Selected with chosen icon" />

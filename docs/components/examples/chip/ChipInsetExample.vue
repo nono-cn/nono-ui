@@ -1,44 +1,49 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Avatar } from '@/components/ui/Avatar'
-import { Chip } from '@/components/ui/Chip'
+import { Chip, chipDefaults } from '@/components/ui/Chip'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const insetOptions = ['false', 'true'] as const
+const selectedInset = ref(String(chipDefaults.inset))
+const inset = computed(() => selectedInset.value === 'true')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
 import { Chip } from '__DOCS_PACKAGE__/components/ui/Chip'
+
+const inset = ref(${inset.value})
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-8">
-    <div class="grid justify-items-center gap-2">
-      <Chip :inset="false"><Avatar label="OUT" size="lg" /></Chip>
-      <span class="text-xs text-muted-foreground">inset=false</span>
-    </div>
-    <div class="grid justify-items-center gap-2">
-      <Chip :inset="true"><Avatar label="IN" size="lg" /></Chip>
-      <span class="text-xs text-muted-foreground">inset=true</span>
-    </div>
-  </div>
-</template>`
+  <Chip :inset="inset">
+    <Avatar label="NC" size="lg" />
+  </Chip>
+</template>`,
+)
+
+function reset() {
+  selectedInset.value = String(chipDefaults.inset)
+}
 </script>
 
 <template>
   <ComponentExample
     title="Inset"
-    description="Prevent the chip from being offset from its position."
+    description="Choose whether the chip stays within its positioned corner."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-8">
-      <div class="grid justify-items-center gap-2">
-        <Chip :inset="false"><Avatar label="OUT" size="lg" /></Chip>
-        <span class="text-xs text-muted-foreground">inset=false</span>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="selectedInset" label="Inset" :options="insetOptions" />
       </div>
-      <div class="grid justify-items-center gap-2">
-        <Chip :inset="true"><Avatar label="IN" size="lg" /></Chip>
-        <span class="text-xs text-muted-foreground">inset=true</span>
-      </div>
-    </div>
+    </template>
+    <Chip :inset="inset">
+      <Avatar label="NC" size="lg" />
+    </Chip>
   </ComponentExample>
 </template>

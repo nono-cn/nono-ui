@@ -1,36 +1,53 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Avatar } from '@/components/ui/Avatar'
-import { Chip } from '@/components/ui/Chip'
+import { Chip, chipDefaults } from '@/components/ui/Chip'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const standaloneOptions = ['false', 'true'] as const
+const selectedStandalone = ref(String(chipDefaults.standalone))
+const standalone = computed(() => selectedStandalone.value === 'true')
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
 import { Chip } from '__DOCS_PACKAGE__/components/ui/Chip'
+
+const standalone = ref(${standalone.value})
 ${scriptEnd}
 
 <template>
-  <Chip class="mr-8" size="3xl" standalone aria-label="standalone=true">
-    <Avatar label="ON" size="lg" />
+  <Chip :standalone="standalone">
+    <Avatar label="NC" size="lg" />
   </Chip>
-  <Chip size="3xl" position="top-right" :standalone="false" aria-label="standalone=false">
-    <Avatar label="OFF" size="lg" />
-  </Chip>
-</template>`
+</template>`,
+)
+
+function reset() {
+  selectedStandalone.value = String(chipDefaults.standalone)
+}
 </script>
 
 <template>
   <ComponentExample
     title="Standalone"
-    description="Display the chip without absolute positioning."
+    description="Choose whether the indicator is positioned independently from its content."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <Chip class="mr-8" size="3xl" standalone aria-label="standalone=true">
-      <Avatar label="ON" size="lg" />
-    </Chip>
-    <Chip size="3xl" position="top-right" :standalone="false" aria-label="standalone=false">
-      <Avatar label="OFF" size="lg" />
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl
+          v-model="selectedStandalone"
+          label="Standalone"
+          :options="standaloneOptions"
+        />
+      </div>
+    </template>
+    <Chip :standalone="standalone">
+      <Avatar label="NC" size="lg" />
     </Chip>
   </ComponentExample>
 </template>

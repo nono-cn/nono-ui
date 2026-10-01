@@ -1,9 +1,9 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { chipDefaults, chipPositions, chipSizes } from '@/components/ui/Chip'
 import ChipColorExample from '../../components/examples/chip/ChipColorExample.vue'
 import ChipDefaultExample from '../../components/examples/chip/ChipDefaultExample.vue'
 import ChipInsetExample from '../../components/examples/chip/ChipInsetExample.vue'
 import ChipPositionExample from '../../components/examples/chip/ChipPositionExample.vue'
-import ChipSeverityExample from '../../components/examples/chip/ChipSeverityExample.vue'
 import ChipShowExample from '../../components/examples/chip/ChipShowExample.vue'
 import ChipSizeExample from '../../components/examples/chip/ChipSizeExample.vue'
 import ChipStandaloneExample from '../../components/examples/chip/ChipStandaloneExample.vue'
@@ -25,42 +25,37 @@ const chipConfig: ComponentDocConfig = {
   examples: [
     {
       title: 'Default',
-      description: 'Use the default slot to position the chip over an element.',
+      description: 'Show the default top-right position on a slotted element.',
       component: ChipDefaultExample,
     },
     {
-      title: 'Severity',
-      description: 'Choose a semantic color for the chip indicator.',
-      component: ChipSeverityExample,
-    },
-    {
       title: 'Color',
-      description: 'Apply a custom CSS color to the chip.',
+      description: 'Choose a theme token or a custom CSS color.',
       component: ChipColorExample,
     },
     {
       title: 'Size',
-      description: 'Adjust the chip’s size.',
+      description: 'Choose the chip’s visual size.',
       component: ChipSizeExample,
     },
     {
       title: 'Position',
-      description: 'Place the chip in one of the available corners.',
+      description: 'Choose the corner where the chip appears.',
       component: ChipPositionExample,
     },
     {
       title: 'Show',
-      description: 'Control whether the chip is visible.',
+      description: 'Choose whether the chip indicator is visible.',
       component: ChipShowExample,
     },
     {
       title: 'Inset',
-      description: 'Prevent the chip from being offset from its position.',
+      description: 'Choose whether the chip stays within its positioned corner.',
       component: ChipInsetExample,
     },
     {
       title: 'Standalone',
-      description: 'Display the chip without absolute positioning.',
+      description: 'Choose whether the indicator is positioned independently from its content.',
       component: ChipStandaloneExample,
     },
   ],
@@ -76,43 +71,37 @@ const chipConfig: ComponentDocConfig = {
       {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Custom CSS color for the chip, overriding severity colors.',
-      },
-      {
-        name: 'severity',
-        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'primary'",
-        description: 'Semantic color used for the chip indicator when no custom color is set.',
+        default: `'${chipDefaults.color}'`,
+        description: 'Theme token or CSS color for the chip indicator.',
       },
       {
         name: 'size',
-        type: "'3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'",
-        default: "'3xl'",
+        type: chipSizes.map((size) => `'${size}'`).join(' | '),
+        default: `'${chipDefaults.size}'`,
         description: 'Size of the chip.',
       },
       {
         name: 'position',
-        type: "'top-right' | 'bottom-right' | 'top-left' | 'bottom-left'",
-        default: "'top-right'",
+        type: chipPositions.map((position) => `'${position}'`).join(' | '),
+        default: `'${chipDefaults.position}'`,
         description: 'Chip position when it is rendered without a default slot.',
       },
       {
         name: 'show',
         type: 'boolean',
-        default: 'true',
+        default: String(chipDefaults.show),
         description: 'Controls whether the chip is visible. Use with v-model:show.',
       },
       {
         name: 'inset',
         type: 'boolean',
-        default: 'false',
+        default: String(chipDefaults.inset),
         description: 'Prevents the chip from being offset from its position.',
       },
       {
         name: 'standalone',
         type: 'boolean',
-        default: 'false',
+        default: String(chipDefaults.standalone),
         description: 'Displays the chip without absolute positioning.',
       },
     ],

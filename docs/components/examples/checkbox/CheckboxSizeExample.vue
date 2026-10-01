@@ -37,7 +37,9 @@ function reset() {
     @reset="reset"
   >
     <template #controls>
-      <ExampleSelectControl v-model="size" label="Size" :options="checkboxSizes" />
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="size" label="Size" :options="checkboxSizes" />
+      </div>
     </template>
     <Checkbox :size="size" :value="true" aria-label="Selected" />
   </ComponentExample>
