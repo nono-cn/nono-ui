@@ -1,4 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { aspectRatioDefaults } from '@/components/ui/AspectRatio'
 import AspectRatioBasicExample from '../../components/examples/aspect-ratio/AspectRatioBasicExample.vue'
 import AspectRatioRatiosExample from '../../components/examples/aspect-ratio/AspectRatioRatiosExample.vue'
 
@@ -34,7 +35,7 @@ const aspectRatioConfig: ComponentDocConfig = {
       {
         name: 'ratio',
         type: 'number',
-        default: '1',
+        default: String(aspectRatioDefaults.ratio),
         description: 'Ratio between the container’s width and height.',
       },
     ],

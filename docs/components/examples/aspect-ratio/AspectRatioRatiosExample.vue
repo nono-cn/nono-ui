@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { AspectRatio } from '@/components/ui/AspectRatio'
+import { AspectRatio, aspectRatioDefaults } from '@/components/ui/AspectRatio'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,7 +10,7 @@ type RatioPreset = '1:1' | '4:3' | '16:9'
 const ratioOptions: RatioPreset[] = ['1:1', '4:3', '16:9']
 const selectedPreset = ref<RatioPreset>('16:9')
 const ratioValues: Record<RatioPreset, number> = {
-  '1:1': 1,
+  '1:1': aspectRatioDefaults.ratio,
   '4:3': 4 / 3,
   '16:9': 16 / 9,
 }

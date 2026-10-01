@@ -1,4 +1,5 @@
 export { default as AspectRatio } from './AspectRatio.vue'
+export { aspectRatioDefaults } from './constants'
 
 export type AspectRatioRatio = number
 
