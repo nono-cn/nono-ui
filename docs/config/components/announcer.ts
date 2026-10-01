@@ -1,4 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { announcerDefaults, announcerPolitenessOptions } from '@/components/ui/Announcer'
 import AnnouncerBasicExample from '../../components/examples/announcer/AnnouncerBasicExample.vue'
 import AnnouncerMessageExample from '../../components/examples/announcer/AnnouncerMessageExample.vue'
 import AnnouncerPolitenessExample from '../../components/examples/announcer/AnnouncerPolitenessExample.vue'
@@ -52,20 +53,20 @@ const announcerConfig: ComponentDocConfig = {
       {
         name: 'atomic',
         type: 'boolean',
-        default: 'true',
+        default: String(announcerDefaults.atomic),
         description:
           'Determines whether the entire region is announced when part of its content changes.',
       },
       {
         name: 'message',
         type: 'string',
-        default: "''",
+        default: `'${announcerDefaults.message}'`,
         description: 'Message announced when no content is provided in the default slot.',
       },
       {
         name: 'politeness',
-        type: "'assertive' | 'polite' | 'off'",
-        default: "'polite'",
+        type: announcerPolitenessOptions.map((option) => `'${option}'`).join(' | '),
+        default: `'${announcerDefaults.politeness}'`,
         description:
           'Value for aria-live. Also determines the role: alert for assertive, status for polite, and no role for off.',
       },

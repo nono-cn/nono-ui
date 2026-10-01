@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import { computed, useAttrs, useSlots } from 'vue'
 import { cn } from '@/lib/utils'
-import {
-  type AnnouncerProps,
-  type AnnouncerSlots,
-} from '.'
+import { announcerDefaults } from './constants'
+import { type AnnouncerProps, type AnnouncerSlots } from '.'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<AnnouncerProps>(), {
-  atomic: true,
-  message: '',
-  politeness: 'polite',
-})
+const props = withDefaults(defineProps<AnnouncerProps>(), announcerDefaults)
 defineSlots<AnnouncerSlots>()
 
 const attrs = useAttrs()

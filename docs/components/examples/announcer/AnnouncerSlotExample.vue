@@ -15,7 +15,7 @@ const message = ref(${JSON.stringify(message.value)})
 ${scriptEnd}
 
 <template>
-  <Announcer politeness="polite">
+  <Announcer>
     <strong>{{ message }}</strong>
   </Announcer>
 </template>`,
@@ -43,7 +43,7 @@ function reset() {
       </div>
     </template>
     <div class="grid gap-2 text-sm">
-      <Announcer politeness="polite">
+      <Announcer>
         <strong>{{ message }}</strong>
       </Announcer>
       <p class="text-xs text-muted-foreground">

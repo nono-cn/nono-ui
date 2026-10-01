@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Announcer, type AnnouncerPoliteness } from '@/components/ui/Announcer'
+import {
+  Announcer,
+  announcerDefaults,
+  announcerPolitenessOptions,
+  type AnnouncerPoliteness,
+} from '@/components/ui/Announcer'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const politenessOptions: AnnouncerPoliteness[] = ['polite', 'assertive', 'off']
-const politeness = ref<AnnouncerPoliteness>('polite')
+const politeness = ref<AnnouncerPoliteness>(announcerDefaults.politeness)
 const role = computed(() => {
   if (politeness.value === 'assertive') return 'alert'
   if (politeness.value === 'polite') return 'status'
@@ -26,7 +30,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  politeness.value = 'polite'
+  politeness.value = announcerDefaults.politeness
 }
 </script>
 
@@ -42,7 +46,7 @@ function reset() {
         <ExampleSelectControl
           v-model="politeness"
           label="Politeness"
-          :options="politenessOptions"
+          :options="announcerPolitenessOptions"
         />
       </div>
     </template>

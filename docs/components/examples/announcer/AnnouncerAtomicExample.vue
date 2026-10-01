@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Announcer } from '@/components/ui/Announcer'
+import { Announcer, announcerDefaults } from '@/components/ui/Announcer'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const booleanOptions = ['true', 'false'] as const
-const selectedAtomic = ref<(typeof booleanOptions)[number]>('true')
+const initialAtomic: (typeof booleanOptions)[number] = announcerDefaults.atomic ? 'true' : 'false'
+const selectedAtomic = ref<(typeof booleanOptions)[number]>(initialAtomic)
 const atomic = computed(() => selectedAtomic.value === 'true')
 const code = computed(
   () => `<script setup lang="ts">
@@ -22,7 +23,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  selectedAtomic.value = 'true'
+  selectedAtomic.value = initialAtomic
 }
 </script>
 
