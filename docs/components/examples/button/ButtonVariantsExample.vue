@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button, buttonVariantNames, type ButtonVariant } from '@/components/ui/Button'
+import {
+  Button,
+  buttonDefaults,
+  buttonVariantNames,
+  type ButtonVariant,
+} from '@/components/ui/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variant = ref<ButtonVariant>('solid')
+const variant = ref<ButtonVariant>(buttonDefaults.variant)
 
 const code = computed(
   () => `<script setup lang="ts">
@@ -21,7 +26,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  variant.value = 'solid'
+  variant.value = buttonDefaults.variant
 }
 </script>
 

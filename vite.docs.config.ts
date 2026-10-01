@@ -20,6 +20,7 @@ export default defineConfig({
       },
       { find: '@', replacement: path.resolve(__dirname, 'src') },
       { find: '@nono-ui', replacement: path.resolve(__dirname, 'src') },
+      { find: '__DOCS_PACKAGE__', replacement: path.resolve(__dirname, 'src') },
     ],
   },
   build: {

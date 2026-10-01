@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button, buttonTextSizes, type ButtonSize } from '@/components/ui/Button'
+import { Button, buttonDefaults, buttonTextSizes, type ButtonSize } from '@/components/ui/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const size = ref<ButtonSize>('md')
+const size = ref<ButtonSize>(buttonDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -20,7 +20,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  size.value = 'md'
+  size.value = buttonDefaults.size
 }
 </script>
 

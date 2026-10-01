@@ -1,4 +1,9 @@
 import type { ComponentDocConfig } from '../component-docs'
+import {
+  buttonGroupDefaults,
+  buttonGroupOrientations,
+  buttonGroupSizes,
+} from '@/components/ui/ButtonGroup'
 import ButtonGroupBasicExample from '../../components/examples/button-group/ButtonGroupBasicExample.vue'
 import ButtonGroupVerticalExample from '../../components/examples/button-group/ButtonGroupVerticalExample.vue'
 import ButtonGroupSizesExample from '../../components/examples/button-group/ButtonGroupSizesExample.vue'
@@ -39,14 +44,14 @@ const buttonGroupConfig: ComponentDocConfig = {
     props: [
       {
         name: 'orientation',
-        type: "'horizontal' | 'vertical'",
-        default: "'horizontal'",
+        type: buttonGroupOrientations.map((orientation) => `'${orientation}'`).join(' | '),
+        default: `'${buttonGroupDefaults.orientation}'`,
         description: 'Direction in which the buttons are arranged.',
       },
       {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
-        default: "'md'",
+        type: buttonGroupSizes.map((size) => `'${size}'`).join(' | '),
+        default: `'${buttonGroupDefaults.size}'`,
         description:
           'Default size provided to descendant Buttons; an explicit Button size takes priority.',
       },

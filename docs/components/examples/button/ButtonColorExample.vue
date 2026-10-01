@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button, buttonVariantNames, type ButtonVariant } from '@/components/ui/Button'
+import {
+  Button,
+  buttonDefaults,
+  buttonVariantNames,
+  type ButtonVariant,
+} from '@/components/ui/Button'
 import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
@@ -8,12 +13,12 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const colors = [...themeColors, 'custom']
-const selectedColor = ref<string>(themeColors[0])
+const selectedColor = ref<string>(buttonDefaults.color)
 const customColor = ref('#6366f1')
 const color = computed(() =>
   selectedColor.value === 'custom' ? customColor.value : selectedColor.value,
 )
-const variant = ref<ButtonVariant>('solid')
+const variant = ref<ButtonVariant>(buttonDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
@@ -29,9 +34,9 @@ ${scriptEnd}
 )
 
 function reset() {
-  selectedColor.value = themeColors[0]
+  selectedColor.value = buttonDefaults.color
   customColor.value = '#6366f1'
-  variant.value = 'solid'
+  variant.value = buttonDefaults.variant
 }
 </script>
 

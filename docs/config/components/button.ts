@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { buttonSizes, buttonVariantNames } from '@/components/ui/Button'
+import { buttonDefaults, buttonSizes, buttonVariantNames } from '@/components/ui/Button'
 import ButtonColorExample from '../../components/examples/button/ButtonColorExample.vue'
 import ButtonIconExample from '../../components/examples/button/ButtonIconExample.vue'
 import ButtonDisabledExample from '../../components/examples/button/ButtonDisabledExample.vue'
@@ -83,65 +83,65 @@ const buttonConfig: ComponentDocConfig = {
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(buttonDefaults.label),
         description: 'Text displayed when no content is provided in the default slot.',
       },
       {
         name: 'variant',
         type: buttonVariantNames.map((variant) => `'${variant}'`).join(' | '),
-        default: "'solid'",
+        default: `'${buttonDefaults.variant}'`,
         description: 'Visual style applied to the button.',
       },
       {
         name: 'size',
         type: buttonSizes.map((size) => `'${size}'`).join(' | '),
-        default: "'md'",
+        default: `'${buttonDefaults.size}'`,
         description:
           'Text button size from xs to xl, or square icon size from icon-xs to icon-xl. Icon is the medium icon size.',
       },
       {
         name: 'radius',
         type: 'string | number',
-        default: "'md'",
+        default: `'${buttonDefaults.radius}'`,
         description:
           'Tailwind radius token, CSS border-radius value, or a number of pixels. Combine full with an icon size for a circular button.',
       },
       {
         name: 'loading',
         type: 'boolean',
-        default: 'false',
+        default: String(buttonDefaults.loading),
         description:
           'Displays the default loading icon or the loading slot, and adds aria-busy and aria-disabled.',
       },
       {
         name: 'color',
         type: 'string',
-        default: "'primary'",
+        default: `'${buttonDefaults.color}'`,
         description:
           'Theme token name such as primary, neutral or secondary, or a CSS color such as #6366f1. Named colors use --<name> and --<name>-foreground, with primary as fallback. Hexadecimal colors use a computed foreground.',
       },
       {
         name: 'icon',
         type: 'IconName',
-        default: 'undefined',
+        default: String(buttonDefaults.icon),
         description: 'Name of the leading icon shown when the leading slot is not provided.',
       },
       {
         name: 'trailingIcon',
         type: 'IconName',
-        default: 'undefined',
+        default: String(buttonDefaults.trailingIcon),
         description: 'Name of the trailing icon shown when the trailing slot is not provided.',
       },
       {
         name: 'as',
         type: 'AsTag | Component',
-        default: "'button'",
+        default: `'${buttonDefaults.as}'`,
         description: 'Element or component rendered as the root, such as button or a.',
       },
       {
         name: 'asChild',
         type: 'boolean',
-        default: 'false',
+        default: String(buttonDefaults.asChild),
         description: 'Applies the props and behavior to the element provided in the default slot.',
       },
     ],

@@ -16,7 +16,15 @@ interface TestColorOptions {
   }
 }
 
-export function testColor({ text, id, varColor, mount, defaultColor, fallbackColor = 'primary', theme }: TestColorOptions) {
+export function testColor({
+  text,
+  id,
+  varColor,
+  mount,
+  defaultColor,
+  fallbackColor = 'primary',
+  theme,
+}: TestColorOptions) {
   it.each([
     { input: '#ff0000', expected: `${varColor}: #ff0000` },
     { input: undefined, expected: defaultColor && `${varColor}: ${defaultColor}` },
@@ -28,7 +36,7 @@ export function testColor({ text, id, varColor, mount, defaultColor, fallbackCol
   })
 
   if (theme) {
-    it.each([...theme.colors, 'mi-marca'])(
+    it.each([theme.colors[0] ?? fallbackColor, 'mi-marca'])(
       `${text} resuelve el token %s y su foreground`,
       (color) => {
         const style = mount(color).get(id).attributes('style')

@@ -5,7 +5,7 @@ import { Icon, type IconSize } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/composables'
 import { buttonVariants, type ButtonEmits, type ButtonProps, type ButtonSlots } from '.'
-import { buttonDefaults } from './defaults'
+import { buttonDefaults } from './constants'
 import { buttonGroupSizeKey } from '@/components/ui/ButtonGroup'
 
 defineOptions({ inheritAttrs: false })
@@ -47,8 +47,8 @@ const calculatedVariants = computed(() => {
 const rootProps = computed(() => {
   return {
     ...attrs,
-    as: props.as,
-    asChild: props.asChild,
+    as: props.as ?? buttonDefaults.as,
+    asChild: props.asChild ?? buttonDefaults.asChild,
     'aria-busy': ariaBusy.value,
     'aria-disabled': ariaDisabled.value,
     class: cn(calculatedVariants.value, attrs.class),

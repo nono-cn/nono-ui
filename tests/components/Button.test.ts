@@ -1,8 +1,9 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { h } from 'vue'
+import { defineComponent, h } from 'vue'
 
 import { Button, type ButtonProps, type ButtonVariant } from '@/components/ui/Button'
+import { ButtonGroup } from '@/components/ui/ButtonGroup'
 import { themeColors } from '@/components/ui/constants'
 import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
@@ -33,7 +34,6 @@ const casesIconSize = [
   { input: 'icon' as const, expected: 'size-9', iconSize: 'md' },
   { input: 'icon-lg' as const, expected: 'size-10', iconSize: 'lg' },
   { input: 'icon-xl' as const, expected: 'size-11', iconSize: 'xl' },
-  { input: undefined, expected:  expected: 'size-9', iconSize: 'md' },
 ]
 
 const casesVariantStyles = [
@@ -157,6 +157,20 @@ const casesClick = [
   { loading: false, ariaDisabled: true, expected: 0 },
 ]
 
+const ButtonInGroup = defineComponent({
+  props: { groupSize: String, buttonSize: String },
+  setup(props) {
+    return () =>
+      h(
+        ButtonGroup,
+        { size: props.groupSize as 'xs' | 'md' | 'xl' },
+        {
+          default: () => h(Button, { size: props.buttonSize as ButtonProps['size'], icon: 'plus' }),
+        },
+      )
+  },
+})
+
 describe('Button', () => {
   describe('props', () => {
     describe('label', () => {
@@ -176,13 +190,38 @@ describe('Button', () => {
 
         expect(root.classes()).toEqual(expect.arrayContaining(expected))
       })
+
+      it.each([
+        { groupSize: 'xs', buttonSize: undefined, expected: ['h-7', 'text-xs'], iconSize: 'xs' },
+        { groupSize: 'xl', buttonSize: undefined, expected: ['h-11', 'text-xl'], iconSize: 'xl' },
+        { groupSize: 'xl', buttonSize: 'sm', expected: ['h-8', 'text-sm'], iconSize: 'sm' },
+      ])(
+        'resuelve size=$buttonSize dentro de ButtonGroup size=$groupSize',
+        ({ groupSize, buttonSize, expected, iconSize }) => {
+          const wrapper = mount(ButtonInGroup, { props: { groupSize, buttonSize } })
+
+          expect(wrapper.get('[data-test-button-root]').classes()).toEqual(
+            expect.arrayContaining(expected),
+          )
+          expect(wrapper.getComponent(Icon).props('size')).toBe(iconSize)
+        },
+      )
+
+      it('actualiza el size inyectado al cambiar ButtonGroup', async () => {
+        const wrapper = mount(ButtonInGroup, { props: { groupSize: 'xs' } })
+
+        await wrapper.setProps({ groupSize: 'xl' })
+
+        expect(wrapper.get('[data-test-button-root]').classes()).toContain('h-11')
+        expect(wrapper.getComponent(Icon).props('size')).toBe('xl')
+      })
     })
 
     describe('variant', () => {
       it.each(casesVariantStyles)(
         'renderiza variant=$variant',
         ({ variant, expectedStateVariables, expectedNormal, expectedHover }) => {
-          const classes = mountButton({ props: { variant } })
+          const classes = mountButton({ props: { variant, as: 'button' } })
             .get('[data-test-button-root]')
             .classes()
 

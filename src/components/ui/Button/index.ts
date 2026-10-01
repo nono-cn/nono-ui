@@ -3,10 +3,15 @@ import type { HTMLAttributes } from 'vue'
 import type { IconName } from '@/components/ui/Icon'
 import type { PrimitiveProps } from 'reka-ui'
 import type { EmitsAsProps } from '@/types/emits'
-import { buttonIconSizes, buttonSizes, buttonVariantNames } from './constants'
-
+import { buttonSizes, buttonVariantNames } from './constants'
 export { default as Button } from './Button.vue'
-export { buttonIconSizes, buttonSizes, buttonTextSizes, buttonVariantNames } from './constants'
+export {
+  buttonDefaults,
+  buttonTextSizes,
+  buttonIconSizes,
+  buttonSizes,
+  buttonVariantNames,
+} from './constants'
 
 export const buttonVariants = cva(
   'inline-flex shrink-0 items-center justify-center gap-2 rounded-(--button-radius) border border-transparent font-medium whitespace-nowrap transition-colors outline-none focus-visible:border-(--button-color) focus-visible:ring-[3px] focus-visible:ring-(--button-color)/30 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',

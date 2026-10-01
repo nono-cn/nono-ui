@@ -1,15 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { InjectionKey, Ref } from 'vue'
-import { buttonTextSizes } from '@/components/ui/Button/constants'
+import { buttonGroupOrientations, buttonGroupSizes } from './constants'
 
 export { default as ButtonGroup } from './ButtonGroup.vue'
-
-export const buttonGroupOrientations = ['horizontal', 'vertical'] as const
-export const buttonGroupDefaults = {
-  orientation: 'horizontal' as const,
-  size: 'md' as const,
-}
-
+export { buttonGroupDefaults, buttonGroupOrientations, buttonGroupSizes } from './constants'
 export const buttonGroupVariants = cva(
   'relative flex w-fit items-stretch [&>*]:focus-visible:relative [&>*]:focus-visible:z-10',
   {
@@ -29,7 +23,7 @@ export const buttonGroupVariants = cva(
 
 export type ButtonGroupVariants = VariantProps<typeof buttonGroupVariants>
 export type ButtonGroupOrientation = NonNullable<ButtonGroupVariants['orientation']>
-export type ButtonGroupSize = (typeof buttonTextSizes)[number]
+export type ButtonGroupSize = (typeof buttonGroupSizes)[number]
 export const buttonGroupSizeKey: InjectionKey<Ref<ButtonGroupSize>> =
   Symbol.for('nono-ui.buttonGroupSize')
 

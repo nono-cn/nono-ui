@@ -2,12 +2,12 @@
 import { computed, provide, useAttrs } from 'vue'
 import { cn } from '@/lib/utils'
 import {
-  buttonGroupDefaults,
   buttonGroupSizeKey,
   buttonGroupVariants,
   type ButtonGroupProps,
   type ButtonGroupSlots,
 } from '.'
+import { buttonGroupDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
