@@ -16,7 +16,7 @@ defineOptions({ inheritAttrs: false })
 
 const attrs = useAttrs()
 const props = withDefaults(defineProps<ColorAreaProps>(), colorAreaDefaults)
-const value = defineModel<ColorAreaValue>('value', { default: colorAreaDefaults.value })
+const modelValue = defineModel<ColorAreaValue>({ default: colorAreaDefaults.modelValue })
 const emit = defineEmits<{
   change: [value: string]
   changeEnd: [value: string]
@@ -35,7 +35,7 @@ const rootProps = computed(() => ({
   required: props.required,
   xName: props.xName,
   yName: props.yName,
-  class: cn(colorAreaRootVariants({ size: props.size, rounded: props.rounded }), attrs.class),
+  class: cn(colorAreaRootVariants({ size: props.size }), attrs.class),
   style: attrs.style,
 }))
 
@@ -65,7 +65,7 @@ const thumbProps = computed(() => {
 <template>
   <ColorAreaRoot
     v-slot="{ style }"
-    v-model="value"
+    v-model="modelValue"
     v-bind="rootProps"
     data-test-color-area-root
     @change="emit('change', $event)"

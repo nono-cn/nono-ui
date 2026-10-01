@@ -16,25 +16,23 @@ export {
   colorAreaSizes,
 } from './constants'
 
-export const colorAreaRootVariants = cva('relative overflow-hidden data-[disabled]:opacity-50', {
-  variants: {
-    size: {
-      xs: 'size-32',
-      sm: 'size-40',
-      md: 'size-48',
-      lg: 'size-56',
-      xl: 'size-64',
-    } satisfies Record<(typeof colorAreaSizes)[number], string>,
-    rounded: {
-      true: 'rounded-md',
-      false: 'rounded-none',
+export const colorAreaRootVariants = cva(
+  'relative overflow-hidden rounded-md data-[disabled]:opacity-50',
+  {
+    variants: {
+      size: {
+        xs: 'size-32',
+        sm: 'size-40',
+        md: 'size-48',
+        lg: 'size-56',
+        xl: 'size-64',
+      } satisfies Record<(typeof colorAreaSizes)[number], string>,
+    },
+    defaultVariants: {
+      size: colorAreaDefaults.size,
     },
   },
-  defaultVariants: {
-    size: colorAreaDefaults.size,
-    rounded: colorAreaDefaults.rounded,
-  },
-})
+)
 
 export type ColorAreaSize = NonNullable<VariantProps<typeof colorAreaRootVariants>['size']>
 export type ColorAreaColorSpace = (typeof colorAreaColorSpaces)[number]
@@ -54,13 +52,12 @@ export interface ColorAreaUI {
 }
 
 export interface ColorAreaProps {
-  value?: ColorAreaValue
+  modelValue?: ColorAreaValue
   colorSpace?: ColorAreaColorSpace
   xChannel?: ColorAreaChannel
   yChannel?: ColorAreaChannel
   disabled?: boolean
   size?: ColorAreaSize
-  rounded?: boolean
   required?: boolean
   xName?: string
   yName?: string

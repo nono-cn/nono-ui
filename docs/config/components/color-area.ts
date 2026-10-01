@@ -10,7 +10,6 @@ import ColorAreaValueExample from '../../components/examples/color-area/ColorAre
 import ColorAreaChannelsExample from '../../components/examples/color-area/ColorAreaChannelsExample.vue'
 import ColorAreaDisabledExample from '../../components/examples/color-area/ColorAreaDisabledExample.vue'
 import ColorAreaNamesExample from '../../components/examples/color-area/ColorAreaNamesExample.vue'
-import ColorAreaRoundedExample from '../../components/examples/color-area/ColorAreaRoundedExample.vue'
 import ColorAreaSizeExample from '../../components/examples/color-area/ColorAreaSizeExample.vue'
 
 const colorAreaConfig: ComponentDocConfig = {
@@ -28,8 +27,8 @@ const colorAreaConfig: ComponentDocConfig = {
   ],
   examples: [
     {
-      title: 'Value',
-      description: 'Bind the selected color with v-model:value.',
+      title: 'Model value',
+      description: 'Bind the selected color with v-model.',
       component: ColorAreaValueExample,
     },
     {
@@ -41,11 +40,6 @@ const colorAreaConfig: ComponentDocConfig = {
       title: 'Disabled',
       description: 'Toggle interaction with the color area.',
       component: ColorAreaDisabledExample,
-    },
-    {
-      title: 'Rounded',
-      description: 'Toggle between rounded and square corners.',
-      component: ColorAreaRoundedExample,
     },
     {
       title: 'Size',
@@ -75,10 +69,10 @@ const colorAreaConfig: ComponentDocConfig = {
   api: {
     props: [
       {
-        name: 'value',
+        name: 'modelValue',
         type: 'string | Color',
-        default: `'${colorAreaDefaults.value}'`,
-        description: 'Selected color. Can also be bound with v-model:value.',
+        default: `'${colorAreaDefaults.modelValue}'`,
+        description: 'Selected color. Can also be bound with v-model.',
       },
       {
         name: 'colorSpace',
@@ -105,12 +99,6 @@ const colorAreaConfig: ComponentDocConfig = {
         type: 'boolean',
         default: String(colorAreaDefaults.disabled),
         description: 'Prevents pointer and keyboard interaction with the color area.',
-      },
-      {
-        name: 'rounded',
-        type: 'boolean',
-        default: String(colorAreaDefaults.rounded),
-        description: 'Applies rounded corners to the color area when true.',
       },
       {
         name: 'size',
@@ -166,7 +154,7 @@ const colorAreaConfig: ComponentDocConfig = {
         description: 'Emitted with the selected color object when the color changes.',
       },
       {
-        name: 'update:value',
+        name: 'update:modelValue',
         type: '[value: string | Color]',
         description: 'Emitted when the selected color changes.',
       },

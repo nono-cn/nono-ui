@@ -29,7 +29,7 @@ const casesValue: Array<{ input: ColorAreaValue | undefined; expected: ColorArea
     input: { space: 'hsb', h: 150, s: 60, b: 84, alpha: 1 } satisfies Color,
     expected: { space: 'hsb', h: 150, s: 60, b: 84, alpha: 1 },
   },
-  { input: undefined, expected: colorAreaDefaults.value },
+  { input: undefined, expected: colorAreaDefaults.modelValue },
 ]
 
 const casesColorSpace = [
@@ -75,15 +75,6 @@ const casesRequired = [
   { input: undefined, expected: undefined },
 ]
 
-const casesRounded = [
-  { input: true, expected: 'rounded-md' },
-  { input: false, expected: 'rounded-none' },
-  {
-    input: undefined,
-    expected: colorAreaDefaults.rounded ? 'rounded-md' : 'rounded-none',
-  },
-] satisfies { input: boolean | undefined; expected: string }[]
-
 const casesSize = [
   { input: 'xs' as const, expected: 'size-32' },
   { input: 'sm' as const, expected: 'size-40' },
@@ -114,15 +105,23 @@ function mountColorArea(options: MountingOptions<ColorAreaProps> = {}) {
 
 describe('ColorArea', () => {
   describe('props', () => {
-    describe('value', () => {
+    describe('modelValue', () => {
       it.each(casesValue)(
-        'pasa value=$input a ColorAreaRoot como $expected',
+        'pasa modelValue=$input a ColorAreaRoot como $expected',
         ({ input, expected }) => {
-          const wrapper = mountColorArea({ props: { value: input } })
+          const wrapper = mountColorArea({ props: { modelValue: input } })
 
           expect(wrapper.getComponent(ColorAreaRoot).props('modelValue')).toEqual(expected)
         },
       )
+
+      it('actualiza ColorAreaRoot cuando cambia modelValue externamente', async () => {
+        const wrapper = mountColorArea({ props: { modelValue: '#ff0000' } })
+
+        await wrapper.setProps({ modelValue: '#56d799' })
+
+        expect(wrapper.getComponent(ColorAreaRoot).props('modelValue')).toBe('#56d799')
+      })
     })
 
     describe('colorSpace', () => {
@@ -178,16 +177,6 @@ describe('ColorArea', () => {
           expect(wrapper.getComponent(ColorAreaRoot).props('required')).toBe(expected)
         },
       )
-    })
-
-    describe('rounded', () => {
-      it.each(casesRounded)('aplica $expected con rounded=$input', ({ input, expected }) => {
-        const root = mountColorArea({ props: { rounded: input } }).get(
-          '[data-test-color-area-root]',
-        )
-
-        expect(root.classes()).toContain(expected)
-      })
     })
 
     describe('size', () => {
@@ -278,9 +267,9 @@ describe('ColorArea', () => {
       })
     })
 
-    describe('update:value', () => {
+    describe('update:modelValue', () => {
       it.each(casesUpdateValue)(
-        'sincroniza v-model:value cuando ColorAreaRoot emite update:modelValue=$input',
+        'sincroniza v-model cuando ColorAreaRoot emite update:modelValue=$input',
         async ({ input }) => {
           const wrapper = mountColorArea()
           const root = wrapper.getComponent(ColorAreaRoot)
@@ -288,7 +277,7 @@ describe('ColorArea', () => {
           await root.vm.$emit('update:modelValue', input)
           await nextTick()
 
-          expect(wrapper.emitted('update:value')).toEqual([[input]])
+          expect(wrapper.emitted('update:modelValue')).toEqual([[input]])
           expect(root.props('modelValue')).toEqual(input)
         },
       )
@@ -314,6 +303,12 @@ describe('ColorArea', () => {
   })
 
   describe('configuración de la raíz', () => {
+    it('mantiene las esquinas redondeadas con rounded-md', () => {
+      const wrapper = mountColorArea()
+
+      expect(wrapper.get('[data-test-color-area-root]').classes()).toContain('rounded-md')
+    })
+
     it('usa una raíz div sin asChild', () => {
       const wrapper = mountColorArea()
       const root = wrapper.getComponent(ColorAreaRoot)
