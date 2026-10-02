@@ -104,7 +104,7 @@ const contentProps = computed(() => {
 </script>
 
 <template>
-  <Collapsible v-model:open="calculatedOpen" v-bind="rootProps" data-test-panel-root>
+  <Collapsible v-model="calculatedOpen" v-bind="rootProps" data-test-panel-root>
     <template #default>
       <Button v-bind="buttonProps" data-test-panel-trigger data-test-panel-header>
         <span class="flex min-w-0 items-center gap-2">
