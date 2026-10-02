@@ -1,5 +1,5 @@
 import { h, nextTick } from 'vue'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import {
   DialogClose,
@@ -42,70 +42,66 @@ function getContent(wrapper: ReturnType<typeof mountDialog>) {
 const casesOpen = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
 ]
 
 const casesModal = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: true },
 ]
 
 const casesUnmountOnHide = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: true },
 ]
 
 const casesBlock = [
   { input: true, closeButton: false, openAfterClose: true },
   { input: false, closeButton: true, openAfterClose: false },
-  { input: undefined, closeButton: true, openAfterClose: false },
 ]
 
 const casesLabel = [
   { input: 'Título del diálogo', expected: true },
   { input: '', expected: false },
-  { input: undefined, expected: false },
 ]
 
 const casesDescription = [
   { input: 'Descripción del diálogo', expected: true },
   { input: '', expected: false },
-  { input: undefined, expected: false },
 ]
 
 const casesShowCloseButton = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: true },
 ]
 
 const casesForceMount = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: undefined },
 ]
 
 const casesDisableOutsidePointerEvents = [
-  { input: false, expected: false },
-  { input: true, expected: true },
-  { input: undefined, expected: true },
+  { modal: true, input: false, expected: false },
+  { modal: true, input: true, expected: true },
+  { modal: false, input: false, expected: false },
+  { modal: false, input: true, expected: true },
 ]
 
 const casesContext = [
-  { name: 'valores predeterminados', input: undefined, expected: false },
   { name: 'cerrado', input: false, expected: false },
   { name: 'abierto', input: true, expected: true },
 ]
 
-const casesContentEmits = [
-  { event: 'openAutoFocus', input: new Event('focus') },
-  { event: 'closeAutoFocus', input: new Event('blur') },
-  { event: 'escapeKeyDown', input: new KeyboardEvent('keydown') },
-  { event: 'pointerDownOutside', input: new Event('pointerdown') },
-  { event: 'focusOutside', input: new Event('focusout') },
-  { event: 'interactOutside', input: new Event('click') },
+const casesContentCallbacks = [
+  { event: 'openAutoFocus', callback: 'onOpenAutoFocus', input: new Event('focus') },
+  { event: 'closeAutoFocus', callback: 'onCloseAutoFocus', input: new Event('blur') },
+  { event: 'escapeKeyDown', callback: 'onEscapeKeyDown', input: new KeyboardEvent('keydown') },
+  {
+    event: 'pointerDownOutside',
+    callback: 'onPointerDownOutside',
+    input: new Event('pointerdown'),
+  },
+  { event: 'focusOutside', callback: 'onFocusOutside', input: new Event('focusout') },
+  { event: 'interactOutside', callback: 'onInteractOutside', input: new Event('click') },
 ]
 
 describe('Dialog', () => {
@@ -197,7 +193,7 @@ describe('Dialog', () => {
           props: {
             open: expected,
             label: input,
-            description: expected ? 'Descripción' : undefined,
+            description: expected ? 'Descripción' : '',
           },
         })
         await nextTick()
@@ -214,7 +210,7 @@ describe('Dialog', () => {
           const wrapper = mountDialog({
             props: {
               open: expected,
-              label: expected ? 'Título' : undefined,
+              label: expected ? 'Título' : '',
               description: input,
             },
           })
@@ -250,7 +246,6 @@ describe('Dialog', () => {
       testIconConfig({
         text: 'pasa las props de closeIcon',
         id: '[data-test-dialog-close-icon]',
-        default: 'x',
         mount: async (input) => {
           const wrapper = mountDialog({
             props: { open: true, label: 'Título', description: 'Descripción', closeIcon: input },
@@ -282,10 +277,15 @@ describe('Dialog', () => {
 
     describe('forceMount', () => {
       it.each(casesForceMount)(
-        'pasa forceMount=$input a DialogContent como $expected',
+        'pasa content.forceMount=$input a DialogContent como $expected',
         async ({ input, expected }) => {
           const wrapper = mountDialog({
-            props: { open: true, label: 'Título', description: 'Descripción', forceMount: input },
+            props: {
+              open: true,
+              label: 'Título',
+              description: 'Descripción',
+              content: { forceMount: input },
+            },
           })
           await nextTick()
 
@@ -296,19 +296,63 @@ describe('Dialog', () => {
 
     describe('disableOutsidePointerEvents', () => {
       it.each(casesDisableOutsidePointerEvents)(
-        'pasa disableOutsidePointerEvents=$input a DialogContent como $expected',
-        async ({ input, expected }) => {
+        'pasa content.disableOutsidePointerEvents=$input con modal=$modal a DialogContent como $expected',
+        async ({ modal, input, expected }) => {
           const wrapper = mountDialog({
             props: {
               open: true,
+              modal,
               label: 'Título',
               description: 'Descripción',
-              disableOutsidePointerEvents: input,
+              content: { disableOutsidePointerEvents: input },
             },
           })
           await nextTick()
 
           expect(getContent(wrapper).props('disableOutsidePointerEvents')).toBe(expected)
+        },
+      )
+    })
+
+    describe('content', () => {
+      testAttrs({
+        text: 'pasa atributos, class y style de content a DialogContent',
+        id: '[data-test-dialog-content]',
+        mount: async (attrs) => {
+          const wrapper = mountDialog({
+            props: {
+              open: true,
+              modal: true,
+              unmountOnHide: true,
+              label: 'Título',
+              description: 'Descripción',
+              content: attrs,
+            },
+          })
+          await nextTick()
+          return wrapper
+        },
+      })
+
+      it.each(casesContentCallbacks)(
+        'invoca content.$callback desde DialogContent sin emitir $event en Dialog',
+        async ({ event, callback, input }) => {
+          const handler = vi.fn()
+          const wrapper = mountDialog({
+            props: {
+              open: true,
+              label: 'Título',
+              description: 'Descripción',
+              content: { [callback]: handler },
+            },
+          })
+          await nextTick()
+          handler.mockClear()
+
+          getContent(wrapper).vm.$emit(event, input)
+
+          expect(handler).toHaveBeenCalledExactlyOnceWith(input)
+          expect(wrapper.emitted(event)).toBeUndefined()
         },
       )
     })
@@ -468,32 +512,44 @@ describe('Dialog', () => {
     })
   })
 
-  describe('context contract', () => {
-    it.each(casesContext)('pasa el contrato con $name', async ({ input, expected }) => {
-      let context: DialogContext | undefined
+  describe('emits', () => {
+    describe('update:open', () => {
+      it('reenvía el cambio de open desde DialogRoot', async () => {
+        const wrapper = mountDialog({
+          props: { open: true, modal: true, unmountOnHide: true },
+        })
 
-      const wrapper = mountDialog({
-        props: { open: input, label: 'Título', description: 'Descripción' },
-        slots: {
-          default: (slotContext: DialogContext) => {
-            context = slotContext
-            return h('button', 'Disparador')
-          },
-        },
+        wrapper.getComponent(DialogRoot).vm.$emit('update:open', false)
+        await nextTick()
+
+        expect(wrapper.emitted('update:open')).toEqual([[false]])
       })
+    })
 
-      expect(context).toEqual({
-        open: expected,
-        close: expect.any(Function),
+    describe('show', () => {
+      it('emite show cuando se abre el diálogo', async () => {
+        const wrapper = mountDialog({
+          props: { open: false, label: 'Título', description: 'Descripción' },
+        })
+
+        await wrapper.setProps({ open: true })
+
+        expect(wrapper.emitted('show')).toEqual([[]])
       })
+    })
 
-      context?.close()
-      await nextTick()
+    describe('close', () => {
+      it('emite close cuando se cierra el diálogo', async () => {
+        const wrapper = mountDialog({
+          props: { open: true, label: 'Título', description: 'Descripción' },
+        })
 
-      expect(wrapper.getComponent(DialogRoot).props('open')).toBe(false)
+        await wrapper.setProps({ open: false })
+
+        expect(wrapper.emitted('close')).toEqual([[]])
+      })
     })
   })
-
   describe('slots', () => {
     describe('default', () => {
       it('renderiza el slot predeterminado', async () => {
@@ -615,45 +671,29 @@ describe('Dialog', () => {
     })
   })
 
-  describe('emits', () => {
-    describe('show', () => {
-      it('emite show cuando se abre el diálogo', async () => {
-        const wrapper = mountDialog({
-          props: { open: false, label: 'Título', description: 'Descripción' },
-        })
+  describe('context contract', () => {
+    it.each(casesContext)('pasa el contrato con $name', async ({ input, expected }) => {
+      let context: DialogContext | undefined
 
-        await wrapper.setProps({ open: true })
-
-        expect(wrapper.emitted('show')).toEqual([[]])
-      })
-    })
-
-    describe('close', () => {
-      it('emite close cuando se cierra el diálogo', async () => {
-        const wrapper = mountDialog({
-          props: { open: true, label: 'Título', description: 'Descripción' },
-        })
-
-        await wrapper.setProps({ open: false })
-
-        expect(wrapper.emitted('close')).toEqual([[]])
-      })
-    })
-
-    describe('emits de Reka DialogContent', () => {
-      it.each(casesContentEmits)(
-        'emite $event desde Reka DialogContent',
-        async ({ event, input }) => {
-          const wrapper = mountDialog({
-            props: { open: true, label: 'Título', description: 'Descripción' },
-          })
-          await nextTick()
-
-          getContent(wrapper).vm.$emit(event, input)
-
-          expect(wrapper.emitted(event)).toEqual([[input]])
+      const wrapper = mountDialog({
+        props: { open: input, label: 'Título', description: 'Descripción' },
+        slots: {
+          default: (slotContext: DialogContext) => {
+            context = slotContext
+            return h('button', 'Disparador')
+          },
         },
-      )
+      })
+
+      expect(context).toEqual({
+        open: expected,
+        close: expect.any(Function),
+      })
+
+      context?.close()
+      await nextTick()
+
+      expect(wrapper.getComponent(DialogRoot).props('open')).toBe(false)
     })
   })
 })

@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 
 export interface ContentOptions<T extends object> {
   class?: string
+  defaults?: Partial<T> | false
 }
 
 const contentDefaults = {
@@ -31,9 +32,10 @@ export function useContent<T extends object>(
   return computed(() => {
     const config = content.value ?? {}
     const { class: configClass, style: configStyle, ...props } = config
+    const defaults = options.defaults === false ? {} : (options.defaults ?? contentDefaults)
 
     return {
-      ...contentDefaults,
+      ...defaults,
       ...props,
       class: cn(options.class, configClass),
       style: configStyle,
