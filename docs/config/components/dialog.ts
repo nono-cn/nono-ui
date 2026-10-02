@@ -108,16 +108,35 @@ const dialogConfig: ComponentDocConfig = {
       {
         name: 'ui',
         type: `{
-  overlay?: DialogFn<HTMLAttributes>
-  content?: DialogFn<HTMLAttributes>
-  header?: DialogFn<HTMLAttributes>
-  label?: DialogFn<HTMLAttributes>
-  description?: DialogFn<HTMLAttributes>
-  body?: DialogFn<HTMLAttributes>
-  footer?: DialogFn<HTMLAttributes>
-  close?: DialogFn<HTMLAttributes>
+  overlay?: (context: DialogContext) => HTMLAttributes
+  content?: (context: DialogContext) => HTMLAttributes
+  header?: (context: DialogContext) => HTMLAttributes
+  label?: (context: DialogContext) => HTMLAttributes
+  description?: (context: DialogContext) => HTMLAttributes
+  body?: (context: DialogContext) => HTMLAttributes
+  footer?: (context: DialogContext) => HTMLAttributes
+  close?: (context: DialogContext) => HTMLAttributes
 }`,
         typePre: true,
+        typeParts: [
+          { text: '{\n  overlay?: (context: ' },
+          { text: 'DialogContext', link: '#dialog-context' },
+          { text: ') => HTMLAttributes\n  content?: (context: ' },
+          { text: 'DialogContext', link: '#dialog-context' },
+          { text: ') => HTMLAttributes\n  header?: (context: ' },
+          { text: 'DialogContext', link: '#dialog-context' },
+          { text: ') => HTMLAttributes\n  label?: (context: ' },
+          { text: 'DialogContext', link: '#dialog-context' },
+          { text: ') => HTMLAttributes\n  description?: (context: ' },
+          { text: 'DialogContext', link: '#dialog-context' },
+          { text: ') => HTMLAttributes\n  body?: (context: ' },
+          { text: 'DialogContext', link: '#dialog-context' },
+          { text: ') => HTMLAttributes\n  footer?: (context: ' },
+          { text: 'DialogContext', link: '#dialog-context' },
+          { text: ') => HTMLAttributes\n  close?: (context: ' },
+          { text: 'DialogContext', link: '#dialog-context' },
+          { text: ') => HTMLAttributes\n}' },
+        ],
         default: String(dialogDefaults.ui),
         description:
           'Resolvers for attributes and classes on internal parts. Each receives DialogContext.',
