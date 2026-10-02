@@ -2,7 +2,7 @@
 import { computed, useAttrs } from 'vue'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { emptyDefaults } from './default'
+import { emptyDefaults } from './constants'
 import type { EmptyProps, EmptySlots } from '.'
 
 defineOptions({ inheritAttrs: false })
@@ -106,10 +106,3 @@ const contentProps = computed(() => {
     </div>
   </div>
 </template>
-
-
-
-
-
-
-

@@ -1,6 +1,8 @@
 import type { HTMLAttributes } from 'vue'
+import { emptyMediaVariantNames } from './constants'
 
 export { default as Empty } from './Empty.vue'
+export { emptyDefaults, emptyMediaVariantNames } from './constants'
 
 export type EmptyFn<T> = () => T
 
@@ -15,9 +17,11 @@ export interface EmptyUI {
 export interface EmptyProps {
   label?: string
   description?: string
-  mediaVariant?: 'default' | 'icon'
+  mediaVariant?: EmptyMediaVariant
   ui?: EmptyUI
 }
+
+export type EmptyMediaVariant = (typeof emptyMediaVariantNames)[number]
 
 export interface EmptySlots {
   default?(): unknown

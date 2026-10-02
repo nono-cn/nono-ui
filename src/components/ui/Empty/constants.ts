@@ -1,3 +1,5 @@
+export const emptyMediaVariantNames = ['default', 'icon'] as const
+
 export const emptyDefaults = {
   label: undefined,
   description: undefined,

@@ -39,6 +39,10 @@ const content = computed(() => {
   }
 })
 
+const slotTypeLabel = computed(() =>
+  props.component.api.slots.some((slot) => slot.type !== '-') ? 'slotProps' : undefined,
+)
+
 function publicImportPath(importPath: string) {
   return importPath.replace(/^@nono-ui/, docsPackageName)
 }
@@ -152,7 +156,7 @@ function publicImportPath(importPath: string) {
           v-if="component.api.slots.length"
           id="slots"
           title="Slots"
-          type-label="slotProps"
+          :type-label="slotTypeLabel"
           :rows="component.api.slots"
           :language="component.language"
           :show-default="false"

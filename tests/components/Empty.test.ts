@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Empty, type EmptyProps } from '@/components/ui/Empty'
+import { Empty, emptyMediaVariantNames, type EmptyProps } from '@/components/ui/Empty'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountEmpty(options: MountingOptions<EmptyProps> = {}) {
@@ -22,8 +22,7 @@ const casesDescription = [
 ]
 
 const casesMediaVariant = [
-  { input: 'default' as const, expected: 'default' as const },
-  { input: 'icon' as const, expected: 'icon' as const },
+  ...emptyMediaVariantNames.map((input) => ({ input, expected: input })),
   { input: undefined, expected: 'default' as const },
 ]
 

@@ -1,9 +1,12 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { emptyDefaults, emptyMediaVariantNames } from '@/components/ui/Empty'
 import EmptyDefaultExample from '../../components/examples/empty/EmptyDefaultExample.vue'
-import EmptyDescriptionExample from '../../components/examples/empty/EmptyDescriptionExample.vue'
-import EmptyLabelExample from '../../components/examples/empty/EmptyLabelExample.vue'
-import EmptyMediaVariantExample from '../../components/examples/empty/EmptyMediaVariantExample.vue'
+import EmptyMediaLabelDescriptionExample from '../../components/examples/empty/EmptyMediaLabelDescriptionExample.vue'
+import EmptySlotsExample from '../../components/examples/empty/EmptySlotsExample.vue'
 import EmptyUsageExample from '../../components/examples/empty/EmptyUsageExample.vue'
+
+const optionType = (values: readonly string[]) => values.map((value) => `'${value}'`).join(' | ')
+const quotedDefault = (value: string) => `'${value}'`
 
 const emptyConfig: ComponentDocConfig = {
   slug: 'empty',
@@ -25,26 +28,21 @@ const emptyConfig: ComponentDocConfig = {
       component: EmptyDefaultExample,
     },
     {
-      title: 'Label',
-      description: 'Set the main title of the empty state.',
-      component: EmptyLabelExample,
+      title: 'Media, label & description',
+      description: 'Combine the media slot with editable label and description content.',
+      component: EmptyMediaLabelDescriptionExample,
     },
     {
-      title: 'Description',
-      description: 'Add supporting information to the empty state.',
-      component: EmptyDescriptionExample,
-    },
-    {
-      title: 'Media variant',
-      description: 'Apply the icon visual style to the media content.',
-      component: EmptyMediaVariantExample,
+      title: 'Slots',
+      description: 'Replace the label and description, and provide custom content.',
+      component: EmptySlotsExample,
     },
   ],
   accessibility: [
     {
-      title: 'Status message',
+      title: 'Meaningful empty state',
       description:
-        'Provide a clear label and description. Actions in the content should have accessible names, and the message should not rely solely on an icon or color.',
+        'Empty renders a generic container and does not announce updates automatically. Provide a clear label and description, give actions accessible names, and use an appropriate live region in the surrounding context when the empty state changes dynamically.',
     },
   ],
   api: {
@@ -52,19 +50,19 @@ const emptyConfig: ComponentDocConfig = {
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(emptyDefaults.label),
         description: 'Title of the empty state.',
       },
       {
         name: 'description',
         type: 'string',
-        default: 'undefined',
+        default: String(emptyDefaults.description),
         description: 'Supporting text for the empty state.',
       },
       {
         name: 'mediaVariant',
-        type: "'default' | 'icon'",
-        default: "'default'",
+        type: optionType(emptyMediaVariantNames),
+        default: quotedDefault(emptyDefaults.mediaVariant),
         description: 'Visual style of the media slot.',
       },
       {
@@ -77,16 +75,33 @@ const emptyConfig: ComponentDocConfig = {
   content?: () => HTMLAttributes
 }`,
         typePre: true,
-        default: 'undefined',
-        description: 'Resolvers for customizing the attributes of the inner regions.',
+        default: String(emptyDefaults.ui),
+        description:
+          'Resolvers for adding HTML attributes, classes, styles, and ARIA attributes to the header, media, label, description, and content regions.',
       },
     ],
     emits: [],
     slots: [
-      { name: 'default', type: '-', description: 'Main content, such as actions or links.' },
-      { name: 'media', type: '-', description: 'Icon, illustration, or other visual content.' },
-      { name: 'label', type: '-', description: 'Replaces the label text.' },
-      { name: 'description', type: '-', description: 'Replaces the description text.' },
+      {
+        name: 'default',
+        type: '-',
+        description: 'Main content, such as actions or links; omitted when the slot is empty.',
+      },
+      {
+        name: 'media',
+        type: '-',
+        description: 'Optional icon, illustration, or other visual content shown above the text.',
+      },
+      {
+        name: 'label',
+        type: '-',
+        description: 'Custom content that replaces the label prop when provided.',
+      },
+      {
+        name: 'description',
+        type: '-',
+        description: 'Custom content that replaces the description prop when provided.',
+      },
     ],
     expose: [],
   },
