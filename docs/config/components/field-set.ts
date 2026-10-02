@@ -1,7 +1,8 @@
 import type { ComponentDocConfig } from '../component-docs'
-import FieldSetDescriptionExample from '../../components/examples/field-set/FieldSetDescriptionExample.vue'
-import FieldSetLegendExample from '../../components/examples/field-set/FieldSetLegendExample.vue'
-import FieldSetLegendVariantExample from '../../components/examples/field-set/FieldSetLegendVariantExample.vue'
+import { fieldSetDefaults } from '@/components/ui/FieldSet'
+import FieldSetDetailsExample from '../../components/examples/field-set/FieldSetDetailsExample.vue'
+import FieldSetSlotsExample from '../../components/examples/field-set/FieldSetSlotsExample.vue'
+import FieldSetUiExample from '../../components/examples/field-set/FieldSetUiExample.vue'
 import FieldSetUsageExample from '../../components/examples/field-set/FieldSetUsageExample.vue'
 
 const fieldSetConfig: ComponentDocConfig = {
@@ -19,26 +20,26 @@ const fieldSetConfig: ComponentDocConfig = {
   ],
   examples: [
     {
-      title: 'Legend',
-      description: 'Set the accessible name for the group.',
-      component: FieldSetLegendExample,
+      title: 'Legend, description & variant',
+      description: 'Edit the group name and supporting text, and choose the legend size.',
+      component: FieldSetDetailsExample,
     },
     {
-      title: 'Description',
-      description: 'Add supporting context to the group.',
-      component: FieldSetDescriptionExample,
+      title: 'Slots',
+      description: 'Replace the legend and description while keeping fieldset semantics.',
+      component: FieldSetSlotsExample,
     },
     {
-      title: 'Legend variant',
-      description: 'Adjust the visual size of the legend.',
-      component: FieldSetLegendVariantExample,
+      title: 'UI',
+      description: 'Customize attributes on the legend, description, and control group.',
+      component: FieldSetUiExample,
     },
   ],
   accessibility: [
     {
       title: 'Group related controls',
       description:
-        "Use legend to provide the group's accessible name and description to add supporting context. Keep a visible label associated with every control in the group.",
+        "Use legend to provide the group's accessible name. Description adds visible context; if it should be announced with the group, give it an id through ui.description and reference that id with aria-describedby on FieldSet. Keep each control labeled.",
     },
   ],
   api: {
@@ -58,14 +59,18 @@ const fieldSetConfig: ComponentDocConfig = {
       {
         name: 'legendVariant',
         type: "'legend' | 'label'",
-        default: "'legend'",
+        default: `'${fieldSetDefaults.legendVariant}'`,
         description: 'Visual size of the legend: base for legend or small for label.',
       },
       {
         name: 'ui',
-        type: `{\n  legend?: () => HTMLAttributes\n  description?: () => HTMLAttributes\n  group?: () => HTMLAttributes\n}`,
+        type: `{
+  legend?: () => HTMLAttributes
+  description?: () => HTMLAttributes
+  group?: () => HTMLAttributes
+}`,
         typePre: true,
-        default: 'undefined',
+        default: String(fieldSetDefaults.ui),
         description:
           'Resolvers for customizing attributes and classes of the legend, description, and control group.',
       },

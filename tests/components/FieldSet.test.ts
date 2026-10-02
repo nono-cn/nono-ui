@@ -28,6 +28,13 @@ const casesLegendVariant = [
 ]
 
 describe('FieldSet', () => {
+  it('renderiza un fieldset con el contenido dentro del grupo', () => {
+    const fieldSet = mountFieldSet({ slots: { default: () => h('input', { id: 'field' }) } })
+
+    expect(fieldSet.get('[data-test-field-set-root]').element.tagName).toBe('FIELDSET')
+    expect(fieldSet.get('[data-test-field-set-group] input').attributes('id')).toBe('field')
+  })
+
   describe('props', () => {
     describe('legend', () => {
       it.each(casesLegend)('renderiza legend=$input', ({ input, expected }) => {
@@ -117,6 +124,12 @@ describe('FieldSet', () => {
     })
 
     describe('legend', () => {
+      it('renderiza la leyenda cuando solo se proporciona el slot', () => {
+        const fieldSet = mountFieldSet({ slots: { legend: () => h('span', 'Leyenda') } })
+
+        expect(fieldSet.get('[data-test-field-set-legend]').text()).toBe('Leyenda')
+      })
+
       it('renderiza el slot legend y oculta el valor alternativo', () => {
         const fieldSet = mountFieldSet({
           props: { legend: 'Leyenda alternativa' },
@@ -136,6 +149,14 @@ describe('FieldSet', () => {
     })
 
     describe('description', () => {
+      it('renderiza la descripción cuando solo se proporciona el slot', () => {
+        const fieldSet = mountFieldSet({
+          slots: { description: () => h('span', 'Ayuda') },
+        })
+
+        expect(fieldSet.get('[data-test-field-set-description]').text()).toBe('Ayuda')
+      })
+
       it('renderiza el slot description y oculta el valor alternativo', () => {
         const fieldSet = mountFieldSet({
           props: { description: 'Descripción alternativa' },

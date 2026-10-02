@@ -2,8 +2,15 @@
 import { computed, useAttrs, useSlots } from 'vue'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { fieldSetLegendVariants, type FieldSetProps, type FieldSetSlots } from '.'
-import { fieldSetDefaults } from './default'
+import {
+  fieldSetDefaults,
+  fieldSetDescriptionVariants,
+  fieldSetGroupVariants,
+  fieldSetLegendVariants,
+  fieldSetRootVariants,
+  type FieldSetProps,
+  type FieldSetSlots,
+} from '.'
 
 defineOptions({ inheritAttrs: false })
 
@@ -16,7 +23,7 @@ const slots = useSlots()
 const rootProps = computed(() => {
   return {
     ...attrs,
-    class: cn('flex flex-col gap-6', attrs.class),
+    class: cn(fieldSetRootVariants(), attrs.class),
     style: attrs.style,
   }
 })
@@ -34,10 +41,7 @@ const descriptionProps = computed(() => {
   const ui = useUi(props.ui?.description, undefined)
   return {
     ...ui,
-    class: cn(
-      'text-sm leading-normal font-normal text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary',
-      ui.class,
-    ),
+    class: cn(fieldSetDescriptionVariants(), ui.class),
     style: ui.style,
   }
 })
@@ -46,7 +50,7 @@ const groupProps = computed(() => {
   const ui = useUi(props.ui?.group, undefined)
   return {
     ...ui,
-    class: cn('@container/field-group flex w-full flex-col gap-7', ui.class),
+    class: cn(fieldSetGroupVariants(), ui.class),
     style: ui.style,
   }
 })
