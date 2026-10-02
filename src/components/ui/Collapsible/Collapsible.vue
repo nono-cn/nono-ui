@@ -2,39 +2,28 @@
 import { computed, useAttrs } from 'vue'
 import { CollapsibleContent, CollapsibleRoot, CollapsibleTrigger } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
-import { cn } from '@/lib/utils'
-import type { CollapsibleContext, CollapsibleEmits, CollapsibleProps, CollapsibleSlots } from '.'
-import { collapsibleDefaults } from './default'
+import { type CollapsibleContext, type CollapsibleProps, type CollapsibleSlots } from '.'
+import { collapsibleDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<CollapsibleProps>(), collapsibleDefaults)
-defineEmits<CollapsibleEmits>()
 defineSlots<CollapsibleSlots>()
 
 const attrs = useAttrs()
-const open = defineModel<boolean>('open', { default: false })
+const modelValue = defineModel<boolean>({ default: false })
 
-const collapsibleContext = computed<CollapsibleContext>(() => ({ open: open.value }))
+const collapsibleContext = computed<CollapsibleContext>(() => ({ open: modelValue.value }))
 
 const rootProps = computed(() => {
   return {
     ...attrs,
+    as: 'div' as const,
+    asChild: false,
     disabled: props.disabled,
     unmountOnHide: props.unmountOnHide,
-    class: cn(attrs.class),
+    class: attrs.class,
     style: attrs.style,
-  }
-})
-
-const triggerProps = computed(() => {
-  const triggerUI = useUi(props.ui?.trigger, collapsibleContext.value)
-
-  return {
-    ...triggerUI,
-    asChild: true,
-    class: cn(triggerUI.class),
-    style: triggerUI.style,
   }
 })
 
@@ -45,15 +34,15 @@ const contentProps = computed(() => {
 
   return {
     ...contentUI,
-    class: cn(contentUI.class),
+    class: contentUI.class,
     style: contentUI.style,
   }
 })
 </script>
 
 <template>
-  <CollapsibleRoot v-model:open="open" v-bind="rootProps" data-test-collapsible-root>
-    <CollapsibleTrigger v-bind="triggerProps" data-test-collapsible-trigger>
+  <CollapsibleRoot v-model:open="modelValue" v-bind="rootProps" data-test-collapsible-root>
+    <CollapsibleTrigger as-child data-test-collapsible-trigger>
       <slot v-bind="collapsibleContext" />
     </CollapsibleTrigger>
 

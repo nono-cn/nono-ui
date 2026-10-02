@@ -13,6 +13,7 @@ import buttonGroup from './components/button-group'
 import card from './components/card'
 import checkboxConfig from './components/checkbox'
 import chip from './components/chip'
+import collapsible from './components/collapsible'
 import colorArea from './components/color-area'
 import dialog from './components/dialog'
 import empty from './components/empty'
@@ -56,6 +57,7 @@ export const docsComponents = [
   card,
   checkboxConfig,
   chip,
+  collapsible,
   colorArea,
   dialog,
   empty,

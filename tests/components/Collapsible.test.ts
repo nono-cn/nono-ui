@@ -1,7 +1,7 @@
 import { h, nextTick } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { CollapsibleRoot, CollapsibleTrigger } from 'reka-ui'
+import { CollapsibleContent, CollapsibleRoot, CollapsibleTrigger } from 'reka-ui'
 
 import {
   Collapsible,
@@ -14,6 +14,7 @@ function mountCollapsible(options: MountingOptions<CollapsibleProps> = {}) {
   return mount(Collapsible, options)
 }
 const triggerSlot = () => h('span', 'Abrir')
+const buttonSlot = () => h('button', { type: 'button' }, 'Abrir')
 const casesOpen = [
   { input: true, expected: 'open' },
   { input: false, expected: 'closed' },
@@ -33,12 +34,20 @@ const casesEmittedValues = [
   { input: true, initial: false },
   { input: false, initial: true },
 ]
+const collapsibleContextCases = [
+  { input: true, expected: { open: true } },
+  { input: false, expected: { open: false } },
+  { input: undefined, expected: { open: false } },
+]
 
 describe('Collapsible', () => {
   describe('props', () => {
-    describe('open', () => {
-      it.each(casesOpen)('renderiza open=$input como $expected', ({ input, expected }) => {
-        const w = mountCollapsible({ props: { open: input }, slots: { default: triggerSlot } })
+    describe('modelValue', () => {
+      it.each(casesOpen)('renderiza modelValue=$input como $expected', ({ input, expected }) => {
+        const w = mountCollapsible({
+          props: { modelValue: input },
+          slots: { default: triggerSlot },
+        })
         expect(w.get('[data-test-collapsible-root]').attributes('data-state')).toBe(expected)
       })
     })
@@ -77,18 +86,6 @@ describe('Collapsible', () => {
     })
 
     describe('ui', () => {
-      describe('trigger', () => {
-        testAttrs({
-          text: 'resuelve props.ui.trigger en el trigger',
-          id: '[data-test-collapsible-trigger]',
-          mount: (attrs) =>
-            mountCollapsible({
-              props: { ui: { trigger: () => attrs } },
-              slots: { default: triggerSlot },
-            }),
-        })
-      })
-
       describe('content', () => {
         testAttrs({
           text: 'resuelve props.ui.content en el content',
@@ -100,9 +97,30 @@ describe('Collapsible', () => {
               slots: { default: triggerSlot, content: 'Contenido' },
             }),
         })
+
+        it.each(collapsibleContextCases)(
+          'entrega el contexto con open=$input al resolver',
+          ({ input, expected }) => {
+            let context: CollapsibleContext | undefined
+            mountCollapsible({
+              props: {
+                modelValue: input,
+                ui: {
+                  content: (value) => {
+                    context = value
+                    return {}
+                  },
+                },
+              },
+              slots: { default: buttonSlot, content: 'Contenido' },
+            })
+            expect(context).toEqual(expected)
+          },
+        )
       })
     })
   })
+  
   describe('attrs', () => {
     testAttrs({
       text: 'reenvia attrs, class y style a la raiz',
@@ -110,31 +128,17 @@ describe('Collapsible', () => {
       mount: (attrs) => mountCollapsible({ attrs, slots: { default: triggerSlot } }),
     })
   })
+  
   describe('emits', () => {
-    describe('update:open', () => {
+    describe('update:modelValue', () => {
       it.each(casesEmittedValues)('reenvia open=$input', async ({ input, initial }) => {
-        const w = mountCollapsible({ props: { open: initial }, slots: { default: triggerSlot } })
+        const w = mountCollapsible({
+          props: { modelValue: initial },
+          slots: { default: triggerSlot },
+        })
         await w.getComponent(CollapsibleRoot).vm.$emit('update:open', input)
         await nextTick()
-        expect(w.emitted('update:open')).toEqual([[input]])
-      })
-    })
-  })
-
-  describe('context contract', () => {
-    describe('CollapsibleContext', () => {
-      it.each([{ input: true }, { input: false }])('expone solo open=$input', ({ input }) => {
-        let context: CollapsibleContext | undefined
-        mountCollapsible({
-          props: { open: input },
-          slots: {
-            default: (value: CollapsibleContext) => {
-              context = value
-              return h('button')
-            },
-          },
-        })
-        expect(context).toEqual({ open: input })
+        expect(w.emitted('update:modelValue')).toEqual([[input]])
       })
     })
   })
@@ -146,6 +150,20 @@ describe('Collapsible', () => {
           mountCollapsible({ slots: { default: () => h('button', 'Default') } }).text(),
         ).toContain('Default')
       })
+
+      it.each(collapsibleContextCases)('entrega el contexto con open=$input', ({ input, expected }) => {
+        let context: CollapsibleContext | undefined
+        mountCollapsible({
+          props: { modelValue: input },
+          slots: {
+            default: (value: CollapsibleContext) => {
+              context = value
+              return h('button')
+            },
+          },
+        })
+        expect(context).toEqual(expected)
+      })
     })
 
     describe('content', () => {
@@ -154,12 +172,28 @@ describe('Collapsible', () => {
           mountCollapsible({ slots: { default: triggerSlot, content: 'Contenido' } }).text(),
         ).toContain('Contenido')
       })
+      
       it('no renderiza content sin slot', () => {
         expect(
           mountCollapsible({ slots: { default: triggerSlot } })
             .find('[data-test-collapsible-content]')
             .exists(),
         ).toBe(false)
+      })
+      
+      it.each(collapsibleContextCases)('entrega el contexto con open=$input', ({ input, expected }) => {
+        let context: CollapsibleContext | undefined
+        mountCollapsible({
+          props: { modelValue: input },
+          slots: {
+            default: buttonSlot,
+            content: (value: CollapsibleContext) => {
+              context = value
+              return h('p', 'Contenido')
+            },
+          },
+        })
+        expect(context).toEqual(expected)
       })
     })
   })

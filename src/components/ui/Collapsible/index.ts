@@ -2,13 +2,13 @@ import type { HTMLAttributes } from 'vue'
 import type { CollapsibleRootProps as RekaCollapsibleRootProps } from 'reka-ui'
 
 export { default as Collapsible } from './Collapsible.vue'
-export { collapsibleDefaults } from './default'
+export { collapsibleDefaults } from './constants'
 
 // Props Reka
 export type CollapsibleRootProps = Pick<RekaCollapsibleRootProps, 'disabled' | 'unmountOnHide'>
 // Props
 export interface CollapsibleProps extends CollapsibleRootProps {
-  open?: boolean
+  modelValue?: boolean
   ui?: CollapsibleUI
 }
 
@@ -17,7 +17,6 @@ export type CollapsibleFn<T> = (context: CollapsibleContext) => T
 
 // UI
 export interface CollapsibleUI {
-  trigger?: CollapsibleFn<HTMLAttributes>
   content?: CollapsibleFn<HTMLAttributes>
 }
 
@@ -28,7 +27,7 @@ export interface CollapsibleContext {
 
 // Emits
 export interface CollapsibleEmits {
-  'update:open': [value: boolean]
+  'update:modelValue': [value: boolean]
 }
 
 // Slots
