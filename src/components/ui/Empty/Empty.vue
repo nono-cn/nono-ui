@@ -2,7 +2,15 @@
 import { computed, useAttrs } from 'vue'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { emptyDefaults } from './constants'
+import {
+  emptyContentVariants,
+  emptyDescriptionVariants,
+  emptyHeaderVariants,
+  emptyLabelVariants,
+  emptyMediaVariants,
+  emptyRootVariants,
+  emptyDefaults,
+} from '.'
 import type { EmptyProps, EmptySlots } from '.'
 
 defineOptions({ inheritAttrs: false })
@@ -15,10 +23,7 @@ const attrs = useAttrs()
 const rootProps = computed(() => {
   return {
     ...attrs,
-    class: cn(
-      'flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg border-dashed p-6 text-center md:p-12',
-      attrs.class,
-    ),
+    class: cn(emptyRootVariants(), attrs.class),
     style: attrs.style,
   }
 })
@@ -27,7 +32,7 @@ const headerProps = computed(() => {
   const ui = useUi(props.ui?.header, undefined)
   return {
     ...ui,
-    class: cn('flex max-w-sm flex-col items-center gap-2 text-center', ui.class),
+    class: cn(emptyHeaderVariants(), ui.class),
     style: ui.style,
   }
 })
@@ -35,11 +40,7 @@ const mediaProps = computed(() => {
   const ui = useUi(props.ui?.media, undefined)
   return {
     ...ui,
-    class: cn(
-      props.mediaVariant === 'icon' &&
-        'flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground [&_svg:not([class*=size-])]:size-6',
-      ui.class,
-    ),
+    class: cn(emptyMediaVariants({ variant: props.mediaVariant }), ui.class),
     style: ui.style,
   }
 })
@@ -47,7 +48,7 @@ const labelProps = computed(() => {
   const ui = useUi(props.ui?.label, undefined)
   return {
     ...ui,
-    class: cn('text-lg font-medium tracking-tight', ui.class),
+    class: cn(emptyLabelVariants(), ui.class),
     style: ui.style,
   }
 })
@@ -55,10 +56,7 @@ const descriptionProps = computed(() => {
   const ui = useUi(props.ui?.description, undefined)
   return {
     ...ui,
-    class: cn(
-      'text-sm/relaxed text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-primary',
-      ui.class,
-    ),
+    class: cn(emptyDescriptionVariants(), ui.class),
     style: ui.style,
   }
 })
@@ -66,7 +64,7 @@ const contentProps = computed(() => {
   const ui = useUi(props.ui?.content, undefined)
   return {
     ...ui,
-    class: cn('flex w-full max-w-sm min-w-0 flex-col items-center gap-4 text-sm', ui.class),
+    class: cn(emptyContentVariants(), ui.class),
     style: ui.style,
   }
 })
