@@ -89,17 +89,15 @@ const dialogConfig: ComponentDocConfig = {
       },
       {
         name: 'icon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
+        type: 'IconName',
         default: String(dialogDefaults.icon),
         description: 'Icon rendered before the title.',
       },
       {
         name: 'closeIcon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
-        default: "{ name: 'x' }",
-        description: 'Icon configuration for the close button.',
+        type: 'IconName',
+        default: "'x'",
+        description: 'Icon rendered in the close button.',
       },
       {
         name: 'showCloseButton',

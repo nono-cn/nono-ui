@@ -12,7 +12,7 @@ import {
 } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
 import { Separator } from '@/components/ui/Separator'
-import { useContent } from '@/composables/useContent'
+import { useDialogContent } from '@/composables/useDialogContent'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import { useI18n } from '@/i18n'
@@ -104,14 +104,14 @@ const contentConfig = computed<DialogContentConfig>(() => {
   return {
     ...contentUI,
     ...content,
-    disableOutsidePointerEvents: content.disableOutsidePointerEvents ?? props.modal,
-    class: cn(content.class, uiClass),
+    class: cn(dialogContentVariants(), content.class, uiClass),
     style: content.style && uiStyle ? [content.style, uiStyle] : (content.style ?? uiStyle),
   }
 })
-const contentProps = useContent(contentConfig, {
-  class: dialogContentVariants(),
-  defaults: false,
+
+const contentProps = useDialogContent({
+  content: contentConfig,
+  modal: computed(() => props.modal),
 })
 
 const headerProps = computed(() => {
@@ -168,9 +168,6 @@ const closeProps = computed(() => {
     style: ui.style,
   }
 })
-
-const icon = computed(() => props.icon)
-const closeIcon = computed(() => props.closeIcon)
 </script>
 
 <template>
@@ -187,7 +184,7 @@ const closeIcon = computed(() => props.closeIcon)
             <slot name="close" v-bind="dialogContext">
               <DialogClose v-bind="closeProps" data-test-dialog-close>
                 <slot name="closeIcon" v-bind="dialogContext">
-                  <Icon v-if="closeIcon?.name" v-bind="closeIcon" data-test-dialog-close-icon />
+                  <Icon v-if="props.closeIcon" :name="props.closeIcon" data-test-dialog-close-icon />
                 </slot>
               </DialogClose>
             </slot>
@@ -206,7 +203,7 @@ const closeIcon = computed(() => props.closeIcon)
                 v-bind="labelProps"
                 data-test-dialog-label
               >
-                <Icon v-if="icon?.name" v-bind="icon" :name="icon.name" data-test-dialog-icon />
+                <Icon v-if="props.icon" :name="props.icon" data-test-dialog-icon />
                 <slot name="label" v-bind="dialogContext">{{ props.label }}</slot>
               </DialogTitle>
 

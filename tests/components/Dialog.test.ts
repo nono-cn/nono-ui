@@ -10,9 +10,9 @@ import {
   DialogTitle,
 } from 'reka-ui'
 import { Dialog, type DialogContext, type DialogProps } from '@/components/ui/Dialog'
+import type { IconName } from '@/components/ui/Icon'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconConfig } from '../utils/testIconConfig'
 
 afterEach(() => {
   document.body.innerHTML = ''
@@ -223,10 +223,12 @@ describe('Dialog', () => {
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa las props de icon',
-        id: '[data-test-dialog-icon]',
-        mount: async (input) => {
+      it.each([
+        { input: 'save' as IconName, expected: true },
+        { input: undefined, expected: false },
+      ])(
+        'renderiza icon=$input como $expected',
+        async ({ input, expected }) => {
           const wrapper = mountDialog({
             props: {
               open: true,
@@ -237,22 +239,23 @@ describe('Dialog', () => {
             },
           })
           await nextTick()
-          return wrapper
+          const icon = wrapper.findComponent('[data-test-dialog-icon]')
+          expect(icon.exists()).toBe(expected)
+          if (expected) expect(icon.props('name')).toBe(input)
         },
-      })
+      )
     })
 
     describe('closeIcon', () => {
-      testIconConfig({
-        text: 'pasa las props de closeIcon',
-        id: '[data-test-dialog-close-icon]',
-        mount: async (input) => {
-          const wrapper = mountDialog({
-            props: { open: true, label: 'Título', description: 'Descripción', closeIcon: input },
-          })
-          await nextTick()
-          return wrapper
-        },
+      it.each([
+        { input: 'save' as IconName, expected: 'save' },
+        { input: undefined, expected: 'x' },
+      ])('renderiza closeIcon=$input como $expected', async ({ input, expected }) => {
+        const wrapper = mountDialog({
+          props: { open: true, label: 'Título', description: 'Descripción', closeIcon: input },
+        })
+        await nextTick()
+        expect(wrapper.getComponent('[data-test-dialog-close-icon]').props('name')).toBe(expected)
       })
     })
 
@@ -349,6 +352,7 @@ describe('Dialog', () => {
           await nextTick()
           handler.mockClear()
 
+          expect(getContent(wrapper).vm.$.vnode.props?.[callback]).toBe(handler)
           getContent(wrapper).vm.$emit(event, input)
 
           expect(handler).toHaveBeenCalledExactlyOnceWith(input)

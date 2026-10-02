@@ -6,7 +6,7 @@ import type {
   DialogRootEmits as RekaDialogRootEmits,
   DialogRootProps as RekaDialogRootProps,
 } from 'reka-ui'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 import type { EmitsAsProps } from '@/types/emits'
 
 export { default as Dialog } from './Dialog.vue'
@@ -63,8 +63,8 @@ export interface DialogProps extends DialogRootProps {
   block?: boolean
   label?: string
   description?: string
-  icon?: IconConfig
-  closeIcon?: IconConfig
+  icon?: IconName
+  closeIcon?: IconName
   showCloseButton?: boolean
   ui?: DialogUI
 }
