@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, useAttrs, watch } from 'vue'
+import { computed, ref, useAttrs } from 'vue'
 import { Attachment } from '@/components/ui/Attachment'
 import { Alert } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
+import { useFiles } from '@/composables/useFiles'
 import { cn } from '@/lib/utils'
 import { useI18n } from '@/i18n'
-import { useFiles } from '@/composables'
 import {
+  fileUploadContentVariants,
   fileUploadDescriptionVariants,
   fileUploadDropzoneVariants,
+  fileUploadInputVariants,
   fileUploadLabelVariants,
   fileUploadListVariants,
   fileUploadMediaVariants,
@@ -20,23 +22,11 @@ import {
   type FileUploadProps,
   type FileUploadSlots,
 } from '.'
+import { fileUploadDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<FileUploadProps>(), {
-  label: null,
-  description: null,
-  accept: undefined,
-  multiple: false,
-  disabled: false,
-  name: undefined,
-  required: false,
-  maxFiles: undefined,
-  maxSize: undefined,
-  showList: true,
-  attachmentMediaVariant: 'default',
-  ui: undefined,
-})
+const props = withDefaults(defineProps<FileUploadProps>(), fileUploadDefaults)
 const emit = defineEmits<FileUploadEmits>()
 defineSlots<FileUploadSlots>()
 
@@ -45,10 +35,9 @@ const attrs = useAttrs()
 const input = ref<HTMLInputElement>()
 const dragDepth = ref(0)
 const errors = ref<string[]>([])
-const previews = new Map<File, string>()
 const isDragging = computed(() => dragDepth.value > 0)
 const { t } = useI18n()
-const { formatFileSize, getFileIcon } = useFiles()
+const { formatFileSize, getFileIcon, getFilePreview } = useFiles(files)
 
 const fileUploadContext = computed<FileUploadContext>(() => {
   const { ui, ...fileUploadProps } = props
@@ -96,12 +85,13 @@ const inputProps = computed(() => {
   return {
     ...ui,
     tabindex: -1,
+    'aria-hidden': true,
     accept: props.accept,
     multiple: props.multiple,
     disabled: props.disabled,
     name: props.name,
     required: props.required,
-    class: cn('sr-only', ui.class),
+    class: cn(fileUploadInputVariants(), ui.class),
   }
 })
 
@@ -132,41 +122,22 @@ const listProps = computed(() => {
   }
 })
 
+const contentProps = computed(() => ({ class: fileUploadContentVariants() }))
+
 const alertProps = computed(() => {
   return {
     label: t('fileUploadLimitTitle'),
-    severity: 'error' as const,
+    color: 'error',
     variant: 'soft' as const,
-    icon: { name: 'error' as const },
+    icon: 'error' as const,
     closable: true,
   }
 })
 
-watch(files, (nextFiles) => {
-  for (const [file, preview] of previews) {
-    if (!nextFiles.includes(file)) {
-      URL.revokeObjectURL(preview)
-      previews.delete(file)
-    }
-  }
-})
-
-onBeforeUnmount(() => {
-  for (const preview of previews.values()) URL.revokeObjectURL(preview)
-  previews.clear()
-})
-
-function getFilePreview(file: File) {
-  const currentPreview = previews.get(file)
-  if (currentPreview) return currentPreview
-
-  const preview = URL.createObjectURL(file)
-  previews.set(file, preview)
-  return preview
-}
-
-function getMediaVariant() {
-  return props.attachmentMediaVariant === 'image' ? 'image' : 'default'
+function getMediaVariant(file: File) {
+  return props.attachmentMediaVariant === 'image' && file.type.startsWith('image/')
+    ? 'image'
+    : 'icon'
 }
 
 function updateFiles(nextFiles: File[]) {
@@ -292,7 +263,7 @@ function handleDrop(event: DragEvent) {
           <slot name="media" v-bind="fileUploadContext"><Icon name="upload" /></slot>
         </div>
 
-        <div class="space-y-1 text-center" data-slot="file-upload-content">
+        <div v-bind="contentProps" data-slot="file-upload-content">
           <p v-if="props.label || $slots.label" v-bind="labelProps" data-slot="file-upload-label">
             <slot name="label" v-bind="fileUploadContext">{{ props.label }}</slot>
           </p>
@@ -331,12 +302,12 @@ function handleDrop(event: DragEvent) {
             class="w-full"
             :label="file.name"
             :description="`${formatFileSize(file.size)}`"
-            :media-variant="getMediaVariant()"
-            :orientation="getMediaVariant() === 'image' ? 'vertical' : 'horizontal'"
+            :media-variant="getMediaVariant(file)"
+            :orientation="getMediaVariant(file) === 'image' ? 'vertical' : 'horizontal'"
           >
             <template #media>
               <img
-                v-if="getMediaVariant() === 'image'"
+                v-if="getMediaVariant(file) === 'image'"
                 :src="getFilePreview(file)"
                 :alt="file.name"
                 width="60"

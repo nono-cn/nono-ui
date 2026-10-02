@@ -1,8 +1,10 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
-import type { AttachmentMediaVariants } from '@/components/ui/Attachment'
+import type { AttachmentMediaVariant } from '@/components/ui/Attachment'
+import { fileUploadDefaults } from './constants'
 
 export { default as FileUpload } from './FileUpload.vue'
+export { fileUploadDefaults } from './constants'
 
 export const fileUploadVariants = cva('grid w-full gap-3')
 
@@ -35,15 +37,17 @@ export const fileUploadMediaVariants = cva(
 
 export const fileUploadLabelVariants = cva('text-sm font-medium')
 export const fileUploadDescriptionVariants = cva('text-xs text-muted-foreground')
+export const fileUploadContentVariants = cva('space-y-1 text-center')
+export const fileUploadInputVariants = cva('sr-only')
 
 export const fileUploadListVariants = cva('grid gap-2', {
   variants: {
     mediaVariant: {
-      default: 'grid-cols-1',
+      icon: 'grid-cols-1',
       image: 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4',
-    },
+    } satisfies Record<AttachmentMediaVariant, string>,
   },
-  defaultVariants: { mediaVariant: 'default' },
+  defaultVariants: { mediaVariant: fileUploadDefaults.attachmentMediaVariant },
 })
 
 export type FileUploadVariants = VariantProps<typeof fileUploadDropzoneVariants>
@@ -71,7 +75,7 @@ export interface FileUploadProps {
   maxFiles?: number
   maxSize?: number
   showList?: boolean
-  attachmentMediaVariant?: AttachmentMediaVariants['variant']
+  attachmentMediaVariant?: AttachmentMediaVariant
   ui?: FileUploadUI
 }
 

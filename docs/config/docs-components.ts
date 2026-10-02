@@ -18,6 +18,7 @@ import colorArea from './components/color-area'
 import dialog from './components/dialog'
 import empty from './components/empty'
 import fieldSet from './components/field-set'
+import fileUpload from './components/file-upload'
 import icon from './components/icon'
 import iconTile from './components/icon-tile'
 import kbd from './components/kbd'
@@ -62,6 +63,7 @@ export const docsComponents = [
   dialog,
   empty,
   fieldSet,
+  fileUpload,
   icon,
   iconTile,
   kbd,
