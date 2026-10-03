@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { IconTile, iconTileSizes, type IconTileSize } from '@/components/ui/IconTile'
+import {
+  IconTile,
+  iconTileDefaults,
+  iconTileSizes,
+  type IconTileSize,
+} from '@/components/ui/IconTile'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const size = ref<IconTileSize>('md')
+const size = ref<IconTileSize>(iconTileDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
@@ -17,7 +22,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  size.value = 'md'
+  size.value = iconTileDefaults.size
 }
 </script>
 

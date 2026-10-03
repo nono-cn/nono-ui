@@ -1,9 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { IconName } from '@/components/ui/Icon'
-import { iconTileSizes, iconTileVariantNames } from './constants'
+import { iconTileDefaults, iconTileSizes, iconTileVariantNames } from './constants'
 
 export { default as IconTile } from './IconTile.vue'
-export { iconTileSizes, iconTileVariantNames } from './constants'
+export { iconTileDefaults, iconTileSizes, iconTileVariantNames } from './constants'
 
 export const iconTileVariants = cva(
   'relative inline-flex shrink-0 items-center justify-center rounded-(--icon-tile-radius)',
@@ -27,8 +27,8 @@ export const iconTileVariants = cva(
       } satisfies Record<(typeof iconTileSizes)[number], string>,
     },
     defaultVariants: {
-      variant: 'outline',
-      size: 'md',
+      variant: iconTileDefaults.variant,
+      size: iconTileDefaults.size,
     },
   },
 )

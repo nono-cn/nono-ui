@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { iconTileSizes, iconTileVariantNames } from '@/components/ui/IconTile'
+import { iconTileDefaults, iconTileSizes, iconTileVariantNames } from '@/components/ui/IconTile'
 import IconTileIconExample from '../../components/examples/icon-tile/IconTileIconExample.vue'
 import IconTileUsageExample from '../../components/examples/icon-tile/IconTileUsageExample.vue'
 import IconTileVariantExample from '../../components/examples/icon-tile/IconTileVariantExample.vue'
@@ -66,26 +66,26 @@ const iconTileConfig: ComponentDocConfig = {
       {
         name: 'variant',
         type: iconTileVariantNames.map((variant) => `'${variant}'`).join(' | '),
-        default: "'outline'",
+        default: `'${iconTileDefaults.variant}'`,
         description: 'Surface treatment of the tile.',
       },
       {
         name: 'size',
         type: iconTileSizes.map((size) => `'${size}'`).join(' | '),
-        default: "'md'",
+        default: `'${iconTileDefaults.size}'`,
         description: 'Tile size from 24px to 64px. The default icon scales with the tile.',
       },
       {
         name: 'radius',
         type: 'string | number',
-        default: "'sm'",
+        default: `'${iconTileDefaults.radius}'`,
         description:
           'Tailwind radius token, CSS border-radius value, or a number of pixels such as 12.',
       },
       {
         name: 'color',
         type: 'string',
-        default: "'neutral'",
+        default: `'${iconTileDefaults.color}'`,
         description:
           'Theme token such as primary, neutral, or success, a custom token, or a CSS color such as #7c3aed. Named tokens fall back to neutral.',
       },

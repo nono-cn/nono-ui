@@ -4,7 +4,7 @@ import { Icon } from '@/components/ui/Icon'
 import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { iconTileVariants, type IconTileProps } from '.'
-import { iconTileDefaults } from './defaults'
+import { iconTileDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

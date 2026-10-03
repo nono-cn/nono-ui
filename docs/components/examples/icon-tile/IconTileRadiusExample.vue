@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { IconTile, type IconTileRadius } from '@/components/ui/IconTile'
+import { IconTile, iconTileDefaults, type IconTileRadius } from '@/components/ui/IconTile'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const radius = ref<IconTileRadius>('sm')
+const radius = ref<IconTileRadius>(iconTileDefaults.radius)
 const code = computed(
   () => `<script setup lang="ts">
 import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
@@ -18,7 +18,7 @@ ${scriptEnd}
 )
 
 function reset() {
-  radius.value = 'sm'
+  radius.value = iconTileDefaults.radius
 }
 </script>
 
