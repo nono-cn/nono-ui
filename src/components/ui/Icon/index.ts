@@ -1,11 +1,11 @@
-import type { IconName } from './icons.ts'
+import type { IconName } from '@/assets/icon/icons'
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
 import { iconSizes } from './constants'
 
 export { default as Icon } from './Icon.vue'
-export { iconSizes } from './constants'
-export type { IconName } from './icons.ts'
+export { iconDefaults, iconSizes } from './constants'
+export type { IconName } from '@/assets/icon/icons'
 
 export const iconVariants = cva('shrink-0', {
   variants: {

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
-import { ICONS } from './icons.ts'
+import { ICONS } from '@/assets/icon/icons'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/composables'
 import { iconVariants, type IconProps } from '.'
-import { iconDefaults } from './defaults'
+import { iconDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 

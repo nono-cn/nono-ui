@@ -46,6 +46,7 @@ export default defineConfig({
         'src/i18n/**/*',
         'src/lib/**/*.ts',
         'src/assets/icons/**/*.ts',
+        'src/assets/icon/**/*.ts',
         'src/index.js',
       ],
       rollupTypes: false,

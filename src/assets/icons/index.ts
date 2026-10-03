@@ -1,1 +1,1 @@
-export { ICONS, type IconName } from '@/components/ui/Icon/icons'
+export { ICONS, type IconName } from '@/assets/icon/icons'
