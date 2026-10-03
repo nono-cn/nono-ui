@@ -590,7 +590,7 @@ describe('Listbox', () => {
           .findAllComponents(Input)
           .find((inputComponent) => inputComponent.find('[data-test-listbox-filter]').exists())
 
-        expect(filterInput.props('value')).toBe(expected)
+        expect(filterInput.props('modelValue')).toBe(expected)
       })
     })
 

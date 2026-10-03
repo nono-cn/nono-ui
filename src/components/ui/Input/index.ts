@@ -1,171 +1,104 @@
 import { cva, type VariantProps } from 'class-variance-authority'
+import type { IconName } from '@/components/ui/Icon'
 import type { EmitsAsProps } from '@/types/emits'
+import type { HTMLAttributes } from 'vue'
+import { inputDefaults, inputSizes, inputVariantNames } from './constants'
 
 export { default as Input } from './Input.vue'
-export { inputDefaults } from './default'
+export { inputDefaults, inputSizes, inputVariantNames } from './constants'
 
-export const inputVariants = cva('', {
-  variants: {
-    size: {
-      xs: 'h-7 text-sm',
-      sm: 'h-8 text-sm',
-      md: 'h-9 text-base',
-      lg: 'h-10 text-lg',
-      xl: 'h-11 text-xl',
+export const inputVariants = cva(
+  'relative flex w-full min-w-0 items-center overflow-hidden transition-[color,box-shadow] focus-within:border-(--input-color) focus-within:ring-3 focus-within:ring-(--input-color)/30 has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-3 has-[[aria-invalid=true]]:ring-destructive/20 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 dark:bg-input/30 dark:has-[[aria-invalid=true]]:ring-destructive/40',
+  {
+    variants: {
+      size: {
+        xs: 'h-7 text-sm',
+        sm: 'h-8 text-sm',
+        md: 'h-9 text-base',
+        lg: 'h-10 text-lg',
+        xl: 'h-11 text-xl',
+      } satisfies Record<(typeof inputSizes)[number], string>,
+      variant: {
+        outline: 'rounded-md border bg-transparent shadow-xs',
+        plain: 'rounded-md border-transparent bg-transparent shadow-none',
+        none: 'rounded-md border-0 bg-transparent shadow-none',
+        subtle: 'rounded-md border bg-muted shadow-xs',
+        soft: 'rounded-md border-transparent bg-muted/50 shadow-none',
+      } satisfies Record<(typeof inputVariantNames)[number], string>,
+      highlight: {
+        true: '',
+        false: 'border-input',
+      },
     },
-    variant: {
-      outline: 'rounded-md border bg-transparent shadow-xs',
-      plain: 'rounded-md border-transparent bg-transparent shadow-none',
-      none: 'rounded-md border-0 bg-transparent shadow-none',
-      subtle: 'rounded-md border shadow-xs',
-      soft: 'rounded-md border-transparent shadow-none',
-    },
-    severity: {
-      primary: 'focus-within:border-primary focus-within:ring-primary/50',
-      secondary:
-        'focus-within:border-secondary-foreground focus-within:ring-secondary-foreground/20',
-      error: 'focus-within:border-error focus-within:ring-error/30',
-      warning: 'focus-within:border-warning focus-within:ring-warning/30',
-      success: 'focus-within:border-success focus-within:ring-success/30',
-    },
-    color: {
-      true: 'focus-within:border-(--input-color) focus-within:ring-(--input-color)/30',
-      false: '',
-    },
-    highlight: {
-      true: '',
-      false: 'border-input',
+    compoundVariants: [
+      { variant: 'none', class: 'focus-within:border-0 focus-within:ring-0' },
+      { variant: ['outline', 'plain'], class: 'text-(--input-color)' },
+      { variant: ['subtle', 'soft'], class: 'text-(--input-color)' },
+      { variant: ['outline', 'plain'], highlight: true, class: 'border-(--input-color)/40' },
+      { variant: 'subtle', highlight: true, class: 'border-(--input-color)/20' },
+      { variant: 'soft', highlight: true, class: 'border-(--input-color)/40' },
+    ],
+    defaultVariants: {
+      size: inputDefaults.size,
+      variant: inputDefaults.variant,
+      highlight: inputDefaults.highlight,
     },
   },
-  compoundVariants: [
-    { variant: 'none', class: 'focus-within:border-0 focus-within:ring-0' },
-    { variant: 'outline', severity: 'primary', class: 'text-primary' },
-    { variant: 'plain', severity: 'primary', class: 'text-primary' },
-    { variant: 'subtle', severity: 'primary', class: 'bg-primary/10 text-primary' },
-    { variant: 'soft', severity: 'primary', class: 'bg-primary/10 text-primary' },
-    { variant: 'outline', severity: 'secondary', class: 'text-secondary-foreground' },
-    { variant: 'plain', severity: 'secondary', class: 'text-secondary-foreground' },
-    { variant: 'subtle', severity: 'secondary', class: 'bg-secondary/60 text-secondary-foreground' },
-    { variant: 'soft', severity: 'secondary', class: 'bg-secondary/60 text-secondary-foreground' },
-    { variant: 'outline', severity: 'error', class: 'text-error' },
-    { variant: 'plain', severity: 'error', class: 'text-error' },
-    { variant: 'subtle', severity: 'error', class: 'bg-error/10 text-error' },
-    { variant: 'soft', severity: 'error', class: 'bg-error/10 text-error' },
-    { variant: 'outline', severity: 'warning', class: 'text-warning' },
-    { variant: 'plain', severity: 'warning', class: 'text-warning' },
-    { variant: 'subtle', severity: 'warning', class: 'bg-warning/10 text-warning' },
-    { variant: 'soft', severity: 'warning', class: 'bg-warning/10 text-warning' },
-    { variant: 'outline', severity: 'success', class: 'text-success' },
-    { variant: 'plain', severity: 'success', class: 'text-success' },
-    { variant: 'subtle', severity: 'success', class: 'bg-success/10 text-success' },
-    { variant: 'soft', severity: 'success', class: 'bg-success/10 text-success' },
-    { severity: 'secondary', highlight: true, class: 'border-secondary-foreground/30' },
-    { severity: 'error', highlight: true, class: 'border-error/40' },
-    { severity: 'warning', highlight: true, class: 'border-warning/40' },
-    { severity: 'success', highlight: true, class: 'border-success/40' },
-    {
-      highlight: true,
-      severity: 'primary',
-      variant: 'outline',
-      class: 'border-primary/40',
+)
+
+export const inputFieldVariants = cva(
+  'flex h-full w-full min-w-0 flex-1 border-0 bg-transparent px-3 py-1 text-foreground outline-none selection:bg-primary selection:text-primary-foreground file:inline-flex file:h-7 file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-0 disabled:pointer-events-none disabled:cursor-not-allowed',
+  {
+    variants: {
+      leading: {
+        true: 'pl-0',
+        false: '',
+      },
     },
-    {
-      highlight: true,
-      severity: 'primary',
-      variant: 'plain',
-      class: 'border-primary/40',
+    defaultVariants: {
+      leading: false,
     },
-    {
-      highlight: true,
-      severity: 'primary',
-      variant: 'subtle',
-      class: 'border-primary/20',
-    },
-    {
-      highlight: true,
-      severity: 'primary',
-      variant: 'soft',
-      class: 'border-primary/40',
-    },
-    {
-      color: true,
-      variant: 'outline',
-      class: 'text-(--input-color)',
-    },
-    {
-      color: true,
-      variant: 'plain',
-      class: 'text-(--input-color)',
-    },
-    {
-      color: true,
-      variant: 'subtle',
-      class: 'bg-(--input-color)/10 text-(--input-color)',
-    },
-    {
-      color: true,
-      variant: 'soft',
-      class: 'bg-(--input-color)/10 text-(--input-color)',
-    },
-    {
-      color: true,
-      highlight: true,
-      variant: 'outline',
-      class: 'border-(--input-color)/40',
-    },
-    {
-      color: true,
-      highlight: true,
-      variant: 'plain',
-      class: 'border-(--input-color)/40',
-    },
-    {
-      color: true,
-      highlight: true,
-      variant: 'subtle',
-      class: 'border-(--input-color)/20',
-    },
-    {
-      color: true,
-      highlight: true,
-      variant: 'soft',
-      class: 'border-(--input-color)/40',
-    },
-  ],
-  defaultVariants: {
-    size: 'md',
-    variant: 'outline',
-    severity: 'primary',
-    color: false,
-    highlight: false,
   },
-})
+)
 
 export type InputVariants = VariantProps<typeof inputVariants>
 export type InputSize = NonNullable<InputVariants['size']>
 export type InputVariant = NonNullable<InputVariants['variant']>
-export type InputSeverity = NonNullable<InputVariants['severity']>
+export type InputLoadingIcon = IconName
 
-export type InputValue = string
+export type InputValue = string | number
 
 // Props
 export interface InputProps {
-  value?: InputValue
+  modelValue?: InputValue
   size?: InputSize
   variant?: InputVariant
-  severity?: InputSeverity
   color?: string
   highlight?: boolean
+  icon?: IconName
+  loading?: boolean
+  loadingIcon?: InputLoadingIcon
+  trailingIcon?: IconName
+  ui?: InputUI
+}
+
+export type InputFn<T> = () => T
+
+export interface InputUI {
+  root?: InputFn<HTMLAttributes>
+  leading?: InputFn<HTMLAttributes>
+  trailing?: InputFn<HTMLAttributes>
 }
 
 // Emits
 export interface InputEmits {
-  'update:value': [value: InputValue]
+  'update:modelValue': [value: InputValue]
 }
 
 // Slots
 export interface InputSlots {
   leading?(): unknown
+  loading?(): unknown
   trailing?(): unknown
 }
 

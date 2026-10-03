@@ -11,7 +11,7 @@ interface TestInputConfigOptions {
 
 export function testInputConfig({ text, id, mount }: TestInputConfigOptions) {
   it(text, async () => {
-    const onUpdateValue = vi.fn()
+    const onUpdateModelValue = vi.fn()
     const input: NormalizeInputProps = {
       id: 'custom-input',
       class: 'custom-input',
@@ -21,7 +21,7 @@ export function testInputConfig({ text, id, mount }: TestInputConfigOptions) {
       variant: 'plain',
       color: '#ff0000',
       highlight: true,
-      'onUpdate:value': onUpdateValue,
+      'onUpdate:modelValue': onUpdateModelValue,
     }
 
     const wrapper = await mount(input)
@@ -45,6 +45,6 @@ export function testInputConfig({ text, id, mount }: TestInputConfigOptions) {
     expect(inputElement.attributes('aria-label')).toBe(input['aria-label'])
 
     await inputElement.setValue('Nuevo valor')
-    expect(onUpdateValue).toHaveBeenCalledWith('Nuevo valor')
+    expect(onUpdateModelValue).toHaveBeenCalledWith('Nuevo valor')
   })
 }

@@ -21,6 +21,7 @@ import fieldSet from './components/field-set'
 import hoverCard from './components/hover-card'
 import icon from './components/icon'
 import iconTile from './components/icon-tile'
+import input from './components/input'
 import kbd from './components/kbd'
 import label from './components/label'
 import loading from './components/loading'
@@ -66,6 +67,7 @@ export const docsComponents = [
   hoverCard,
   icon,
   iconTile,
+  input,
   kbd,
   label,
   loading,
