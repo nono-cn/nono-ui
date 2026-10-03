@@ -112,6 +112,7 @@ describe('Popover', () => {
         id: '[data-test-popover-content]',
         omit: ['id'],
         mount: (content) => mountOpenPopover(content),
+        getProps: (wrapper) => getContent(wrapper).props(),
       })
     })
 
@@ -120,6 +121,7 @@ describe('Popover', () => {
         text: 'renderiza la configuración de arrow',
         id: '[data-test-popover-arrow]',
         mount: (arrow) => mountOpenPopover({}, arrow),
+        getProps: (wrapper) => wrapper.getComponent(PopoverArrow).props(),
       })
     })
   })

@@ -18,11 +18,10 @@ describe('useArrow', () => {
         height: 8,
         rounded: true,
         id: 'arrow',
-        class: 'custom-arrow',
+        class: 'fill-popover custom-arrow',
         style: { opacity: 0.5 },
         'aria-label': 'Arrow',
       }),
-      { class: 'fill-popover' },
     )
 
     expect(arrow.value).toMatchObject({

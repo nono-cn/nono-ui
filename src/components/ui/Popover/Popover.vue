@@ -5,6 +5,7 @@ import type { PopoverContext, PopoverEmits, PopoverProps, PopoverSlots } from '.
 import { popoverDefaults } from './defaults'
 import { useArrow } from '@/composables/useArrow'
 import { useContent } from '@/composables/useContent'
+import { cn } from '@/lib/utils'
 
 defineOptions({ inheritAttrs: false })
 defineSlots<PopoverSlots>()
@@ -34,8 +35,7 @@ const contentProps = useContent(
   },
 )
 const arrowProps = useArrow(
-  computed(() => props.arrow),
-  { class: 'fill-popover' },
+  computed(() => ({ ...props.arrow, class: cn('fill-popover', props.arrow?.class) })),
 )
 </script>
 
