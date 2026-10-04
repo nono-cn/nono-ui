@@ -2,8 +2,8 @@
 import { computed, useAttrs } from 'vue'
 import { Label } from 'reka-ui'
 import { cn } from '@/lib/utils'
-import { type LabelProps, type LabelSlots } from '.'
-import { labelDefaults } from './default'
+import { labelVariants, type LabelProps, type LabelSlots } from '.'
+import { labelDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -16,10 +16,7 @@ const rootProps = computed(() => {
   return {
     ...attrs,
     for: props.for,
-    class: cn(
-      'flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
-      attrs.class,
-    ),
+    class: cn(labelVariants(), attrs.class),
     style: attrs.style,
   }
 })

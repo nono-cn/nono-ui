@@ -33,6 +33,25 @@ describe('Label', () => {
     })
   })
 
+  describe('variantsCss', () => {
+    describe('labelVariants', () => {
+      it('mantiene las clases base del label', () => {
+        const root = mountLabel().get('[data-test-label-root]')
+
+        expect(root.element.tagName).toBe('LABEL')
+        expect(root.classes()).toEqual(
+          expect.arrayContaining([
+            'flex',
+            'items-center',
+            'select-none',
+            'group-data-[disabled=true]:pointer-events-none',
+            'peer-disabled:cursor-not-allowed',
+          ]),
+        )
+      })
+    })
+  })
+
   describe('slots', () => {
     it('renderiza el slot predeterminado', () => {
       const label = mountLabel({

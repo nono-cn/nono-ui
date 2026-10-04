@@ -1,4 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { labelDefaults } from '@/components/ui/Label'
 import LabelForExample from '../../components/examples/label/LabelForExample.vue'
 import LabelUsageExample from '../../components/examples/label/LabelUsageExample.vue'
 
@@ -26,7 +27,7 @@ const labelConfig: ComponentDocConfig = {
     {
       title: 'Associating labels with controls',
       description:
-        'Set for to the same id as the control so assistive technologies associate the label with the field. Keep the label text visible and descriptive.',
+        'Set for to the same id as the control so assistive technologies associate the label with the field. Keep the text visible and descriptive. HTML and ARIA attributes, class, and style are forwarded to the root label.',
     },
   ],
   api: {
@@ -34,7 +35,7 @@ const labelConfig: ComponentDocConfig = {
       {
         name: 'for',
         type: 'string',
-        default: 'undefined',
+        default: String(labelDefaults.for),
         description: 'Id of the associated form control.',
       },
     ],
