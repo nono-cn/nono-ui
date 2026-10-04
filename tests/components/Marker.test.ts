@@ -2,46 +2,63 @@ import { h } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Icon } from '@/components/ui/Icon'
 import { Marker, type MarkerProps } from '@/components/ui/Marker'
 import { testAttrs } from '../utils/testAttrs'
-import { testIconConfig } from '../utils/testIconConfig'
 
 function mountMarker(options: MountingOptions<MarkerProps> = {}) {
   return mount(Marker, options)
 }
 
+const casesStatus = [
+  [false, undefined],
+  [true, 'status'],
+] as const
+
+const casesIcon = [
+  { input: undefined, expected: false },
+  { input: 'check' as const, expected: true },
+]
+
+const casesVariant = [
+  ['default', false],
+  ['border', true],
+  ['separator', true],
+] as const
+
+const casesShimmer = [
+  [false, false],
+  [true, true],
+] as const
+
 describe('Marker', () => {
   describe('props', () => {
     describe('label', () => {
-      it('renderiza la etiqueta cuando no hay slot default', () => {
+      it('renderiza la etiqueta', () => {
         expect(mountMarker({ props: { label: 'Procesando' } }).text()).toBe('Procesando')
       })
     })
 
     describe('status', () => {
-      it.each([
-        [false, undefined],
-        [true, 'status'],
-      ] as const)('usa role=%s', (status, role) => {
+      it.each(casesStatus)('usa role=%s', (status, role) => {
         expect(mountMarker({ props: { status } }).attributes('role')).toBe(role)
       })
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa la configuración del icono',
-        id: Icon,
-        mount: (icon) => mountMarker({ props: { icon } }),
+      it.each(casesIcon)('renderiza icon=$input', ({ input, expected }) => {
+        const icon = mountMarker({ props: { icon: input } }).findComponent(
+          '[data-test-marker-icon]',
+        )
+
+        expect(icon.exists()).toBe(expected)
+        if (expected) {
+          expect(icon.props('name')).toBe(input)
+        }
       })
     })
 
     describe('variant', () => {
-      it.each([
-        ['default', false],
-        ['border', true],
-        ['separator', true],
-      ] as const)('renderiza variant=%s', (variant, hasVariantClass) => {
+      it.each(casesVariant)('renderiza variant=%s', (variant, hasVariantClass) => {
         const root = mountMarker({ props: { variant } }).get('[data-test-marker-root]')
         expect(
           root.classes().includes('border-b') || root.classes().includes('before:flex-1'),
@@ -50,10 +67,7 @@ describe('Marker', () => {
     })
 
     describe('shimmer', () => {
-      it.each([
-        [false, false],
-        [true, true],
-      ] as const)('aplica el brillo=%s', (shimmer, hasClass) => {
+      it.each(casesShimmer)('aplica el brillo=%s', (shimmer, hasClass) => {
         const classes = mountMarker({ props: { shimmer } }).classes()
         expect(classes.includes('animate-pulse')).toBe(hasClass)
       })

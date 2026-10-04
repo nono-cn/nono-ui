@@ -1,32 +1,46 @@
 <script setup lang="ts">
-import { Marker } from '@/components/ui/Marker'
+import { computed, ref } from 'vue'
+import {
+  Marker,
+  markerDefaults,
+  markerVariantNames,
+  type MarkerVariant,
+} from '@/components/ui/Marker'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
-import { Marker } from '__DOCS_PACKAGE__/components/ui/Marker'
+const variant = ref<MarkerVariant>(markerDefaults.variant)
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Marker, type MarkerVariant } from '__DOCS_PACKAGE__/components/ui/Marker'
+
+const variant = ref<MarkerVariant>('${variant.value}')
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full gap-2">
-    <Marker variant="default" label="Value updated" />
-    <Marker variant="border" label="Last updated: just now" />
-    <Marker variant="separator" label="More information" />
-  </div>
-</template>`
+  <Marker :variant="variant" label="Value updated" />
+</template>`,
+)
+
+function reset() {
+  variant.value = markerDefaults.variant
+}
 </script>
 
 <template>
   <ComponentExample
-    title="Variants"
+    title="Variant"
     description="Adapt the visual separation to the content context."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid w-full gap-2">
-      <Marker variant="default" label="Value updated" />
-      <Marker variant="border" label="Last updated: just now" />
-      <Marker variant="separator" label="More information" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="variant" label="Variant" :options="markerVariantNames" />
+      </div>
+    </template>
+    <Marker :variant="variant" label="Value updated" />
   </ComponentExample>
 </template>

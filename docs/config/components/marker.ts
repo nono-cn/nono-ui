@@ -2,6 +2,7 @@ import type { ComponentDocConfig } from '../component-docs'
 import MarkerBasicExample from '../../components/examples/marker/MarkerBasicExample.vue'
 import MarkerVariantsExample from '../../components/examples/marker/MarkerVariantsExample.vue'
 import MarkerShimmerExample from '../../components/examples/marker/MarkerShimmerExample.vue'
+import MarkerIconExample from '../../components/examples/marker/MarkerIconExample.vue'
 
 const markerConfig: ComponentDocConfig = {
   slug: 'marker',
@@ -18,7 +19,12 @@ const markerConfig: ComponentDocConfig = {
   ],
   examples: [
     {
-      title: 'Variants',
+      title: 'Icon',
+      description: 'Choose a decorative icon displayed before the message.',
+      component: MarkerIconExample,
+    },
+    {
+      title: 'Variant',
       description: 'Choose from the default, border, and separator styles.',
       component: MarkerVariantsExample,
     },
@@ -45,10 +51,10 @@ const markerConfig: ComponentDocConfig = {
       },
       {
         name: 'icon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
+        type: 'IconName',
+        typeLink: '/components/icon#props',
         default: 'undefined',
-        description: 'Icon configuration displayed before the content.',
+        description: 'Decorative icon displayed before the content.',
       },
       {
         name: 'label',

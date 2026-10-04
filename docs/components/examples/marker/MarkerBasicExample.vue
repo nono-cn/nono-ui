@@ -8,7 +8,7 @@ import { Marker } from '__DOCS_PACKAGE__/components/ui/Marker'
 ${scriptEnd}
 
 <template>
-  <Marker label="Sync complete" :icon="{ name: 'check' }" />
+  <Marker label="Sync complete" icon="check" />
 </template>`
 </script>
 
@@ -19,6 +19,6 @@ ${scriptEnd}
     :code="code"
     :show-reset="false"
   >
-    <Marker label="Sync complete" :icon="{ name: 'check' }" />
+    <Marker label="Sync complete" icon="check" />
   </ComponentExample>
 </template>
