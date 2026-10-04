@@ -6,7 +6,6 @@ import { Checkbox, type CheckboxProps, type CheckboxSize } from '@/components/ui
 import { themeColors } from '@/components/ui/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
-import { testIconConfig } from '../utils/testIconConfig'
 
 function mountCheckbox(options: MountingOptions<CheckboxProps> = {}) {
   return mount(Checkbox, options)
@@ -152,11 +151,13 @@ describe('Checkbox', () => {
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa la configuración del icono',
-        id: '[data-test-checkbox-icon]',
-        default: 'check',
-        mount: (icon) => mountCheckbox({ props: { value: true, icon } }),
+      it('usa check por defecto', () => {
+        const icon = mountCheckbox({ props: { value: true } }).getComponent(
+          '[data-test-checkbox-icon]',
+        )
+
+        expect(icon.props('name')).toBe('check')
+        expect(icon.props('color')).toBe('currentColor')
       })
 
       it('acepta un nombre de icono', () => {
@@ -168,24 +169,6 @@ describe('Checkbox', () => {
         expect(icon.props('color')).toBe('currentColor')
       })
 
-      it('respeta el tamaño explícito del icono', () => {
-        const checkbox = mountCheckbox({
-          props: { value: true, icon: { name: 'check', size: 'xl' } },
-        })
-        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
-
-        expect(icon.props('size')).toBe('xl')
-      })
-
-      it('respeta el color explícito del icono', () => {
-        const checkbox = mountCheckbox({
-          props: { value: true, icon: { name: 'check', color: '#ff0000' } },
-        })
-        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
-
-        expect(icon.props('color')).toBe('#ff0000')
-      })
-
       it('no renderiza el icono cuando no está checkeado', () => {
         const checkbox = mountCheckbox({ props: { value: false } })
 
@@ -194,41 +177,12 @@ describe('Checkbox', () => {
     })
 
     describe('indeterminateIcon', () => {
-      testIconConfig({
-        text: 'pasa la configuración del icono indeterminado',
-        id: '[data-test-checkbox-icon]',
-        default: 'minus',
-        mount: (icon) =>
-          mountCheckbox({ props: { value: 'indeterminate', indeterminateIcon: icon } }),
-      })
-
       it('usa el icono indeterminado por defecto', () => {
         const checkbox = mountCheckbox({ props: { value: 'indeterminate' } })
         const icon = checkbox.getComponent('[data-test-checkbox-icon]')
 
         expect(icon.props('name')).toBe('minus')
         expect(icon.props('color')).toBe('currentColor')
-      })
-
-      it('respeta el tamaño explícito del icono indeterminado', () => {
-        const checkbox = mountCheckbox({
-          props: { value: 'indeterminate', indeterminateIcon: { name: 'minus', size: 'xl' } },
-        })
-        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
-
-        expect(icon.props('size')).toBe('xl')
-      })
-
-      it('respeta el color explícito del icono indeterminado', () => {
-        const checkbox = mountCheckbox({
-          props: {
-            value: 'indeterminate',
-            indeterminateIcon: { name: 'minus', color: '#ff0000' },
-          },
-        })
-        const icon = checkbox.getComponent('[data-test-checkbox-icon]')
-
-        expect(icon.props('color')).toBe('#ff0000')
       })
 
       it('acepta un nombre de icono indeterminado', () => {

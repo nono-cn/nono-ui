@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, useAttrs, watch } from 'vue'
-import { Icon, type IconConfig } from '@/components/ui/Icon'
+import { Icon } from '@/components/ui/Icon'
 import { CheckboxIndicator, CheckboxRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { useTheme } from '@/composables'
@@ -44,10 +44,9 @@ const checkboxContext = computed<CheckboxContext>(() => ({
   state: value.value === 'indeterminate' ? 'indeterminate' : value.value === props.trueValue,
 }))
 
-const checkboxIcon = computed<IconConfig | undefined>(() => {
-  const icon = value.value === 'indeterminate' ? props.indeterminateIcon : props.icon
-  return typeof icon === 'string' ? { name: icon } : icon
-})
+const checkboxIcon = computed(() =>
+  value.value === 'indeterminate' ? props.indeterminateIcon : props.icon,
+)
 
 const attrs = useAttrs()
 const { colorStyle } = useTheme({
@@ -81,16 +80,10 @@ const indicatorProps = computed(() => {
   <CheckboxRoot v-bind="rootProps" v-model="value" data-test-checkbox-root>
     <CheckboxIndicator v-bind="indicatorProps" data-test-checkbox-indicator>
       <Icon
-        v-if="checkboxIcon?.name"
-        v-bind="checkboxIcon"
-        :size="checkboxIcon.size"
-        :color="checkboxIcon.color ?? 'currentColor'"
-        :class="
-          cn(
-            checkboxIcon.size ? undefined : checkboxIconVariants({ size: props.size }),
-            checkboxIcon.class,
-          )
-        "
+        v-if="checkboxIcon"
+        :name="checkboxIcon"
+        color="currentColor"
+        :class="checkboxIconVariants({ size: props.size })"
         data-test-checkbox-icon
       />
     </CheckboxIndicator>

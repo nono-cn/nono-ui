@@ -22,7 +22,7 @@ ${scriptEnd}
     <Checkbox :value="true" :icon="icon" aria-label="Selected with chosen icon" />
     <Checkbox
       value="indeterminate"
-      :indeterminate-icon="{ name: 'minus', class: 'rotate-45' }"
+      indeterminate-icon="minus"
       aria-label="Partial selection with custom icon"
     />
   </div>
@@ -37,7 +37,7 @@ function reset() {
 <template>
   <ComponentExample
     title="Icons"
-    description="Use an icon name or an IconConfig object."
+    description="Choose an icon name for each state."
     :code="code"
     @reset="reset"
   >
@@ -50,7 +50,7 @@ function reset() {
       <Checkbox :value="true" :icon="icon" aria-label="Selected with chosen icon" />
       <Checkbox
         value="indeterminate"
-        :indeterminate-icon="{ name: 'minus', class: 'rotate-45' }"
+        indeterminate-icon="minus"
         aria-label="Partial selection with custom icon"
       />
     </div>

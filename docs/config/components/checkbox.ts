@@ -44,8 +44,7 @@ const checkboxConfig: ComponentDocConfig = {
     },
     {
       title: 'Icons',
-      description:
-        'Choose icon names or pass a full IconConfig for checked and indeterminate states.',
+      description: 'Choose icon names for checked and indeterminate states.',
       component: CheckboxIconsExample,
     },
     {
@@ -95,25 +94,17 @@ const checkboxConfig: ComponentDocConfig = {
       },
       {
         name: 'icon',
-        type: 'IconName | IconConfig',
-        typeParts: [
-          { text: 'IconName', link: '/components/icon#props' },
-          { text: ' | ' },
-          { text: 'IconConfig', link: '/components/icon#icon-config' },
-        ],
+        type: 'IconName',
+        typeLink: '/components/icon#props',
         default: `'${checkboxDefaults.icon}'`,
-        description: 'Checked-state icon; a name or an icon configuration.',
+        description: 'Checked-state icon name.',
       },
       {
         name: 'indeterminateIcon',
-        type: 'IconName | IconConfig',
-        typeParts: [
-          { text: 'IconName', link: '/components/icon#props' },
-          { text: ' | ' },
-          { text: 'IconConfig', link: '/components/icon#icon-config' },
-        ],
+        type: 'IconName',
+        typeLink: '/components/icon#props',
         default: `'${checkboxDefaults.indeterminateIcon}'`,
-        description: 'Indeterminate-state icon; a name or an icon configuration.',
+        description: 'Indeterminate-state icon name.',
       },
       {
         name: 'ui',

@@ -122,7 +122,7 @@ describe('Link', () => {
 
     describe('props de Button', () => {
       testButtonConfig({
-        text: 'pasa la configuración y el evento click a Button',
+        text: 'pasa la configuración de button',
         id: '[data-test-link-root]',
         mount: (input) => mountLink({ props: input }),
       })

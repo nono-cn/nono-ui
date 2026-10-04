@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'vue'
 import type { CheckboxRootProps } from 'reka-ui'
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { IconConfig, IconName } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 import { checkboxDefaults, checkboxSizes } from './constants'
 
 export { default as Checkbox } from './Checkbox.vue'
@@ -44,7 +44,7 @@ export const checkboxIconVariants = cva('', {
 
 export type CheckboxVariants = VariantProps<typeof checkboxVariants>
 export type CheckboxSize = NonNullable<CheckboxVariants['size']>
-export type CheckboxIcon = IconName | IconConfig
+export type CheckboxIcon = IconName
 
 export type CheckboxValue = boolean | string | number
 export type CheckboxModelValue = CheckboxValue | 'indeterminate'
