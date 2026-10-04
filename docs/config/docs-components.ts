@@ -30,6 +30,7 @@ import linearChart from './components/linear-chart'
 import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
+import switchConfig from './components/switch'
 import textarea from './components/textarea'
 import type { ComponentDocConfig } from './component-docs'
 
@@ -68,6 +69,7 @@ export const docsComponents = [
   loading,
   marker,
   masonry,
+  switchConfig,
   textarea,
 ] satisfies ComponentDocConfig[]
 

@@ -1,73 +1,50 @@
 import type { HTMLAttributes } from 'vue'
 import type { SwitchRootProps } from 'reka-ui'
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
+import { switchDefaults, switchSizes } from './constants'
 
 export { default as Switch } from './Switch.vue'
+export { switchDefaults, switchSizes } from './constants'
 
-export const switchVariants = cva('', {
-  variants: {
-    size: {
-      xs: 'h-3.5 w-6',
-      sm: 'h-4 w-7',
-      md: 'h-5 w-9',
-      lg: 'h-6 w-11',
-      xl: 'h-7 w-13',
+export const switchVariants = cva(
+  'peer inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-(--switch-color) focus-visible:ring-3 focus-visible:ring-(--switch-color)/50 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-input data-[state=checked]:bg-(--switch-color) dark:data-[state=unchecked]:bg-input/80',
+  {
+    variants: {
+      size: {
+        xs: 'h-3.5 w-6',
+        sm: 'h-4 w-7',
+        md: 'h-5 w-9',
+        lg: 'h-6 w-11',
+        xl: 'h-7 w-13',
+      } satisfies Record<(typeof switchSizes)[number], string>,
     },
-    severity: {
-      primary:
-        'focus-visible:border-primary focus-visible:ring-primary/50 data-[state=checked]:bg-primary',
-      secondary:
-        'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/50 data-[state=checked]:bg-secondary',
-      warning:
-        'focus-visible:border-warning focus-visible:ring-warning/50 data-[state=checked]:bg-warning',
-      success:
-        'focus-visible:border-success focus-visible:ring-success/50 data-[state=checked]:bg-success',
-      error: 'focus-visible:border-error focus-visible:ring-error/50 data-[state=checked]:bg-error',
-    },
-    color: {
-      true: 'focus-visible:border-(--switch-color) focus-visible:ring-(--switch-color)/50 data-[state=checked]:bg-(--switch-color)',
-      false: '',
+    defaultVariants: {
+      size: switchDefaults.size,
     },
   },
-  defaultVariants: {
-    size: 'md',
-    severity: 'primary',
-    color: false,
-  },
-})
+)
 
-export const switchThumbVariants = cva('', {
-  variants: {
-    size: {
-      xs: 'size-3 data-[state=checked]:translate-x-[calc(100%-2px)]',
-      sm: 'size-3.5 data-[state=checked]:translate-x-[calc(100%-2px)]',
-      md: 'size-4 data-[state=checked]:translate-x-[calc(100%-2px)]',
-      lg: 'size-5 data-[state=checked]:translate-x-[calc(100%-2px)]',
-      xl: 'size-6 data-[state=checked]:translate-x-[calc(100%-2px)]',
+export const switchThumbVariants = cva(
+  'pointer-events-none block rounded-full bg-background ring-0 transition-transform [&>*]:!size-full data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-(--switch-color-foreground) dark:data-[state=unchecked]:bg-foreground [&>svg]:text-foreground',
+  {
+    variants: {
+      size: {
+        xs: 'size-3 data-[state=checked]:translate-x-[calc(100%-2px)]',
+        sm: 'size-3.5 data-[state=checked]:translate-x-[calc(100%-2px)]',
+        md: 'size-4 data-[state=checked]:translate-x-[calc(100%-2px)]',
+        lg: 'size-5 data-[state=checked]:translate-x-[calc(100%-2px)]',
+        xl: 'size-6 data-[state=checked]:translate-x-[calc(100%-2px)]',
+      } satisfies Record<(typeof switchSizes)[number], string>,
     },
-    severity: {
-      primary: 'data-[state=checked]:[&>svg]:text-primary-foreground',
-      secondary: 'data-[state=checked]:[&>svg]:text-secondary-foreground',
-      warning: 'data-[state=checked]:[&>svg]:text-warning-foreground',
-      success: 'data-[state=checked]:[&>svg]:text-success-foreground',
-      error: 'data-[state=checked]:[&>svg]:text-error-foreground',
-    },
-    color: {
-      true: 'data-[state=checked]:[&>svg]:text-(--switch-color-foreground)',
-      false: '',
+    defaultVariants: {
+      size: switchDefaults.size,
     },
   },
-  defaultVariants: {
-    size: 'md',
-    severity: 'primary',
-    color: false,
-  },
-})
+)
 
 export type SwitchVariants = VariantProps<typeof switchVariants>
 export type SwitchSize = NonNullable<SwitchVariants['size']>
-export type SwitchSeverity = NonNullable<SwitchVariants['severity']>
 
 export type SwitchValue = boolean | number | string
 export type SwitchState = boolean
@@ -84,12 +61,11 @@ export interface SwitchProps extends Pick<
   SwitchRootProps<SwitchValue>,
   'trueValue' | 'falseValue'
 > {
-  value?: SwitchValue
+  modelValue?: SwitchValue
   size?: SwitchSize
-  severity?: SwitchSeverity
   color?: string
-  uncheckedIcon?: IconConfig
-  checkedIcon?: IconConfig
+  uncheckedIcon?: IconName
+  checkedIcon?: IconName
   ui?: SwitchUI
 }
 
@@ -100,5 +76,5 @@ export interface SwitchContext {
 
 // Emits
 export interface SwitchEmits {
-  'update:value': [value: SwitchValue]
+  'update:modelValue': [value: SwitchValue]
 }
