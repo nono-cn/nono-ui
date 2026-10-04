@@ -30,17 +30,6 @@ import linearChart from './components/linear-chart'
 import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
-import message from './components/message'
-import popover from './components/popover'
-import progress from './components/progress'
-import rating from './components/rating'
-import ribbon from './components/ribbon'
-import scrollArea from './components/scroll-area'
-import search from './components/search'
-import slider from './components/slider'
-import separator from './components/separator'
-import splitter from './components/splitter'
-import switchConfig from './components/switch'
 import textarea from './components/textarea'
 import type { ComponentDocConfig } from './component-docs'
 
@@ -79,17 +68,6 @@ export const docsComponents = [
   loading,
   marker,
   masonry,
-  message,
-  popover,
-  progress,
-  rating,
-  ribbon,
-  scrollArea,
-  search,
-  slider,
-  separator,
-  splitter,
-  switchConfig,
   textarea,
 ] satisfies ComponentDocConfig[]
 
