@@ -1,7 +1,14 @@
+import { cva } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
 
 export { default as Loading } from './Loading.vue'
+export { loadingDefaults } from './constants'
+
+export const loadingVariants = cva('w-full')
+export const loadingIndicatorVariants = cva('flex w-full items-center justify-center')
+export const loadingContentVariants = cva('w-full')
+export const loadingIconVariants = cva('animate-spin')
 
 // Fn
 export type LoadingFn<T> = (context: LoadingContext) => T
@@ -15,7 +22,7 @@ export interface LoadingUI {
 // Props
 export interface LoadingProps {
   loading?: boolean
-  icon?: IconConfig
+  icon?: IconName
   ui?: LoadingUI
 }
 

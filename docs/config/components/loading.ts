@@ -1,7 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { loadingDefaults } from '@/components/ui/Loading'
 import LoadingBasicExample from '../../components/examples/loading/LoadingBasicExample.vue'
 import LoadingCustomExample from '../../components/examples/loading/LoadingCustomExample.vue'
 import LoadingContentExample from '../../components/examples/loading/LoadingContentExample.vue'
+import LoadingIconExample from '../../components/examples/loading/LoadingIconExample.vue'
+import LoadingUiExample from '../../components/examples/loading/LoadingUiExample.vue'
 
 const loadingConfig: ComponentDocConfig = {
   slug: 'loading',
@@ -12,11 +15,21 @@ const loadingConfig: ComponentDocConfig = {
   usage: [
     {
       title: 'Basic loading',
-      description: 'Show the default indicator while an operation is in progress.',
+      description: 'Switch between the default indicator and loaded content.',
       component: LoadingBasicExample,
     },
   ],
   examples: [
+    {
+      title: 'Icon',
+      description: 'Choose the icon name used as the loading indicator.',
+      component: LoadingIconExample,
+    },
+    {
+      title: 'UI',
+      description: 'Style the loading and content containers from LoadingContext.',
+      component: LoadingUiExample,
+    },
     {
       title: 'Custom loading',
       description: 'Replace the default icon using the loading slot.',
@@ -37,7 +50,7 @@ const loadingConfig: ComponentDocConfig = {
     {
       title: 'Content and spinner',
       description:
-        'Do not rely on animation or the icon alone to communicate the state. Provide clear text in the content or loading slot when needed, and mark decorative icons as hidden from assistive technologies through their configuration.',
+        'Do not rely on animation or the icon alone to communicate the state. The Icon is hidden from assistive technologies by default; provide a clear accessible name on Loading or text in the loading slot.',
     },
   ],
   api: {
@@ -45,16 +58,15 @@ const loadingConfig: ComponentDocConfig = {
       {
         name: 'loading',
         type: 'boolean',
-        default: 'true',
+        default: String(loadingDefaults.loading),
         description: 'Determines whether to show the loading state or the default slot content.',
       },
       {
         name: 'icon',
-        type: 'IconConfig',
-        typeLink: '/components/icon#icon-config',
-        default: "{ name: 'spinner' }",
-        description:
-          'Icon configuration displayed while loading when the loading slot is not used.',
+        type: 'IconName',
+        typeLink: '/components/icon#props',
+        default: `'${loadingDefaults.icon}'`,
+        description: 'Name of the icon displayed while loading when the loading slot is not used.',
       },
       {
         name: 'ui',
@@ -70,7 +82,7 @@ const loadingConfig: ComponentDocConfig = {
           { text: ') => HTMLAttributes\n}' },
         ],
         typePre: true,
-        default: 'undefined',
+        default: String(loadingDefaults.ui),
         description:
           'Resolvers for customizing the attributes and classes of the loading and content containers.',
       },

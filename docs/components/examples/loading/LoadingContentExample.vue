@@ -9,7 +9,7 @@ ${scriptEnd}
 
 <template>
   <Loading :loading="false">
-    <ul>
+    <ul class="grid gap-1 text-sm">
       <li>Ana</li>
       <li>Bruno</li>
       <li>Carla</li>

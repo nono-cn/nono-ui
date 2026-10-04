@@ -1,5 +1,5 @@
 export const loadingDefaults = {
   loading: true,
-  icon: { name: 'spinner' },
+  icon: 'spinner' as const,
   ui: undefined,
 }

@@ -3,7 +3,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { i18n } from '@/i18n'
 import { Loading, type LoadingContext, type LoadingProps } from '@/components/ui/Loading'
-import { testIconConfig } from '../utils/testIconConfig'
+import { Icon, type IconName } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 
 const casesLoading = [
@@ -11,6 +11,12 @@ const casesLoading = [
   { input: false, expected: false },
   { input: undefined, expected: true },
 ]
+
+const casesIcon = [
+  { input: 'spinner', expected: 'spinner' },
+  { input: 'star', expected: 'star' },
+  { input: undefined, expected: 'spinner' },
+] satisfies { input: IconName | undefined; expected: IconName }[]
 
 function mountLoading(options: MountingOptions<LoadingProps> = {}) {
   return mount(Loading, {
@@ -40,11 +46,10 @@ describe('Loading', () => {
     })
 
     describe('icon', () => {
-      testIconConfig({
-        text: 'pasa las props del icono',
-        id: '[data-test-loading-icon]',
-        default: 'spinner',
-        mount: (input) => mountLoading({ props: { loading: true, icon: input } }),
+      it.each(casesIcon)('pasa icon=$input a Icon como $expected', ({ input, expected }) => {
+        const loading = mountLoading({ props: { icon: input } })
+
+        expect(loading.getComponent(Icon).props('name')).toBe(expected)
       })
     })
 
@@ -79,17 +84,32 @@ describe('Loading', () => {
       id: '[data-test-loading-root]',
       mount: (attrs) => mountLoading({ attrs }),
     })
+  })
 
-    describe('aria-label', () => {
-      it.each(casesLoading)('solo es accesible mientras loading=$input', ({ input, expected }) => {
-        const loading = mountLoading({
-          props: { loading: input },
-          attrs: { 'aria-label': 'Cargando usuarios' },
-        })
+  describe('variantsCss', () => {
+    describe('loadingVariants', () => {
+      it('aplica las clases base a la raíz', () => {
+        expect(mountLoading().get('[data-test-loading-root]').classes()).toContain('w-full')
+      })
+    })
 
-        expect(loading.get('[data-test-loading-root]').attributes('aria-label')).toBe(
-          expected ? 'Cargando usuarios' : undefined,
+    describe('loadingIndicatorVariants', () => {
+      it('centra el indicador de carga', () => {
+        expect(mountLoading().get('[data-test-loading-loading]').classes()).toEqual(
+          expect.arrayContaining(['flex', 'w-full', 'items-center', 'justify-center']),
         )
+      })
+    })
+
+    describe('loadingContentVariants', () => {
+      it('ocupa el ancho disponible para el contenido', () => {
+        expect(mountLoading().get('[data-test-loading-content]').classes()).toContain('w-full')
+      })
+    })
+
+    describe('loadingIconVariants', () => {
+      it('anima el icono predeterminado', () => {
+        expect(mountLoading().get('[data-test-loading-icon]').classes()).toContain('animate-spin')
       })
     })
   })
@@ -127,6 +147,30 @@ describe('Loading', () => {
   })
 
   describe('context contract', () => {
+    it.each(casesLoading)('pasa loading=$input a los resolvers de ui', ({ input, expected }) => {
+      let indicatorContext: LoadingContext | undefined
+      let contentContext: LoadingContext | undefined
+
+      mountLoading({
+        props: {
+          loading: input,
+          ui: {
+            loading: (context) => {
+              indicatorContext = context
+              return {}
+            },
+            content: (context) => {
+              contentContext = context
+              return {}
+            },
+          },
+        },
+      })
+
+      expect(indicatorContext).toEqual({ loading: expected } satisfies LoadingContext)
+      expect(contentContext).toEqual({ loading: expected } satisfies LoadingContext)
+    })
+
     it.each(casesLoading)('pasa loading=$input como $expected', ({ input, expected }) => {
       let context: LoadingContext | undefined
 

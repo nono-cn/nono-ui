@@ -1,24 +1,43 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Loading } from '@/components/ui/Loading'
+import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
+const loading = ref(true)
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
 import { Loading } from '__DOCS_PACKAGE__/components/ui/Loading'
+
+const loading = ref(${loading.value})
 ${scriptEnd}
 
 <template>
-  <Loading :loading="true" aria-label="Loading users" />
-</template>`
+  <Loading :loading="loading" aria-label="Loading users">
+    <p>Users loaded.</p>
+  </Loading>
+</template>`,
+)
+
+function reset() {
+  loading.value = true
+}
 </script>
 
 <template>
   <ComponentExample
     title="Basic loading"
-    description="Use the default spinner icon."
+    description="Switch between the default spinner and loaded content."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <Loading :loading="true" aria-label="Loading users" />
+    <template #controls>
+      <ExampleCheckboxControl v-model="loading" label="Loading" />
+    </template>
+    <Loading :loading="loading" aria-label="Loading users">
+      <p>Users loaded.</p>
+    </Loading>
   </ComponentExample>
 </template>

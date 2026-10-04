@@ -4,8 +4,16 @@ import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import { useI18n } from '@/i18n'
-import type { LoadingContext, LoadingProps, LoadingSlots } from '.'
-import { loadingDefaults } from './defaults'
+import {
+  loadingContentVariants,
+  loadingIconVariants,
+  loadingIndicatorVariants,
+  loadingVariants,
+  type LoadingContext,
+  type LoadingProps,
+  type LoadingSlots,
+} from '.'
+import { loadingDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -24,7 +32,7 @@ const rootProps = computed(() => ({
   role: 'status',
   'aria-busy': props.loading,
   'aria-label': props.loading ? (attrs['aria-label'] ?? t('loading')) : undefined,
-  class: cn('w-full', attrs.class),
+  class: cn(loadingVariants(), attrs.class),
   style: attrs.style,
 }))
 
@@ -33,21 +41,16 @@ const loadingProps = computed(() => {
 
   return {
     ...loadingUI,
-    class: cn('flex w-full items-center justify-center', loadingUI.class),
+    class: cn(loadingIndicatorVariants(), loadingUI.class),
   }
 })
-
-const iconProps = computed(() => ({
-  ...props.icon,
-  class: cn(props.icon?.class, 'animate-spin'),
-}))
 
 const contentProps = computed(() => {
   const contentUI = useUi(props.ui?.content, loadingContext.value)
 
   return {
     ...contentUI,
-    class: cn('w-full', contentUI.class),
+    class: cn(loadingContentVariants(), contentUI.class),
   }
 })
 </script>
@@ -57,9 +60,9 @@ const contentProps = computed(() => {
     <div v-show="props.loading" v-bind="loadingProps" data-test-loading-loading>
       <slot name="loading" v-bind="loadingContext">
         <Icon
-          v-if="iconProps.name"
-          v-bind="iconProps"
-          :name="iconProps.name"
+          v-if="props.icon"
+          :name="props.icon"
+          :class="loadingIconVariants()"
           data-test-loading-icon
         />
       </slot>
