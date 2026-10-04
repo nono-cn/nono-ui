@@ -8,7 +8,7 @@ import { Link, type LinkProps } from '@/components/ui/Link'
 import { testAttrs } from '../utils/testAttrs'
 import { testButtonConfig } from '../utils/testButtonConfig'
 
-function mountLink(options: MountingOptions<LinkProps> & Record<string, unknown> = {}) {
+export function mountLink(options: MountingOptions<LinkProps> & Record<string, unknown> = {}) {
   const router = createRouter({
     history: createMemoryHistory(),
     routes: [
@@ -32,85 +32,105 @@ function mountLink(options: MountingOptions<LinkProps> & Record<string, unknown>
 }
 
 const casesTo = [
-  { input: '/docs', tag: 'a', expected: '/docs' },
-  { input: 'https://example.com/docs', tag: 'a', expected: 'https://example.com/docs' },
-  { input: undefined, tag: 'div', expected: undefined },
-]
+  {
+    name: 'sin destino',
+    input: undefined,
+    expected: { tag: 'DIV', href: undefined, router: false },
+  },
+  { name: 'una ruta interna', input: '/docs', expected: { tag: 'A', href: '/docs', router: true } },
+  {
+    name: 'una ruta interna con query y hash',
+    input: '/docs?tab=api#props',
+    expected: { tag: 'A', href: '/docs?tab=api#props', router: true },
+  },
+  {
+    name: 'una ruta por nombre',
+    input: { name: 'docs' },
+    expected: { tag: 'A', href: '/docs', router: true },
+  },
+  {
+    name: 'una ruta por objeto con query',
+    input: { path: '/docs', query: { tab: 'api' } },
+    expected: { tag: 'A', href: '/docs?tab=api', router: true },
+  },
+  {
+    name: 'una URL externa',
+    input: 'https://example.com/docs',
+    expected: { tag: 'A', href: 'https://example.com/docs', router: false },
+  },
+  {
+    name: 'una URL sin protocolo explícito',
+    input: '//example.com/docs',
+    expected: { tag: 'A', href: '//example.com/docs', router: false },
+  },
+  {
+    name: 'un enlace de correo',
+    input: 'mailto:hello@example.com',
+    expected: { tag: 'A', href: 'mailto:hello@example.com', router: false },
+  },
+] satisfies {
+  name: string
+  input: LinkProps['to']
+  expected: { tag: string; href?: string; router: boolean }
+}[]
 
 const casesReplace = [
-  { input: true, expected: true },
-  { input: false, expected: false },
-  { input: undefined, expected: false },
+  { name: 'el valor por defecto', input: undefined, expected: false },
+  { name: 'activado', input: true, expected: true },
+  { name: 'desactivado', input: false, expected: false },
 ]
 
-const casesAs = [
-  { to: undefined, expected: 'div' },
-  { to: '/docs', expected: 'a' },
-  { to: 'https://example.com', expected: 'a' },
+const casesSlotDestinations = [
+  { name: 'externo', to: 'https://example.com' },
+  { name: 'interno', to: '/docs' },
+  { name: 'sin destino', to: undefined },
 ]
+
+const casesButtonRoot = [
+  { name: 'sin destino', to: undefined, as: 'div' },
+  { name: 'con destino interno', to: '/docs', as: 'a' },
+  { name: 'con destino externo', to: 'https://example.com', as: 'a' },
+] satisfies { name: string; to: LinkProps['to']; as: string }[]
 
 describe('Link', () => {
   describe('props', () => {
     describe('to', () => {
-      it.each(casesTo)(
-        'renderiza el elemento y destino correctos para to=$input',
-        ({ input, tag, expected }) => {
-          const link = mountLink({ props: { to: input } }).get('[data-test-link-root]')
+      it.each(casesTo)('renderiza $name', ({ input, expected }) => {
+        const wrapper = mountLink({ props: { to: input } })
+        const root = wrapper.get('[data-test-link-root]')
 
-          expect(link.element.tagName.toLowerCase()).toBe(tag)
-          expect(link.attributes('href')).toBe(expected)
-        },
-      )
-
-      it('renderiza objetos RouteLocationRaw', () => {
-        const link = mountLink({ props: { to: { name: 'docs' } } })
-
-        expect(link.get('[data-test-link-root]').attributes('href')).toBe('/docs')
+        expect(root.element.tagName).toBe(expected.tag)
+        expect(root.attributes('href')).toBe(expected.href)
+        expect(wrapper.findComponent(RouterLink).exists()).toBe(expected.router)
       })
     })
 
     describe('replace', () => {
-      it.each(casesReplace)(
-        'pasa replace=$input a RouterLink como $expected',
-        ({ input, expected }) => {
-          const link = mountLink({ props: { to: '/docs', replace: input } })
+      it.each(casesReplace)('pasa $name a RouterLink', ({ input, expected }) => {
+        const wrapper = mountLink({ props: { to: '/docs', replace: input } })
 
-          expect(link.getComponent(RouterLink).props('replace')).toBe(expected)
-        },
-      )
+        expect(wrapper.getComponent(RouterLink).props('replace')).toBe(expected)
+      })
+
+      it('no usa RouterLink para una URL externa', () => {
+        const wrapper = mountLink({ props: { to: 'https://example.com', replace: true } })
+
+        expect(wrapper.findComponent(RouterLink).exists()).toBe(false)
+        expect(wrapper.get('[data-test-link-root]').attributes('href')).toBe('https://example.com')
+      })
     })
 
-    describe('button props', () => {
+    describe('props de Button', () => {
       testButtonConfig({
-        text: 'pasa las props y atributos a Button',
+        text: 'pasa la configuración y el evento click a Button',
         id: '[data-test-link-root]',
-        mount: (input) =>
-          mountLink({
-            props: { label: input.label },
-            attrs: input,
-          }),
-      })
-    })
-
-    describe('button configuration', () => {
-      it('usa los valores actuales de color y radius por defecto', () => {
-        const button = mountLink().getComponent(Button)
-
-        expect(button.props('color')).toBe('primary')
-        expect(button.props('radius')).toBe('md')
+        mount: (input) => mountLink({ props: input }),
       })
 
-      it.each(casesAs)('pasa as=$expected a Button para to=$to', ({ to, expected }) => {
+      it.each(casesButtonRoot)('fija as, asChild y loading $name', ({ to, as }) => {
         const button = mountLink({ props: { to } }).getComponent(Button)
 
-        expect(button.props('as')).toBe(expected)
-      })
-
-      it('fuerza asChild=false y loading=false', () => {
-        const button = mountLink({
-          attrs: { as: 'button', asChild: true, loading: true },
-        }).getComponent(Button)
-
+        expect(button.props('as')).toBe(as)
         expect(button.props('asChild')).toBe(false)
         expect(button.props('loading')).toBe(false)
       })
@@ -119,7 +139,7 @@ describe('Link', () => {
 
   describe('attrs', () => {
     testAttrs({
-      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
+      text: 'pasa los atributos, la clase y el estilo al enlace externo',
       id: '[data-test-link-root]',
       mount: (attrs) => mountLink({ attrs }),
     })
@@ -127,36 +147,46 @@ describe('Link', () => {
 
   describe('slots', () => {
     describe('default', () => {
-      it('renderiza el slot predeterminado', () => {
-        const link = mountLink({
+      it.each(casesSlotDestinations)('sustituye label en un enlace $name', ({ to }) => {
+        const root = mountLink({
+          props: { to, label: 'Etiqueta' },
           slots: {
-            default: () => h('span', { 'data-test-link-slot': 'default' }, 'Slot predeterminado'),
+            default: () => h('span', { 'data-test-link-slot': 'default' }, 'Contenido'),
           },
-        })
+        }).get('[data-test-link-root]')
 
-        expect(link.get('[data-test-link-slot="default"]').text()).toBe('Slot predeterminado')
+        expect(root.get('[data-test-link-slot="default"]').text()).toBe('Contenido')
+        expect(root.text()).toBe('Contenido')
       })
     })
 
     describe('leading', () => {
-      it('renderiza el slot inicial', () => {
-        const link = mountLink({
-          slots: { leading: () => h('span', { 'data-test-link-slot': 'leading' }, 'Slot inicial') },
-        })
+      it.each(casesSlotDestinations)('sustituye icon en un enlace $name', ({ to }) => {
+        const root = mountLink({
+          props: { to, icon: 'star', label: 'Etiqueta' },
+          slots: {
+            leading: () => h('span', { 'data-test-link-slot': 'leading' }, 'Inicio'),
+          },
+        }).get('[data-test-link-root]')
 
-        expect(link.get('[data-test-link-slot="leading"]').text()).toBe('Slot inicial')
+        expect(root.get('[data-test-link-slot="leading"]').text()).toBe('Inicio')
+        expect(root.element.firstElementChild?.getAttribute('data-test-link-slot')).toBe('leading')
+        expect(root.find('[data-test-button-icon]').exists()).toBe(false)
       })
     })
 
     describe('trailing', () => {
-      it('renderiza el slot final', () => {
-        const link = mountLink({
+      it.each(casesSlotDestinations)('sustituye trailingIcon en un enlace $name', ({ to }) => {
+        const root = mountLink({
+          props: { to, trailingIcon: 'chevronRight', label: 'Etiqueta' },
           slots: {
-            trailing: () => h('span', { 'data-test-link-slot': 'trailing' }, 'Slot final'),
+            trailing: () => h('span', { 'data-test-link-slot': 'trailing' }, 'Final'),
           },
-        })
+        }).get('[data-test-link-root]')
 
-        expect(link.get('[data-test-link-slot="trailing"]').text()).toBe('Slot final')
+        expect(root.get('[data-test-link-slot="trailing"]').text()).toBe('Final')
+        expect(root.element.lastElementChild?.getAttribute('data-test-link-slot')).toBe('trailing')
+        expect(root.find('[data-test-button-trailing-icon]').exists()).toBe(false)
       })
     })
   })

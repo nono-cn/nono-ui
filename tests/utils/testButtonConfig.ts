@@ -13,9 +13,21 @@ export function testButtonConfig({ text, id, mount }: TestButtonConfigOptions) {
   it(text, async () => {
     const onClick = vi.fn()
     const input: NormalizeButtonProps = {
+      as: 'a',
+      asChild: false,
       label: 'Close',
+      variant: 'outline',
+      size: 'icon-lg',
+      radius: 12,
+      loading: false,
+      color: '#123456',
+      icon: 'star',
+      trailingIcon: 'chevronRight',
       onClick,
       id: 'custom-button',
+      'aria-label': 'Close',
+      title: 'Título',
+      'data-test-config': 'valor',
       class: 'custom-button',
       style: 'opacity: 0.5',
     }
@@ -27,14 +39,31 @@ export function testButtonConfig({ text, id, mount }: TestButtonConfigOptions) {
 
     if (!button) throw new Error(`Expected Button ${id}`)
 
-    expect(button.exists()).toBe(true)
-    expect(button.props('label')).toBe(input.label)
-    expect(button.attributes('id')).toBe(input.id)
+    for (const name of [
+      'as',
+      'asChild',
+      'label',
+      'variant',
+      'size',
+      'radius',
+      'loading',
+      'color',
+      'icon',
+      'trailingIcon',
+    ] as const) {
+      expect(button.props(name)).toBe(input[name])
+    }
+
+    for (const name of ['id', 'aria-label', 'title', 'data-test-config'] as const) {
+      expect(button.attributes(name)).toBe(input[name])
+    }
     expect(button.classes()).toContain(input.class)
-    expect(button.attributes('style')).toContain('opacity: 0.5')
+    expect(button.attributes('style')).toContain(input.style)
 
     await button.trigger('click')
 
     expect(onClick).toHaveBeenCalledTimes(1)
+    expect(onClick.mock.calls[0][0]).toBeInstanceOf(Event)
+    expect(onClick.mock.calls[0][0].type).toBe('click')
   })
 }

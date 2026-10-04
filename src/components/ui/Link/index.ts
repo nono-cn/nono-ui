@@ -1,8 +1,9 @@
-import type { ButtonEmits, ButtonProps } from '@/components/ui/Button'
+import type { ButtonEmits, ButtonProps, ButtonSlots } from '@/components/ui/Button'
 import type { RouterLinkProps } from 'vue-router'
 import type { EmitsAsProps } from '@/types/emits'
 
 export { default as Link } from './Link.vue'
+export { linkDefaults } from './constants'
 
 // Props
 export type LinkProps = Omit<ButtonProps, 'as' | 'asChild' | 'loading'> &
@@ -15,11 +16,7 @@ export type LinkSize = NonNullable<ButtonProps['size']>
 export type LinkEmits = ButtonEmits
 
 // Slots
-export interface LinkSlots {
-  default?(): unknown
-  leading?(): unknown
-  trailing?(): unknown
-}
+export type LinkSlots = Pick<ButtonSlots, 'default' | 'leading' | 'trailing'>
 
 // Normalize
 export type NormalizeLinkProps = LinkProps & EmitsAsProps<LinkEmits>

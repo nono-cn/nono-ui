@@ -3,7 +3,7 @@ import { computed, mergeProps, useAttrs, useSlots } from 'vue'
 import { RouterLink } from 'vue-router'
 import { Button } from '@/components/ui/Button'
 import type { LinkEmits, LinkProps, LinkSlots } from '.'
-import { linkDefaults } from './default'
+import { linkDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
