@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { Masonry } from '@/components/ui/Masonry'
+import { computed, ref } from 'vue'
+import { Masonry, type MasonryItem } from '@/components/ui/Masonry'
+import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -10,10 +12,13 @@ const items = [
   { label: 'Fourth', height: 88 },
   { label: 'Fifth', height: 144 },
   { label: 'Sixth', height: 80 },
-]
+] satisfies MasonryItem[]
 
-const code = `<script setup lang="ts">
-import { Masonry } from '__DOCS_PACKAGE__/components/ui/Masonry'
+const sequential = ref(true)
+
+const code = computed(
+  () => `<script setup lang="ts">
+import { Masonry, type MasonryItem } from '__DOCS_PACKAGE__/components/ui/Masonry'
 
 const items = [
   { label: 'First', height: 128 },
@@ -22,18 +27,23 @@ const items = [
   { label: 'Fourth', height: 88 },
   { label: 'Fifth', height: 144 },
   { label: 'Sixth', height: 80 },
-]
+] satisfies MasonryItem[]
 ${scriptEnd}
 
 <template>
-  <Masonry class="min-w-0" :items="items" :columns="3" :spacing="3" sequential>
+  <Masonry class="min-w-0" :items="items" :columns="3" :spacing="3" :sequential="${sequential.value}">
     <template #default="{ item }">
-      <div class="grid place-items-center rounded-lg border bg-muted/40 p-4" :style="{ minHeight: \`\${item.height}px\` }">
+      <div class="grid h-full place-items-center rounded-lg border bg-muted/40 p-4">
         {{ item.label }}
       </div>
     </template>
   </Masonry>
-</template>`
+</template>`,
+)
+
+function reset() {
+  sequential.value = true
+}
 </script>
 
 <template>
@@ -41,14 +51,14 @@ ${scriptEnd}
     title="Sequential order"
     description="Preserve the left-to-right order in each row."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <Masonry class="min-w-0" :items="items" :columns="3" :spacing="3" sequential>
+    <template #controls>
+      <ExampleCheckboxControl v-model="sequential" label="Sequential" />
+    </template>
+    <Masonry class="min-w-0" :items="items" :columns="3" :spacing="3" :sequential="sequential">
       <template #default="{ item }">
-        <div
-          class="grid place-items-center rounded-lg border bg-muted/40 p-4"
-          :style="{ minHeight: `${item.height}px` }"
-        >
+        <div class="grid h-full place-items-center rounded-lg border bg-muted/40 p-4">
           {{ item.label }}
         </div>
       </template>

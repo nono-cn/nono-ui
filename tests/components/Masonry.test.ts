@@ -1,125 +1,273 @@
-import { h } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { h } from 'vue'
 
-import { Masonry, type MasonryProps } from '@/components/ui/Masonry'
+import { Masonry, type MasonryItem, type MasonryProps } from '@/components/ui/Masonry'
 import { testAttrs } from '../utils/testAttrs'
-
-type Item = { id: string; label: string }
-
-const items: Item[] = [
-  { id: 'one', label: 'One' },
-  { id: 'two', label: 'Two' },
-  { id: 'three', label: 'Three' },
-  { id: 'four', label: 'Four' },
-  { id: 'five', label: 'Five' },
-]
 
 function mountMasonry(options: MountingOptions<MasonryProps> = {}) {
   return mount(Masonry, {
-    props: { items },
+    props: { items: [{ height: 72, label: 'one' }] },
     ...options,
   })
 }
 
-function getColumns(wrapper: ReturnType<typeof mountMasonry>) {
-  return Array.from(wrapper.get('[data-test-masonry-root]').element.children)
-}
+const casesItems = [
+  { input: [], expected: { root: false, items: [] } },
+  {
+    input: [{ height: 72, label: 'one' }],
+    expected: { root: true, items: [{ text: 'one', height: '72px' }] },
+  },
+  {
+    input: [
+      { height: 72, label: 'one' },
+      { height: 120, label: 'two' },
+      { height: 88, label: 'three' },
+    ],
+    expected: {
+      root: true,
+      items: [
+        { text: 'one', height: '72px' },
+        { text: 'two', height: '120px' },
+        { text: 'three', height: '88px' },
+      ],
+    },
+  },
+  {
+    input: [{ height: 64 }],
+    expected: { root: true, items: [{ text: '64', height: '64px' }] },
+  },
+  {
+    input: [{ height: 96, id: 'custom' }],
+    expected: { root: true, items: [{ text: '96', height: '96px' }] },
+  },
+]
+
+const casesColumns = [
+  { input: undefined, expected: 4, label: 'default' },
+  { input: 1, expected: 1, label: 'one' },
+  { input: 2, expected: 2, label: 'two' },
+  { input: 3, expected: 3, label: 'three' },
+  { input: 4, expected: 4, label: 'four' },
+  { input: 0, expected: 1, label: 'zero' },
+  { input: -2, expected: 1, label: 'negative' },
+  { input: 2.9, expected: 2, label: 'fractional' },
+  { input: { sm: 1, md: 2, lg: 4 }, width: 500, expected: 2, label: 'below sm' },
+  { input: { sm: 1, md: 2, lg: 4 }, width: 700, expected: 1, label: 'sm' },
+  { input: { sm: 1, md: 2, lg: 4 }, width: 800, expected: 2, label: 'md' },
+  { input: { sm: 1, md: 2, lg: 4 }, width: 1200, expected: 4, label: 'lg' },
+  { input: { sm: 2 }, width: 1200, expected: 2, label: 'responsive fallback' },
+]
+
+const casesSpacing = [
+  { input: undefined, expected: { root: '0.5rem', column: '0.5rem' } },
+  { input: 0, expected: { root: '0rem', column: '0rem' } },
+  { input: 1, expected: { root: '0.25rem', column: '0.25rem' } },
+  { input: 2, expected: { root: '0.5rem', column: '0.5rem' } },
+  { input: 4, expected: { root: '1rem', column: '1rem' } },
+  { input: -2, expected: { root: '0rem', column: '0rem' } },
+  { input: '3', expected: { root: '0.75rem', column: '0.75rem' } },
+  { input: '1.5', expected: { root: '0.375rem', column: '0.375rem' } },
+  { input: 'invalid', expected: { root: '0rem', column: '0rem' } },
+]
+
+const casesSequential = [
+  {
+    input: undefined,
+    expected: { columns: [['one'], ['two', 'four'], ['three', 'five']] },
+  },
+  {
+    input: false,
+    expected: { columns: [['one'], ['two', 'four'], ['three', 'five']] },
+  },
+  {
+    input: true,
+    expected: { columns: [['one', 'four'], ['two', 'five'], ['three']] },
+  },
+]
 
 describe('Masonry', () => {
   describe('props', () => {
     describe('items', () => {
-      it('renderiza todos los items mediante el slot default scoped', () => {
+      it.each(casesItems)('renderiza items=$input', ({ input, expected }) => {
         const wrapper = mountMasonry({
+          props: { items: input },
           slots: {
-            default: ({ item }: { item: Item }) => h('span', item.label),
+            default: ({ item }: { item: MasonryItem }) =>
+              h('span', String(item.label ?? item.height)),
           },
         })
+        const root = wrapper.find('[data-test-masonry-root]')
 
-        expect(wrapper.text()).toContain('One')
-        expect(wrapper.text()).toContain('Five')
-        expect(wrapper.findAll('span')).toHaveLength(items.length)
+        expect(root.exists()).toBe(expected.root)
+        if (!expected.root) return
+
+        const renderedItems = wrapper.findAll('[data-test-masonry-item]').map((item) => ({
+          text: item.text().trim(),
+          height: (item.element as HTMLElement).style.height,
+        }))
+        expect(renderedItems).toHaveLength(expected.items.length)
+        expect(renderedItems).toEqual(expect.arrayContaining(expected.items))
       })
 
-      it('renderiza un div por item cuando no se proporciona el slot', () => {
-        const wrapper = mountMasonry({ props: { items: ['one', 'two'] } })
-        const renderedItems = getColumns(wrapper).flatMap((column) =>
-          Array.from(column.children).map((itemWrapper) => itemWrapper.firstElementChild),
-        )
+      it('actualiza la distribución y la altura cuando cambian los items', async () => {
+        const wrapper = mountMasonry({
+          props: {
+            columns: 2,
+            items: [
+              { height: 100, label: 'one' },
+              { height: 10, label: 'two' },
+              { height: 10, label: 'three' },
+            ],
+          },
+          slots: { default: ({ item }: { item: MasonryItem }) => h('span', String(item.label)) },
+        })
+        const columnTexts = () =>
+          wrapper
+            .findAll('[data-test-masonry-column]')
+            .map((column) =>
+              column.findAll('[data-test-masonry-item]').map((item) => item.text().trim()),
+            )
 
-        expect(renderedItems).toHaveLength(2)
-        expect(renderedItems.every((element) => element?.tagName === 'DIV')).toBe(true)
-        expect(renderedItems.map((element) => element?.textContent)).toEqual(['one', 'two'])
-      })
+        expect(columnTexts()).toEqual([['one'], ['two', 'three']])
 
-      it('renderiza un array vacío sin items', () => {
-        const wrapper = mountMasonry({ props: { items: [] } })
+        await wrapper.setProps({
+          items: [
+            { height: 5, label: 'one' },
+            { height: 10, label: 'two' },
+            { height: 10, label: 'three' },
+          ],
+        })
 
+        expect(columnTexts()).toEqual([['one', 'three'], ['two']])
+        expect(
+          (wrapper.findAll('[data-test-masonry-item]')[0].element as HTMLElement).style.height,
+        ).toBe('5px')
+
+        await wrapper.setProps({ items: [] })
         expect(wrapper.find('[data-test-masonry-root]').exists()).toBe(false)
       })
     })
 
     describe('columns', () => {
-      it.each([
-        { input: 1, expected: 1 },
-        { input: 2, expected: 2 },
-        { input: 3, expected: 3 },
-        { input: 4, expected: 4 },
-        { input: 0, expected: 1 },
-        { input: undefined, expected: 4 },
-      ])('crea $expected columnas cuando columns=$input', ({ input, expected }) => {
-        const wrapper = mountMasonry({ props: { items, columns: input } })
+      it.each(casesColumns)('crea $expected columnas con $label', ({ input, width, expected }) => {
+        const originalWidth = window.innerWidth
 
-        expect(getColumns(wrapper)).toHaveLength(expected)
+        try {
+          if (width !== undefined) window.innerWidth = width
+          const wrapper = mountMasonry({
+            props: { items: [{ height: 72, label: 'one' }], columns: input },
+          })
+
+          expect(wrapper.findAll('[data-test-masonry-column]')).toHaveLength(expected)
+        } finally {
+          window.innerWidth = originalWidth
+        }
       })
 
-      it.each([
-        { width: 500, expected: 2, label: 'fallback md' },
-        { width: 700, expected: 1, label: 'sm' },
-        { width: 800, expected: 2, label: 'md' },
-        { width: 1200, expected: 4, label: 'lg' },
-      ])('resuelve columns responsive en $label', ({ width, expected }) => {
-        window.innerWidth = width
-        const wrapper = mountMasonry({
-          props: { items, columns: { sm: 1, md: 2, lg: 4 } },
-        })
+      it('actualiza las columnas al cambiar el ancho de la ventana', async () => {
+        const originalWidth = window.innerWidth
+        let wrapper: ReturnType<typeof mountMasonry> | undefined
 
-        expect(getColumns(wrapper)).toHaveLength(expected)
+        try {
+          window.innerWidth = 700
+          wrapper = mountMasonry({
+            props: {
+              items: [{ height: 72 }],
+              columns: { sm: 1, md: 2, lg: 4 },
+            },
+          })
+          expect(wrapper.findAll('[data-test-masonry-column]')).toHaveLength(1)
+
+          window.innerWidth = 1200
+          window.dispatchEvent(new Event('resize'))
+          await wrapper.vm.$nextTick()
+          expect(wrapper.findAll('[data-test-masonry-column]')).toHaveLength(4)
+
+          await wrapper.setProps({ columns: 2 })
+          expect(wrapper.findAll('[data-test-masonry-column]')).toHaveLength(2)
+        } finally {
+          wrapper?.unmount()
+          window.innerWidth = originalWidth
+        }
       })
     })
 
     describe('spacing', () => {
-      it.each([
-        { input: 1, expected: '0.25rem' },
-        { input: 2, expected: '0.5rem' },
-        { input: 4, expected: '1rem' },
-        { input: '3', expected: '0.75rem' },
-        { input: undefined, expected: '0.5rem' },
-      ])('aplica spacing=$input como $expected', ({ input, expected }) => {
-        const wrapper = mountMasonry({ props: { items, spacing: input } })
-        const root = wrapper.get('[data-test-masonry-root]')
+      it.each(casesSpacing)('aplica spacing=$input', ({ input, expected }) => {
+        const wrapper = mountMasonry({
+          props: { items: [{ height: 72, label: 'one' }], spacing: input },
+        })
 
-        expect(root.attributes('style')).toContain(`gap: ${expected}`)
-        expect(getColumns(wrapper)[0].getAttribute('style')).toContain(`gap: ${expected}`)
+        expect(wrapper.get('[data-test-masonry-root]').attributes('style')).toContain(
+          `gap: ${expected.root}`,
+        )
+        expect(wrapper.get('[data-test-masonry-column]').attributes('style')).toContain(
+          `gap: ${expected.column}`,
+        )
       })
     })
 
     describe('sequential', () => {
-      it.each([
-        { input: false, expected: ['One', 'Four'] },
-        { input: true, expected: ['One', 'Four'] },
-        { input: undefined, expected: ['One', 'Four'] },
-      ])('distribuye con sequential=$input', ({ input, expected }) => {
+      it.each(casesSequential)('distribuye items con sequential=$input', ({ input, expected }) => {
         const wrapper = mountMasonry({
-          props: { items, columns: 3, sequential: input },
+          props: {
+            items: [
+              { height: 100, label: 'one' },
+              { height: 10, label: 'two' },
+              { height: 10, label: 'three' },
+              { height: 10, label: 'four' },
+              { height: 10, label: 'five' },
+            ],
+            columns: 3,
+            sequential: input,
+          },
+          slots: { default: ({ item }: { item: MasonryItem }) => h('span', String(item.label)) },
+        })
+        const columns = wrapper
+          .findAll('[data-test-masonry-column]')
+          .map((column) =>
+            column.findAll('[data-test-masonry-item]').map((item) => item.text().trim()),
+          )
+
+        expect(columns).toEqual(expected.columns)
+      })
+    })
+  })
+
+  describe('slots', () => {
+    describe('default', () => {
+      it('expone el item completo y su índice original', () => {
+        const items = [
+          { height: 100, label: 'one', id: 'custom-one' },
+          { height: 10, label: 'two', id: 'custom-two' },
+          { height: 10, label: 'three', id: 'custom-three' },
+        ] satisfies MasonryItem[]
+        const wrapper = mountMasonry({
+          props: { items, columns: 2 },
           slots: {
-            default: ({ item }: { item: Item }) => h('span', item.label),
+            default: ({ item, index }: { item: MasonryItem; index: number }) =>
+              h(
+                'span',
+                { 'data-test-slot': '' },
+                `${index}:${item.id}:${item.label}:${item.height}`,
+              ),
           },
         })
-        const firstColumn = getColumns(wrapper)[0]
 
-        expect(firstColumn.textContent).toContain(expected[0])
-        expect(firstColumn.textContent).toContain(expected[1])
+        expect(wrapper.findAll('[data-test-slot]').map((node) => node.text())).toEqual([
+          '0:custom-one:one:100',
+          '1:custom-two:two:10',
+          '2:custom-three:three:10',
+        ])
+      })
+
+      it('renderiza el contenido por defecto cuando no se pasa un slot', () => {
+        const wrapper = mountMasonry({ props: { items: [{ height: 72, id: 'custom' }] } })
+        const item = wrapper.get('[data-test-masonry-item]').element as HTMLElement
+
+        expect(item.textContent).toBe('[object Object]')
+        expect(item.style.height).toBe('72px')
       })
     })
   })
@@ -131,18 +279,30 @@ describe('Masonry', () => {
     })
   })
 
-  describe('slots', () => {
-    describe('default', () => {
-      it('expone item e index al slot scoped', () => {
-        const wrapper = mountMasonry({
-          slots: {
-            default: ({ item, index }: { item: Item; index: number }) =>
-              h('span', `${index}:${item.id}`),
-          },
-        })
+  describe('variantsCss', () => {
+    describe('masonryVariants', () => {
+      it('aplica las clases base a la raíz', () => {
+        expect(mountMasonry().get('[data-test-masonry-root]').classes()).toEqual(
+          expect.arrayContaining(['flex', 'w-full', 'items-start']),
+        )
+      })
+    })
 
-        expect(wrapper.text()).toContain('0:one')
-        expect(wrapper.text()).toContain('4:five')
+    describe('masonryColumnVariants', () => {
+      it('aplica las clases base a cada columna', () => {
+        const column = mountMasonry().get('[data-test-masonry-column]')
+
+        expect(column.classes()).toEqual(
+          expect.arrayContaining(['flex', 'min-w-0', 'flex-1', 'flex-col']),
+        )
+      })
+    })
+
+    describe('masonryItemVariants', () => {
+      it('aplica la clase base a cada item', () => {
+        const item = mountMasonry().get('[data-test-masonry-item]')
+
+        expect(item.classes()).toContain('min-w-0')
       })
     })
   })
