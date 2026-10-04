@@ -19,6 +19,7 @@ const props = withDefaults(defineProps<EmptyProps>(), emptyDefaults)
 defineSlots<EmptySlots>()
 
 const attrs = useAttrs()
+const mediaVariant = computed(() => props.mediaVariant ?? emptyDefaults.mediaVariant)
 
 const rootProps = computed(() => {
   return {
@@ -40,7 +41,7 @@ const mediaProps = computed(() => {
   const ui = useUi(props.ui?.media, undefined)
   return {
     ...ui,
-    class: cn(emptyMediaVariants({ variant: props.mediaVariant }), ui.class),
+    class: cn(emptyMediaVariants({ variant: mediaVariant.value }), ui.class),
     style: ui.style,
   }
 })
@@ -81,7 +82,7 @@ const contentProps = computed(() => {
         v-if="$slots.media"
         v-bind="mediaProps"
         data-test-empty-media
-        :data-variant="props.mediaVariant"
+        :data-variant="mediaVariant"
       >
         <slot name="media" />
       </div>
