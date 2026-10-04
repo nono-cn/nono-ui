@@ -5,7 +5,7 @@ import { ToggleGroupItem, ToggleGroupRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
 import { toggleGroupVariants } from '@/components/ui/ToggleGroup'
 import { toggleVariants } from '@/components/ui/Toggle'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import type { IconProps } from '@/components/ui/Icon'
@@ -50,10 +50,11 @@ const value = computed<ToggleGroupModelValue>({
     model.value = nextValue
   },
 })
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'toggle',
-)
+const { colorStyle } = useTheme({
+  color: () => props.color ?? (props.severity === 'default' ? 'muted-foreground' : props.severity),
+  prefix: 'toggle',
+  defaultColor: 'muted-foreground',
+})
 
 watch(model, (nextValue, previousValue) => {
   if (nextValue !== previousValue) emit('valueChange', nextValue)
@@ -126,9 +127,7 @@ function getItemProps(context: ToggleGroupItemContext) {
       'inline-flex shrink-0 items-center justify-center gap-2 rounded-md border border-transparent text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
       toggleVariants({
         variant: props.variant,
-        severity: props.severity,
         size: props.size,
-        color: Boolean(props.color),
       }),
       ui.class,
     ),

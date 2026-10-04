@@ -53,7 +53,8 @@ export type ToggleGroupItemProps = Pick<RekaToggleGroupItemProps, 'value' | 'dis
 export type ToggleGroupType = NonNullable<ToggleGroupRootProps['type']>
 export type ToggleGroupOrientation = NonNullable<ToggleGroupRootProps['orientation']>
 export type ToggleGroupVariant = NonNullable<ToggleVariants['variant']>
-export type ToggleGroupSeverity = NonNullable<ToggleVariants['severity']>
+export type ToggleGroupSeverity =
+  'default' | 'primary' | 'secondary' | 'warning' | 'success' | 'error'
 export type ToggleGroupSize = NonNullable<ToggleVariants['size']>
 
 // Item
@@ -69,7 +70,7 @@ export interface ToggleGroupProps extends ToggleGroupRootProps {
   variant?: ToggleGroupVariant
   severity?: ToggleGroupSeverity
   size?: ToggleGroupSize
-  color?: ToggleVariants['color']
+  color?: string
   spacing?: number
   mandatory?: boolean
   items?: ToggleGroupItem[]

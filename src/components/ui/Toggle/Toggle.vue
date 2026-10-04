@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 import { Toggle } from 'reka-ui'
-import { Icon } from '@/components/ui/Icon'
+import { Icon, type IconSize } from '@/components/ui/Icon'
 import { cn } from '@/lib/utils'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import {
   createToggleContext,
   toggleVariants,
@@ -11,7 +11,7 @@ import {
   type ToggleSlots,
   type ToggleValue,
 } from '.'
-import { toggleDefaults } from './defaults'
+import { toggleDefaults, toggleSizes, toggleVariantNames } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -19,71 +19,72 @@ const props = withDefaults(defineProps<ToggleProps>(), toggleDefaults)
 defineSlots<ToggleSlots>()
 
 const attrs = useAttrs()
-const value = defineModel<ToggleValue>('value', { default: toggleDefaults.value })
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'toggle',
-)
+const modelValue = defineModel<ToggleValue>({ default: toggleDefaults.modelValue })
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'toggle',
+  defaultColor: toggleDefaults.color,
+})
 
-const toggleContext = computed(() => createToggleContext(value.value))
+const toggleContext = computed(() => createToggleContext(modelValue.value))
+const variant = computed(() =>
+  toggleVariantNames.includes(props.variant) ? props.variant : toggleDefaults.variant,
+)
+const size = computed(() => (toggleSizes.includes(props.size) ? props.size : toggleDefaults.size))
+const iconSize = computed<IconSize>(() => {
+  switch (size.value) {
+    case 'icon-xs':
+      return 'xs'
+    case 'icon-sm':
+      return 'sm'
+    case 'icon':
+      return 'md'
+    case 'icon-lg':
+      return 'lg'
+    case 'icon-xl':
+      return 'xl'
+    default:
+      return size.value
+  }
+})
 
 const rootProps = computed(() => {
   const calculatedVariants = toggleVariants({
-    variant: props.variant,
-    severity: props.severity,
-    size: props.size,
-    color: Boolean(props.color),
+    variant: variant.value,
+    size: size.value,
   })
   return {
     ...attrs,
     as: 'button' as const,
     disabled: props.disabled,
+    name: props.name,
     asChild: false,
-    class: cn(
-      'inline-flex shrink-0 items-center justify-center gap-2 rounded-md border border-transparent text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
-      calculatedVariants,
-      attrs.class,
-    ),
+    class: cn(calculatedVariants, attrs.class),
     style: [colorStyle.value, attrs.style],
   }
-})
-
-const iconProps = computed(() => {
-  const icon = props.icon
-
-  return { ...icon, size: icon?.size ?? props.size }
-})
-const trailingIconProps = computed(() => {
-  const icon = props.trailingIcon
-
-  return { ...icon, size: icon?.size ?? props.size }
 })
 </script>
 
 <template>
-  <Toggle v-bind="rootProps" v-model="value" data-test-toggle-root>
-    <div v-if="$slots.leading" data-test-toggle-leading>
-      <slot name="leading" v-bind="toggleContext" />
-    </div>
-    <Icon
-      v-else-if="iconProps.name"
-      v-bind="iconProps"
-      :name="iconProps.name"
-      data-test-toggle-icon
-    />
+  <Toggle v-bind="rootProps" v-model="modelValue" data-test-toggle-root>
+    <slot name="leading" v-bind="toggleContext">
+      <Icon
+        v-if="props.icon"
+        :name="props.icon"
+        :size="iconSize"
+        data-test-toggle-icon
+      />
+    </slot>
 
-    <div data-test-toggle-default>
-      <slot v-bind="toggleContext">{{ props.label }}</slot>
-    </div>
+    <slot v-if="$slots.default || props.label" v-bind="toggleContext">{{ props.label }}</slot>
 
-    <div v-if="$slots.trailing" data-test-toggle-trailing>
-      <slot name="trailing" v-bind="toggleContext" />
-    </div>
-    <Icon
-      v-else-if="trailingIconProps.name"
-      v-bind="trailingIconProps"
-      :name="trailingIconProps.name"
-      data-test-toggle-trailing-icon
-    />
+    <slot name="trailing" v-bind="toggleContext">
+      <Icon
+        v-if="props.trailingIcon"
+        :name="props.trailingIcon"
+        :size="iconSize"
+        data-test-toggle-trailing-icon
+      />
+    </slot>
   </Toggle>
 </template>

@@ -32,6 +32,7 @@ import marker from './components/marker'
 import masonry from './components/masonry'
 import switchConfig from './components/switch'
 import textarea from './components/textarea'
+import toggleConfig from './components/toggle'
 import type { ComponentDocConfig } from './component-docs'
 
 export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'description'>
@@ -71,6 +72,7 @@ export const docsComponents = [
   masonry,
   switchConfig,
   textarea,
+  toggleConfig,
 ] satisfies ComponentDocConfig[]
 
 export const docsComponentsBySlug = Object.fromEntries(
