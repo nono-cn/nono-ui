@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 import { cn } from '@/lib/utils'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import { kbdVariants, type KbdProps, type KbdSlots } from '.'
-import { kbdDefaults } from './defaults'
+import { kbdDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -11,26 +11,23 @@ const props = withDefaults(defineProps<KbdProps>(), kbdDefaults)
 defineSlots<KbdSlots>()
 
 const attrs = useAttrs()
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'kbd',
-)
+const { colorStyle, radiusStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'kbd',
+  defaultColor: kbdDefaults.color,
+  radius: () => props.radius,
+  defaultRadius: kbdDefaults.radius,
+})
 const rootProps = computed(() => {
   const calculatedVariants = kbdVariants({
     size: props.size,
     variant: props.variant,
-    severity: props.severity,
-    color: Boolean(props.color),
   })
 
   return {
     ...attrs,
-    class: cn(
-      calculatedVariants,
-      '[[data-slot=tooltip-content]_&]:bg-background/20 [[data-slot=tooltip-content]_&]:text-background dark:[[data-slot=tooltip-content]_&]:bg-background/10',
-      attrs.class,
-    ),
-    style: [colorStyle.value, attrs.style],
+    class: cn(calculatedVariants, attrs.class),
+    style: [colorStyle.value, radiusStyle.value, attrs.style],
   }
 })
 </script>

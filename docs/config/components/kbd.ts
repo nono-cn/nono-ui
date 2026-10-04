@@ -1,6 +1,8 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { kbdDefaults, kbdSizes, kbdVariantNames } from '@/components/ui/Kbd'
 import KbdColorExample from '../../components/examples/kbd/KbdColorExample.vue'
-import KbdSeverityExample from '../../components/examples/kbd/KbdSeverityExample.vue'
+import KbdRadiusExample from '../../components/examples/kbd/KbdRadiusExample.vue'
+import KbdGroupExample from '../../components/examples/kbd/KbdGroupExample.vue'
 import KbdSizeExample from '../../components/examples/kbd/KbdSizeExample.vue'
 import KbdUsageExample from '../../components/examples/kbd/KbdUsageExample.vue'
 import KbdVariantExample from '../../components/examples/kbd/KbdVariantExample.vue'
@@ -21,13 +23,8 @@ const kbdConfig: ComponentDocConfig = {
   examples: [
     {
       title: 'Variant',
-      description: 'Compare the key’s visual variants using the default neutral severity.',
+      description: 'Choose the visual style applied to the key.',
       component: KbdVariantExample,
-    },
-    {
-      title: 'Severity',
-      description: 'Compare severity levels using the subtle variant.',
-      component: KbdSeverityExample,
     },
     {
       title: 'Size',
@@ -36,15 +33,25 @@ const kbdConfig: ComponentDocConfig = {
     },
     {
       title: 'Color',
-      description: 'Apply a custom CSS color.',
+      description: 'Choose a theme token or custom color.',
       component: KbdColorExample,
+    },
+    {
+      title: 'Radius',
+      description: 'Choose the corner radius of the key.',
+      component: KbdRadiusExample,
+    },
+    {
+      title: 'Keyboard shortcuts',
+      description: 'Combine keys with KbdGroup.',
+      component: KbdGroupExample,
     },
   ],
   accessibility: [
     {
       title: 'Accessible content',
       description:
-        'Kbd renders a semantic kbd element and forwards HTML and ARIA attributes, class, and style to the root element. Keep the shortcut visible and add text context when its pronunciation is unclear. Do not rely on color or visual styling alone to communicate an action.',
+        'Kbd and KbdGroup render semantic kbd elements and forward HTML and ARIA attributes, class, and style to their roots. Keep the shortcut visible and give combined keys a readable name or nearby text context. Do not rely on color alone to communicate an action.',
     },
   ],
   api: {
@@ -52,32 +59,32 @@ const kbdConfig: ComponentDocConfig = {
       {
         name: 'label',
         type: 'string',
-        default: 'undefined',
+        default: String(kbdDefaults.label),
         description: 'Text displayed when no content is provided in the default slot.',
       },
       {
         name: 'size',
-        type: "'sm' | 'md' | 'lg'",
-        default: "'md'",
+        type: kbdSizes.map((size) => `'${size}'`).join(' | '),
+        default: `'${kbdDefaults.size}'`,
         description: 'Visual size of the key.',
       },
       {
         name: 'variant',
-        type: "'solid' | 'outline' | 'soft' | 'subtle'",
-        default: "'subtle'",
+        type: kbdVariantNames.map((variant) => `'${variant}'`).join(' | '),
+        default: `'${kbdDefaults.variant}'`,
         description: 'Visual style applied to the key.',
-      },
-      {
-        name: 'severity',
-        type: "'primary' | 'neutral' | 'secondary' | 'warning' | 'success' | 'error'",
-        default: "'neutral'",
-        description: 'Severity used to choose the colors for the visual style.',
       },
       {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Custom CSS color applied to the key’s background, border, and text.',
+        default: `'${kbdDefaults.color}'`,
+        description: 'Theme token or CSS color used by the key variants.',
+      },
+      {
+        name: 'radius',
+        type: 'string | number',
+        default: `'${kbdDefaults.radius}'`,
+        description: 'Tailwind radius token, CSS border-radius value, or a number of pixels.',
       },
     ],
     emits: [],

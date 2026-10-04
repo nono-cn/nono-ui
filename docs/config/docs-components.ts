@@ -23,6 +23,7 @@ import icon from './components/icon'
 import iconTile from './components/icon-tile'
 import input from './components/input'
 import kbd from './components/kbd'
+import kbdGroup from './components/kbd-group'
 import label from './components/label'
 import loading from './components/loading'
 import marker from './components/marker'
@@ -69,6 +70,7 @@ export const docsComponents = [
   iconTile,
   input,
   kbd,
+  kbdGroup,
   label,
   loading,
   marker,

@@ -9,12 +9,17 @@ function mountKbdGroup(options: MountingOptions<KbdGroupProps> = {}) {
   return mount(KbdGroup, options)
 }
 
-const casesRootClasses = ['inline-flex', 'items-center', 'gap-1']
-
 describe('KbdGroup', () => {
-  describe('raíz', () => {
-    it.each(casesRootClasses)('renderiza la clase %s', (className) => {
-      expect(mountKbdGroup().get('[data-test-kbd-group-root]').classes()).toContain(className)
+  describe('variantsCss', () => {
+    describe('kbdGroupVariants', () => {
+      it('mantiene las clases base del grupo', () => {
+        const root = mountKbdGroup().get('[data-test-kbd-group-root]')
+
+        expect(root.element.tagName).toBe('KBD')
+        expect(root.classes()).toEqual(
+          expect.arrayContaining(['inline-flex', 'items-center', 'gap-1']),
+        )
+      })
     })
   })
 

@@ -1,119 +1,53 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { h } from 'vue'
 
-import { Kbd, type KbdProps, type KbdSeverity, type KbdVariant } from '@/components/ui/Kbd'
+import { Kbd, kbdDefaults, type KbdProps, type KbdSize, type KbdVariant } from '@/components/ui/Kbd'
+import { themeColors } from '@/components/ui/constants'
 import { testAttrs } from '../utils/testAttrs'
+import { testColor } from '../utils/testColor'
+import { testRadius } from '../utils/testRadius'
 
 function mountKbd(options: MountingOptions<KbdProps> = {}) {
   return mount(Kbd, options)
 }
 
-function mountWithProp(prop: keyof KbdProps, value: unknown) {
-  return mountKbd({ props: { [prop]: value } as KbdProps })
-}
-
 const casesLabel = [
   { input: 'Ctrl', expected: 'Ctrl' },
+  { input: 'Ctrl + K', expected: 'Ctrl + K' },
+  { input: '<Ctrl & K>', expected: '<Ctrl & K>' },
   { input: '', expected: '' },
   { input: undefined, expected: '' },
-]
+] satisfies { input: KbdProps['label']; expected: string }[]
 
 const casesSize = [
-  { input: 'sm' as const, expected: ['h-4', 'min-w-4', 'text-[10px]'] },
-  { input: 'md' as const, expected: ['h-5', 'min-w-5', 'text-[11px]'] },
-  { input: 'lg' as const, expected: ['h-6', 'min-w-6', 'text-xs'] },
+  { input: 'sm', expected: ['h-4', 'min-w-4', 'text-[10px]'] },
+  { input: 'md', expected: ['h-5', 'min-w-5', 'text-[11px]'] },
+  { input: 'lg', expected: ['h-6', 'min-w-6', 'text-xs'] },
   { input: undefined, expected: ['h-5', 'min-w-5', 'text-[11px]'] },
-]
+] satisfies { input: KbdSize | undefined; expected: string[] }[]
 
 const casesVariant = [
   {
-    input: 'solid' as const,
+    input: 'solid',
     expected: ['border-transparent', 'bg-(--kbd-solid)', 'text-(--kbd-solid-foreground)'],
   },
   {
-    input: 'outline' as const,
+    input: 'outline',
     expected: ['border-(--kbd-color)/40', 'bg-transparent', 'text-(--kbd-color)'],
   },
   {
-    input: 'soft' as const,
+    input: 'soft',
     expected: ['border-transparent', 'bg-(--kbd-color)/10', 'text-(--kbd-color)'],
   },
   {
-    input: 'subtle' as const,
+    input: 'subtle',
     expected: ['border-(--kbd-color)/20', 'bg-(--kbd-color)/10', 'text-(--kbd-color)'],
   },
-]
-
-const casesSeverity = [
   {
-    input: 'primary' as const,
-    expected: [
-      '[--kbd-color:var(--primary)]',
-      '[--kbd-solid:var(--primary)]',
-      '[--kbd-solid-foreground:var(--primary-foreground)]',
-    ],
+    input: undefined,
+    expected: ['border-(--kbd-color)/20', 'bg-(--kbd-color)/10', 'text-(--kbd-color)'],
   },
-  {
-    input: 'neutral' as const,
-    expected: [
-      '[--kbd-color:var(--foreground)]',
-      '[--kbd-solid:var(--foreground)]',
-      '[--kbd-solid-foreground:var(--background)]',
-    ],
-  },
-  {
-    input: 'secondary' as const,
-    expected: [
-      '[--kbd-color:var(--secondary-foreground)]',
-      '[--kbd-solid:var(--secondary)]',
-      '[--kbd-solid-foreground:var(--secondary-foreground)]',
-    ],
-  },
-  {
-    input: 'warning' as const,
-    expected: [
-      '[--kbd-color:var(--warning)]',
-      '[--kbd-solid:var(--warning)]',
-      '[--kbd-solid-foreground:var(--warning-foreground)]',
-    ],
-  },
-  {
-    input: 'success' as const,
-    expected: [
-      '[--kbd-color:var(--success)]',
-      '[--kbd-solid:var(--success)]',
-      '[--kbd-solid-foreground:var(--success-foreground)]',
-    ],
-  },
-  {
-    input: 'error' as const,
-    expected: [
-      '[--kbd-color:var(--error)]',
-      '[--kbd-solid:var(--error)]',
-      '[--kbd-solid-foreground:var(--error-foreground)]',
-    ],
-  },
-] satisfies { input: KbdSeverity | undefined; expected: string[] }[]
-
-const casesSeverityVariant = casesSeverity.flatMap(
-  ({ input: severity, expected: severityClasses }) =>
-    casesVariant.map(({ input: variant, expected: variantClasses }) => ({
-      severity,
-      variant,
-      expected: [...severityClasses, ...variantClasses],
-    })),
-)
-
-const casesColorVariant = casesVariant.map(({ input: variant, expected: variantClasses }) => ({
-  variant,
-  expected: [
-    ...variantClasses,
-    ...(variant === 'solid'
-      ? ['[--kbd-solid:var(--kbd-color)]', '[--kbd-solid-foreground:var(--kbd-color-foreground)]']
-      : []),
-  ],
-}))
+] satisfies { input: KbdVariant | undefined; expected: string[] }[]
 
 describe('Kbd', () => {
   describe('props', () => {
@@ -126,53 +60,45 @@ describe('Kbd', () => {
     })
 
     describe('size', () => {
-      it.each(casesSize)('renderiza size=$input', ({ input, expected }) => {
-        const root = mountWithProp('size', input).get('[data-test-kbd-root]')
+      it.each(casesSize)('renderiza size=$input como "$expected"', ({ input, expected }) => {
+        const root = mountKbd({ props: { size: input } }).get('[data-test-kbd-root]')
 
         expect(root.classes()).toEqual(expect.arrayContaining(expected))
       })
     })
 
     describe('variant', () => {
-      it.each(casesSeverityVariant)(
-        'renderiza severity=$severity con variant=$variant',
-        ({ severity, variant, expected }) => {
-          const root = mountKbd({ props: { severity, variant } }).get('[data-test-kbd-root]')
+      it.each(casesVariant)('renderiza variant=$input como "$expected"', ({ input, expected }) => {
+        const root = mountKbd({ props: { variant: input } }).get('[data-test-kbd-root]')
 
-          expect(root.classes()).toEqual(expect.arrayContaining(expected))
-        },
-      )
-
-      it('usa subtle y severity neutral por defecto', () => {
-        const root = mountKbd().get('[data-test-kbd-root]')
-
-        expect(root.classes()).toEqual(
-          expect.arrayContaining([
-            'border-(--kbd-color)/20',
-            'bg-(--kbd-color)/10',
-            'text-(--kbd-color)',
-            '[--kbd-color:var(--foreground)]',
-            '[--kbd-solid:var(--foreground)]',
-            '[--kbd-solid-foreground:var(--background)]',
-          ]),
-        )
+        expect(root.classes()).toEqual(expect.arrayContaining(expected))
       })
     })
 
     describe('color', () => {
-      it.each(casesColorVariant)(
-        'prioriza color personalizado sobre severity=success con variant=$variant',
-        ({ variant, expected }) => {
-          const root = mountKbd({
-            props: { color: '#ff0000', severity: 'success', variant },
-          }).get('[data-test-kbd-root]')
-
-          expect(root.classes()).toEqual(expect.arrayContaining(expected))
-          expect(root.classes()).toContain('[--kbd-color:var(--success)]')
-          expect(root.attributes('style')).toContain('--kbd-color: #ff0000')
-          expect(root.attributes('style')).toContain('--kbd-color-foreground: #09090b')
+      testColor({
+        text: 'resuelve el color',
+        id: '[data-test-kbd-root]',
+        varColor: '--kbd-color',
+        defaultColor: `var(--${kbdDefaults.color}, var(--${kbdDefaults.color}))`,
+        fallbackColor: kbdDefaults.color,
+        theme: {
+          colors: themeColors,
+          foregroundVar: '--kbd-color-foreground',
+          solidVar: '--kbd-solid',
+          solidForegroundVar: '--kbd-solid-foreground',
         },
-      )
+        mount: (color) => mountKbd({ props: { color } }),
+      })
+    })
+
+    describe('radius', () => {
+      testRadius({
+        id: '[data-test-kbd-root]',
+        variable: '--kbd-radius',
+        defaultValue: 'var(--radius-sm, 0.25rem)',
+        mount: (radius) => mountKbd({ props: { radius } }),
+      })
     })
   })
 
@@ -184,18 +110,23 @@ describe('Kbd', () => {
     })
   })
 
-  describe('slots', () => {
-    describe('default', () => {
-      it('renderiza el slot predeterminado y sustituye el label alternativo', () => {
-        const kbd = mountKbd({
-          props: { label: 'Valor alternativo' },
-          slots: {
-            default: () => h('span', { 'data-test-kbd-slot': '' }, 'Ctrl+K'),
-          },
-        })
+  describe('variantsCss', () => {
+    describe('kbdVariants', () => {
+      it('mantiene las clases base de una tecla', () => {
+        const root = mountKbd().get('[data-test-kbd-root]')
 
-        expect(kbd.get('[data-test-kbd-slot]').text()).toBe('Ctrl+K')
-        expect(kbd.get('[data-test-kbd-root]').text()).not.toContain('Valor alternativo')
+        expect(root.classes()).toEqual(
+          expect.arrayContaining([
+            'pointer-events-none',
+            'inline-flex',
+            'items-center',
+            'justify-center',
+            'rounded-(--kbd-radius)',
+            'border',
+            'uppercase',
+            'select-none',
+          ]),
+        )
       })
     })
   })

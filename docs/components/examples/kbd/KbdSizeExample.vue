@@ -1,32 +1,41 @@
 <script setup lang="ts">
-import { Kbd } from '@/components/ui/Kbd'
+import { computed, ref } from 'vue'
+import { Kbd, kbdDefaults, kbdSizes, type KbdSize } from '@/components/ui/Kbd'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
-import { Kbd } from '__DOCS_PACKAGE__/components/ui/Kbd'
+const size = ref<KbdSize>(kbdDefaults.size)
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Kbd, type KbdSize } from '__DOCS_PACKAGE__/components/ui/Kbd'
+
+const size = ref<KbdSize>('${size.value}')
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-3">
-    <Kbd label="Ctrl" size="sm" />
-    <Kbd label="Ctrl+K" size="md" />
-    <Kbd label="Ctrl+Shift+P" size="lg" />
-  </div>
-</template>`
+  <Kbd label="Ctrl" :size="size" />
+</template>`,
+)
+
+function reset() {
+  size.value = kbdDefaults.size
+}
 </script>
 
 <template>
   <ComponentExample
     title="Size"
-    description="Adjust the key’s visual size."
+    description="Choose the key size and internal spacing."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-3">
-      <Kbd label="Ctrl" size="sm" />
-      <Kbd label="Ctrl+K" size="md" />
-      <Kbd label="Ctrl+Shift+P" size="lg" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="size" label="Size" :options="kbdSizes" />
+      </div>
+    </template>
+    <Kbd label="Ctrl" :size="size" />
   </ComponentExample>
 </template>

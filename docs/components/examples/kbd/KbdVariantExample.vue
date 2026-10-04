@@ -1,34 +1,41 @@
 <script setup lang="ts">
-import { Kbd } from '@/components/ui/Kbd'
+import { computed, ref } from 'vue'
+import { Kbd, kbdDefaults, kbdVariantNames, type KbdVariant } from '@/components/ui/Kbd'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const code = `<script setup lang="ts">
-import { Kbd } from '__DOCS_PACKAGE__/components/ui/Kbd'
+const variant = ref<KbdVariant>(kbdDefaults.variant)
+const code = computed(
+  () => `<script setup lang="ts">
+import { ref } from 'vue'
+import { Kbd, type KbdVariant } from '__DOCS_PACKAGE__/components/ui/Kbd'
+
+const variant = ref<KbdVariant>('${variant.value}')
 ${scriptEnd}
 
 <template>
-  <div class="flex flex-wrap items-center gap-3">
-    <Kbd label="Ctrl" variant="solid" severity="neutral" />
-    <Kbd label="Alt" variant="outline" severity="neutral" />
-    <Kbd label="Shift" variant="soft" severity="neutral" />
-    <Kbd label="Enter" variant="subtle" severity="neutral" />
-  </div>
-</template>`
+  <Kbd label="Ctrl" :variant="variant" />
+</template>`,
+)
+
+function reset() {
+  variant.value = kbdDefaults.variant
+}
 </script>
 
 <template>
   <ComponentExample
     title="Variant"
-    description="Compare visual variants using the default neutral severity."
+    description="Choose the visual style applied to the key."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="flex flex-wrap items-center gap-3">
-      <Kbd label="Ctrl" variant="solid" severity="neutral" />
-      <Kbd label="Alt" variant="outline" severity="neutral" />
-      <Kbd label="Shift" variant="soft" severity="neutral" />
-      <Kbd label="Enter" variant="subtle" severity="neutral" />
-    </div>
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="variant" label="Variant" :options="kbdVariantNames" />
+      </div>
+    </template>
+    <Kbd label="Ctrl" :variant="variant" />
   </ComponentExample>
 </template>
