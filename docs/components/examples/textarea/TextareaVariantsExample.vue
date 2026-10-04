@@ -1,40 +1,52 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Label } from '@/components/ui/Label'
-import { Textarea } from '@/components/ui/Textarea'
+import {
+  Textarea,
+  textareaDefaults,
+  textareaVariantNames,
+  type TextareaVariant,
+} from '@/components/ui/Textarea'
+import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const variants = ['outline', 'subtle', 'soft', 'plain', 'none'] as const
+const variant = ref<TextareaVariant>(textareaDefaults.variant)
 
-const code = `<script setup lang="ts">
+const code = computed(
+  () => `<script setup lang="ts">
 import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
 import { Textarea } from '__DOCS_PACKAGE__/components/ui/Textarea'
-
-const variants = ['outline', 'subtle', 'soft', 'plain', 'none'] as const
 ${scriptEnd}
 
 <template>
-  <div class="grid w-full gap-4 sm:grid-cols-2">
-    <div v-for="variant in variants" :key="variant" class="grid gap-2">
-      <Label :for="'textarea-' + variant">{{ variant }}</Label>
-      <Textarea :id="'textarea-' + variant" :variant="variant" size="sm" />
-    </div>
+  <div class="grid w-full max-w-lg gap-2">
+    <Label for="variant-textarea">Variant</Label>
+    <Textarea id="variant-textarea" variant="${variant.value}" placeholder="Write a message..." />
   </div>
-</template>`
+</template>`,
+)
+
+function reset() {
+  variant.value = textareaDefaults.variant
+}
 </script>
 
 <template>
   <ComponentExample
     title="Variant"
-    description="Compare the available border and background styles."
+    description="Choose the border and background style."
     :code="code"
-    :show-reset="false"
+    @reset="reset"
   >
-    <div class="grid w-full gap-4 sm:grid-cols-2">
-      <div v-for="variant in variants" :key="variant" class="grid gap-2">
-        <Label :for="'textarea-' + variant">{{ variant }}</Label>
-        <Textarea :id="'textarea-' + variant" :variant="variant" size="sm" />
+    <template #controls>
+      <div class="flex flex-wrap gap-4">
+        <ExampleSelectControl v-model="variant" label="Variant" :options="textareaVariantNames" />
       </div>
+    </template>
+    <div class="grid w-full max-w-lg gap-2">
+      <Label for="variant-textarea">Variant</Label>
+      <Textarea id="variant-textarea" :variant="variant" placeholder="Write a message..." />
     </div>
   </ComponentExample>
 </template>

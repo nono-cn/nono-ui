@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Label } from '@/components/ui/Label'
-import { Textarea } from '@/components/ui/Textarea'
+import { Textarea, textareaDefaults } from '@/components/ui/Textarea'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
-const value = ref('')
+const value = ref(textareaDefaults.modelValue)
 
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
@@ -18,7 +18,8 @@ ${scriptEnd}
 <template>
   <div class="grid w-full max-w-lg gap-2">
     <Label for="feedback">Feedback</Label>
-    <Textarea id="feedback" v-model:value="value" placeholder="Share your thoughts..." />
+    <Textarea id="feedback" v-model="value" placeholder="Share your thoughts..." />
+    <p>Value: {{ value }}</p>
   </div>
 </template>`
 </script>
@@ -28,11 +29,12 @@ ${scriptEnd}
     title="Basic usage"
     description="Bind the field value and associate it with a visible label."
     :code="code"
-    :show-reset="false"
+    @reset="value = textareaDefaults.modelValue"
   >
     <div class="grid w-full max-w-lg gap-2">
       <Label for="feedback">Feedback</Label>
-      <Textarea id="feedback" v-model:value="value" placeholder="Share your thoughts..." />
+      <Textarea id="feedback" v-model="value" placeholder="Share your thoughts..." />
+      <p>Value: {{ value }}</p>
     </div>
   </ComponentExample>
 </template>

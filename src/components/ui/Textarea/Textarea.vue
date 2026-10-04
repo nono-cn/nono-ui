@@ -1,41 +1,31 @@
 <script setup lang="ts">
-import { computed, useAttrs, watch } from 'vue'
-import { useColor } from '@/composables'
+import { computed, useAttrs } from 'vue'
+import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { textareaVariants, type TextareaProps, type TextareaValue } from '.'
-import { textareaDefaults } from './defaults'
+import { textareaDefaults, textareaSizes } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<TextareaProps>(), textareaDefaults)
-const value = defineModel<TextareaValue>('value', { default: textareaDefaults.value })
-
-watch(
-  value,
-  () => {
-    if (typeof value.value !== 'string') value.value = ''
-  },
-  {
-    immediate: true,
-  },
+const value = defineModel<TextareaValue>({ default: textareaDefaults.modelValue })
+const resolvedSize = computed(() =>
+  textareaSizes.includes(props.size) ? props.size : textareaDefaults.size,
 )
 
 const attrs = useAttrs()
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'textarea',
-)
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'textarea',
+  defaultColor: textareaDefaults.color,
+})
 const rootProps = computed(() => {
   return {
     ...attrs,
     class: cn(
-      'flex w-full rounded-md border border-input bg-transparent shadow-xs transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:aria-invalid:ring-destructive/40',
-      'focus-visible:border-primary focus-visible:ring-primary/50',
       textareaVariants({
         autoresize: props.autoresize,
-        size: props.size,
-        severity: props.color ? undefined : props.severity,
-        color: Boolean(props.color),
+        size: resolvedSize.value,
         highlight: props.highlight,
         variant: props.variant,
       }),

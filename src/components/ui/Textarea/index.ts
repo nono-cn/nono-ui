@@ -1,79 +1,68 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-
-export const textareaVariants = cva('', {
-  variants: {
-    autoresize: {
-      true: 'field-sizing-content',
-      false: 'field-sizing-fixed',
-    },
-    size: {
-      xs: 'min-h-14 px-2 py-1 text-sm',
-      sm: 'min-h-16 px-2.5 py-1.5 text-sm',
-      md: 'min-h-20 px-3 py-2 text-base',
-      lg: 'min-h-24 px-3 py-2.5 text-lg',
-      xl: 'min-h-28 px-4 py-3 text-xl',
-    },
-    severity: {
-      primary: 'focus-visible:border-primary focus-visible:ring-primary/50',
-      secondary:
-        'focus-visible:border-secondary-foreground focus-visible:ring-secondary-foreground/20',
-      error: 'focus-visible:border-error focus-visible:ring-error/30',
-      warning: 'focus-visible:border-warning focus-visible:ring-warning/30',
-      success: 'focus-visible:border-success focus-visible:ring-success/30',
-    },
-    color: {
-      true: 'focus-visible:border-(--textarea-color) focus-visible:ring-(--textarea-color)/30',
-      false: '',
-    },
-    highlight: {
-      true: '',
-      false: 'border-input',
-    },
-    variant: {
-      outline: 'rounded-md border bg-transparent shadow-xs',
-      subtle: 'rounded-md border bg-muted shadow-xs',
-      soft: 'rounded-md border-transparent bg-muted/50 shadow-none hover:bg-muted focus:bg-muted disabled:bg-muted/50',
-      plain: 'rounded-md border-transparent bg-transparent shadow-none',
-      none: 'rounded-md border-0 bg-transparent shadow-none',
-    },
-  },
-  compoundVariants: [
-    { highlight: true, severity: 'primary', class: 'border-primary/40' },
-    { highlight: true, severity: 'secondary', class: 'border-secondary-foreground/30' },
-    { highlight: true, severity: 'error', class: 'border-error/40' },
-    { highlight: true, severity: 'warning', class: 'border-warning/40' },
-    { highlight: true, severity: 'success', class: 'border-success/40' },
-    { highlight: true, color: true, class: 'border-(--textarea-color)/40' },
-    { variant: 'none', class: 'focus-visible:border-0 focus-visible:ring-0' },
-  ],
-  defaultVariants: {
-    autoresize: false,
-    size: 'md',
-    severity: 'primary',
-    color: false,
-    highlight: false,
-    variant: 'outline',
-  },
-})
-
-export type TextareaVariants = VariantProps<typeof textareaVariants>
+import type { EmitsAsProps } from '@/types/emits'
+import { textareaDefaults, textareaSizes, textareaVariantNames } from './constants'
 
 export { default as Textarea } from './Textarea.vue'
+export { textareaDefaults, textareaSizes, textareaVariantNames } from './constants'
 
+export const textareaVariants = cva(
+  'flex w-full border bg-transparent outline-none transition-[color,box-shadow] placeholder:text-muted-foreground focus-visible:border-(--textarea-color) focus-visible:ring-3 focus-visible:ring-(--textarea-color)/30 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:aria-invalid:ring-destructive/40',
+  {
+    variants: {
+      autoresize: {
+        true: 'field-sizing-content',
+        false: 'field-sizing-fixed',
+      },
+      size: {
+        xs: 'min-h-14 px-2 py-1 text-sm',
+        sm: 'min-h-16 px-2.5 py-1.5 text-sm',
+        md: 'min-h-20 px-3 py-2 text-base',
+        lg: 'min-h-24 px-3 py-2.5 text-lg',
+        xl: 'min-h-28 px-4 py-3 text-xl',
+      } satisfies Record<(typeof textareaSizes)[number], string>,
+      highlight: {
+        true: '',
+        false: 'border-input',
+      },
+      variant: {
+        outline: 'rounded-md border bg-transparent shadow-xs',
+        subtle: 'rounded-md border bg-muted shadow-xs',
+        soft: 'rounded-md border-transparent bg-muted/50 shadow-none hover:bg-muted focus:bg-muted disabled:bg-muted/50',
+        plain: 'rounded-md border-transparent bg-transparent shadow-none',
+        none: 'rounded-md border-0 bg-transparent shadow-none',
+      } satisfies Record<(typeof textareaVariantNames)[number], string>,
+    },
+    compoundVariants: [
+      { variant: 'none', class: 'focus-visible:border-0 focus-visible:ring-0' },
+      { variant: ['outline', 'plain'], highlight: true, class: 'border-(--textarea-color)/40' },
+      { variant: 'subtle', highlight: true, class: 'border-(--textarea-color)/20' },
+      { variant: 'soft', highlight: true, class: 'border-(--textarea-color)/40' },
+    ],
+    defaultVariants: {
+      autoresize: textareaDefaults.autoresize,
+      size: textareaDefaults.size,
+      highlight: textareaDefaults.highlight,
+      variant: textareaDefaults.variant,
+    },
+  },
+)
+
+export type TextareaVariants = VariantProps<typeof textareaVariants>
+export type TextareaSize = NonNullable<TextareaVariants['size']>
+export type TextareaVariant = NonNullable<TextareaVariants['variant']>
 export type TextareaValue = string
 
-// Props
 export interface TextareaProps {
-  value?: TextareaValue
-  autoresize?: TextareaVariants['autoresize']
-  size?: TextareaVariants['size']
-  severity?: TextareaVariants['severity']
+  modelValue?: TextareaValue
+  autoresize?: boolean
+  size?: TextareaSize
   color?: string
-  highlight?: TextareaVariants['highlight']
-  variant?: TextareaVariants['variant']
+  highlight?: boolean
+  variant?: TextareaVariant
 }
 
-// Emits
 export interface TextareaEmits {
-  'update:value': [value: TextareaValue]
+  'update:modelValue': [value: TextareaValue]
 }
+
+export type NormalizeTextareaProps = TextareaProps & EmitsAsProps<TextareaEmits>

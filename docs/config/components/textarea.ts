@@ -1,11 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
+import { textareaDefaults, textareaSizes, textareaVariantNames } from '@/components/ui/Textarea'
 import TextareaBasicExample from '../../components/examples/textarea/TextareaBasicExample.vue'
 import TextareaSizesExample from '../../components/examples/textarea/TextareaSizesExample.vue'
-import TextareaSeverityExample from '../../components/examples/textarea/TextareaSeverityExample.vue'
 import TextareaVariantsExample from '../../components/examples/textarea/TextareaVariantsExample.vue'
 import TextareaAutoresizeExample from '../../components/examples/textarea/TextareaAutoresizeExample.vue'
-import TextareaHighlightExample from '../../components/examples/textarea/TextareaHighlightExample.vue'
-import TextareaColorExample from '../../components/examples/textarea/TextareaColorExample.vue'
+import TextareaAppearanceExample from '../../components/examples/textarea/TextareaAppearanceExample.vue'
 
 const textareaConfig: ComponentDocConfig = {
   slug: 'textarea',
@@ -23,17 +22,12 @@ const textareaConfig: ComponentDocConfig = {
   examples: [
     {
       title: 'Size',
-      description: 'Compare the five available sizes.',
+      description: 'Choose the minimum height and text size.',
       component: TextareaSizesExample,
     },
     {
-      title: 'Severity',
-      description: 'Focus a field to see its semantic focus color.',
-      component: TextareaSeverityExample,
-    },
-    {
       title: 'Variant',
-      description: 'Compare the available border and background styles.',
+      description: 'Choose the border and background style.',
       component: TextareaVariantsExample,
     },
     {
@@ -42,73 +36,61 @@ const textareaConfig: ComponentDocConfig = {
       component: TextareaAutoresizeExample,
     },
     {
-      title: 'Highlight',
-      description: 'Show the semantic border color when the field is not focused.',
-      component: TextareaHighlightExample,
-    },
-    {
-      title: 'Custom color',
-      description: 'Use a custom color that takes precedence over severity.',
-      component: TextareaColorExample,
+      title: 'Appearance',
+      description: 'Choose the variant, color, and highlighted border together.',
+      component: TextareaAppearanceExample,
     },
   ],
   accessibility: [
     {
       title: 'Label and description',
       description:
-        'Associate a visible label using for and id. Use aria-describedby to associate helper text or an additional description with the field.',
+        'Associate a visible label using for and id. Use aria-describedby for helper text and aria-invalid when validation fails. HTML and ARIA attributes, class, and style apply to the native textarea.',
     },
   ],
   api: {
     props: [
       {
-        name: 'value',
+        name: 'modelValue',
         type: 'string',
-        default: "''",
-        description: 'Field value. Can also be bound with v-model:value.',
+        default: `'${textareaDefaults.modelValue}'`,
+        description: 'Field value. Can also be bound with v-model.',
       },
       {
         name: 'autoresize',
         type: 'boolean',
-        default: 'false',
+        default: String(textareaDefaults.autoresize),
         description: 'Automatically adjusts the height to fit the content when true.',
       },
       {
         name: 'size',
-        type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
-        default: "'md'",
+        type: textareaSizes.map((size) => `'${size}'`).join(' | '),
+        default: `'${textareaDefaults.size}'`,
         description: 'Controls the minimum height, spacing, and text size.',
-      },
-      {
-        name: 'severity',
-        type: "'primary' | 'secondary' | 'error' | 'warning' | 'success'",
-        default: "'primary'",
-        description: 'Sets the semantic focus color for the field.',
       },
       {
         name: 'color',
         type: 'string',
-        default: 'undefined',
-        description: 'Sets a custom color that takes precedence over severity.',
+        default: `'${textareaDefaults.color}'`,
+        description: 'Theme token or CSS color for the field and its focus state.',
       },
       {
         name: 'highlight',
         type: 'boolean',
-        default: 'false',
-        description:
-          'Shows the border in the severity or custom color, even when the field is not focused.',
+        default: String(textareaDefaults.highlight),
+        description: 'Shows the theme or custom border color before focus.',
       },
       {
         name: 'variant',
-        type: "'outline' | 'subtle' | 'soft' | 'plain' | 'none'",
-        default: "'outline'",
+        type: textareaVariantNames.map((variant) => `'${variant}'`).join(' | '),
+        default: `'${textareaDefaults.variant}'`,
         description:
           'Defines the border and background style. none also removes the border on focus.',
       },
     ],
     emits: [
       {
-        name: 'update:value',
+        name: 'update:modelValue',
         type: '[value: string]',
         description: 'Emitted when the field content changes.',
       },
