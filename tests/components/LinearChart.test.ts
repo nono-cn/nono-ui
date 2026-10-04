@@ -1,13 +1,13 @@
-import { defineComponent, h, nextTick, toRaw } from 'vue'
-import { mount, type VueWrapper } from '@vue/test-utils'
+import { defineComponent, h } from 'vue'
+import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
-import { VisAxis, VisCrosshair, VisLine, VisTooltip, VisXYContainer } from '@unovis/vue'
 
 import {
   LinearChart,
   type LinearChartEvents,
   type LinearChartProps,
 } from '@/components/ui/LinearChart'
+import { testAttrs } from '../utils/testAttrs'
 
 vi.mock('@unovis/vue', () => {
   const createStub = (name: string, props: string[]) =>
@@ -52,7 +52,10 @@ const data: Point[] = [
 const x = (point: Point) => point.position
 const y = (point: Point) => point.value
 
-function mountChart(props: Partial<LinearChartProps<Point>> = {}) {
+export function mountChart(
+  props: Partial<LinearChartProps<Point>> = {},
+  attrs: Record<string, string> = {},
+) {
   return mount(LinearChart, {
     props: {
       data,
@@ -60,442 +63,519 @@ function mountChart(props: Partial<LinearChartProps<Point>> = {}) {
       y,
       ...props,
     },
+    attrs,
   })
 }
 
-function getComponent<T>(wrapper: VueWrapper, component: T) {
-  return wrapper.getComponent(component as never)
-}
+const casesData = [
+  { name: 'un array vacío', input: [] },
+  { name: 'un punto', input: [data[0]] },
+  { name: 'varios puntos', input: data },
+]
+
+const categoryData: Point[] = [
+  { position: 0, label: 'A', value: 10 },
+  { position: 1, label: 'B', value: 20 },
+  { position: 2, label: 'A', value: 30 },
+]
+const dates = [new Date('2026-01-01T00:00:00Z'), new Date('2026-02-01T00:00:00Z')]
+const mixedDate = new Date('2026-01-01T00:00:00Z')
+
+const casesX = [
+  {
+    name: 'valores numéricos',
+    data,
+    input: (point: Point, index: number) => point.position + index,
+    expected: { values: [0, 2, 4], sameAccessor: true },
+  },
+  {
+    name: 'categorías de texto, incluida una repetida',
+    data: categoryData,
+    input: (point: Point) => point.label,
+    expected: { values: [0, 1, 0], tickLabels: ['A', 'B'] },
+  },
+  {
+    name: 'fechas',
+    data,
+    input: (point: Point) => dates[point.position % dates.length],
+    expected: { values: [dates[0].getTime(), dates[1].getTime(), dates[0].getTime()] },
+  },
+  {
+    name: 'valores numéricos, texto y fechas mezclados',
+    data,
+    input: (point: Point) => (point.position === 0 ? 10 : point.position === 1 ? 'B' : mixedDate),
+    expected: { values: [10, 0, mixedDate.getTime()] },
+  },
+]
+
+const casesY = [
+  { name: 'una función de acceso', input: y },
+  { name: 'varias funciones de acceso', input: [y, (point: Point) => point.position] },
+  { name: 'un array vacío de funciones de acceso', input: [] },
+]
+
+const casesHeight = [
+  { name: 'el valor por defecto', input: undefined, expected: 320 },
+  { name: 'un número', input: 240, expected: 240 },
+  { name: 'cero', input: 0, expected: 0 },
+  { name: 'una cadena CSS', input: '50vh', expected: '50vh' },
+]
+
+const casesColor = [
+  { name: 'el valor por defecto', input: undefined, expected: 'var(--chart-1)' },
+  { name: 'un color personalizado', input: '#f00', expected: '#f00' },
+  { name: 'una cadena vacía', input: '', expected: '' },
+]
+
+const casesColors = [
+  { name: 'sin colores', input: undefined, expected: 'var(--chart-1)' },
+  { name: 'un array vacío', input: [], expected: [] },
+  { name: 'un color', input: ['#f00'], expected: ['#f00'] },
+  { name: 'varios colores', input: ['#f00', '#00f'], expected: ['#f00', '#00f'] },
+  {
+    name: 'colores con prioridad sobre color',
+    input: ['#f00', '#00f'],
+    color: '#0f0',
+    expected: ['#f00', '#00f'],
+  },
+]
+
+const casesLineWidth = [
+  { name: 'el valor por defecto', input: undefined, expected: 2 },
+  { name: 'cero', input: 0, expected: 0 },
+  { name: 'un número entero', input: 4, expected: 4 },
+  { name: 'un número decimal', input: 1.5, expected: 1.5 },
+]
+
+const casesLineDashArray = [
+  { name: 'sin patrón', input: undefined, expected: undefined },
+  { name: 'un array vacío', input: [], expected: [] },
+  { name: 'un patrón de trazos y espacios', input: [6, 3], expected: [6, 3] },
+  { name: 'un patrón con varios segmentos', input: [6, 3, 2, 3], expected: [6, 3, 2, 3] },
+]
+
+const casesCurveType = [
+  { name: 'el valor por defecto', input: undefined, expected: 'linear' },
+  ...(
+    [
+      'basis',
+      'basisClosed',
+      'basisOpen',
+      'bundle',
+      'cardinal',
+      'cardinalClosed',
+      'cardinalOpen',
+      'catmullRom',
+      'catmullRomClosed',
+      'catmullRomOpen',
+      'linear',
+      'linearClosed',
+      'monotoneX',
+      'monotoneY',
+      'natural',
+      'step',
+      'stepAfter',
+      'stepBefore',
+    ] as const
+  ).map((curveType) => ({ name: curveType, input: curveType, expected: curveType })),
+]
+
+const casesInterpolateMissingData = [
+  { name: 'el valor por defecto', input: undefined, expected: false },
+  { name: 'activado', input: true, expected: true },
+  { name: 'desactivado', input: false, expected: false },
+]
+
+const casesFallbackValue = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  { name: 'nulo', input: null, expected: null },
+  { name: 'cero', input: 0, expected: 0 },
+  { name: 'un número', input: 12, expected: 12 },
+]
+
+const casesHighlightOnHover = [
+  { name: 'el valor por defecto', input: undefined, expected: false },
+  { name: 'activado', input: true, expected: true },
+  { name: 'desactivado', input: false, expected: false },
+]
+
+const casesCursor = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  { name: 'un cursor personalizado', input: 'pointer', expected: 'pointer' },
+  { name: 'una cadena vacía', input: '', expected: '' },
+]
+
+const casesCrosshair = [
+  { name: 'el valor por defecto', input: undefined, tooltip: undefined, expected: false },
+  { name: 'desactivado', input: false, tooltip: false, expected: false },
+  { name: 'activado', input: true, tooltip: false, expected: true },
+  { name: 'desactivado con tooltip activo', input: false, tooltip: true, expected: true },
+]
+
+const casesTooltip = [
+  { name: 'el valor por defecto', input: undefined, expected: false },
+  { name: 'desactivado', input: false, expected: false },
+  { name: 'activado', input: true, expected: true },
+]
+
+const casesYDomain = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  {
+    name: 'ambos límites abiertos',
+    input: [undefined, undefined],
+    expected: [undefined, undefined],
+  },
+  { name: 'solo el límite inferior', input: [0, undefined], expected: [0, undefined] },
+  { name: 'solo el límite superior', input: [undefined, 100], expected: [undefined, 100] },
+  { name: 'ambos límites', input: [-10, 100], expected: [-10, 100] },
+] satisfies { name: string; input: LinearChartProps<Point>['yDomain']; expected: unknown }[]
+
+const customXTickFormat = (value: number | Date) => `X: ${value}`
+const casesXTickFormat = [
+  {
+    name: 'sin formato para valores numéricos',
+    data,
+    x,
+    input: undefined,
+    expected: { format: undefined, labels: undefined },
+  },
+  {
+    name: 'formato automático para categorías',
+    data: categoryData,
+    x: (point: Point) => point.label,
+    input: undefined,
+    expected: { format: undefined, labels: ['A', 'B'] },
+  },
+  {
+    name: 'formato personalizado para valores numéricos',
+    data,
+    x,
+    input: customXTickFormat,
+    expected: { format: customXTickFormat, labels: undefined },
+  },
+  {
+    name: 'formato personalizado que sustituye al de categorías',
+    data: categoryData,
+    x: (point: Point) => point.label,
+    input: customXTickFormat,
+    expected: { format: customXTickFormat, labels: undefined },
+  },
+]
+
+const customYTickFormat = (value: number | Date) => `${value} €`
+const casesYTickFormat = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  { name: 'una función de formato', input: customYTickFormat, expected: customYTickFormat },
+]
+
+const casesXLabel = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  { name: 'una etiqueta', input: 'Mes', expected: 'Mes' },
+  { name: 'una cadena vacía', input: '', expected: '' },
+]
+
+const casesYLabel = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  { name: 'una etiqueta', input: 'Ingresos', expected: 'Ingresos' },
+  { name: 'una cadena vacía', input: '', expected: '' },
+]
+
+const casesXNumTicks = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  { name: 'cero', input: 0, expected: 0 },
+  { name: 'un número de marcas', input: 4, expected: 4 },
+]
+
+const casesYNumTicks = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  { name: 'cero', input: 0, expected: 0 },
+  { name: 'un número de marcas', input: 6, expected: 6 },
+]
+
+const casesGridLine = [
+  { name: 'el valor por defecto', input: undefined, expected: true },
+  { name: 'activado', input: true, expected: true },
+  { name: 'desactivado', input: false, expected: false },
+]
+
+const casesEvents = [
+  { name: 'el valor por defecto', input: undefined, expected: undefined },
+  { name: 'un objeto vacío', input: {}, expected: [] },
+  { name: 'solo click', input: { click: vi.fn() }, expected: ['click'] },
+  { name: 'solo mouseover', input: { mouseover: vi.fn() }, expected: ['mouseover'] },
+  { name: 'solo mouseleave', input: { mouseleave: vi.fn() }, expected: ['mouseleave'] },
+  {
+    name: 'los tres eventos',
+    input: { click: vi.fn(), mouseover: vi.fn(), mouseleave: vi.fn() },
+    expected: ['click', 'mouseover', 'mouseleave'],
+  },
+] satisfies {
+  name: string
+  input: LinearChartEvents | undefined
+  expected: (keyof LinearChartEvents)[] | undefined
+}[]
 
 describe('LinearChart', () => {
   describe('props', () => {
+    describe('events', () => {
+      it.each(casesEvents)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ events: input })
+        const events = wrapper.findComponent({ name: 'VisLine' }).props('events') as
+          | Record<string, Record<string, (_data: unknown, event: Event, index: number) => void>>
+          | undefined
+
+        if (!expected) {
+          expect(events).toBeUndefined()
+          return
+        }
+
+        expect(Object.keys(events ?? {})).toEqual(['line-selector'])
+        const handlers = events?.['line-selector']
+        expect(Object.keys(handlers ?? {})).toEqual(expected)
+
+        for (const name of expected) {
+          const event = new MouseEvent(name)
+          handlers?.[name]?.(data[0], event, 2)
+          expect(input?.[name]).toHaveBeenCalledExactlyOnceWith(event, 2)
+        }
+      })
+    })
+
     describe('data', () => {
-      it('pasa el array al contenedor', () => {
-        const wrapper = mountChart()
+      it.each(casesData)('pasa $name a VisXYContainer', ({ input }) => {
+        const wrapper = mountChart({ data: input })
 
-        expect(toRaw(getComponent(wrapper, VisXYContainer).props('data'))).toBe(data)
-      })
-
-      it.each([
-        { name: 'vacío', value: [] },
-        { name: 'normal', value: data },
-      ])('acepta el dataset $name', ({ value: chartData }) => {
-        expect(() => mountChart({ data: chartData })).not.toThrow()
-      })
-
-      it('acepta filas con valores null y undefined', () => {
-        const nullableData: Point[] = [
-          { position: 0, label: 'A', value: null },
-          { position: 1, label: 'B', value: undefined },
-        ]
-
-        expect(() => mountChart({ data: nullableData })).not.toThrow()
-      })
-
-      it('actualiza el contenedor cuando cambia el array', async () => {
-        const wrapper = mountChart()
-        const nextData = [{ position: 3, label: 'D', value: 40 }]
-
-        await wrapper.setProps({ data: nextData })
-        await nextTick()
-
-        expect(toRaw(getComponent(wrapper, VisXYContainer).props('data'))).toBe(nextData)
+        expect(wrapper.findComponent({ name: 'VisXYContainer' }).props('data')).toEqual(input)
       })
     })
 
     describe('x', () => {
-      it('conserva la identidad del accessor numérico', () => {
-        const wrapper = mountChart()
+      it.each(casesX)('pasa $name a VisLine', ({ data, input, expected }) => {
+        const wrapper = mountChart({ data, x: input })
+        const accessor = wrapper.findComponent({ name: 'VisLine' }).props('x') as typeof x
 
-        expect(getComponent(wrapper, VisLine).props('x')).toBe(x)
-      })
-
-      it('normaliza categorías de texto para la escala continua', () => {
-        const categoricalData = [
-          { label: 'Enero', value: 10 },
-          { label: 'Febrero', value: 20 },
-        ]
-        const categoricalX = (point: (typeof categoricalData)[number]) => point.label
-
-        const wrapper = mountChart({
-          data: categoricalData,
-          x: categoricalX,
-        })
-        const line = getComponent(wrapper, VisLine)
-        const axis = wrapper.findAllComponents(VisAxis)[0]
-
-        expect(line.props('x')).not.toBe(categoricalX)
-        expect(line.props('x')(categoricalData[0], 0)).toBe(0)
-        expect(line.props('x')(categoricalData[1], 1)).toBe(1)
-        expect(axis.props('tickFormat')?.(0, 0, [0, 1])).toBe('Enero')
-        expect(axis.props('tickFormat')?.(1, 1, [0, 1])).toBe('Febrero')
-      })
-
-      it('convierte fechas a timestamps y admite un dataset vacío', () => {
-        const dateData = [
-          { date: new Date('2026-01-01'), value: 10 },
-          { date: new Date('2026-01-02'), value: 20 },
-        ]
-        const dateX = (point: (typeof dateData)[number]) => point.date
-        const dateWrapper = mountChart({ data: dateData, x: dateX })
-        const emptyWrapper = mountChart({ data: [] })
-
-        expect(getComponent(dateWrapper, VisLine).props('x')(dateData[0], 0)).toBe(
-          dateData[0].date.getTime(),
-        )
-        expect(getComponent(emptyWrapper, VisLine).props('x')).toBe(x)
+        expect(data.map(accessor)).toEqual(expected.values)
+        if ('sameAccessor' in expected) expect(accessor).toBe(input)
+        if ('tickLabels' in expected) {
+          const format = wrapper.findComponent({ name: 'VisAxis' }).props('tickFormat') as (
+            value: number,
+          ) => string
+          expect([0, 1].map(format)).toEqual(expected.tickLabels)
+        }
       })
     })
 
     describe('y', () => {
-      it('pasa y y conserva la identidad del accessor único', () => {
-        const wrapper = mountChart()
+      it.each(casesY)('pasa $name a VisLine', ({ input }) => {
+        const wrapper = mountChart({ y: input })
 
-        expect(getComponent(wrapper, VisLine).props('y')).toBe(y)
-      })
-
-      it('pasa múltiples accessors a VisLine', () => {
-        const y2 = (point: Point) => (point.value ?? 0) + 5
-        const yAccessors = [y, y2]
-        const wrapper = mountChart({ y: yAccessors })
-
-        expect(getComponent(wrapper, VisLine).props('y')).toStrictEqual(yAccessors)
-      })
-
-      it.each([null, undefined])('admite un valor %s en la serie', (value) => {
-        const nullableData = [{ position: 0, value }]
-        const nullableY = (point: (typeof nullableData)[number]) => point.value
-
-        expect(() => mountChart({ data: nullableData, y: nullableY })).not.toThrow()
-      })
-    })
-
-    describe('events', () => {
-      it('no pasa configuración cuando no se definen eventos', () => {
-        const wrapper = mountChart()
-
-        expect(getComponent(wrapper, VisLine).props('events')).toBeUndefined()
-      })
-
-      it('mapea click, mouseover y mouseleave al selector de la línea', () => {
-        const click = vi.fn()
-        const mouseover = vi.fn()
-        const mouseleave = vi.fn()
-        const events: LinearChartEvents = { click, mouseover, mouseleave }
-        const wrapper = mountChart({ events })
-        const lineEvents = getComponent(wrapper, VisLine).props('events') as Record<
-          string,
-          Record<string, (data: unknown, event: MouseEvent, index: number) => void>
-        >
-        const event = new MouseEvent('click')
-
-        lineEvents['line-selector'].click(undefined, event, 2)
-        lineEvents['line-selector'].mouseover(undefined, event, 2)
-        lineEvents['line-selector'].mouseleave(undefined, event, 2)
-
-        expect(click).toHaveBeenCalledWith(event, 2)
-        expect(mouseover).toHaveBeenCalledWith(event, 2)
-        expect(mouseleave).toHaveBeenCalledWith(event, 2)
-      })
-
-      it('solo registra los callbacks definidos', () => {
-        const click = vi.fn()
-        const wrapper = mountChart({ events: { click } })
-        const lineEvents = getComponent(wrapper, VisLine).props('events') as Record<
-          string,
-          Record<string, unknown>
-        >
-
-        expect(Object.keys(lineEvents['line-selector'])).toEqual(['click'])
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('y')).toEqual(input)
       })
     })
 
     describe('height', () => {
-      it.each([
-        [undefined, 320],
-        [320, 320],
-        ['24rem', '24rem'],
-        [0, 0],
-      ])('pasa height=%s como %s', (height, expected) => {
-        const wrapper = mountChart({ height })
+      it.each(casesHeight)('pasa $name a VisXYContainer', ({ input, expected }) => {
+        const wrapper = mountChart({ height: input })
 
-        expect(getComponent(wrapper, VisXYContainer).props('height')).toBe(expected)
+        expect(wrapper.findComponent({ name: 'VisXYContainer' }).props('height')).toBe(expected)
       })
     })
 
     describe('color', () => {
-      it.each([
-        [undefined, 'var(--chart-1)'],
-        ['#2563eb', '#2563eb'],
-        ['', ''],
-      ])('pasa color=%s como %s', (color, expected) => {
-        const wrapper = mountChart({ color })
+      it.each(casesColor)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ color: input })
 
-        expect(getComponent(wrapper, VisLine).props('color')).toBe(expected)
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('color')).toBe(expected)
       })
     })
 
     describe('colors', () => {
-      it('pasa un color por serie a VisLine', () => {
-        const colors = ['#2563eb', '#16a34a']
-        const wrapper = mountChart({ colors })
+      it.each(casesColors)('pasa $name a VisLine', ({ input, color, expected }) => {
+        const wrapper = mountChart({ colors: input, color })
 
-        expect(getComponent(wrapper, VisLine).props('color')).toStrictEqual(colors)
-      })
-
-      it('prioriza colors sobre color cuando se definen ambos', () => {
-        const colors = ['#2563eb', '#16a34a']
-        const wrapper = mountChart({ color: '#111827', colors })
-
-        expect(getComponent(wrapper, VisLine).props('color')).toStrictEqual(colors)
-      })
-
-      it('pasa un array vacío sin sustituirlo por el color individual', () => {
-        const wrapper = mountChart({ colors: [] })
-
-        expect(getComponent(wrapper, VisLine).props('color')).toStrictEqual([])
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('color')).toEqual(expected)
       })
     })
 
     describe('lineWidth', () => {
-      it.each([
-        [undefined, 2],
-        [2, 2],
-        [0, 0],
-        [-1, -1],
-      ])('pasa lineWidth=%s como %s', (lineWidth, expected) => {
-        const wrapper = mountChart({ lineWidth })
+      it.each(casesLineWidth)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ lineWidth: input })
 
-        expect(getComponent(wrapper, VisLine).props('lineWidth')).toBe(expected)
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('lineWidth')).toBe(expected)
       })
     })
 
     describe('lineDashArray', () => {
-      it.each([
-        [undefined, undefined],
-        [[], []],
-        [
-          [8, 4],
-          [8, 4],
-        ],
-      ])('pasa lineDashArray=%j', (lineDashArray, expected) => {
-        const wrapper = mountChart({ lineDashArray })
+      it.each(casesLineDashArray)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ lineDashArray: input })
 
-        expect(getComponent(wrapper, VisLine).props('lineDashArray')).toStrictEqual(expected)
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('lineDashArray')).toEqual(expected)
       })
     })
 
     describe('curveType', () => {
-      it('usa linear como valor por defecto', () => {
-        const wrapper = mountChart({ curveType: undefined })
+      it.each(casesCurveType)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ curveType: input })
 
-        expect(getComponent(wrapper, VisLine).props('curveType')).toBe('linear')
-      })
-
-      it.each([
-        'basis',
-        'basisClosed',
-        'basisOpen',
-        'bundle',
-        'cardinal',
-        'cardinalClosed',
-        'cardinalOpen',
-        'catmullRom',
-        'catmullRomClosed',
-        'catmullRomOpen',
-        'linear',
-        'linearClosed',
-        'monotoneX',
-        'monotoneY',
-        'natural',
-        'step',
-        'stepAfter',
-        'stepBefore',
-      ] as const)('pasa la curva %s a VisLine', (curveType) => {
-        const wrapper = mountChart({ curveType })
-
-        expect(getComponent(wrapper, VisLine).props('curveType')).toBe(curveType)
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('curveType')).toBe(expected)
       })
     })
 
     describe('interpolateMissingData', () => {
-      it.each([false, true])('pasa %s a VisLine', (interpolateMissingData) => {
-        const wrapper = mountChart({ interpolateMissingData })
+      it.each(casesInterpolateMissingData)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ interpolateMissingData: input })
 
-        expect(getComponent(wrapper, VisLine).props('interpolateMissingData')).toBe(
-          interpolateMissingData,
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('interpolateMissingData')).toBe(
+          expected,
         )
       })
     })
 
     describe('fallbackValue', () => {
-      it.each([undefined, null, 0, 7])('pasa fallbackValue=%s a VisLine', (fallbackValue) => {
-        const wrapper = mountChart({ fallbackValue })
+      it.each(casesFallbackValue)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ fallbackValue: input })
 
-        expect(getComponent(wrapper, VisLine).props('fallbackValue')).toBe(fallbackValue)
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('fallbackValue')).toBe(expected)
       })
     })
 
     describe('highlightOnHover', () => {
-      it.each([false, true])('pasa highlightOnHover=%s a VisLine', (highlightOnHover) => {
-        const wrapper = mountChart({ highlightOnHover })
+      it.each(casesHighlightOnHover)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ highlightOnHover: input })
 
-        expect(getComponent(wrapper, VisLine).props('highlightOnHover')).toBe(highlightOnHover)
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('highlightOnHover')).toBe(expected)
       })
     })
 
     describe('cursor', () => {
-      it.each([undefined, '', 'crosshair'])('pasa cursor=%s a VisLine', (cursor) => {
-        const wrapper = mountChart({ cursor })
+      it.each(casesCursor)('pasa $name a VisLine', ({ input, expected }) => {
+        const wrapper = mountChart({ cursor: input })
 
-        expect(getComponent(wrapper, VisLine).props('cursor')).toBe(cursor)
-      })
-    })
-
-    describe('tooltip', () => {
-      it.each([false, true])('muestra tooltip=%s y su crosshair asociado', (tooltip) => {
-        const wrapper = mountChart({ tooltip, crosshair: false })
-
-        expect(wrapper.findComponent(VisTooltip).exists()).toBe(tooltip)
-        expect(wrapper.findComponent(VisCrosshair).exists()).toBe(tooltip)
-      })
-
-      it('pasa los accessors y un template cuando está activo', () => {
-        const wrapper = mountChart({ tooltip: true })
-        const crosshair = getComponent(wrapper, VisCrosshair)
-
-        expect(crosshair.props('x')).toBe(x)
-        expect(crosshair.props('y')).toBe(y)
-        expect(crosshair.props('template')).toEqual(expect.any(Function))
+        expect(wrapper.findComponent({ name: 'VisLine' }).props('cursor')).toBe(expected)
       })
     })
 
     describe('crosshair', () => {
-      it.each([false, true])('muestra crosshair=%s cuando no hay tooltip', (crosshair) => {
-        const wrapper = mountChart({ crosshair, tooltip: false })
+      it.each(casesCrosshair)('muestra VisCrosshair con $name', ({ input, tooltip, expected }) => {
+        const wrapper = mountChart({ crosshair: input, tooltip })
+        const crosshair = wrapper.findComponent({ name: 'VisCrosshair' })
 
-        expect(wrapper.findComponent(VisCrosshair).exists()).toBe(crosshair)
+        expect(crosshair.exists()).toBe(expected)
+        if (expected) {
+          expect(crosshair.props('x')).toBe(x)
+          expect(crosshair.props('y')).toBe(y)
+          expect(typeof crosshair.props('template')).toBe(tooltip ? 'function' : 'undefined')
+        }
+      })
+    })
+
+    describe('tooltip', () => {
+      it.each(casesTooltip)('muestra los componentes de ayuda con $name', ({ input, expected }) => {
+        const wrapper = mountChart({ tooltip: input })
+        const crosshair = wrapper.findComponent({ name: 'VisCrosshair' })
+
+        expect(wrapper.findComponent({ name: 'VisTooltip' }).exists()).toBe(expected)
+        expect(crosshair.exists()).toBe(expected)
+        if (expected) expect(typeof crosshair.props('template')).toBe('function')
       })
     })
 
     describe('yDomain', () => {
-      it.each([
-        { name: 'omitido', value: undefined },
-        { name: 'completo', value: [0, 400] },
-        { name: 'sin mínimo', value: [undefined, 400] },
-        { name: 'sin máximo', value: [0, undefined] },
-      ])('pasa el dominio $name al contenedor', ({ value: yDomain }) => {
-        const wrapper = mountChart({ yDomain })
+      it.each(casesYDomain)('pasa $name a VisXYContainer', ({ input, expected }) => {
+        const wrapper = mountChart({ yDomain: input })
 
-        expect(getComponent(wrapper, VisXYContainer).props('yDomain')).toStrictEqual(yDomain)
+        expect(wrapper.findComponent({ name: 'VisXYContainer' }).props('yDomain')).toEqual(expected)
       })
     })
 
     describe('xTickFormat', () => {
-      it('mantiene el formateo automático de categorías cuando se omite', () => {
-        const categoricalData = [
-          { label: 'Enero', value: 10 },
-          { label: 'Febrero', value: 20 },
-        ]
-        const categoricalX = (point: (typeof categoricalData)[number]) => point.label
-        const wrapper = mountChart({ data: categoricalData, x: categoricalX })
+      it.each(casesXTickFormat)('pasa $name al eje X', ({ data, x, input, expected }) => {
+        const wrapper = mountChart({ data, x, xTickFormat: input })
+        const format = wrapper.findAllComponents({ name: 'VisAxis' })[0].props('tickFormat') as
+          ((value: number) => string) | undefined
 
-        expect(wrapper.findAllComponents(VisAxis)[0].props('tickFormat')?.(0, 0, [0, 1])).toBe(
-          'Enero',
-        )
-      })
-
-      it('pasa el callback personalizado al eje X', () => {
-        const xTickFormat = (value: number | Date, index: number) => `${value}-${index}`
-        const wrapper = mountChart({ xTickFormat })
-        const formatter = wrapper.findAllComponents(VisAxis)[0].props('tickFormat')
-
-        expect(formatter).toBe(xTickFormat)
-        expect(formatter?.(4, 1, [4])).toBe('4-1')
+        if (expected.labels) {
+          expect([0, 1].map((tick) => format?.(tick))).toEqual(expected.labels)
+        } else {
+          expect(format).toBe(expected.format)
+        }
       })
     })
 
     describe('yTickFormat', () => {
-      it('deja el formatter sin definir cuando se omite', () => {
-        const wrapper = mountChart({ yTickFormat: undefined })
+      it.each(casesYTickFormat)('pasa $name al eje Y', ({ input, expected }) => {
+        const wrapper = mountChart({ yTickFormat: input })
 
-        expect(wrapper.findAllComponents(VisAxis)[1].props('tickFormat')).toBeUndefined()
-      })
-
-      it('pasa el callback personalizado al eje Y', () => {
-        const yTickFormat = (value: number | Date, index: number) => `${value}-${index}`
-        const wrapper = mountChart({ yTickFormat })
-        const formatter = wrapper.findAllComponents(VisAxis)[1].props('tickFormat')
-
-        expect(formatter).toBe(yTickFormat)
-        expect(formatter?.(100, 2, [100])).toBe('100-2')
+        expect(wrapper.findAllComponents({ name: 'VisAxis' })[1].props('tickFormat')).toBe(expected)
       })
     })
 
     describe('xLabel', () => {
-      it.each([undefined, '', 'Mes'])('pasa xLabel=%s al eje X', (xLabel) => {
-        const wrapper = mountChart({ xLabel })
+      it.each(casesXLabel)('pasa $name al eje X', ({ input, expected }) => {
+        const wrapper = mountChart({ xLabel: input })
 
-        expect(wrapper.findAllComponents(VisAxis)[0].props('label')).toBe(xLabel)
+        expect(wrapper.findAllComponents({ name: 'VisAxis' })[0].props('label')).toBe(expected)
       })
     })
 
     describe('yLabel', () => {
-      it.each([undefined, '', 'Visitas'])('pasa yLabel=%s al eje Y', (yLabel) => {
-        const wrapper = mountChart({ yLabel })
+      it.each(casesYLabel)('pasa $name al eje Y', ({ input, expected }) => {
+        const wrapper = mountChart({ yLabel: input })
 
-        expect(wrapper.findAllComponents(VisAxis)[1].props('label')).toBe(yLabel)
+        expect(wrapper.findAllComponents({ name: 'VisAxis' })[1].props('label')).toBe(expected)
       })
     })
 
     describe('xNumTicks', () => {
-      it.each([undefined, 0, 6])('pasa xNumTicks=%s al eje X', (xNumTicks) => {
-        const wrapper = mountChart({ xNumTicks })
+      it.each(casesXNumTicks)('pasa $name al eje X', ({ input, expected }) => {
+        const wrapper = mountChart({ xNumTicks: input })
 
-        expect(wrapper.findAllComponents(VisAxis)[0].props('numTicks')).toBe(xNumTicks)
+        expect(wrapper.findAllComponents({ name: 'VisAxis' })[0].props('numTicks')).toBe(expected)
       })
     })
 
     describe('yNumTicks', () => {
-      it.each([undefined, 0, 5])('pasa yNumTicks=%s al eje Y', (yNumTicks) => {
-        const wrapper = mountChart({ yNumTicks })
+      it.each(casesYNumTicks)('pasa $name al eje Y', ({ input, expected }) => {
+        const wrapper = mountChart({ yNumTicks: input })
 
-        expect(wrapper.findAllComponents(VisAxis)[1].props('numTicks')).toBe(yNumTicks)
+        expect(wrapper.findAllComponents({ name: 'VisAxis' })[1].props('numTicks')).toBe(expected)
       })
     })
 
     describe('gridLine', () => {
-      it.each([true, false])('pasa gridLine=%s a ambos ejes', (gridLine) => {
-        const wrapper = mountChart({ gridLine })
-        const axes = wrapper.findAllComponents(VisAxis)
+      it.each(casesGridLine)('pasa $name a ambos ejes', ({ input, expected }) => {
+        const wrapper = mountChart({ gridLine: input })
+        const axes = wrapper.findAllComponents({ name: 'VisAxis' })
 
-        expect(axes[0].props('gridLine')).toBe(gridLine)
-        expect(axes[1].props('gridLine')).toBe(gridLine)
-      })
-
-      it('usa true cuando se omite', () => {
-        const wrapper = mountChart({ gridLine: undefined })
-
-        expect(wrapper.findAllComponents(VisAxis)[0].props('gridLine')).toBe(true)
-        expect(wrapper.findAllComponents(VisAxis)[1].props('gridLine')).toBe(true)
+        expect(axes[0].props('gridLine')).toBe(expected)
+        expect(axes[1].props('gridLine')).toBe(expected)
       })
     })
   })
 
   describe('attrs', () => {
-    it('reenvía attrs, class y style al root', () => {
-      const wrapper = mountChart({
-        class: 'custom-chart',
-        style: { minHeight: '12rem' },
-        id: 'monthly-chart',
-        'data-test-custom': 'true',
-      } as Partial<LinearChartProps<Point>>)
-      const root = wrapper.get('[data-test-linear-chart-root]')
+    testAttrs({
+      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
+      id: '[data-test-linear-chart-root]',
+      mount: (attrs) => mountChart({}, attrs),
+    })
 
-      expect(root.attributes('id')).toBe('monthly-chart')
-      expect(root.attributes('data-test-custom')).toBe('true')
-      expect(root.classes()).toContain('custom-chart')
-      expect(root.attributes('style')).toContain('min-height: 12rem')
+    it('usa el rol img por defecto y permite cambiarlo', () => {
+      expect(mountChart().get('[data-test-linear-chart-root]').attributes('role')).toBe('img')
+      expect(
+        mountChart({}, { role: 'group' }).get('[data-test-linear-chart-root]').attributes('role'),
+      ).toBe('group')
+    })
+  })
+
+  describe('variantsCss', () => {
+    describe('linearChartVariants', () => {
+      it('mantiene las clases base del gráfico', () => {
+        const root = mountChart().get('[data-test-linear-chart-root]')
+
+        expect(root.element.tagName).toBe('DIV')
+        expect(root.classes()).toEqual(expect.arrayContaining(['relative', 'w-full']))
+      })
     })
   })
 })

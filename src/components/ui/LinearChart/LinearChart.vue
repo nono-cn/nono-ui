@@ -9,8 +9,8 @@ import {
   VisXYContainer,
 } from '@unovis/vue'
 import { cn } from '@/lib/utils'
-import type { LinearChartAccessor, LinearChartProps } from '.'
-import { linearChartDefaults } from './defaults'
+import { linearChartVariants, type LinearChartAccessor, type LinearChartProps } from '.'
+import { linearChartDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -98,7 +98,7 @@ const rootProps = computed(() => ({
   ...attrs,
   role: attrs.role ?? 'img',
   'aria-label': attrs['aria-label'],
-  class: cn('relative w-full', attrs.class),
+  class: cn(linearChartVariants(), attrs.class),
   style: attrs.style,
 }))
 </script>

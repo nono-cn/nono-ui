@@ -1,4 +1,10 @@
+import { cva } from 'class-variance-authority'
+import { linearChartCurveTypes } from './constants'
+
 export { default as LinearChart } from './LinearChart.vue'
+export { linearChartCurveTypes, linearChartDefaults } from './constants'
+
+export const linearChartVariants = cva('relative w-full')
 
 export type LinearChartXValue = number | string | Date
 export type LinearChartAccessor<T, V> = (datum: T, index: number) => V
@@ -10,25 +16,7 @@ export interface LinearChartEvents {
   mouseover?: LinearChartEventHandler
   mouseleave?: LinearChartEventHandler
 }
-export type LinearChartCurveType =
-  | 'basis'
-  | 'basisClosed'
-  | 'basisOpen'
-  | 'bundle'
-  | 'cardinal'
-  | 'cardinalClosed'
-  | 'cardinalOpen'
-  | 'catmullRom'
-  | 'catmullRomClosed'
-  | 'catmullRomOpen'
-  | 'linear'
-  | 'linearClosed'
-  | 'monotoneX'
-  | 'monotoneY'
-  | 'natural'
-  | 'step'
-  | 'stepAfter'
-  | 'stepBefore'
+export type LinearChartCurveType = (typeof linearChartCurveTypes)[number]
 
 export interface LinearChartProps<T = Record<string, unknown>> {
   data: T[]

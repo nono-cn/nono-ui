@@ -25,6 +25,7 @@ import input from './components/input'
 import kbd from './components/kbd'
 import kbdGroup from './components/kbd-group'
 import label from './components/label'
+import linearChart from './components/linear-chart'
 import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
@@ -72,6 +73,7 @@ export const docsComponents = [
   kbd,
   kbdGroup,
   label,
+  linearChart,
   loading,
   marker,
   masonry,
