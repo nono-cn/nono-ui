@@ -18,9 +18,9 @@ export const toggleVariants = cva(
     variants: {
       variant: {
         outline:
-          'border border-(--toggle-color)/40 bg-transparent text-(--toggle-color) hover:bg-(--toggle-color)/10 data-[state=on]:border-(--toggle-color)/60 data-[state=on]:bg-(--toggle-color)/20',
+          'border border-(--toggle-color)/40 bg-transparent text-foreground hover:bg-(--toggle-color)/10 data-[state=on]:border-(--toggle-color)/60 data-[state=on]:bg-(--toggle-color)/20',
         plain:
-          'bg-transparent text-(--toggle-color) hover:bg-(--toggle-color)/10 data-[state=on]:bg-(--toggle-color)/20',
+          'bg-transparent text-foreground hover:bg-(--toggle-color)/10 data-[state=on]:bg-(--toggle-color)/20',
       } satisfies Record<(typeof toggleVariantNames)[number], string>,
       size: {
         xs: 'h-7 gap-1 px-2.5 text-xs has-[>svg]:px-2',

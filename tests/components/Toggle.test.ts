@@ -62,7 +62,7 @@ const casesName = [
 const outlineClasses = [
   'border-(--toggle-color)/40',
   'bg-transparent',
-  'text-(--toggle-color)',
+  'text-foreground',
   'hover:bg-(--toggle-color)/10',
   'data-[state=on]:border-(--toggle-color)/60',
   'data-[state=on]:bg-(--toggle-color)/20',
@@ -70,7 +70,7 @@ const outlineClasses = [
 
 const plainClasses = [
   'bg-transparent',
-  'text-(--toggle-color)',
+  'text-foreground',
   'hover:bg-(--toggle-color)/10',
   'data-[state=on]:bg-(--toggle-color)/20',
 ]
