@@ -67,24 +67,31 @@ const rootProps = computed(() => {
 
 <template>
   <Toggle v-bind="rootProps" v-model="modelValue" data-test-toggle-root>
-    <slot name="leading" v-bind="toggleContext">
-      <Icon
-        v-if="props.icon"
-        :name="props.icon"
-        :size="iconSize"
-        data-test-toggle-icon
-      />
-    </slot>
+   <div data-test-toggle-slot-leading>
+      <slot name="leading" v-bind="toggleContext">
+        <Icon
+          v-if="props.icon"
+          :name="props.icon"
+          :size="iconSize"
+          data-test-toggle-icon
+        />
+      </slot>
+    </div>
 
-    <slot v-if="$slots.default || props.label" v-bind="toggleContext">{{ props.label }}</slot>
+    <div data-test-toggle-slot-default>
+      <slot v-if="$slots.default || props.label" v-bind="toggleContext">{{ props.label }}</slot>
+    </div>
+    
+    <div data-test-toggle-slot-trailing>
+      <slot name="trailing" v-bind="toggleContext">
+        <Icon
+          v-if="props.trailingIcon"
+          :name="props.trailingIcon"
+          :size="iconSize"
+          data-test-toggle-trailing-icon
+        />
+      </slot>
+    </div>
 
-    <slot name="trailing" v-bind="toggleContext">
-      <Icon
-        v-if="props.trailingIcon"
-        :name="props.trailingIcon"
-        :size="iconSize"
-        data-test-toggle-trailing-icon
-      />
-    </slot>
   </Toggle>
 </template>

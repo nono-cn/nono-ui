@@ -62,7 +62,7 @@ const casesName = [
 const outlineClasses = [
   'border-(--toggle-color)/40',
   'bg-transparent',
-  'text-foreground',
+  'text-(--toggle-color)',
   'hover:bg-(--toggle-color)/10',
   'data-[state=on]:border-(--toggle-color)/60',
   'data-[state=on]:bg-(--toggle-color)/20',
@@ -70,7 +70,7 @@ const outlineClasses = [
 
 const plainClasses = [
   'bg-transparent',
-  'text-foreground',
+  'text-(--toggle-color)',
   'hover:bg-(--toggle-color)/10',
   'data-[state=on]:bg-(--toggle-color)/20',
 ]
@@ -115,8 +115,27 @@ const casesToggleContext = [
   { input: true, expected: { pressed: true } },
 ] satisfies Array<{ input: ToggleValue | undefined; expected: ToggleContext }>
 
+const casesAs = [undefined, 'a'] as const
+const casesAsChild = [undefined, false, true] as const
+
 describe('Toggle', () => {
   describe('props', () => {
+    describe('as', () => {
+      it.each(casesAs)('fija as=button aunque se pase %s', (input) => {
+        const toggle = mountToggle({ attrs: { as: input } })
+
+        expect(toggle.getComponent(RekaToggle).props('as')).toBe('button')
+      })
+    })
+
+    describe('asChild', () => {
+      it.each(casesAsChild)('fija asChild=false aunque se pase %s', (input) => {
+        const toggle = mountToggle({ attrs: { asChild: input } })
+
+        expect(toggle.getComponent(RekaToggle).props('asChild')).toBe(false)
+      })
+    })
+
     describe('modelValue', () => {
       it.each(casesModelValue)('pasa modelValue=$input a Reka Toggle', ({ input, expected }) => {
         const toggle = mountToggle({ props: { modelValue: input } })
@@ -257,11 +276,11 @@ describe('Toggle', () => {
       it('renderiza el slot y sustituye label', () => {
         const toggle = mountToggle({
           props: { label: 'Label alternativo' },
-          slots: { default: () => h('span', { 'data-test-toggle-slot': 'default' }, 'Contenido') },
+          slots: { default: () => h('span', 'Contenido') },
         })
 
-        expect(toggle.get('[data-test-toggle-slot="default"]').text()).toBe('Contenido')
-        expect(toggle.get('[data-test-toggle-root]').text()).not.toContain('Label alternativo')
+        expect(toggle.get('[data-test-toggle-slot-default]').text()).toBe('Contenido')
+        expect(toggle.get('[data-test-toggle-slot-default]').text()).not.toContain('Label alternativo')
       })
     })
 
@@ -269,10 +288,10 @@ describe('Toggle', () => {
       it('renderiza el slot y sustituye icon', () => {
         const toggle = mountToggle({
           props: { icon: 'star' },
-          slots: { leading: () => h('span', { 'data-test-toggle-slot': 'leading' }, 'Inicio') },
+          slots: { leading: () => h('span', 'Inicio') },
         })
 
-        expect(toggle.get('[data-test-toggle-slot="leading"]').text()).toBe('Inicio')
+        expect(toggle.get('[data-test-toggle-slot-leading]').text()).toBe('Inicio')
         expect(toggle.find('[data-test-toggle-icon]').exists()).toBe(false)
       })
     })
@@ -281,10 +300,10 @@ describe('Toggle', () => {
       it('renderiza el slot y sustituye trailingIcon', () => {
         const toggle = mountToggle({
           props: { trailingIcon: 'check' },
-          slots: { trailing: () => h('span', { 'data-test-toggle-slot': 'trailing' }, 'Final') },
+          slots: { trailing: () => h('span', 'Final') },
         })
 
-        expect(toggle.get('[data-test-toggle-slot="trailing"]').text()).toBe('Final')
+        expect(toggle.get('[data-test-toggle-slot-trailing]').text()).toBe('Final')
         expect(toggle.find('[data-test-toggle-trailing-icon]').exists()).toBe(false)
       })
     })
