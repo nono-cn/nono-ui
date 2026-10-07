@@ -7,11 +7,13 @@ export { fieldDefaults } from './constants'
 
 export const fieldRootVariants = cva('grid gap-2')
 export const fieldLabelVariants = cva('text-sm font-medium')
+export const fieldDescriptionVariants = cva('text-sm text-muted-foreground')
 
 export type FieldFn<T> = () => T
 
 export interface FieldUI {
   label?: FieldFn<HTMLAttributes>
+  description?: FieldFn<HTMLAttributes>
 }
 
 export type FieldProps = Pick<
@@ -25,9 +27,10 @@ export type FieldProps = Pick<
   | 'validate'
   | 'validationMode'
   | 'validationDebounceTime'
-> & { label?: string; ui?: FieldUI }
+> & { label?: string; description?: string; ui?: FieldUI }
 
 export interface FieldSlots {
   default?(props: { invalid: boolean; errors: string[] }): unknown
   label?(): unknown
+  description?(): unknown
 }

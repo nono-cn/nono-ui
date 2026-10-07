@@ -28,6 +28,15 @@ const casesLabel = [
   expected: string | undefined
 }>
 
+const casesDescription = [
+  { input: undefined, expected: undefined },
+  { input: '', expected: undefined },
+  { input: 'Helper text', expected: 'Helper text' },
+] satisfies Array<{
+  input: FieldProps['description']
+  expected: string | undefined
+}>
+
 const casesDisabled = [
   { input: undefined, expected: undefined },
   { input: false, expected: false },
@@ -115,6 +124,16 @@ describe('Field', () => {
 
         expect(label.exists()).toBe(expected !== undefined)
         if (expected !== undefined) expect(label.text()).toBe(expected)
+      })
+    })
+
+    describe('description', () => {
+      it.each(casesDescription)('renderiza description=$input', ({ input, expected }) => {
+        const field = mountField({ props: { description: input } })
+        const description = field.find('[data-test-field-description]')
+
+        expect(description.exists()).toBe(expected !== undefined)
+        if (expected !== undefined) expect(description.text()).toBe(expected)
       })
     })
 
@@ -219,6 +238,17 @@ describe('Field', () => {
             }),
         })
       })
+
+      describe('description', () => {
+        testAttrs({
+          text: 'pasa los atributos de ui.description a la descripción',
+          id: '[data-test-field-description]',
+          mount: (attrs) =>
+            mountField({
+              props: { description: 'Helper text', ui: { description: () => attrs } },
+            }),
+        })
+      })
     })
   })
 
@@ -242,6 +272,32 @@ describe('Field', () => {
         expect(field.get('[data-test-field-label]').text()).not.toContain('Texto original')
       })
     })
+
+    describe('description', () => {
+      it('renderiza el slot aunque no haya prop description', () => {
+        const field = mountField({
+          slots: {
+            description: () => h('span', { 'data-test-description-slot': '' }, 'Ayuda'),
+          },
+        })
+
+        expect(field.get('[data-test-field-description] [data-test-description-slot]').text()).toBe(
+          'Ayuda',
+        )
+      })
+
+      it('sustituye el texto de description con el slot', () => {
+        const field = mountField({
+          props: { description: 'Texto original' },
+          slots: {
+            description: () => h('span', { 'data-test-description-slot': '' }, 'Texto nuevo'),
+          },
+        })
+
+        expect(field.get('[data-test-field-description]').text()).toBe('Texto nuevo')
+        expect(field.get('[data-test-field-description]').text()).not.toContain('Texto original')
+      })
+    })
   })
 
   describe('Attrs', () => {
@@ -253,6 +309,19 @@ describe('Field', () => {
   })
 
   describe('variantsCss', () => {
+    describe('fieldDescriptionVariants', () => {
+      it('mantiene las clases base de la descripción', () => {
+        const description = mountField({ props: { description: 'Ayuda' } }).get(
+          '[data-test-field-description]',
+        )
+
+        expect(description.element.tagName).toBe('P')
+        expect(description.classes()).toEqual(
+          expect.arrayContaining(['text-sm', 'text-muted-foreground']),
+        )
+      })
+    })
+
     describe('fieldLabelVariants', () => {
       it('mantiene las clases base del label', () => {
         const label = mountField({ props: { label: 'Email' } }).get('[data-test-field-label]')

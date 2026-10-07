@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { computed, useAttrs, useSlots } from 'vue'
-import { FieldLabel, FieldRoot } from 'reka-ui'
+import { FieldDescription, FieldLabel, FieldRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { fieldLabelVariants, fieldRootVariants, type FieldProps, type FieldSlots } from '.'
+import {
+  fieldDescriptionVariants,
+  fieldLabelVariants,
+  fieldRootVariants,
+  type FieldProps,
+  type FieldSlots,
+} from '.'
 import { fieldDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
@@ -36,6 +42,15 @@ const labelProps = computed(() => {
     style: ui.style,
   }
 })
+
+const descriptionProps = computed(() => {
+  const ui = useUi(props.ui?.description, undefined)
+  return {
+    ...ui,
+    class: cn(fieldDescriptionVariants(), ui.class),
+    style: ui.style,
+  }
+})
 </script>
 
 <template>
@@ -44,5 +59,12 @@ const labelProps = computed(() => {
       <slot name="label">{{ props.label }}</slot>
     </FieldLabel>
     <slot v-bind="slotProps" />
+    <FieldDescription
+      v-if="props.description || slots.description"
+      v-bind="descriptionProps"
+      data-test-field-description
+    >
+      <slot name="description">{{ props.description }}</slot>
+    </FieldDescription>
   </FieldRoot>
 </template>

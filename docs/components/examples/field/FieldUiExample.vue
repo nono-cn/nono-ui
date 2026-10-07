@@ -12,8 +12,12 @@ ${scriptEnd}
 <template>
   <Field
     label="Email"
+    description="We will use this address to contact you."
     class="w-full max-w-sm"
-    :ui="{ label: () => ({ class: 'text-primary underline underline-offset-4' }) }"
+    :ui="{
+      label: () => ({ class: 'text-primary underline underline-offset-4' }),
+      description: () => ({ class: 'italic' }),
+    }"
   >
     <FieldControl
       type="email"
@@ -27,14 +31,18 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Label UI"
-    description="Add attributes and classes to the label through ui.label."
+    description="Customize the label and description through ui resolvers."
     :code="code"
     :show-reset="false"
   >
     <Field
       label="Email"
+      description="We will use this address to contact you."
       class="w-full max-w-sm"
-      :ui="{ label: () => ({ class: 'text-primary underline underline-offset-4' }) }"
+      :ui="{
+        label: () => ({ class: 'text-primary underline underline-offset-4' }),
+        description: () => ({ class: 'italic' }),
+      }"
     >
       <FieldControl
         type="email"

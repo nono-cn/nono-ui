@@ -10,37 +10,35 @@ import { FieldControl } from 'reka-ui'
 ${scriptEnd}
 
 <template>
-  <Field
-    label="Email"
-    description="We will use this address to contact you."
-    class="w-full max-w-sm"
-  >
+  <Field label="Email" class="w-full max-w-sm">
     <FieldControl
       type="email"
       placeholder="you@example.com"
       class="h-9 rounded-md border border-input bg-background px-3 text-sm"
     />
+    <template #description>
+      We will only use your address for <strong>account updates</strong>.
+    </template>
   </Field>
 </template>`
 </script>
 
 <template>
   <ComponentExample
-    title="Basic usage"
-    description="Connect a label and description to a control inside Field."
+    title="Description slot"
+    description="Replace the description text with custom content."
     :code="code"
     :show-reset="false"
   >
-    <Field
-      label="Email"
-      description="We will use this address to contact you."
-      class="w-full max-w-sm"
-    >
+    <Field label="Email" class="w-full max-w-sm">
       <FieldControl
         type="email"
         placeholder="you@example.com"
         class="h-9 rounded-md border border-input bg-background px-3 text-sm"
       />
+      <template #description>
+        We will only use your address for <strong>account updates</strong>.
+      </template>
     </Field>
   </ComponentExample>
 </template>

@@ -1,4 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
+import FieldDescriptionSlotExample from '../../components/examples/field/FieldDescriptionSlotExample.vue'
 import FieldLabelSlotExample from '../../components/examples/field/FieldLabelSlotExample.vue'
 import FieldRequiredExample from '../../components/examples/field/FieldRequiredExample.vue'
 import FieldUiExample from '../../components/examples/field/FieldUiExample.vue'
@@ -24,13 +25,18 @@ const fieldConfig: ComponentDocConfig = {
       component: FieldLabelSlotExample,
     },
     {
+      title: 'Description slot',
+      description: 'Replace the description text with custom content.',
+      component: FieldDescriptionSlotExample,
+    },
+    {
       title: 'Required control',
       description: 'Mark the field as required and pass that state to its control.',
       component: FieldRequiredExample,
     },
     {
-      title: 'Label UI',
-      description: 'Add attributes and classes to the label through ui.label.',
+      title: 'Label and description UI',
+      description: 'Customize the label and description through ui resolvers.',
       component: FieldUiExample,
     },
   ],
@@ -38,7 +44,7 @@ const fieldConfig: ComponentDocConfig = {
     {
       title: 'Label and control association',
       description:
-        'Provide label or the label slot, then place Reka UI FieldControl inside Field. Field connects the label and control automatically, renders a div, and forwards HTML and ARIA attributes to that root element.',
+        'Provide label or the label slot, then place Reka UI FieldControl inside Field. Field connects the label and optional description to the control automatically, renders a div, and forwards HTML and ARIA attributes to that root element.',
       links: [
         {
           label: 'Read the Reka UI Field accessibility guide',
@@ -54,6 +60,13 @@ const fieldConfig: ComponentDocConfig = {
         type: 'string',
         default: 'undefined',
         description: 'Visible label text. Omitted when empty unless the label slot is provided.',
+      },
+      {
+        name: 'description',
+        type: 'string',
+        default: 'undefined',
+        description:
+          'Supporting text below the control. Omitted when empty unless the description slot is provided.',
       },
       {
         name: 'name',
@@ -111,9 +124,14 @@ const fieldConfig: ComponentDocConfig = {
       },
       {
         name: 'ui',
-        type: '{ label?: () => HTMLAttributes }',
+        type: `{
+  label?: () => HTMLAttributes
+  description?: () => HTMLAttributes
+}`,
+        typePre: true,
         default: 'undefined',
-        description: 'Resolver for attributes, classes, and styles on FieldLabel.',
+        description:
+          'Resolvers for attributes, classes, and styles on FieldLabel and FieldDescription.',
       },
     ],
     emits: [],
@@ -122,6 +140,11 @@ const fieldConfig: ComponentDocConfig = {
         name: 'label',
         type: '-',
         description: 'Custom content that replaces the label prop inside FieldLabel.',
+      },
+      {
+        name: 'description',
+        type: '-',
+        description: 'Custom content that replaces the description prop inside FieldDescription.',
       },
       {
         name: 'default',
