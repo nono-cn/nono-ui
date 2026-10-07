@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { FieldControl } from 'reka-ui'
 import { Field } from '@/components/ui/Field'
+import { Input } from '@/components/ui/Input'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Field } from '__DOCS_PACKAGE__/components/ui/Field'
-import { FieldControl } from 'reka-ui'
+import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
 ${scriptEnd}
 
 <template>
@@ -15,10 +15,9 @@ ${scriptEnd}
     description="We will use this address to contact you."
     class="w-full max-w-sm"
   >
-    <FieldControl
+    <Input
       type="email"
       placeholder="you@example.com"
-      class="h-9 rounded-md border border-input bg-background px-3 text-sm"
     />
   </Field>
 </template>`
@@ -27,7 +26,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Basic usage"
-    description="Connect a label and description to a control inside Field."
+    description="Use your Input inside Field and connect it to the label and description."
     :code="code"
     :show-reset="false"
   >
@@ -36,11 +35,7 @@ ${scriptEnd}
       description="We will use this address to contact you."
       class="w-full max-w-sm"
     >
-      <FieldControl
-        type="email"
-        placeholder="you@example.com"
-        class="h-9 rounded-md border border-input bg-background px-3 text-sm"
-      />
+      <Input type="email" placeholder="you@example.com" />
     </Field>
   </ComponentExample>
 </template>

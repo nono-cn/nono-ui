@@ -14,7 +14,7 @@ const fieldConfig: ComponentDocConfig = {
   usage: [
     {
       title: 'Basic usage',
-      description: 'Connect a label and description to a control inside Field.',
+      description: 'Use your Input inside Field and connect it to the label and description.',
       component: FieldUsageExample,
     },
   ],
@@ -31,7 +31,7 @@ const fieldConfig: ComponentDocConfig = {
     },
     {
       title: 'Required control',
-      description: 'Mark the field as required and pass that state to its control.',
+      description: 'Mark Field and your Input as required.',
       component: FieldRequiredExample,
     },
     {
@@ -44,7 +44,7 @@ const fieldConfig: ComponentDocConfig = {
     {
       title: 'Label and control association',
       description:
-        'Provide label or the label slot, then place Reka UI FieldControl inside Field. Field connects the label and optional description to the control automatically, renders a div, and forwards HTML and ARIA attributes to that root element.',
+        'The nono-ui Input does not register with Reka FieldRoot. Set native constraints such as required directly on Input. For an accessible name, associate the Input with a label in your form.',
       links: [
         {
           label: 'Read the Reka UI Field accessibility guide',

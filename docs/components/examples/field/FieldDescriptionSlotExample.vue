@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { FieldControl } from 'reka-ui'
 import { Field } from '@/components/ui/Field'
+import { Input } from '@/components/ui/Input'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Field } from '__DOCS_PACKAGE__/components/ui/Field'
-import { FieldControl } from 'reka-ui'
+import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
 ${scriptEnd}
 
 <template>
-  <Field label="Email" class="w-full max-w-sm">
-    <FieldControl
+  <Field
+    label="Email"
+    class="w-full max-w-sm"
+  >
+    <Input
       type="email"
       placeholder="you@example.com"
-      class="h-9 rounded-md border border-input bg-background px-3 text-sm"
     />
     <template #description>
       We will only use your address for <strong>account updates</strong>.
@@ -31,11 +33,7 @@ ${scriptEnd}
     :show-reset="false"
   >
     <Field label="Email" class="w-full max-w-sm">
-      <FieldControl
-        type="email"
-        placeholder="you@example.com"
-        class="h-9 rounded-md border border-input bg-background px-3 text-sm"
-      />
+      <Input type="email" placeholder="you@example.com" />
       <template #description>
         We will only use your address for <strong>account updates</strong>.
       </template>

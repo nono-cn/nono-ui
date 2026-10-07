@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { FieldControl } from 'reka-ui'
 import { Field } from '@/components/ui/Field'
+import { Input } from '@/components/ui/Input'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Field } from '__DOCS_PACKAGE__/components/ui/Field'
-import { FieldControl } from 'reka-ui'
+import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
 ${scriptEnd}
 
 <template>
-  <Field label="Name" required class="w-full max-w-sm">
-    <FieldControl
-      placeholder="Your name"
-      class="h-9 rounded-md border border-input bg-background px-3 text-sm"
-    />
+  <Field
+    label="Name"
+    required
+    class="w-full max-w-sm"
+  >
+    <Input required placeholder="Your name" />
   </Field>
 </template>`
 </script>
@@ -22,15 +23,12 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Required control"
-    description="Mark the field as required and pass that state to its control."
+    description="Mark Field and your Input as required."
     :code="code"
     :show-reset="false"
   >
     <Field label="Name" required class="w-full max-w-sm">
-      <FieldControl
-        placeholder="Your name"
-        class="h-9 rounded-md border border-input bg-background px-3 text-sm"
-      />
+      <Input required placeholder="Your name" />
     </Field>
   </ComponentExample>
 </template>
