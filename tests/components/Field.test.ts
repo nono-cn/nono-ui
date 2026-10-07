@@ -167,11 +167,14 @@ describe('Field', () => {
     })
 
     describe('validationMode', () => {
-      it.each(casesValidationMode)('pasa validationMode=$input a FieldRoot', ({ input, expected }) => {
-        const field = mountField({ props: { validationMode: input } })
+      it.each(casesValidationMode)(
+        'pasa validationMode=$input a FieldRoot',
+        ({ input, expected }) => {
+          const field = mountField({ props: { validationMode: input } })
 
-        expect(field.getComponent(FieldRoot).props('validationMode')).toBe(expected)
-      })
+          expect(field.getComponent(FieldRoot).props('validationMode')).toBe(expected)
+        },
+      )
     })
 
     describe('validationDebounceTime', () => {
