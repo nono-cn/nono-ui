@@ -273,6 +273,24 @@ describe('Toggle', () => {
 
   describe('slots', () => {
     describe('default', () => {
+      it('no renderiza el contenedor sin label ni slot', () => {
+        expect(mountToggle().find('[data-test-toggle-slot-default]').exists()).toBe(false)
+      })
+
+      it('renderiza el contenedor con label', () => {
+        expect(
+          mountToggle({ props: { label: 'Etiqueta' } })
+            .get('[data-test-toggle-slot-default]')
+            .text(),
+        ).toBe('Etiqueta')
+      })
+
+      it('renderiza el contenedor con el slot sin label', () => {
+        const toggle = mountToggle({ slots: { default: () => h('span', 'Contenido') } })
+
+        expect(toggle.get('[data-test-toggle-slot-default]').text()).toBe('Contenido')
+      })
+
       it('renderiza el slot y sustituye label', () => {
         const toggle = mountToggle({
           props: { label: 'Label alternativo' },
@@ -285,6 +303,25 @@ describe('Toggle', () => {
     })
 
     describe('leading', () => {
+      it('no renderiza el contenedor sin icon ni slot', () => {
+        expect(mountToggle().find('[data-test-toggle-slot-leading]').exists()).toBe(false)
+      })
+
+      it('renderiza el contenedor con icon', () => {
+        expect(
+          mountToggle({ props: { icon: 'star' } })
+            .get('[data-test-toggle-slot-leading]')
+            .find('[data-test-toggle-icon]')
+            .exists(),
+        ).toBe(true)
+      })
+
+      it('renderiza el contenedor con el slot sin icon', () => {
+        const toggle = mountToggle({ slots: { leading: () => h('span', 'Inicio') } })
+
+        expect(toggle.get('[data-test-toggle-slot-leading]').text()).toBe('Inicio')
+      })
+
       it('renderiza el slot y sustituye icon', () => {
         const toggle = mountToggle({
           props: { icon: 'star' },
@@ -297,6 +334,25 @@ describe('Toggle', () => {
     })
 
     describe('trailing', () => {
+      it('no renderiza el contenedor sin trailingIcon ni slot', () => {
+        expect(mountToggle().find('[data-test-toggle-slot-trailing]').exists()).toBe(false)
+      })
+
+      it('renderiza el contenedor con trailingIcon', () => {
+        expect(
+          mountToggle({ props: { trailingIcon: 'check' } })
+            .get('[data-test-toggle-slot-trailing]')
+            .find('[data-test-toggle-trailing-icon]')
+            .exists(),
+        ).toBe(true)
+      })
+
+      it('renderiza el contenedor con el slot sin trailingIcon', () => {
+        const toggle = mountToggle({ slots: { trailing: () => h('span', 'Final') } })
+
+        expect(toggle.get('[data-test-toggle-slot-trailing]').text()).toBe('Final')
+      })
+
       it('renderiza el slot y sustituye trailingIcon', () => {
         const toggle = mountToggle({
           props: { trailingIcon: 'check' },
