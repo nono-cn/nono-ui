@@ -74,6 +74,13 @@ export interface SwitchContext {
   state: SwitchState
 }
 
+export function createSwitchContext(
+  modelValue: SwitchValue | undefined,
+  trueValue: SwitchValue,
+): SwitchContext {
+  return { state: modelValue === trueValue }
+}
+
 // Emits
 export interface SwitchEmits {
   'update:modelValue': [value: SwitchValue]

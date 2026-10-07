@@ -31,7 +31,7 @@ function reset() {
 
 <template>
   <ComponentExample
-    title="Appearance"
+    title="Color"
     description="Choose a theme color or a custom CSS color."
     :code="code"
     @reset="reset"

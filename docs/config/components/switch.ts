@@ -11,7 +11,7 @@ const switchConfig: ComponentDocConfig = {
   slug: 'switch',
   title: 'Switch',
   language: 'en',
-  description: 'Accessible on/off control with custom values, appearance, and icons.',
+  description: 'Accessible on/off control with custom values, color, and icons.',
   importPath: '@nono-ui/components/ui/Switch',
   usage: [
     { title: 'Basic usage', description: 'Toggle a boolean value.', component: SwitchBasicExample },
@@ -28,7 +28,7 @@ const switchConfig: ComponentDocConfig = {
       component: SwitchSizeExample,
     },
     {
-      title: 'Appearance',
+      title: 'Color',
       description: 'Choose a theme color or a custom CSS color.',
       component: SwitchAppearanceExample,
     },

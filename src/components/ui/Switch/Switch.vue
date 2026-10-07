@@ -5,9 +5,14 @@ import { Icon } from '@/components/ui/Icon'
 import { useUi } from '@/composables/useUi'
 import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
-import { switchThumbVariants, switchVariants, type SwitchProps, type SwitchValue } from '.'
+import {
+  createSwitchContext,
+  switchThumbVariants,
+  switchVariants,
+  type SwitchProps,
+  type SwitchValue,
+} from '.'
 import { switchDefaults, switchSizes } from './constants'
-import { createSwitchContext } from './context'
 
 defineOptions({ inheritAttrs: false })
 
