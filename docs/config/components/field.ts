@@ -44,7 +44,7 @@ const fieldConfig: ComponentDocConfig = {
     {
       title: 'Label and control association',
       description:
-        'The nono-ui Input does not register with Reka FieldRoot. Set native constraints such as required directly on Input. For an accessible name, associate the Input with a label in your form.',
+        'Field generates ids for the nono-ui Input and its description, associating the visible label and supporting text automatically. Input does not register its value or validation state with Reka FieldRoot; set native constraints such as required directly on Input.',
       links: [
         {
           label: 'Read the Reka UI Field accessibility guide',

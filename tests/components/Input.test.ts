@@ -2,6 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
+import { Field } from '@/components/ui/Field'
 import { Icon, type IconName } from '@/components/ui/Icon'
 import {
   Input,
@@ -452,6 +453,53 @@ describe('Input', () => {
         expect(wrapper.get('[data-test-input-trailing]').text()).toBe('Custom trailing')
         expect(wrapper.findComponent(Icon).exists()).toBe(false)
       })
+    })
+  })
+
+  describe('field', () => {
+    it('usa los IDs del label y la descripción', () => {
+      const field = mount(Field, {
+        props: { label: 'Email', description: 'Texto de ayuda' },
+        slots: { default: () => h(Input) },
+      })
+      const input = field.get('[data-test-input-root]')
+
+      expect(input.attributes('id')).toBe(field.get('[data-test-field-label]').attributes('for'))
+      expect(input.attributes('aria-describedby')).toBe(
+        field.get('[data-test-field-description]').attributes('id'),
+      )
+    })
+
+    it('no añade aria-describedby si Field no tiene descripción', () => {
+      const field = mount(Field, {
+        props: { label: 'Email' },
+        slots: { default: () => h(Input) },
+      })
+      const input = field.get('[data-test-input-root]')
+
+      expect(input.attributes('id')).toBe(field.get('[data-test-field-label]').attributes('for'))
+      expect(input.attributes('aria-describedby')).toBeUndefined()
+    })
+
+    it('conserva aria-describedby del Input y añade el ID de la descripción', () => {
+      const field = mount(Field, {
+        props: { description: 'Texto de ayuda' },
+        slots: { default: () => h(Input, { 'aria-describedby': 'ayuda-externa' }) },
+      })
+      const descriptionId = field.get('[data-test-field-description]').attributes('id')
+
+      expect(field.get('[data-test-input-root]').attributes('aria-describedby')).toBe(
+        `ayuda-externa ${descriptionId}`,
+      )
+    })
+
+    it('conserva id y aria-describedby fuera de Field', () => {
+      const input = mountInput({
+        attrs: { id: 'email', 'aria-describedby': 'ayuda-externa' },
+      }).get('[data-test-input-root]')
+
+      expect(input.attributes('id')).toBe('email')
+      expect(input.attributes('aria-describedby')).toBe('ayuda-externa')
     })
   })
 })

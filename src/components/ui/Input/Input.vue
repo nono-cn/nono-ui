@@ -2,6 +2,7 @@
 import { computed, useAttrs, useSlots } from 'vue'
 import { InputGroupAddon } from '@/components/internal/InputGroup'
 import { Icon } from '@/components/ui/Icon'
+import { useField } from '@/composables/useField'
 import { useTheme } from '@/composables'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
@@ -20,6 +21,7 @@ const resolvedSize = computed(() =>
 
 const attrs = useAttrs()
 const slots = useSlots()
+const field = useField()
 const { colorStyle } = useTheme({
   color: () => props.color,
   prefix: 'input',
@@ -46,6 +48,10 @@ const rootProps = computed(() => {
 const inputProps = computed(() => {
   return {
     ...attrs,
+    id: field?.for ?? attrs.id,
+    'aria-describedby': field?.ariaDescribedby
+      ? [attrs['aria-describedby'], field.ariaDescribedby].filter(Boolean).join(' ')
+      : attrs['aria-describedby'],
     'aria-busy': props.loading || attrs['aria-busy'],
     class: cn(
       inputFieldVariants({

@@ -1,13 +1,32 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { FieldRoot } from 'reka-ui'
 import { describe, expect, it } from 'vitest'
-import { h } from 'vue'
+import { defineComponent, h } from 'vue'
 
 import { Field, type FieldProps } from '@/components/ui/Field'
+import { useField, type FieldContext } from '@/composables/useField'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountField(options: MountingOptions<FieldProps> = {}) {
   return mount(Field, options)
+}
+
+function mountFieldWithContext(description?: string) {
+  let context: FieldContext | null = null
+
+  const Consumer = defineComponent({
+    setup() {
+      context = useField()
+      return () => h('span')
+    },
+  })
+
+  const field = mountField({
+    props: { label: 'Email', description },
+    slots: { default: () => h(Consumer) },
+  })
+
+  return { field, getContext: () => context }
 }
 
 const casesName = [
@@ -243,6 +262,7 @@ describe('Field', () => {
         testAttrs({
           text: 'pasa los atributos de ui.description a la descripción',
           id: '[data-test-field-description]',
+          assertId: false,
           mount: (attrs) =>
             mountField({
               props: { description: 'Helper text', ui: { description: () => attrs } },
@@ -338,6 +358,26 @@ describe('Field', () => {
         expect(root.element.tagName).toBe('DIV')
         expect(root.classes()).toEqual(expect.arrayContaining(['grid', 'gap-2']))
       })
+    })
+  })
+
+  describe('context contract', () => {
+    it('proporciona los IDs generados del label y la descripción', () => {
+      const { field, getContext } = mountFieldWithContext('Ayuda')
+      const labelFor = field.get('[data-test-field-label]').attributes('for')
+      const descriptionId = field.get('[data-test-field-description]').attributes('id')
+
+      expect(labelFor).toMatch(/^label-/)
+      expect(descriptionId).toMatch(/^description-/)
+      expect(getContext()).toEqual({ for: labelFor, ariaDescribedby: descriptionId })
+    })
+
+    it('no proporciona ariaDescribedby cuando no hay descripción', () => {
+      const { field, getContext } = mountFieldWithContext()
+      const labelFor = field.get('[data-test-field-label]').attributes('for')
+
+      expect(field.find('[data-test-field-description]').exists()).toBe(false)
+      expect(getContext()).toEqual({ for: labelFor, ariaDescribedby: undefined })
     })
   })
 })

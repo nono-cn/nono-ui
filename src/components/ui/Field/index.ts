@@ -4,6 +4,7 @@ import type { FieldRootProps } from 'reka-ui'
 
 export { default as Field } from './Field.vue'
 export { fieldDefaults } from './constants'
+export { useField, type FieldContext } from '@/composables/useField'
 
 export const fieldRootVariants = cva('grid gap-2')
 export const fieldLabelVariants = cva('text-sm font-medium')

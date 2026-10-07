@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from 'vue'
+import { computed, useAttrs, useId, useSlots } from 'vue'
 import { FieldDescription, FieldLabel, FieldRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
@@ -11,6 +11,7 @@ import {
   type FieldSlots,
 } from '.'
 import { fieldDefaults } from './constants'
+import { provideField } from '@/composables/useField'
 
 defineOptions({ inheritAttrs: false })
 defineSlots<FieldSlots>()
@@ -18,6 +19,16 @@ defineSlots<FieldSlots>()
 const props = withDefaults(defineProps<FieldProps>(), fieldDefaults)
 const attrs = useAttrs()
 const slots = useSlots()
+const id = useId()
+const fieldFor = `label-${id}`
+const descriptionId = `description-${id}`
+
+provideField({
+  for: fieldFor,
+  get ariaDescribedby() {
+    return props.description || slots.description ? descriptionId : undefined
+  },
+})
 
 const rootProps = computed(() => ({
   ...attrs,
@@ -38,6 +49,7 @@ const labelProps = computed(() => {
   const ui = useUi(props.ui?.label, undefined)
   return {
     ...ui,
+    for: fieldFor,
     class: cn(fieldLabelVariants(), ui.class),
     style: ui.style,
   }
@@ -47,6 +59,7 @@ const descriptionProps = computed(() => {
   const ui = useUi(props.ui?.description, undefined)
   return {
     ...ui,
+    id: descriptionId,
     class: cn(fieldDescriptionVariants(), ui.class),
     style: ui.style,
   }
