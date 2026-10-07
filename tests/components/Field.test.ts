@@ -36,6 +36,24 @@ const casesRequired = [
   expected: FieldProps['required']
 }>
 
+const casesDirty = [
+  { input: undefined, expected: undefined },
+  { input: false, expected: false },
+  { input: true, expected: true },
+] satisfies Array<{
+  input: FieldProps['dirty']
+  expected: FieldProps['dirty']
+}>
+
+const casesTouched = [
+  { input: undefined, expected: undefined },
+  { input: false, expected: false },
+  { input: true, expected: true },
+] satisfies Array<{
+  input: FieldProps['touched']
+  expected: FieldProps['touched']
+}>
+
 describe('Field', () => {
   describe('props', () => {
     describe('name', () => {
@@ -59,6 +77,30 @@ describe('Field', () => {
         const field = mountField({ props: { required: input } })
 
         expect(field.getComponent(FieldRoot).props('required')).toBe(expected)
+      })
+    })
+
+    describe('dirty', () => {
+      it.each(casesDirty)('pasa dirty=$input a FieldRoot', ({ input, expected }) => {
+        const field = mountField({ props: { dirty: input } })
+
+        expect(field.getComponent(FieldRoot).props('dirty')).toBe(expected)
+      })
+
+      it('mantiene dirty sin controlar cuando se omite', () => {
+        expect(mountField().getComponent(FieldRoot).props('dirty')).toBeUndefined()
+      })
+    })
+
+    describe('touched', () => {
+      it.each(casesTouched)('pasa touched=$input a FieldRoot', ({ input, expected }) => {
+        const field = mountField({ props: { touched: input } })
+
+        expect(field.getComponent(FieldRoot).props('touched')).toBe(expected)
+      })
+
+      it('mantiene touched sin controlar cuando se omite', () => {
+        expect(mountField().getComponent(FieldRoot).props('touched')).toBeUndefined()
       })
     })
   })

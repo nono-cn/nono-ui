@@ -55,6 +55,18 @@ const fieldConfig: ComponentDocConfig = {
         default: 'false',
         description: 'Marks the field’s control as required.',
       },
+      {
+        name: 'dirty',
+        type: 'boolean',
+        default: 'undefined',
+        description: 'Overrides whether the field value differs from its initial value.',
+      },
+      {
+        name: 'touched',
+        type: 'boolean',
+        default: 'undefined',
+        description: 'Overrides whether the field control has been blurred.',
+      },
     ],
     emits: [],
     slots: [
