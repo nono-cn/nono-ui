@@ -79,6 +79,18 @@ const fieldConfig: ComponentDocConfig = {
         default: 'undefined',
         description: 'Returns an error message, messages, or no error for the control value.',
       },
+      {
+        name: 'validationMode',
+        type: "'onSubmit' | 'onBlur' | 'onChange'",
+        default: 'undefined',
+        description: 'Chooses when validation runs. Inherits the owning form’s mode when omitted.',
+      },
+      {
+        name: 'validationDebounceTime',
+        type: 'number',
+        default: 'undefined',
+        description: 'Delay in milliseconds between validation calls when validating on change.',
+      },
     ],
     emits: [],
     slots: [

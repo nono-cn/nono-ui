@@ -77,6 +77,25 @@ const casesValidate = [
   expected: FieldProps['validate']
 }>
 
+const casesValidationDebounceTime = [
+  { input: undefined, expected: undefined },
+  { input: 0, expected: 0 },
+  { input: 300, expected: 300 },
+] satisfies Array<{
+  input: FieldProps['validationDebounceTime']
+  expected: FieldProps['validationDebounceTime']
+}>
+
+const casesValidationMode = [
+  { input: undefined, expected: undefined },
+  { input: 'onSubmit', expected: 'onSubmit' },
+  { input: 'onBlur', expected: 'onBlur' },
+  { input: 'onChange', expected: 'onChange' },
+] satisfies Array<{
+  input: FieldProps['validationMode']
+  expected: FieldProps['validationMode']
+}>
+
 describe('Field', () => {
   describe('props', () => {
     describe('name', () => {
@@ -145,6 +164,25 @@ describe('Field', () => {
 
         expect(field.getComponent(FieldRoot).props('validate')).toBe(expected)
       })
+    })
+
+    describe('validationMode', () => {
+      it.each(casesValidationMode)('pasa validationMode=$input a FieldRoot', ({ input, expected }) => {
+        const field = mountField({ props: { validationMode: input } })
+
+        expect(field.getComponent(FieldRoot).props('validationMode')).toBe(expected)
+      })
+    })
+
+    describe('validationDebounceTime', () => {
+      it.each(casesValidationDebounceTime)(
+        'pasa validationDebounceTime=$input a FieldRoot',
+        ({ input, expected }) => {
+          const field = mountField({ props: { validationDebounceTime: input } })
+
+          expect(field.getComponent(FieldRoot).props('validationDebounceTime')).toBe(expected)
+        },
+      )
     })
   })
 

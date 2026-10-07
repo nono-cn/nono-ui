@@ -20,6 +20,8 @@ const rootProps = computed(() => ({
   dirty: props.dirty,
   touched: props.touched,
   validate: props.validate,
+  validationMode: props.validationMode,
+  validationDebounceTime: props.validationDebounceTime,
   class: cn(fieldRootVariants(), attrs.class),
   style: attrs.style,
 }))
