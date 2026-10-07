@@ -17,6 +17,7 @@ import collapsible from './components/collapsible'
 import colorArea from './components/color-area'
 import dialog from './components/dialog'
 import empty from './components/empty'
+import field from './components/field'
 import fieldSet from './components/field-set'
 import hoverCard from './components/hover-card'
 import icon from './components/icon'
@@ -57,6 +58,7 @@ export const docsComponents = [
   colorArea,
   dialog,
   empty,
+  field,
   fieldSet,
   hoverCard,
   icon,
