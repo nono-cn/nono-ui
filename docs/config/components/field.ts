@@ -56,6 +56,12 @@ const fieldConfig: ComponentDocConfig = {
         description: 'Marks the field’s control as required.',
       },
       {
+        name: 'invalid',
+        type: 'boolean',
+        default: 'undefined',
+        description: 'Overrides the field’s validity state when controlled externally.',
+      },
+      {
         name: 'dirty',
         type: 'boolean',
         default: 'undefined',

@@ -36,6 +36,15 @@ const casesRequired = [
   expected: FieldProps['required']
 }>
 
+const casesInvalid = [
+  { input: undefined, expected: undefined },
+  { input: false, expected: false },
+  { input: true, expected: true },
+] satisfies Array<{
+  input: FieldProps['invalid']
+  expected: FieldProps['invalid']
+}>
+
 const casesDirty = [
   { input: undefined, expected: undefined },
   { input: false, expected: false },
@@ -77,6 +86,18 @@ describe('Field', () => {
         const field = mountField({ props: { required: input } })
 
         expect(field.getComponent(FieldRoot).props('required')).toBe(expected)
+      })
+    })
+
+    describe('invalid', () => {
+      it.each(casesInvalid)('pasa invalid=$input a FieldRoot', ({ input, expected }) => {
+        const field = mountField({ props: { invalid: input } })
+
+        expect(field.getComponent(FieldRoot).props('invalid')).toBe(expected)
+      })
+
+      it('mantiene invalid sin controlar cuando se omite', () => {
+        expect(mountField().getComponent(FieldRoot).props('invalid')).toBeUndefined()
       })
     })
 
