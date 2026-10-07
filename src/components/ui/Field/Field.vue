@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs, useSlots } from 'vue'
 import { FieldLabel, FieldRoot } from 'reka-ui'
+import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import { fieldLabelVariants, fieldRootVariants, type FieldProps, type FieldSlots } from '.'
 import { fieldDefaults } from './constants'
@@ -27,9 +28,14 @@ const rootProps = computed(() => ({
   style: attrs.style,
 }))
 
-const labelProps = computed(() => ({
-  class: fieldLabelVariants(),
-}))
+const labelProps = computed(() => {
+  const ui = useUi(props.ui?.label, undefined)
+  return {
+    ...ui,
+    class: cn(fieldLabelVariants(), ui.class),
+    style: ui.style,
+  }
+})
 </script>
 
 <template>

@@ -207,6 +207,19 @@ describe('Field', () => {
         },
       )
     })
+
+    describe('ui', () => {
+      describe('label', () => {
+        testAttrs({
+          text: 'pasa los atributos de ui.label al label',
+          id: '[data-test-field-label]',
+          mount: (attrs) =>
+            mountField({
+              props: { label: 'Email', ui: { label: () => attrs } },
+            }),
+        })
+      })
+    })
   })
 
   describe('slots', () => {

@@ -1,6 +1,7 @@
 import type { ComponentDocConfig } from '../component-docs'
 import FieldLabelSlotExample from '../../components/examples/field/FieldLabelSlotExample.vue'
 import FieldRequiredExample from '../../components/examples/field/FieldRequiredExample.vue'
+import FieldUiExample from '../../components/examples/field/FieldUiExample.vue'
 import FieldUsageExample from '../../components/examples/field/FieldUsageExample.vue'
 
 const fieldConfig: ComponentDocConfig = {
@@ -26,6 +27,11 @@ const fieldConfig: ComponentDocConfig = {
       title: 'Required control',
       description: 'Mark the field as required and pass that state to its control.',
       component: FieldRequiredExample,
+    },
+    {
+      title: 'Label UI',
+      description: 'Add attributes and classes to the label through ui.label.',
+      component: FieldUiExample,
     },
   ],
   accessibility: [
@@ -102,6 +108,12 @@ const fieldConfig: ComponentDocConfig = {
         type: 'number',
         default: 'undefined',
         description: 'Delay in milliseconds between validation calls when validating on change.',
+      },
+      {
+        name: 'ui',
+        type: '{ label?: () => HTMLAttributes }',
+        default: 'undefined',
+        description: 'Resolver for attributes, classes, and styles on FieldLabel.',
       },
     ],
     emits: [],
