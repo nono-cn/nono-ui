@@ -19,6 +19,7 @@ const rootProps = computed(() => ({
   invalid: props.invalid,
   dirty: props.dirty,
   touched: props.touched,
+  validate: props.validate,
   class: cn(fieldRootVariants(), attrs.class),
   style: attrs.style,
 }))

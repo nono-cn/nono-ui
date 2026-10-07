@@ -63,6 +63,20 @@ const casesTouched = [
   expected: FieldProps['touched']
 }>
 
+const syncValidate: NonNullable<FieldProps['validate']> = (value) =>
+  value === 'valid' ? null : 'Invalid value'
+const asyncValidate: NonNullable<FieldProps['validate']> = async (value) =>
+  value === 'valid' ? null : 'Invalid value'
+
+const casesValidate = [
+  { input: undefined, expected: undefined },
+  { input: syncValidate, expected: syncValidate },
+  { input: asyncValidate, expected: asyncValidate },
+] satisfies Array<{
+  input: FieldProps['validate']
+  expected: FieldProps['validate']
+}>
+
 describe('Field', () => {
   describe('props', () => {
     describe('name', () => {
@@ -122,6 +136,14 @@ describe('Field', () => {
 
       it('mantiene touched sin controlar cuando se omite', () => {
         expect(mountField().getComponent(FieldRoot).props('touched')).toBeUndefined()
+      })
+    })
+
+    describe('validate', () => {
+      it.each(casesValidate)('pasa validate=$input a FieldRoot', ({ input, expected }) => {
+        const field = mountField({ props: { validate: input } })
+
+        expect(field.getComponent(FieldRoot).props('validate')).toBe(expected)
       })
     })
   })

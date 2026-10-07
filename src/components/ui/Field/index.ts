@@ -8,7 +8,7 @@ export const fieldRootVariants = cva('grid gap-2')
 
 export type FieldProps = Pick<
   FieldRootProps,
-  'name' | 'disabled' | 'required' | 'invalid' | 'dirty' | 'touched'
+  'name' | 'disabled' | 'required' | 'invalid' | 'dirty' | 'touched' | 'validate'
 >
 
 export interface FieldSlots {

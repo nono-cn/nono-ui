@@ -73,6 +73,12 @@ const fieldConfig: ComponentDocConfig = {
         default: 'undefined',
         description: 'Overrides whether the field control has been blurred.',
       },
+      {
+        name: 'validate',
+        type: '(value: unknown, formValues: Record<string, unknown>) => string | string[] | null | undefined | void | Promise<string | string[] | null | undefined | void>',
+        default: 'undefined',
+        description: 'Returns an error message, messages, or no error for the control value.',
+      },
     ],
     emits: [],
     slots: [
