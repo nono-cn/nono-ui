@@ -1,6 +1,7 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { FieldRoot } from 'reka-ui'
 import { describe, expect, it } from 'vitest'
+import { h } from 'vue'
 
 import { Field, type FieldProps } from '@/components/ui/Field'
 import { testAttrs } from '../utils/testAttrs'
@@ -16,6 +17,15 @@ const casesName = [
 ] satisfies Array<{
   input: FieldProps['name']
   expected: FieldProps['name']
+}>
+
+const casesLabel = [
+  { input: undefined, expected: undefined },
+  { input: '', expected: undefined },
+  { input: 'Email', expected: 'Email' },
+] satisfies Array<{
+  input: FieldProps['label']
+  expected: string | undefined
 }>
 
 const casesDisabled = [
@@ -98,6 +108,16 @@ const casesValidationMode = [
 
 describe('Field', () => {
   describe('props', () => {
+    describe('label', () => {
+      it.each(casesLabel)('renderiza label=$input', ({ input, expected }) => {
+        const field = mountField({ props: { label: input } })
+        const label = field.find('[data-test-field-label]')
+
+        expect(label.exists()).toBe(expected !== undefined)
+        if (expected !== undefined) expect(label.text()).toBe(expected)
+      })
+    })
+
     describe('name', () => {
       it.each(casesName)('pasa name=$input a FieldRoot', ({ input, expected }) => {
         const field = mountField({ props: { name: input } })
@@ -189,6 +209,28 @@ describe('Field', () => {
     })
   })
 
+  describe('slots', () => {
+    describe('label', () => {
+      it('renderiza el slot aunque no haya prop label', () => {
+        const field = mountField({
+          slots: { label: () => h('span', { 'data-test-label-slot': '' }, 'Nombre') },
+        })
+
+        expect(field.get('[data-test-field-label] [data-test-label-slot]').text()).toBe('Nombre')
+      })
+
+      it('sustituye el texto de label con el slot', () => {
+        const field = mountField({
+          props: { label: 'Texto original' },
+          slots: { label: () => h('span', { 'data-test-label-slot': '' }, 'Texto nuevo') },
+        })
+
+        expect(field.get('[data-test-field-label]').text()).toBe('Texto nuevo')
+        expect(field.get('[data-test-field-label]').text()).not.toContain('Texto original')
+      })
+    })
+  })
+
   describe('Attrs', () => {
     testAttrs({
       text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
@@ -198,6 +240,15 @@ describe('Field', () => {
   })
 
   describe('variantsCss', () => {
+    describe('fieldLabelVariants', () => {
+      it('mantiene las clases base del label', () => {
+        const label = mountField({ props: { label: 'Email' } }).get('[data-test-field-label]')
+
+        expect(label.element.tagName).toBe('LABEL')
+        expect(label.classes()).toEqual(expect.arrayContaining(['text-sm', 'font-medium']))
+      })
+    })
+
     describe('fieldRootVariants', () => {
       it('mantiene las clases base del field', () => {
         const root = mountField().get('[data-test-field-root]')

@@ -10,9 +10,13 @@ import { FieldControl } from 'reka-ui'
 ${scriptEnd}
 
 <template>
-  <Field label="Name" required class="w-full max-w-sm">
+  <Field label="Email" class="w-full max-w-sm">
+    <template #label>
+      Email <span class="text-muted-foreground">(work)</span>
+    </template>
     <FieldControl
-      placeholder="Your name"
+      type="email"
+      placeholder="you@example.com"
       class="h-9 rounded-md border border-input bg-background px-3 text-sm"
     />
   </Field>
@@ -21,14 +25,16 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Required control"
-    description="Mark the field as required and pass that state to its control."
+    title="Label slot"
+    description="Replace the label text with custom content."
     :code="code"
     :show-reset="false"
   >
-    <Field label="Name" required class="w-full max-w-sm">
+    <Field label="Email" class="w-full max-w-sm">
+      <template #label> Email <span class="text-muted-foreground">(work)</span> </template>
       <FieldControl
-        placeholder="Your name"
+        type="email"
+        placeholder="you@example.com"
         class="h-9 rounded-md border border-input bg-background px-3 text-sm"
       />
     </Field>

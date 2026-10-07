@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { FieldControl, FieldDescription, FieldLabel } from 'reka-ui'
+import { FieldControl, FieldDescription } from 'reka-ui'
 import { Field } from '@/components/ui/Field'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
 import { Field } from '__DOCS_PACKAGE__/components/ui/Field'
-import { FieldControl, FieldDescription, FieldLabel } from 'reka-ui'
+import { FieldControl, FieldDescription } from 'reka-ui'
 ${scriptEnd}
 
 <template>
-  <Field class="w-full max-w-sm">
-    <FieldLabel class="text-sm font-medium">Email</FieldLabel>
+  <Field label="Email" class="w-full max-w-sm">
     <FieldControl
       type="email"
       placeholder="you@example.com"
@@ -31,8 +30,7 @@ ${scriptEnd}
     :code="code"
     :show-reset="false"
   >
-    <Field class="w-full max-w-sm">
-      <FieldLabel class="text-sm font-medium">Email</FieldLabel>
+    <Field label="Email" class="w-full max-w-sm">
       <FieldControl
         type="email"
         placeholder="you@example.com"

@@ -5,6 +5,7 @@ export { default as Field } from './Field.vue'
 export { fieldDefaults } from './constants'
 
 export const fieldRootVariants = cva('grid gap-2')
+export const fieldLabelVariants = cva('text-sm font-medium')
 
 export type FieldProps = Pick<
   FieldRootProps,
@@ -17,8 +18,9 @@ export type FieldProps = Pick<
   | 'validate'
   | 'validationMode'
   | 'validationDebounceTime'
->
+> & { label?: string }
 
 export interface FieldSlots {
   default?(props: { invalid: boolean; errors: string[] }): unknown
+  label?(): unknown
 }

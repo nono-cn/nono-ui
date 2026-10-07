@@ -1,4 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
+import FieldLabelSlotExample from '../../components/examples/field/FieldLabelSlotExample.vue'
 import FieldRequiredExample from '../../components/examples/field/FieldRequiredExample.vue'
 import FieldUsageExample from '../../components/examples/field/FieldUsageExample.vue'
 
@@ -17,6 +18,11 @@ const fieldConfig: ComponentDocConfig = {
   ],
   examples: [
     {
+      title: 'Label slot',
+      description: 'Replace the label text with custom content.',
+      component: FieldLabelSlotExample,
+    },
+    {
       title: 'Required control',
       description: 'Mark the field as required and pass that state to its control.',
       component: FieldRequiredExample,
@@ -26,7 +32,7 @@ const fieldConfig: ComponentDocConfig = {
     {
       title: 'Label and control association',
       description:
-        'Place Reka UI FieldLabel and FieldControl inside Field so their ids and accessible description are connected automatically. Field renders a div and forwards HTML and ARIA attributes to that root element.',
+        'Provide label or the label slot, then place Reka UI FieldControl inside Field. Field connects the label and control automatically, renders a div, and forwards HTML and ARIA attributes to that root element.',
       links: [
         {
           label: 'Read the Reka UI Field accessibility guide',
@@ -37,6 +43,12 @@ const fieldConfig: ComponentDocConfig = {
   ],
   api: {
     props: [
+      {
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Visible label text. Omitted when empty unless the label slot is provided.',
+      },
       {
         name: 'name',
         type: 'string',
@@ -94,6 +106,11 @@ const fieldConfig: ComponentDocConfig = {
     ],
     emits: [],
     slots: [
+      {
+        name: 'label',
+        type: '-',
+        description: 'Custom content that replaces the label prop inside FieldLabel.',
+      },
       {
         name: 'default',
         type: '{ invalid: boolean; errors: string[] }',
