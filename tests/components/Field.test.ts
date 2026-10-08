@@ -365,19 +365,60 @@ describe('Field', () => {
     it('proporciona los IDs generados del label y la descripción', () => {
       const { field, getContext } = mountFieldWithContext('Ayuda')
       const labelFor = field.get('[data-test-field-label]').attributes('for')
+      const labelId = field.get('[data-test-field-label]').attributes('id')
       const descriptionId = field.get('[data-test-field-description]').attributes('id')
 
       expect(labelFor).toMatch(/^label-/)
+      expect(labelId).toMatch(/^field-label-/)
       expect(descriptionId).toMatch(/^description-/)
-      expect(getContext()).toEqual({ for: labelFor, ariaDescribedby: descriptionId })
+      expect(getContext()).toEqual({
+        for: labelFor,
+        ariaLabelledby: labelId,
+        ariaDescribedby: descriptionId,
+      })
     })
 
     it('no proporciona ariaDescribedby cuando no hay descripción', () => {
       const { field, getContext } = mountFieldWithContext()
       const labelFor = field.get('[data-test-field-label]').attributes('for')
+      const labelId = field.get('[data-test-field-label]').attributes('id')
 
       expect(field.find('[data-test-field-description]').exists()).toBe(false)
-      expect(getContext()).toEqual({ for: labelFor, ariaDescribedby: undefined })
+      expect(getContext()).toEqual({
+        for: labelFor,
+        ariaLabelledby: labelId,
+        ariaDescribedby: undefined,
+      })
+    })
+
+    it('no proporciona ariaLabelledby cuando no hay label', () => {
+      let context: FieldContext | null = null
+      const Consumer = defineComponent({
+        setup() {
+          context = useField()
+          return () => h('span')
+        },
+      })
+      const field = mountField({ slots: { default: () => h(Consumer) } })
+
+      expect(field.find('[data-test-field-label]').exists()).toBe(false)
+      expect(context?.ariaLabelledby).toBeUndefined()
+    })
+
+    it('ariaLabelledby coincide con el id personalizado del label', async () => {
+      const { field, getContext } = mountFieldWithContext()
+      await field.setProps({ ui: { label: () => ({ id: 'email-label' }) } })
+
+      expect(field.get('[data-test-field-label]').attributes('id')).toBe('email-label')
+      expect(getContext()?.ariaLabelledby).toBe('email-label')
+    })
+
+    it('ariaDescribedby coincide con el id personalizado de la descripción', async () => {
+      const { field, getContext } = mountFieldWithContext('Ayuda')
+      await field.setProps({ ui: { description: () => ({ id: 'email-help' }) } })
+
+      expect(field.get('[data-test-field-description]').attributes('id')).toBe('email-help')
+      expect(getContext()?.ariaDescribedby).toBe('email-help')
     })
   })
 })

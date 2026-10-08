@@ -21,14 +21,8 @@ const attrs = useAttrs()
 const slots = useSlots()
 const id = useId()
 const fieldFor = `label-${id}`
+const labelId = `field-label-${id}`
 const descriptionId = `description-${id}`
-
-provideField({
-  for: fieldFor,
-  get ariaDescribedby() {
-    return props.description || slots.description ? descriptionId : undefined
-  },
-})
 
 const rootProps = computed(() => ({
   ...attrs,
@@ -49,6 +43,7 @@ const labelProps = computed(() => {
   const ui = useUi(props.ui?.label, undefined)
   return {
     ...ui,
+    id: ui.id ?? labelId,
     for: fieldFor,
     class: cn(fieldLabelVariants(), ui.class),
     style: ui.style,
@@ -59,10 +54,20 @@ const descriptionProps = computed(() => {
   const ui = useUi(props.ui?.description, undefined)
   return {
     ...ui,
-    id: descriptionId,
+    id: ui.id ?? descriptionId,
     class: cn(fieldDescriptionVariants(), ui.class),
     style: ui.style,
   }
+})
+
+provideField({
+  for: fieldFor,
+  get ariaLabelledby() {
+    return props.label || slots.label ? labelProps.value.id : undefined
+  },
+  get ariaDescribedby() {
+    return props.description || slots.description ? descriptionProps.value.id : undefined
+  },
 })
 </script>
 
@@ -74,6 +79,7 @@ const descriptionProps = computed(() => {
     <slot v-bind="slotProps" />
     <FieldDescription
       v-if="props.description || slots.description"
+      :key="descriptionProps.id"
       v-bind="descriptionProps"
       data-test-field-description
     >

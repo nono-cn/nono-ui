@@ -2,6 +2,7 @@ import { inject, provide, type InjectionKey } from 'vue'
 
 export interface FieldContext {
   for: string
+  ariaLabelledby?: string
   ariaDescribedby?: string
 }
 
