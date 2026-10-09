@@ -1,15 +1,14 @@
+import type { FormRootEmits, FormRootProps } from 'reka-ui'
+
 export { default as Form } from './Form.vue'
 
-export type FormValue = unknown
-
-export interface FormProps {
-  modelValue?: FormValue
-}
-
-export interface FormEmits {
-  submit: [event: SubmitEvent]
-}
+export type FormProps = Pick<FormRootProps, 'errors' | 'validationMode'>
+export type FormEmits = Pick<FormRootEmits, 'submit' | 'formSubmit'>
 
 export interface FormSlots {
-  default?(props: { modelValue: FormValue | undefined }): unknown
+  default?(): unknown
+}
+
+export interface FormExpose {
+  validate: (name?: string) => boolean
 }
