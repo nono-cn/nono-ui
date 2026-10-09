@@ -18,6 +18,7 @@ import colorArea from './components/color-area'
 import dialog from './components/dialog'
 import empty from './components/empty'
 import fieldSet from './components/field-set'
+import form from './components/form'
 import hoverCard from './components/hover-card'
 import icon from './components/icon'
 import iconTile from './components/icon-tile'
@@ -58,6 +59,7 @@ export const docsComponents = [
   dialog,
   empty,
   fieldSet,
+  form,
   hoverCard,
   icon,
   iconTile,
