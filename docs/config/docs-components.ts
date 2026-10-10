@@ -33,6 +33,7 @@ import marker from './components/marker'
 import masonry from './components/masonry'
 import rating from './components/rating'
 import switchConfig from './components/switch'
+import tabsConfig from './components/tabs'
 import textarea from './components/textarea'
 import toggleConfig from './components/toggle'
 import type { ComponentDocConfig } from './component-docs'
@@ -75,6 +76,7 @@ export const docsComponents = [
   masonry,
   rating,
   switchConfig,
+  tabsConfig,
   textarea,
   toggleConfig,
 ] satisfies ComponentDocConfig[]

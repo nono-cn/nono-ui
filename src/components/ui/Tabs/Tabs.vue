@@ -2,11 +2,11 @@
 import { computed, useAttrs } from 'vue'
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
+import { useTheme } from '@/composables'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import { tabsVariants } from '.'
-import { tabsDefaults } from './defaults'
-import type { IconProps } from '@/components/ui/Icon'
+import { tabsDefaults } from './constants'
 import type { TabsContext, TabsEmits, TabsItemContext, TabsProps, TabsSlots, TabsValue } from '.'
 
 defineOptions({ inheritAttrs: false })
@@ -16,31 +16,25 @@ defineSlots<TabsSlots>()
 defineEmits<TabsEmits>()
 
 const attrs = useAttrs()
-const value = defineModel<TabsValue>('value')
+const modelValue = defineModel<TabsValue>()
 const tabsContext = computed<TabsContext>(() => ({ tabs: props.tabs }))
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'tabs',
+  defaultColor: tabsDefaults.color,
+})
 
 const rootProps = computed(() => {
-  const normalizedRootUI = useUi(props.ui?.root, undefined)
-  const { dir: rootDirection, ...rootUI } = normalizedRootUI
-
-  void rootDirection
-
   return {
     ...attrs,
-    ...rootUI,
     orientation: props.orientation,
     activationMode: props.activationMode,
     unmountOnHide: props.unmountOnHide,
     as: 'div' as const,
     asChild: false,
     'data-variant': props.variant,
-    class: cn(
-      'flex flex-col gap-2',
-      tabsVariants.root({ orientation: props.orientation }),
-      attrs.class,
-      rootUI.class,
-    ),
-    style: [attrs.style, rootUI.style],
+    class: cn(tabsVariants.root({ orientation: props.orientation }), attrs.class),
+    style: [colorStyle.value, attrs.style],
   }
 })
 
@@ -52,7 +46,6 @@ const listProps = computed(() => {
     loop: props.loop,
     'data-variant': props.variant,
     class: cn(
-      'inline-flex h-9 w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground aria-[orientation=vertical]:h-fit aria-[orientation=vertical]:flex-col',
       tabsVariants.list({ variant: props.variant, orientation: props.orientation }),
       ui.class,
     ),
@@ -62,14 +55,14 @@ const listProps = computed(() => {
 
 const contentWrapperProps = computed(() => {
   const ui = useUi(props.ui?.contentWrapper, undefined)
-  return { ...ui, class: cn('min-w-0 flex-1', ui.class), style: ui.style }
+  return { ...ui, class: cn(tabsVariants.contentWrapper(), ui.class), style: ui.style }
 })
 
 const itemContexts = computed<TabsItemContext[]>(() =>
   props.tabs.map((tab, index) => ({
     tab,
     index,
-    active: Object.is(value.value, tab.value),
+    active: Object.is(modelValue.value, tab.value),
     first: index === 0,
     last: index === props.tabs.length - 1,
   })),
@@ -87,7 +80,6 @@ function getTriggerProps(context: TabsItemContext) {
     value: context.tab.value,
     disabled: context.tab.disabled,
     class: cn(
-      'inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap text-foreground transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:shadow-sm dark:text-muted-foreground dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 dark:data-[state=active]:text-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
       tabsVariants.trigger({ variant: props.variant, orientation: props.orientation }),
       ui.class,
     ),
@@ -111,20 +103,9 @@ function getContentProps(context: TabsItemContext) {
     tabindex: ui.tabindex ?? 0,
     value: context.tab.value,
     forceMount: context.tab.forceMount,
-    class: cn(
-      'flex-1 outline-none rounded-md focus-visible:ring-3 focus-visible:ring-ring/50',
-      ui.class,
-    ),
+    class: cn(tabsVariants.content(), ui.class),
     style: ui.style,
   }
-}
-
-function getIconProps(context: TabsItemContext): IconProps {
-  return context.tab.icon!
-}
-
-function getTrailingIconProps(context: TabsItemContext): IconProps {
-  return context.tab.trailingIcon!
 }
 
 function getSlotNames(context: TabsItemContext) {
@@ -144,7 +125,7 @@ function getKey(context: TabsItemContext) {
 </script>
 
 <template>
-  <TabsRoot v-model="value" v-bind="rootProps" data-test-tabs-root>
+  <TabsRoot v-model="modelValue" v-bind="rootProps" data-test-tabs-root>
     <TabsList v-bind="listProps" data-test-tabs-list>
       <TabsTrigger
         v-for="itemContext in itemContexts"
@@ -156,7 +137,11 @@ function getKey(context: TabsItemContext) {
           <slot name="trigger" v-bind="getTabsContext()">
             <slot :name="getSlotNames(itemContext).leading" v-bind="itemContext">
               <slot name="leading" v-bind="getTabsContext()">
-                <Icon v-if="itemContext.tab.icon" v-bind="getIconProps(itemContext)" />
+                <Icon
+                  v-if="itemContext.tab.icon"
+                  :name="itemContext.tab.icon"
+                  color="currentColor"
+                />
               </slot>
             </slot>
 
@@ -172,7 +157,8 @@ function getKey(context: TabsItemContext) {
               <slot name="trailing" v-bind="getTabsContext()">
                 <Icon
                   v-if="itemContext.tab.trailingIcon"
-                  v-bind="getTrailingIconProps(itemContext)"
+                  :name="itemContext.tab.trailingIcon"
+                  color="currentColor"
                 />
               </slot>
             </slot>
