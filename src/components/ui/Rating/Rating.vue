@@ -2,7 +2,7 @@
 import { computed, useAttrs } from 'vue'
 import { RatingItem, RatingItemIndicator, RatingRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import { useUi } from '@/composables/useUi'
 import { useI18n } from '@/i18n'
 import { cn } from '@/lib/utils'
@@ -12,7 +12,7 @@ import {
   ratingItemVariants,
   ratingRootVariants,
 } from '.'
-import { ratingDefaults } from './defaults'
+import { ratingDefaults } from './constants'
 import type { RatingItemContext, RatingProps, RatingSlots } from '.'
 
 defineOptions({ inheritAttrs: false })
@@ -22,10 +22,11 @@ defineSlots<RatingSlots>()
 const model = defineModel<number>()
 const attrs = useAttrs()
 const { t } = useI18n()
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'rating',
-)
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'rating',
+  defaultColor: ratingDefaults.color,
+})
 
 const rootProps = computed(() => ({
   ...attrs,
@@ -73,13 +74,7 @@ function getIndicatorProps(item: number, step: number) {
     step,
     'aria-label': ui['aria-label'] ?? t('ratingItemLabel', { step, length: props.length }),
     'data-test-rating-item-indicator': '',
-    class: cn(
-      ratingIndicatorVariants({
-        severity: props.color ? null : props.severity,
-        color: Boolean(props.color),
-      }),
-      ui.class,
-    ),
+    class: cn(ratingIndicatorVariants(), ui.class),
     style: ui.style,
   }
 }

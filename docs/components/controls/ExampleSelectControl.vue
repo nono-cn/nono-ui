@@ -8,11 +8,11 @@ const model = defineModel<string>({ required: true })
 </script>
 
 <template>
-  <label class="grid gap-1.5 text-sm font-medium">
+  <label class="grid w-44 gap-1.5 text-sm font-medium">
     <span>{{ label }}</span>
     <select
       v-model="model"
-      class="h-9 min-w-36 rounded-md border bg-background px-3 text-sm font-normal outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+      class="h-9 w-full rounded-md border bg-background px-3 text-sm font-normal outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
     >
       <option v-for="option in options" :key="option" :value="option">
         {{ option }}

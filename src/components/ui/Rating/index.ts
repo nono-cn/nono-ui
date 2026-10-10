@@ -1,9 +1,11 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import type { RatingRootProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import type { IconName } from '@/components/ui/Icon'
+import { ratingDefaults, ratingOrientations, ratingSizes } from './constants'
 
 export { default as Rating } from './Rating.vue'
+export { ratingDefaults, ratingOrientations, ratingSizes } from './constants'
 
 export const ratingRootVariants = cva('flex', {
   variants: {
@@ -21,17 +23,17 @@ export const ratingRootVariants = cva('flex', {
       md: 'gap-1',
       lg: 'gap-1.5',
       xl: 'gap-2',
-    },
+    } satisfies Record<(typeof ratingSizes)[number], string>,
     orientation: {
       horizontal: 'flex-row',
       vertical: 'flex-col',
-    },
+    } satisfies Record<(typeof ratingOrientations)[number], string>,
   },
   defaultVariants: {
     disabled: false,
     readonly: false,
-    size: 'md',
-    orientation: 'horizontal',
+    size: ratingDefaults.size,
+    orientation: ratingDefaults.orientation,
   },
 })
 
@@ -50,30 +52,13 @@ export const ratingItemVariants = cva('relative inline-flex transition-transform
     },
   },
   defaultVariants: {
-    size: 'md',
+    size: ratingDefaults.size,
     disabled: false,
   },
 })
 
 export const ratingIndicatorVariants = cva(
-  'group absolute inset-y-0 left-0 z-[var(--reka-rating-item-step-z-index)] flex w-[var(--reka-rating-item-step-width)] items-center overflow-hidden rounded-md opacity-[var(--reka-rating-item-step-opacity)] outline-none focus-visible:ring-2',
-  {
-    variants: {
-      severity: {
-        primary: 'text-primary focus-visible:ring-primary/60',
-        secondary: 'text-secondary-foreground focus-visible:ring-secondary-foreground/60',
-        neutral: 'text-foreground focus-visible:ring-foreground/60',
-        warning: 'text-warning focus-visible:ring-warning/60',
-        success: 'text-success focus-visible:ring-success/60',
-        error: 'text-error focus-visible:ring-error/60',
-      },
-      color: {
-        true: 'text-(--rating-color) focus-visible:ring-(--rating-color)/60',
-        false: '',
-      },
-    },
-    defaultVariants: { severity: 'primary', color: false },
-  },
+  'group absolute inset-y-0 left-0 z-[var(--reka-rating-item-step-z-index)] flex w-[var(--reka-rating-item-step-width)] items-center overflow-hidden rounded-md opacity-[var(--reka-rating-item-step-opacity)] text-(--rating-color) outline-none focus-visible:ring-2 focus-visible:ring-(--rating-color)/60',
 )
 
 export const ratingIconVariants = cva(
@@ -88,12 +73,11 @@ export const ratingIconVariants = cva(
         xl: 'top-1 left-1 size-10',
       },
     },
-    defaultVariants: { size: 'md' },
+    defaultVariants: { size: ratingDefaults.size },
   },
 )
 
-export type RatingSize = NonNullable<VariantProps<typeof ratingItemVariants>['size']>
-export type RatingSeverity = NonNullable<VariantProps<typeof ratingIndicatorVariants>['severity']>
+export type RatingSize = (typeof ratingSizes)[number]
 
 export type RatingProps = Pick<
   RatingRootProps,
@@ -110,7 +94,6 @@ export type RatingProps = Pick<
 > & {
   readonly?: boolean
   size?: RatingSize
-  severity?: RatingSeverity
   color?: string
   icon?: IconName
   ui?: RatingUI

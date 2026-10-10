@@ -1,3 +1,6 @@
+export const ratingSizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+export const ratingOrientations = ['horizontal', 'vertical'] as const
+
 export const ratingDefaults = {
   length: 5,
   clearable: false,
@@ -10,7 +13,6 @@ export const ratingDefaults = {
   step: 1 as const,
   orientation: 'horizontal' as const,
   size: 'md' as const,
-  severity: 'primary' as const,
-  color: undefined,
+  color: 'primary',
   icon: 'star' as const,
 }

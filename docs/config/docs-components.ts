@@ -31,6 +31,7 @@ import linearChart from './components/linear-chart'
 import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
+import rating from './components/rating'
 import switchConfig from './components/switch'
 import textarea from './components/textarea'
 import toggleConfig from './components/toggle'
@@ -72,6 +73,7 @@ export const docsComponents = [
   loading,
   marker,
   masonry,
+  rating,
   switchConfig,
   textarea,
   toggleConfig,
