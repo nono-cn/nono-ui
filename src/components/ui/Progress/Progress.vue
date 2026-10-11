@@ -3,7 +3,7 @@ import { computed, useAttrs } from 'vue'
 import { ProgressIndicator, ProgressRoot } from 'reka-ui'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
 import {
   progressIndicatorVariants,
   progressLabelVariants,
@@ -13,24 +13,26 @@ import {
   type ProgressSlots,
   type ProgressValue,
 } from '.'
-import { progressDefaults } from './defaults'
+import { progressDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
-defineSlots<ProgressSlots>()
+const slots = defineSlots<ProgressSlots>()
 
 const attrs = useAttrs()
 const props = withDefaults(defineProps<ProgressProps>(), progressDefaults)
-const value = defineModel<ProgressValue>('value', { default: progressDefaults.value })
+const value = defineModel<ProgressValue>({ default: progressDefaults.modelValue })
 
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'progress',
-)
-const { colorStyle: trackColorStyle } = useColor(
-  computed(() => props.trackColor),
-  'progress-track',
-)
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'progress',
+  defaultColor: progressDefaults.color,
+})
+const { colorStyle: trackColorStyle } = useTheme({
+  color: () => props.trackColor,
+  prefix: 'progress-track',
+  defaultColor: progressDefaults.color,
+})
 
 const percentage = computed(() => {
   if (value.value === null) return 0
@@ -54,20 +56,9 @@ const progressContext = computed<ProgressContext>(() => {
     percentage: percentage.value,
   }
 })
-
-const verticalAnimationClasses = {
-  carousel:
-    'data-[state=indeterminate]:animate-[progress-carousel-vertical_2s_ease-in-out_infinite]',
-  'carousel-inverse':
-    'data-[state=indeterminate]:animate-[progress-carousel-inverse-vertical_2s_ease-in-out_infinite]',
-  swing: 'data-[state=indeterminate]:animate-[progress-swing-vertical_2s_ease-in-out_infinite]',
-  elastic: 'data-[state=indeterminate]:animate-[progress-elastic-vertical_2s_ease-in-out_infinite]',
-} as const
-
-const verticalAnimationClass = computed(() => {
-  if (props.orientation !== 'vertical') return undefined
-  return verticalAnimationClasses[props.animation ?? 'carousel']
-})
+const showLabel = computed(
+  () => (props.size === 'xl' || props.size === '2xl') && (props.label || !!slots.label),
+)
 
 const rootProps = computed(() => {
   return {
@@ -75,15 +66,13 @@ const rootProps = computed(() => {
     max: props.max,
     getValueLabel: props.getValueLabel,
     getValueText: props.getValueText,
-    'aria-label': attrs['aria-label'],
     class: cn(
       progressVariants({
         size: props.size,
-        severity: props.severity,
         orientation: props.orientation,
         inverted: props.inverted,
+        trackColor: !!props.trackColor,
       }),
-      props.trackColor ? 'bg-(--progress-track-color)' : props.color && 'bg-(--progress-color)/20',
       attrs.class,
     ),
     style: [colorStyle.value, trackColorStyle.value, attrs.style],
@@ -97,11 +86,9 @@ const indicatorProps = computed(() => {
     ...indicatorUI,
     class: cn(
       progressIndicatorVariants({
-        severity: props.severity,
-        animation: props.orientation === 'vertical' ? null : props.animation,
+        animation: props.animation,
+        orientation: props.orientation,
       }),
-      verticalAnimationClass.value,
-      props.color && 'bg-(--progress-color)',
       indicatorUI.class,
     ),
     style: [
@@ -117,29 +104,18 @@ const labelProps = computed(() => {
   return {
     ...labelUI,
     'aria-hidden': true,
-    class: cn(
-      'pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-2 text-center font-medium text-white [text-shadow:0_1px_3px_rgb(0_0_0),0_0_7px_rgb(0_0_0/0.9),0_0_12px_rgb(0_0_0/0.7)]',
-      progressLabelVariants({ size: props.size }),
-      labelUI.class,
-    ),
+    class: cn(progressLabelVariants({ size: props.size }), labelUI.class),
+    style: labelUI.style,
   }
 })
 </script>
 
 <template>
-  <ProgressRoot v-bind="rootProps" v-model="value" data-slot="progress" data-test-progress-root>
-    <ProgressIndicator
-      v-bind="indicatorProps"
-      data-slot="progress-indicator"
-      data-test-progress-indicator
-    />
+  <slot name="indicator" v-bind="progressContext" />
+  <ProgressRoot v-bind="rootProps" v-model="value" data-test-progress-root>
+    <ProgressIndicator v-bind="indicatorProps" data-test-progress-indicator />
 
-    <span
-      v-if="props.label || $slots.label"
-      v-bind="labelProps"
-      data-slot="progress-label"
-      data-test-progress-label
-    >
+    <span v-if="showLabel" v-bind="labelProps" data-test-progress-label>
       <slot name="label" v-bind="progressContext">{{ props.label }}</slot>
     </span>
   </ProgressRoot>
