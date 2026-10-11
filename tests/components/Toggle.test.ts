@@ -178,8 +178,7 @@ describe('Toggle', () => {
         text: 'resuelve el color',
         id: '[data-test-toggle-root]',
         varColor: '--toggle-color',
-        defaultColor: 'var(--neutral, var(--neutral))',
-        fallbackColor: 'neutral',
+        defaultColor: 'var(--primary, var(--primary))',
         theme: {
           colors: themeColors,
           foregroundVar: '--toggle-color-foreground',

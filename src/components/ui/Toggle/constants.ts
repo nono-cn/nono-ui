@@ -10,5 +10,5 @@ export const toggleDefaults = {
   trailingIcon: undefined,
   variant: 'outline' as const,
   size: 'md' as const,
-  color: 'neutral',
+  color: 'primary',
 }
