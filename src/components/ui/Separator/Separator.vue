@@ -2,8 +2,14 @@
 import { computed, useAttrs } from 'vue'
 import { Separator as RekaSeparator } from 'reka-ui'
 import { cn } from '@/lib/utils'
-import { separatorDefaults } from './defaults'
-import type { SeparatorProps, SeparatorSlots } from '.'
+import { useTheme } from '@/composables'
+import { separatorDefaults } from './constants'
+import {
+  separatorContentVariants,
+  separatorVariants,
+  type SeparatorProps,
+  type SeparatorSlots,
+} from '.'
 
 defineOptions({ inheritAttrs: false })
 
@@ -11,22 +17,38 @@ const props = withDefaults(defineProps<SeparatorProps>(), separatorDefaults)
 defineSlots<SeparatorSlots>()
 
 const attrs = useAttrs()
+const { colorStyle } = useTheme({
+  color: () => (props.color === 'neutral' ? 'var(--border)' : props.color),
+  prefix: 'separator',
+  defaultColor: separatorDefaults.color,
+})
 const rootProps = computed(() => {
   return {
     ...attrs,
     orientation: props.orientation,
     decorative: props.decorative,
     class: cn(
-      'shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px data-[orientation=vertical]:self-stretch',
+      separatorVariants({
+        type: props.type,
+        orientation: props.orientation,
+        size: props.size,
+        position: props.position,
+      }),
       attrs.class,
     ),
-    style: attrs.style,
+    style: [colorStyle.value, attrs.style],
   }
 })
 </script>
 
 <template>
   <RekaSeparator v-bind="rootProps" data-test-separator-root>
-    <slot />
+    <div
+      v-if="$slots.default || props.label"
+      :class="separatorContentVariants()"
+      data-test-separator-content
+    >
+      <slot>{{ props.label }}</slot>
+    </div>
   </RekaSeparator>
 </template>

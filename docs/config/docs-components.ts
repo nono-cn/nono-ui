@@ -33,6 +33,7 @@ import marker from './components/marker'
 import masonry from './components/masonry'
 import progress from './components/progress'
 import rating from './components/rating'
+import separator from './components/separator'
 import switchConfig from './components/switch'
 import tabsConfig from './components/tabs'
 import textarea from './components/textarea'
@@ -77,6 +78,7 @@ export const docsComponents = [
   masonry,
   progress,
   rating,
+  separator,
   switchConfig,
   tabsConfig,
   textarea,
