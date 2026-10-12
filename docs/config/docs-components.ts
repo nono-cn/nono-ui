@@ -39,6 +39,7 @@ import tabsConfig from './components/tabs'
 import textarea from './components/textarea'
 import timeline from './components/timeline'
 import toggleConfig from './components/toggle'
+import toast from './components/toast'
 import type { ComponentDocConfig } from './component-docs'
 
 export type DocsComponent = Pick<ComponentDocConfig, 'slug' | 'title' | 'description'>
@@ -85,6 +86,7 @@ export const docsComponents = [
   textarea,
   timeline,
   toggleConfig,
+  toast,
 ] satisfies ComponentDocConfig[]
 
 export const docsComponentsBySlug = Object.fromEntries(
