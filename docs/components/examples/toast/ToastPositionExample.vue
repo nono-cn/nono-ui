@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { ConfigProvider } from '@/components/provider'
+import { Button } from '@/components/ui/Button'
 import { Toast, toastDefaults, toastPositionNames, type ToastPosition } from '@/components/ui/Toast'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -12,6 +13,7 @@ const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
 import { ConfigProvider } from '__DOCS_PACKAGE__/components/provider'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 import { Toast } from '__DOCS_PACKAGE__/components/ui/Toast'
 
 const open = ref(false)
@@ -19,7 +21,7 @@ ${scriptEnd}
 
 <template>
   <ConfigProvider>
-    <button type="button" @click="open = true">Show notification</button>
+    <Button @click="open = true">Show notification</Button>
     <Toast v-model:open="open" position="${position.value}" label="Saved" />
   </ConfigProvider>
 </template>`,
@@ -42,9 +44,7 @@ function reset() {
       <ExampleSelectControl v-model="position" label="Position" :options="toastPositionNames" />
     </template>
     <ConfigProvider>
-      <button type="button" class="rounded-md border px-3 py-2 text-sm" @click="open = true">
-        Show notification
-      </button>
+      <Button @click="open = true"> Show notification </Button>
       <Toast v-model:open="open" :position="position" label="Saved" />
     </ConfigProvider>
   </ComponentExample>

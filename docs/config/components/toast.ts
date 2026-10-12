@@ -1,6 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
 import { toastDefaults } from '@/components/ui/Toast'
-import { toastProviderDefaults } from '@/components/provider'
 import ToastBasicExample from '../../components/examples/toast/ToastBasicExample.vue'
 import ToastColorExample from '../../components/examples/toast/ToastColorExample.vue'
 import ToastDescriptionSlotExample from '../../components/examples/toast/ToastDescriptionSlotExample.vue'
@@ -133,87 +132,6 @@ const toastConfig: ComponentDocConfig = {
       },
     ],
     configs: [
-      {
-        id: 'toast-provider-options',
-        title: 'ConfigProvider toast options',
-        description: 'Pass these options to the toast prop of ConfigProvider.',
-        rows: [
-          {
-            name: 'disableSwipe',
-            type: 'boolean',
-            default: String(toastProviderDefaults.disableSwipe),
-            description: 'Disables swipe gestures.',
-          },
-          {
-            name: 'duration',
-            type: 'number',
-            default: String(toastProviderDefaults.duration),
-            description: 'Default duration in milliseconds.',
-          },
-          {
-            name: 'label',
-            type: 'string',
-            default: String(toastProviderDefaults.label),
-            description: 'Localized announcement label.',
-          },
-          {
-            name: 'limit',
-            type: 'number',
-            default: 'undefined',
-            description: 'Maximum visible toasts; older ones become inert.',
-          },
-          {
-            name: 'swipeDirection',
-            type: "'right' | 'left' | 'down' | 'up'",
-            default: `'${toastProviderDefaults.swipeDirection}'`,
-            description: 'Swipe direction that closes a toast.',
-          },
-          {
-            name: 'swipeThreshold',
-            type: 'number',
-            default: String(toastProviderDefaults.swipeThreshold),
-            description: 'Minimum closing swipe distance in pixels.',
-          },
-          {
-            name: 'toastManager',
-            type: 'GlobalToastManager<any>',
-            default: 'undefined',
-            description: 'Global manager created with createToastManager().',
-          },
-        ],
-      },
-      {
-        id: 'toast-viewport-options',
-        title: 'ConfigProvider toastViewport options',
-        description:
-          'Pass these options to the toastViewport prop of ConfigProvider. ConfigProvider renders one viewport automatically.',
-        rows: [
-          {
-            name: 'hotkey',
-            type: 'string[]',
-            default: "['F8']",
-            description: 'Keyboard shortcut that focuses the viewport.',
-          },
-          {
-            name: 'label',
-            type: 'string | ((hotkey: string) => string)',
-            default: "'Notifications ({hotkey})'",
-            description: 'Accessible landmark label; {hotkey} is replaced with the shortcut.',
-          },
-          {
-            name: 'class',
-            type: "HTMLAttributes['class']",
-            default: "'fixed right-4 bottom-4 z-50 w-80'",
-            description: 'Classes used to position and style the viewport.',
-          },
-          {
-            name: 'style',
-            type: "HTMLAttributes['style']",
-            default: 'undefined',
-            description: 'Inline styles applied to the viewport.',
-          },
-        ],
-      },
       {
         id: 'toast-slot-props',
         title: 'ToastSlotProps',

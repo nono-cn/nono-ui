@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Toast } from '@/components/ui/Toast'
+import { Button } from '@/components/ui/Button'
 import { ConfigProvider, toastProviderDefaults } from '@/components/provider'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ExampleNumberControl from '../../controls/ExampleNumberControl.vue'
@@ -19,6 +20,7 @@ const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
 import { Toast } from '__DOCS_PACKAGE__/components/ui/Toast'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 import { ConfigProvider } from '__DOCS_PACKAGE__/components/provider'
 
 const open = ref(false)
@@ -26,7 +28,7 @@ ${scriptEnd}
 
 <template>
   <ConfigProvider :toast="{ disableSwipe: ${disableSwipe.value}, duration: ${duration.value}, label: 'Notifications', limit: ${limit.value}, swipeDirection: '${swipeDirection.value}', swipeThreshold: ${swipeThreshold.value} }">
-    <button type="button" @click="open = true">Show notification</button>
+    <Button @click="open = true">Show notification</Button>
     <Toast v-model:open="open" label="Saved" class="rounded-lg border bg-background p-4 shadow-lg" />
   </ConfigProvider>
 </template>`,
@@ -72,9 +74,7 @@ function reset() {
         swipeThreshold,
       }"
     >
-      <button type="button" class="rounded-md border px-3 py-2 text-sm" @click="open = true">
-        Show notification
-      </button>
+      <Button @click="open = true"> Show notification </Button>
       <Toast
         v-model:open="open"
         label="Saved"

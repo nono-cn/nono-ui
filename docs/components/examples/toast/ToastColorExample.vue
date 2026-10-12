@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { ToastClose } from 'reka-ui'
 import { ConfigProvider } from '@/components/provider'
+import { Button } from '@/components/ui/Button'
 import { Toast, toastDefaults, toastVariantNames, type ToastVariant } from '@/components/ui/Toast'
 import { themeColors } from '@/components/ui/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
@@ -23,6 +24,7 @@ const code = computed(
 import { ref } from 'vue'
 import { Toast } from '__DOCS_PACKAGE__/components/ui/Toast'
 import { ConfigProvider } from '__DOCS_PACKAGE__/components/provider'
+import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 import { ToastClose } from 'reka-ui'
 
 const open = ref(false)
@@ -30,7 +32,7 @@ ${scriptEnd}
 
 <template>
   <ConfigProvider>
-    <button type="button" @click="open = true">Show notification</button>
+    <Button @click="open = true">Show notification</Button>
     <Toast v-model:open="open" color="${color.value}" variant="${variant.value}" label="Saved" description="Your changes have been saved.">
       <ToastClose aria-label="Dismiss notification">Dismiss</ToastClose>
     </Toast>
@@ -65,9 +67,7 @@ function reset() {
       </div>
     </template>
     <ConfigProvider>
-      <button type="button" class="rounded-md border px-3 py-2 text-sm" @click="open = true">
-        Show notification
-      </button>
+      <Button @click="open = true"> Show notification </Button>
       <Toast
         v-model:open="open"
         :color="color"
