@@ -37,6 +37,7 @@ import separator from './components/separator'
 import switchConfig from './components/switch'
 import tabsConfig from './components/tabs'
 import textarea from './components/textarea'
+import timeline from './components/timeline'
 import toggleConfig from './components/toggle'
 import type { ComponentDocConfig } from './component-docs'
 
@@ -82,6 +83,7 @@ export const docsComponents = [
   switchConfig,
   tabsConfig,
   textarea,
+  timeline,
   toggleConfig,
 ] satisfies ComponentDocConfig[]
 

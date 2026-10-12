@@ -1,12 +1,13 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
-import type { IconConfig } from '@/components/ui/Icon'
+import type { IconName } from '@/components/ui/Icon'
+import { timelineDefaults } from './constants'
 
 export { default as Timeline } from './Timeline.vue'
-export { timelineDefaults } from './defaults'
+export { timelineAligns, timelineDefaults, timelineSizes, timelineOrientations } from './constants'
 
 export type TimelineValue = string | number
-export type TimelineAlign = 'left' | 'right' | 'alternate'
+export type TimelineAlign = (typeof import('./constants').timelineAligns)[number]
 
 export const timelineVariants = cva('group/timeline m-0 flex w-full list-none p-0', {
   variants: {
@@ -16,7 +17,7 @@ export const timelineVariants = cva('group/timeline m-0 flex w-full list-none p-
     },
   },
   defaultVariants: {
-    orientation: 'vertical',
+    orientation: timelineDefaults.orientation,
   },
 })
 
@@ -49,8 +50,8 @@ export const timelineItemVariants = cva('group/timeline-item relative min-w-0', 
     },
   ],
   defaultVariants: {
-    orientation: 'vertical',
-    align: 'right',
+    orientation: timelineDefaults.orientation,
+    align: timelineDefaults.align,
   },
 })
 
@@ -85,14 +86,40 @@ export const timelineContentVariants = cva('flex min-w-0 flex-col gap-0.5', {
     },
   ],
   defaultVariants: {
-    orientation: 'vertical',
-    align: 'right',
-    side: 'right',
+    orientation: timelineDefaults.orientation,
+    align: timelineDefaults.align,
+    side: timelineDefaults.align,
+  },
+})
+
+export const timelineHeaderVariants = cva('', {
+  variants: {
+    orientation: {
+      vertical: '',
+      horizontal: 'w-full',
+    },
+  },
+  defaultVariants: {
+    orientation: timelineDefaults.orientation,
+  },
+})
+
+export const timelineLabelVariants = cva('text-sm font-semibold text-foreground')
+
+export const timelineDescriptionVariants = cva('text-sm text-muted-foreground', {
+  variants: {
+    orientation: {
+      vertical: 'mt-2',
+      horizontal: 'mt-3 w-full min-w-0',
+    },
+  },
+  defaultVariants: {
+    orientation: timelineDefaults.orientation,
   },
 })
 
 export const timelineIndicatorVariants = cva(
-  'absolute z-10 flex items-center justify-center rounded-full border-2 font-medium transition-colors',
+  'absolute z-10 flex items-center justify-center rounded-full border-2 font-medium transition-colors [&_svg]:size-[1em]',
   {
     variants: {
       orientation: {
@@ -108,27 +135,16 @@ export const timelineIndicatorVariants = cva(
         left: '',
         right: '',
       },
-      sizeIndicator: {
-        sm: 'size-7 text-sm',
-        md: 'size-8 text-base',
-        lg: 'size-9 text-sm',
-        xl: 'size-10 text-lg',
-      },
-      severity: {
-        primary:
-          'border-primary/20 text-primary data-[completed=true]:bg-primary data-[completed=true]:text-primary-foreground',
-        secondary:
-          'border-secondary-foreground/20 text-secondary-foreground data-[completed=true]:bg-secondary data-[completed=true]:text-secondary-foreground',
-        warning:
-          'border-warning/20 text-warning data-[completed=true]:bg-warning data-[completed=true]:text-warning-foreground',
-        success:
-          'border-success/20 text-success data-[completed=true]:bg-success data-[completed=true]:text-success-foreground',
-        error:
-          'border-error/20 text-error data-[completed=true]:bg-error data-[completed=true]:text-error-foreground',
-      },
-      color: {
-        true: 'border-(--timeline-color)/20 text-(--timeline-color) data-[completed=true]:bg-(--timeline-color) data-[completed=true]:text-(--timeline-color-foreground)',
-        false: '',
+      size: {
+        xs: 'size-6 text-xs',
+        sm: 'size-7 text-base',
+        md: 'size-8 text-xl',
+        lg: 'size-9 text-2xl',
+        xl: 'size-10 text-[1.75rem]',
+      } satisfies Record<(typeof import('./constants').timelineSizes)[number], string>,
+      completed: {
+        true: 'border-(--timeline-color)/20 bg-(--timeline-color) text-(--timeline-color-foreground)',
+        false: 'border-border bg-background text-muted-foreground',
       },
     },
     compoundVariants: [
@@ -139,12 +155,11 @@ export const timelineIndicatorVariants = cva(
       { orientation: 'horizontal', align: 'alternate', class: 'top-1/2 -translate-y-1/2' },
     ],
     defaultVariants: {
-      orientation: 'vertical',
-      align: 'right',
-      side: 'right',
-      sizeIndicator: 'md',
-      severity: 'primary',
-      color: false,
+      orientation: timelineDefaults.orientation,
+      align: timelineDefaults.align,
+      side: timelineDefaults.align,
+      size: timelineDefaults.size,
+      completed: false,
     },
   },
 )
@@ -170,17 +185,6 @@ export const timelineSeparatorVariants = cva(
         true: '',
         false: 'bg-border',
       },
-      severity: {
-        primary: '',
-        secondary: '',
-        warning: '',
-        success: '',
-        error: '',
-      },
-      color: {
-        true: '',
-        false: '',
-      },
     },
     compoundVariants: [
       { orientation: 'vertical', side: 'left', class: 'end-0 translate-x-1/2' },
@@ -188,20 +192,13 @@ export const timelineSeparatorVariants = cva(
       { orientation: 'horizontal', align: 'left', class: 'bottom-0 translate-y-1/2' },
       { orientation: 'horizontal', align: 'right', class: 'top-0 -translate-y-1/2' },
       { orientation: 'horizontal', align: 'alternate', class: 'top-1/2 -translate-y-1/2' },
-      { completed: true, severity: 'primary', class: 'bg-primary/40' },
-      { completed: true, severity: 'secondary', class: 'bg-secondary-foreground/40' },
-      { completed: true, severity: 'warning', class: 'bg-warning/40' },
-      { completed: true, severity: 'success', class: 'bg-success/40' },
-      { completed: true, severity: 'error', class: 'bg-error/40' },
-      { completed: true, color: true, class: 'bg-(--timeline-color)/40' },
+      { completed: true, class: 'bg-(--timeline-color)/40' },
     ],
     defaultVariants: {
-      orientation: 'vertical',
-      align: 'right',
-      side: 'right',
+      orientation: timelineDefaults.orientation,
+      align: timelineDefaults.align,
+      side: timelineDefaults.align,
       completed: false,
-      severity: 'primary',
-      color: false,
     },
   },
 )
@@ -217,29 +214,26 @@ export interface TimelineItem {
   slot?: string
   label?: string
   description?: string
-  icon?: IconConfig
+  icon?: IconName
 }
 
 // Props
 export interface TimelineProps {
-  value?: TimelineValue
+  modelValue?: TimelineValue
   items: TimelineItem[]
   orientation?: TimelineVariants['orientation']
   align?: TimelineAlign
-  sizeIndicator?: TimelineIndicatorVariants['sizeIndicator']
+  size?: TimelineIndicatorVariants['size']
   color?: string
-  severity?: TimelineIndicatorVariants['severity']
   reverse?: boolean
   ui?: TimelineUI
 }
 
 // Fn
-export type TimelineFn<T> = (context: TimelineContext) => T
 export type TimelineItemFn<T> = (context: TimelineItemContext) => T
 
 // UI
 export interface TimelineUI {
-  root?: TimelineFn<HTMLAttributes>
   item?: TimelineItemFn<HTMLAttributes>
   content?: TimelineItemFn<HTMLAttributes>
   header?: TimelineItemFn<HTMLAttributes>
@@ -250,12 +244,8 @@ export interface TimelineUI {
 }
 
 // Context
-export interface TimelineContext {
-  props: Omit<TimelineProps, 'ui'>
-  value?: TimelineValue
-}
-
-export interface TimelineItemContext extends TimelineContext {
+export interface TimelineItemContext {
+  modelValue?: TimelineValue
   item: TimelineItem
   index: number
   active: boolean
@@ -279,5 +269,5 @@ export type TimelineSlots = {
 }
 
 export type TimelineEmits = {
-  'update:value': [value: TimelineValue]
+  'update:modelValue': [value: TimelineValue | undefined]
 }

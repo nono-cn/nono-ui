@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, useAttrs, watch } from 'vue'
+import { Primitive } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
-import { useColor } from '@/composables'
+import { useTheme } from '@/composables'
+import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
+import { timelineDefaults } from './constants'
 import type {
-  TimelineContext,
+  TimelineEmits,
   TimelineItemContext,
   TimelineProps,
   TimelineSlots,
@@ -12,59 +15,46 @@ import type {
 } from '.'
 import {
   timelineContentVariants,
+  timelineDescriptionVariants,
+  timelineHeaderVariants,
   timelineIndicatorVariants,
   timelineItemVariants,
+  timelineLabelVariants,
   timelineSeparatorVariants,
   timelineVariants,
 } from '.'
-import { Primitive } from 'reka-ui'
-import { useUi } from '@/composables/useUi'
-import { timelineDefaults } from './defaults'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<TimelineProps>(), timelineDefaults)
+const props = withDefaults(defineProps<Omit<TimelineProps, 'modelValue'>>(), timelineDefaults)
 
 defineSlots<TimelineSlots>()
+const emit = defineEmits<TimelineEmits>()
 const attrs = useAttrs()
-const model = defineModel<TimelineValue>('value')
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'timeline',
-)
+const model = defineModel<TimelineValue>()
+watch(model, (value) => emit('update:modelValue', value))
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'timeline',
+  defaultColor: timelineDefaults.color,
+})
 
 const timelineItems = computed(() => (props.reverse ? [...props.items].reverse() : props.items))
 const activeIndex = computed(() =>
   timelineItems.value.findIndex((item) => Object.is(item.value, model.value)),
 )
 
-const timelineContext = computed<TimelineContext>(() => {
-  const { ui, ...timelineProps } = props
-  void ui
-
-  return {
-    props: timelineProps,
-    value: model.value,
-  }
-})
-
-const rootProps = computed(() => {
-  const rootUI = useUi(props.ui?.root, timelineContext.value)
-
-  return {
-    ...attrs,
-    ...rootUI,
-    class: cn(timelineVariants({ orientation: props.orientation }), attrs.class, rootUI.class),
-    style: [attrs.style, rootUI.style],
-    'data-orientation': props.orientation,
-    'data-slot': 'timeline',
-  }
-})
+const rootProps = computed(() => ({
+  ...attrs,
+  class: cn(timelineVariants({ orientation: props.orientation }), attrs.class),
+  style: attrs.style,
+  'data-orientation': props.orientation,
+}))
 
 function getItemContext(item: TimelineProps['items'][number], index: number): TimelineItemContext {
   const completed = activeIndex.value >= 0 && index <= activeIndex.value
   return {
-    ...timelineContext.value,
+    modelValue: model.value,
     item,
     index,
     completed,
@@ -86,7 +76,6 @@ function getItemProps(context: TimelineItemContext) {
     style: ui.style,
     'data-align': context.itemAlign,
     'data-completed': context.completed || undefined,
-    'data-slot': 'timeline-item',
   }
 }
 
@@ -103,7 +92,6 @@ function getContentProps(context: TimelineItemContext) {
       ui.class,
     ),
     style: ui.style,
-    'data-slot': 'timeline-content',
   }
 }
 
@@ -111,8 +99,7 @@ function getHeaderProps(context: TimelineItemContext) {
   const ui = useUi(props.ui?.header, context)
   return {
     ...ui,
-    class: cn(props.orientation === 'horizontal' ? 'w-full' : '', ui.class),
-    'data-slot': 'timeline-header',
+    class: cn(timelineHeaderVariants({ orientation: props.orientation }), ui.class),
   }
 }
 
@@ -127,14 +114,11 @@ function getSeparatorProps(context: TimelineItemContext) {
         align: props.align,
         side: context.itemAlign,
         completed,
-        severity: props.severity,
-        color: Boolean(props.color),
       }),
       ui.class,
     ),
     'aria-hidden': true,
     'data-completed': completed || undefined,
-    'data-slot': 'timeline-separator',
     style: [colorStyle.value, ui.style],
   }
 }
@@ -143,8 +127,7 @@ function getLabelProps(context: TimelineItemContext) {
   const ui = useUi(props.ui?.label, context)
   return {
     ...ui,
-    class: cn('text-sm font-semibold text-foreground', ui.class),
-    'data-slot': 'timeline-label',
+    class: cn(timelineLabelVariants(), ui.class),
   }
 }
 
@@ -152,12 +135,7 @@ function getDescriptionProps(context: TimelineItemContext) {
   const ui = useUi(props.ui?.description, context)
   return {
     ...ui,
-    class: cn(
-      'text-sm text-muted-foreground',
-      props.orientation === 'vertical' ? 'mt-2' : 'mt-3 w-full min-w-0',
-      ui.class,
-    ),
-    'data-slot': 'timeline-description',
+    class: cn(timelineDescriptionVariants({ orientation: props.orientation }), ui.class),
   }
 }
 
@@ -170,16 +148,13 @@ function getIndicatorProps(context: TimelineItemContext) {
         orientation: props.orientation,
         align: props.align,
         side: context.itemAlign,
-        sizeIndicator: props.sizeIndicator,
-        severity: props.severity,
-        color: Boolean(props.color),
+        size: props.size,
+        completed: context.completed,
       }),
-      context.completed ? undefined : 'border-border bg-background text-muted-foreground',
       ui.class,
     ),
     'aria-hidden': true,
     'data-completed': context.completed || undefined,
-    'data-slot': 'timeline-indicator',
     style: [colorStyle.value, ui.style],
   }
 }
@@ -198,10 +173,6 @@ function getKeyItem(context: TimelineItemContext) {
   return String(context.item.slot ?? context.item.value)
 }
 const itemContexts = computed(() => timelineItems.value.map(getItemContext))
-
-function getIconProps(context: TimelineItemContext) {
-  return context.item?.icon
-}
 </script>
 
 <template>
@@ -241,9 +212,8 @@ function getIconProps(context: TimelineItemContext) {
         <slot :name="getSlots(context).indicator" v-bind="context">
           <slot name="indicator" v-bind="context">
             <Icon
-              v-if="getIconProps(context)?.name"
-              v-bind="getIconProps(context)!"
-              data-slot="timeline-indicator-icon"
+              v-if="context.item.icon"
+              :name="context.item.icon"
               data-test-timeline-indicator-icon
             />
           </slot>
