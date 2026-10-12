@@ -6,6 +6,7 @@ import ToastColorExample from '../../components/examples/toast/ToastColorExample
 import ToastDescriptionSlotExample from '../../components/examples/toast/ToastDescriptionSlotExample.vue'
 import ToastLabelSlotExample from '../../components/examples/toast/ToastLabelSlotExample.vue'
 import ToastOptionsExample from '../../components/examples/toast/ToastOptionsExample.vue'
+import ToastPositionExample from '../../components/examples/toast/ToastPositionExample.vue'
 import ToastVariantExample from '../../components/examples/toast/ToastVariantExample.vue'
 
 const toastConfig: ComponentDocConfig = {
@@ -22,6 +23,11 @@ const toastConfig: ComponentDocConfig = {
     },
   ],
   examples: [
+    {
+      title: 'Position',
+      description: 'Choose where an individual notification appears.',
+      component: ToastPositionExample,
+    },
     {
       title: 'Variant',
       description: 'Choose the visual style of the notification.',
@@ -99,6 +105,12 @@ const toastConfig: ComponentDocConfig = {
         type: 'boolean',
         default: 'undefined',
         description: 'Controlled open state; supports v-model:open.',
+      },
+      {
+        name: 'position',
+        type: "'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'",
+        default: `'${toastDefaults.position}'`,
+        description: 'Fixed position of this notification.',
       },
       {
         name: 'toast',

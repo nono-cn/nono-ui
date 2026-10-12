@@ -3,13 +3,27 @@ import { mount } from '@vue/test-utils'
 import { ToastProvider, ToastRoot, ToastViewport, type ToastObject } from 'reka-ui'
 import { describe, expect, it } from 'vitest'
 
-import { Toast, type ToastProps, type ToastVariant } from '@/components/ui/Toast'
+import {
+  Toast,
+  type ToastPosition,
+  type ToastProps,
+  type ToastVariant,
+} from '@/components/ui/Toast'
 import { themeColors } from '@/components/ui/constants'
 import { testColor } from '../utils/testColor'
 
 const casesDuration = [undefined, 0, 1200, Infinity]
 const casesForceMount = [undefined, false, true]
 const casesOpen = [undefined, false, true]
+const casesPosition = [
+  { input: undefined, expected: ['bottom-4', 'right-4'] },
+  { input: 'top-left', expected: ['top-4', 'left-4'] },
+  { input: 'top-center', expected: ['top-4', 'left-1/2', '-translate-x-1/2'] },
+  { input: 'top-right', expected: ['top-4', 'right-4'] },
+  { input: 'bottom-left', expected: ['bottom-4', 'left-4'] },
+  { input: 'bottom-center', expected: ['bottom-4', 'left-1/2', '-translate-x-1/2'] },
+  { input: 'bottom-right', expected: ['bottom-4', 'right-4'] },
+] satisfies { input: ToastPosition | undefined; expected: string[] }[]
 const casesType = [undefined, 'foreground', 'background'] as const
 const casesVariant = [
   {
@@ -102,7 +116,6 @@ describe('Toast', () => {
         },
         mount: (color) => mountToast({ open: true, color }),
       })
-
     })
 
     describe('duration', () => {
@@ -159,6 +172,16 @@ describe('Toast', () => {
     describe('open', () => {
       it.each(casesOpen)('pasa open=%s a Reka', (open) => {
         expect(rootProps({ open }).open).toBe(open)
+      })
+    })
+
+    describe('position', () => {
+      it.each(casesPosition)('aplica position=$input al aviso', async ({ input, expected }) => {
+        const wrapper = mountToast({ open: true, position: input })
+        await nextTick()
+        const classes = wrapper.get('[data-test-toast-root]').classes()
+        expect(classes).toContain('fixed')
+        for (const className of expected) expect(classes).toContain(className)
       })
     })
 

@@ -6,12 +6,12 @@ import type {
   ToastViewportProps as RekaToastViewportProps,
 } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
-import { toastVariantNames } from './constants'
+import { toastPositionNames, toastVariantNames } from './constants'
 
 export { default as Toast } from './Toast.vue'
-export { toastDefaults, toastVariantNames } from './constants'
+export { toastDefaults, toastPositionNames, toastVariantNames } from './constants'
 
-export const toastVariants = cva('rounded-lg border p-4 shadow-lg', {
+export const toastVariants = cva('fixed w-80 rounded-lg border p-4 shadow-lg', {
   variants: {
     variant: {
       solid: 'border-transparent bg-(--toast-solid) text-(--toast-solid-foreground)',
@@ -20,12 +20,21 @@ export const toastVariants = cva('rounded-lg border p-4 shadow-lg', {
       subtle: 'border-(--toast-color)/20 bg-(--toast-color)/10 text-(--toast-color)',
       soft: 'border-transparent bg-(--toast-color)/10 text-(--toast-color)',
     } satisfies Record<(typeof toastVariantNames)[number], string>,
+    position: {
+      'top-left': 'top-4 left-4',
+      'top-center': 'top-4 left-1/2 -translate-x-1/2',
+      'top-right': 'top-4 right-4',
+      'bottom-left': 'bottom-4 left-4',
+      'bottom-center': 'bottom-4 left-1/2 -translate-x-1/2',
+      'bottom-right': 'bottom-4 right-4',
+    } satisfies Record<(typeof toastPositionNames)[number], string>,
   },
-  defaultVariants: { variant: 'subtle' },
+  defaultVariants: { variant: 'subtle', position: 'bottom-right' },
 })
 
 export type ToastVariants = VariantProps<typeof toastVariants>
 export type ToastVariant = NonNullable<ToastVariants['variant']>
+export type ToastPosition = NonNullable<ToastVariants['position']>
 
 export type ToastProviderProps = Pick<
   RekaToastProviderProps,
@@ -43,6 +52,7 @@ export type ToastViewportConfig = Pick<RekaToastViewportProps, 'hotkey' | 'label
 
 export type ToastProps = Omit<RekaToastRootProps, 'defaultOpen' | 'as' | 'asChild'> & {
   color?: string
+  position?: ToastPosition
   variant?: ToastVariant
   label?: string
   description?: string

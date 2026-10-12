@@ -22,7 +22,7 @@ const { colorStyle } = useTheme({
 
 const rootProps = computed(() => ({
   ...attrs,
-  class: cn(toastVariants({ variant: props.variant }), attrs.class),
+  class: cn(toastVariants({ variant: props.variant, position: props.position }), attrs.class),
   style: [colorStyle.value, attrs.style],
   as: 'div',
   asChild: false,
