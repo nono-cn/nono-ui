@@ -3,12 +3,37 @@ import { mount } from '@vue/test-utils'
 import { ToastProvider, ToastRoot, ToastViewport, type ToastObject } from 'reka-ui'
 import { describe, expect, it } from 'vitest'
 
-import { Toast, type ToastProps } from '@/components/ui/Toast'
+import { Toast, type ToastProps, type ToastVariant } from '@/components/ui/Toast'
+import { themeColors } from '@/components/ui/constants'
+import { testColor } from '../utils/testColor'
 
 const casesDuration = [undefined, 0, 1200, Infinity]
 const casesForceMount = [undefined, false, true]
 const casesOpen = [undefined, false, true]
 const casesType = [undefined, 'foreground', 'background'] as const
+const casesVariant = [
+  {
+    input: undefined,
+    expected: ['border-(--toast-color)/20', 'bg-(--toast-color)/10', 'text-(--toast-color)'],
+  },
+  {
+    input: 'solid',
+    expected: ['border-transparent', 'bg-(--toast-solid)', 'text-(--toast-solid-foreground)'],
+  },
+  {
+    input: 'outline',
+    expected: ['border-(--toast-color)/40', 'bg-transparent', 'text-(--toast-color)'],
+  },
+  { input: 'plain', expected: ['border-transparent', 'bg-transparent', 'text-(--toast-color)'] },
+  {
+    input: 'subtle',
+    expected: ['border-(--toast-color)/20', 'bg-(--toast-color)/10', 'text-(--toast-color)'],
+  },
+  {
+    input: 'soft',
+    expected: ['border-transparent', 'bg-(--toast-color)/10', 'text-(--toast-color)'],
+  },
+] satisfies { input: ToastVariant | undefined; expected: string[] }[]
 const casesLabel = [
   { input: undefined, expected: undefined },
   { input: 'Guardado', expected: 'Guardado' },
@@ -63,6 +88,23 @@ function rootProps(props: ToastProps = {}) {
 
 describe('Toast', () => {
   describe('props', () => {
+    describe('color', () => {
+      testColor({
+        text: 'resuelve el color',
+        id: '[data-test-toast-root]',
+        varColor: '--toast-color',
+        defaultColor: 'var(--primary, var(--primary))',
+        theme: {
+          colors: themeColors,
+          foregroundVar: '--toast-color-foreground',
+          solidVar: '--toast-solid',
+          solidForegroundVar: '--toast-solid-foreground',
+        },
+        mount: (color) => mountToast({ open: true, color }),
+      })
+
+    })
+
     describe('duration', () => {
       it.each(casesDuration)('pasa duration=%s a Reka', (duration) => {
         expect(rootProps({ duration }).duration).toBe(duration)
@@ -134,6 +176,15 @@ describe('Toast', () => {
     describe('type', () => {
       it.each(casesType)('pasa type=%s a Reka', (type) => {
         expect(rootProps({ type }).type).toBe(type ?? 'foreground')
+      })
+    })
+
+    describe('variant', () => {
+      it.each(casesVariant)('aplica variant=$input en ToastRoot', async ({ input, expected }) => {
+        const wrapper = mountToast({ open: true, variant: input })
+        await nextTick()
+        const classes = wrapper.get('[data-test-toast-root]').classes()
+        for (const className of expected) expect(classes).toContain(className)
       })
     })
   })

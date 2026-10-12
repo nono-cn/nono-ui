@@ -2,9 +2,11 @@ import type { ComponentDocConfig } from '../component-docs'
 import { toastDefaults } from '@/components/ui/Toast'
 import { toastProviderDefaults } from '@/components/provider'
 import ToastBasicExample from '../../components/examples/toast/ToastBasicExample.vue'
+import ToastColorExample from '../../components/examples/toast/ToastColorExample.vue'
 import ToastDescriptionSlotExample from '../../components/examples/toast/ToastDescriptionSlotExample.vue'
 import ToastLabelSlotExample from '../../components/examples/toast/ToastLabelSlotExample.vue'
 import ToastOptionsExample from '../../components/examples/toast/ToastOptionsExample.vue'
+import ToastVariantExample from '../../components/examples/toast/ToastVariantExample.vue'
 
 const toastConfig: ComponentDocConfig = {
   slug: 'toast',
@@ -20,6 +22,16 @@ const toastConfig: ComponentDocConfig = {
     },
   ],
   examples: [
+    {
+      title: 'Variant',
+      description: 'Choose the visual style of the notification.',
+      component: ToastVariantExample,
+    },
+    {
+      title: 'Color',
+      description: 'Choose a theme color or a custom color for the notification.',
+      component: ToastColorExample,
+    },
     {
       title: 'Description slot',
       description: 'Replace the description prop with custom message content.',
@@ -51,6 +63,12 @@ const toastConfig: ComponentDocConfig = {
   ],
   api: {
     props: [
+      {
+        name: 'color',
+        type: 'string',
+        default: `'${toastDefaults.color}'`,
+        description: 'Theme color token or custom CSS color used by the toast.',
+      },
       {
         name: 'duration',
         type: 'number',
@@ -94,6 +112,12 @@ const toastConfig: ComponentDocConfig = {
         type: "'foreground' | 'background'",
         default: `'${toastDefaults.type}'`,
         description: 'Announcement priority for accessibility.',
+      },
+      {
+        name: 'variant',
+        type: "'solid' | 'outline' | 'plain' | 'subtle' | 'soft'",
+        default: `'${toastDefaults.variant}'`,
+        description: 'Visual style of the notification.',
       },
     ],
     configs: [

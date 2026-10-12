@@ -1,4 +1,5 @@
 import type { VueWrapper } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import { expect, it } from 'vitest'
 
 interface TestColorOptions {
@@ -28,8 +29,10 @@ export function testColor({
   it.each([
     { input: '#ff0000', expected: `${varColor}: #ff0000` },
     { input: undefined, expected: defaultColor && `${varColor}: ${defaultColor}` },
-  ])(`${text} input=$input`, ({ input, expected }) => {
-    const root = mount(input).get(id)
+  ])(`${text} input=$input`, async ({ input, expected }) => {
+    const wrapper = mount(input)
+    await nextTick()
+    const root = wrapper.get(id)
 
     if (expected) expect(root.attributes('style')).toContain(expected)
     else expect(root.attributes('style') ?? '').not.toContain(varColor)
@@ -38,8 +41,10 @@ export function testColor({
   if (theme) {
     it.each([theme.colors[0] ?? fallbackColor, 'mi-marca'])(
       `${text} resuelve el token %s y su foreground`,
-      (color) => {
-        const style = mount(color).get(id).attributes('style')
+      async (color) => {
+        const wrapper = mount(color)
+        await nextTick()
+        const style = wrapper.get(id).attributes('style')
         const base = `var(--${color}, var(--${fallbackColor}))`
         const foreground = `var(--${color}-foreground, var(--${fallbackColor}-foreground))`
 
@@ -53,13 +58,18 @@ export function testColor({
     it.each([
       { color: '#ffffff', foreground: '#09090b' },
       { color: '#000000', foreground: '#ffffff' },
-    ])(`${text} usa hexadecimal $color con foreground $foreground`, ({ color, foreground }) => {
-      const style = mount(color).get(id).attributes('style')
+    ])(
+      `${text} usa hexadecimal $color con foreground $foreground`,
+      async ({ color, foreground }) => {
+        const wrapper = mount(color)
+        await nextTick()
+        const style = wrapper.get(id).attributes('style')
 
-      expect(style).toContain(`${varColor}: ${color}`)
-      expect(style).toContain(`${theme.solidVar}: ${color}`)
-      expect(style).toContain(`${theme.foregroundVar}: ${foreground}`)
-      expect(style).toContain(`${theme.solidForegroundVar}: ${foreground}`)
-    })
+        expect(style).toContain(`${varColor}: ${color}`)
+        expect(style).toContain(`${theme.solidVar}: ${color}`)
+        expect(style).toContain(`${theme.foregroundVar}: ${foreground}`)
+        expect(style).toContain(`${theme.solidForegroundVar}: ${foreground}`)
+      },
+    )
   }
 }

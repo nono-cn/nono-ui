@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, useAttrs, useSlots } from 'vue'
 import { ToastDescription, ToastRoot, ToastTitle } from 'reka-ui'
-import type { ToastEmits, ToastProps, ToastSlots } from '.'
+import { toastVariants, type ToastEmits, type ToastProps, type ToastSlots } from '.'
+import { useTheme } from '@/composables'
+import { cn } from '@/lib/utils'
 import { toastDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
@@ -12,9 +14,16 @@ const emit = defineEmits<ToastEmits>()
 const open = defineModel<boolean>('open')
 const attrs = useAttrs()
 const slots = useSlots()
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'toast',
+  defaultColor: toastDefaults.color,
+})
 
 const rootProps = computed(() => ({
   ...attrs,
+  class: cn(toastVariants({ variant: props.variant }), attrs.class),
+  style: [colorStyle.value, attrs.style],
   as: 'div',
   asChild: false,
   duration: props.duration,
