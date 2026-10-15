@@ -35,18 +35,18 @@ export const stepperListVariants = cva('flex w-full', {
   defaultVariants: { orientation: stepperDefaults.orientation, size: stepperDefaults.size },
 })
 
-export const stepperItemVariants = cva(
-  'group flex items-center gap-2 data-[disabled]:pointer-events-none',
-  {
-    variants: {
-      orientation: {
-        vertical: 'relative flex w-full items-start gap-4 pb-(--stepper-spacing) last:pb-0',
-        horizontal: 'relative flex min-w-0 flex-1 basis-0 flex-col items-center justify-start',
-      },
+export type StepperState = 'active' | 'completed' | 'inactive'
+
+export const stepperItemVariants = cva('flex items-center gap-2', {
+  variants: {
+    orientation: {
+      vertical: 'relative flex w-full items-start gap-4 pb-(--stepper-spacing) last:pb-0',
+      horizontal: 'relative flex min-w-0 flex-1 basis-0 flex-col items-center justify-start',
     },
-    defaultVariants: { orientation: stepperDefaults.orientation },
+    disabled: { true: 'pointer-events-none', false: '' },
   },
-)
+  defaultVariants: { orientation: stepperDefaults.orientation, disabled: false },
+})
 
 export const stepperTriggerVariants = cva(
   'group/stepper-trigger flex min-w-0 flex-col items-center gap-1 rounded-md p-1 text-center z-10 outline-none',
@@ -62,7 +62,7 @@ export const stepperTriggerVariants = cva(
 )
 
 export const stepperIndicatorVariants = cva(
-  'inline-flex size-(--stepper-indicator-size) shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors group-focus-visible/stepper-trigger:ring-3 group-data-[state=active]:bg-primary group-data-[state=active]:text-primary-foreground group-data-[state=completed]:bg-primary group-data-[state=completed]:text-primary-foreground group-data-[disabled]:opacity-50',
+  'inline-flex size-(--stepper-indicator-size) shrink-0 items-center justify-center rounded-full transition-colors group-focus-visible/stepper-trigger:ring-3 group-focus-visible/stepper-trigger:ring-(--stepper-color)/50',
   {
     variants: {
       size: {
@@ -72,12 +72,14 @@ export const stepperIndicatorVariants = cva(
         lg: 'text-xl',
         xl: 'text-2xl',
       } satisfies Record<StepperSize, string>,
-      customColor: {
-        true: 'group-focus-visible/stepper-trigger:ring-(--stepper-color)/50 group-data-[state=active]:bg-(--stepper-color) group-data-[state=active]:text-(--stepper-color-foreground) group-data-[state=completed]:bg-(--stepper-color) group-data-[state=completed]:text-(--stepper-color-foreground)',
-        false: 'group-focus-visible/stepper-trigger:ring-primary/50',
-      },
+      state: {
+        active: 'bg-(--stepper-color) text-(--stepper-color-foreground)',
+        completed: 'bg-(--stepper-color) text-(--stepper-color-foreground)',
+        inactive: 'bg-muted text-muted-foreground',
+      } satisfies Record<StepperState, string>,
+      disabled: { true: 'opacity-50', false: '' },
     },
-    defaultVariants: { customColor: true, size: stepperDefaults.size },
+    defaultVariants: { size: stepperDefaults.size, state: 'inactive', disabled: false },
   },
 )
 
@@ -120,18 +122,23 @@ export const stepperDescriptionVariants = cva('text-muted-foreground', {
 })
 
 export const stepperSeparatorVariants = cva(
-  'bg-muted transition-colors group-data-[disabled]:bg-muted group-data-[disabled]:opacity-50 group-data-[state=completed]:bg-primary',
+  'transition-colors',
   {
     variants: {
+      state: {
+        active: 'bg-muted',
+        completed: 'bg-(--stepper-color)',
+        inactive: 'bg-muted',
+      } satisfies Record<StepperState, string>,
+      disabled: { true: 'bg-muted opacity-50', false: '' },
       orientation: {
         vertical:
           'absolute top-(--stepper-indicator-size) left-[calc(var(--stepper-indicator-size)/2)] -bottom-[calc(var(--stepper-indicator-size)/2)] w-0.5 -translate-x-1/2 rounded-full',
         horizontal:
           'absolute top-[calc(var(--stepper-indicator-size)/2+var(--spacing))] right-[calc(-50%-var(--stepper-list-gap)+var(--stepper-indicator-size)/2)] left-[calc(50%+var(--stepper-indicator-size)/2)] h-0.5 shrink-0 -translate-y-1/2 rounded-full',
       },
-      customColor: { true: 'group-data-[state=completed]:bg-(--stepper-color)', false: '' },
     },
-    defaultVariants: { orientation: stepperDefaults.orientation, customColor: true },
+    defaultVariants: { orientation: stepperDefaults.orientation, state: 'inactive', disabled: false },
   },
 )
 

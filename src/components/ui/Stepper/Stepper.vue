@@ -33,6 +33,7 @@ import type {
   StepperItemContext,
   StepperProps,
   StepperSlots,
+  StepperState,
 } from '.'
 
 defineOptions({ inheritAttrs: false })
@@ -182,15 +183,26 @@ function getSlotNames(context: StepperItemContext) {
   } as const
 }
 
+function getState(context: StepperItemContext): StepperState {
+  if (context.completed) return 'completed'
+  if (context.active) return 'active'
+  return 'inactive'
+}
+
+function isDisabled(context: StepperItemContext) {
+  return Boolean(props.disabled || context.item.disabled)
+}
+
 function getItemProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.item, context)
+  const disabled = isDisabled(context)
   return {
     ...ui,
     step: context.item.value,
-    disabled: props.disabled || context.item.disabled,
+    disabled,
     'data-slot': 'stepper-item',
     'data-test-stepper-item': context.item.slot ?? context.item.value,
-    class: cn(stepperItemVariants({ orientation: props.orientation }), ui.class),
+    class: cn(stepperItemVariants({ orientation: props.orientation, disabled }), ui.class),
     style: ui.style,
   }
 }
@@ -213,7 +225,11 @@ function getIndicatorProps(context: StepperItemContext) {
     'data-slot': 'stepper-indicator',
     'data-test-stepper-indicator': context.item.slot ?? context.item.value,
     class: cn(
-      stepperIndicatorVariants({ customColor: Boolean(props.color), size: props.size }),
+      stepperIndicatorVariants({
+        size: props.size,
+        state: getState(context),
+        disabled: isDisabled(context),
+      }),
       ui.class,
     ),
     style: ui.style,
@@ -265,7 +281,8 @@ function getSeparatorProps(context: StepperItemContext) {
     class: cn(
       stepperSeparatorVariants({
         orientation: props.orientation,
-        customColor: Boolean(props.color),
+        state: getState(context),
+        disabled: isDisabled(context),
       }),
       ui.class,
     ),
