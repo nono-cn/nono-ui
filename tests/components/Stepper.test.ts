@@ -4,6 +4,8 @@ import { StepperItem, StepperRoot } from 'reka-ui'
 
 import {
   Stepper,
+  type StepperContext,
+  type StepperItemContext,
   type StepperProps,
   type StepperSize,
   type StepperState,
@@ -226,8 +228,187 @@ const casesUpdateModelValue = [
 //   expected: { icon: string | undefined; text: string }
 // }>
 
+const contextFunctions = {
+  goToStep: expect.any(Function),
+  nextStep: expect.any(Function),
+  prevStep: expect.any(Function),
+  hasNext: expect.any(Function),
+  hasPrev: expect.any(Function),
+}
+
+const casesStepperContext = [
+  {
+    name: 'primer step',
+    input: { modelValue: 1 },
+    expected: {
+      modelValue: 1,
+      totalSteps: 3,
+      isNextDisabled: false,
+      isPrevDisabled: true,
+      isFirstStep: true,
+      isLastStep: false,
+    },
+  },
+  {
+    name: 'step intermedio',
+    input: { modelValue: 2 },
+    expected: {
+      modelValue: 2,
+      totalSteps: 3,
+      isNextDisabled: false,
+      isPrevDisabled: false,
+      isFirstStep: false,
+      isLastStep: false,
+    },
+  },
+  {
+    name: 'último step',
+    input: { modelValue: 3 },
+    expected: {
+      modelValue: 3,
+      totalSteps: 3,
+      isNextDisabled: true,
+      isPrevDisabled: false,
+      isFirstStep: false,
+      isLastStep: true,
+    },
+  },
+  {
+    name: 'sin modelValue',
+    input: { modelValue: undefined },
+    expected: {
+      modelValue: 1,
+      totalSteps: 3,
+      isNextDisabled: false,
+      isPrevDisabled: true,
+      isFirstStep: true,
+      isLastStep: false,
+    },
+  },
+  {
+    name: 'modelValue inexistente',
+    input: { modelValue: 99 },
+    expected: {
+      modelValue: 99,
+      totalSteps: 3,
+      isNextDisabled: true,
+      isPrevDisabled: true,
+      isFirstStep: false,
+      isLastStep: false,
+    },
+  },
+  {
+    name: 'stepper deshabilitado',
+    input: { modelValue: 2, disabled: true },
+    expected: {
+      modelValue: 2,
+      totalSteps: 3,
+      isNextDisabled: true,
+      isPrevDisabled: true,
+      isFirstStep: false,
+      isLastStep: false,
+    },
+  },
+  {
+    name: 'steps vecinos deshabilitados',
+    input: {
+      modelValue: 2,
+      steps: [{ ...steps[0]!, disabled: true }, steps[1]!, { ...steps[2]!, disabled: true }],
+    },
+    expected: {
+      modelValue: 2,
+      totalSteps: 3,
+      isNextDisabled: true,
+      isPrevDisabled: true,
+      isFirstStep: false,
+      isLastStep: false,
+    },
+  },
+] satisfies Array<{
+  name: string
+  input: Partial<StepperProps>
+  expected: Omit<StepperContext, keyof typeof contextFunctions>
+}>
+
+// con modelValue=2: step 1 completado, step 2 activo, step 3 inactivo
+const casesStepperItemContext = [
+  {
+    name: 'completado',
+    input: 1,
+    expected: {
+      item: steps[0]!,
+      index: 0,
+      completed: true,
+      active: false,
+      first: true,
+      last: false,
+    },
+  },
+  {
+    name: 'activo',
+    input: 2,
+    expected: {
+      item: steps[1]!,
+      index: 1,
+      completed: false,
+      active: true,
+      first: false,
+      last: false,
+    },
+  },
+  {
+    name: 'inactivo',
+    input: 3,
+    expected: {
+      item: steps[2]!,
+      index: 2,
+      completed: false,
+      active: false,
+      first: false,
+      last: true,
+    },
+  },
+] satisfies Array<{
+  name: string
+  input: number
+  expected: Omit<StepperItemContext, keyof StepperContext>
+}>
+
+// contexto del step 2 activo, usado para comprobar que llega a cada ui y slot
+const expectedStepperItemContext: StepperItemContext = {
+  ...casesStepperContext[1]!.expected,
+  ...contextFunctions,
+  ...casesStepperItemContext[1]!.expected,
+}
+
+const casesUiItemContext = [
+  'item',
+  'trigger',
+  'indicator',
+  'wrapper',
+  'label',
+  'description',
+  'separator',
+  'content',
+] satisfies Array<Exclude<keyof NonNullable<StepperProps['ui']>, 'list'>>
+
+const casesSlotItemContext = [
+  'indicator',
+  'label',
+  'description',
+  'content',
+  'indicator-2',
+  'label-2',
+  'description-2',
+  'content-2',
+]
+
 function mountStepper(options: MountingOptions<StepperProps> = {}) {
   return mount(Stepper, { ...options, props: { steps, ...options.props } })
+}
+
+function findItemContext(contexts: StepperItemContext[], value: number) {
+  return contexts.find((context) => context.item.value === value)
 }
 
 describe('Stepper', () => {
@@ -800,6 +981,92 @@ describe('Stepper', () => {
             .get('[data-test-stepper-content="1"]')
             .classes(),
         ).toContain('mt-(--stepper-spacing)')
+      })
+    })
+  })
+
+  describe('context', () => {
+    describe('StepperContext', () => {
+      it.each(casesStepperContext)(
+        'cumple el contrato de StepperContext en el caso $name',
+        ({ input, expected }) => {
+          let context: StepperContext | undefined
+          mountStepper({
+            props: {
+              ...input,
+              ui: {
+                list: (value) => {
+                  context = value
+                  return {}
+                },
+              },
+            },
+          })
+
+          expect(context).toEqual({ ...expected, ...contextFunctions })
+        },
+      )
+    })
+
+    describe('StepperItemContext', () => {
+      it.each(casesStepperItemContext)(
+        'cumple el contrato de StepperItemContext en el step $input ($name)',
+        ({ input, expected }) => {
+          const contexts: StepperItemContext[] = []
+          mountStepper({
+            props: {
+              modelValue: 2,
+              ui: {
+                item: (value) => {
+                  contexts.push(value)
+                  return {}
+                },
+              },
+            },
+          })
+
+          expect(findItemContext(contexts, input)).toEqual({
+            ...casesStepperContext[1]!.expected,
+            ...contextFunctions,
+            ...expected,
+          })
+        },
+      )
+
+      it.each(casesUiItemContext)('pasa StepperItemContext a ui.%s', (key) => {
+        const contexts: StepperItemContext[] = []
+        mountStepper({
+          props: {
+            modelValue: 2,
+            ui: {
+              [key]: (value: StepperItemContext) => {
+                contexts.push(value)
+                return {}
+              },
+            },
+          },
+          slots: { content: 'Contenido' },
+        })
+
+        expect(findItemContext(contexts, 2)).toEqual(expectedStepperItemContext)
+      })
+
+      it.each(casesSlotItemContext)('pasa StepperItemContext al slot %s', (name) => {
+        const contexts: StepperItemContext[] = []
+        mountStepper({
+          props: { modelValue: 2 },
+          slots: {
+            // Vue añade ref_for a los slots dentro de un v-for; no es parte del contexto
+            [name]: (slotProps: StepperItemContext & { ref_for?: boolean }) => {
+              const { ref_for: _refFor, ...value } = slotProps
+              void _refFor
+              contexts.push(value)
+              return 'Slot'
+            },
+          },
+        })
+
+        expect(findItemContext(contexts, 2)).toEqual(expectedStepperItemContext)
       })
     })
   })
