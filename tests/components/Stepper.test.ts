@@ -190,6 +190,12 @@ const casesModelValue = [
   expected: { value: number; content: boolean[] }
 }>
 
+const casesUpdateModelValue = [
+  { input: 1, expected: 2 },
+  { input: 3, expected: 1 },
+  { input: undefined, expected: 3 },
+] satisfies Array<{ input: StepperProps['modelValue']; expected: number }>
+
 function mountStepper(options: MountingOptions<StepperProps> = {}) {
   return mount(Stepper, { ...options, props: { steps, ...options.props } })
 }
@@ -335,7 +341,95 @@ describe('Stepper', () => {
             )
           })
         },
-      )    })
+      )
+    })
+
+    describe('ui', () => {
+      describe('list', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.list',
+          id: '[data-test-stepper-list]',
+          mount: (attrs) => mountStepper({ props: { ui: { list: () => attrs } } }),
+        })
+      })
+
+      describe('item', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.item',
+          id: '[data-test-stepper-item="1"]',
+          mount: (attrs) =>
+            mountStepper({ props: { steps: [steps[0]!], ui: { item: () => attrs } } }),
+        })
+      })
+
+      describe('trigger', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.trigger',
+          id: '[data-test-stepper-trigger="1"]',
+          mount: (attrs) =>
+            mountStepper({ props: { steps: [steps[0]!], ui: { trigger: () => attrs } } }),
+        })
+      })
+
+      describe('indicator', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.indicator',
+          id: '[data-test-stepper-indicator="1"]',
+          mount: (attrs) =>
+            mountStepper({ props: { steps: [steps[0]!], ui: { indicator: () => attrs } } }),
+        })
+      })
+
+      describe('wrapper', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.wrapper',
+          id: '[data-test-stepper-wrapper="1"]',
+          mount: (attrs) =>
+            mountStepper({ props: { steps: [steps[0]!], ui: { wrapper: () => attrs } } }),
+        })
+      })
+
+      describe('label', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.label',
+          id: '[data-test-stepper-title="1"]',
+          mount: (attrs) =>
+            mountStepper({ props: { steps: [steps[0]!], ui: { label: () => attrs } } }),
+        })
+      })
+
+      describe('description', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.description',
+          id: '[data-test-stepper-description="1"]',
+          mount: (attrs) =>
+            mountStepper({ props: { steps: [steps[0]!], ui: { description: () => attrs } } }),
+        })
+      })
+
+      describe('separator', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.separator',
+          id: '[data-test-stepper-separator="1"]',
+          mount: (attrs) =>
+            mountStepper({
+              props: { steps: [steps[0]!, steps[1]!], ui: { separator: () => attrs } },
+            }),
+        })
+      })
+
+      describe('content', () => {
+        testAttrs({
+          text: 'renderiza los atributos de ui.content',
+          id: '[data-test-stepper-content="1"]',
+          mount: (attrs) =>
+            mountStepper({
+              props: { steps: [steps[0]!], ui: { content: () => attrs } },
+              slots: { content: 'Contenido' },
+            }),
+        })
+      })
+    })
 
     describe('disabled', () => {
       it.each(casesDisabled)(
@@ -389,6 +483,21 @@ describe('Stepper', () => {
       text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
       id: '[data-test-stepper-root]',
       mount: (attrs) => mountStepper({ attrs }),
+    })
+  })
+
+  describe('emits', () => {
+    describe('update:modelValue', () => {
+      it.each(casesUpdateModelValue)(
+        'reemite $expected cuando StepperRoot cambia modelValue=$input',
+        ({ input, expected }) => {
+          const stepper = mountStepper({ props: { modelValue: input } })
+
+          stepper.getComponent(StepperRoot).vm.$emit('update:modelValue', expected)
+
+          expect(stepper.emitted('update:modelValue')).toEqual([[expected]])
+        },
+      )
     })
   })
 })
