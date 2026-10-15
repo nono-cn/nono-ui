@@ -179,6 +179,17 @@ const casesDisabled = [
   { input: undefined, expected: false },
 ] satisfies Array<{ input: StepperProps['disabled']; expected: boolean }>
 
+const casesModelValue = [
+  { input: undefined, expected: { value: 1, content: [true, false, false] } },
+  { input: 1, expected: { value: 1, content: [true, false, false] } },
+  { input: 2, expected: { value: 2, content: [false, true, false] } },
+  { input: 3, expected: { value: 3, content: [false, false, true] } },
+  { input: 99, expected: { value: 99, content: [false, false, false] } },
+] satisfies Array<{
+  input: StepperProps['modelValue']
+  expected: { value: number; content: boolean[] }
+}>
+
 function mountStepper(options: MountingOptions<StepperProps> = {}) {
   return mount(Stepper, { ...options, props: { steps, ...options.props } })
 }
@@ -299,6 +310,32 @@ describe('Stepper', () => {
         },
       )
     })
+
+    describe('modelValue', () => {
+      it.each(casesModelValue)(
+        'pasa modelValue=$input a StepperRoot como $expected.value',
+        ({ input, expected }) => {
+          const stepper = mountStepper({ props: { modelValue: input } })
+
+          expect(stepper.getComponent(StepperRoot).props('modelValue')).toBe(expected.value)
+        },
+      )
+
+      it.each(casesModelValue)(
+        'muestra solo el contenido del step activo con modelValue=$input',
+        ({ input, expected }) => {
+          const stepper = mountStepper({
+            props: { modelValue: input },
+            slots: { content: 'Contenido' },
+          })
+
+          steps.forEach(({ value }, index) => {
+            expect(stepper.find(`[data-test-stepper-content="${value}"]`).exists()).toBe(
+              expected.content[index],
+            )
+          })
+        },
+      )    })
 
     describe('disabled', () => {
       it.each(casesDisabled)(
