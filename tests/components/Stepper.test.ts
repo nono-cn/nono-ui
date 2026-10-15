@@ -241,7 +241,7 @@ describe('Stepper', () => {
         expect(stepper.get('[data-test-stepper-indicator="1"]').classes()).toContain(
           expected.indicator,
         )
-        expect(stepper.get('[data-test-stepper-title="1"]').classes()).toContain(expected.label)
+        expect(stepper.get('[data-test-stepper-label="1"]').classes()).toContain(expected.label)
         expect(stepper.get('[data-test-stepper-description="1"]').classes()).toContain(
           expected.description,
         )
@@ -289,7 +289,7 @@ describe('Stepper', () => {
             stepper.get('[data-test-stepper-wrapper="1"]').classes().includes('items-center'),
           ).toBe(expected.centered)
           expect(
-            stepper.get('[data-test-stepper-title="1"]').classes().includes('text-center'),
+            stepper.get('[data-test-stepper-label="1"]').classes().includes('text-center'),
           ).toBe(expected.centered)
           expect(
             stepper.get('[data-test-stepper-description="1"]').classes().includes('text-center'),
@@ -393,7 +393,7 @@ describe('Stepper', () => {
     //     'renderiza label=$input.label y description=$input.description',
     //     ({ input, expected }) => {
     //       const stepper = mountStepper({ props: { steps: [input] } })
-    //       const label = stepper.find('[data-test-stepper-title="1"]')
+    //       const label = stepper.find('[data-test-stepper-label="1"]')
     //       const description = stepper.find('[data-test-stepper-description="1"]')
 
     //       expect(stepper.find('[data-test-stepper-wrapper="1"]').exists()).toBe(expected.wrapper)
@@ -483,7 +483,7 @@ describe('Stepper', () => {
       describe('label', () => {
         testAttrs({
           text: 'renderiza los atributos de ui.label',
-          id: '[data-test-stepper-title="1"]',
+          id: '[data-test-stepper-label="1"]',
           mount: (attrs) =>
             mountStepper({ props: { steps: [steps[0]!], ui: { label: () => attrs } } }),
         })
@@ -613,7 +613,7 @@ describe('Stepper', () => {
         const stepper = mountStepper({ slots: { label: 'Slot' } })
 
         steps.forEach(({ value }) => {
-          expect(stepper.get(`[data-test-stepper-title="${value}"]`).text()).toBe('Slot')
+          expect(stepper.get(`[data-test-stepper-label="${value}"]`).text()).toBe('Slot')
         })
       })
 
@@ -623,15 +623,15 @@ describe('Stepper', () => {
           slots: { label: 'Slot' },
         })
 
-        expect(stepper.get('[data-test-stepper-title="1"]').text()).toBe('Slot')
+        expect(stepper.get('[data-test-stepper-label="1"]').text()).toBe('Slot')
       })
 
       it('renderiza label-{step} solo en su step con prioridad sobre label', () => {
         const stepper = mountStepper({ slots: { label: 'General', 'label-2': 'Step 2' } })
 
-        expect(stepper.get('[data-test-stepper-title="1"]').text()).toBe('General')
-        expect(stepper.get('[data-test-stepper-title="2"]').text()).toBe('Step 2')
-        expect(stepper.get('[data-test-stepper-title="3"]').text()).toBe('General')
+        expect(stepper.get('[data-test-stepper-label="1"]').text()).toBe('General')
+        expect(stepper.get('[data-test-stepper-label="2"]').text()).toBe('Step 2')
+        expect(stepper.get('[data-test-stepper-label="3"]').text()).toBe('General')
       })
     })
 
@@ -694,6 +694,112 @@ describe('Stepper', () => {
         })
 
         expect(stepper.find('[data-test-stepper-content]').exists()).toBe(false)
+      })
+    })
+  })
+
+  describe('variantsCss', () => {
+    describe('stepperVariants', () => {
+      it('aplica las clases base a la raíz', () => {
+        expect(mountStepper().get('[data-test-stepper-root]').classes()).toEqual(
+          expect.arrayContaining(['block', 'w-full']),
+        )
+      })
+    })
+
+    describe('stepperListVariants', () => {
+      it('aplica las clases base a la lista', () => {
+        expect(mountStepper().get('[data-test-stepper-list]').classes()).toEqual(
+          expect.arrayContaining(['flex', 'w-full']),
+        )
+      })
+    })
+
+    describe('stepperItemVariants', () => {
+      it('aplica las clases base al item', () => {
+        expect(mountStepper().get('[data-test-stepper-item="1"]').classes()).toEqual(
+          expect.arrayContaining(['flex', 'items-center', 'gap-2']),
+        )
+      })
+    })
+
+    describe('stepperTriggerVariants', () => {
+      it('aplica las clases base al trigger', () => {
+        expect(mountStepper().get('[data-test-stepper-trigger="1"]').classes()).toEqual(
+          expect.arrayContaining([
+            'group/stepper-trigger',
+            'flex',
+            'min-w-0',
+            'flex-col',
+            'items-center',
+            'gap-1',
+            'rounded-md',
+            'p-1',
+            'text-center',
+            'z-10',
+            'outline-none',
+          ]),
+        )
+      })
+    })
+
+    describe('stepperIndicatorVariants', () => {
+      it('aplica las clases base al indicador', () => {
+        expect(mountStepper().get('[data-test-stepper-indicator="1"]').classes()).toEqual(
+          expect.arrayContaining([
+            'inline-flex',
+            'size-(--stepper-indicator-size)',
+            'shrink-0',
+            'items-center',
+            'justify-center',
+            'rounded-full',
+            'transition-colors',
+            'group-focus-visible/stepper-trigger:ring-3',
+            'group-focus-visible/stepper-trigger:ring-(--stepper-color)/50',
+          ]),
+        )
+      })
+    })
+
+    describe('stepperWrapperVariants', () => {
+      it('aplica las clases base al wrapper', () => {
+        expect(mountStepper().get('[data-test-stepper-wrapper="1"]').classes()).toEqual(
+          expect.arrayContaining(['flex', 'min-w-0', 'flex-1', 'flex-col']),
+        )
+      })
+    })
+
+    describe('stepperLabelVariants', () => {
+      it('aplica las clases base al label', () => {
+        expect(mountStepper().get('[data-test-stepper-label="1"]').classes()).toContain(
+          'font-semibold',
+        )
+      })
+    })
+
+    describe('stepperDescriptionVariants', () => {
+      it('aplica las clases base a la descripción', () => {
+        expect(mountStepper().get('[data-test-stepper-description="1"]').classes()).toContain(
+          'text-muted-foreground',
+        )
+      })
+    })
+
+    describe('stepperSeparatorVariants', () => {
+      it('aplica las clases base al separador', () => {
+        expect(mountStepper().get('[data-test-stepper-separator="1"]').classes()).toContain(
+          'transition-colors',
+        )
+      })
+    })
+
+    describe('stepperContentVariants', () => {
+      it('aplica las clases base al contenido', () => {
+        expect(
+          mountStepper({ slots: { content: 'Contenido' } })
+            .get('[data-test-stepper-content="1"]')
+            .classes(),
+        ).toContain('mt-(--stepper-spacing)')
       })
     })
   })

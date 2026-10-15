@@ -121,26 +121,23 @@ export const stepperDescriptionVariants = cva('text-muted-foreground', {
   defaultVariants: { orientation: stepperDefaults.orientation, size: stepperDefaults.size },
 })
 
-export const stepperSeparatorVariants = cva(
-  'transition-colors',
-  {
-    variants: {
-      state: {
-        active: 'bg-muted',
-        completed: 'bg-(--stepper-color)',
-        inactive: 'bg-muted',
-      } satisfies Record<StepperState, string>,
-      disabled: { true: 'opacity-50', false: '' },
-      orientation: {
-        vertical:
-          'absolute top-(--stepper-indicator-size) left-[calc(var(--stepper-indicator-size)/2)] -bottom-[calc(var(--stepper-indicator-size)/2)] w-0.5 -translate-x-1/2 rounded-full',
-        horizontal:
-          'absolute top-[calc(var(--stepper-indicator-size)/2+var(--spacing))] right-[calc(-50%-var(--stepper-list-gap)+var(--stepper-indicator-size)/2)] left-[calc(50%+var(--stepper-indicator-size)/2)] h-0.5 shrink-0 -translate-y-1/2 rounded-full',
-      },
+export const stepperSeparatorVariants = cva('absolute rounded-full transition-colors', {
+  variants: {
+    state: {
+      active: 'bg-muted',
+      completed: 'bg-(--stepper-color)',
+      inactive: 'bg-muted',
+    } satisfies Record<StepperState, string>,
+    disabled: { true: 'opacity-50', false: '' },
+    orientation: {
+      vertical:
+        'top-(--stepper-indicator-size) left-[calc(var(--stepper-indicator-size)/2)] -bottom-[calc(var(--stepper-indicator-size)/2)] w-0.5 -translate-x-1/2',
+      horizontal:
+        'top-[calc(var(--stepper-indicator-size)/2+var(--spacing))] right-[calc(-50%-var(--stepper-list-gap)+var(--stepper-indicator-size)/2)] left-[calc(50%+var(--stepper-indicator-size)/2)] h-0.5 shrink-0 -translate-y-1/2',
     },
-    defaultVariants: { orientation: stepperDefaults.orientation, state: 'inactive', disabled: false },
   },
-)
+  defaultVariants: { orientation: stepperDefaults.orientation, state: 'inactive', disabled: false },
+})
 
 export const stepperContentVariants = cva('mt-(--stepper-spacing)', {
   variants: {

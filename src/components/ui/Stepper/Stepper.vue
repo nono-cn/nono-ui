@@ -245,7 +245,7 @@ function getLabelProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.label, context)
   return {
     ...ui,
-    'data-test-stepper-title': context.item.slot ?? context.item.value,
+    'data-test-stepper-label': context.item.slot ?? context.item.value,
     class: cn(stepperLabelVariants({ orientation: props.orientation, size: props.size }), ui.class),
     style: ui.style,
   }
