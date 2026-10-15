@@ -34,6 +34,7 @@ import masonry from './components/masonry'
 import progress from './components/progress'
 import rating from './components/rating'
 import separator from './components/separator'
+import stepper from './components/stepper'
 import switchConfig from './components/switch'
 import tabsConfig from './components/tabs'
 import textarea from './components/textarea'
@@ -80,6 +81,7 @@ export const docsComponents = [
   progress,
   rating,
   separator,
+  stepper,
   switchConfig,
   tabsConfig,
   textarea,
