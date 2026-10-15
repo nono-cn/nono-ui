@@ -21,6 +21,9 @@ const steps: StepperStep[] = [
   { value: 3, label: 'Confirm', description: 'Review and confirm' },
 ]
 
+// el step 2 tiene slot para probar los slots propios del step
+const stepsWithSlot: StepperStep[] = [steps[0]!, { ...steps[1]!, slot: 'perfil' }, steps[2]!]
+
 const casesSize = [
   {
     input: 'xs',
@@ -397,10 +400,10 @@ const casesSlotItemContext = [
   'label',
   'description',
   'content',
-  'indicator-2',
-  'label-2',
-  'description-2',
-  'content-2',
+  'indicator-perfil',
+  'label-perfil',
+  'description-perfil',
+  'content-perfil',
 ]
 
 function mountStepper(options: MountingOptions<StepperProps> = {}) {
@@ -548,6 +551,60 @@ describe('Stepper', () => {
           })
         },
       )
+    })
+
+    describe('steps', () => {
+      describe('value', () => {
+        it('pasa value como step a cada StepperItem de Reka', () => {
+          const stepper = mountStepper()
+
+          expect(stepper.findAllComponents(StepperItem).map((item) => item.props('step'))).toEqual([
+            1, 2, 3,
+          ])
+        })
+      })
+
+      describe('label', () => {
+        it('renderiza step.label en el label de cada step', () => {
+          const stepper = mountStepper()
+
+          steps.forEach(({ value, label }) => {
+            expect(stepper.get(`[data-test-stepper-label="${value}"]`).text()).toBe(label)
+          })
+        })
+
+        it('no renderiza el label si el step no tiene label', () => {
+          const stepper = mountStepper({
+            props: { steps: [{ value: 1, description: 'Crea tu cuenta' }] },
+          })
+
+          expect(stepper.find('[data-test-stepper-label="1"]').exists()).toBe(false)
+        })
+      })
+
+      describe('description', () => {
+        it('renderiza step.description en la descripción de cada step', () => {
+          const stepper = mountStepper()
+
+          steps.forEach(({ value, description }) => {
+            expect(stepper.get(`[data-test-stepper-description="${value}"]`).text()).toBe(
+              description,
+            )
+          })
+        })
+
+        it('no renderiza la descripción si el step no tiene description', () => {
+          const stepper = mountStepper({ props: { steps: [{ value: 1, label: 'Cuenta' }] } })
+
+          expect(stepper.find('[data-test-stepper-description="1"]').exists()).toBe(false)
+        })
+      })
+
+      it('no renderiza el wrapper si el step no tiene label ni description', () => {
+        const stepper = mountStepper({ props: { steps: [{ value: 1 }] } })
+
+        expect(stepper.find('[data-test-stepper-wrapper="1"]').exists()).toBe(false)
+      })
     })
 
     // describe('steps', () => {
@@ -778,14 +835,21 @@ describe('Stepper', () => {
         expect(stepper.get('[data-test-stepper-indicator="1"]').text()).toBe('Slot')
       })
 
-      it('renderiza indicator-{step} solo en su step con prioridad sobre indicator', () => {
+      it('renderiza indicator-{step.slot} solo en su step con prioridad sobre indicator', () => {
         const stepper = mountStepper({
-          slots: { indicator: 'General', 'indicator-2': 'Step 2' },
+          props: { steps: stepsWithSlot },
+          slots: { indicator: 'General', 'indicator-perfil': 'Step 2' },
         })
 
         expect(stepper.get('[data-test-stepper-indicator="1"]').text()).toBe('General')
-        expect(stepper.get('[data-test-stepper-indicator="2"]').text()).toBe('Step 2')
+        expect(stepper.get('[data-test-stepper-indicator="perfil"]').text()).toBe('Step 2')
         expect(stepper.get('[data-test-stepper-indicator="3"]').text()).toBe('General')
+      })
+
+      it('no renderiza indicator-{value} si el step no tiene slot', () => {
+        const stepper = mountStepper({ slots: { 'indicator-2': 'Step 2' } })
+
+        expect(stepper.get('[data-test-stepper-indicator="2"]').text()).toBe('2')
       })
     })
 
@@ -807,12 +871,21 @@ describe('Stepper', () => {
         expect(stepper.get('[data-test-stepper-label="1"]').text()).toBe('Slot')
       })
 
-      it('renderiza label-{step} solo en su step con prioridad sobre label', () => {
-        const stepper = mountStepper({ slots: { label: 'General', 'label-2': 'Step 2' } })
+      it('renderiza label-{step.slot} solo en su step con prioridad sobre label', () => {
+        const stepper = mountStepper({
+          props: { steps: stepsWithSlot },
+          slots: { label: 'General', 'label-perfil': 'Step 2' },
+        })
 
         expect(stepper.get('[data-test-stepper-label="1"]').text()).toBe('General')
-        expect(stepper.get('[data-test-stepper-label="2"]').text()).toBe('Step 2')
+        expect(stepper.get('[data-test-stepper-label="perfil"]').text()).toBe('Step 2')
         expect(stepper.get('[data-test-stepper-label="3"]').text()).toBe('General')
+      })
+
+      it('no renderiza label-{value} si el step no tiene slot', () => {
+        const stepper = mountStepper({ slots: { 'label-2': 'Step 2' } })
+
+        expect(stepper.get('[data-test-stepper-label="2"]').text()).toBe(steps[1]!.label)
       })
     })
 
@@ -834,14 +907,23 @@ describe('Stepper', () => {
         expect(stepper.get('[data-test-stepper-description="1"]').text()).toBe('Slot')
       })
 
-      it('renderiza description-{step} solo en su step con prioridad sobre description', () => {
+      it('renderiza description-{step.slot} solo en su step con prioridad sobre description', () => {
         const stepper = mountStepper({
-          slots: { description: 'General', 'description-2': 'Step 2' },
+          props: { steps: stepsWithSlot },
+          slots: { description: 'General', 'description-perfil': 'Step 2' },
         })
 
         expect(stepper.get('[data-test-stepper-description="1"]').text()).toBe('General')
-        expect(stepper.get('[data-test-stepper-description="2"]').text()).toBe('Step 2')
+        expect(stepper.get('[data-test-stepper-description="perfil"]').text()).toBe('Step 2')
         expect(stepper.get('[data-test-stepper-description="3"]').text()).toBe('General')
+      })
+
+      it('no renderiza description-{value} si el step no tiene slot', () => {
+        const stepper = mountStepper({ slots: { 'description-2': 'Step 2' } })
+
+        expect(stepper.get('[data-test-stepper-description="2"]').text()).toBe(
+          steps[1]!.description,
+        )
       })
     })
 
@@ -859,18 +941,27 @@ describe('Stepper', () => {
         expect(stepper.get('[data-test-stepper-content="2"]').text()).toBe('Slot')
       })
 
-      it('renderiza content-{step} con prioridad sobre content', () => {
+      it('renderiza content-{step.slot} con prioridad sobre content', () => {
         const stepper = mountStepper({
-          props: { modelValue: 2 },
-          slots: { content: 'General', 'content-2': 'Step 2' },
+          props: { modelValue: 2, steps: stepsWithSlot },
+          slots: { content: 'General', 'content-perfil': 'Step 2' },
         })
 
-        expect(stepper.get('[data-test-stepper-content="2"]').text()).toBe('Step 2')
+        expect(stepper.get('[data-test-stepper-content="perfil"]').text()).toBe('Step 2')
       })
 
-      it('no renderiza content-{step} si su step no está activo', () => {
+      it('no renderiza content-{step.slot} si su step no está activo', () => {
         const stepper = mountStepper({
-          props: { modelValue: 1 },
+          props: { modelValue: 1, steps: stepsWithSlot },
+          slots: { 'content-perfil': 'Step 2' },
+        })
+
+        expect(stepper.find('[data-test-stepper-content]').exists()).toBe(false)
+      })
+
+      it('no renderiza content-{value} si el step no tiene slot', () => {
+        const stepper = mountStepper({
+          props: { modelValue: 2 },
           slots: { 'content-2': 'Step 2' },
         })
 
@@ -1054,7 +1145,7 @@ describe('Stepper', () => {
       it.each(casesSlotItemContext)('pasa StepperItemContext al slot %s', (name) => {
         const contexts: StepperItemContext[] = []
         mountStepper({
-          props: { modelValue: 2 },
+          props: { modelValue: 2, steps: stepsWithSlot },
           slots: {
             // Vue añade ref_for a los slots dentro de un v-for; no es parte del contexto
             [name]: (slotProps: StepperItemContext & { ref_for?: boolean }) => {
@@ -1066,7 +1157,10 @@ describe('Stepper', () => {
           },
         })
 
-        expect(findItemContext(contexts, 2)).toEqual(expectedStepperItemContext)
+        expect(findItemContext(contexts, 2)).toEqual({
+          ...expectedStepperItemContext,
+          item: stepsWithSlot[1],
+        })
       })
     })
   })

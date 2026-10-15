@@ -222,7 +222,7 @@ const config: ComponentDocConfig = {
         ...row(
           `${name}-{slot}`,
           'StepperItemContext',
-          `Step-specific ${name}; uses item.slot or item.value and takes precedence over the general slot.`,
+          `Step-specific ${name}; only available when the step defines item.slot and takes precedence over the general slot.`,
         ),
         typeLink: '#stepper-item-context',
       },
@@ -239,7 +239,7 @@ const config: ComponentDocConfig = {
           row(
             'slot',
             'string | number',
-            'Stable rendering key and suffix for step-specific slots; falls back to value.',
+            'Stable rendering key and suffix for step-specific slots. Without it, the step only uses the general slots.',
           ),
           row('label', 'string', 'Step title.'),
           row('description', 'string', 'Additional text below the title.'),

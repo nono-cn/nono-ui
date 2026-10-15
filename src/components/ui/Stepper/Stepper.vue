@@ -172,7 +172,15 @@ function getStepContext(
 }
 
 function getSlotNames(context: StepperItemContext) {
-  const slot = String(context.item.slot ?? context.item.value)
+  const slot = context.item.slot
+  if (slot === undefined) {
+    return {
+      indicator: 'indicator',
+      label: 'label',
+      description: 'description',
+      content: 'content',
+    } as const
+  }
   return {
     indicator: `indicator-${slot}`,
     label: `label-${slot}`,
