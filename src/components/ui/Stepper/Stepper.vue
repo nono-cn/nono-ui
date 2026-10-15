@@ -134,7 +134,6 @@ const rootProps = computed(() => {
   return {
     ...attrs,
     ...normalizeStepperRootProps(props),
-    'data-slot': 'stepper',
     'data-test-stepper-root': '',
     class: cn(stepperVariants({ size: props.size }), attrs.class),
     style: [colorStyle.value, attrs.style],
@@ -146,7 +145,6 @@ const listProps = computed(() => {
 
   return {
     ...listUI,
-    'data-slot': 'stepper-list',
     'data-test-stepper-list': '',
     class: cn(
       stepperListVariants({ orientation: props.orientation, size: props.size }),
@@ -200,7 +198,6 @@ function getItemProps(context: StepperItemContext) {
     ...ui,
     step: context.item.value,
     disabled,
-    'data-slot': 'stepper-item',
     'data-test-stepper-item': context.item.slot ?? context.item.value,
     class: cn(stepperItemVariants({ orientation: props.orientation, disabled }), ui.class),
     style: ui.style,
@@ -211,7 +208,6 @@ function getTriggerProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.trigger, context)
   return {
     ...ui,
-    'data-slot': 'stepper-trigger',
     'data-test-stepper-trigger': context.item.slot ?? context.item.value,
     class: cn(stepperTriggerVariants({ orientation: props.orientation }), ui.class),
     style: ui.style,
@@ -222,7 +218,6 @@ function getIndicatorProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.indicator, context)
   return {
     ...ui,
-    'data-slot': 'stepper-indicator',
     'data-test-stepper-indicator': context.item.slot ?? context.item.value,
     class: cn(
       stepperIndicatorVariants({
@@ -240,7 +235,6 @@ function getWrapperProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.wrapper, context)
   return {
     ...ui,
-    'data-slot': 'stepper-wrapper',
     'data-test-stepper-wrapper': context.item.slot ?? context.item.value,
     class: cn(stepperWrapperVariants({ orientation: props.orientation }), ui.class),
     style: ui.style,
@@ -251,7 +245,6 @@ function getLabelProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.label, context)
   return {
     ...ui,
-    'data-slot': 'stepper-title',
     'data-test-stepper-title': context.item.slot ?? context.item.value,
     class: cn(stepperLabelVariants({ orientation: props.orientation, size: props.size }), ui.class),
     style: ui.style,
@@ -262,7 +255,6 @@ function getDescriptionProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.description, context)
   return {
     ...ui,
-    'data-slot': 'stepper-description',
     'data-test-stepper-description': context.item.slot ?? context.item.value,
     class: cn(
       stepperDescriptionVariants({ orientation: props.orientation, size: props.size }),
@@ -276,7 +268,6 @@ function getSeparatorProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.separator, context)
   return {
     ...ui,
-    'data-slot': 'stepper-separator',
     'data-test-stepper-separator': context.item.slot ?? context.item.value,
     class: cn(
       stepperSeparatorVariants({
@@ -294,7 +285,6 @@ function getContentProps(context: StepperItemContext) {
   const ui = useUi(props.ui?.content, context)
   return {
     ...ui,
-    'data-slot': 'stepper-content',
     'data-test-stepper-content': context.item.slot ?? context.item.value,
     class: cn(stepperContentVariants({ orientation: props.orientation }), ui.class),
     style: ui.style,
@@ -351,7 +341,6 @@ const stepContexts = computed(() => props.steps.map(getStepContext))
                   v-if="context.item.icon"
                   :name="context.item.icon"
                   :size="props.size"
-                  data-slot="stepper-icon"
                   :data-test-stepper-icon="context.item.slot ?? context.item.value"
                 />
                 <span v-else>{{ context.item.value }}</span>

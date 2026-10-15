@@ -196,16 +196,41 @@ const casesUpdateModelValue = [
   { input: undefined, expected: 3 },
 ] satisfies Array<{ input: StepperProps['modelValue']; expected: number }>
 
+// const casesStepContent = [
+//   {
+//     input: { value: 1, label: 'Cuenta', description: 'Crea tu cuenta' },
+//     expected: { wrapper: true, label: 'Cuenta', description: 'Crea tu cuenta' },
+//   },
+//   {
+//     input: { value: 1, label: 'Cuenta' },
+//     expected: { wrapper: true, label: 'Cuenta', description: undefined },
+//   },
+//   {
+//     input: { value: 1, description: 'Crea tu cuenta' },
+//     expected: { wrapper: true, label: undefined, description: 'Crea tu cuenta' },
+//   },
+//   {
+//     input: { value: 1 },
+//     expected: { wrapper: false, label: undefined, description: undefined },
+//   },
+// ] satisfies Array<{
+//   input: StepperStep
+//   expected: { wrapper: boolean; label: string | undefined; description: string | undefined }
+// }>
+
+// const casesStepIcon = [
+//   { input: 'check' as const, expected: { icon: 'check', text: '' } },
+//   { input: undefined, expected: { icon: undefined, text: '1' } },
+// ] satisfies Array<{
+//   input: StepperStep['icon']
+//   expected: { icon: string | undefined; text: string }
+// }>
+
 function mountStepper(options: MountingOptions<StepperProps> = {}) {
   return mount(Stepper, { ...options, props: { steps, ...options.props } })
 }
 
 describe('Stepper', () => {
-  it('renderiza correctamente', () => {
-    const wrapper = mountStepper()
-    expect(wrapper.find('[data-test-stepper-root]').exists()).toBe(true)
-  })
-
   describe('props', () => {
     describe('size', () => {
       it.each(casesSize)('aplica las clases de size=$input a cada nodo', ({ input, expected }) => {
@@ -343,6 +368,72 @@ describe('Stepper', () => {
         },
       )
     })
+
+    // describe('steps', () => {
+    //   it('renderiza un item por cada step', () => {
+    //     const stepper = mountStepper()
+
+    //     expect(stepper.findAll('[data-test-stepper-item]')).toHaveLength(steps.length)
+    //   })
+
+    //   it('no renderiza items sin steps', () => {
+    //     const stepper = mountStepper({ props: { steps: [] } })
+
+    //     expect(stepper.findAll('[data-test-stepper-item]')).toHaveLength(0)
+    //   })
+
+    //   it('usa step.slot como identificador del nodo si existe', () => {
+    //     const stepper = mountStepper({ props: { steps: [{ value: 1, slot: 'cuenta' }] } })
+
+    //     expect(stepper.find('[data-test-stepper-item="cuenta"]').exists()).toBe(true)
+    //     expect(stepper.find('[data-test-stepper-item="1"]').exists()).toBe(false)
+    //   })
+
+    //   it.each(casesStepContent)(
+    //     'renderiza label=$input.label y description=$input.description',
+    //     ({ input, expected }) => {
+    //       const stepper = mountStepper({ props: { steps: [input] } })
+    //       const label = stepper.find('[data-test-stepper-title="1"]')
+    //       const description = stepper.find('[data-test-stepper-description="1"]')
+
+    //       expect(stepper.find('[data-test-stepper-wrapper="1"]').exists()).toBe(expected.wrapper)
+    //       expect(label.exists()).toBe(Boolean(expected.label))
+    //       if (expected.label) expect(label.text()).toBe(expected.label)
+    //       expect(description.exists()).toBe(Boolean(expected.description))
+    //       if (expected.description) expect(description.text()).toBe(expected.description)
+    //     },
+    //   )
+
+    //   it.each(casesStepIcon)(
+    //     'renderiza icon=$input o el número del step en el indicador',
+    //     ({ input, expected }) => {
+    //       const stepper = mountStepper({ props: { steps: [{ value: 1, icon: input }] } })
+    //       const icon = stepper.findComponent(Icon)
+
+    //       expect(icon.exists()).toBe(Boolean(expected.icon))
+    //       if (expected.icon) expect(icon.props('name')).toBe(expected.icon)
+    //       expect(stepper.get('[data-test-stepper-indicator="1"]').text()).toBe(expected.text)
+    //     },
+    //   )
+
+    //   it('deshabilita solo el step con disabled', () => {
+    //     const stepper = mountStepper({
+    //       props: { steps: [steps[0]!, { ...steps[1]!, disabled: true }, steps[2]!] },
+    //     })
+
+    //     expect(
+    //       stepper.findAllComponents(StepperItem).map((item) => item.props('disabled')),
+    //     ).toEqual([false, true, false])
+    //     steps.forEach(({ value }) => {
+    //       expect(
+    //         stepper
+    //           .get(`[data-test-stepper-indicator="${value}"]`)
+    //           .classes()
+    //           .includes('opacity-50'),
+    //       ).toBe(value === 2)
+    //     })
+    //   })
+    // })
 
     describe('ui', () => {
       describe('list', () => {
@@ -483,6 +574,127 @@ describe('Stepper', () => {
       text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
       id: '[data-test-stepper-root]',
       mount: (attrs) => mountStepper({ attrs }),
+    })
+  })
+
+  describe('slots', () => {
+    describe('indicator', () => {
+      it('renderiza el slot en todos los steps', () => {
+        const stepper = mountStepper({ slots: { indicator: 'Slot' } })
+
+        steps.forEach(({ value }) => {
+          expect(stepper.get(`[data-test-stepper-indicator="${value}"]`).text()).toBe('Slot')
+        })
+      })
+
+      it('oculta el icono del step', () => {
+        const stepper = mountStepper({
+          props: { steps: [{ value: 1, icon: 'check' }] },
+          slots: { indicator: 'Slot' },
+        })
+
+        expect(stepper.find('[data-test-stepper-icon="1"]').exists()).toBe(false)
+        expect(stepper.get('[data-test-stepper-indicator="1"]').text()).toBe('Slot')
+      })
+
+      it('renderiza indicator-{step} solo en su step con prioridad sobre indicator', () => {
+        const stepper = mountStepper({
+          slots: { indicator: 'General', 'indicator-2': 'Step 2' },
+        })
+
+        expect(stepper.get('[data-test-stepper-indicator="1"]').text()).toBe('General')
+        expect(stepper.get('[data-test-stepper-indicator="2"]').text()).toBe('Step 2')
+        expect(stepper.get('[data-test-stepper-indicator="3"]').text()).toBe('General')
+      })
+    })
+
+    describe('label', () => {
+      it('renderiza el slot en todos los steps y oculta step.label', () => {
+        const stepper = mountStepper({ slots: { label: 'Slot' } })
+
+        steps.forEach(({ value }) => {
+          expect(stepper.get(`[data-test-stepper-title="${value}"]`).text()).toBe('Slot')
+        })
+      })
+
+      it('renderiza el slot aunque el step no tenga label', () => {
+        const stepper = mountStepper({
+          props: { steps: [{ value: 1 }] },
+          slots: { label: 'Slot' },
+        })
+
+        expect(stepper.get('[data-test-stepper-title="1"]').text()).toBe('Slot')
+      })
+
+      it('renderiza label-{step} solo en su step con prioridad sobre label', () => {
+        const stepper = mountStepper({ slots: { label: 'General', 'label-2': 'Step 2' } })
+
+        expect(stepper.get('[data-test-stepper-title="1"]').text()).toBe('General')
+        expect(stepper.get('[data-test-stepper-title="2"]').text()).toBe('Step 2')
+        expect(stepper.get('[data-test-stepper-title="3"]').text()).toBe('General')
+      })
+    })
+
+    describe('description', () => {
+      it('renderiza el slot en todos los steps y oculta step.description', () => {
+        const stepper = mountStepper({ slots: { description: 'Slot' } })
+
+        steps.forEach(({ value }) => {
+          expect(stepper.get(`[data-test-stepper-description="${value}"]`).text()).toBe('Slot')
+        })
+      })
+
+      it('renderiza el slot aunque el step no tenga description', () => {
+        const stepper = mountStepper({
+          props: { steps: [{ value: 1 }] },
+          slots: { description: 'Slot' },
+        })
+
+        expect(stepper.get('[data-test-stepper-description="1"]').text()).toBe('Slot')
+      })
+
+      it('renderiza description-{step} solo en su step con prioridad sobre description', () => {
+        const stepper = mountStepper({
+          slots: { description: 'General', 'description-2': 'Step 2' },
+        })
+
+        expect(stepper.get('[data-test-stepper-description="1"]').text()).toBe('General')
+        expect(stepper.get('[data-test-stepper-description="2"]').text()).toBe('Step 2')
+        expect(stepper.get('[data-test-stepper-description="3"]').text()).toBe('General')
+      })
+    })
+
+    describe('content', () => {
+      it('no renderiza el contenido sin slot', () => {
+        const stepper = mountStepper()
+
+        expect(stepper.find('[data-test-stepper-content]').exists()).toBe(false)
+      })
+
+      it('renderiza el slot solo en el step activo', () => {
+        const stepper = mountStepper({ props: { modelValue: 2 }, slots: { content: 'Slot' } })
+
+        expect(stepper.findAll('[data-test-stepper-content]')).toHaveLength(1)
+        expect(stepper.get('[data-test-stepper-content="2"]').text()).toBe('Slot')
+      })
+
+      it('renderiza content-{step} con prioridad sobre content', () => {
+        const stepper = mountStepper({
+          props: { modelValue: 2 },
+          slots: { content: 'General', 'content-2': 'Step 2' },
+        })
+
+        expect(stepper.get('[data-test-stepper-content="2"]').text()).toBe('Step 2')
+      })
+
+      it('no renderiza content-{step} si su step no está activo', () => {
+        const stepper = mountStepper({
+          props: { modelValue: 1 },
+          slots: { 'content-2': 'Step 2' },
+        })
+
+        expect(stepper.find('[data-test-stepper-content]').exists()).toBe(false)
+      })
     })
   })
 
