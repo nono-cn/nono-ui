@@ -12,6 +12,7 @@ import {
   type StepperStep,
 } from '@/components/ui/Stepper'
 import { themeColors } from '@/components/ui/constants'
+import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 
@@ -23,6 +24,9 @@ const steps: StepperStep[] = [
 
 // el step 2 tiene slot para probar los slots propios del step
 const stepsWithSlot: StepperStep[] = [steps[0]!, { ...steps[1]!, slot: 'perfil' }, steps[2]!]
+
+// el step 2 está deshabilitado
+const stepsWithDisabled: StepperStep[] = [steps[0]!, { ...steps[1]!, disabled: true }, steps[2]!]
 
 const casesSize = [
   {
@@ -604,6 +608,57 @@ describe('Stepper', () => {
         const stepper = mountStepper({ props: { steps: [{ value: 1 }] } })
 
         expect(stepper.find('[data-test-stepper-wrapper="1"]').exists()).toBe(false)
+      })
+
+      describe('icon', () => {
+        it('renderiza step.icon en el indicador en lugar del número', () => {
+          const stepper = mountStepper({ props: { steps: [{ value: 1, icon: 'check' }] } })
+
+          expect(stepper.find('[data-test-stepper-icon="1"]').exists()).toBe(true)
+          expect(stepper.getComponent(Icon).props('name')).toBe('check')
+          expect(stepper.get('[data-test-stepper-indicator="1"]').text()).toBe('')
+        })
+
+        it('no renderiza el icono si el step no tiene icon', () => {
+          const stepper = mountStepper({ props: { steps: [{ value: 1 }] } })
+
+          expect(stepper.find('[data-test-stepper-icon="1"]').exists()).toBe(false)
+        })
+      })
+
+      describe('disabled', () => {
+        it('pasa step.disabled solo al StepperItem de Reka de ese step', () => {
+          const stepper = mountStepper({ props: { steps: stepsWithDisabled } })
+
+          expect(
+            stepper.findAllComponents(StepperItem).map((item) => item.props('disabled')),
+          ).toEqual([false, true, false])
+        })
+
+        it('aplica las clases de disabled solo a los nodos de ese step', () => {
+          const stepper = mountStepper({ props: { steps: stepsWithDisabled } })
+
+          steps.forEach(({ value }) => {
+            const disabled = value === 2
+
+            expect(
+              stepper
+                .get(`[data-test-stepper-item="${value}"]`)
+                .classes()
+                .includes('pointer-events-none'),
+            ).toBe(disabled)
+            expect(
+              stepper
+                .get(`[data-test-stepper-indicator="${value}"]`)
+                .classes()
+                .includes('opacity-50'),
+            ).toBe(disabled)
+          })
+          expect(stepper.get('[data-test-stepper-separator="1"]').classes()).not.toContain(
+            'opacity-50',
+          )
+          expect(stepper.get('[data-test-stepper-separator="2"]').classes()).toContain('opacity-50')
+        })
       })
     })
 
