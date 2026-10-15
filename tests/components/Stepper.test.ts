@@ -1,6 +1,6 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { StepperRoot } from 'reka-ui'
+import { StepperItem, StepperRoot } from 'reka-ui'
 
 import {
   Stepper,
@@ -173,6 +173,12 @@ const casesColorState = [
   expected: { indicator: string[]; separator: string | undefined }
 }>
 
+const casesDisabled = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: false },
+] satisfies Array<{ input: StepperProps['disabled']; expected: boolean }>
+
 function mountStepper(options: MountingOptions<StepperProps> = {}) {
   return mount(Stepper, { ...options, props: { steps, ...options.props } })
 }
@@ -217,9 +223,7 @@ describe('Stepper', () => {
         ({ input, expected }) => {
           const stepper = mountStepper({ props: { orientation: input } })
 
-          expect(stepper.getComponent(StepperRoot).props('orientation')).toBe(
-            expected.orientation,
-          )
+          expect(stepper.getComponent(StepperRoot).props('orientation')).toBe(expected.orientation)
         },
       )
 
@@ -294,6 +298,52 @@ describe('Stepper', () => {
           )
         },
       )
+    })
+
+    describe('disabled', () => {
+      it.each(casesDisabled)(
+        'pasa disabled=$input a todos los StepperItem como $expected',
+        ({ input, expected }) => {
+          const stepper = mountStepper({ props: { disabled: input } })
+
+          expect(
+            stepper.findAllComponents(StepperItem).map((item) => item.props('disabled')),
+          ).toEqual(steps.map(() => expected))
+        },
+      )
+
+      it.each(casesDisabled)(
+        'aplica las clases de disabled=$input a todos los steps como $expected',
+        ({ input, expected }) => {
+          const stepper = mountStepper({ props: { disabled: input } })
+
+          steps.forEach(({ value }) => {
+            expect(
+              stepper
+                .get(`[data-test-stepper-item="${value}"]`)
+                .classes()
+                .includes('pointer-events-none'),
+            ).toBe(expected)
+            expect(
+              stepper
+                .get(`[data-test-stepper-indicator="${value}"]`)
+                .classes()
+                .includes('opacity-50'),
+            ).toBe(expected)
+          })
+        },
+      )
+
+      it('mantiene el color del indicador y el separador completados con opacidad', () => {
+        const stepper = mountStepper({ props: { modelValue: 2, disabled: true } })
+
+        expect(stepper.get('[data-test-stepper-indicator="1"]').classes()).toEqual(
+          expect.arrayContaining(['bg-(--stepper-color)', 'opacity-50']),
+        )
+        expect(stepper.get('[data-test-stepper-separator="1"]').classes()).toEqual(
+          expect.arrayContaining(['bg-(--stepper-color)', 'opacity-50']),
+        )
+      })
     })
   })
 

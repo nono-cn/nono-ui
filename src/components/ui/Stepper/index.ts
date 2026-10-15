@@ -130,7 +130,7 @@ export const stepperSeparatorVariants = cva(
         completed: 'bg-(--stepper-color)',
         inactive: 'bg-muted',
       } satisfies Record<StepperState, string>,
-      disabled: { true: 'bg-muted opacity-50', false: '' },
+      disabled: { true: 'opacity-50', false: '' },
       orientation: {
         vertical:
           'absolute top-(--stepper-indicator-size) left-[calc(var(--stepper-indicator-size)/2)] -bottom-[calc(var(--stepper-indicator-size)/2)] w-0.5 -translate-x-1/2 rounded-full',
