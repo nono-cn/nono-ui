@@ -1,5 +1,5 @@
 import { h, nextTick } from 'vue'
-import { mount, type MountingOptions } from '@vue/test-utils'
+import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   HoverCardArrow,
@@ -26,7 +26,7 @@ afterEach(() => {
   document.body.innerHTML = ''
 })
 
-function mountHoverCard(options: MountingOptions<HoverCardProps> = {}) {
+function mountHoverCard(options: ComponentMountingOptions<typeof HoverCard> = {}) {
   const { slots, global, ...rest } = options
   return mount(HoverCard, {
     attachTo: document.body,

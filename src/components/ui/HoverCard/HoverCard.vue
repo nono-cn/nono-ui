@@ -15,6 +15,7 @@ import {
   hoverCardContentVariants,
   hoverCardRootVariants,
   type HoverCardArrowConfig,
+  type HoverCardContentConfig,
   type HoverCardContext,
   type HoverCardEmits,
   type HoverCardProps,
@@ -57,12 +58,12 @@ const triggerProps = {
   reference: undefined,
 }
 
-const contentProps = useContent(
-  computed(() => props.content),
-  {
-    class: hoverCardContentVariants(),
-  },
-)
+const contentConfig = computed<HoverCardContentConfig>(() => ({
+  ...props.content,
+  class: cn(hoverCardContentVariants(), props.content?.class),
+}))
+
+const contentProps = useContent(contentConfig)
 
 const portalProps = computed(() => ({
   to: portalTarget.value,

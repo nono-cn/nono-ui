@@ -1,11 +1,13 @@
-import { ref } from 'vue'
+import { shallowRef, type StyleValue } from 'vue'
 import { describe, expect, it } from 'vitest'
-import type { PopoverArrowConfig } from '@/components/ui/Popover'
 import { useArrow } from '@/composables/useArrow'
+
+// cualquier config de flecha: class y style más atributos y props de reka
+type ArrowConfig = { class?: string; style?: StyleValue; [key: string]: unknown }
 
 describe('useArrow', () => {
   it('aplica los valores por defecto', () => {
-    const arrow = useArrow(ref<PopoverArrowConfig | undefined>(undefined))
+    const arrow = useArrow(shallowRef<ArrowConfig | undefined>(undefined))
 
     expect(arrow.value).toMatchObject({ width: 10, height: 5, rounded: false })
     expect(arrow.value.class).toBe('')
@@ -13,11 +15,10 @@ describe('useArrow', () => {
 
   it('conserva las props, atributos y estilos configurados', () => {
     const arrow = useArrow(
-      ref<PopoverArrowConfig>({
+      shallowRef<ArrowConfig>({
         width: 12,
         height: 8,
         rounded: true,
-        id: 'arrow',
         class: 'fill-popover custom-arrow',
         style: { opacity: 0.5 },
         'aria-label': 'Arrow',
@@ -28,7 +29,6 @@ describe('useArrow', () => {
       width: 12,
       height: 8,
       rounded: true,
-      id: 'arrow',
       class: 'fill-popover custom-arrow',
       style: { opacity: 0.5 },
       'aria-label': 'Arrow',
@@ -36,7 +36,7 @@ describe('useArrow', () => {
   })
 
   it('recalcula la configuración cuando cambia la ref', () => {
-    const input = ref<PopoverArrowConfig>({ width: 6 })
+    const input = shallowRef<ArrowConfig>({ width: 6 })
     const arrow = useArrow(input)
 
     expect(arrow.value.width).toBe(6)
