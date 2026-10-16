@@ -1,3 +1,4 @@
+import type { HTMLAttributes } from 'vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it, vi } from 'vitest'
 
@@ -12,9 +13,9 @@ interface TestLinkConfigOptions {
 export function testLinkConfig({ text, id, mount }: TestLinkConfigOptions) {
   it(text, async () => {
     const onClick = vi.fn()
-    const input: NormalizeLinkProps = {
+    const input: NormalizeLinkProps & HTMLAttributes = {
       label: 'Open link',
-      icon: { name: 'link' },
+      icon: 'chevronRight',
       to: 'https://example.com',
       onClick,
       id: 'custom-link',

@@ -12,7 +12,7 @@ interface TestButtonConfigOptions {
 export function testButtonConfig({ text, id, mount }: TestButtonConfigOptions) {
   it(text, async () => {
     const onClick = vi.fn()
-    const input: NormalizeButtonProps = {
+    const input: NormalizeButtonProps & Record<`data-${string}`, string> = {
       as: 'a',
       asChild: false,
       label: 'Close',

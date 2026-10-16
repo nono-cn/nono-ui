@@ -1,3 +1,4 @@
+import type { HTMLAttributes } from 'vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it, vi } from 'vitest'
 
@@ -12,7 +13,7 @@ interface TestInputConfigOptions {
 export function testInputConfig({ text, id, mount }: TestInputConfigOptions) {
   it(text, async () => {
     const onUpdateModelValue = vi.fn()
-    const input: NormalizeInputProps = {
+    const input: NormalizeInputProps & HTMLAttributes = {
       id: 'custom-input',
       class: 'custom-input',
       style: 'opacity: 0.5',

@@ -31,6 +31,7 @@ import linearChart from './components/linear-chart'
 import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
+import popover from './components/popover'
 import progress from './components/progress'
 import rating from './components/rating'
 import separator from './components/separator'
@@ -78,6 +79,7 @@ export const docsComponents = [
   loading,
   marker,
   masonry,
+  popover,
   progress,
   rating,
   separator,

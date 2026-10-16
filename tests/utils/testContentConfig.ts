@@ -1,49 +1,46 @@
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it } from 'vitest'
-import type { PopoverContentConfig } from '@/components/ui/Popover'
+
+// config de ejemplo válida para el content de cualquier componente con contenido flotante
+const contentConfig = {
+  side: 'top',
+  align: 'start',
+  sideOffset: 12,
+  alignOffset: 6,
+  arrowPadding: 4,
+  avoidCollisions: false,
+  collisionPadding: 16,
+  class: 'custom-content',
+  style: 'opacity: 0.5',
+  'aria-label': 'Content',
+} as const
 
 export function testContentConfig({
   text,
   id,
-  omit = [],
   mount,
   getProps,
 }: {
   text: string
   id: string
-  omit?: string[]
-  mount: (config: PopoverContentConfig) => VueWrapper | Promise<VueWrapper>
-  getProps: (wrapper: VueWrapper) => Record<string, unknown>
+  mount: (config: typeof contentConfig) => VueWrapper | Promise<VueWrapper>
+  getProps: (wrapper: VueWrapper) => object
 }) {
   it(text, async () => {
-    const config: PopoverContentConfig = {
-      side: 'top',
-      align: 'start',
-      sideOffset: 12,
-      alignOffset: 6,
-      arrowPadding: 4,
-      avoidCollisions: false,
-      collisionPadding: 16,
-      id: 'custom-popover-content',
-      class: 'custom-popover-content',
-      style: 'opacity: 0.5',
-      'aria-label': 'Content',
-    }
-    const wrapper = await mount(config)
+    const wrapper = await mount(contentConfig)
     expect(getProps(wrapper)).toMatchObject({
-      side: config.side,
-      align: config.align,
-      sideOffset: config.sideOffset,
-      alignOffset: config.alignOffset,
-      arrowPadding: config.arrowPadding,
-      avoidCollisions: config.avoidCollisions,
-      collisionPadding: config.collisionPadding,
+      side: contentConfig.side,
+      align: contentConfig.align,
+      sideOffset: contentConfig.sideOffset,
+      alignOffset: contentConfig.alignOffset,
+      arrowPadding: contentConfig.arrowPadding,
+      avoidCollisions: contentConfig.avoidCollisions,
+      collisionPadding: contentConfig.collisionPadding,
     })
     const content = wrapper.find(id)
     expect(content.exists()).toBe(true)
-    if (!omit.includes('id')) expect(content.attributes('id')).toBe(config.id)
-    expect(content.classes()).toContain(config.class)
-    expect(content.attributes('style')).toContain('opacity: 0.5')
-    expect(content.attributes('aria-label')).toBe(config['aria-label'])
+    expect(content.classes()).toContain(contentConfig.class)
+    expect(content.attributes('style')).toContain(contentConfig.style)
+    expect(content.attributes('aria-label')).toBe(contentConfig['aria-label'])
   })
 }

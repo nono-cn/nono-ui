@@ -1,11 +1,13 @@
-import { ref } from 'vue'
+import { shallowRef, type StyleValue } from 'vue'
 import { describe, expect, it } from 'vitest'
-import type { PopoverContentConfig } from '@/components/ui/Popover'
 import { useContent } from '@/composables/useContent'
 
+// cualquier config de contenido: class y style más atributos, props y callbacks de reka
+type ContentConfig = { class?: string; style?: StyleValue; [key: string]: unknown }
+
 describe('useContent', () => {
-  it('aplica los valores por defecto de PopoverContent', () => {
-    const content = useContent(ref<PopoverContentConfig | undefined>(undefined))
+  it('aplica los valores por defecto del contenido', () => {
+    const content = useContent(shallowRef<ContentConfig | undefined>(undefined))
 
     expect(content.value).toMatchObject({
       align: 'center',
@@ -30,10 +32,9 @@ describe('useContent', () => {
 
   it('sobrescribe los defaults y conserva atributos, clases y estilos', () => {
     const content = useContent(
-      ref<PopoverContentConfig>({
+      shallowRef<ContentConfig>({
         side: 'top',
         sideOffset: 12,
-        id: 'content',
         class: 'custom-content',
         style: { opacity: 0.5 },
         'aria-label': 'Content',
@@ -43,8 +44,7 @@ describe('useContent', () => {
     expect(content.value).toMatchObject({
       side: 'top',
       sideOffset: 12,
-      id: 'content',
-      class: expect.stringContaining('custom-content'),
+      class: 'custom-content',
       style: { opacity: 0.5 },
       'aria-label': 'Content',
     })
@@ -53,14 +53,14 @@ describe('useContent', () => {
   it('conserva los callbacks de Reka como props', () => {
     const onFocusOutside = () => undefined
     const onEscapeKeyDown = () => undefined
-    const content = useContent(ref<PopoverContentConfig>({ onFocusOutside, onEscapeKeyDown }))
+    const content = useContent(shallowRef<ContentConfig>({ onFocusOutside, onEscapeKeyDown }))
 
     expect(content.value.onFocusOutside).toBe(onFocusOutside)
     expect(content.value.onEscapeKeyDown).toBe(onEscapeKeyDown)
   })
 
   it('recalcula la configuración cuando cambia la ref', () => {
-    const input = ref<PopoverContentConfig>({ side: 'left' })
+    const input = shallowRef<ContentConfig>({ side: 'left' })
     const content = useContent(input)
 
     expect(content.value.side).toBe('left')

@@ -1,10 +1,7 @@
-import { computed, type Ref } from 'vue'
+import { computed, type HTMLAttributes, type Ref } from 'vue'
 import { cn } from '@/lib/utils'
 
-export interface ContentOptions<T extends object> {
-  class?: string
-  defaults?: Partial<T> | false
-}
+type ClassStyle = Pick<HTMLAttributes, 'class' | 'style'>
 
 const contentDefaults = {
   align: 'center' as const,
@@ -25,19 +22,14 @@ const contentDefaults = {
   updatePositionStrategy: 'optimized' as const,
 }
 
-export function useContent<T extends object>(
-  content: Ref<T | undefined>,
-  options: ContentOptions<T> = {},
-) {
+export function useContent<T extends ClassStyle>(content: Ref<T | undefined>) {
   return computed(() => {
-    const config = content.value ?? {}
+    const config = content.value ?? ({} as T)
     const { class: configClass, style: configStyle, ...props } = config
-    const defaults = options.defaults === false ? {} : (options.defaults ?? contentDefaults)
-
     return {
-      ...defaults,
+      ...contentDefaults,
       ...props,
-      class: cn(options.class, configClass),
+      class: cn(configClass),
       style: configStyle,
     }
   })
