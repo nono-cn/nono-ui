@@ -5,13 +5,15 @@ import { PopoverArrow, PopoverContent, PopoverRoot } from 'reka-ui'
 
 import {
   Popover,
+  popoverArrowDefaults,
+  popoverContentDefaults,
+  type PopoverArrowConfig,
+  type PopoverContentConfig,
   type PopoverContext,
   type PopoverProps,
   type PopoverSlots,
 } from '@/components/ui/Popover'
-import { testArrowConfig } from '../utils/testArrowConfig'
 import { testAttrs } from '../utils/testAttrs'
-import { testContentConfig } from '../utils/testContentConfig'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -44,6 +46,46 @@ const casesShowArrow = [
   { input: false, expected: false },
   { input: undefined, expected: false },
 ] satisfies Array<{ input: PopoverProps['showArrow']; expected: boolean }>
+
+const customContent = {
+  side: 'top',
+  sideOffset: 12,
+  align: 'start',
+  alignOffset: 6,
+  collisionPadding: 16,
+  avoidCollisions: false,
+  disableOutsidePointerEvents: true,
+} satisfies PopoverContentConfig
+
+const casesContent = [
+  { name: 'sin configuración', input: undefined, expected: popoverContentDefaults },
+  {
+    name: 'con configuración',
+    input: customContent,
+    expected: { ...popoverContentDefaults, ...customContent },
+  },
+] satisfies Array<{ name: string; input: PopoverProps['content']; expected: object }>
+
+const customArrow = { width: 16, height: 8, rounded: true } satisfies PopoverArrowConfig
+
+const casesArrow = [
+  { name: 'sin configuración', input: undefined, expected: popoverArrowDefaults },
+  {
+    name: 'con configuración',
+    input: customArrow,
+    expected: { ...popoverArrowDefaults, ...customArrow },
+  },
+] satisfies Array<{ name: string; input: PopoverProps['arrow']; expected: object }>
+
+const contentAttrs = {
+  input: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
+  expected: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
+} satisfies { input: PopoverContentConfig; expected: Record<string, string> }
+
+const arrowAttrs = {
+  input: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
+  expected: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
+} satisfies { input: PopoverArrowConfig; expected: Record<string, string> }
 
 const contextFunctions = {
   close: expect.any(Function),
@@ -130,20 +172,38 @@ describe('Popover', () => {
     })
 
     describe('content', () => {
-      testContentConfig({
-        text: 'pasa la configuración de content al PopoverContent',
-        id: '[data-test-popover-content]',
-        mount: (content) => mountPopover({ props: { open: true, content } }),
-        getProps: (popover) => popover.getComponent(PopoverContent).props(),
+      it.each(casesContent)('pasa content $name al PopoverContent', ({ input, expected }) => {
+        const popover = mountPopover({ props: { open: true, content: input } })
+
+        expect(popover.getComponent(PopoverContent).props()).toMatchObject(expected)
+      })
+
+      it('pasa la clase, el estilo y los atributos de content al contenido', () => {
+        const content = mountPopover({
+          props: { open: true, content: contentAttrs.input },
+        }).get('[data-test-popover-content]')
+
+        expect(content.classes()).toContain(contentAttrs.expected.class)
+        expect(content.attributes('style')).toContain(contentAttrs.expected.style)
+        expect(content.attributes('title')).toBe(contentAttrs.expected.title)
       })
     })
 
     describe('arrow', () => {
-      testArrowConfig({
-        text: 'pasa la configuración de arrow al PopoverArrow',
-        id: '[data-test-popover-arrow]',
-        mount: (arrow) => mountPopover({ props: { open: true, showArrow: true, arrow } }),
-        getProps: (popover) => popover.getComponent(PopoverArrow).props(),
+      it.each(casesArrow)('pasa arrow $name al PopoverArrow', ({ input, expected }) => {
+        const popover = mountPopover({ props: { open: true, showArrow: true, arrow: input } })
+
+        expect(popover.getComponent(PopoverArrow).props()).toMatchObject(expected)
+      })
+
+      it('pasa la clase, el estilo y los atributos de arrow a la flecha', () => {
+        const arrow = mountPopover({
+          props: { open: true, showArrow: true, arrow: arrowAttrs.input },
+        }).get('[data-test-popover-arrow]')
+
+        expect(arrow.classes()).toContain(arrowAttrs.expected.class)
+        expect(arrow.attributes('style')).toContain(arrowAttrs.expected.style)
+        expect(arrow.attributes('title')).toBe(arrowAttrs.expected.title)
       })
     })
 

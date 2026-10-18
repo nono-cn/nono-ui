@@ -1,5 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { popoverDefaults } from '@/components/ui/Popover'
+import {
+  popoverArrowDefaults,
+  popoverContentDefaults,
+  popoverDefaults,
+} from '@/components/ui/Popover'
+import { formatDefaultObject } from '../format-default'
 import PopoverBasicExample from '../../components/examples/popover/PopoverBasicExample.vue'
 import PopoverContentExample from '../../components/examples/popover/PopoverContentExample.vue'
 import PopoverArrowExample from '../../components/examples/popover/PopoverArrowExample.vue'
@@ -66,13 +71,13 @@ const popoverConfig: ComponentDocConfig = {
       {
         name: 'content',
         type: 'PopoverContentConfig',
-        default: String(popoverDefaults.content),
+        default: formatDefaultObject(popoverContentDefaults),
         description: 'Grouped PopoverContent props, event callbacks, and HTML attributes.',
       },
       {
         name: 'arrow',
         type: 'PopoverArrowConfig',
-        default: String(popoverDefaults.arrow),
+        default: formatDefaultObject(popoverArrowDefaults),
         description: 'Arrow size, shape, and attributes.',
       },
       {

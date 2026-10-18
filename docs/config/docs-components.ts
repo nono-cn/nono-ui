@@ -40,6 +40,7 @@ import switchConfig from './components/switch'
 import tabsConfig from './components/tabs'
 import textarea from './components/textarea'
 import timeline from './components/timeline'
+import tooltip from './components/tooltip'
 import toggleConfig from './components/toggle'
 import type { ComponentDocConfig } from './component-docs'
 
@@ -88,6 +89,7 @@ export const docsComponents = [
   tabsConfig,
   textarea,
   timeline,
+  tooltip,
   toggleConfig,
 ] satisfies ComponentDocConfig[]
 

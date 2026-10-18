@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, useAttrs } from 'vue'
 import {
   TooltipArrow,
   TooltipContent,
@@ -8,18 +8,27 @@ import {
   TooltipRoot,
   TooltipTrigger,
 } from 'reka-ui'
-import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import type { TooltipContext, TooltipEmits, TooltipProps, TooltipSlots } from '.'
-import { tooltipDefaults } from './default'
+import {
+  tooltipArrowVariants,
+  tooltipContentVariants,
+  tooltipRootVariants,
+  type TooltipArrowConfig,
+  type TooltipContentConfig,
+  type TooltipContext,
+  type TooltipEmits,
+  type TooltipProps,
+  type TooltipSlots,
+} from '.'
+import { tooltipArrowDefaults, tooltipContentDefaults, tooltipDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
-
 defineSlots<TooltipSlots>()
 
 const props = withDefaults(defineProps<TooltipProps>(), tooltipDefaults)
-const emit = defineEmits<TooltipEmits>()
+defineEmits<TooltipEmits>()
 
+const attrs = useAttrs()
 const portalTarget = ref<HTMLElement>()
 const open = defineModel<boolean>('open', { default: false })
 
@@ -27,9 +36,11 @@ function close() {
   open.value = false
 }
 
-const tooltipContext = computed<TooltipContext>(() => ({
-  open: open.value,
-  close,
+const tooltipContext = computed<TooltipContext>(() => ({ open: open.value, close }))
+
+const rootAttrs = computed(() => ({
+  ...attrs,
+  class: cn(tooltipRootVariants(), attrs.class),
 }))
 
 const rootProps = computed(() => {
@@ -42,63 +53,51 @@ const rootProps = computed(() => {
   }
 })
 
-const contentProps = computed(() => {
-  const contentUI = useUi(props.ui?.content, tooltipContext.value)
+const triggerProps = {
+  as: 'button' as const,
+  asChild: true,
+}
 
-  return {
-    ...contentUI,
-    align: props.align,
-    alignOffset: props.alignOffset,
-    ariaLabel: props.ariaLabel ?? contentUI['aria-label'],
-    arrowPadding: props.arrowPadding,
-    avoidCollisions: props.avoidCollisions,
-    collisionPadding: props.collisionPadding,
-    forceMount: props.forceMount,
-    hideWhenDetached: props.hideWhenDetached,
-    positionStrategy: props.positionStrategy,
-    side: props.side,
-    sideOffset: props.sideOffset,
-    sticky: props.sticky,
-    updatePositionStrategy: props.updatePositionStrategy,
-    onEscapeKeyDown: (event: TooltipEmits['escapeKeyDown'][0]) => emit('escapeKeyDown', event),
-    onPointerDownOutside: (event: TooltipEmits['pointerDownOutside'][0]) =>
-      emit('pointerDownOutside', event),
-    class: cn(
-      'data-[state=closed]:animate-out data-[state=delayed-open]:animate-in data-[state=instant-open]:animate-in data-[state=closed]:fade-out-0 data-[state=delayed-open]:fade-in-0 data-[state=instant-open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=delayed-open]:zoom-in-95 data-[state=instant-open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-fit origin-(--reka-tooltip-content-transform-origin) rounded-md bg-foreground px-3 py-1.5 text-xs text-balance text-background border border-zinc-200 bg-white text-zinc-950 shadow-md',
-      contentUI.class,
-    ),
-    style: contentUI.style,
-  }
-})
+const contentProps = computed<TooltipContentConfig>(() => ({
+  ...tooltipContentDefaults,
+  ...props.content,
+  class: cn(tooltipContentVariants(), props.content?.class),
+}))
 
-const arrowProps = computed(() => {
-  const ui = useUi(props.ui?.arrow, tooltipContext.value)
-  return {
-    ...ui,
-    width: props.arrowWidth,
-    height: props.arrowHeight,
-    class: cn(ui.class),
-    style: ui.style,
-  }
-})
+const portalProps = computed(() => ({
+  to: portalTarget.value,
+  forceMount: false,
+  defer: undefined,
+  disabled: undefined,
+}))
+
+const arrowProps = computed<TooltipArrowConfig>(() => ({
+  ...tooltipArrowDefaults,
+  ...props.arrow,
+  class: cn(tooltipArrowVariants(), props.arrow?.class),
+}))
 </script>
 
 <template>
-  <div data-test-tooltip-root>
+  <div v-bind="rootAttrs" data-test-tooltip-root>
     <TooltipProvider>
       <TooltipRoot v-bind="rootProps" v-model:open="open">
-        <TooltipTrigger as-child data-test-tooltip-trigger>
+        <TooltipTrigger v-bind="triggerProps" data-test-tooltip-trigger>
           <slot v-bind="tooltipContext" />
         </TooltipTrigger>
 
-        <TooltipPortal :to="portalTarget">
-          <TooltipContent v-bind="contentProps" data-test-tooltip-content>
-            <slot name="content" v-bind="tooltipContext">{{ props.label }}</slot>
-            <TooltipArrow v-if="props.withArrow" v-bind="arrowProps" data-test-tooltip-arrow />
+        <TooltipPortal v-bind="portalProps">
+          <TooltipContent
+            v-if="$slots.content || props.text"
+            v-bind="contentProps"
+            data-test-tooltip-content
+          >
+            <slot name="content" v-bind="tooltipContext">{{ props.text }}</slot>
+            <TooltipArrow v-if="props.showArrow" v-bind="arrowProps" data-test-tooltip-arrow />
           </TooltipContent>
         </TooltipPortal>
       </TooltipRoot>
-      <div ref="portalTarget" data-test-tooltip-portal-target />
     </TooltipProvider>
+    <div ref="portalTarget" data-test-tooltip-portal-target />
   </div>
 </template>

@@ -7,8 +7,6 @@ import {
   HoverCardRoot,
   HoverCardTrigger,
 } from 'reka-ui'
-import { useContent } from '@/composables/useContent'
-import { useArrow } from '@/composables/useArrow'
 import { cn } from '@/lib/utils'
 import {
   hoverCardArrowVariants,
@@ -21,7 +19,7 @@ import {
   type HoverCardProps,
   type HoverCardSlots,
 } from '.'
-import { hoverCardDefaults } from './constants'
+import { hoverCardArrowDefaults, hoverCardContentDefaults, hoverCardDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 defineSlots<HoverCardSlots>()
@@ -58,12 +56,11 @@ const triggerProps = {
   reference: undefined,
 }
 
-const contentConfig = computed<HoverCardContentConfig>(() => ({
+const contentProps = computed<HoverCardContentConfig>(() => ({
+  ...hoverCardContentDefaults,
   ...props.content,
   class: cn(hoverCardContentVariants(), props.content?.class),
 }))
-
-const contentProps = useContent(contentConfig)
 
 const portalProps = computed(() => ({
   to: portalTarget.value,
@@ -72,12 +69,11 @@ const portalProps = computed(() => ({
   disabled: undefined,
 }))
 
-const arrowConfig = computed<HoverCardArrowConfig>(() => ({
+const arrowProps = computed<HoverCardArrowConfig>(() => ({
+  ...hoverCardArrowDefaults,
   ...props.arrow,
   class: cn(hoverCardArrowVariants(), props.arrow?.class),
 }))
-
-const arrowProps = useArrow(arrowConfig)
 </script>
 
 <template>

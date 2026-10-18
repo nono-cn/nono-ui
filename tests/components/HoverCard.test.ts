@@ -8,10 +8,16 @@ import {
   HoverCardRoot,
   HoverCardTrigger,
 } from 'reka-ui'
-import { HoverCard, type HoverCardContext, type HoverCardProps } from '@/components/ui/HoverCard'
-import { testArrowConfig } from '../utils/testArrowConfig'
+import {
+  HoverCard,
+  hoverCardArrowDefaults,
+  hoverCardContentDefaults,
+  type HoverCardArrowConfig,
+  type HoverCardContentConfig,
+  type HoverCardContext,
+  type HoverCardProps,
+} from '@/components/ui/HoverCard'
 import { testAttrs } from '../utils/testAttrs'
-import { testContentConfig } from '../utils/testContentConfig'
 
 vi.stubGlobal(
   'ResizeObserver',
@@ -56,6 +62,45 @@ const casesOpenDelay = [undefined, 0, 250]
 const casesCloseDelay = [undefined, 0, 250]
 const casesEnableTouch = [undefined, false, true]
 const casesShowArrow = [undefined, false, true]
+
+const customContent = {
+  side: 'top',
+  sideOffset: 12,
+  align: 'start',
+  alignOffset: 6,
+  collisionPadding: 16,
+  avoidCollisions: false,
+} satisfies HoverCardContentConfig
+
+const casesContent = [
+  { name: 'sin configuración', input: undefined, expected: hoverCardContentDefaults },
+  {
+    name: 'con configuración',
+    input: customContent,
+    expected: { ...hoverCardContentDefaults, ...customContent },
+  },
+] satisfies Array<{ name: string; input: HoverCardProps['content']; expected: object }>
+
+const customArrow = { width: 16, height: 8, rounded: true } satisfies HoverCardArrowConfig
+
+const casesArrow = [
+  { name: 'sin configuración', input: undefined, expected: hoverCardArrowDefaults },
+  {
+    name: 'con configuración',
+    input: customArrow,
+    expected: { ...hoverCardArrowDefaults, ...customArrow },
+  },
+] satisfies Array<{ name: string; input: HoverCardProps['arrow']; expected: object }>
+
+const contentAttrs = {
+  input: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
+  expected: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
+} satisfies { input: HoverCardContentConfig; expected: Record<string, string> }
+
+const arrowAttrs = {
+  input: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
+  expected: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
+} satisfies { input: HoverCardArrowConfig; expected: Record<string, string> }
 const casesUpdateOpen = [
   { initial: false, value: true },
   { initial: true, value: false },
@@ -116,11 +161,20 @@ describe('HoverCard', () => {
     })
 
     describe('content', () => {
-      testContentConfig({
-        text: 'renders the content configuration',
-        id: '[data-test-hover-card-content]',
-        mount: (content) => mountOpen({ content }),
-        getProps: (wrapper) => wrapper.getComponent(HoverCardContent).props(),
+      it.each(casesContent)('pasa content $name al HoverCardContent', ({ input, expected }) => {
+        const wrapper = mountOpen({ content: input })
+
+        expect(wrapper.getComponent(HoverCardContent).props()).toMatchObject(expected)
+      })
+
+      it('pasa la clase, el estilo y los atributos de content al contenido', () => {
+        const content = mountOpen({ content: contentAttrs.input }).get(
+          '[data-test-hover-card-content]',
+        )
+
+        expect(content.classes()).toContain(contentAttrs.expected.class)
+        expect(content.attributes('style')).toContain(contentAttrs.expected.style)
+        expect(content.attributes('title')).toBe(contentAttrs.expected.title)
       })
     })
 
@@ -139,11 +193,20 @@ describe('HoverCard', () => {
     })
 
     describe('arrow', () => {
-      testArrowConfig({
-        text: 'renders the arrow configuration',
-        id: '[data-test-hover-card-arrow]',
-        mount: (arrow) => mountOpen({ showArrow: true, arrow }),
-        getProps: (wrapper) => wrapper.getComponent(HoverCardArrow).props(),
+      it.each(casesArrow)('pasa arrow $name al HoverCardArrow', ({ input, expected }) => {
+        const wrapper = mountOpen({ showArrow: true, arrow: input })
+
+        expect(wrapper.getComponent(HoverCardArrow).props()).toMatchObject(expected)
+      })
+
+      it('pasa la clase, el estilo y los atributos de arrow a la flecha', () => {
+        const arrow = mountOpen({ showArrow: true, arrow: arrowAttrs.input }).get(
+          '[data-test-hover-card-arrow]',
+        )
+
+        expect(arrow.classes()).toContain(arrowAttrs.expected.class)
+        expect(arrow.attributes('style')).toContain(arrowAttrs.expected.style)
+        expect(arrow.attributes('title')).toBe(arrowAttrs.expected.title)
       })
     })
 
