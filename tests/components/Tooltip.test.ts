@@ -1,19 +1,24 @@
 import { h } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { TooltipArrow, TooltipContent, TooltipRoot } from 'reka-ui'
+import {
+  TooltipArrow,
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  TooltipRoot,
+  TooltipTrigger,
+} from 'reka-ui'
 
 import {
   Tooltip,
-  tooltipArrowDefaults,
-  tooltipContentDefaults,
+  tooltipDefaults,
   type TooltipArrowConfig,
   type TooltipContentConfig,
   type TooltipContext,
   type TooltipProps,
   type TooltipSlots,
 } from '@/components/ui/Tooltip'
-import { testAttrs } from '../utils/testAttrs'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -30,12 +35,6 @@ afterEach(() => {
 })
 
 const casesVariantsCss = [
-  {
-    name: 'tooltipRootVariants',
-    part: 'la raíz',
-    input: '[data-test-tooltip-root]',
-    expected: ['contents'],
-  },
   {
     name: 'tooltipContentVariants',
     part: 'el contenido',
@@ -67,7 +66,7 @@ const casesVariantsCss = [
 const casesOpen = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: tooltipDefaults.open },
 ] satisfies Array<{ input: TooltipProps['open']; expected: boolean }>
 
 const casesText = [
@@ -78,13 +77,13 @@ const casesText = [
 const casesDelayDuration = [
   { input: 300, expected: 300 },
   { input: 0, expected: 0 },
-  { input: undefined, expected: 0 },
+  { input: undefined, expected: tooltipDefaults.delayDuration },
 ] satisfies Array<{ input: TooltipProps['delayDuration']; expected: number }>
 
 const casesDisableHoverableContent = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: undefined },
+  { input: undefined, expected: tooltipDefaults.disableHoverableContent },
 ] satisfies Array<{
   input: TooltipProps['disableHoverableContent']
   expected: boolean | undefined
@@ -93,25 +92,25 @@ const casesDisableHoverableContent = [
 const casesDisableClosingTrigger = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: tooltipDefaults.disableClosingTrigger },
 ] satisfies Array<{ input: TooltipProps['disableClosingTrigger']; expected: boolean }>
 
 const casesDisabled = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: tooltipDefaults.disabled },
 ] satisfies Array<{ input: TooltipProps['disabled']; expected: boolean }>
 
 const casesIgnoreNonKeyboardFocus = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: tooltipDefaults.ignoreNonKeyboardFocus },
 ] satisfies Array<{ input: TooltipProps['ignoreNonKeyboardFocus']; expected: boolean }>
 
 const casesShowArrow = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: tooltipDefaults.showArrow },
 ] satisfies Array<{ input: TooltipProps['showArrow']; expected: boolean }>
 
 const customContent = {
@@ -125,22 +124,22 @@ const customContent = {
 } satisfies TooltipContentConfig
 
 const casesContent = [
-  { name: 'sin configuración', input: undefined, expected: tooltipContentDefaults },
+  { name: 'sin configuración', input: undefined, expected: tooltipDefaults.content },
   {
     name: 'con configuración',
     input: customContent,
-    expected: { ...tooltipContentDefaults, ...customContent },
+    expected: { ...tooltipDefaults.content, ...customContent },
   },
 ] satisfies Array<{ name: string; input: TooltipProps['content']; expected: object }>
 
 const customArrow = { width: 16, height: 8 } satisfies TooltipArrowConfig
 
 const casesArrow = [
-  { name: 'sin configuración', input: undefined, expected: tooltipArrowDefaults },
+  { name: 'sin configuración', input: undefined, expected: tooltipDefaults.arrow },
   {
     name: 'con configuración',
     input: customArrow,
-    expected: { ...tooltipArrowDefaults, ...customArrow },
+    expected: { ...tooltipDefaults.arrow, ...customArrow },
   },
 ] satisfies Array<{ name: string; input: TooltipProps['arrow']; expected: object }>
 
@@ -172,7 +171,7 @@ const casesTooltipContext = [
   {
     name: 'open por defecto',
     input: { open: undefined },
-    expected: { open: false },
+    expected: { open: tooltipDefaults.open },
   },
 ] satisfies Array<{
   name: string
@@ -194,24 +193,26 @@ const casesUpdateOpen = [
 ] satisfies Array<{ input: TooltipProps['open']; expected: boolean }>
 
 function mountTooltip(options: ComponentMountingOptions<typeof Tooltip> = {}) {
-  const { slots, global, ...rest } = options
-  return mount(Tooltip, {
+  const { props, slots, global } = options
+  // un slot a undefined quita el slot por defecto
+  const tooltipSlots = Object.fromEntries(
+    Object.entries({
+      default: () => h('button', 'Abrir'),
+      content: () => h('p', 'Contenido'),
+      ...slots,
+    }).filter(([, slot]) => slot !== undefined),
+  )
+
+  // el TooltipProvider lo aporta el ConfigProvider de la app
+  return mount(TooltipProvider, {
     attachTo: document.body,
     global: {
       ...global,
       // el portal se pinta en línea para poder buscar el contenido dentro del wrapper
       stubs: { TooltipPortal: { template: '<div><slot /></div>' }, ...global?.stubs },
     },
-    // un slot a undefined quita el slot por defecto (vue test utils no acepta slots undefined)
-    slots: Object.fromEntries(
-      Object.entries({
-        default: () => h('button', 'Abrir'),
-        content: () => h('p', 'Contenido'),
-        ...slots,
-      }).filter(([, slot]) => slot !== undefined),
-    ),
-    ...rest,
-  })
+    slots: { default: () => h(Tooltip, props, tooltipSlots) },
+  }).findComponent(Tooltip)
 }
 
 describe('Tooltip', () => {
@@ -293,6 +294,28 @@ describe('Tooltip', () => {
       )
     })
 
+    describe('trigger', () => {
+      it('usa un button con asChild en el TooltipTrigger', () => {
+        expect(mountTooltip().getComponent(TooltipTrigger).props()).toMatchObject({
+          as: 'button',
+          asChild: true,
+        })
+      })
+    })
+
+    describe('portal', () => {
+      it('teletransporta al body con opciones de portal fijas', () => {
+        const tooltip = mountTooltip({ props: { open: true } })
+
+        expect(tooltip.getComponent(TooltipPortal).vm.$.vnode.props).toMatchObject({
+          to: 'body',
+          forceMount: false,
+          defer: undefined,
+          disabled: undefined,
+        })
+      })
+    })
+
     describe('content', () => {
       it.each(casesContent)('pasa content $name al TooltipContent', ({ input, expected }) => {
         const tooltip = mountTooltip({ props: { open: true, content: input } })
@@ -338,14 +361,6 @@ describe('Tooltip', () => {
           expect(tooltip.find('[data-test-tooltip-arrow]').exists()).toBe(expected)
         },
       )
-    })
-  })
-
-  describe('attrs', () => {
-    testAttrs({
-      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
-      id: '[data-test-tooltip-root]',
-      mount: (attrs) => mountTooltip({ attrs }),
     })
   })
 

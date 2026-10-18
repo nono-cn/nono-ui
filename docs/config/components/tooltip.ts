@@ -1,9 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import {
-  tooltipArrowDefaults,
-  tooltipContentDefaults,
-  tooltipDefaults,
-} from '@/components/ui/Tooltip'
+import { tooltipDefaults } from '@/components/ui/Tooltip'
 import { formatDefaultObject } from '../format-default'
 import TooltipBasicExample from '../../components/examples/tooltip/TooltipBasicExample.vue'
 import TooltipContentSlotExample from '../../components/examples/tooltip/TooltipContentSlotExample.vue'
@@ -64,7 +60,7 @@ const tooltipConfig: ComponentDocConfig = {
       {
         name: 'open',
         type: 'boolean',
-        default: 'false',
+        default: String(tooltipDefaults.open),
         description: 'Open state; supports v-model:open.',
       },
       {
@@ -107,13 +103,13 @@ const tooltipConfig: ComponentDocConfig = {
       {
         name: 'content',
         type: 'TooltipContentConfig',
-        default: formatDefaultObject(tooltipContentDefaults),
+        default: formatDefaultObject(tooltipDefaults.content),
         description: 'Grouped TooltipContent props, event callbacks, and HTML attributes.',
       },
       {
         name: 'arrow',
         type: 'TooltipArrowConfig',
-        default: formatDefaultObject(tooltipArrowDefaults),
+        default: formatDefaultObject(tooltipDefaults.arrow),
         description: 'Arrow size and attributes.',
       },
       {
