@@ -1,9 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import {
-  popoverArrowDefaults,
-  popoverContentDefaults,
-  popoverDefaults,
-} from '@/components/ui/Popover'
+import { popoverDefaults } from '@/components/ui/Popover'
 import { formatDefaultObject } from '../format-default'
 import PopoverBasicExample from '../../components/examples/popover/PopoverBasicExample.vue'
 import PopoverContentExample from '../../components/examples/popover/PopoverContentExample.vue'
@@ -58,7 +54,7 @@ const popoverConfig: ComponentDocConfig = {
       {
         name: 'open',
         type: 'boolean',
-        default: 'false',
+        default: String(popoverDefaults.open),
         description: 'Open state; supports v-model:open.',
       },
       {
@@ -71,13 +67,13 @@ const popoverConfig: ComponentDocConfig = {
       {
         name: 'content',
         type: 'PopoverContentConfig',
-        default: formatDefaultObject(popoverContentDefaults),
+        default: formatDefaultObject(popoverDefaults.content),
         description: 'Grouped PopoverContent props, event callbacks, and HTML attributes.',
       },
       {
         name: 'arrow',
         type: 'PopoverArrowConfig',
-        default: formatDefaultObject(popoverArrowDefaults),
+        default: formatDefaultObject(popoverDefaults.arrow),
         description: 'Arrow size, shape, and attributes.',
       },
       {

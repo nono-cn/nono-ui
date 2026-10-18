@@ -10,14 +10,13 @@ import {
 } from 'reka-ui'
 import {
   HoverCard,
-  hoverCardArrowDefaults,
-  hoverCardContentDefaults,
+  hoverCardDefaults,
   type HoverCardArrowConfig,
   type HoverCardContentConfig,
   type HoverCardContext,
   type HoverCardProps,
 } from '@/components/ui/HoverCard'
-import { testAttrs } from '../utils/testAttrs'
+import { arrowPaths } from '@/components/ui/constants'
 
 vi.stubGlobal(
   'ResizeObserver',
@@ -54,7 +53,7 @@ function mountOpen(props: HoverCardProps = {}) {
 }
 
 const casesOpen = [
-  { input: undefined, expected: false },
+  { input: undefined, expected: hoverCardDefaults.open },
   { input: false, expected: false },
   { input: true, expected: true },
 ]
@@ -73,24 +72,30 @@ const customContent = {
 } satisfies HoverCardContentConfig
 
 const casesContent = [
-  { name: 'sin configuración', input: undefined, expected: hoverCardContentDefaults },
+  { name: 'sin configuración', input: undefined, expected: hoverCardDefaults.content },
   {
     name: 'con configuración',
     input: customContent,
-    expected: { ...hoverCardContentDefaults, ...customContent },
+    expected: { ...hoverCardDefaults.content, ...customContent },
   },
 ] satisfies Array<{ name: string; input: HoverCardProps['content']; expected: object }>
 
 const customArrow = { width: 16, height: 8, rounded: true } satisfies HoverCardArrowConfig
 
 const casesArrow = [
-  { name: 'sin configuración', input: undefined, expected: hoverCardArrowDefaults },
+  { name: 'sin configuración', input: undefined, expected: hoverCardDefaults.arrow },
   {
     name: 'con configuración',
     input: customArrow,
-    expected: { ...hoverCardArrowDefaults, ...customArrow },
+    expected: { ...hoverCardDefaults.arrow, ...customArrow },
   },
 ] satisfies Array<{ name: string; input: HoverCardProps['arrow']; expected: object }>
+
+const casesArrowPath = [
+  { name: 'redondeado', input: true, expected: arrowPaths.rounded },
+  { name: 'recto', input: false, expected: arrowPaths.sharp },
+  { name: 'por defecto', input: undefined, expected: arrowPaths.sharp },
+] satisfies Array<{ name: string; input: HoverCardArrowConfig['rounded']; expected: string }>
 
 const contentAttrs = {
   input: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
@@ -125,7 +130,7 @@ describe('HoverCard', () => {
           mountHoverCard({ props: { openDelay: input } })
             .getComponent(HoverCardRoot)
             .props('openDelay'),
-        ).toBe(input ?? 700)
+        ).toBe(input ?? hoverCardDefaults.openDelay)
       })
     })
 
@@ -135,7 +140,7 @@ describe('HoverCard', () => {
           mountHoverCard({ props: { closeDelay: input } })
             .getComponent(HoverCardRoot)
             .props('closeDelay'),
-        ).toBe(input ?? 300)
+        ).toBe(input ?? hoverCardDefaults.closeDelay)
       })
     })
 
@@ -145,7 +150,7 @@ describe('HoverCard', () => {
           mountHoverCard({ props: { enableTouch: input } })
             .getComponent(HoverCardRoot)
             .props('enableTouch'),
-        ).toBe(input ?? false)
+        ).toBe(input ?? hoverCardDefaults.enableTouch)
       })
     })
 
@@ -179,12 +184,10 @@ describe('HoverCard', () => {
     })
 
     describe('portal', () => {
-      it('uses a local target with fixed portal options', async () => {
+      it('teletransporta al body con opciones de portal fijas', () => {
         const wrapper = mountOpen()
-        await nextTick()
-        const target = wrapper.get('[data-test-hover-card-portal-target]').element
         expect(wrapper.getComponent(HoverCardPortal).vm.$.vnode.props).toMatchObject({
-          to: target,
+          to: 'body',
           disabled: undefined,
           defer: undefined,
           forceMount: false,
@@ -197,6 +200,14 @@ describe('HoverCard', () => {
         const wrapper = mountOpen({ showArrow: true, arrow: input })
 
         expect(wrapper.getComponent(HoverCardArrow).props()).toMatchObject(expected)
+      })
+
+      it.each(casesArrowPath)('con rounded=$input pinta el path $name', ({ input, expected }) => {
+        const arrow = mountOpen({ showArrow: true, arrow: { rounded: input } }).get(
+          '[data-test-hover-card-arrow] path',
+        )
+
+        expect(arrow.attributes('d')).toBe(expected)
       })
 
       it('pasa la clase, el estilo y los atributos de arrow a la flecha', () => {
@@ -213,17 +224,9 @@ describe('HoverCard', () => {
     describe('showArrow', () => {
       it.each(casesShowArrow)('renders default arrow for %s', (value) => {
         expect(mountOpen({ showArrow: value }).findComponent(HoverCardArrow).exists()).toBe(
-          value ?? false,
+          value ?? hoverCardDefaults.showArrow,
         )
       })
-    })
-  })
-
-  describe('attrs', () => {
-    testAttrs({
-      text: 'forwards attributes to root',
-      id: '[data-test-hover-card-root]',
-      mount: (attrs) => mountHoverCard({ attrs }),
     })
   })
 
@@ -269,7 +272,7 @@ describe('HoverCard', () => {
       expect(contexts).toHaveLength(open ? 2 : 1)
       for (const context of contexts) {
         expect(context).toEqual({
-          open: open ?? false,
+          open: open ?? hoverCardDefaults.open,
           close: expect.any(Function),
         })
       }

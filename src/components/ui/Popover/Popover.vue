@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs } from 'vue'
+import { computed } from 'vue'
 import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'reka-ui'
 import { cn } from '@/lib/utils'
+import { arrowPaths } from '@/components/ui/constants'
 import {
   popoverArrowVariants,
   popoverContentVariants,
-  popoverRootVariants,
   type PopoverArrowConfig,
   type PopoverContentConfig,
   type PopoverContext,
@@ -13,28 +13,25 @@ import {
   type PopoverProps,
   type PopoverSlots,
 } from '.'
-import { popoverArrowDefaults, popoverContentDefaults, popoverDefaults } from './constants'
+import { popoverDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 defineSlots<PopoverSlots>()
 
-const props = withDefaults(defineProps<PopoverProps>(), popoverDefaults)
+const props = withDefaults(defineProps<PopoverProps>(), {
+  ...popoverDefaults,
+  content: undefined,
+  arrow: undefined,
+})
 defineEmits<PopoverEmits>()
 
-const attrs = useAttrs()
-const portalTarget = ref<HTMLElement>()
-const open = defineModel<boolean>('open', { default: false })
+const open = defineModel<boolean>('open', { default: popoverDefaults.open })
 
 function close() {
   open.value = false
 }
 
 const popoverContext = computed<PopoverContext>(() => ({ open: open.value, close }))
-
-const rootAttrs = computed(() => ({
-  ...attrs,
-  class: cn(popoverRootVariants(), attrs.class),
-}))
 
 const rootProps = computed(() => {
   return {
@@ -48,39 +45,41 @@ const triggerProps = {
 }
 
 const contentProps = computed<PopoverContentConfig>(() => ({
-  ...popoverContentDefaults,
+  ...popoverDefaults.content,
   ...props.content,
   class: cn(popoverContentVariants(), props.content?.class),
 }))
 
-const portalProps = computed(() => ({
-  to: portalTarget.value,
+const portalProps = {
+  to: 'body',
   forceMount: false,
   defer: undefined,
   disabled: undefined,
-}))
+}
 
 const arrowProps = computed<PopoverArrowConfig>(() => ({
-  ...popoverArrowDefaults,
+  ...popoverDefaults.arrow,
   ...props.arrow,
   class: cn(popoverArrowVariants(), props.arrow?.class),
 }))
 </script>
 
 <template>
-  <div v-bind="rootAttrs" data-test-popover-root>
-    <PopoverRoot v-bind="rootProps" v-model:open="open">
-      <PopoverTrigger v-bind="triggerProps" data-test-popover-trigger>
-        <slot v-bind="popoverContext" />
-      </PopoverTrigger>
+  <PopoverRoot v-bind="rootProps" v-model:open="open">
+    <PopoverTrigger v-bind="triggerProps" data-test-popover-trigger>
+      <slot v-bind="popoverContext" />
+    </PopoverTrigger>
 
-      <PopoverPortal v-bind="portalProps">
-        <PopoverContent v-if="$slots.content" v-bind="contentProps" data-test-popover-content>
-          <slot name="content" v-bind="popoverContext" />
-          <PopoverArrow v-if="props.showArrow" v-bind="arrowProps" data-test-popover-arrow />
-        </PopoverContent>
-      </PopoverPortal>
-    </PopoverRoot>
-    <div ref="portalTarget" data-test-popover-portal-target />
-  </div>
+    <PopoverPortal v-bind="portalProps">
+      <PopoverContent v-if="$slots.content" v-bind="contentProps" data-test-popover-content>
+        <slot name="content" v-bind="popoverContext" />
+        <PopoverArrow v-if="props.showArrow" v-bind="arrowProps" data-test-popover-arrow>
+          <path
+            :d="arrowProps.rounded ? arrowPaths.rounded : arrowPaths.sharp"
+            vector-effect="non-scaling-stroke"
+          />
+        </PopoverArrow>
+      </PopoverContent>
+    </PopoverPortal>
+  </PopoverRoot>
 </template>

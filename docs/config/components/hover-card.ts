@@ -1,9 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import {
-  hoverCardArrowDefaults,
-  hoverCardContentDefaults,
-  hoverCardDefaults,
-} from '@/components/ui/HoverCard'
+import { hoverCardDefaults } from '@/components/ui/HoverCard'
 import { formatDefaultObject } from '../format-default'
 import HoverCardBasicExample from '../../components/examples/hover-card/HoverCardBasicExample.vue'
 import HoverCardContentExample from '../../components/examples/hover-card/HoverCardContentExample.vue'
@@ -58,7 +54,7 @@ const hoverCardConfig: ComponentDocConfig = {
       {
         name: 'open',
         type: 'boolean',
-        default: 'false',
+        default: String(hoverCardDefaults.open),
         description: 'Open state; supports v-model:open.',
       },
       {
@@ -76,19 +72,19 @@ const hoverCardConfig: ComponentDocConfig = {
       {
         name: 'enableTouch',
         type: 'boolean',
-        default: 'undefined',
+        default: String(hoverCardDefaults.enableTouch),
         description: 'Enables touch interaction on the Reka HoverCard root.',
       },
       {
         name: 'content',
         type: 'HoverCardContentConfig',
-        default: formatDefaultObject(hoverCardContentDefaults),
+        default: formatDefaultObject(hoverCardDefaults.content),
         description: 'Content positioning, attributes, and outside interaction callbacks.',
       },
       {
         name: 'arrow',
         type: 'HoverCardArrowConfig',
-        default: formatDefaultObject(hoverCardArrowDefaults),
+        default: formatDefaultObject(hoverCardDefaults.arrow),
         description: 'Arrow size, shape, and attributes.',
       },
       {

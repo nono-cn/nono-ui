@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger } from 'reka-ui'
 import { cn } from '@/lib/utils'
+import { arrowPaths } from '@/components/ui/constants'
 import {
   tooltipArrowVariants,
   tooltipContentVariants,
@@ -82,7 +83,7 @@ const arrowProps = computed<TooltipArrowConfig>(() => ({
       >
         <slot name="content" v-bind="tooltipContext">{{ props.text }}</slot>
         <TooltipArrow v-if="props.showArrow" v-bind="arrowProps" data-test-tooltip-arrow>
-          <path d="M0 0L6 6L12 0" vector-effect="non-scaling-stroke" />
+          <path :d="arrowPaths.sharp" vector-effect="non-scaling-stroke" />
         </TooltipArrow>
       </TooltipContent>
     </TooltipPortal>

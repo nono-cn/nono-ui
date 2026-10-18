@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs } from 'vue'
+import { computed } from 'vue'
 import {
   HoverCardArrow,
   HoverCardContent,
@@ -8,10 +8,10 @@ import {
   HoverCardTrigger,
 } from 'reka-ui'
 import { cn } from '@/lib/utils'
+import { arrowPaths } from '@/components/ui/constants'
 import {
   hoverCardArrowVariants,
   hoverCardContentVariants,
-  hoverCardRootVariants,
   type HoverCardArrowConfig,
   type HoverCardContentConfig,
   type HoverCardContext,
@@ -19,28 +19,25 @@ import {
   type HoverCardProps,
   type HoverCardSlots,
 } from '.'
-import { hoverCardArrowDefaults, hoverCardContentDefaults, hoverCardDefaults } from './constants'
+import { hoverCardDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 defineSlots<HoverCardSlots>()
 
-const props = withDefaults(defineProps<HoverCardProps>(), hoverCardDefaults)
+const props = withDefaults(defineProps<HoverCardProps>(), {
+  ...hoverCardDefaults,
+  content: undefined,
+  arrow: undefined,
+})
 defineEmits<HoverCardEmits>()
 
-const attrs = useAttrs()
-const portalTarget = ref<HTMLElement>()
-const open = defineModel<boolean>('open', { default: false })
+const open = defineModel<boolean>('open', { default: hoverCardDefaults.open })
 
 function close() {
   open.value = false
 }
 
 const hoverCardContext = computed<HoverCardContext>(() => ({ open: open.value, close }))
-
-const rootAttrs = computed(() => ({
-  ...attrs,
-  class: cn(hoverCardRootVariants(), attrs.class),
-}))
 
 const rootProps = computed(() => {
   return {
@@ -57,39 +54,41 @@ const triggerProps = {
 }
 
 const contentProps = computed<HoverCardContentConfig>(() => ({
-  ...hoverCardContentDefaults,
+  ...hoverCardDefaults.content,
   ...props.content,
   class: cn(hoverCardContentVariants(), props.content?.class),
 }))
 
-const portalProps = computed(() => ({
-  to: portalTarget.value,
+const portalProps = {
+  to: 'body',
   forceMount: false,
   defer: undefined,
   disabled: undefined,
-}))
+}
 
 const arrowProps = computed<HoverCardArrowConfig>(() => ({
-  ...hoverCardArrowDefaults,
+  ...hoverCardDefaults.arrow,
   ...props.arrow,
   class: cn(hoverCardArrowVariants(), props.arrow?.class),
 }))
 </script>
 
 <template>
-  <div v-bind="rootAttrs" data-test-hover-card-root>
-    <HoverCardRoot v-bind="rootProps" v-model:open="open">
-      <HoverCardTrigger v-bind="triggerProps" data-test-hover-card-trigger>
-        <slot v-bind="hoverCardContext" />
-      </HoverCardTrigger>
+  <HoverCardRoot v-bind="rootProps" v-model:open="open">
+    <HoverCardTrigger v-bind="triggerProps" data-test-hover-card-trigger>
+      <slot v-bind="hoverCardContext" />
+    </HoverCardTrigger>
 
-      <HoverCardPortal v-bind="portalProps">
-        <HoverCardContent v-if="$slots.content" v-bind="contentProps" data-test-hover-card-content>
-          <slot name="content" v-bind="hoverCardContext" />
-          <HoverCardArrow v-if="props.showArrow" v-bind="arrowProps" data-test-hover-card-arrow />
-        </HoverCardContent>
-      </HoverCardPortal>
-    </HoverCardRoot>
-    <div ref="portalTarget" data-test-hover-card-portal-target />
-  </div>
+    <HoverCardPortal v-bind="portalProps">
+      <HoverCardContent v-if="$slots.content" v-bind="contentProps" data-test-hover-card-content>
+        <slot name="content" v-bind="hoverCardContext" />
+        <HoverCardArrow v-if="props.showArrow" v-bind="arrowProps" data-test-hover-card-arrow>
+          <path
+            :d="arrowProps.rounded ? arrowPaths.rounded : arrowPaths.sharp"
+            vector-effect="non-scaling-stroke"
+          />
+        </HoverCardArrow>
+      </HoverCardContent>
+    </HoverCardPortal>
+  </HoverCardRoot>
 </template>

@@ -1,19 +1,18 @@
 import { h } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { PopoverArrow, PopoverContent, PopoverRoot } from 'reka-ui'
+import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'reka-ui'
 
 import {
   Popover,
-  popoverArrowDefaults,
-  popoverContentDefaults,
+  popoverDefaults,
   type PopoverArrowConfig,
   type PopoverContentConfig,
   type PopoverContext,
   type PopoverProps,
   type PopoverSlots,
 } from '@/components/ui/Popover'
-import { testAttrs } from '../utils/testAttrs'
+import { arrowPaths } from '@/components/ui/constants'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -32,19 +31,19 @@ afterEach(() => {
 const casesModal = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: popoverDefaults.modal },
 ] satisfies Array<{ input: PopoverProps['modal']; expected: boolean }>
 
 const casesOpen = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: popoverDefaults.open },
 ] satisfies Array<{ input: PopoverProps['open']; expected: boolean }>
 
 const casesShowArrow = [
   { input: true, expected: true },
   { input: false, expected: false },
-  { input: undefined, expected: false },
+  { input: undefined, expected: popoverDefaults.showArrow },
 ] satisfies Array<{ input: PopoverProps['showArrow']; expected: boolean }>
 
 const customContent = {
@@ -58,24 +57,30 @@ const customContent = {
 } satisfies PopoverContentConfig
 
 const casesContent = [
-  { name: 'sin configuración', input: undefined, expected: popoverContentDefaults },
+  { name: 'sin configuración', input: undefined, expected: popoverDefaults.content },
   {
     name: 'con configuración',
     input: customContent,
-    expected: { ...popoverContentDefaults, ...customContent },
+    expected: { ...popoverDefaults.content, ...customContent },
   },
 ] satisfies Array<{ name: string; input: PopoverProps['content']; expected: object }>
 
 const customArrow = { width: 16, height: 8, rounded: true } satisfies PopoverArrowConfig
 
 const casesArrow = [
-  { name: 'sin configuración', input: undefined, expected: popoverArrowDefaults },
+  { name: 'sin configuración', input: undefined, expected: popoverDefaults.arrow },
   {
     name: 'con configuración',
     input: customArrow,
-    expected: { ...popoverArrowDefaults, ...customArrow },
+    expected: { ...popoverDefaults.arrow, ...customArrow },
   },
 ] satisfies Array<{ name: string; input: PopoverProps['arrow']; expected: object }>
+
+const casesArrowPath = [
+  { name: 'redondeado', input: true, expected: arrowPaths.rounded },
+  { name: 'recto', input: false, expected: arrowPaths.sharp },
+  { name: 'por defecto', input: undefined, expected: arrowPaths.sharp },
+] satisfies Array<{ name: string; input: PopoverArrowConfig['rounded']; expected: string }>
 
 const contentAttrs = {
   input: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
@@ -105,7 +110,7 @@ const casesPopoverContext = [
   {
     name: 'open por defecto',
     input: { open: undefined },
-    expected: { open: false },
+    expected: { open: popoverDefaults.open },
   },
 ] satisfies Array<{
   name: string
@@ -171,6 +176,28 @@ describe('Popover', () => {
       )
     })
 
+    describe('trigger', () => {
+      it('usa un button con asChild en el PopoverTrigger', () => {
+        expect(mountPopover().getComponent(PopoverTrigger).props()).toMatchObject({
+          as: 'button',
+          asChild: true,
+        })
+      })
+    })
+
+    describe('portal', () => {
+      it('teletransporta al body con opciones de portal fijas', () => {
+        const popover = mountPopover({ props: { open: true } })
+
+        expect(popover.getComponent(PopoverPortal).vm.$.vnode.props).toMatchObject({
+          to: 'body',
+          forceMount: false,
+          defer: undefined,
+          disabled: undefined,
+        })
+      })
+    })
+
     describe('content', () => {
       it.each(casesContent)('pasa content $name al PopoverContent', ({ input, expected }) => {
         const popover = mountPopover({ props: { open: true, content: input } })
@@ -196,6 +223,14 @@ describe('Popover', () => {
         expect(popover.getComponent(PopoverArrow).props()).toMatchObject(expected)
       })
 
+      it.each(casesArrowPath)('con rounded=$input pinta el path $name', ({ input, expected }) => {
+        const arrow = mountPopover({
+          props: { open: true, showArrow: true, arrow: { rounded: input } },
+        }).get('[data-test-popover-arrow] path')
+
+        expect(arrow.attributes('d')).toBe(expected)
+      })
+
       it('pasa la clase, el estilo y los atributos de arrow a la flecha', () => {
         const arrow = mountPopover({
           props: { open: true, showArrow: true, arrow: arrowAttrs.input },
@@ -216,14 +251,6 @@ describe('Popover', () => {
           expect(popover.find('[data-test-popover-arrow]').exists()).toBe(expected)
         },
       )
-    })
-  })
-
-  describe('attrs', () => {
-    testAttrs({
-      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
-      id: '[data-test-popover-root]',
-      mount: (attrs) => mountPopover({ attrs }),
     })
   })
 
@@ -252,12 +279,6 @@ describe('Popover', () => {
   })
 
   describe('variantsCss', () => {
-    describe('popoverRootVariants', () => {
-      it('aplica las clases base a la raíz', () => {
-        expect(mountPopover().get('[data-test-popover-root]').classes()).toContain('contents')
-      })
-    })
-
     describe('popoverContentVariants', () => {
       it('aplica las clases base al contenido', () => {
         expect(
@@ -286,13 +307,7 @@ describe('Popover', () => {
           mountPopover({ props: { open: true, showArrow: true } })
             .get('[data-test-popover-arrow]')
             .classes(),
-        ).toEqual(
-          expect.arrayContaining([
-            'fill-popover',
-            '-translate-y-px',
-            'drop-shadow-[0_1px_0_var(--color-border)]',
-          ]),
-        )
+        ).toEqual(expect.arrayContaining(['fill-popover', 'stroke-border', '-translate-y-px']))
       })
     })
   })
