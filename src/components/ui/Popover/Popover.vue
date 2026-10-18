@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
 import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'reka-ui'
-import { useArrow } from '@/composables/useArrow'
-import { useContent } from '@/composables/useContent'
 import { cn } from '@/lib/utils'
 import {
   popoverArrowVariants,
@@ -15,7 +13,7 @@ import {
   type PopoverProps,
   type PopoverSlots,
 } from '.'
-import { popoverDefaults } from './constants'
+import { popoverArrowDefaults, popoverContentDefaults, popoverDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 defineSlots<PopoverSlots>()
@@ -49,12 +47,11 @@ const triggerProps = {
   asChild: true,
 }
 
-const contentConfig = computed<PopoverContentConfig>(() => ({
+const contentProps = computed<PopoverContentConfig>(() => ({
+  ...popoverContentDefaults,
   ...props.content,
   class: cn(popoverContentVariants(), props.content?.class),
 }))
-
-const contentProps = useContent(contentConfig)
 
 const portalProps = computed(() => ({
   to: portalTarget.value,
@@ -63,12 +60,11 @@ const portalProps = computed(() => ({
   disabled: undefined,
 }))
 
-const arrowConfig = computed<PopoverArrowConfig>(() => ({
+const arrowProps = computed<PopoverArrowConfig>(() => ({
+  ...popoverArrowDefaults,
   ...props.arrow,
   class: cn(popoverArrowVariants(), props.arrow?.class),
 }))
-
-const arrowProps = useArrow(arrowConfig)
 </script>
 
 <template>

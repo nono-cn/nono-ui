@@ -10,7 +10,7 @@ import type {
 } from 'reka-ui'
 
 export { default as HoverCard } from './HoverCard.vue'
-export { hoverCardDefaults } from './constants'
+export { hoverCardArrowDefaults, hoverCardContentDefaults, hoverCardDefaults } from './constants'
 
 export const hoverCardRootVariants = cva('contents')
 export const hoverCardContentVariants = cva(
@@ -28,24 +28,24 @@ export type HoverCardContentProps = Pick<
   RekaHoverCardContentProps,
   | 'as'
   | 'asChild'
+  | 'side'
+  | 'sideOffset'
+  | 'sideFlip'
   | 'align'
-  | 'alignFlip'
   | 'alignOffset'
-  | 'arrowPadding'
+  | 'alignFlip'
   | 'avoidCollisions'
   | 'collisionBoundary'
   | 'collisionPadding'
-  | 'disableUpdateOnLayoutShift'
-  | 'forceMount'
+  | 'arrowPadding'
   | 'hideShiftedArrow'
+  | 'sticky'
   | 'hideWhenDetached'
   | 'positionStrategy'
-  | 'prioritizePosition'
-  | 'side'
-  | 'sideFlip'
-  | 'sideOffset'
-  | 'sticky'
   | 'updatePositionStrategy'
+  | 'disableUpdateOnLayoutShift'
+  | 'prioritizePosition'
+  | 'forceMount'
 >
 export type HoverCardArrowProps = Pick<
   RekaHoverCardArrowProps,

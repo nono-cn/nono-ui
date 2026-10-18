@@ -10,7 +10,7 @@ import type {
 import type { EmitsAsProps } from '@/types/emits'
 
 export { default as Popover } from './Popover.vue'
-export { popoverDefaults } from './constants'
+export { popoverArrowDefaults, popoverContentDefaults, popoverDefaults } from './constants'
 
 export const popoverRootVariants = cva('contents')
 export const popoverContentVariants = cva(
@@ -26,25 +26,25 @@ export type PopoverContentProps = Pick<
   RekaPopoverContentProps,
   | 'as'
   | 'asChild'
+  | 'side'
+  | 'sideOffset'
+  | 'sideFlip'
   | 'align'
-  | 'alignFlip'
   | 'alignOffset'
-  | 'arrowPadding'
+  | 'alignFlip'
   | 'avoidCollisions'
   | 'collisionBoundary'
   | 'collisionPadding'
-  | 'disableOutsidePointerEvents'
-  | 'disableUpdateOnLayoutShift'
-  | 'forceMount'
+  | 'arrowPadding'
   | 'hideShiftedArrow'
+  | 'sticky'
   | 'hideWhenDetached'
   | 'positionStrategy'
-  | 'prioritizePosition'
-  | 'side'
-  | 'sideFlip'
-  | 'sideOffset'
-  | 'sticky'
   | 'updatePositionStrategy'
+  | 'disableUpdateOnLayoutShift'
+  | 'prioritizePosition'
+  | 'disableOutsidePointerEvents'
+  | 'forceMount'
 >
 export type PopoverArrowProps = Pick<
   RekaPopoverArrowProps,

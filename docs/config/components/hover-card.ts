@@ -1,5 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { hoverCardDefaults } from '@/components/ui/HoverCard'
+import {
+  hoverCardArrowDefaults,
+  hoverCardContentDefaults,
+  hoverCardDefaults,
+} from '@/components/ui/HoverCard'
+import { formatDefaultObject } from '../format-default'
 import HoverCardBasicExample from '../../components/examples/hover-card/HoverCardBasicExample.vue'
 import HoverCardContentExample from '../../components/examples/hover-card/HoverCardContentExample.vue'
 import HoverCardArrowExample from '../../components/examples/hover-card/HoverCardArrowExample.vue'
@@ -77,13 +82,13 @@ const hoverCardConfig: ComponentDocConfig = {
       {
         name: 'content',
         type: 'HoverCardContentConfig',
-        default: 'undefined',
+        default: formatDefaultObject(hoverCardContentDefaults),
         description: 'Content positioning, attributes, and outside interaction callbacks.',
       },
       {
         name: 'arrow',
         type: 'HoverCardArrowConfig',
-        default: 'undefined',
+        default: formatDefaultObject(hoverCardArrowDefaults),
         description: 'Arrow size, shape, and attributes.',
       },
       {

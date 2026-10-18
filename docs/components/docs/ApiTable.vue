@@ -89,7 +89,7 @@ withDefaults(
               </code>
             </td>
             <td v-if="showDefault" class="px-4 py-3 text-muted-foreground sm:px-5">
-              <code v-if="row.default" class="text-xs">{{ row.default }}</code>
+              <code v-if="row.default" class="text-xs whitespace-pre">{{ row.default }}</code>
               <span v-else>—</span>
             </td>
             <td class="px-4 py-3 text-muted-foreground sm:px-5">{{ row.description }}</td>
