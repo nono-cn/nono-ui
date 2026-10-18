@@ -59,7 +59,7 @@ const casesVariantsCss = [
     name: 'tooltipArrowVariants',
     part: 'la flecha',
     input: '[data-test-tooltip-arrow]',
-    expected: ['fill-popover', '-translate-y-px', 'drop-shadow-[0_1px_0_var(--color-border)]'],
+    expected: ['fill-popover', 'stroke-border', '-translate-y-px'],
   },
 ] satisfies Array<{ name: string; part: string; input: string; expected: string[] }>
 

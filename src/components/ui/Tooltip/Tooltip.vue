@@ -81,7 +81,9 @@ const arrowProps = computed<TooltipArrowConfig>(() => ({
         data-test-tooltip-content
       >
         <slot name="content" v-bind="tooltipContext">{{ props.text }}</slot>
-        <TooltipArrow v-if="props.showArrow" v-bind="arrowProps" data-test-tooltip-arrow />
+        <TooltipArrow v-if="props.showArrow" v-bind="arrowProps" data-test-tooltip-arrow>
+          <path d="M0 0L6 6L12 0" vector-effect="non-scaling-stroke" />
+        </TooltipArrow>
       </TooltipContent>
     </TooltipPortal>
   </TooltipRoot>
