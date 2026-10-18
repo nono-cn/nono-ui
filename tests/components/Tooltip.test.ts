@@ -9,7 +9,9 @@ import {
   tooltipContentDefaults,
   type TooltipArrowConfig,
   type TooltipContentConfig,
+  type TooltipContext,
   type TooltipProps,
+  type TooltipSlots,
 } from '@/components/ui/Tooltip'
 import { testAttrs } from '../utils/testAttrs'
 
@@ -151,6 +153,40 @@ const arrowAttrs = {
   input: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
   expected: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
 } satisfies { input: TooltipArrowConfig; expected: Record<string, string> }
+
+const contextFunctions = {
+  close: expect.any(Function),
+}
+
+const casesTooltipContext = [
+  {
+    name: 'abierto',
+    input: { open: true },
+    expected: { open: true },
+  },
+  {
+    name: 'cerrado',
+    input: { open: false },
+    expected: { open: false },
+  },
+  {
+    name: 'open por defecto',
+    input: { open: undefined },
+    expected: { open: false },
+  },
+] satisfies Array<{
+  name: string
+  input: Partial<TooltipProps>
+  expected: Omit<TooltipContext, keyof typeof contextFunctions>
+}>
+
+// contexto del tooltip abierto, usado para comprobar que llega a cada slot
+const expectedTooltipContext: TooltipContext = {
+  ...casesTooltipContext[0]!.expected,
+  ...contextFunctions,
+}
+
+const casesSlotContext = ['default', 'content'] satisfies Array<keyof TooltipSlots>
 
 const casesUpdateOpen = [
   { input: false, expected: true },
@@ -313,11 +349,98 @@ describe('Tooltip', () => {
     })
   })
 
+  describe('slots', () => {
+    describe('default', () => {
+      it('renderiza el slot dentro del trigger', () => {
+        expect(mountTooltip().get('[data-test-tooltip-trigger]').text()).toBe('Abrir')
+      })
+    })
+
+    describe('content', () => {
+      it('renderiza el slot dentro del contenido', () => {
+        expect(
+          mountTooltip({ props: { open: true } })
+            .get('[data-test-tooltip-content]')
+            .text(),
+        ).toContain('Contenido')
+      })
+
+      it('prioriza el slot content sobre text', () => {
+        const content = mountTooltip({ props: { open: true, text: 'Ayuda' } }).get(
+          '[data-test-tooltip-content]',
+        )
+
+        expect(content.text()).toContain('Contenido')
+        expect(content.text()).not.toContain('Ayuda')
+      })
+
+      it('no renderiza el contenido si no hay slot content ni text', () => {
+        const tooltip = mountTooltip({ props: { open: true }, slots: { content: undefined } })
+
+        expect(tooltip.find('[data-test-tooltip-content]').exists()).toBe(false)
+      })
+    })
+  })
+
   describe('variantsCss', () => {
     it.each(casesVariantsCss)('aplica las clases base de $name a $part', ({ input, expected }) => {
       const element = mountTooltip({ props: { open: true, showArrow: true } }).get(input)
 
       expect(element.classes()).toEqual(expect.arrayContaining(expected))
+    })
+  })
+
+  describe('context', () => {
+    describe('TooltipContext', () => {
+      it.each(casesTooltipContext)(
+        'cumple el contrato de TooltipContext en el caso $name',
+        ({ input, expected }) => {
+          let context: TooltipContext | undefined
+          mountTooltip({
+            props: input,
+            slots: {
+              default: (value: TooltipContext) => {
+                context = value
+                return h('button', 'Abrir')
+              },
+            },
+          })
+
+          expect(context).toEqual({ ...expected, ...contextFunctions })
+        },
+      )
+
+      it.each(casesSlotContext)('pasa TooltipContext al slot %s', (name) => {
+        let context: TooltipContext | undefined
+        mountTooltip({
+          props: { open: true },
+          slots: {
+            [name]: (value: TooltipContext) => {
+              context = value
+              return h('span', 'Slot')
+            },
+          },
+        })
+
+        expect(context).toEqual(expectedTooltipContext)
+      })
+
+      it('close cierra el tooltip y emite update:open con false', () => {
+        let context: TooltipContext | undefined
+        const tooltip = mountTooltip({
+          props: { open: true },
+          slots: {
+            content: (value: TooltipContext) => {
+              context = value
+              return h('span', 'Slot')
+            },
+          },
+        })
+
+        context!.close()
+
+        expect(tooltip.emitted('update:open')).toEqual([[false]])
+      })
     })
   })
 
