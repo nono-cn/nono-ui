@@ -2,216 +2,236 @@
 import { computed, useAttrs, useSlots } from 'vue'
 import { ProgressIndicator, ProgressRoot } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
+import { getThemeColorStyle } from '@/composables/useTheme'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import type {
-  MeterGroupStatusContext,
-  MeterGroupItemContext,
-  MeterGroupProps,
-  MeterGroupSlots,
+import {
+  meterGroupBodyVariants,
+  meterGroupIconVariants,
+  meterGroupIndicatorVariants,
+  meterGroupItemVariants,
+  meterGroupLabelVariants,
+  meterGroupLeadingVariants,
+  meterGroupListVariants,
+  meterGroupStatusVariants,
+  meterGroupTrackVariants,
+  meterGroupTrailingVariants,
+  meterGroupVariants,
+  type MeterGroupContext,
+  type MeterGroupItemContext,
+  type MeterGroupProps,
+  type MeterGroupSlots,
 } from '.'
-import { meterGroupLeadingVariants, meterGroupMeterVariants, meterGroupVariants } from '.'
-import { meterGroupDefaults } from './defaults'
+import { meterGroupDefaults, meterGroupItemDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
-
 defineSlots<MeterGroupSlots>()
+
+const props = withDefaults(defineProps<MeterGroupProps>(), meterGroupDefaults)
 
 const attrs = useAttrs()
 const slots = useSlots()
-const props = withDefaults(defineProps<MeterGroupProps>(), {
-  ...meterGroupDefaults,
-  items: () => [],
-})
 
 const max = computed(() => (props.max > 0 ? props.max : meterGroupDefaults.max))
-const vertical = computed(() => props.orientation === 'vertical')
-const hasStatus = computed(() => props.status || Boolean(slots.status))
-
-const meters = computed(() =>
-  props.items.map((item, index) => ({
-    item,
-    index,
-    value: Math.max(0, item.value),
-  })),
-)
-
-const total = computed(() => meters.value.reduce((sum, meter) => sum + meter.value, 0))
-const value = computed(() => Math.min(max.value, total.value))
-const percentage = computed(() => (value.value / max.value) * 100)
+const total = computed(() => props.items.reduce((sum, item) => sum + Math.max(0, item.value), 0))
+// si la suma supera max, los indicadores se escalan para caber en la pista
 const scale = computed(() => (total.value > max.value ? max.value / total.value : 1))
 
-const meterContexts = computed<MeterGroupItemContext[]>(() =>
-  meters.value.map((meter) => ({
-    item: meter.item,
-    index: meter.index,
-    percentage: Math.min(100, (meter.value / max.value) * 100),
-  })),
+const context = computed<MeterGroupContext>(() => {
+  const value = Math.min(max.value, total.value)
+
+  return { value, max: max.value, percentage: (value / max.value) * 100 }
+})
+
+const itemContexts = computed<MeterGroupItemContext[]>(() =>
+  props.items.map((item, index) => {
+    const value = Math.max(0, item.value)
+
+    return { item, index, value, percentage: Math.min(100, (value / max.value) * 100) }
+  }),
 )
 
-const statusContext = computed<MeterGroupStatusContext>(() => ({
-  total: value.value,
-  percentage: percentage.value,
+const listedContexts = computed(() => itemContexts.value.filter(hasLabel))
+
+const rootProps = computed(() => ({
+  ...attrs,
+  class: cn(meterGroupVariants({ size: props.size }), attrs.class),
+  style: attrs.style,
 }))
 
 const statusProps = computed(() => {
-  const ui = useUi(props.ui?.status, statusContext.value)
+  const ui = useUi(props.ui?.status, context.value)
 
   return {
     ...ui,
-    class: cn('text-right font-medium tabular-nums', ui.class),
+    class: cn(meterGroupStatusVariants(), ui.class),
   }
 })
 
-function getItemProps(context: MeterGroupItemContext) {
-  const ui = useUi(props.ui?.item, context)
+const bodyProps = computed(() => ({
+  class: meterGroupBodyVariants({ orientation: props.orientation }),
+}))
+
+const trackProps = computed(() => {
+  const ui = useUi(props.ui?.track, context.value)
 
   return {
     ...ui,
-    class: cn('flex items-center justify-between gap-4', ui.class),
+    modelValue: context.value.value,
+    max: max.value,
+    getValueLabel: props.getValueLabel,
+    getValueText: props.getValueText,
+    role: 'meter',
+    class: cn(
+      meterGroupTrackVariants({ orientation: props.orientation, size: props.size }),
+      ui.class,
+    ),
+  }
+})
+
+const listProps = computed(() => {
+  const ui = useUi(props.ui?.list, context.value)
+
+  return {
+    ...ui,
+    class: cn(meterGroupListVariants({ orientation: props.orientation }), ui.class),
+  }
+})
+
+function getColorStyle(itemContext: MeterGroupItemContext) {
+  return getThemeColorStyle(itemContext.item.color, 'meter-group', meterGroupItemDefaults.color)
+}
+
+function getIndicatorProps(itemContext: MeterGroupItemContext) {
+  const ui = useUi(props.ui?.indicator, itemContext)
+  const size = `${(itemContext.value / max.value) * 100 * scale.value}%`
+
+  return {
+    ...ui,
+    class: cn(meterGroupIndicatorVariants({ orientation: props.orientation }), ui.class),
+    style: [
+      getColorStyle(itemContext),
+      props.orientation === 'vertical' ? { height: size } : { width: size },
+      ui.style,
+    ],
   }
 }
 
-function getLeadingProps(context: MeterGroupItemContext) {
-  const ui = useUi(props.ui?.leading, context)
+function getItemProps(itemContext: MeterGroupItemContext) {
+  const ui = useUi(props.ui?.item, itemContext)
+
+  return {
+    ...ui,
+    class: cn(meterGroupItemVariants(), ui.class),
+    style: [getColorStyle(itemContext), ui.style],
+  }
+}
+
+function getLeadingProps(itemContext: MeterGroupItemContext) {
+  const ui = useUi(props.ui?.leading, itemContext)
 
   return {
     ...ui,
     class: cn(meterGroupLeadingVariants({ size: props.size }), ui.class),
-    style: [context.item.color ? { backgroundColor: context.item.color } : undefined, ui.style],
     'aria-hidden': true,
   }
 }
 
-function getIconProps(context: MeterGroupItemContext) {
-  const icon = context.item.icon
-
-  if (!icon) return {}
+function getIconProps(itemContext: MeterGroupItemContext) {
+  const ui = useUi(props.ui?.leading, itemContext)
 
   return {
-    ...icon,
-    name: icon.name,
-    color: context.item.color,
-    class: icon.class,
-    style: icon.style,
+    ...ui,
+    name: itemContext.item.icon!,
+    class: cn(meterGroupIconVariants({ size: props.size }), ui.class),
+    color: itemContext.item.color ?? meterGroupItemDefaults.color,
   }
 }
 
-function getLabelSlotProps(context: MeterGroupItemContext) {
-  const ui = useUi(props.ui?.label, context)
+function getLabelProps(itemContext: MeterGroupItemContext) {
+  const ui = useUi(props.ui?.label, itemContext)
 
   return {
     ...ui,
-    class: cn('truncate', ui.class),
+    class: cn(meterGroupLabelVariants(), ui.class),
   }
 }
 
-function getTrailingProps(context: MeterGroupItemContext) {
-  const ui = useUi(props.ui?.trailing, context)
+function getTrailingProps(itemContext: MeterGroupItemContext) {
+  const ui = useUi(props.ui?.trailing, itemContext)
 
   return {
     ...ui,
-    class: cn('shrink-0 tabular-nums', ui.class),
+    class: cn(meterGroupTrailingVariants(), ui.class),
   }
 }
 
-const listProps = computed(() => {
-  const ui = useUi(props.ui?.list, undefined)
-
-  return {
-    ...ui,
-    class: cn('grid gap-1 text-muted-foreground', vertical.value && 'gap-0', ui.class),
+function getSlotNames(itemContext: MeterGroupItemContext) {
+  const slot = itemContext.item.slot
+  if (slot === undefined) {
+    return { leading: 'leading', label: 'label', trailing: 'trailing' } as const
   }
-})
-
-const meterProps = computed(() => {
-  const ui = useUi(props.ui?.meter, statusContext.value)
-
   return {
-    ...ui,
-    max: max.value,
-    orientation: props.orientation,
-    class: cn(
-      meterGroupMeterVariants({ orientation: props.orientation, size: props.size }),
-      vertical.value && 'self-center',
-      ui.class,
-    ),
-    style: ui.style,
-  }
-})
+    leading: `leading-${slot}`,
+    label: `label-${slot}`,
+    trailing: `trailing-${slot}`,
+  } as const
+}
 
-const rootProps = computed(() => ({
-  ...attrs,
-  class: cn(meterGroupVariants({ orientation: 'horizontal', size: props.size }), attrs.class),
-  style: attrs.style,
-}))
+function hasLabel(itemContext: MeterGroupItemContext) {
+  return Boolean(itemContext.item.label || slots.label || slots[getSlotNames(itemContext).label])
+}
 
-const groupProps = computed(() => ({
-  class: meterGroupVariants({ orientation: props.orientation, size: props.size }),
-}))
+function getKey(itemContext: MeterGroupItemContext) {
+  return itemContext.item.slot ?? itemContext.index
+}
 </script>
 
 <template>
   <div v-bind="rootProps" data-test-meter-group-root>
-    <div v-if="hasStatus" v-bind="statusProps" data-test-meter-group-status>
-      <slot name="status" v-bind="statusContext">{{ Math.round(percentage) }}%</slot>
+    <div v-if="props.status" v-bind="statusProps" data-test-meter-group-status>
+      <slot name="status" v-bind="context">{{ Math.round(context.percentage) }}%</slot>
     </div>
 
-    <div v-bind="groupProps">
-      <ProgressRoot v-bind="meterProps" v-model="value" role="meter" data-test-meter-group-meter>
+    <div v-bind="bodyProps" data-test-meter-group-body>
+      <ProgressRoot v-bind="trackProps" data-test-meter-group-track>
         <ProgressIndicator
-          v-for="meter in meters"
-          :key="meter.index"
-          :class="
-            cn(
-              vertical
-                ? 'w-full shrink-0 transition-[height] duration-300'
-                : 'h-full shrink-0 transition-[width] duration-300',
-              !meter.item.color && 'bg-primary',
-            )
-          "
-          :style="{
-            width: vertical ? '100%' : `${(meter.value / max) * 100 * scale}%`,
-            height: vertical ? `${(meter.value / max) * 100 * scale}%` : '100%',
-            ...(meter.item.color ? { backgroundColor: meter.item.color } : {}),
-          }"
+          v-for="itemContext in itemContexts"
+          :key="getKey(itemContext)"
+          v-bind="getIndicatorProps(itemContext)"
+          data-test-meter-group-indicator
         />
       </ProgressRoot>
 
-      <ul
-        v-if="meters.some((meter) => meter.item.label)"
-        v-bind="listProps"
-        data-test-meter-group-list
-      >
+      <ul v-if="listedContexts.length" v-bind="listProps" data-test-meter-group-list>
         <li
-          v-for="meter in meterContexts"
-          v-show="meter.item.label"
-          :key="`label-${meter.index}`"
-          v-bind="getItemProps(meter)"
+          v-for="itemContext in listedContexts"
+          :key="getKey(itemContext)"
+          v-bind="getItemProps(itemContext)"
           data-test-meter-group-item
         >
-          <slot name="item" v-bind="meter">
-            <span class="flex min-w-0 items-center gap-2">
-              <slot name="item-leading" v-bind="meter">
-                <Icon
-                  v-if="meter.item.icon"
-                  v-bind="getIconProps(meter)"
-                  data-test-meter-group-icon
-                />
-                <span v-else data-test-meter-group-leading v-bind="getLeadingProps(meter)" />
-              </slot>
-              <slot name="item-label" v-bind="meter">
-                <span data-test-meter-group-label v-bind="getLabelSlotProps(meter)">{{
-                  meter.item.label
-                }}</span>
-              </slot>
-            </span>
-            <slot name="item-trailing" v-bind="meter">
-              <span data-test-meter-group-trailing v-bind="getTrailingProps(meter)"
-                >{{ Math.round(meter.percentage) }}%</span
-              >
+          <slot :name="getSlotNames(itemContext).leading" v-bind="itemContext">
+            <slot name="leading" v-bind="itemContext">
+              <Icon
+                v-if="itemContext.item.icon"
+                v-bind="getIconProps(itemContext)"
+                data-test-meter-group-icon
+              />
+              <span v-else v-bind="getLeadingProps(itemContext)" data-test-meter-group-leading />
             </slot>
           </slot>
+          <span v-bind="getLabelProps(itemContext)" data-test-meter-group-label>
+            <slot :name="getSlotNames(itemContext).label" v-bind="itemContext">
+              <slot name="label" v-bind="itemContext">{{ itemContext.item.label }}</slot>
+            </slot>
+          </span>
+          <span v-bind="getTrailingProps(itemContext)" data-test-meter-group-trailing>
+            <slot :name="getSlotNames(itemContext).trailing" v-bind="itemContext">
+              <slot name="trailing" v-bind="itemContext"
+                >{{ Math.round(itemContext.percentage) }}%</slot
+              >
+            </slot>
+          </span>
         </li>
       </ul>
     </div>
