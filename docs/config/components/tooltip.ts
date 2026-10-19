@@ -1,6 +1,6 @@
 import type { ComponentDocConfig } from '../component-docs'
 import { tooltipDefaults } from '@/components/ui/Tooltip'
-import { formatDefaultObject } from '../format-default'
+import { formatDefaultObject, formatValue } from '../format-default'
 import TooltipBasicExample from '../../components/examples/tooltip/TooltipBasicExample.vue'
 import TooltipContentSlotExample from '../../components/examples/tooltip/TooltipContentSlotExample.vue'
 import TooltipContentExample from '../../components/examples/tooltip/TooltipContentExample.vue'
@@ -103,12 +103,14 @@ const tooltipConfig: ComponentDocConfig = {
       {
         name: 'content',
         type: 'TooltipContentConfig',
+        typeLink: '#tooltip-content-config',
         default: formatDefaultObject(tooltipDefaults.content),
         description: 'Grouped TooltipContent props, event callbacks, and HTML attributes.',
       },
       {
         name: 'arrow',
         type: 'TooltipArrowConfig',
+        typeLink: '#tooltip-arrow-config',
         default: formatDefaultObject(tooltipDefaults.arrow),
         description: 'Arrow size and attributes.',
       },
@@ -120,6 +122,155 @@ const tooltipConfig: ComponentDocConfig = {
       },
     ],
     configs: [
+      {
+        id: 'tooltip-content-config',
+        title: 'TooltipContentConfig',
+        description:
+          'Combines the listed Reka UI content props and event callbacks with HTML attributes such as id, class, style, and ARIA attributes.',
+        rows: [
+          {
+            name: 'as',
+            type: 'AsTag | Component',
+            default: formatValue(tooltipDefaults.content.as),
+            description: 'Element or component the content renders as.',
+          },
+          {
+            name: 'asChild',
+            type: 'boolean',
+            default: formatValue(tooltipDefaults.content.asChild),
+            description: 'Renders the child element instead, merging props and behavior.',
+          },
+          {
+            name: 'side',
+            type: "'top' | 'right' | 'bottom' | 'left'",
+            default: formatValue(tooltipDefaults.content.side),
+            description: 'Preferred side of the trigger to render against.',
+          },
+          {
+            name: 'sideOffset',
+            type: 'number',
+            default: formatValue(tooltipDefaults.content.sideOffset),
+            description: 'Distance in pixels from the trigger.',
+          },
+          {
+            name: 'align',
+            type: "'start' | 'center' | 'end'",
+            default: formatValue(tooltipDefaults.content.align),
+            description: 'Preferred alignment against the trigger.',
+          },
+          {
+            name: 'alignOffset',
+            type: 'number',
+            default: formatValue(tooltipDefaults.content.alignOffset),
+            description: 'Offset in pixels from the start or end alignment.',
+          },
+          {
+            name: 'avoidCollisions',
+            type: 'boolean',
+            default: formatValue(tooltipDefaults.content.avoidCollisions),
+            description: 'Changes side and alignment to prevent collisions with the boundary.',
+          },
+          {
+            name: 'collisionBoundary',
+            type: 'Element | null | Array<Element | null>',
+            default: formatValue(tooltipDefaults.content.collisionBoundary),
+            description: 'Elements used as the collision boundary. Defaults to the viewport.',
+          },
+          {
+            name: 'collisionPadding',
+            type: 'number | Partial<Record<Side, number>>',
+            default: formatValue(tooltipDefaults.content.collisionPadding),
+            description:
+              'Distance in pixels from the boundary edges where collision detection occurs.',
+          },
+          {
+            name: 'arrowPadding',
+            type: 'number',
+            default: formatValue(tooltipDefaults.content.arrowPadding),
+            description: 'Padding between the arrow and the content edges.',
+          },
+          {
+            name: 'sticky',
+            type: "'partial' | 'always'",
+            default: formatValue(tooltipDefaults.content.sticky),
+            description: 'Sticky behavior on the align axis when the trigger leaves the boundary.',
+          },
+          {
+            name: 'hideWhenDetached',
+            type: 'boolean',
+            default: formatValue(tooltipDefaults.content.hideWhenDetached),
+            description: 'Hides the content when the trigger is fully occluded.',
+          },
+          {
+            name: 'positionStrategy',
+            type: "'absolute' | 'fixed'",
+            default: formatValue(tooltipDefaults.content.positionStrategy),
+            description: 'CSS position strategy used for the content.',
+          },
+          {
+            name: 'updatePositionStrategy',
+            type: "'optimized' | 'always'",
+            default: formatValue(tooltipDefaults.content.updatePositionStrategy),
+            description: 'Whether to update the position on every animation frame.',
+          },
+          {
+            name: 'ariaLabel',
+            type: 'string',
+            default: formatValue(tooltipDefaults.content.ariaLabel),
+            description: 'Accessible label announced instead of the content.',
+          },
+          {
+            name: 'forceMount',
+            type: 'boolean',
+            default: formatValue(tooltipDefaults.content.forceMount),
+            description: 'Keeps the content mounted for custom presence and animation handling.',
+          },
+          {
+            name: 'onEscapeKeyDown',
+            type: '(event: KeyboardEvent) => void',
+            default: 'undefined',
+            description: 'Handles Escape before the tooltip closes.',
+          },
+          {
+            name: 'onPointerDownOutside',
+            type: '(event: Event) => void',
+            default: 'undefined',
+            description: 'Handles a pointer interaction outside the content.',
+          },
+        ],
+      },
+      {
+        id: 'tooltip-arrow-config',
+        title: 'TooltipArrowConfig',
+        description:
+          'Combines the listed Reka UI arrow props with HTML attributes such as class and style.',
+        rows: [
+          {
+            name: 'as',
+            type: 'AsTag | Component',
+            default: formatValue(tooltipDefaults.arrow.as),
+            description: 'Element or component the arrow renders as.',
+          },
+          {
+            name: 'asChild',
+            type: 'boolean',
+            default: formatValue(tooltipDefaults.arrow.asChild),
+            description: 'Renders the child element instead of the default arrow.',
+          },
+          {
+            name: 'width',
+            type: 'number',
+            default: formatValue(tooltipDefaults.arrow.width),
+            description: 'Arrow width in pixels.',
+          },
+          {
+            name: 'height',
+            type: 'number',
+            default: formatValue(tooltipDefaults.arrow.height),
+            description: 'Arrow height in pixels.',
+          },
+        ],
+      },
       {
         id: 'tooltip-context',
         title: 'TooltipContext',

@@ -1,4 +1,5 @@
-function formatValue(value: unknown): string {
+// Formatea un valor por defecto como un literal de TS
+export function formatValue(value: unknown): string {
   if (value === undefined) return 'undefined'
   if (typeof value === 'string') return `'${value}'`
   if (Array.isArray(value)) return `[${value.map(formatValue).join(', ')}]`
