@@ -22,22 +22,31 @@ function resolveRadius(value: string | number): string {
   return text
 }
 
-export function useTheme({ color, prefix, defaultColor, radius, defaultRadius }: ThemeOptions) {
-  const colorStyle = computed<CSSProperties>(() => {
-    const value = (toValue(color) || defaultColor).trim()
-    const palette = /^[a-z][\w-]*$/i.test(value)
-    const base = palette ? `var(--${value}, var(--${defaultColor}))` : value
-    const foreground = palette
-      ? `var(--${value}-foreground, var(--${defaultColor}-foreground))`
-      : getContrastColor(value)
+// Resuelve un token de tema o un color CSS a las variables --{prefix}-color*
+export function getThemeColorStyle(
+  color: string | undefined,
+  prefix: string,
+  defaultColor: string,
+): CSSProperties {
+  const value = (color || defaultColor).trim()
+  const palette = /^[a-z][\w-]*$/i.test(value)
+  const base = palette ? `var(--${value}, var(--${defaultColor}))` : value
+  const foreground = palette
+    ? `var(--${value}-foreground, var(--${defaultColor}-foreground))`
+    : getContrastColor(value)
 
-    return {
-      [`--${prefix}-color`]: base,
-      [`--${prefix}-color-foreground`]: foreground,
-      [`--${prefix}-solid`]: base,
-      [`--${prefix}-solid-foreground`]: foreground,
-    } as CSSProperties
-  })
+  return {
+    [`--${prefix}-color`]: base,
+    [`--${prefix}-color-foreground`]: foreground,
+    [`--${prefix}-solid`]: base,
+    [`--${prefix}-solid-foreground`]: foreground,
+  } as CSSProperties
+}
+
+export function useTheme({ color, prefix, defaultColor, radius, defaultRadius }: ThemeOptions) {
+  const colorStyle = computed<CSSProperties>(() =>
+    getThemeColorStyle(toValue(color), prefix, defaultColor),
+  )
 
   const radiusStyle = computed<CSSProperties>(() => {
     if (!defaultRadius) return {}

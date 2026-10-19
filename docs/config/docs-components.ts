@@ -34,6 +34,7 @@ import masonry from './components/masonry'
 import popover from './components/popover'
 import progress from './components/progress'
 import rating from './components/rating'
+import ribbon from './components/ribbon'
 import separator from './components/separator'
 import stepper from './components/stepper'
 import switchConfig from './components/switch'
@@ -83,6 +84,7 @@ export const docsComponents = [
   popover,
   progress,
   rating,
+  ribbon,
   separator,
   stepper,
   switchConfig,

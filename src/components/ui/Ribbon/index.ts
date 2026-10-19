@@ -1,9 +1,16 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import type { HTMLAttributes } from 'vue'
+import { ribbonItemDefaults, type ribbonPositions } from './constants'
 
 export { default as Ribbon } from './Ribbon.vue'
+export { ribbonDefaults, ribbonItemDefaults, ribbonPositions, ribbonRotations } from './constants'
 
-export const ribbonVariants = cva(
-  'pointer-events-none absolute flex h-8 w-48 items-center justify-center overflow-hidden border-y border-(--ribbon-background) bg-(--ribbon-background) px-4 text-(--ribbon-foreground) text-xs font-semibold tracking-wide whitespace-nowrap shadow-md',
+export type RibbonPosition = (typeof ribbonPositions)[number]
+
+export const ribbonVariants = cva('relative isolate block overflow-hidden')
+
+export const ribbonBandVariants = cva(
+  'pointer-events-none absolute flex h-8 w-48 items-center justify-center overflow-hidden border-y border-(--ribbon-color) bg-(--ribbon-color) px-4 text-xs font-semibold tracking-wide whitespace-nowrap text-(--ribbon-color-foreground) shadow-md',
   {
     variants: {
       position: {
@@ -11,54 +18,53 @@ export const ribbonVariants = cva(
         'top-left': 'top-5 left-[-3.5rem]',
         'bottom-right': 'right-[-3.5rem] bottom-5',
         'bottom-left': 'bottom-5 left-[-3.5rem]',
-      },
-      severity: {
-        primary:
-          '[--ribbon-background:var(--primary)] [--ribbon-foreground:var(--primary-foreground)]',
-        secondary:
-          '[--ribbon-background:var(--secondary)] [--ribbon-foreground:var(--secondary-foreground)]',
-        warning:
-          '[--ribbon-background:var(--warning)] [--ribbon-foreground:var(--warning-foreground)]',
-        success:
-          '[--ribbon-background:var(--success)] [--ribbon-foreground:var(--success-foreground)]',
-        error: '[--ribbon-background:var(--error)] [--ribbon-foreground:var(--error-foreground)]',
-      },
-      color: {
-        true: '[--ribbon-background:var(--ribbon-color)] [--ribbon-foreground:var(--ribbon-color-foreground)]',
-        false: '',
-      },
+      } satisfies Record<RibbonPosition, string>,
     },
     defaultVariants: {
-      severity: 'primary',
-      color: false,
+      position: ribbonItemDefaults.position,
     },
   },
 )
 
-export const ribbonRotations: Record<RibbonPosition, number> = {
-  'top-right': 45,
-  'top-left': -45,
-  'bottom-right': -45,
-  'bottom-left': 45,
-}
+export const ribbonContentVariants = cva('relative z-10')
 
-export type RibbonVariants = VariantProps<typeof ribbonVariants>
-export type RibbonPosition = NonNullable<RibbonVariants['position']>
-export type RibbonSeverity = NonNullable<RibbonVariants['severity']>
-
+// Item
 export interface RibbonItem {
-  label: string
-  severity?: RibbonSeverity
+  label?: string
+  slot?: string
   color?: string
   position?: RibbonPosition
   rotate?: number
   zIndex?: number
 }
 
+// Props
 export interface RibbonProps {
   ribbons?: RibbonItem[]
+  ui?: RibbonUI
 }
 
-export interface RibbonSlots {
+// Context
+export interface RibbonItemContext {
+  item: RibbonItem
+  index: number
+}
+
+// Fn
+export type RibbonFn<T> = () => T
+export type RibbonItemFn<T> = (context: RibbonItemContext) => T
+
+// UI
+export interface RibbonUI {
+  band?: RibbonItemFn<HTMLAttributes>
+  label?: RibbonItemFn<HTMLAttributes>
+  content?: RibbonFn<HTMLAttributes>
+}
+
+// Slots
+export type RibbonSlots = {
   default?(): unknown
+  label?(props: RibbonItemContext): unknown
+} & {
+  [name: `label-${string}`]: ((props: RibbonItemContext) => unknown) | undefined
 }
