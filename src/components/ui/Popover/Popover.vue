@@ -2,12 +2,11 @@
 import { computed } from 'vue'
 import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'reka-ui'
 import { cn } from '@/lib/utils'
+import { useUi } from '@/composables/useUi'
 import { arrowPaths } from '@/components/ui/constants'
 import {
   popoverArrowVariants,
   popoverContentVariants,
-  type PopoverArrowConfig,
-  type PopoverContentConfig,
   type PopoverContext,
   type PopoverEmits,
   type PopoverProps,
@@ -44,11 +43,17 @@ const triggerProps = {
   asChild: true,
 }
 
-const contentProps = computed<PopoverContentConfig>(() => ({
-  ...popoverDefaults.content,
-  ...props.content,
-  class: cn(popoverContentVariants(), props.content?.class),
-}))
+const contentProps = computed(() => {
+  const { dir: _dir, class: uiClass, ...contentUI } = useUi(props.ui?.content, popoverContext.value)
+  void _dir
+
+  return {
+    ...contentUI,
+    ...popoverDefaults.content,
+    ...props.content,
+    class: cn(popoverContentVariants(), uiClass),
+  }
+})
 
 const portalProps = {
   to: 'body',
@@ -57,11 +62,16 @@ const portalProps = {
   disabled: undefined,
 }
 
-const arrowProps = computed<PopoverArrowConfig>(() => ({
-  ...popoverDefaults.arrow,
-  ...props.arrow,
-  class: cn(popoverArrowVariants(), props.arrow?.class),
-}))
+const arrowProps = computed(() => {
+  const { class: uiClass, ...arrowUI } = useUi(props.ui?.arrow, popoverContext.value)
+
+  return {
+    ...arrowUI,
+    ...popoverDefaults.arrow,
+    ...props.arrow,
+    class: cn(popoverArrowVariants(), uiClass),
+  }
+})
 </script>
 
 <template>

@@ -2,6 +2,7 @@ export const popoverDefaults = {
   open: false,
   modal: false,
   showArrow: false,
+  ui: undefined,
   content: {
     as: 'div' as const,
     asChild: false,

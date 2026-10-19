@@ -105,14 +105,14 @@ const tooltipConfig: ComponentDocConfig = {
         type: 'TooltipContentConfig',
         typeLink: '#tooltip-content-config',
         default: formatDefaultObject(tooltipDefaults.content),
-        description: 'Grouped TooltipContent props, event callbacks, and HTML attributes.',
+        description: 'Grouped TooltipContent props and event callbacks.',
       },
       {
         name: 'arrow',
         type: 'TooltipArrowConfig',
         typeLink: '#tooltip-arrow-config',
         default: formatDefaultObject(tooltipDefaults.arrow),
-        description: 'Arrow size and attributes.',
+        description: 'Arrow size.',
       },
       {
         name: 'showArrow',
@@ -120,13 +120,31 @@ const tooltipConfig: ComponentDocConfig = {
         default: String(tooltipDefaults.showArrow),
         description: 'Renders the arrow when content is present.',
       },
+      {
+        name: 'ui',
+        type: `{
+  content?: (context: TooltipContext) => HTMLAttributes
+  arrow?: (context: TooltipContext) => HTMLAttributes
+}`,
+        typePre: true,
+        typeParts: [
+          { text: '{\n  content?: (context: ' },
+          { text: 'TooltipContext', link: '#tooltip-context' },
+          { text: ') => HTMLAttributes\n  arrow?: (context: ' },
+          { text: 'TooltipContext', link: '#tooltip-context' },
+          { text: ') => HTMLAttributes\n}' },
+        ],
+        default: String(tooltipDefaults.ui),
+        description:
+          'Resolvers for attributes and classes on the content and the arrow. Each receives TooltipContext. Use content.ariaLabel for the accessible label; an aria-label set here is ignored.',
+      },
     ],
     configs: [
       {
         id: 'tooltip-content-config',
         title: 'TooltipContentConfig',
         description:
-          'Combines the listed Reka UI content props and event callbacks with HTML attributes such as id, class, style, and ARIA attributes.',
+          'Reka UI content props and event callbacks. Set HTML attributes such as class and style through ui.content.',
         rows: [
           {
             name: 'as',
@@ -243,7 +261,7 @@ const tooltipConfig: ComponentDocConfig = {
         id: 'tooltip-arrow-config',
         title: 'TooltipArrowConfig',
         description:
-          'Combines the listed Reka UI arrow props with HTML attributes such as class and style.',
+          'Reka UI arrow props. Set HTML attributes such as class and style through ui.arrow.',
         rows: [
           {
             name: 'as',
@@ -276,7 +294,7 @@ const tooltipConfig: ComponentDocConfig = {
         title: 'TooltipContext',
         typeLabel: 'slotProps',
         showDefault: false,
-        description: 'Context passed to both slots.',
+        description: 'Context passed to both slots and the ui resolvers.',
         rows: [
           { name: 'open', type: 'boolean', description: 'Current open state.' },
           { name: 'close', type: '() => void', description: 'Closes the tooltip.' },

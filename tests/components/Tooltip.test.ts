@@ -18,7 +18,9 @@ import {
   type TooltipContext,
   type TooltipProps,
   type TooltipSlots,
+  type TooltipUI,
 } from '@/components/ui/Tooltip'
+import { testAttrs } from '../utils/testAttrs'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -143,16 +145,6 @@ const casesArrow = [
   },
 ] satisfies Array<{ name: string; input: TooltipProps['arrow']; expected: object }>
 
-const contentAttrs = {
-  input: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
-  expected: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
-} satisfies { input: TooltipContentConfig; expected: Record<string, string> }
-
-const arrowAttrs = {
-  input: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
-  expected: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
-} satisfies { input: TooltipArrowConfig; expected: Record<string, string> }
-
 const contextFunctions = {
   close: expect.any(Function),
 }
@@ -186,6 +178,8 @@ const expectedTooltipContext: TooltipContext = {
 }
 
 const casesSlotContext = ['default', 'content'] satisfies Array<keyof TooltipSlots>
+
+const casesUiContext = ['content', 'arrow'] satisfies Array<keyof TooltipUI>
 
 const casesUpdateOpen = [
   { input: false, expected: true },
@@ -322,16 +316,6 @@ describe('Tooltip', () => {
 
         expect(tooltip.getComponent(TooltipContent).props()).toMatchObject(expected)
       })
-
-      it('pasa la clase, el estilo y los atributos de content al contenido', () => {
-        const content = mountTooltip({
-          props: { open: true, content: contentAttrs.input },
-        }).get('[data-test-tooltip-content]')
-
-        expect(content.classes()).toContain(contentAttrs.expected.class)
-        expect(content.attributes('style')).toContain(contentAttrs.expected.style)
-        expect(content.attributes('title')).toBe(contentAttrs.expected.title)
-      })
     })
 
     describe('arrow', () => {
@@ -340,15 +324,22 @@ describe('Tooltip', () => {
 
         expect(tooltip.getComponent(TooltipArrow).props()).toMatchObject(expected)
       })
+    })
 
-      it('pasa la clase, el estilo y los atributos de arrow a la flecha', () => {
-        const arrow = mountTooltip({
-          props: { open: true, showArrow: true, arrow: arrowAttrs.input },
-        }).get('[data-test-tooltip-arrow]')
+    describe('ui', () => {
+      testAttrs({
+        text: 'pasa atributos mediante ui.content',
+        id: '[data-test-tooltip-content]',
+        // reka-ui consume aria-label como la prop ariaLabel y lo pinta en el nodo con role="tooltip"
+        assertAriaLabel: false,
+        mount: (attrs) => mountTooltip({ props: { open: true, ui: { content: () => attrs } } }),
+      })
 
-        expect(arrow.classes()).toContain(arrowAttrs.expected.class)
-        expect(arrow.attributes('style')).toContain(arrowAttrs.expected.style)
-        expect(arrow.attributes('title')).toBe(arrowAttrs.expected.title)
+      testAttrs({
+        text: 'pasa atributos mediante ui.arrow',
+        id: '[data-test-tooltip-arrow]',
+        mount: (attrs) =>
+          mountTooltip({ props: { open: true, showArrow: true, ui: { arrow: () => attrs } } }),
       })
     })
 
@@ -438,6 +429,13 @@ describe('Tooltip', () => {
         })
 
         expect(context).toEqual(expectedTooltipContext)
+      })
+
+      it.each(casesUiContext)('pasa TooltipContext a ui.%s', (name) => {
+        const resolver = vi.fn(() => ({}))
+        mountTooltip({ props: { open: true, showArrow: true, ui: { [name]: resolver } } })
+
+        expect(resolver).toHaveBeenCalledWith(expectedTooltipContext)
       })
 
       it('close cierra el tooltip y emite update:open con false', () => {

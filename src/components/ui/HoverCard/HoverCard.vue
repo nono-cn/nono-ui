@@ -8,12 +8,11 @@ import {
   HoverCardTrigger,
 } from 'reka-ui'
 import { cn } from '@/lib/utils'
+import { useUi } from '@/composables/useUi'
 import { arrowPaths } from '@/components/ui/constants'
 import {
   hoverCardArrowVariants,
   hoverCardContentVariants,
-  type HoverCardArrowConfig,
-  type HoverCardContentConfig,
   type HoverCardContext,
   type HoverCardEmits,
   type HoverCardProps,
@@ -53,11 +52,21 @@ const triggerProps = {
   reference: undefined,
 }
 
-const contentProps = computed<HoverCardContentConfig>(() => ({
-  ...hoverCardDefaults.content,
-  ...props.content,
-  class: cn(hoverCardContentVariants(), props.content?.class),
-}))
+const contentProps = computed(() => {
+  const {
+    dir: _dir,
+    class: uiClass,
+    ...contentUI
+  } = useUi(props.ui?.content, hoverCardContext.value)
+  void _dir
+
+  return {
+    ...contentUI,
+    ...hoverCardDefaults.content,
+    ...props.content,
+    class: cn(hoverCardContentVariants(), uiClass),
+  }
+})
 
 const portalProps = {
   to: 'body',
@@ -66,11 +75,16 @@ const portalProps = {
   disabled: undefined,
 }
 
-const arrowProps = computed<HoverCardArrowConfig>(() => ({
-  ...hoverCardDefaults.arrow,
-  ...props.arrow,
-  class: cn(hoverCardArrowVariants(), props.arrow?.class),
-}))
+const arrowProps = computed(() => {
+  const { class: uiClass, ...arrowUI } = useUi(props.ui?.arrow, hoverCardContext.value)
+
+  return {
+    ...arrowUI,
+    ...hoverCardDefaults.arrow,
+    ...props.arrow,
+    class: cn(hoverCardArrowVariants(), uiClass),
+  }
+})
 </script>
 
 <template>

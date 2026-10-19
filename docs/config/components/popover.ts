@@ -69,14 +69,14 @@ const popoverConfig: ComponentDocConfig = {
         type: 'PopoverContentConfig',
         typeLink: '#popover-content-config',
         default: formatDefaultObject(popoverDefaults.content),
-        description: 'Grouped PopoverContent props, event callbacks, and HTML attributes.',
+        description: 'Grouped PopoverContent props and event callbacks.',
       },
       {
         name: 'arrow',
         type: 'PopoverArrowConfig',
         typeLink: '#popover-arrow-config',
         default: formatDefaultObject(popoverDefaults.arrow),
-        description: 'Arrow size, shape, and attributes.',
+        description: 'Arrow size and shape.',
       },
       {
         name: 'showArrow',
@@ -84,13 +84,31 @@ const popoverConfig: ComponentDocConfig = {
         default: String(popoverDefaults.showArrow),
         description: 'Renders the arrow when content is present.',
       },
+      {
+        name: 'ui',
+        type: `{
+  content?: (context: PopoverContext) => HTMLAttributes
+  arrow?: (context: PopoverContext) => HTMLAttributes
+}`,
+        typePre: true,
+        typeParts: [
+          { text: '{\n  content?: (context: ' },
+          { text: 'PopoverContext', link: '#popover-context' },
+          { text: ') => HTMLAttributes\n  arrow?: (context: ' },
+          { text: 'PopoverContext', link: '#popover-context' },
+          { text: ') => HTMLAttributes\n}' },
+        ],
+        default: String(popoverDefaults.ui),
+        description:
+          'Resolvers for attributes and classes on the content and the arrow. Each receives PopoverContext.',
+      },
     ],
     configs: [
       {
         id: 'popover-content-config',
         title: 'PopoverContentConfig',
         description:
-          'Combines the listed Reka UI content props and event callbacks with HTML attributes such as id, class, style, and ARIA attributes.',
+          'Reka UI content props and event callbacks. Set HTML attributes such as class and style through ui.content.',
         rows: [
           {
             name: 'as',
@@ -261,7 +279,7 @@ const popoverConfig: ComponentDocConfig = {
         id: 'popover-arrow-config',
         title: 'PopoverArrowConfig',
         description:
-          'Combines the listed Reka UI arrow props with HTML attributes such as class and style.',
+          'Reka UI arrow props. Set HTML attributes such as class and style through ui.arrow.',
         rows: [
           {
             name: 'as',
@@ -300,7 +318,7 @@ const popoverConfig: ComponentDocConfig = {
         title: 'PopoverContext',
         typeLabel: 'slotProps',
         showDefault: false,
-        description: 'Context passed to both slots.',
+        description: 'Context passed to both slots and the ui resolvers.',
         rows: [
           { name: 'open', type: 'boolean', description: 'Current open state.' },
           { name: 'close', type: '() => void', description: 'Closes the popover.' },

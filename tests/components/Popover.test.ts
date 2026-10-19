@@ -11,8 +11,10 @@ import {
   type PopoverContext,
   type PopoverProps,
   type PopoverSlots,
+  type PopoverUI,
 } from '@/components/ui/Popover'
 import { arrowPaths } from '@/components/ui/constants'
+import { testAttrs } from '../utils/testAttrs'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -82,16 +84,6 @@ const casesArrowPath = [
   { name: 'por defecto', input: undefined, expected: arrowPaths.sharp },
 ] satisfies Array<{ name: string; input: PopoverArrowConfig['rounded']; expected: string }>
 
-const contentAttrs = {
-  input: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
-  expected: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
-} satisfies { input: PopoverContentConfig; expected: Record<string, string> }
-
-const arrowAttrs = {
-  input: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
-  expected: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
-} satisfies { input: PopoverArrowConfig; expected: Record<string, string> }
-
 const contextFunctions = {
   close: expect.any(Function),
 }
@@ -125,6 +117,8 @@ const expectedPopoverContext: PopoverContext = {
 }
 
 const casesSlotContext = ['default', 'content'] satisfies Array<keyof PopoverSlots>
+
+const casesUiContext = ['content', 'arrow'] satisfies Array<keyof PopoverUI>
 
 const casesUpdateOpen = [
   { input: false, expected: true },
@@ -204,16 +198,6 @@ describe('Popover', () => {
 
         expect(popover.getComponent(PopoverContent).props()).toMatchObject(expected)
       })
-
-      it('pasa la clase, el estilo y los atributos de content al contenido', () => {
-        const content = mountPopover({
-          props: { open: true, content: contentAttrs.input },
-        }).get('[data-test-popover-content]')
-
-        expect(content.classes()).toContain(contentAttrs.expected.class)
-        expect(content.attributes('style')).toContain(contentAttrs.expected.style)
-        expect(content.attributes('title')).toBe(contentAttrs.expected.title)
-      })
     })
 
     describe('arrow', () => {
@@ -230,15 +214,22 @@ describe('Popover', () => {
 
         expect(arrow.attributes('d')).toBe(expected)
       })
+    })
 
-      it('pasa la clase, el estilo y los atributos de arrow a la flecha', () => {
-        const arrow = mountPopover({
-          props: { open: true, showArrow: true, arrow: arrowAttrs.input },
-        }).get('[data-test-popover-arrow]')
+    describe('ui', () => {
+      testAttrs({
+        text: 'pasa atributos mediante ui.content',
+        id: '[data-test-popover-content]',
+        // reka-ui fija el id del contenido para enlazarlo con aria-controls del trigger
+        assertId: false,
+        mount: (attrs) => mountPopover({ props: { open: true, ui: { content: () => attrs } } }),
+      })
 
-        expect(arrow.classes()).toContain(arrowAttrs.expected.class)
-        expect(arrow.attributes('style')).toContain(arrowAttrs.expected.style)
-        expect(arrow.attributes('title')).toBe(arrowAttrs.expected.title)
+      testAttrs({
+        text: 'pasa atributos mediante ui.arrow',
+        id: '[data-test-popover-arrow]',
+        mount: (attrs) =>
+          mountPopover({ props: { open: true, showArrow: true, ui: { arrow: () => attrs } } }),
       })
     })
 
@@ -345,6 +336,13 @@ describe('Popover', () => {
         })
 
         expect(context).toEqual(expectedPopoverContext)
+      })
+
+      it.each(casesUiContext)('pasa PopoverContext a ui.%s', (name) => {
+        const resolver = vi.fn(() => ({}))
+        mountPopover({ props: { open: true, showArrow: true, ui: { [name]: resolver } } })
+
+        expect(resolver).toHaveBeenCalledWith(expectedPopoverContext)
       })
     })
   })

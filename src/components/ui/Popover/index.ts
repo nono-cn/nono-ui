@@ -47,10 +47,17 @@ export type PopoverArrowProps = Pick<
   RekaPopoverArrowProps,
   'as' | 'asChild' | 'width' | 'height' | 'rounded'
 >
-export type PopoverContentConfig = PopoverContentProps &
-  EmitsAsProps<RekaPopoverContentEmits> &
-  Omit<HTMLAttributes, 'dir'>
-export type PopoverArrowConfig = PopoverArrowProps & HTMLAttributes
+export type PopoverContentConfig = PopoverContentProps & EmitsAsProps<RekaPopoverContentEmits>
+export type PopoverArrowConfig = PopoverArrowProps
+
+// Fn
+export type PopoverFn<T> = (context: PopoverContext) => T
+
+// UI
+export interface PopoverUI {
+  content?: PopoverFn<HTMLAttributes>
+  arrow?: PopoverFn<HTMLAttributes>
+}
 
 // Props
 export interface PopoverProps extends PopoverRootProps {
@@ -58,6 +65,7 @@ export interface PopoverProps extends PopoverRootProps {
   content?: PopoverContentConfig
   arrow?: PopoverArrowConfig
   showArrow?: boolean
+  ui?: PopoverUI
 }
 
 // Context

@@ -19,7 +19,7 @@ const align = ref<NonNullable<PopoverContentConfig['align']>>(${JSON.stringify(a
 ${scriptEnd}
 
 <template>
-  <Popover :content="{ side, align, sideOffset: 12, class: 'w-56' }">
+  <Popover :content="{ side, align, sideOffset: 12 }" :ui="{ content: () => ({ class: 'w-56' }) }">
     <Button label="Open popover" variant="outline" />
     <template #content><p class="text-sm">Positioned on the {{ side }}.</p></template>
   </Popover>
@@ -49,7 +49,10 @@ function reset() {
         <ExampleSelectControl v-model="align" label="Align" :options="['start', 'center', 'end']" />
       </div>
     </template>
-    <Popover :content="{ side, align, sideOffset: 12, class: 'w-56' }">
+    <Popover
+      :content="{ side, align, sideOffset: 12 }"
+      :ui="{ content: () => ({ class: 'w-56' }) }"
+    >
       <Button label="Open popover" variant="outline" />
       <template #content
         ><p class="text-sm">Positioned on the {{ side }}.</p></template

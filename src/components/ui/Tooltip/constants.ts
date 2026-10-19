@@ -7,6 +7,7 @@ export const tooltipDefaults = {
   ignoreNonKeyboardFocus: false,
   text: undefined,
   showArrow: false,
+  ui: undefined,
   content: {
     as: 'div' as const,
     asChild: false,

@@ -48,20 +48,29 @@ export type HoverCardArrowProps = Pick<
   RekaHoverCardArrowProps,
   'as' | 'asChild' | 'width' | 'height' | 'rounded'
 >
-export type HoverCardContentConfig = HoverCardContentProps &
-  Omit<HTMLAttributes, 'dir'> & {
-    onEscapeKeyDown?: (event: KeyboardEvent) => void
-    onPointerDownOutside?: (event: PointerDownOutsideEvent) => void
-    onFocusOutside?: (event: FocusOutsideEvent) => void
-    onInteractOutside?: (event: PointerDownOutsideEvent | FocusOutsideEvent) => void
-  }
-export type HoverCardArrowConfig = HoverCardArrowProps & HTMLAttributes
+export type HoverCardContentConfig = HoverCardContentProps & {
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
+  onPointerDownOutside?: (event: PointerDownOutsideEvent) => void
+  onFocusOutside?: (event: FocusOutsideEvent) => void
+  onInteractOutside?: (event: PointerDownOutsideEvent | FocusOutsideEvent) => void
+}
+export type HoverCardArrowConfig = HoverCardArrowProps
+
+// Fn
+export type HoverCardFn<T> = (context: HoverCardContext) => T
+
+// UI
+export interface HoverCardUI {
+  content?: HoverCardFn<HTMLAttributes>
+  arrow?: HoverCardFn<HTMLAttributes>
+}
 
 export interface HoverCardProps extends HoverCardRootProps {
   open?: boolean
   content?: HoverCardContentConfig
   arrow?: HoverCardArrowConfig
   showArrow?: boolean
+  ui?: HoverCardUI
 }
 
 export interface HoverCardContext {

@@ -4,6 +4,7 @@ export const hoverCardDefaults = {
   closeDelay: 300,
   enableTouch: false,
   showArrow: false,
+  ui: undefined,
   content: {
     as: 'div' as const,
     asChild: false,

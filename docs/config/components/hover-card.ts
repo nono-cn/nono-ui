@@ -80,14 +80,14 @@ const hoverCardConfig: ComponentDocConfig = {
         type: 'HoverCardContentConfig',
         typeLink: '#hover-card-content-config',
         default: formatDefaultObject(hoverCardDefaults.content),
-        description: 'Content positioning, attributes, and outside interaction callbacks.',
+        description: 'Content positioning and outside interaction callbacks.',
       },
       {
         name: 'arrow',
         type: 'HoverCardArrowConfig',
         typeLink: '#hover-card-arrow-config',
         default: formatDefaultObject(hoverCardDefaults.arrow),
-        description: 'Arrow size, shape, and attributes.',
+        description: 'Arrow size and shape.',
       },
       {
         name: 'showArrow',
@@ -95,13 +95,31 @@ const hoverCardConfig: ComponentDocConfig = {
         default: String(hoverCardDefaults.showArrow),
         description: 'Renders the default arrow when content is present.',
       },
+      {
+        name: 'ui',
+        type: `{
+  content?: (context: HoverCardContext) => HTMLAttributes
+  arrow?: (context: HoverCardContext) => HTMLAttributes
+}`,
+        typePre: true,
+        typeParts: [
+          { text: '{\n  content?: (context: ' },
+          { text: 'HoverCardContext', link: '#hover-card-context' },
+          { text: ') => HTMLAttributes\n  arrow?: (context: ' },
+          { text: 'HoverCardContext', link: '#hover-card-context' },
+          { text: ') => HTMLAttributes\n}' },
+        ],
+        default: String(hoverCardDefaults.ui),
+        description:
+          'Resolvers for attributes and classes on the content and the arrow. Each receives HoverCardContext.',
+      },
     ],
     configs: [
       {
         id: 'hover-card-content-config',
         title: 'HoverCardContentConfig',
         description:
-          'Combines the listed Reka UI content props and event callbacks with HTML attributes such as id, class, style, and ARIA attributes.',
+          'Reka UI content props and event callbacks. Set HTML attributes such as class and style through ui.content.',
         rows: [
           {
             name: 'as',
@@ -254,7 +272,7 @@ const hoverCardConfig: ComponentDocConfig = {
         id: 'hover-card-arrow-config',
         title: 'HoverCardArrowConfig',
         description:
-          'Combines the listed Reka UI arrow props with HTML attributes such as class and style.',
+          'Reka UI arrow props. Set HTML attributes such as class and style through ui.arrow.',
         rows: [
           {
             name: 'as',
@@ -293,7 +311,7 @@ const hoverCardConfig: ComponentDocConfig = {
         title: 'HoverCardContext',
         typeLabel: 'slotProps',
         showDefault: false,
-        description: 'Context passed to both slots.',
+        description: 'Context passed to both slots and the ui resolvers.',
         rows: [
           { name: 'open', type: 'boolean', description: 'Current open state.' },
           { name: 'close', type: '() => void', description: 'Closes the card.' },

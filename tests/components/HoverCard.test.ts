@@ -15,8 +15,11 @@ import {
   type HoverCardContentConfig,
   type HoverCardContext,
   type HoverCardProps,
+  type HoverCardSlots,
+  type HoverCardUI,
 } from '@/components/ui/HoverCard'
 import { arrowPaths } from '@/components/ui/constants'
+import { testAttrs } from '../utils/testAttrs'
 
 vi.stubGlobal(
   'ResizeObserver',
@@ -97,20 +100,46 @@ const casesArrowPath = [
   { name: 'por defecto', input: undefined, expected: arrowPaths.sharp },
 ] satisfies Array<{ name: string; input: HoverCardArrowConfig['rounded']; expected: string }>
 
-const contentAttrs = {
-  input: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
-  expected: { class: 'custom-content', style: 'opacity: 0.5', title: 'Contenido' },
-} satisfies { input: HoverCardContentConfig; expected: Record<string, string> }
+const contextFunctions = {
+  close: expect.any(Function),
+}
 
-const arrowAttrs = {
-  input: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
-  expected: { class: 'custom-arrow', style: 'opacity: 0.5', title: 'Flecha' },
-} satisfies { input: HoverCardArrowConfig; expected: Record<string, string> }
+const casesHoverCardContext = [
+  {
+    name: 'abierto',
+    input: { open: true },
+    expected: { open: true },
+  },
+  {
+    name: 'cerrado',
+    input: { open: false },
+    expected: { open: false },
+  },
+  {
+    name: 'open por defecto',
+    input: { open: undefined },
+    expected: { open: hoverCardDefaults.open },
+  },
+] satisfies Array<{
+  name: string
+  input: Partial<HoverCardProps>
+  expected: Omit<HoverCardContext, keyof typeof contextFunctions>
+}>
+
+// contexto del hover card abierto, usado para comprobar que llega a cada slot
+const expectedHoverCardContext: HoverCardContext = {
+  ...casesHoverCardContext[0]!.expected,
+  ...contextFunctions,
+}
+
+const casesSlotContext = ['default', 'content'] satisfies Array<keyof HoverCardSlots>
+
+const casesUiContext = ['content', 'arrow'] satisfies Array<keyof HoverCardUI>
+
 const casesUpdateOpen = [
   { initial: false, value: true },
   { initial: true, value: false },
 ]
-const casesContext = casesOpen.map(({ input }) => input)
 
 describe('HoverCard', () => {
   describe('props', () => {
@@ -171,16 +200,6 @@ describe('HoverCard', () => {
 
         expect(wrapper.getComponent(HoverCardContent).props()).toMatchObject(expected)
       })
-
-      it('pasa la clase, el estilo y los atributos de content al contenido', () => {
-        const content = mountOpen({ content: contentAttrs.input }).get(
-          '[data-test-hover-card-content]',
-        )
-
-        expect(content.classes()).toContain(contentAttrs.expected.class)
-        expect(content.attributes('style')).toContain(contentAttrs.expected.style)
-        expect(content.attributes('title')).toBe(contentAttrs.expected.title)
-      })
     })
 
     describe('portal', () => {
@@ -209,15 +228,19 @@ describe('HoverCard', () => {
 
         expect(arrow.attributes('d')).toBe(expected)
       })
+    })
 
-      it('pasa la clase, el estilo y los atributos de arrow a la flecha', () => {
-        const arrow = mountOpen({ showArrow: true, arrow: arrowAttrs.input }).get(
-          '[data-test-hover-card-arrow]',
-        )
+    describe('ui', () => {
+      testAttrs({
+        text: 'pasa atributos mediante ui.content',
+        id: '[data-test-hover-card-content]',
+        mount: (attrs) => mountOpen({ ui: { content: () => attrs } }),
+      })
 
-        expect(arrow.classes()).toContain(arrowAttrs.expected.class)
-        expect(arrow.attributes('style')).toContain(arrowAttrs.expected.style)
-        expect(arrow.attributes('title')).toBe(arrowAttrs.expected.title)
+      testAttrs({
+        text: 'pasa atributos mediante ui.arrow',
+        id: '[data-test-hover-card-arrow]',
+        mount: (attrs) => mountOpen({ showArrow: true, ui: { arrow: () => attrs } }),
       })
     })
 
@@ -253,30 +276,47 @@ describe('HoverCard', () => {
     })
   })
 
-  describe('context contract', () => {
-    it.each(casesContext)('passes the complete context for open=%s', (open) => {
-      const contexts: HoverCardContext[] = []
-      const wrapper = mountHoverCard({
-        props: { open },
-        slots: {
-          default: (context: HoverCardContext) => {
-            contexts.push(context)
-            return h('a', { href: '#profile' }, 'Profile')
-          },
-          content: (context: HoverCardContext) => {
-            contexts.push(context)
-            return h('p', 'Content')
-          },
+  describe('context', () => {
+    describe('HoverCardContext', () => {
+      it.each(casesHoverCardContext)(
+        'cumple el contrato de HoverCardContext en el caso $name',
+        ({ input, expected }) => {
+          let context: HoverCardContext | undefined
+          mountHoverCard({
+            props: input,
+            slots: {
+              default: (value: HoverCardContext) => {
+                context = value
+                return h('a', { href: '#profile' }, 'Profile')
+              },
+            },
+          })
+
+          expect(context).toEqual({ ...expected, ...contextFunctions })
         },
-      })
-      expect(contexts).toHaveLength(open ? 2 : 1)
-      for (const context of contexts) {
-        expect(context).toEqual({
-          open: open ?? hoverCardDefaults.open,
-          close: expect.any(Function),
+      )
+
+      it.each(casesSlotContext)('pasa HoverCardContext al slot %s', (name) => {
+        let context: HoverCardContext | undefined
+        mountHoverCard({
+          props: { open: true },
+          slots: {
+            [name]: (value: HoverCardContext) => {
+              context = value
+              return h('span', 'Slot')
+            },
+          },
         })
-      }
-      expect(wrapper.exists()).toBe(true)
+
+        expect(context).toEqual(expectedHoverCardContext)
+      })
+
+      it.each(casesUiContext)('pasa HoverCardContext a ui.%s', (name) => {
+        const resolver = vi.fn(() => ({}))
+        mountOpen({ showArrow: true, ui: { [name]: resolver } })
+
+        expect(resolver).toHaveBeenCalledWith(expectedHoverCardContext)
+      })
     })
   })
 })

@@ -46,10 +46,17 @@ export type TooltipContentProps = Pick<
   | 'forceMount'
 >
 export type TooltipArrowProps = Pick<RekaTooltipArrowProps, 'as' | 'asChild' | 'width' | 'height'>
-export type TooltipContentConfig = TooltipContentProps &
-  EmitsAsProps<RekaTooltipContentEmits> &
-  Omit<HTMLAttributes, 'dir'>
-export type TooltipArrowConfig = TooltipArrowProps & HTMLAttributes
+export type TooltipContentConfig = TooltipContentProps & EmitsAsProps<RekaTooltipContentEmits>
+export type TooltipArrowConfig = TooltipArrowProps
+
+// Fn
+export type TooltipFn<T> = (context: TooltipContext) => T
+
+// UI
+export interface TooltipUI {
+  content?: TooltipFn<HTMLAttributes>
+  arrow?: TooltipFn<HTMLAttributes>
+}
 
 // Props
 export interface TooltipProps extends TooltipRootProps {
@@ -58,6 +65,7 @@ export interface TooltipProps extends TooltipRootProps {
   content?: TooltipContentConfig
   arrow?: TooltipArrowConfig
   showArrow?: boolean
+  ui?: TooltipUI
 }
 
 // Context

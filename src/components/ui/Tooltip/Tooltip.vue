@@ -2,12 +2,11 @@
 import { computed } from 'vue'
 import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger } from 'reka-ui'
 import { cn } from '@/lib/utils'
+import { useUi } from '@/composables/useUi'
 import { arrowPaths } from '@/components/ui/constants'
 import {
   tooltipArrowVariants,
   tooltipContentVariants,
-  type TooltipArrowConfig,
-  type TooltipContentConfig,
   type TooltipContext,
   type TooltipEmits,
   type TooltipProps,
@@ -49,11 +48,17 @@ const triggerProps = {
   asChild: true,
 }
 
-const contentProps = computed<TooltipContentConfig>(() => ({
-  ...tooltipDefaults.content,
-  ...props.content,
-  class: cn(tooltipContentVariants(), props.content?.class),
-}))
+const contentProps = computed(() => {
+  const { dir: _dir, class: uiClass, ...contentUI } = useUi(props.ui?.content, tooltipContext.value)
+  void _dir
+
+  return {
+    ...contentUI,
+    ...tooltipDefaults.content,
+    ...props.content,
+    class: cn(tooltipContentVariants(), uiClass),
+  }
+})
 
 const portalProps = {
   to: 'body',
@@ -62,11 +67,16 @@ const portalProps = {
   disabled: undefined,
 }
 
-const arrowProps = computed<TooltipArrowConfig>(() => ({
-  ...tooltipDefaults.arrow,
-  ...props.arrow,
-  class: cn(tooltipArrowVariants(), props.arrow?.class),
-}))
+const arrowProps = computed(() => {
+  const { class: uiClass, ...arrowUI } = useUi(props.ui?.arrow, tooltipContext.value)
+
+  return {
+    ...arrowUI,
+    ...tooltipDefaults.arrow,
+    ...props.arrow,
+    class: cn(tooltipArrowVariants(), uiClass),
+  }
+})
 </script>
 
 <template>
