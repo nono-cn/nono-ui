@@ -32,6 +32,7 @@ import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
 import meterGroup from './components/meter-group'
+import pagination from './components/pagination'
 import popover from './components/popover'
 import progress from './components/progress'
 import radioGroup from './components/radio-group'
@@ -84,6 +85,7 @@ export const docsComponents = [
   marker,
   masonry,
   meterGroup,
+  pagination,
   popover,
   progress,
   radioGroup,
