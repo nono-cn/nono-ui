@@ -1,11 +1,12 @@
 import { nextTick } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { RadioGroupItem as RekaRadioGroupItem, RadioGroupRoot } from 'reka-ui'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   RadioGroup,
   radioGroupDefaults,
+  type RadioGroupContext,
   type RadioGroupItem,
   type RadioGroupItemContext,
   type RadioGroupProps,
@@ -448,6 +449,62 @@ const casesIndicator = [
     variant?: { card: { class: { item: string[] } }; table: { class: { item: string[] } } }
   }
 }>
+
+const contextItem = {
+  label: 'Sistema',
+  description: 'Sigue al sistema',
+  value: 'system',
+  icon: 'heart',
+} satisfies RadioGroupItem
+
+const contextDisabledItem = { ...contextItem, disabled: true } satisfies RadioGroupItem
+
+// un solo ítem; group es lo que recibe el grupo e item lo que recibe el ítem
+const casesContext = [
+  {
+    name: 'sin selección',
+    input: { modelValue: undefined, disabled: undefined, item: contextItem },
+    expected: {
+      group: { value: undefined, disabled: false },
+      item: { item: contextItem, index: 0, checked: false, disabled: false },
+    },
+  },
+  {
+    name: 'con el ítem seleccionado',
+    input: { modelValue: 'system', disabled: undefined, item: contextItem },
+    expected: {
+      group: { value: 'system', disabled: false },
+      item: { item: contextItem, index: 0, checked: true, disabled: false },
+    },
+  },
+  {
+    name: 'con el ítem deshabilitado',
+    input: { modelValue: undefined, disabled: undefined, item: contextDisabledItem },
+    expected: {
+      group: { value: undefined, disabled: false },
+      item: { item: contextDisabledItem, index: 0, checked: false, disabled: true },
+    },
+  },
+  {
+    name: 'con el grupo deshabilitado',
+    input: { modelValue: undefined, disabled: true, item: contextItem },
+    expected: {
+      group: { value: undefined, disabled: true },
+      item: { item: contextItem, index: 0, checked: false, disabled: true },
+    },
+  },
+] satisfies Array<{
+  name: string
+  input: Pick<RadioGroupProps, 'modelValue' | 'disabled'> & { item: RadioGroupItem }
+  expected: { group: RadioGroupContext; item: RadioGroupItemContext }
+}>
+
+// Vue añade ref_for a los slots dentro de un v-for; no es parte del contexto
+function withoutRefFor(slotProps: RadioGroupItemContext & { ref_for?: boolean }) {
+  const { ref_for: _refFor, ...context } = slotProps
+  void _refFor
+  return context
+}
 
 const casesNodos = [
   { input: 'root', expected: { class: ['flex', 'flex-col'], attrs: { role: 'radiogroup' } } },
@@ -1162,6 +1219,87 @@ describe('RadioGroup', () => {
 
         expect(description.text()).toBe('Sigue al sistema')
       })
+    })
+  })
+
+  describe('context contract', () => {
+    describe('RadioGroupContext', () => {
+      it.each(casesContext)(
+        'pasa el contexto del grupo $name a ui.legend, ui.list y al slot legend',
+        ({ input, expected }) => {
+          const ui = { legend: vi.fn(() => ({})), list: vi.fn(() => ({})) }
+          const slots = { legend: vi.fn<(context: RadioGroupContext) => string>(() => 'Slot') }
+
+          mountRadioGroup({
+            props: { ...input, legend: 'Tema', items: [input.item], ui },
+            slots,
+          })
+
+          expect({
+            'ui.legend': ui.legend.mock.calls,
+            'ui.list': ui.list.mock.calls,
+            'slot legend': slots.legend.mock.calls,
+          }).toEqual({
+            'ui.legend': [[expected.group]],
+            'ui.list': [[expected.group]],
+            'slot legend': [[expected.group]],
+          })
+        },
+      )
+    })
+
+    describe('RadioGroupItemContext', () => {
+      it.each(casesContext)(
+        'pasa el contexto del ítem $name a los ui del ítem y a los slots label y description',
+        ({ input, expected }) => {
+          const ui = {
+            item: vi.fn(() => ({})),
+            container: vi.fn(() => ({})),
+            base: vi.fn(() => ({})),
+            indicator: vi.fn(() => ({})),
+            wrapper: vi.fn(() => ({})),
+            icon: vi.fn(() => ({})),
+            label: vi.fn(() => ({})),
+            description: vi.fn(() => ({})),
+          }
+          const slots = {
+            label: vi.fn<(context: RadioGroupItemContext) => string>(() => 'Slot'),
+            description: vi.fn<(context: RadioGroupItemContext) => string>(() => 'Slot'),
+          }
+
+          // indicator hidden para que se pinte el icono
+          mountRadioGroup({
+            props: { ...input, indicator: 'hidden', items: [input.item], ui },
+            slots,
+          })
+
+          expect({
+            'ui.item': ui.item.mock.calls,
+            'ui.container': ui.container.mock.calls,
+            'ui.base': ui.base.mock.calls,
+            'ui.indicator': ui.indicator.mock.calls,
+            'ui.wrapper': ui.wrapper.mock.calls,
+            'ui.icon': ui.icon.mock.calls,
+            'ui.label': ui.label.mock.calls,
+            'ui.description': ui.description.mock.calls,
+            'slot label': slots.label.mock.calls.map(([context]) => [withoutRefFor(context)]),
+            'slot description': slots.description.mock.calls.map(([context]) => [
+              withoutRefFor(context),
+            ]),
+          }).toEqual({
+            'ui.item': [[expected.item]],
+            'ui.container': [[expected.item]],
+            'ui.base': [[expected.item]],
+            'ui.indicator': [[expected.item]],
+            'ui.wrapper': [[expected.item]],
+            'ui.icon': [[expected.item]],
+            'ui.label': [[expected.item]],
+            'ui.description': [[expected.item]],
+            'slot label': [[expected.item]],
+            'slot description': [[expected.item]],
+          })
+        },
+      )
     })
   })
 })
