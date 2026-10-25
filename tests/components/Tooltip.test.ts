@@ -197,7 +197,7 @@ function mountTooltip(options: ComponentMountingOptions<typeof Tooltip> = {}) {
     }).filter(([, slot]) => slot !== undefined),
   )
 
-  // el TooltipProvider lo aporta el ConfigProvider de la app
+  // el TooltipProvider lo aporta el App de la aplicación
   return mount(TooltipProvider, {
     attachTo: document.body,
     global: {

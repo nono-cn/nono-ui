@@ -3,11 +3,11 @@ import { ConfigProvider as RekaConfigProvider, TooltipProvider, useDirection } f
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getTextDirection } from '@/i18n'
-import type { NeutralColor } from '../../types/theme'
+import { appDefaults } from './constants'
+import { type AppProps, type AppSlots } from '.'
 
-const props = withDefaults(defineProps<{ neutral?: NeutralColor }>(), {
-  neutral: 'neutral',
-})
+const props = withDefaults(defineProps<AppProps>(), appDefaults)
+defineSlots<AppSlots>()
 
 const { locale } = useI18n({ useScope: 'global' })
 const localeDirection = computed(() => getTextDirection(locale.value))

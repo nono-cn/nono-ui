@@ -46,10 +46,6 @@
     "./assets/icons": {
       "types": "./dist/assets/icons/index.d.ts",
       "import": "./dist/assets/icons/index.js"
-    },
-    "./components/provider": {
-      "types": "./dist/components/provider/index.d.ts",
-      "import": "./dist/components/provider/index.js"
     }
   },
   "main": "./dist/index.js",

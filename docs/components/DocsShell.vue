@@ -5,7 +5,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import packageJson from '../../package.json'
 import DocsComponentsSidebar from './DocsComponentsSidebar.vue'
 import ComponentDocsPage from './ComponentDocsPage.vue'
-import { ConfigProvider, neutralColors, type NeutralColor } from '@/components/provider'
+import { App, neutralColors, type NeutralColor } from '@/components/ui/App'
 import { docsComponentsBySlug } from '../config/docs-components'
 import { exampleAnchor } from '../config/docs-anchors'
 
@@ -115,7 +115,7 @@ watch(pageTitle, (value) => (document.title = value), { immediate: true })
 </script>
 
 <template>
-  <ConfigProvider :neutral="neutral">
+  <App :neutral="neutral">
     <div class="docs-shell">
       <header class="docs-topbar">
         <RouterLink to="/components/icon" class="docs-brand"
@@ -223,5 +223,5 @@ watch(pageTitle, (value) => (document.title = value), { immediate: true })
         </aside>
       </div>
     </div>
-  </ConfigProvider>
+  </App>
 </template>

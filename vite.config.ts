@@ -11,7 +11,6 @@ const sourceRoot = path.resolve(__dirname, 'src')
 const uiRoot = path.join(sourceRoot, 'components/ui')
 const entries = {
   index: path.join(sourceRoot, 'index.js'),
-  'components/provider/index': path.join(sourceRoot, 'components/provider/index.ts'),
   'components/ui/constants': path.join(uiRoot, 'constants.ts'),
   ...Object.fromEntries(
     readdirSync(uiRoot, { withFileTypes: true })
@@ -40,7 +39,6 @@ export default defineConfig({
     dts({
       tsconfigPath: './tsconfig.app.json',
       include: [
-        'src/components/provider/**/*',
         'src/components/ui/**/*',
         'src/composables/**/*.ts',
         'src/i18n/**/*',
