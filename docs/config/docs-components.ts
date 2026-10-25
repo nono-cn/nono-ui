@@ -34,6 +34,7 @@ import masonry from './components/masonry'
 import meterGroup from './components/meter-group'
 import popover from './components/popover'
 import progress from './components/progress'
+import radioGroup from './components/radio-group'
 import rating from './components/rating'
 import ribbon from './components/ribbon'
 import separator from './components/separator'
@@ -85,6 +86,7 @@ export const docsComponents = [
   meterGroup,
   popover,
   progress,
+  radioGroup,
   rating,
   ribbon,
   separator,

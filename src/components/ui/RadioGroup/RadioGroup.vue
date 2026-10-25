@@ -1,177 +1,281 @@
 <script setup lang="ts">
-import { computed, useAttrs, useId, watch } from 'vue'
-import { RadioGroupRoot } from 'reka-ui'
-import { Label } from '@/components/ui/Label'
+import { computed, useAttrs, useId, useSlots } from 'vue'
+import { RadioGroupIndicator, RadioGroupItem, RadioGroupRoot, type AcceptableValue } from 'reka-ui'
+import { Icon } from '@/components/ui/Icon'
+import { useTheme } from '@/composables'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { normalizeRadioGroupItemProps } from '.'
-import RadioGroupItem from './RadioGroupItem.vue'
-import type {
-  RadioGroupContext,
-  RadioGroupEmits,
-  RadioGroupItemContext,
-  RadioGroupProps,
-  RadioGroupSlots,
-  RadioGroupValue,
+import {
+  radioGroupBaseVariants,
+  radioGroupContainerVariants,
+  radioGroupDescriptionVariants,
+  radioGroupIconVariants,
+  radioGroupIndicatorVariants,
+  radioGroupItemVariants,
+  radioGroupLabelVariants,
+  radioGroupLegendVariants,
+  radioGroupListVariants,
+  radioGroupVariants,
+  radioGroupWrapperVariants,
+  type RadioGroupContext,
+  type RadioGroupEmits,
+  type RadioGroupItemContext,
+  type RadioGroupProps,
+  type RadioGroupSlots,
+  type RadioGroupValue,
 } from '.'
+import { radioGroupDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<RadioGroupProps>(), {
-  orientation: 'vertical',
-  grouped: false,
-  radioPosition: 'left',
-  loop: true,
-  as: 'div',
-  asChild: false,
-  items: () => [],
-  ui: undefined,
-})
+const props = withDefaults(defineProps<RadioGroupProps>(), radioGroupDefaults)
 defineSlots<RadioGroupSlots>()
 const emit = defineEmits<RadioGroupEmits>()
 
 const attrs = useAttrs()
-const value = defineModel<RadioGroupValue>('value')
-const radioGroupId = useId()
+const slots = useSlots()
+const modelValue = defineModel<RadioGroupValue>()
+const id = useId()
+const legendId = `${id}-legend`
 
-watch(value, (nextValue, previousValue) => {
-  if (nextValue !== previousValue) emit('valueChange', nextValue)
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'radio-group',
+  defaultColor: radioGroupDefaults.color,
 })
 
-const radioGroupContext = computed<RadioGroupContext>(() => {
-  const { ui, ...radioGroupProps } = props
-  void ui
-
-  return {
-    props: radioGroupProps,
-    value: value.value,
-  }
-})
-
-const rootProps = computed(() => {
-  const rootUI = useUi(props.ui?.root, radioGroupContext.value)
-
-  return {
-    ...attrs,
-    ...rootUI,
-    as: props.as,
-    asChild: props.asChild,
-    disabled: props.disabled,
-    name: props.name,
-    orientation: props.orientation,
-    dir: props.dir,
-    loop: props.loop,
-    required: props.required,
-    rovingFocus: props.rovingFocus,
-    class: cn(
-      'grid gap-3',
-      props.orientation === 'horizontal' && 'grid-flow-col auto-cols-fr',
-      props.orientation === 'horizontal' && props.grouped && 'w-fit auto-cols-max',
-      attrs.class,
-      rootUI.class,
-    ),
-    style: [attrs.style, rootUI.style],
-  }
-})
-
-function getKey(context: RadioGroupItemContext) {
-  return String(context.item.value)
-}
-
-function getInputId(context: RadioGroupItemContext) {
-  return `${radioGroupId}-${getKey(context)}`
-}
+const context = computed<RadioGroupContext>(() => ({
+  value: modelValue.value,
+  disabled: props.disabled,
+}))
 
 const itemContexts = computed<RadioGroupItemContext[]>(() =>
   props.items.map((item, index) => ({
-    ...radioGroupContext.value,
     item,
     index,
-    selected: Object.is(value.value, item.value),
+    checked: Object.is(modelValue.value, item.value),
+    disabled: props.disabled || Boolean(item.disabled),
   })),
 )
 
-function getItemProps(context: RadioGroupItemContext) {
-  const ui = useUi(props.ui?.item, context)
+const hasLegend = computed(() => Boolean(props.legend || slots.legend))
+
+const rootProps = computed(() => ({
+  ...attrs,
+  disabled: props.disabled,
+  loop: props.loop,
+  name: props.name,
+  required: props.required,
+  orientation: props.orientation,
+  'aria-labelledby': hasLegend.value ? legendId : attrs['aria-labelledby'],
+  class: cn(radioGroupVariants(), attrs.class),
+  style: [colorStyle.value, attrs.style],
+}))
+
+const legendProps = computed(() => {
+  const ui = useUi(props.ui?.legend, context.value)
 
   return {
     ...ui,
-    for: getInputId(context),
+    id: legendId,
+    class: cn(radioGroupLegendVariants({ size: props.size }), ui.class),
+  }
+})
+
+const listProps = computed(() => {
+  const ui = useUi(props.ui?.list, context.value)
+
+  return {
+    ...ui,
     class: cn(
-      'flex cursor-pointer items-center gap-2 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50',
+      radioGroupListVariants({
+        orientation: props.orientation,
+        variant: props.variant,
+        size: props.size,
+      }),
       ui.class,
     ),
-    style: ui.style,
   }
-}
+})
 
-function getRadioProps(context: RadioGroupItemContext) {
-  const ui = useUi(props.ui?.radio, context)
+function getItemProps(itemContext: RadioGroupItemContext) {
+  const ui = useUi(props.ui?.item, itemContext)
 
   return {
     ...ui,
-    ...normalizeRadioGroupItemProps(context.item),
-    id: getInputId(context),
-    class: cn(ui.class),
-    style: ui.style,
+    class: cn(
+      radioGroupItemVariants({
+        variant: props.variant,
+        orientation: props.orientation,
+        indicator: props.indicator,
+        size: props.size,
+        disabled: itemContext.disabled,
+      }),
+      ui.class,
+    ),
   }
 }
 
-function getContentProps(context: RadioGroupItemContext) {
-  const ui = useUi(props.ui?.content, context)
-  return { ...ui, class: cn('grid gap-1', ui.class), style: ui.style }
-}
+function getContainerProps(itemContext: RadioGroupItemContext) {
+  const ui = useUi(props.ui?.container, itemContext)
 
-function getLabelProps(context: RadioGroupItemContext) {
-  const ui = useUi(props.ui?.label, context)
-  return { ...ui, class: cn('text-sm font-medium', ui.class), style: ui.style }
-}
-
-function getDescriptionProps(context: RadioGroupItemContext) {
-  const ui = useUi(props.ui?.description, context)
-  return { ...ui, class: cn('text-sm text-muted-foreground', ui.class), style: ui.style }
-}
-
-function getSlotNames(context: RadioGroupItemContext) {
-  const key = getKey(context)
   return {
-    leading: `leading-${key}` as `leading-${string}`,
-    trailing: `trailing-${key}` as `trailing-${string}`,
+    ...ui,
+    class: cn(
+      radioGroupContainerVariants({ size: props.size, indicator: props.indicator }),
+      ui.class,
+    ),
   }
+}
+
+function getBaseProps(itemContext: RadioGroupItemContext) {
+  const ui = useUi(props.ui?.base, itemContext)
+
+  return {
+    ...ui,
+    value: itemContext.item.value,
+    disabled: itemContext.disabled,
+    'aria-labelledby': hasLabel(itemContext) ? getPartId(itemContext, 'label') : undefined,
+    'aria-describedby': hasDescription(itemContext)
+      ? getPartId(itemContext, 'description')
+      : undefined,
+    class: cn(
+      radioGroupBaseVariants({
+        size: props.size,
+        variant: props.variant,
+        indicator: props.indicator,
+      }),
+      ui.class,
+    ),
+  }
+}
+
+function getIndicatorProps(itemContext: RadioGroupItemContext) {
+  const ui = useUi(props.ui?.indicator, itemContext)
+
+  return {
+    ...ui,
+    class: cn(radioGroupIndicatorVariants({ size: props.size }), ui.class),
+  }
+}
+
+function getWrapperProps(itemContext: RadioGroupItemContext) {
+  const ui = useUi(props.ui?.wrapper, itemContext)
+
+  return {
+    ...ui,
+    class: cn(radioGroupWrapperVariants({ indicator: props.indicator }), ui.class),
+  }
+}
+
+function getIconProps(itemContext: RadioGroupItemContext) {
+  const ui = useUi(props.ui?.icon, itemContext)
+
+  return {
+    ...ui,
+    name: itemContext.item.icon!,
+    color: 'currentColor',
+    class: cn(radioGroupIconVariants({ size: props.size }), ui.class),
+  }
+}
+
+function getLabelProps(itemContext: RadioGroupItemContext) {
+  const ui = useUi(props.ui?.label, itemContext)
+
+  return {
+    ...ui,
+    id: getPartId(itemContext, 'label'),
+    class: cn(radioGroupLabelVariants(), ui.class),
+  }
+}
+
+function getDescriptionProps(itemContext: RadioGroupItemContext) {
+  const ui = useUi(props.ui?.description, itemContext)
+
+  return {
+    ...ui,
+    id: getPartId(itemContext, 'description'),
+    class: cn(radioGroupDescriptionVariants(), ui.class),
+  }
+}
+
+function hasLabel(itemContext: RadioGroupItemContext) {
+  return Boolean(itemContext.item.label || slots.label)
+}
+
+function hasDescription(itemContext: RadioGroupItemContext) {
+  return Boolean(itemContext.item.description || slots.description)
+}
+
+function hasIcon(itemContext: RadioGroupItemContext) {
+  return props.indicator === 'hidden' && Boolean(itemContext.item.icon)
+}
+
+function getPartId(itemContext: RadioGroupItemContext, part: 'label' | 'description') {
+  return `${id}-${itemContext.index}-${part}`
+}
+
+function onUpdateModelValue(value: AcceptableValue) {
+  if (typeof value !== 'string' && typeof value !== 'number') return
+  if (Object.is(value, modelValue.value)) return
+  modelValue.value = value
+  emit('change', value)
+}
+
+function getKey(itemContext: RadioGroupItemContext) {
+  return String(itemContext.item.value)
 }
 </script>
 
 <template>
-  <RadioGroupRoot v-model="value" v-bind="rootProps" data-slot="radio-group">
-    <template v-if="itemContexts.length">
-      <template v-for="context in itemContexts" :key="getKey(context)">
-        <slot name="item" v-bind="context">
-          <Label v-bind="getItemProps(context)">
-            <slot :name="getSlotNames(context).leading" v-bind="context">
-              <slot name="leading" v-bind="context" />
-            </slot>
+  <RadioGroupRoot
+    :model-value="modelValue"
+    v-bind="rootProps"
+    data-test-radio-group-root
+    @update:model-value="onUpdateModelValue"
+  >
+    <span v-if="hasLegend" v-bind="legendProps" data-test-radio-group-legend>
+      <slot name="legend" v-bind="context">{{ props.legend }}</slot>
+    </span>
 
-            <RadioGroupItem v-if="props.radioPosition === 'left'" v-bind="getRadioProps(context)" />
-
-            <span v-bind="getContentProps(context)">
-              <span v-bind="getLabelProps(context)">{{ context.item.label }}</span>
-              <span v-if="context.item.description" v-bind="getDescriptionProps(context)">
-                {{ context.item.description }}
-              </span>
-            </span>
-
-            <RadioGroupItem
-              v-if="props.radioPosition === 'right'"
-              v-bind="getRadioProps(context)"
+    <div v-bind="listProps" data-test-radio-group-list>
+      <label
+        v-for="itemContext in itemContexts"
+        :key="getKey(itemContext)"
+        v-bind="getItemProps(itemContext)"
+        data-test-radio-group-item
+      >
+        <span v-bind="getContainerProps(itemContext)" data-test-radio-group-container>
+          <RadioGroupItem v-bind="getBaseProps(itemContext)" data-test-radio-group-base>
+            <RadioGroupIndicator
+              v-bind="getIndicatorProps(itemContext)"
+              data-test-radio-group-indicator
             />
+          </RadioGroupItem>
+        </span>
 
-            <slot :name="getSlotNames(context).trailing" v-bind="context">
-              <slot name="trailing" v-bind="context" />
-            </slot>
-          </Label>
-        </slot>
-      </template>
-    </template>
-    <slot v-else :value="value" />
+        <span v-bind="getWrapperProps(itemContext)" data-test-radio-group-wrapper>
+          <Icon
+            v-if="hasIcon(itemContext)"
+            v-bind="getIconProps(itemContext)"
+            data-test-radio-group-icon
+          />
+          <span
+            v-if="hasLabel(itemContext)"
+            v-bind="getLabelProps(itemContext)"
+            data-test-radio-group-label
+          >
+            <slot name="label" v-bind="itemContext">{{ itemContext.item.label }}</slot>
+          </span>
+          <span
+            v-if="hasDescription(itemContext)"
+            v-bind="getDescriptionProps(itemContext)"
+            data-test-radio-group-description
+          >
+            <slot name="description" v-bind="itemContext">{{ itemContext.item.description }}</slot>
+          </span>
+        </span>
+      </label>
+    </div>
   </RadioGroupRoot>
 </template>
