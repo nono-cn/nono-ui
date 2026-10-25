@@ -1,6 +1,6 @@
 import { nextTick } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
-import { RadioGroupRoot } from 'reka-ui'
+import { RadioGroupItem as RekaRadioGroupItem, RadioGroupRoot } from 'reka-ui'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -11,6 +11,7 @@ import {
   type RadioGroupProps,
 } from '@/components/ui/RadioGroup'
 import { themeColors } from '@/components/ui/constants'
+import { Icon } from '@/components/ui/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 
@@ -56,6 +57,45 @@ const casesItemLabel = [
 ] satisfies Array<{
   input: RadioGroupItem['label']
   expected: { visible: boolean; text: string | undefined }
+}>
+
+const casesItemDescription = [
+  { input: 'Sigue al sistema', expected: { visible: true, text: 'Sigue al sistema' } },
+  { input: '', expected: { visible: false, text: undefined } },
+  { input: undefined, expected: { visible: false, text: undefined } },
+] satisfies Array<{
+  input: RadioGroupItem['description']
+  expected: { visible: boolean; text: string | undefined }
+}>
+
+const casesItemDisabled = [
+  { input: undefined, expected: { reka: false, class: { item: ['cursor-pointer'] } } },
+  { input: false, expected: { reka: false, class: { item: ['cursor-pointer'] } } },
+  {
+    input: true,
+    expected: { reka: true, class: { item: ['cursor-not-allowed', 'opacity-50'] } },
+  },
+] satisfies Array<{
+  input: RadioGroupItem['disabled']
+  expected: { reka: boolean; class: { item: string[] } }
+}>
+
+const casesItemValue = [
+  { input: 'system', expected: { reka: 'system' } },
+  { input: 1, expected: { reka: 1 } },
+] satisfies Array<{
+  input: RadioGroupItem['value']
+  expected: { reka: RadioGroupItem['value'] }
+}>
+
+// con indicator hidden, que es cuando se pinta el icono
+const casesItemIcon = [
+  { input: 'heart', expected: { visible: true, name: 'heart' } },
+  { input: '', expected: { visible: false, name: undefined } },
+  { input: undefined, expected: { visible: false, name: undefined } },
+] satisfies Array<{
+  input: RadioGroupItem['icon']
+  expected: { visible: boolean; name: string | undefined }
 }>
 
 const casesLegend = [
@@ -496,6 +536,19 @@ describe('RadioGroup', () => {
         },
       )
 
+      describe('value', () => {
+        it.each(casesItemValue)(
+          'pasa value=$input del ítem a Reka RadioGroupItem',
+          ({ input, expected }) => {
+            const radioGroup = mountRadioGroup({
+              props: { items: [{ label: 'Sistema', value: input }] },
+            })
+
+            expect(radioGroup.getComponent(RekaRadioGroupItem).props('value')).toBe(expected.reka)
+          },
+        )
+      })
+
       describe('label', () => {
         it.each(casesItemLabel)('muestra el label con label=$input', ({ input, expected }) => {
           const label = mountRadioGroup({
@@ -518,6 +571,88 @@ describe('RadioGroup', () => {
             ).toBe(label?.id)
           },
         )
+      })
+
+      describe('description', () => {
+        it.each(casesItemDescription)(
+          'muestra la descripción con description=$input',
+          ({ input, expected }) => {
+            const description = mountRadioGroup({
+              props: { items: [{ label: 'Sistema', description: input, value: 'system' }] },
+            }).element.querySelector('[data-test-radio-group-description]')
+
+            expect({
+              visible: description !== null,
+              text: description?.textContent?.trim(),
+            }).toEqual(expected)
+          },
+        )
+
+        it.each(casesItemDescription)(
+          'describe el radio con su descripción mediante aria-describedby con description=$input',
+          ({ input }) => {
+            const radioGroup = mountRadioGroup({
+              props: { items: [{ label: 'Sistema', description: input, value: 'system' }] },
+            })
+            const description = radioGroup.element.querySelector(
+              '[data-test-radio-group-description]',
+            )
+
+            expect(
+              radioGroup.get('[data-test-radio-group-base]').attributes('aria-describedby'),
+            ).toBe(description?.id)
+          },
+        )
+      })
+
+      describe('disabled', () => {
+        it.each(casesItemDisabled)(
+          'pasa disabled=$input del ítem a Reka RadioGroupItem',
+          ({ input, expected }) => {
+            const radioGroup = mountRadioGroup({
+              props: { items: [{ label: 'Sistema', value: 'system', disabled: input }] },
+            })
+
+            expect(radioGroup.getComponent(RekaRadioGroupItem).props('disabled')).toBe(
+              expected.reka,
+            )
+          },
+        )
+
+        it.each(casesItemDisabled)(
+          'aplica las clases de disabled=$input del ítem al nodo item',
+          ({ input, expected }) => {
+            const item = mountRadioGroup({
+              props: { items: [{ label: 'Sistema', value: 'system', disabled: input }] },
+            }).get('[data-test-radio-group-item]')
+
+            expect(item.classes()).toEqual(expect.arrayContaining(expected.class.item))
+          },
+        )
+      })
+
+      describe('icon', () => {
+        it.each(casesItemIcon)('muestra el icono con icon=$input', ({ input, expected }) => {
+          const icon = mountRadioGroup({
+            props: {
+              indicator: 'hidden',
+              items: [{ label: 'Sistema', value: 'system', icon: input }],
+            },
+          }).findComponent(Icon)
+
+          expect({
+            visible: icon.exists(),
+            name: icon.exists() ? icon.props('name') : undefined,
+          }).toEqual(expected)
+        })
+
+        it('no muestra el icono si el indicador no está oculto', () => {
+          const icon = mountRadioGroup({
+            props: { items: [{ label: 'Sistema', value: 'system', icon: 'heart' }] },
+          }).findComponent(Icon)
+
+          expect(icon.exists()).toBe(false)
+        })
       })
     })
 
