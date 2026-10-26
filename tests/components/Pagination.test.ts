@@ -84,6 +84,93 @@ const casesEllipsisIcon = [
   { input: 'heart', expected: { name: 'heart' } },
 ] satisfies Array<{ input: PaginationProps['ellipsisIcon']; expected: { name: string } }>
 
+// los controles reciben el tamaño de icono equivalente de Button
+const casesSize = [
+  {
+    input: undefined,
+    expected: {
+      size: { item: 'md', control: 'icon' },
+      class: { item: ['min-w-9', 'px-2.5'], ellipsis: ['size-9'] },
+    },
+  },
+  {
+    input: 'xs',
+    expected: {
+      size: { item: 'xs', control: 'icon-xs' },
+      class: { item: ['min-w-7', 'px-1.5'], ellipsis: ['size-7'] },
+    },
+  },
+  {
+    input: 'sm',
+    expected: {
+      size: { item: 'sm', control: 'icon-sm' },
+      class: { item: ['min-w-8', 'px-2'], ellipsis: ['size-8'] },
+    },
+  },
+  {
+    input: 'md',
+    expected: {
+      size: { item: 'md', control: 'icon' },
+      class: { item: ['min-w-9', 'px-2.5'], ellipsis: ['size-9'] },
+    },
+  },
+  {
+    input: 'lg',
+    expected: {
+      size: { item: 'lg', control: 'icon-lg' },
+      class: { item: ['min-w-10', 'px-3'], ellipsis: ['size-10'] },
+    },
+  },
+  {
+    input: 'xl',
+    expected: {
+      size: { item: 'xl', control: 'icon-xl' },
+      class: { item: ['min-w-11', 'px-3.5'], ellipsis: ['size-11'] },
+    },
+  },
+] satisfies Array<{
+  input: PaginationProps['size']
+  expected: {
+    size: { item: string; control: string }
+    class: { item: string[]; ellipsis: string[] }
+  }
+}>
+
+// las clases de los controles y del ítem son de Button; las de size van en su test
+const casesNodos = [
+  { input: 'root', expected: { class: ['flex', 'w-full', 'justify-center'], attrs: {} } },
+  {
+    input: 'list',
+    expected: { class: ['flex', 'flex-wrap', 'items-center', 'gap-1'], attrs: {} },
+  },
+  { input: 'first', expected: { class: [], attrs: { 'aria-label': i18n.global.t('first') } } },
+  {
+    input: 'previous',
+    expected: { class: [], attrs: { 'aria-label': i18n.global.t('previous') } },
+  },
+  {
+    input: 'item',
+    expected: { class: [], attrs: { 'aria-label': i18n.global.t('page_{n}', { n: 1 }) } },
+  },
+  {
+    input: 'ellipsis',
+    expected: {
+      class: ['flex', 'items-center', 'justify-center', 'text-muted-foreground'],
+      attrs: { role: 'img', 'aria-label': i18n.global.t('morePages') },
+    },
+  },
+  { input: 'next', expected: { class: [], attrs: { 'aria-label': i18n.global.t('next') } } },
+  { input: 'last', expected: { class: [], attrs: { 'aria-label': i18n.global.t('last') } } },
+] satisfies Array<{
+  input: string
+  expected: { class: string[]; attrs: Record<string, string> }
+}>
+
+// 20 páginas con la 10 en medio para que se pinte también la ellipsis
+function mountAllNodes() {
+  return mountPagination({ props: { total: 200, page: 10 } })
+}
+
 describe('Pagination', () => {
   describe('props', () => {
     describe('page', () => {
@@ -234,6 +321,59 @@ describe('Pagination', () => {
         },
       )
     })
+
+    describe('size', () => {
+      it.each(casesSize)(
+        'pasa size=$input al Button de los items y los controls',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { size: input } })
+          const buttonSizeOf = (part: string) =>
+            pagination.get(`[data-test-pagination-${part}]`).findComponent(Button).props('size')
+
+          expect({
+            item: buttonSizeOf('item'),
+            first: buttonSizeOf('first'),
+            previous: buttonSizeOf('previous'),
+            next: buttonSizeOf('next'),
+            last: buttonSizeOf('last'),
+          }).toEqual({
+            item: expected.size.item,
+            first: expected.size.control,
+            previous: expected.size.control,
+            next: expected.size.control,
+            last: expected.size.control,
+          })
+        },
+      )
+
+      it.each(casesSize)(
+        'aplica las clases de size=$input al nodo item y ellipsis',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { total: 200, page: 10, size: input } })
+          const classesOf = (part: string) =>
+            pagination.get(`[data-test-pagination-${part}]`).classes()
+
+          expect({ item: classesOf('item'), ellipsis: classesOf('ellipsis') }).toEqual({
+            item: expect.arrayContaining(expected.class.item),
+            ellipsis: expect.arrayContaining(expected.class.ellipsis),
+          })
+        },
+      )
+    })
+  })
+
+  describe('nodos', () => {
+    it.each(casesNodos)(
+      'aplica las clases y los atributos fijos al nodo $input',
+      ({ input, expected }) => {
+        const node = mountAllNodes().get(`[data-test-pagination-${input}]`)
+
+        expect({ class: node.classes(), attrs: node.attributes() }).toEqual({
+          class: expect.arrayContaining(expected.class),
+          attrs: expect.objectContaining(expected.attrs),
+        })
+      },
+    )
   })
 
   describe('attrs', () => {

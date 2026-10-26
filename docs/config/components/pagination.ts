@@ -89,7 +89,7 @@ const paginationConfig: ComponentDocConfig = {
     {
       title: 'Ellipsis',
       description:
-        'The ellipsis is not focusable. Its icon is hidden from assistive technologies and a visually hidden "More pages" text is read instead.',
+        'The ellipsis is not focusable. It has role="img" and is named "More pages" in the current locale, and its icon is hidden from assistive technologies.',
     },
     {
       title: 'Custom controls and pages',

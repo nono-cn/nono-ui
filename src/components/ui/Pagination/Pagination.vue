@@ -118,6 +118,8 @@ function getEllipsisProps(itemContext: PaginationItemContext) {
   const ui = useUi(props.ui?.ellipsis, itemContext)
 
   return {
+    role: 'img',
+    'aria-label': t('morePages'),
     ...ui,
     class: cn(paginationEllipsisVariants({ size: props.size }), ui.class),
   }
@@ -172,8 +174,7 @@ function getKey(itemContext: PaginationItemContext) {
           data-test-pagination-ellipsis
         >
           <slot name="ellipsis" v-bind="itemContext">
-            <Icon :name="props.ellipsisIcon" :size="props.size" />
-            <span class="sr-only">{{ t('morePages') }}</span>
+            <Icon :name="props.ellipsisIcon" />
           </slot>
         </PaginationEllipsis>
       </template>
