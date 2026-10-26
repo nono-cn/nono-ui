@@ -118,6 +118,4 @@ export type PaginationSlots = {
   last?(props: PaginationContext): unknown
   item?(props: PaginationItemContext): unknown
   ellipsis?(props: PaginationItemContext): unknown
-} & {
-  [name: `item-${string}`]: ((props: PaginationItemContext) => unknown) | undefined
 }

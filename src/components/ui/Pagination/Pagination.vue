@@ -162,10 +162,8 @@ function getKey(itemContext: PaginationItemContext) {
           v-bind="getItemProps(itemContext, itemContext.item.value)"
           data-test-pagination-item
         >
-          <slot :name="`item-${itemContext.item.value}`" v-bind="itemContext">
-            <slot name="item" v-bind="itemContext">
-              <Button v-bind="getItemButtonProps(itemContext, itemContext.item.value)" />
-            </slot>
+          <slot name="item" v-bind="itemContext">
+            <Button v-bind="getItemButtonProps(itemContext, itemContext.item.value)" />
           </slot>
         </PaginationListItem>
 

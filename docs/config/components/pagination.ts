@@ -94,7 +94,7 @@ const paginationConfig: ComponentDocConfig = {
     {
       title: 'Custom controls and pages',
       description:
-        'The content of the first, previous, next, last, item, and item-{page} slots is rendered as the button itself, so it must be a single element, such as a Button. It receives the click handler, disabled, aria-label, and aria-current. Keep the visible text inside the accessible name.',
+        'The content of the first, previous, next, last, and item slots is rendered as the button itself, so it must be a single element, such as a Button. It receives the click handler, disabled, aria-label, and aria-current. Keep the visible text inside the accessible name.',
     },
   ],
   api: {
@@ -328,13 +328,6 @@ const paginationConfig: ComponentDocConfig = {
         type: 'PaginationItemContext',
         typeLink: '#pagination-item-context',
         description: 'Replaces every page button. Must be a single element.',
-      },
-      {
-        name: 'item-{page}',
-        type: 'PaginationItemContext',
-        typeLink: '#pagination-item-context',
-        description:
-          'Replaces the button of the page whose number matches {page}, such as item-1. Must be a single element.',
       },
       {
         name: 'ellipsis',
