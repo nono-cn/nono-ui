@@ -49,7 +49,6 @@ const context = computed<PaginationContext>(() => ({
 }))
 
 const rootProps = computed(() => ({
-  'aria-label': t('pagination'),
   ...attrs,
   total: props.total,
   itemsPerPage: props.itemsPerPage,
