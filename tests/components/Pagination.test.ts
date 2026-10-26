@@ -97,6 +97,22 @@ const casesActiveVariant = [
   { input: 'soft', expected: { variant: 'soft' } },
 ] satisfies Array<{ input: PaginationProps['activeVariant']; expected: { variant: string } }>
 
+const casesColor = [
+  { input: undefined, expected: { color: paginationDefaults.color } },
+  { input: 'success', expected: { color: 'success' } },
+  { input: '#ff0000', expected: { color: '#ff0000' } },
+] satisfies Array<{ input: PaginationProps['color']; expected: { color: string } }>
+
+// sin activeColor el ítem activo hereda color
+const casesActiveColor = [
+  { input: { color: 'success', activeColor: undefined }, expected: { color: 'success' } },
+  { input: { color: 'success', activeColor: 'warning' }, expected: { color: 'warning' } },
+  { input: { color: 'success', activeColor: '#ff0000' }, expected: { color: '#ff0000' } },
+] satisfies Array<{
+  input: Pick<PaginationProps, 'color' | 'activeColor'>
+  expected: { color: string }
+}>
+
 // los controles reciben el tamaño de icono equivalente de Button
 const casesSize = [
   {
@@ -416,6 +432,49 @@ describe('Pagination', () => {
             .props('variant')
 
           expect(variant).toBe(expected.variant)
+        },
+      )
+    })
+
+    describe('color', () => {
+      it.each(casesColor)(
+        'pasa color=$input al Button de los controles y de los ítems no activos',
+        ({ input, expected }) => {
+          // página 1 activa; la 2 no lo está
+          const pagination = mountPagination({ props: { page: 1, color: input } })
+          const buttonColorOf = (part: string) =>
+            pagination.get(`[data-test-pagination-${part}]`).findComponent(Button).props('color')
+
+          expect({
+            first: buttonColorOf('first'),
+            previous: buttonColorOf('previous'),
+            next: buttonColorOf('next'),
+            last: buttonColorOf('last'),
+            item: pagination
+              .findAll('[data-test-pagination-item]')[1]!
+              .findComponent(Button)
+              .props('color'),
+          }).toEqual({
+            first: expected.color,
+            previous: expected.color,
+            next: expected.color,
+            last: expected.color,
+            item: expected.color,
+          })
+        },
+      )
+    })
+
+    describe('activeColor', () => {
+      it.each(casesActiveColor)(
+        'pasa activeColor=$input.activeColor al Button del ítem activo',
+        ({ input, expected }) => {
+          const color = mountPagination({ props: { page: 1, ...input } })
+            .findAll('[data-test-pagination-item]')[0]!
+            .findComponent(Button)
+            .props('color')
+
+          expect(color).toBe(expected.color)
         },
       )
     })
