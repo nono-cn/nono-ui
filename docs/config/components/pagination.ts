@@ -79,7 +79,7 @@ const paginationConfig: ComponentDocConfig = {
     {
       title: 'Navigation landmark',
       description:
-        'The root is a nav element named "Pagination" in the current locale. When a page has more than one pagination, pass a distinct aria-label to each.',
+        'The root is a nav element with no name by default. When a page has more than one pagination, pass a distinct aria-label to each.',
     },
     {
       title: 'Current page',
