@@ -11,8 +11,9 @@ export interface Messages {
   increment: string
   minimum: string
   maximum: string
+  pagination: string
   first: string
-  previus: string
+  previous: string
   next: string
   last: string
   more: string

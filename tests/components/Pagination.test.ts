@@ -1,0 +1,863 @@
+import { h, nextTick, type VNode } from 'vue'
+import { mount, type ComponentMountingOptions } from '@vue/test-utils'
+import { PaginationRoot } from 'reka-ui'
+import { describe, expect, it, vi } from 'vitest'
+
+import { Button } from '@/components/ui/Button'
+import { Icon } from '@/components/ui/Icon'
+import {
+  Pagination,
+  paginationDefaults,
+  type PaginationContext,
+  type PaginationItemContext,
+  type PaginationProps,
+} from '@/components/ui/Pagination'
+import { i18n } from '@/i18n'
+import { testAttrs } from '../utils/testAttrs'
+
+function mountPagination(options: ComponentMountingOptions<typeof Pagination> = {}) {
+  const { props, global, ...rest } = options
+  return mount(Pagination, {
+    props: { total: 30, ...props },
+    global: { ...global, plugins: [i18n, ...(global?.plugins ?? [])] },
+    ...rest,
+  })
+}
+
+const casesPage = [
+  { input: undefined, expected: { reka: 1 } },
+  { input: 1, expected: { reka: 1 } },
+  { input: 3, expected: { reka: 3 } },
+] satisfies Array<{ input: PaginationProps['page']; expected: { reka: number } }>
+
+const casesTotal = [
+  { input: undefined, expected: { reka: paginationDefaults.total } },
+  { input: 0, expected: { reka: 0 } },
+  { input: 30, expected: { reka: 30 } },
+] satisfies Array<{ input: PaginationProps['total']; expected: { reka: number } }>
+
+const casesItemsPerPage = [
+  { input: undefined, expected: { reka: paginationDefaults.itemsPerPage } },
+  { input: 10, expected: { reka: 10 } },
+  { input: 15, expected: { reka: 15 } },
+] satisfies Array<{ input: PaginationProps['itemsPerPage']; expected: { reka: number } }>
+
+const casesSiblingCount = [
+  { input: undefined, expected: { reka: paginationDefaults.siblingCount } },
+  { input: 0, expected: { reka: 0 } },
+  { input: 1, expected: { reka: 1 } },
+] satisfies Array<{ input: PaginationProps['siblingCount']; expected: { reka: number } }>
+
+const casesShowEdges = [
+  { input: undefined, expected: { reka: paginationDefaults.showEdges } },
+  { input: true, expected: { reka: true } },
+  { input: false, expected: { reka: false } },
+] satisfies Array<{ input: PaginationProps['showEdges']; expected: { reka: boolean } }>
+
+const casesDisabled = [
+  { input: undefined, expected: { reka: paginationDefaults.disabled, disabled: false } },
+  { input: true, expected: { reka: true, disabled: true } },
+  { input: false, expected: { reka: false, disabled: false } },
+] satisfies Array<{
+  input: PaginationProps['disabled']
+  expected: { reka: boolean; disabled: boolean }
+}>
+
+const casesShowControls = [
+  { input: undefined, expected: { visible: paginationDefaults.showControls } },
+  { input: true, expected: { visible: true } },
+  { input: false, expected: { visible: false } },
+] satisfies Array<{ input: PaginationProps['showControls']; expected: { visible: boolean } }>
+
+const casesFirstIcon = [
+  { input: undefined, expected: { name: paginationDefaults.firstIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['firstIcon']; expected: { name: string } }>
+
+const casesPreviousIcon = [
+  { input: undefined, expected: { name: paginationDefaults.previousIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['previousIcon']; expected: { name: string } }>
+
+const casesNextIcon = [
+  { input: undefined, expected: { name: paginationDefaults.nextIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['nextIcon']; expected: { name: string } }>
+
+const casesLastIcon = [
+  { input: undefined, expected: { name: paginationDefaults.lastIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['lastIcon']; expected: { name: string } }>
+
+const casesEllipsisIcon = [
+  { input: undefined, expected: { name: paginationDefaults.ellipsisIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['ellipsisIcon']; expected: { name: string } }>
+
+const casesVariant = [
+  { input: undefined, expected: { variant: paginationDefaults.variant } },
+  { input: 'outline', expected: { variant: 'outline' } },
+  { input: 'soft', expected: { variant: 'soft' } },
+] satisfies Array<{ input: PaginationProps['variant']; expected: { variant: string } }>
+
+const casesActiveVariant = [
+  { input: undefined, expected: { variant: paginationDefaults.activeVariant } },
+  { input: 'solid', expected: { variant: 'solid' } },
+  { input: 'soft', expected: { variant: 'soft' } },
+] satisfies Array<{ input: PaginationProps['activeVariant']; expected: { variant: string } }>
+
+const casesColor = [
+  { input: undefined, expected: { color: paginationDefaults.color } },
+  { input: 'success', expected: { color: 'success' } },
+  { input: '#ff0000', expected: { color: '#ff0000' } },
+] satisfies Array<{ input: PaginationProps['color']; expected: { color: string } }>
+
+// sin activeColor el ítem activo hereda color
+const casesActiveColor = [
+  { input: { color: 'success', activeColor: undefined }, expected: { color: 'success' } },
+  { input: { color: 'success', activeColor: 'warning' }, expected: { color: 'warning' } },
+  { input: { color: 'success', activeColor: '#ff0000' }, expected: { color: '#ff0000' } },
+] satisfies Array<{
+  input: Pick<PaginationProps, 'color' | 'activeColor'>
+  expected: { color: string }
+}>
+
+// los controles reciben el tamaño de icono equivalente de Button
+const casesSize = [
+  {
+    input: undefined,
+    expected: {
+      size: { item: 'md', control: 'icon' },
+      class: { item: ['min-w-9', 'px-2.5'], ellipsis: ['size-9'] },
+    },
+  },
+  {
+    input: 'xs',
+    expected: {
+      size: { item: 'xs', control: 'icon-xs' },
+      class: { item: ['min-w-7', 'px-1.5'], ellipsis: ['size-7'] },
+    },
+  },
+  {
+    input: 'sm',
+    expected: {
+      size: { item: 'sm', control: 'icon-sm' },
+      class: { item: ['min-w-8', 'px-2'], ellipsis: ['size-8'] },
+    },
+  },
+  {
+    input: 'md',
+    expected: {
+      size: { item: 'md', control: 'icon' },
+      class: { item: ['min-w-9', 'px-2.5'], ellipsis: ['size-9'] },
+    },
+  },
+  {
+    input: 'lg',
+    expected: {
+      size: { item: 'lg', control: 'icon-lg' },
+      class: { item: ['min-w-10', 'px-3'], ellipsis: ['size-10'] },
+    },
+  },
+  {
+    input: 'xl',
+    expected: {
+      size: { item: 'xl', control: 'icon-xl' },
+      class: { item: ['min-w-11', 'px-3.5'], ellipsis: ['size-11'] },
+    },
+  },
+] satisfies Array<{
+  input: PaginationProps['size']
+  expected: {
+    size: { item: string; control: string }
+    class: { item: string[]; ellipsis: string[] }
+  }
+}>
+
+// las clases de los controles y del ítem son de Button; las de size van en su test
+const casesNodos = [
+  { input: 'root', expected: { class: ['flex', 'w-full', 'justify-center'], attrs: {} } },
+  {
+    input: 'list',
+    expected: { class: ['flex', 'flex-wrap', 'items-center', 'gap-1'], attrs: {} },
+  },
+  { input: 'first', expected: { class: [], attrs: { 'aria-label': i18n.global.t('first') } } },
+  {
+    input: 'previous',
+    expected: { class: [], attrs: { 'aria-label': i18n.global.t('previous') } },
+  },
+  {
+    input: 'item',
+    expected: { class: [], attrs: { 'aria-label': i18n.global.t('page_{n}', { n: 1 }) } },
+  },
+  {
+    input: 'ellipsis',
+    expected: {
+      class: ['flex', 'items-center', 'justify-center', 'text-muted-foreground'],
+      attrs: { role: 'img', 'aria-label': i18n.global.t('morePages') },
+    },
+  },
+  { input: 'next', expected: { class: [], attrs: { 'aria-label': i18n.global.t('next') } } },
+  { input: 'last', expected: { class: [], attrs: { 'aria-label': i18n.global.t('last') } } },
+] satisfies Array<{
+  input: string
+  expected: { class: string[]; attrs: Record<string, string> }
+}>
+
+// 20 páginas con la 10 en medio para que se pinte también la ellipsis
+function mountAllNodes() {
+  return mountPagination({ props: { total: 200, page: 10 } })
+}
+
+// con el total por defecto de mountPagination (30)
+const casesContext = [
+  {
+    name: 'en la primera página',
+    input: { page: 1 },
+    expected: { page: 1, pageCount: 3, disabled: false },
+  },
+  {
+    name: 'en una página intermedia',
+    input: { page: 2 },
+    expected: { page: 2, pageCount: 3, disabled: false },
+  },
+  {
+    name: 'deshabilitado',
+    input: { page: 1, disabled: true },
+    expected: { page: 1, pageCount: 3, disabled: true },
+  },
+  {
+    name: 'sin elementos',
+    input: { total: 0 },
+    expected: { page: 1, pageCount: 1, disabled: false },
+  },
+  {
+    name: 'con itemsPerPage=0',
+    input: { itemsPerPage: 0 },
+    expected: { page: 1, pageCount: 30, disabled: false },
+  },
+] satisfies Array<{
+  name: string
+  input: Pick<PaginationProps, 'page' | 'total' | 'itemsPerPage' | 'disabled'>
+  expected: PaginationContext
+}>
+
+function pageContext(value: number, index: number, active: boolean, disabled = false) {
+  return { item: { type: 'page', value }, index, active, disabled } satisfies PaginationItemContext
+}
+
+function ellipsisContext(index: number, disabled = false) {
+  return {
+    item: { type: 'ellipsis' },
+    index,
+    active: false,
+    disabled,
+  } satisfies PaginationItemContext
+}
+
+const casesItemContext = [
+  {
+    name: 'sin ellipsis',
+    input: { page: 2 },
+    expected: {
+      item: [pageContext(1, 0, false), pageContext(2, 1, true), pageContext(3, 2, false)],
+      ellipsis: [],
+    },
+  },
+  {
+    name: 'deshabilitado',
+    input: { page: 2, disabled: true },
+    expected: {
+      item: [
+        pageContext(1, 0, false, true),
+        pageContext(2, 1, true, true),
+        pageContext(3, 2, false, true),
+      ],
+      ellipsis: [],
+    },
+  },
+  {
+    // 1 … 10 … 20: el índice cuenta también las ellipsis
+    name: 'con ellipsis',
+    input: { total: 200, page: 10, siblingCount: 0 },
+    expected: {
+      item: [pageContext(1, 0, false), pageContext(10, 2, true), pageContext(20, 4, false)],
+      ellipsis: [ellipsisContext(1), ellipsisContext(3)],
+    },
+  },
+] satisfies Array<{
+  name: string
+  input: Pick<PaginationProps, 'page' | 'total' | 'siblingCount' | 'disabled'>
+  expected: { item: PaginationItemContext[]; ellipsis: PaginationItemContext[] }
+}>
+
+// Vue añade ref_for a los slots dentro de un v-for; no es parte del contexto
+function withoutRefFor(slotProps: PaginationItemContext & { ref_for?: boolean }) {
+  const { ref_for: _refFor, ...context } = slotProps
+  void _refFor
+  return context
+}
+
+describe('Pagination', () => {
+  describe('props', () => {
+    describe('page', () => {
+      it.each(casesPage)('pasa page=$input a Reka PaginationRoot', ({ input, expected }) => {
+        const pagination = mountPagination({ props: { page: input } })
+
+        expect(pagination.getComponent(PaginationRoot).props('page')).toBe(expected.reka)
+      })
+    })
+
+    describe('total', () => {
+      it.each(casesTotal)('pasa total=$input a Reka PaginationRoot', ({ input, expected }) => {
+        const pagination = mountPagination({ props: { total: input } })
+
+        expect(pagination.getComponent(PaginationRoot).props('total')).toBe(expected.reka)
+      })
+    })
+
+    describe('itemsPerPage', () => {
+      it.each(casesItemsPerPage)(
+        'pasa itemsPerPage=$input a Reka PaginationRoot',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { itemsPerPage: input } })
+
+          expect(pagination.getComponent(PaginationRoot).props('itemsPerPage')).toBe(expected.reka)
+        },
+      )
+    })
+
+    describe('siblingCount', () => {
+      it.each(casesSiblingCount)(
+        'pasa siblingCount=$input a Reka PaginationRoot',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { siblingCount: input } })
+
+          expect(pagination.getComponent(PaginationRoot).props('siblingCount')).toBe(expected.reka)
+        },
+      )
+    })
+
+    describe('showEdges', () => {
+      it.each(casesShowEdges)(
+        'pasa showEdges=$input a Reka PaginationRoot',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { showEdges: input } })
+
+          expect(pagination.getComponent(PaginationRoot).props('showEdges')).toBe(expected.reka)
+        },
+      )
+    })
+
+    describe('disabled', () => {
+      it.each(casesDisabled)(
+        'pasa disabled=$input a Reka PaginationRoot',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { disabled: input } })
+
+          expect(pagination.getComponent(PaginationRoot).props('disabled')).toBe(expected.reka)
+        },
+      )
+
+      it.each(casesDisabled)(
+        'deshabilita los ítems y los controles con disabled=$input',
+        ({ input, expected }) => {
+          // página 2 de 3 para que Reka no deshabilite ningún control por estar en un extremo
+          const pagination = mountPagination({ props: { page: 2, disabled: input } })
+          const isDisabled = (part: string) =>
+            pagination
+              .findAll(`[data-test-pagination-${part}]`)
+              .map((node) => node.attributes('disabled') !== undefined)
+
+          expect({
+            first: isDisabled('first'),
+            previous: isDisabled('previous'),
+            items: isDisabled('item'),
+            next: isDisabled('next'),
+            last: isDisabled('last'),
+          }).toEqual({
+            first: [expected.disabled],
+            previous: [expected.disabled],
+            items: [expected.disabled, expected.disabled, expected.disabled],
+            next: [expected.disabled],
+            last: [expected.disabled],
+          })
+        },
+      )
+    })
+
+    describe('showControls', () => {
+      it.each(casesShowControls)(
+        'muestra los controles first, previous, next y last con showControls=$input',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { showControls: input } })
+          const exists = (control: string) =>
+            pagination.find(`[data-test-pagination-${control}]`).exists()
+
+          expect({
+            first: exists('first'),
+            previous: exists('previous'),
+            next: exists('next'),
+            last: exists('last'),
+          }).toEqual({
+            first: expected.visible,
+            previous: expected.visible,
+            next: expected.visible,
+            last: expected.visible,
+          })
+        },
+      )
+    })
+
+    describe('firstIcon', () => {
+      it.each(casesFirstIcon)(
+        'pasa el icono $expected.name al Button del control first con firstIcon=$input',
+        ({ input, expected }) => {
+          const button = mountPagination({ props: { firstIcon: input } })
+            .get('[data-test-pagination-first]')
+            .findComponent(Button)
+
+          expect(button.props('icon')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('previousIcon', () => {
+      it.each(casesPreviousIcon)(
+        'pasa el icono $expected.name al Button del control previous con previousIcon=$input',
+        ({ input, expected }) => {
+          const button = mountPagination({ props: { previousIcon: input } })
+            .get('[data-test-pagination-previous]')
+            .findComponent(Button)
+
+          expect(button.props('icon')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('nextIcon', () => {
+      it.each(casesNextIcon)(
+        'pasa el icono $expected.name al Button del control next con nextIcon=$input',
+        ({ input, expected }) => {
+          const button = mountPagination({ props: { nextIcon: input } })
+            .get('[data-test-pagination-next]')
+            .findComponent(Button)
+
+          expect(button.props('icon')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('lastIcon', () => {
+      it.each(casesLastIcon)(
+        'pasa el icono $expected.name al Button del control last con lastIcon=$input',
+        ({ input, expected }) => {
+          const button = mountPagination({ props: { lastIcon: input } })
+            .get('[data-test-pagination-last]')
+            .findComponent(Button)
+
+          expect(button.props('icon')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('ellipsisIcon', () => {
+      it.each(casesEllipsisIcon)(
+        'muestra el icono $expected.name en la ellipsis con ellipsisIcon=$input',
+        ({ input, expected }) => {
+          // 20 páginas con la 10 en medio para que se pinte la ellipsis
+          const icon = mountPagination({ props: { total: 200, page: 10, ellipsisIcon: input } })
+            .get('[data-test-pagination-ellipsis]')
+            .findComponent(Icon)
+
+          expect(icon.props('name')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('size', () => {
+      it.each(casesSize)(
+        'pasa size=$input al Button de los items y los controls',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { size: input } })
+          const buttonSizeOf = (part: string) =>
+            pagination.get(`[data-test-pagination-${part}]`).findComponent(Button).props('size')
+
+          expect({
+            item: buttonSizeOf('item'),
+            first: buttonSizeOf('first'),
+            previous: buttonSizeOf('previous'),
+            next: buttonSizeOf('next'),
+            last: buttonSizeOf('last'),
+          }).toEqual({
+            item: expected.size.item,
+            first: expected.size.control,
+            previous: expected.size.control,
+            next: expected.size.control,
+            last: expected.size.control,
+          })
+        },
+      )
+
+      it.each(casesSize)(
+        'aplica las clases de size=$input al nodo item y ellipsis',
+        ({ input, expected }) => {
+          const pagination = mountPagination({ props: { total: 200, page: 10, size: input } })
+          const classesOf = (part: string) =>
+            pagination.get(`[data-test-pagination-${part}]`).classes()
+
+          expect({ item: classesOf('item'), ellipsis: classesOf('ellipsis') }).toEqual({
+            item: expect.arrayContaining(expected.class.item),
+            ellipsis: expect.arrayContaining(expected.class.ellipsis),
+          })
+        },
+      )
+    })
+
+    describe('variant', () => {
+      it.each(casesVariant)(
+        'pasa variant=$input al Button de los controles y de los ítems no activos',
+        ({ input, expected }) => {
+          // página 1 activa; la 2 no lo está
+          const pagination = mountPagination({ props: { page: 1, variant: input } })
+          const buttonVariantOf = (part: string) =>
+            pagination.get(`[data-test-pagination-${part}]`).findComponent(Button).props('variant')
+
+          expect({
+            first: buttonVariantOf('first'),
+            previous: buttonVariantOf('previous'),
+            next: buttonVariantOf('next'),
+            last: buttonVariantOf('last'),
+            item: pagination
+              .findAll('[data-test-pagination-item]')[1]!
+              .findComponent(Button)
+              .props('variant'),
+          }).toEqual({
+            first: expected.variant,
+            previous: expected.variant,
+            next: expected.variant,
+            last: expected.variant,
+            item: expected.variant,
+          })
+        },
+      )
+    })
+
+    describe('activeVariant', () => {
+      it.each(casesActiveVariant)(
+        'pasa activeVariant=$input al Button del ítem activo',
+        ({ input, expected }) => {
+          // página 1 activa; variant distinto para comprobar que no le afecta
+          const variant = mountPagination({
+            props: { page: 1, variant: 'plain', activeVariant: input },
+          })
+            .findAll('[data-test-pagination-item]')[0]!
+            .findComponent(Button)
+            .props('variant')
+
+          expect(variant).toBe(expected.variant)
+        },
+      )
+    })
+
+    describe('color', () => {
+      it.each(casesColor)(
+        'pasa color=$input al Button de los controles y de los ítems no activos',
+        ({ input, expected }) => {
+          // página 1 activa; la 2 no lo está
+          const pagination = mountPagination({ props: { page: 1, color: input } })
+          const buttonColorOf = (part: string) =>
+            pagination.get(`[data-test-pagination-${part}]`).findComponent(Button).props('color')
+
+          expect({
+            first: buttonColorOf('first'),
+            previous: buttonColorOf('previous'),
+            next: buttonColorOf('next'),
+            last: buttonColorOf('last'),
+            item: pagination
+              .findAll('[data-test-pagination-item]')[1]!
+              .findComponent(Button)
+              .props('color'),
+          }).toEqual({
+            first: expected.color,
+            previous: expected.color,
+            next: expected.color,
+            last: expected.color,
+            item: expected.color,
+          })
+        },
+      )
+    })
+
+    describe('activeColor', () => {
+      it.each(casesActiveColor)(
+        'pasa activeColor=$input.activeColor al Button del ítem activo',
+        ({ input, expected }) => {
+          const color = mountPagination({ props: { page: 1, ...input } })
+            .findAll('[data-test-pagination-item]')[0]!
+            .findComponent(Button)
+            .props('color')
+
+          expect(color).toBe(expected.color)
+        },
+      )
+    })
+
+    describe('ui', () => {
+      describe('list', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.list a la lista',
+          id: '[data-test-pagination-list]',
+          mount: (attrs) => mountPagination({ props: { ui: { list: () => attrs } } }),
+        })
+      })
+
+      describe('first', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.first al control first',
+          id: '[data-test-pagination-first]',
+          mount: (attrs) => mountPagination({ props: { ui: { first: () => attrs } } }),
+        })
+      })
+
+      describe('previous', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.previous al control previous',
+          id: '[data-test-pagination-previous]',
+          mount: (attrs) => mountPagination({ props: { ui: { previous: () => attrs } } }),
+        })
+      })
+
+      describe('next', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.next al control next',
+          id: '[data-test-pagination-next]',
+          mount: (attrs) => mountPagination({ props: { ui: { next: () => attrs } } }),
+        })
+      })
+
+      describe('last', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.last al control last',
+          id: '[data-test-pagination-last]',
+          mount: (attrs) => mountPagination({ props: { ui: { last: () => attrs } } }),
+        })
+      })
+
+      describe('item', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.item al ítem',
+          id: '[data-test-pagination-item]',
+          mount: (attrs) => mountPagination({ props: { ui: { item: () => attrs } } }),
+        })
+      })
+
+      describe('ellipsis', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.ellipsis a la ellipsis',
+          id: '[data-test-pagination-ellipsis]',
+          mount: (attrs) =>
+            mountPagination({ props: { total: 200, page: 10, ui: { ellipsis: () => attrs } } }),
+        })
+      })
+    })
+  })
+
+  describe('emits', () => {
+    describe('update:page', () => {
+      it('reemite la página cuando Reka PaginationRoot cambia page', async () => {
+        const pagination = mountPagination({ props: { page: 1 } })
+
+        pagination.getComponent(PaginationRoot).vm.$emit('update:page', 2)
+        await nextTick()
+
+        expect(pagination.emitted('update:page')).toEqual([[2]])
+      })
+    })
+  })
+
+  describe('nodos', () => {
+    it.each(casesNodos)(
+      'aplica las clases y los atributos fijos al nodo $input',
+      ({ input, expected }) => {
+        const node = mountAllNodes().get(`[data-test-pagination-${input}]`)
+
+        expect({ class: node.classes(), attrs: node.attributes() }).toEqual({
+          class: expect.arrayContaining(expected.class),
+          attrs: expect.objectContaining(expected.attrs),
+        })
+      },
+    )
+
+    it('pasa el número de cada página como label al Button del ítem', () => {
+      const labels = mountPagination()
+        .findAll('[data-test-pagination-item]')
+        .map((item) => item.findComponent(Button).props('label'))
+
+      expect(labels).toEqual(['1', '2', '3'])
+    })
+  })
+
+  describe('attrs', () => {
+    testAttrs({
+      text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
+      id: '[data-test-pagination-root]',
+      mount: (attrs) => mountPagination({ attrs }),
+    })
+  })
+
+  describe('slots', () => {
+    describe('leading', () => {
+      it('muestra el slot al principio de la lista', () => {
+        const list = mountPagination({
+          slots: { leading: () => h('span', { 'data-test-pagination-slot': 'leading' }, 'Inicio') },
+        }).get('[data-test-pagination-list]')
+
+        expect(list.element.firstElementChild?.getAttribute('data-test-pagination-slot')).toBe(
+          'leading',
+        )
+      })
+    })
+
+    describe('trailing', () => {
+      it('muestra el slot al final de la lista', () => {
+        const list = mountPagination({
+          slots: { trailing: () => h('span', { 'data-test-pagination-slot': 'trailing' }, 'Fin') },
+        }).get('[data-test-pagination-list]')
+
+        expect(list.element.lastElementChild?.getAttribute('data-test-pagination-slot')).toBe(
+          'trailing',
+        )
+      })
+    })
+
+    describe.each(['first', 'previous', 'next', 'last'] as const)('%s', (control) => {
+      it(`reemplaza el Button del control ${control}`, () => {
+        const node = mountPagination({
+          slots: {
+            [control]: () => h('button', { 'data-test-pagination-slot': control }, 'Slot'),
+          },
+        }).get(`[data-test-pagination-${control}]`)
+
+        expect({
+          slot: node.attributes('data-test-pagination-slot'),
+          button: node.findComponent(Button).exists(),
+        }).toEqual({ slot: control, button: false })
+      })
+    })
+
+    describe('item', () => {
+      it('reemplaza el Button de todas las páginas', () => {
+        const pagination = mountPagination({
+          slots: {
+            item: ({ item }: PaginationItemContext) =>
+              h('button', item.type === 'page' ? `#${item.value}` : ''),
+          },
+        })
+        const items = pagination.findAll('[data-test-pagination-item]')
+
+        expect({
+          texts: items.map((item) => item.text()),
+          buttons: items.filter((item) => item.findComponent(Button).exists()).length,
+        }).toEqual({ texts: ['#1', '#2', '#3'], buttons: 0 })
+      })
+    })
+
+    describe('ellipsis', () => {
+      it('reemplaza el icono de todas las ellipsis', () => {
+        // 20 páginas con la 10 en medio para que se pinten las dos ellipsis
+        const ellipses = mountPagination({
+          props: { total: 200, page: 10 },
+          slots: { ellipsis: () => '…' },
+        }).findAll('[data-test-pagination-ellipsis]')
+
+        expect({
+          texts: ellipses.map((ellipsis) => ellipsis.text()),
+          icons: ellipses.filter((ellipsis) => ellipsis.findComponent(Icon).exists()).length,
+        }).toEqual({ texts: ['…', '…'], icons: 0 })
+      })
+    })
+  })
+
+  describe('context contract', () => {
+    describe('PaginationContext', () => {
+      it.each(casesContext)(
+        'pasa el contexto $name a ui.list, a los ui de los controles y a sus slots',
+        ({ input, expected }) => {
+          const ui = {
+            list: vi.fn(() => ({})),
+            first: vi.fn(() => ({})),
+            previous: vi.fn(() => ({})),
+            next: vi.fn(() => ({})),
+            last: vi.fn(() => ({})),
+          }
+          // los slots de los controles se pintan como el botón, así que deben ser un elemento
+          const slots = {
+            leading: vi.fn<(context: PaginationContext) => string>(() => 'Slot'),
+            trailing: vi.fn<(context: PaginationContext) => string>(() => 'Slot'),
+            first: vi.fn<(context: PaginationContext) => VNode>(() => h('button')),
+            previous: vi.fn<(context: PaginationContext) => VNode>(() => h('button')),
+            next: vi.fn<(context: PaginationContext) => VNode>(() => h('button')),
+            last: vi.fn<(context: PaginationContext) => VNode>(() => h('button')),
+          }
+
+          mountPagination({ props: { ...input, ui }, slots })
+
+          expect({
+            'ui.list': ui.list.mock.calls,
+            'ui.first': ui.first.mock.calls,
+            'ui.previous': ui.previous.mock.calls,
+            'ui.next': ui.next.mock.calls,
+            'ui.last': ui.last.mock.calls,
+            'slot leading': slots.leading.mock.calls,
+            'slot trailing': slots.trailing.mock.calls,
+            'slot first': slots.first.mock.calls,
+            'slot previous': slots.previous.mock.calls,
+            'slot next': slots.next.mock.calls,
+            'slot last': slots.last.mock.calls,
+          }).toEqual({
+            'ui.list': [[expected]],
+            'ui.first': [[expected]],
+            'ui.previous': [[expected]],
+            'ui.next': [[expected]],
+            'ui.last': [[expected]],
+            'slot leading': [[expected]],
+            'slot trailing': [[expected]],
+            'slot first': [[expected]],
+            'slot previous': [[expected]],
+            'slot next': [[expected]],
+            'slot last': [[expected]],
+          })
+        },
+      )
+    })
+
+    describe('PaginationItemContext', () => {
+      it.each(casesItemContext)(
+        'pasa el contexto de cada ítem $name a ui.item, ui.ellipsis y a los slots item y ellipsis',
+        ({ input, expected }) => {
+          const ui = { item: vi.fn(() => ({})), ellipsis: vi.fn(() => ({})) }
+          // el slot item se pinta como el botón, así que debe ser un elemento
+          const slots = {
+            item: vi.fn<(context: PaginationItemContext) => VNode>(() => h('button')),
+            ellipsis: vi.fn<(context: PaginationItemContext) => string>(() => 'Slot'),
+          }
+
+          mountPagination({ props: { ...input, ui }, slots })
+
+          expect({
+            'ui.item': ui.item.mock.calls.map(([context]) => context),
+            'ui.ellipsis': ui.ellipsis.mock.calls.map(([context]) => context),
+            'slot item': slots.item.mock.calls.map(([context]) => withoutRefFor(context)),
+            'slot ellipsis': slots.ellipsis.mock.calls.map(([context]) => withoutRefFor(context)),
+          }).toEqual({
+            'ui.item': expected.item,
+            'ui.ellipsis': expected.ellipsis,
+            'slot item': expected.item,
+            'slot ellipsis': expected.ellipsis,
+          })
+        },
+      )
+    })
+  })
+})
