@@ -2,6 +2,8 @@ import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { PaginationRoot } from 'reka-ui'
 import { describe, expect, it } from 'vitest'
 
+import { Button } from '@/components/ui/Button'
+import { Icon } from '@/components/ui/Icon'
 import { Pagination, paginationDefaults, type PaginationProps } from '@/components/ui/Pagination'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
@@ -56,6 +58,31 @@ const casesShowControls = [
   { input: true, expected: { visible: true } },
   { input: false, expected: { visible: false } },
 ] satisfies Array<{ input: PaginationProps['showControls']; expected: { visible: boolean } }>
+
+const casesFirstIcon = [
+  { input: undefined, expected: { name: paginationDefaults.firstIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['firstIcon']; expected: { name: string } }>
+
+const casesPreviousIcon = [
+  { input: undefined, expected: { name: paginationDefaults.previousIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['previousIcon']; expected: { name: string } }>
+
+const casesNextIcon = [
+  { input: undefined, expected: { name: paginationDefaults.nextIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['nextIcon']; expected: { name: string } }>
+
+const casesLastIcon = [
+  { input: undefined, expected: { name: paginationDefaults.lastIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['lastIcon']; expected: { name: string } }>
+
+const casesEllipsisIcon = [
+  { input: undefined, expected: { name: paginationDefaults.ellipsisIcon } },
+  { input: 'heart', expected: { name: 'heart' } },
+] satisfies Array<{ input: PaginationProps['ellipsisIcon']; expected: { name: string } }>
 
 describe('Pagination', () => {
   describe('props', () => {
@@ -138,6 +165,72 @@ describe('Pagination', () => {
             next: expected.visible,
             last: expected.visible,
           })
+        },
+      )
+    })
+
+    describe('firstIcon', () => {
+      it.each(casesFirstIcon)(
+        'pasa el icono $expected.name al Button del control first con firstIcon=$input',
+        ({ input, expected }) => {
+          const button = mountPagination({ props: { firstIcon: input } })
+            .get('[data-test-pagination-first]')
+            .findComponent(Button)
+
+          expect(button.props('icon')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('previousIcon', () => {
+      it.each(casesPreviousIcon)(
+        'pasa el icono $expected.name al Button del control previous con previousIcon=$input',
+        ({ input, expected }) => {
+          const button = mountPagination({ props: { previousIcon: input } })
+            .get('[data-test-pagination-previous]')
+            .findComponent(Button)
+
+          expect(button.props('icon')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('nextIcon', () => {
+      it.each(casesNextIcon)(
+        'pasa el icono $expected.name al Button del control next con nextIcon=$input',
+        ({ input, expected }) => {
+          const button = mountPagination({ props: { nextIcon: input } })
+            .get('[data-test-pagination-next]')
+            .findComponent(Button)
+
+          expect(button.props('icon')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('lastIcon', () => {
+      it.each(casesLastIcon)(
+        'pasa el icono $expected.name al Button del control last con lastIcon=$input',
+        ({ input, expected }) => {
+          const button = mountPagination({ props: { lastIcon: input } })
+            .get('[data-test-pagination-last]')
+            .findComponent(Button)
+
+          expect(button.props('icon')).toBe(expected.name)
+        },
+      )
+    })
+
+    describe('ellipsisIcon', () => {
+      it.each(casesEllipsisIcon)(
+        'muestra el icono $expected.name en la ellipsis con ellipsisIcon=$input',
+        ({ input, expected }) => {
+          // 20 páginas con la 10 en medio para que se pinte la ellipsis
+          const icon = mountPagination({ props: { total: 200, page: 10, ellipsisIcon: input } })
+            .get('[data-test-pagination-ellipsis]')
+            .findComponent(Icon)
+
+          expect(icon.props('name')).toBe(expected.name)
         },
       )
     })
