@@ -42,7 +42,7 @@ const paginationConfig: ComponentDocConfig = {
     },
     {
       title: 'Size',
-      description: 'Change the size of the buttons, icons, and ellipsis.',
+      description: 'Change the size of the buttons and the ellipsis.',
       component: PaginationSizeExample,
     },
     {
@@ -140,7 +140,7 @@ const paginationConfig: ComponentDocConfig = {
         name: 'size',
         type: toUnion(paginationSizes),
         default: formatValue(paginationDefaults.size),
-        description: 'Size of the buttons, icons, and ellipsis.',
+        description: 'Size of the buttons and the ellipsis.',
       },
       {
         name: 'variant',
