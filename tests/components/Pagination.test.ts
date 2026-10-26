@@ -1,3 +1,4 @@
+import { nextTick } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { PaginationRoot } from 'reka-ui'
 import { describe, expect, it } from 'vitest'
@@ -83,6 +84,18 @@ const casesEllipsisIcon = [
   { input: undefined, expected: { name: paginationDefaults.ellipsisIcon } },
   { input: 'heart', expected: { name: 'heart' } },
 ] satisfies Array<{ input: PaginationProps['ellipsisIcon']; expected: { name: string } }>
+
+const casesVariant = [
+  { input: undefined, expected: { variant: paginationDefaults.variant } },
+  { input: 'outline', expected: { variant: 'outline' } },
+  { input: 'soft', expected: { variant: 'soft' } },
+] satisfies Array<{ input: PaginationProps['variant']; expected: { variant: string } }>
+
+const casesActiveVariant = [
+  { input: undefined, expected: { variant: paginationDefaults.activeVariant } },
+  { input: 'solid', expected: { variant: 'solid' } },
+  { input: 'soft', expected: { variant: 'soft' } },
+] satisfies Array<{ input: PaginationProps['activeVariant']; expected: { variant: string } }>
 
 // los controles reciben el tamaño de icono equivalente de Button
 const casesSize = [
@@ -359,6 +372,124 @@ describe('Pagination', () => {
           })
         },
       )
+    })
+
+    describe('variant', () => {
+      it.each(casesVariant)(
+        'pasa variant=$input al Button de los controles y de los ítems no activos',
+        ({ input, expected }) => {
+          // página 1 activa; la 2 no lo está
+          const pagination = mountPagination({ props: { page: 1, variant: input } })
+          const buttonVariantOf = (part: string) =>
+            pagination.get(`[data-test-pagination-${part}]`).findComponent(Button).props('variant')
+
+          expect({
+            first: buttonVariantOf('first'),
+            previous: buttonVariantOf('previous'),
+            next: buttonVariantOf('next'),
+            last: buttonVariantOf('last'),
+            item: pagination
+              .findAll('[data-test-pagination-item]')[1]!
+              .findComponent(Button)
+              .props('variant'),
+          }).toEqual({
+            first: expected.variant,
+            previous: expected.variant,
+            next: expected.variant,
+            last: expected.variant,
+            item: expected.variant,
+          })
+        },
+      )
+    })
+
+    describe('activeVariant', () => {
+      it.each(casesActiveVariant)(
+        'pasa activeVariant=$input al Button del ítem activo',
+        ({ input, expected }) => {
+          // página 1 activa; variant distinto para comprobar que no le afecta
+          const variant = mountPagination({
+            props: { page: 1, variant: 'plain', activeVariant: input },
+          })
+            .findAll('[data-test-pagination-item]')[0]!
+            .findComponent(Button)
+            .props('variant')
+
+          expect(variant).toBe(expected.variant)
+        },
+      )
+    })
+
+    describe('ui', () => {
+      describe('list', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.list a la lista',
+          id: '[data-test-pagination-list]',
+          mount: (attrs) => mountPagination({ props: { ui: { list: () => attrs } } }),
+        })
+      })
+
+      describe('first', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.first al control first',
+          id: '[data-test-pagination-first]',
+          mount: (attrs) => mountPagination({ props: { ui: { first: () => attrs } } }),
+        })
+      })
+
+      describe('previous', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.previous al control previous',
+          id: '[data-test-pagination-previous]',
+          mount: (attrs) => mountPagination({ props: { ui: { previous: () => attrs } } }),
+        })
+      })
+
+      describe('next', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.next al control next',
+          id: '[data-test-pagination-next]',
+          mount: (attrs) => mountPagination({ props: { ui: { next: () => attrs } } }),
+        })
+      })
+
+      describe('last', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.last al control last',
+          id: '[data-test-pagination-last]',
+          mount: (attrs) => mountPagination({ props: { ui: { last: () => attrs } } }),
+        })
+      })
+
+      describe('item', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.item al ítem',
+          id: '[data-test-pagination-item]',
+          mount: (attrs) => mountPagination({ props: { ui: { item: () => attrs } } }),
+        })
+      })
+
+      describe('ellipsis', () => {
+        testAttrs({
+          text: 'pasa atributos mediante ui.ellipsis a la ellipsis',
+          id: '[data-test-pagination-ellipsis]',
+          mount: (attrs) =>
+            mountPagination({ props: { total: 200, page: 10, ui: { ellipsis: () => attrs } } }),
+        })
+      })
+    })
+  })
+
+  describe('emits', () => {
+    describe('update:page', () => {
+      it('reemite la página cuando Reka PaginationRoot cambia page', async () => {
+        const pagination = mountPagination({ props: { page: 1 } })
+
+        pagination.getComponent(PaginationRoot).vm.$emit('update:page', 2)
+        await nextTick()
+
+        expect(pagination.emitted('update:page')).toEqual([[2]])
+      })
     })
   })
 
