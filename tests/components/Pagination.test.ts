@@ -1,13 +1,14 @@
-import { h, nextTick } from 'vue'
+import { h, nextTick, type VNode } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { PaginationRoot } from 'reka-ui'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
 import {
   Pagination,
   paginationDefaults,
+  type PaginationContext,
   type PaginationItemContext,
   type PaginationProps,
 } from '@/components/ui/Pagination'
@@ -206,6 +207,95 @@ const casesNodos = [
 // 20 páginas con la 10 en medio para que se pinte también la ellipsis
 function mountAllNodes() {
   return mountPagination({ props: { total: 200, page: 10 } })
+}
+
+// con el total por defecto de mountPagination (30)
+const casesContext = [
+  {
+    name: 'en la primera página',
+    input: { page: 1 },
+    expected: { page: 1, pageCount: 3, disabled: false },
+  },
+  {
+    name: 'en una página intermedia',
+    input: { page: 2 },
+    expected: { page: 2, pageCount: 3, disabled: false },
+  },
+  {
+    name: 'deshabilitado',
+    input: { page: 1, disabled: true },
+    expected: { page: 1, pageCount: 3, disabled: true },
+  },
+  {
+    name: 'sin elementos',
+    input: { total: 0 },
+    expected: { page: 1, pageCount: 1, disabled: false },
+  },
+  {
+    name: 'con itemsPerPage=0',
+    input: { itemsPerPage: 0 },
+    expected: { page: 1, pageCount: 30, disabled: false },
+  },
+] satisfies Array<{
+  name: string
+  input: Pick<PaginationProps, 'page' | 'total' | 'itemsPerPage' | 'disabled'>
+  expected: PaginationContext
+}>
+
+function pageContext(value: number, index: number, active: boolean, disabled = false) {
+  return { item: { type: 'page', value }, index, active, disabled } satisfies PaginationItemContext
+}
+
+function ellipsisContext(index: number, disabled = false) {
+  return {
+    item: { type: 'ellipsis' },
+    index,
+    active: false,
+    disabled,
+  } satisfies PaginationItemContext
+}
+
+const casesItemContext = [
+  {
+    name: 'sin ellipsis',
+    input: { page: 2 },
+    expected: {
+      item: [pageContext(1, 0, false), pageContext(2, 1, true), pageContext(3, 2, false)],
+      ellipsis: [],
+    },
+  },
+  {
+    name: 'deshabilitado',
+    input: { page: 2, disabled: true },
+    expected: {
+      item: [
+        pageContext(1, 0, false, true),
+        pageContext(2, 1, true, true),
+        pageContext(3, 2, false, true),
+      ],
+      ellipsis: [],
+    },
+  },
+  {
+    // 1 … 10 … 20: el índice cuenta también las ellipsis
+    name: 'con ellipsis',
+    input: { total: 200, page: 10, siblingCount: 0 },
+    expected: {
+      item: [pageContext(1, 0, false), pageContext(10, 2, true), pageContext(20, 4, false)],
+      ellipsis: [ellipsisContext(1), ellipsisContext(3)],
+    },
+  },
+] satisfies Array<{
+  name: string
+  input: Pick<PaginationProps, 'page' | 'total' | 'siblingCount' | 'disabled'>
+  expected: { item: PaginationItemContext[]; ellipsis: PaginationItemContext[] }
+}>
+
+// Vue añade ref_for a los slots dentro de un v-for; no es parte del contexto
+function withoutRefFor(slotProps: PaginationItemContext & { ref_for?: boolean }) {
+  const { ref_for: _refFor, ...context } = slotProps
+  void _refFor
+  return context
 }
 
 describe('Pagination', () => {
@@ -686,6 +776,88 @@ describe('Pagination', () => {
           icons: ellipses.filter((ellipsis) => ellipsis.findComponent(Icon).exists()).length,
         }).toEqual({ texts: ['…', '…'], icons: 0 })
       })
+    })
+  })
+
+  describe('context contract', () => {
+    describe('PaginationContext', () => {
+      it.each(casesContext)(
+        'pasa el contexto $name a ui.list, a los ui de los controles y a sus slots',
+        ({ input, expected }) => {
+          const ui = {
+            list: vi.fn(() => ({})),
+            first: vi.fn(() => ({})),
+            previous: vi.fn(() => ({})),
+            next: vi.fn(() => ({})),
+            last: vi.fn(() => ({})),
+          }
+          // los slots de los controles se pintan como el botón, así que deben ser un elemento
+          const slots = {
+            leading: vi.fn<(context: PaginationContext) => string>(() => 'Slot'),
+            trailing: vi.fn<(context: PaginationContext) => string>(() => 'Slot'),
+            first: vi.fn<(context: PaginationContext) => VNode>(() => h('button')),
+            previous: vi.fn<(context: PaginationContext) => VNode>(() => h('button')),
+            next: vi.fn<(context: PaginationContext) => VNode>(() => h('button')),
+            last: vi.fn<(context: PaginationContext) => VNode>(() => h('button')),
+          }
+
+          mountPagination({ props: { ...input, ui }, slots })
+
+          expect({
+            'ui.list': ui.list.mock.calls,
+            'ui.first': ui.first.mock.calls,
+            'ui.previous': ui.previous.mock.calls,
+            'ui.next': ui.next.mock.calls,
+            'ui.last': ui.last.mock.calls,
+            'slot leading': slots.leading.mock.calls,
+            'slot trailing': slots.trailing.mock.calls,
+            'slot first': slots.first.mock.calls,
+            'slot previous': slots.previous.mock.calls,
+            'slot next': slots.next.mock.calls,
+            'slot last': slots.last.mock.calls,
+          }).toEqual({
+            'ui.list': [[expected]],
+            'ui.first': [[expected]],
+            'ui.previous': [[expected]],
+            'ui.next': [[expected]],
+            'ui.last': [[expected]],
+            'slot leading': [[expected]],
+            'slot trailing': [[expected]],
+            'slot first': [[expected]],
+            'slot previous': [[expected]],
+            'slot next': [[expected]],
+            'slot last': [[expected]],
+          })
+        },
+      )
+    })
+
+    describe('PaginationItemContext', () => {
+      it.each(casesItemContext)(
+        'pasa el contexto de cada ítem $name a ui.item, ui.ellipsis y a los slots item y ellipsis',
+        ({ input, expected }) => {
+          const ui = { item: vi.fn(() => ({})), ellipsis: vi.fn(() => ({})) }
+          // el slot item se pinta como el botón, así que debe ser un elemento
+          const slots = {
+            item: vi.fn<(context: PaginationItemContext) => VNode>(() => h('button')),
+            ellipsis: vi.fn<(context: PaginationItemContext) => string>(() => 'Slot'),
+          }
+
+          mountPagination({ props: { ...input, ui }, slots })
+
+          expect({
+            'ui.item': ui.item.mock.calls.map(([context]) => context),
+            'ui.ellipsis': ui.ellipsis.mock.calls.map(([context]) => context),
+            'slot item': slots.item.mock.calls.map(([context]) => withoutRefFor(context)),
+            'slot ellipsis': slots.ellipsis.mock.calls.map(([context]) => withoutRefFor(context)),
+          }).toEqual({
+            'ui.item': expected.item,
+            'ui.ellipsis': expected.ellipsis,
+            'slot item': expected.item,
+            'slot ellipsis': expected.ellipsis,
+          })
+        },
+      )
     })
   })
 })
