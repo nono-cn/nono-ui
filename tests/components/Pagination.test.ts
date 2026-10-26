@@ -1,11 +1,16 @@
-import { nextTick } from 'vue'
+import { h, nextTick } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { PaginationRoot } from 'reka-ui'
 import { describe, expect, it } from 'vitest'
 
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
-import { Pagination, paginationDefaults, type PaginationProps } from '@/components/ui/Pagination'
+import {
+  Pagination,
+  paginationDefaults,
+  type PaginationItemContext,
+  type PaginationProps,
+} from '@/components/ui/Pagination'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 
@@ -49,10 +54,13 @@ const casesShowEdges = [
 ] satisfies Array<{ input: PaginationProps['showEdges']; expected: { reka: boolean } }>
 
 const casesDisabled = [
-  { input: undefined, expected: { reka: paginationDefaults.disabled } },
-  { input: true, expected: { reka: true } },
-  { input: false, expected: { reka: false } },
-] satisfies Array<{ input: PaginationProps['disabled']; expected: { reka: boolean } }>
+  { input: undefined, expected: { reka: paginationDefaults.disabled, disabled: false } },
+  { input: true, expected: { reka: true, disabled: true } },
+  { input: false, expected: { reka: false, disabled: false } },
+] satisfies Array<{
+  input: PaginationProps['disabled']
+  expected: { reka: boolean; disabled: boolean }
+}>
 
 const casesShowControls = [
   { input: undefined, expected: { visible: paginationDefaults.showControls } },
@@ -258,6 +266,32 @@ describe('Pagination', () => {
           const pagination = mountPagination({ props: { disabled: input } })
 
           expect(pagination.getComponent(PaginationRoot).props('disabled')).toBe(expected.reka)
+        },
+      )
+
+      it.each(casesDisabled)(
+        'deshabilita los ítems y los controles con disabled=$input',
+        ({ input, expected }) => {
+          // página 2 de 3 para que Reka no deshabilite ningún control por estar en un extremo
+          const pagination = mountPagination({ props: { page: 2, disabled: input } })
+          const isDisabled = (part: string) =>
+            pagination
+              .findAll(`[data-test-pagination-${part}]`)
+              .map((node) => node.attributes('disabled') !== undefined)
+
+          expect({
+            first: isDisabled('first'),
+            previous: isDisabled('previous'),
+            items: isDisabled('item'),
+            next: isDisabled('next'),
+            last: isDisabled('last'),
+          }).toEqual({
+            first: [expected.disabled],
+            previous: [expected.disabled],
+            items: [expected.disabled, expected.disabled, expected.disabled],
+            next: [expected.disabled],
+            last: [expected.disabled],
+          })
         },
       )
     })
@@ -564,6 +598,14 @@ describe('Pagination', () => {
         })
       },
     )
+
+    it('pasa el número de cada página como label al Button del ítem', () => {
+      const labels = mountPagination()
+        .findAll('[data-test-pagination-item]')
+        .map((item) => item.findComponent(Button).props('label'))
+
+      expect(labels).toEqual(['1', '2', '3'])
+    })
   })
 
   describe('attrs', () => {
@@ -571,6 +613,79 @@ describe('Pagination', () => {
       text: 'pasa los atributos arbitrarios, la clase y el estilo a la raíz',
       id: '[data-test-pagination-root]',
       mount: (attrs) => mountPagination({ attrs }),
+    })
+  })
+
+  describe('slots', () => {
+    describe('leading', () => {
+      it('muestra el slot al principio de la lista', () => {
+        const list = mountPagination({
+          slots: { leading: () => h('span', { 'data-test-pagination-slot': 'leading' }, 'Inicio') },
+        }).get('[data-test-pagination-list]')
+
+        expect(list.element.firstElementChild?.getAttribute('data-test-pagination-slot')).toBe(
+          'leading',
+        )
+      })
+    })
+
+    describe('trailing', () => {
+      it('muestra el slot al final de la lista', () => {
+        const list = mountPagination({
+          slots: { trailing: () => h('span', { 'data-test-pagination-slot': 'trailing' }, 'Fin') },
+        }).get('[data-test-pagination-list]')
+
+        expect(list.element.lastElementChild?.getAttribute('data-test-pagination-slot')).toBe(
+          'trailing',
+        )
+      })
+    })
+
+    describe.each(['first', 'previous', 'next', 'last'] as const)('%s', (control) => {
+      it(`reemplaza el Button del control ${control}`, () => {
+        const node = mountPagination({
+          slots: {
+            [control]: () => h('button', { 'data-test-pagination-slot': control }, 'Slot'),
+          },
+        }).get(`[data-test-pagination-${control}]`)
+
+        expect({
+          slot: node.attributes('data-test-pagination-slot'),
+          button: node.findComponent(Button).exists(),
+        }).toEqual({ slot: control, button: false })
+      })
+    })
+
+    describe('item', () => {
+      it('reemplaza el Button de todas las páginas', () => {
+        const pagination = mountPagination({
+          slots: {
+            item: ({ item }: PaginationItemContext) =>
+              h('button', item.type === 'page' ? `#${item.value}` : ''),
+          },
+        })
+        const items = pagination.findAll('[data-test-pagination-item]')
+
+        expect({
+          texts: items.map((item) => item.text()),
+          buttons: items.filter((item) => item.findComponent(Button).exists()).length,
+        }).toEqual({ texts: ['#1', '#2', '#3'], buttons: 0 })
+      })
+    })
+
+    describe('ellipsis', () => {
+      it('reemplaza el icono de todas las ellipsis', () => {
+        // 20 páginas con la 10 en medio para que se pinten las dos ellipsis
+        const ellipses = mountPagination({
+          props: { total: 200, page: 10 },
+          slots: { ellipsis: () => '…' },
+        }).findAll('[data-test-pagination-ellipsis]')
+
+        expect({
+          texts: ellipses.map((ellipsis) => ellipsis.text()),
+          icons: ellipses.filter((ellipsis) => ellipsis.findComponent(Icon).exists()).length,
+        }).toEqual({ texts: ['…', '…'], icons: 0 })
+      })
     })
   })
 })
