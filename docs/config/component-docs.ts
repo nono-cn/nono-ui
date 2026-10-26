@@ -44,9 +44,15 @@ export interface ComponentAccessibilityLink {
   href: string
 }
 
+export interface ComponentAccessibilityTable {
+  columns: string[]
+  rows: string[][]
+}
+
 export interface ComponentAccessibilityConfig {
   title: string
   description: string
+  table?: ComponentAccessibilityTable
   links?: ComponentAccessibilityLink[]
 }
 

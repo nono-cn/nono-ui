@@ -1,162 +1,115 @@
 <script setup lang="ts">
-import { computed, useAttrs, watch } from 'vue'
+import { computed, useAttrs } from 'vue'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack } from 'reka-ui'
+import { useTheme } from '@/composables'
 import { useUi } from '@/composables/useUi'
-import { cn } from '@/lib/utils'
 import { useI18n } from '@/i18n'
-import { useColor } from '@/composables'
+import { cn } from '@/lib/utils'
 import {
-  sliderVariants,
-  sliderTrackVariants,
   sliderRangeVariants,
   sliderThumbVariants,
+  sliderTrackVariants,
+  sliderVariants,
   type SliderContext,
+  type SliderEmits,
   type SliderProps,
   type SliderThumbContext,
-  type SliderValue,
 } from '.'
-import { sliderDefaults } from './defaults'
+import { sliderDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<SliderProps>(), sliderDefaults)
-const emit = defineEmits<{
-  valueCommit: [value: number[]]
-}>()
+const emit = defineEmits<SliderEmits>()
 
 const attrs = useAttrs()
-const value = defineModel<SliderValue>('value', { default: () => [...sliderDefaults.value()] })
-
-const validateValue = (val: SliderValue) => {
-  if (val === null) return [0]
-
-  const values = (val ?? []).filter((item) => item >= props.min && item <= props.max)
-  if (values.length === 0) return val.length === 1 && val[0] === 0 ? val : [0]
-  if (values.length === val.length && val.length <= 2) return val
-
-  return values.slice(0, 2) as SliderValue
-}
-
-watch(
-  [value, () => props.min, () => props.max],
-  () => {
-    value.value = validateValue(value.value)
-  },
-  { immediate: true },
-)
-
+const modelValue = defineModel<number[]>({ default: sliderDefaults.modelValue })
 const { t } = useI18n()
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'slider',
-)
 
-function createSliderContext(values: number[]): SliderContext {
-  return { values }
-}
-
-function createSliderThumbContext(
-  values: number[],
-  index: number,
-  thumbValue: number,
-): SliderThumbContext {
-  return {
-    values,
-    index,
-    value: thumbValue,
-    first: index === 0,
-    last: index === values.length - 1,
-  }
-}
-
-const sliderContext = computed<SliderContext>(() => createSliderContext(value.value))
-
-const rootProps = computed(() => {
-  return {
-    ...attrs,
-    disabled: props.disabled,
-    orientation: props.orientation,
-    inverted: props.inverted,
-    min: props.min,
-    max: props.max,
-    step: props.step,
-    minStepsBetweenThumbs: props.minStepsBetweenThumbs,
-    thumbAlignment: props.thumbAlignment,
-    name: props.name,
-    required: props.required,
-    class: cn(sliderVariants({ orientation: props.orientation }), attrs.class),
-    style: attrs.style,
-  }
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'slider',
+  defaultColor: sliderDefaults.color,
 })
 
+const context = computed<SliderContext>(() => ({
+  value: modelValue.value,
+  disabled: props.disabled,
+}))
+
+const thumbContexts = computed<SliderThumbContext[]>(() =>
+  modelValue.value.map((value, index) => ({
+    value,
+    index,
+    disabled: props.disabled,
+  })),
+)
+
+const rootProps = computed(() => ({
+  ...attrs,
+  min: props.min,
+  max: props.max,
+  step: props.step,
+  minStepsBetweenThumbs: props.minStepsBetweenThumbs,
+  orientation: props.orientation,
+  inverted: props.inverted,
+  disabled: props.disabled,
+  thumbAlignment: props.thumbAlignment,
+  name: props.name,
+  required: props.required,
+  class: cn(
+    sliderVariants({ orientation: props.orientation, disabled: props.disabled }),
+    attrs.class,
+  ),
+  style: [colorStyle.value, attrs.style],
+}))
+
 const trackProps = computed(() => {
-  const ui = useUi(props.ui?.track, sliderContext.value)
+  const ui = useUi(props.ui?.track, context.value)
 
   return {
     ...ui,
-    class: cn(
-      sliderTrackVariants({
-        orientation: props.orientation,
-        size: props.size,
-        severity: props.severity,
-        color: Boolean(props.color),
-      }),
-      ui.class,
-    ),
-    style: [colorStyle.value, ui.style],
+    class: cn(sliderTrackVariants({ orientation: props.orientation, size: props.size }), ui.class),
   }
 })
 
 const rangeProps = computed(() => {
-  const ui = useUi(props.ui?.range, sliderContext.value)
+  const ui = useUi(props.ui?.range, context.value)
+
   return {
     ...ui,
-    class: cn(
-      sliderRangeVariants({
-        orientation: props.orientation,
-        severity: props.severity,
-        color: Boolean(props.color),
-      }),
-      ui.class,
-    ),
-    style: [colorStyle.value, ui.style],
+    class: cn(sliderRangeVariants({ orientation: props.orientation }), ui.class),
   }
 })
 
-const thumbContexts = computed<SliderThumbContext[]>(() =>
-  value.value.map((thumbValue, index, values) =>
-    createSliderThumbContext(values, index, thumbValue),
-  ),
-)
-
-function getThumbProps(context: SliderThumbContext) {
-  const ui = useUi(props.ui?.thumb, context)
-  const rangeAriaLabel =
-    context.values.length === 2 ? (context.index === 0 ? t('minimum') : t('maximum')) : undefined
+function getThumbProps(thumbContext: SliderThumbContext) {
+  const ui = useUi(props.ui?.thumb, thumbContext)
 
   return {
+    'aria-label': t('value_{n}_of_{total}', {
+      n: thumbContext.index + 1,
+      total: modelValue.value.length,
+    }),
     ...ui,
-    'aria-label': ui['aria-label'] ?? rangeAriaLabel,
-    class: cn(
-      sliderThumbVariants({
-        disabled: props.disabled,
-        size: props.size,
-        severity: props.severity,
-        color: Boolean(props.color),
-      }),
-      ui.class,
-    ),
-    style: [colorStyle.value, ui.style],
+    class: cn(sliderThumbVariants({ size: props.size, disabled: props.disabled }), ui.class),
   }
+}
+
+function onUpdateModelValue(value: number[] | undefined) {
+  if (!value) return
+  if (value.length === modelValue.value.length && value.every((v, i) => v === modelValue.value[i]))
+    return
+  modelValue.value = value
+  emit('change', value)
 }
 </script>
 
 <template>
   <SliderRoot
-    v-model="value"
+    :model-value="modelValue"
     v-bind="rootProps"
     data-test-slider-root
-    @value-commit="emit('valueCommit', $event)"
+    @update:model-value="onUpdateModelValue"
   >
     <SliderTrack v-bind="trackProps" data-test-slider-track>
       <SliderRange v-bind="rangeProps" data-test-slider-range />
@@ -165,8 +118,8 @@ function getThumbProps(context: SliderThumbContext) {
     <SliderThumb
       v-for="thumbContext in thumbContexts"
       :key="thumbContext.index"
-      :data-test-slider-thumb="thumbContext.index"
       v-bind="getThumbProps(thumbContext)"
+      :data-test-slider-thumb="thumbContext.index"
     />
   </SliderRoot>
 </template>

@@ -115,6 +115,36 @@ function publicImportPath(importPath: string) {
         >
           <h3 class="font-semibold">{{ item.title }}</h3>
           <p class="text-sm leading-6 text-muted-foreground">{{ item.description }}</p>
+          <div v-if="item.table" class="overflow-x-auto rounded-lg border">
+            <table class="w-full min-w-[480px] text-left text-sm">
+              <thead class="bg-muted/40 text-xs tracking-wide text-muted-foreground uppercase">
+                <tr>
+                  <th
+                    v-for="column in item.table.columns"
+                    :key="column"
+                    class="px-4 py-2.5 font-medium"
+                  >
+                    {{ column }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y">
+                <tr v-for="row in item.table.rows" :key="row.join('|')" class="align-top">
+                  <td
+                    v-for="(cell, index) in row"
+                    :key="index"
+                    :class="
+                      index === 0
+                        ? 'px-4 py-2.5 font-mono text-xs whitespace-nowrap'
+                        : 'px-4 py-2.5 text-muted-foreground'
+                    "
+                  >
+                    {{ cell }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div v-if="item.links?.length" class="grid gap-2">
             <a
               v-for="link in item.links"

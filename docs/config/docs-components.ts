@@ -39,6 +39,7 @@ import radioGroup from './components/radio-group'
 import rating from './components/rating'
 import ribbon from './components/ribbon'
 import separator from './components/separator'
+import slider from './components/slider'
 import stepper from './components/stepper'
 import switchConfig from './components/switch'
 import tabsConfig from './components/tabs'
@@ -92,6 +93,7 @@ export const docsComponents = [
   rating,
   ribbon,
   separator,
+  slider,
   stepper,
   switchConfig,
   tabsConfig,

@@ -9,8 +9,6 @@ export interface Messages {
   empty: string
   decrement: string
   increment: string
-  minimum: string
-  maximum: string
   pagination: string
   first: string
   previous: string
@@ -19,6 +17,7 @@ export interface Messages {
   more: string
   morePages: string
   'page_{n}': string
+  'value_{n}_of_{total}': string
   fileUploadLabel: string
   fileUploadDescription: string
   fileUploadFile: string
