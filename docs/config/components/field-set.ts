@@ -37,9 +37,22 @@ const fieldSetConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Group related controls',
+      title: 'Roles and attributes',
       description:
-        "Use legend to provide the group's accessible name. Description adds visible context; if it should be announced with the group, give it an id through ui.description and reference that id with aria-describedby on FieldSet. Keep each control labeled.",
+        'The legend names the group, so controls inside it are announced with it. Keep each control labeled on its own.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['fieldset', 'Root', 'Native fieldset that groups related controls.'],
+          ['legend', 'Legend', 'Names the fieldset.'],
+          ['p', 'Description', 'Visible text, not linked to the fieldset by default.'],
+        ],
+      },
+    },
+    {
+      title: 'Announcing the description',
+      description:
+        'To have the description announced with the group, give it an id through ui.description and reference that id with aria-describedby on FieldSet.',
     },
   ],
   api: {

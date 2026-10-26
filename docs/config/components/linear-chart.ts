@@ -67,9 +67,25 @@ const linearChartConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible description',
+      title: 'Roles and attributes',
       description:
-        'The root uses role="img" by default. Give it a concise aria-label that identifies the series and range, and provide a nearby table or text summary when readers need the exact data. Interactive hover details alone are not a substitute for that data.',
+        'The chart is announced as a single image, so screen readers only hear its name.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="img"', 'Root', 'Announces the chart as one image, unless you pass another role.'],
+          [
+            'aria-label',
+            'Root',
+            'Not set by default. Pass a concise name that identifies the series and range.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Exact data',
+      description:
+        'Provide a nearby table or text summary when readers need the exact values. Hover details are only available to pointer users and do not replace that data.',
     },
   ],
   api: {

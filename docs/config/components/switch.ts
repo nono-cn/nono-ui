@@ -45,9 +45,29 @@ const switchConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible name',
+      title: 'Roles and attributes',
       description:
-        'Associate the switch with a visible label or provide aria-label or aria-labelledby. HTML and ARIA attributes are forwarded to the root button.',
+        'Associate the switch with a visible label, or give it a name with aria-label or aria-labelledby. HTML and ARIA attributes are forwarded to the root button.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="switch"', 'Root', 'A button announced as a switch.'],
+          ['aria-checked', 'Root', 'true when the value is trueValue, false otherwise.'],
+          ['aria-required', 'Root', 'Whether a value is required.'],
+          ['aria-hidden="true"', 'Thumb icons', 'The checked and unchecked icons are decorative.'],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description: 'Unlike a checkbox, Enter also toggles the switch.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the switch.'],
+          ['Space, Enter', 'Turns the switch on or off.'],
+        ],
+      },
     },
   ],
   api: {

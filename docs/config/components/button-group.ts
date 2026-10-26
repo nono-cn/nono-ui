@@ -35,9 +35,26 @@ const buttonGroupConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Action group',
+      title: 'Roles and attributes',
       description:
-        'ButtonGroup adds role="group" to its root element. Give each button a clear accessible label (aria-label / aria-labelledby) and keep actions in a logical order.',
+        'Give the group a name with aria-label or aria-labelledby when its purpose is not clear from the buttons. Keep the actions in a logical order.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [['role="group"', 'Root', 'Groups the buttons so they are announced together.']],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description:
+        'The group does not change keyboard behavior: each button is its own tab stop, in the order they appear.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the next button.'],
+          ['Shift + Tab', 'Moves focus to the previous button.'],
+          ['Space, Enter', 'Activates the focused button.'],
+        ],
+      },
     },
   ],
   api: {

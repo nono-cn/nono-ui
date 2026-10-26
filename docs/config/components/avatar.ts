@@ -61,14 +61,23 @@ const avatarConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Alternative text',
+      title: 'Roles and attributes',
       description:
-        'Set alt when src points to an informative image. Use label to provide a text fallback when the image is unavailable, and avoid relying on color or initials alone to communicate identity.',
+        'Set alt when src points to an informative image. When the image is not available, the fallback is shown instead.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['span', 'Root', 'Generic container with no role.'],
+          ['role="img"', 'Image', 'The image, while it loads correctly.'],
+          ['alt', 'Image', 'The alt prop.'],
+          ['aria-hidden="true"', 'Fallback icon', 'The icon is decorative.'],
+        ],
+      },
     },
     {
-      title: 'Icons and custom content',
+      title: 'Fallback content',
       description:
-        'Mark decorative icons passed through icon with aria-hidden="true". If you use the fallback slot, preserve a clear accessible name (aria-label / aria-labelledby) or surrounding context when the avatar is relevant to the task.',
+        'Use label to show a text fallback, such as initials, when the image is unavailable. Initials or color alone do not identify a person, so keep the name nearby or give the fallback slot an accessible name when the avatar matters for the task.',
     },
   ],
   api: {

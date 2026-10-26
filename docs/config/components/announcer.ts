@@ -43,9 +43,28 @@ const announcerConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Live regions',
+      title: 'Roles and attributes',
       description:
-        'Announcer renders a span with aria-live and aria-atomic, forwards HTML and ARIA attributes, class, and style to the root element, and stays visually hidden when no default slot is provided. Use assertive politeness only for urgent updates, and avoid announcing the same state multiple times.',
+        'Announcer is a live region: when its content changes, screen readers read it out. It is visually hidden unless you pass a default slot.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['aria-live', 'Root', 'The politeness prop.'],
+          [
+            'aria-atomic',
+            'Root',
+            'The atomic prop. When true, the whole message is read, not only what changed.',
+          ],
+          ['role="status"', 'Root', 'Set when politeness is polite.'],
+          ['role="alert"', 'Root', 'Set when politeness is assertive.'],
+          ['sr-only', 'Root', 'Visually hides the message when there is no default slot.'],
+        ],
+      },
+    },
+    {
+      title: 'Politeness',
+      description:
+        'Polite messages wait until the screen reader is idle; assertive ones interrupt it. Use assertive only for urgent updates, and avoid announcing the same state several times.',
     },
   ],
   api: {

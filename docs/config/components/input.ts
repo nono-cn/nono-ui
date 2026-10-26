@@ -43,9 +43,30 @@ const inputConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
+      title: 'Roles and attributes',
+      description:
+        'Attributes passed to Input, including class and style, apply to the native input. Use ui.root to customize the outer container.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          [
+            'input',
+            'Field',
+            'Native input, so it keeps the keyboard and form behavior of the browser.',
+          ],
+          ['aria-busy="true"', 'Field', 'Set while loading.'],
+          [
+            'aria-hidden="true"',
+            'Icons',
+            'The leading, trailing, and loading icons are decorative.',
+          ],
+        ],
+      },
+    },
+    {
       title: 'Label and description',
       description:
-        'Associate a visible label with the native input using for and id. Use aria-describedby for helper text and aria-invalid when validation fails. The loading prop marks the native input with aria-busy. Attributes passed to Input, including class and style, apply to the native input; use ui.root to customize the outer container.',
+        'Associate a visible label with the input using for and id. Use aria-describedby for helper text, and aria-invalid when validation fails.',
     },
   ],
   api: {

@@ -32,9 +32,20 @@ const masonryConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Order and semantics',
+      title: 'Roles and attributes',
+      description: 'Masonry adds no roles: it only arranges the content of the slot in columns.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container with no role.'],
+          ['div', 'Column', 'One container per column, holding its items in order.'],
+        ],
+      },
+    },
+    {
+      title: 'Reading and focus order',
       description:
-        'Masonry groups items by column in the DOM, so assistive technology reads each column from top to bottom. Use semantic content and accessible names in the slot; do not rely on visual left-to-right order to convey meaning.',
+        'Items are grouped by column in the DOM, so screen readers and Tab go through each column from top to bottom before moving to the next. Do not rely on the visual left-to-right order to convey meaning, and use semantic content with accessible names in the slot.',
     },
   ],
   api: {

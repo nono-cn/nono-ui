@@ -49,14 +49,42 @@ const linkConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Navigation semantics',
+      title: 'Roles and attributes',
       description:
-        'Provide to when the element should navigate: internal and external destinations render an anchor. Without to, Link renders a div and should only present noninteractive content. Use a descriptive label or default slot; icon-only links need an aria-label.',
+        'Use a descriptive label or default slot, and give icon-only links an aria-label. HTML and ARIA attributes, class, and style are passed to the root element.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['a', 'Root with to', 'Anchor for internal and external destinations.'],
+          ['href', 'Root with to', 'The resolved destination.'],
+          [
+            'div',
+            'Root without to',
+            'Not focusable, so only use it for content that does not navigate.',
+          ],
+          [
+            'aria-hidden="true"',
+            'Icons',
+            'Icons are decorative, so the label must carry the meaning.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description: 'A link without to is not focusable.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the link.'],
+          ['Enter', 'Follows the link.'],
+        ],
+      },
     },
     {
       title: 'External destinations',
       description:
-        'Use target="_blank" only when opening a new tab is intentional. Pair it with rel="noopener noreferrer". HTML and ARIA attributes, class, and style are passed to the root element.',
+        'External links do not get target or rel by default. Use target="_blank" only when opening a new tab is intentional, and pair it with rel="noopener noreferrer".',
     },
   ],
   api: {

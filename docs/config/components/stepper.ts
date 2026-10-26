@@ -98,14 +98,53 @@ const config: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Labels and keyboard',
+      title: 'Roles and attributes',
       description:
-        'Pass aria-label to name the root group. Keep meaningful labels for each step: the default triggers are buttons linked to their titles and descriptions. The keyboard focus ring surrounds the indicator. Tab reaches available triggers; arrow keys move focus along the orientation, and Enter or Space activates the focused step.',
+        'The root is named "progress" by Reka UI, in English. Pass aria-label to give it a name in the language of the page.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="group"', 'Root', 'Groups the steps.'],
+          ['aria-label', 'Root', '"progress" unless you pass another one.'],
+          ['aria-current="true"', 'Current step', 'Marks the step that matches the value.'],
+          [
+            'aria-labelledby',
+            'Trigger',
+            'Id of the step title, so the trigger is named by the label.',
+          ],
+          ['aria-describedby', 'Trigger', 'Id of the step description.'],
+          [
+            'disabled',
+            'Trigger',
+            'Set on disabled steps, and on steps that cannot be reached yet while linear.',
+          ],
+          [
+            'role="status"',
+            'Live region',
+            'Visually hidden text "Step N of M" that announces the current step, in English.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description:
+        'Every step that can be reached is its own tab stop. While linear is true, only completed steps, the current step, and the next one can be reached. The arrows follow the orientation and do not wrap.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the next step that can be reached.'],
+          ['Shift + Tab', 'Moves focus to the previous step that can be reached.'],
+          ['ArrowRight, ArrowDown', 'Moves focus to the next step.'],
+          ['ArrowLeft, ArrowUp', 'Moves focus to the previous step.'],
+          ['Space, Enter', 'Goes to the focused step.'],
+        ],
+      },
     },
     {
       title: 'Custom content',
       description:
-        'Root HTML and ARIA attributes are forwarded to StepperRoot. Preserve labels when replacing slots, and use native buttons with disabled states for content navigation, as shown in Custom slots. Keep custom slot content keyboard accessible; do not place interactive elements inside a trigger slot.',
+        'Preserve labels when replacing slots, and use native buttons with disabled states for content navigation, as shown in Custom slots. Keep custom slot content keyboard accessible, and do not place interactive elements inside a trigger slot.',
     },
   ],
   api: {

@@ -43,9 +43,23 @@ const textareaConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
+      title: 'Roles and attributes',
+      description: 'HTML and ARIA attributes, class, and style apply to the native textarea.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          [
+            'textarea',
+            'Root',
+            'Native textarea, so it keeps the keyboard and form behavior of the browser.',
+          ],
+        ],
+      },
+    },
+    {
       title: 'Label and description',
       description:
-        'Associate a visible label using for and id. Use aria-describedby for helper text and aria-invalid when validation fails. HTML and ARIA attributes, class, and style apply to the native textarea.',
+        'Associate a visible label using for and id. Use aria-describedby for helper text, and aria-invalid when validation fails.',
     },
   ],
   api: {

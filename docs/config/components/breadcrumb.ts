@@ -55,14 +55,41 @@ const breadcrumbConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Navigation landmark',
+      title: 'Roles and attributes',
       description:
-        'Breadcrumb renders a nav with an ordered list. Give the nav a descriptive aria-label so it can be distinguished from other navigation landmarks.',
+        'The nav has no name by default. Give it one with aria-label, such as "Breadcrumb", so it can be told apart from other navigation landmarks.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['nav', 'Root', 'Navigation landmark.'],
+          ['ol', 'List', 'Ordered list, so the levels are announced with their position.'],
+          ['aria-current="page"', 'Last item', 'Marks the current page.'],
+          ['role="presentation"', 'Separator', 'Removes the separator from the list semantics.'],
+          [
+            'aria-hidden="true"',
+            'Separator',
+            'Hides the separator icon from assistive technology.',
+          ],
+          ['aria-label', 'Ellipsis', '"More" in the current locale.'],
+        ],
+      },
     },
     {
-      title: 'Current page and collapsed levels',
+      title: 'Keyboard',
+      description: 'Only items with to render a link, so only they are focusable.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the next link.'],
+          ['Shift + Tab', 'Moves focus to the previous link.'],
+          ['Enter', 'Follows the focused link.'],
+        ],
+      },
+    },
+    {
+      title: 'Custom items and ellipsis',
       description:
-        'The current page receives aria-current="page" on its default Link. If you replace an item with a custom slot, apply aria-current="page" to its current-page element. Keep its label meaningful and describe hidden levels in custom ellipsis content.',
+        'If you replace an item with a slot, keep aria-current="page" on the element of the current page. Keep its label meaningful, and describe the hidden levels in custom ellipsis content.',
     },
   ],
   api: {

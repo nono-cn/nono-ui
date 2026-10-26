@@ -77,19 +77,42 @@ const paginationConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Navigation landmark',
+      title: 'Roles and attributes',
       description:
-        'The root is a nav element with no name by default. When a page has more than one pagination, pass a distinct aria-label to each.',
+        'The nav has no name by default. When a page has more than one pagination, pass a distinct aria-label to each.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['nav', 'Root', 'Navigation landmark.'],
+          ['aria-label', 'Page', '"Page N" in the current locale.'],
+          ['aria-current="page"', 'Current page', 'Marks the page that is shown.'],
+          [
+            'aria-label',
+            'First, previous, next, last',
+            'The action of each control in the current locale, such as "Next page".',
+          ],
+          [
+            'disabled',
+            'First, previous, next, last',
+            'Set on first and previous on the first page, and on next and last on the last page.',
+          ],
+          ['role="img"', 'Ellipsis', 'Not focusable; announced as a single image.'],
+          ['aria-label', 'Ellipsis', '"More pages" in the current locale.'],
+        ],
+      },
     },
     {
-      title: 'Current page',
+      title: 'Keyboard',
       description:
-        'Each page is a button named "Page N", and the current one has aria-current="page". The first, previous, next, and last buttons are named after their action, and are disabled on the first or last page.',
-    },
-    {
-      title: 'Ellipsis',
-      description:
-        'The ellipsis is not focusable. It has role="img" and is named "More pages" in the current locale, and its icon is hidden from assistive technologies.',
+        'Every page and control is a button with type="button", so it never submits a form.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the next enabled button.'],
+          ['Shift + Tab', 'Moves focus to the previous enabled button.'],
+          ['Space, Enter', 'Goes to the focused page, or runs the focused control.'],
+        ],
+      },
     },
     {
       title: 'Custom controls and pages',

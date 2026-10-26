@@ -25,9 +25,18 @@ const aspectRatioConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible content',
+      title: 'Roles and attributes',
       description:
-        'AspectRatio only controls the container’s proportions; it does not add a name or an interactive role. Provide descriptive alt text for informative images, captions and accessible controls for videos, and an appropriate name for any interactive content placed in the default slot. The aspect ratio is a visual choice and should not be the only way to convey information.',
+        'AspectRatio only controls the proportions of its container. It adds no role or name, and the content keeps its own semantics.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [['div', 'Root', 'Generic container with no role.']],
+      },
+    },
+    {
+      title: 'Content',
+      description:
+        'Provide descriptive alt text for informative images, captions and accessible controls for videos, and a name for any interactive content in the default slot. The ratio is a visual choice and should not be the only way to convey information.',
     },
   ],
   api: {

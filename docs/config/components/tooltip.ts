@@ -44,15 +44,43 @@ const tooltipConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Focusable trigger',
+      title: 'Roles and attributes',
       description:
-        'Use a focusable trigger such as a button. The tooltip opens on hover and keyboard focus, closes on Escape, and is announced through role="tooltip". Keep tooltip content short and non-interactive, and do not rely on it for essential information.',
-      links: [
-        {
-          label: 'See the Reka UI Tooltip accessibility guide',
-          href: 'https://reka-ui.com/docs/components/tooltip#accessibility',
-        },
-      ],
+        'The default slot becomes the trigger, so use a focusable element such as a button. The tooltip describes the trigger; it does not name it, so the trigger still needs its own accessible name.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          [
+            'aria-describedby',
+            'Trigger',
+            'Id of the tooltip text, only while the tooltip is open.',
+          ],
+          [
+            'role="tooltip"',
+            'Tooltip text',
+            'A visually hidden copy of the text that screen readers announce.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Opening and closing',
+      description:
+        'Keep tooltip content short and non-interactive, and do not rely on it for essential information, because touch users cannot hover.',
+      table: {
+        columns: ['Interaction', 'Action'],
+        rows: [
+          ['Pointer moves over the trigger', 'Opens the tooltip after delayDuration.'],
+          ['Tab onto the trigger', 'Opens the tooltip.'],
+          ['Tab away from the trigger', 'Closes the tooltip.'],
+          [
+            'Click, Space, or Enter on the trigger',
+            'Closes the tooltip, unless disableClosingTrigger is true.',
+          ],
+          ['Escape', 'Closes the tooltip.'],
+          ['Scrolling a container of the trigger', 'Closes the tooltip.'],
+        ],
+      },
     },
   ],
   api: {

@@ -67,9 +67,25 @@ const badgeConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Content and semantics',
+      title: 'Roles and attributes',
       description:
-        'Use visible text to communicate status and add ARIA semantics only when needed. Do not rely on color alone to convey a badge’s meaning.',
+        'Badge is inline text with no role, so it is read as part of the surrounding content.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['span', 'Root', 'Inline element with no role.'],
+          [
+            'aria-hidden="true"',
+            'Icons',
+            'Icons are decorative, so the label must carry the meaning.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Meaning',
+      description:
+        'Use visible text to communicate the status, and do not rely on color alone. Add ARIA only when the badge needs it, for example a live region when it updates.',
     },
   ],
   api: {

@@ -76,14 +76,31 @@ const attachmentConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'File information',
+      title: 'Roles and attributes',
       description:
-        'Attachment renders a div and does not add interaction semantics by itself. Keep the label and description clear, provide accessible names for buttons in the actions slot, and use descriptive alt text when media contains an image. Decorative icons should have aria-hidden="true"; do not hide informative images from the accessibility tree.',
+        'Attachment is a generic container and adds no interaction semantics. Keep the label and description clear, and name the buttons in the actions slot.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container with no role.'],
+          ['data-state', 'Root', 'The state prop, for styling only. It is not announced.'],
+          [
+            'aria-hidden="true"',
+            'Icon, spinner',
+            'The file icon and the uploading spinner are decorative.',
+          ],
+        ],
+      },
     },
     {
       title: 'Dynamic states',
       description:
-        'state changes the visual presentation and shows a spinner during uploading, but does not announce progress by itself. If the state changes during an operation, communicate the update with visible text and an appropriate aria-live mechanism in the context that controls the upload.',
+        'state changes the presentation and shows a spinner while uploading, but does not announce anything. When the state changes during an operation, say so in visible text and with a live region, such as Announcer, in the context that controls the upload.',
+    },
+    {
+      title: 'Media',
+      description:
+        'Use descriptive alt text when the media is an informative image, and do not hide it from the accessibility tree.',
     },
   ],
   api: {

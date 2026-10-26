@@ -82,9 +82,20 @@ const progressConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible name and value',
+      title: 'Roles and attributes',
       description:
-        'Give the progress bar an accessible name with aria-label, aria-labelledby, or getValueLabel. The visual label is hidden from assistive technology. Use getValueText for a spoken value other than the numeric percentage.',
+        'Give the progress bar a name with aria-label, aria-labelledby, or getValueLabel. The visual label inside the track is hidden from assistive technology.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="progressbar"', 'Root', 'Announces the progress.'],
+          ['aria-valuenow', 'Root', 'The value. Missing while the value is null.'],
+          ['aria-valuemin, aria-valuemax', 'Root', '0 and max.'],
+          ['aria-label', 'Root', 'From getValueLabel; the percentage by default.'],
+          ['aria-valuetext', 'Root', 'From getValueText, when you pass it.'],
+          ['aria-hidden="true"', 'Label', 'The visual label inside the track.'],
+        ],
+      },
     },
     {
       title: 'Unknown progress',

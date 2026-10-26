@@ -145,18 +145,6 @@ function publicImportPath(importPath: string) {
               </tbody>
             </table>
           </div>
-          <div v-if="item.links?.length" class="grid gap-2">
-            <a
-              v-for="link in item.links"
-              :key="link.href"
-              :href="link.href"
-              target="_blank"
-              rel="noreferrer"
-              class="w-fit text-sm text-primary underline-offset-4 hover:underline"
-            >
-              {{ link.label }}
-            </a>
-          </div>
         </article>
       </div>
     </section>

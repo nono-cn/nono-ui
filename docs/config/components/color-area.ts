@@ -55,15 +55,58 @@ const colorAreaConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Keyboard interaction',
+      title: 'Roles and attributes',
       description:
-        'Use ArrowLeft and ArrowRight to decrease or increase the horizontal channel, and ArrowUp and ArrowDown to increase or decrease the vertical channel. Hold Shift with an arrow key to change values by 10 steps. PageUp and PageDown change the vertical channel by a larger step; Home and End move the horizontal channel to its minimum and maximum.',
-      links: [
-        {
-          label: 'Read the Reka UI ColorArea accessibility guide',
-          href: 'https://reka-ui.com/docs/components/color-area#accessibility',
-        },
-      ],
+        'The thumb is the only focusable element and carries both channels. Its value attributes describe the horizontal channel, and aria-valuetext reads both.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="group"', 'Root', 'Groups the area and its thumb.'],
+          ['role="application"', 'Area', 'The area handles its own pointer and keyboard input.'],
+          ['aria-roledescription', 'Area', '"Color picker" in the current locale.'],
+          ['role="slider"', 'Thumb', 'Announces the thumb as a slider.'],
+          ['aria-roledescription', 'Thumb', '"Color thumb" in the current locale.'],
+          ['aria-label', 'Thumb', 'Names of both channels, such as "Hue, Saturation".'],
+          ['aria-valuenow', 'Thumb', 'Value of the horizontal channel.'],
+          ['aria-valuemin, aria-valuemax', 'Thumb', 'Range of the horizontal channel.'],
+          [
+            'aria-valuetext',
+            'Thumb',
+            'Both channels with their values, such as "Hue 0, Saturation 100".',
+          ],
+          ['tabindex="0"', 'Thumb', 'Removed while disabled, so the thumb leaves the tab order.'],
+          ['aria-disabled="true"', 'Root, area', 'Set while disabled.'],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description:
+        'The horizontal channel is xChannel and the vertical channel is yChannel. Holding Shift multiplies every step by ten, including PageUp, PageDown, Home, and End.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['ArrowRight', 'Increases the horizontal channel by one step.'],
+          ['ArrowLeft', 'Decreases the horizontal channel by one step.'],
+          ['ArrowUp', 'Increases the vertical channel by one step.'],
+          ['ArrowDown', 'Decreases the vertical channel by one step.'],
+          ['End', 'Increases the horizontal channel by ten steps.'],
+          ['Home', 'Decreases the horizontal channel by ten steps.'],
+          ['PageUp', 'Increases the vertical channel by ten steps.'],
+          ['PageDown', 'Decreases the vertical channel by ten steps.'],
+          ['Shift + key', 'Moves ten times as far as the key alone.'],
+        ],
+      },
+    },
+    {
+      title: 'Channel names',
+      description:
+        'The channel names in aria-label and aria-valuetext come from Reka UI and are always in English. The role descriptions follow the current locale.',
+    },
+    {
+      title: 'Forms',
+      description:
+        'When the color area is inside a form, xName and yName name a hidden input for each channel so both values are submitted.',
     },
   ],
   api: {

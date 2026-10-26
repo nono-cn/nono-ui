@@ -55,9 +55,24 @@ const ribbonConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Decorative bands',
+      title: 'Roles and attributes',
+      description: 'Ribbons are decoration on top of the content of the default slot.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container that wraps the default slot.'],
+          [
+            'aria-hidden="true"',
+            'Band',
+            'Each band, with its label, is hidden from assistive technology.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Information in ribbons',
       description:
-        'Ribbon bands are hidden from assistive technologies with aria-hidden. If a ribbon carries information users need, such as a discount or a status, repeat it in the content.',
+        'If a ribbon carries information users need, such as a discount or a status, repeat it in the content.',
     },
   ],
   api: {

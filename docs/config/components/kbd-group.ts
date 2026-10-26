@@ -17,9 +17,21 @@ const kbdGroupConfig: ComponentDocConfig = {
   examples: [],
   accessibility: [
     {
-      title: 'Shortcut names',
+      title: 'Roles and attributes',
       description:
-        'KbdGroup renders a kbd element and forwards HTML and ARIA attributes to it. Keep each key visible and provide a readable name or nearby text for the complete shortcut.',
+        'KbdGroup renders a kbd element that wraps each key, which is how HTML marks a key combination. It forwards HTML and ARIA attributes to that element.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['kbd', 'Root', 'Marks the whole combination as keyboard input.'],
+          ['kbd', 'Each key', 'Marks each key inside the combination.'],
+        ],
+      },
+    },
+    {
+      title: 'Readable shortcuts',
+      description:
+        'Keep each key visible, and provide a readable name or nearby text for the complete shortcut, such as "Control K".',
     },
   ],
   api: {

@@ -51,9 +51,33 @@ const toggleConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible name and pressed state',
+      title: 'Roles and attributes',
       description:
-        'Provide a visible label or an accessible name with aria-label or aria-labelledby. The root button exposes its pressed state and forwards HTML and ARIA attributes.',
+        'Provide a visible label, or a name with aria-label or aria-labelledby. The root button forwards HTML and ARIA attributes.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['button', 'Root', 'Native button with type="button".'],
+          ['aria-pressed', 'Root', 'true while the toggle is on, false while it is off.'],
+          ['disabled', 'Root', 'Set while disabled.'],
+          [
+            'aria-hidden="true"',
+            'Icons',
+            'Icons are decorative, so the label must carry the meaning.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description: 'A disabled toggle is not focusable.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the toggle.'],
+          ['Space, Enter', 'Turns the toggle on or off.'],
+        ],
+      },
     },
   ],
   api: {

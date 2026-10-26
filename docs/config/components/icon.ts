@@ -43,9 +43,25 @@ const iconConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Decorative and semantic icons',
+      title: 'Roles and attributes',
       description:
-        'Hide decorative icons with aria-hidden="true". Give informative icons an accessible name (aria-label / aria-labelledby) on their containing element, or provide visible text. Do not rely on the icon or color alone to communicate information.',
+        'Icons are decorative by default. Attributes passed to Icon reach the svg, so you can override the defaults.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['svg', 'Root', 'Inline svg element.'],
+          [
+            'aria-hidden="true"',
+            'Root',
+            'Hides the icon from assistive technology, unless you pass another value.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Informative icons',
+      description:
+        'When an icon carries meaning on its own, prefer visible text next to it. Otherwise give its container an accessible name with aria-label or aria-labelledby. Do not rely on the icon or its color alone to communicate information.',
     },
   ],
   api: {

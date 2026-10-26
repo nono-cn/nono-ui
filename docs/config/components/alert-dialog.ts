@@ -43,20 +43,48 @@ const alertDialogConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Confirmation and focus',
+      title: 'Roles and attributes',
       description:
-        'Use AlertDialog for actions that require an explicit decision. It is modal, blocks outside interaction by default, manages focus, and can be dismissed with Escape. Always provide a descriptive label and a clear cancel action.',
-      links: [
-        {
-          label: 'See the Reka UI Alert Dialog accessibility guide',
-          href: 'https://www.reka-ui.com/docs/components/alert-dialog#accessibility',
-        },
-      ],
+        'Use AlertDialog for actions that need an explicit decision. While it is open, the rest of the page is hidden from assistive technology and cannot be clicked.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['aria-haspopup="dialog"', 'Trigger', 'Announces that the trigger opens a dialog.'],
+          ['aria-expanded', 'Trigger', 'true while the dialog is open.'],
+          ['aria-controls', 'Trigger', 'Id of the dialog content.'],
+          [
+            'role="alertdialog"',
+            'Content',
+            'Announces the content as a dialog that needs a response.',
+          ],
+          [
+            'aria-labelledby',
+            'Content',
+            'Id of the h2 that renders label, so the dialog is named by it.',
+          ],
+          ['aria-describedby', 'Content', 'Id of the paragraph that renders description.'],
+          ['aria-hidden="true"', 'Rest of the page', 'Set while the dialog is open.'],
+        ],
+      },
     },
     {
-      title: 'Names and actions',
+      title: 'Focus and keyboard',
       description:
-        'When using custom header, label, or description content, keep AlertDialogTitle and AlertDialogDescription to preserve the dialog’s semantic relationships. Decorative icons should use aria-hidden="true", and custom actions should retain clear visible or accessible names (aria-label / aria-labelledby). Arbitrary attributes, class, style, and ARIA passed to the component are applied to its local root.',
+        'When the dialog opens, focus moves to the cancel button, so the safe choice is the default. Focus stays inside the dialog until it closes, and then returns to the trigger. Clicking outside does not close it.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the next focusable element inside the dialog.'],
+          ['Shift + Tab', 'Moves focus to the previous focusable element inside the dialog.'],
+          ['Space, Enter', 'Activates the focused button.'],
+          ['Escape', 'Closes the dialog, like the cancel button.'],
+        ],
+      },
+    },
+    {
+      title: 'Custom content',
+      description:
+        'When you replace the label or description with slots, keep the text inside them so the dialog stays named and described. Custom actions need a visible or accessible name, and decorative icons need aria-hidden="true".',
     },
   ],
   api: {

@@ -92,9 +92,46 @@ const ratingConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible name and keyboard use',
+      title: 'Roles and attributes',
       description:
-        'Provide an accessible name with aria-label or aria-labelledby. Use readonly to display a value without allowing changes; disabled removes interaction.',
+        'Rating works like a radio group with one radio per item. Give the group a name with aria-label or aria-labelledby.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="radiogroup"', 'Root', 'Groups the items.'],
+          ['aria-orientation', 'Root', 'The orientation prop.'],
+          ['aria-required', 'Root', 'The required prop.'],
+          ['aria-readonly="true"', 'Root', 'Set while readonly.'],
+          ['role="radio"', 'Item', 'Each item is a button announced as a radio.'],
+          ['aria-checked', 'Item', 'true for the item that matches the value.'],
+          ['aria-label', 'Item', '"N of M" in the current locale, such as "3 of 5".'],
+          ['disabled', 'Item', 'Set on every item while disabled or readonly.'],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description:
+        'Only one item is in the tab order at a time. The arrows follow the orientation and stop at the ends unless loop is true. A readonly or disabled rating is not focusable.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus into the rating, on the selected item, or out of it.'],
+          ['ArrowRight, ArrowDown', 'Moves focus to the next item and selects it.'],
+          ['ArrowLeft, ArrowUp', 'Moves focus to the previous item and selects it.'],
+          ['Home, PageUp', 'Moves focus to the first item without selecting it.'],
+          ['End, PageDown', 'Moves focus to the last item without selecting it.'],
+          [
+            'Space',
+            'Selects the focused item. With clearable, pressing it on the selected item clears the value.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Forms',
+      description:
+        'When the rating is inside a form and has a name, its value is submitted with the form.',
     },
   ],
   api: {

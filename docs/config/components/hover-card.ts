@@ -38,15 +38,33 @@ const hoverCardConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible trigger',
+      title: 'Roles and attributes',
       description:
-        'Use a focusable trigger with a clear accessible name. Keep essential information available outside the hover card, since touch and keyboard interactions may differ from pointer hover.',
-      links: [
-        {
-          label: 'Reka UI HoverCard documentation',
-          href: 'https://reka-ui.com/docs/components/hover-card',
-        },
-      ],
+        'The hover card is a visual preview for sighted pointer and keyboard users. Its content has no role and is not linked to the trigger, so screen readers do not announce it.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [['data-state', 'Trigger, content', '"open" or "closed", for styling only.']],
+      },
+    },
+    {
+      title: 'Opening and closing',
+      description:
+        'The default slot becomes the trigger, so use a focusable element with a clear accessible name, such as a link. Touch only opens the card when enableTouch is true.',
+      table: {
+        columns: ['Interaction', 'Action'],
+        rows: [
+          ['Pointer enters the trigger', 'Opens the card after openDelay.'],
+          ['Pointer leaves the trigger and card', 'Closes the card after closeDelay.'],
+          ['Tab onto the trigger', 'Opens the card.'],
+          ['Tab away from the trigger', 'Closes the card.'],
+          ['Escape', 'Closes the card.'],
+        ],
+      },
+    },
+    {
+      title: 'Essential information',
+      description:
+        'Keep anything users need available outside the hover card, for example on the page the trigger links to, because screen reader users, and touch users by default, cannot reach it.',
     },
   ],
   api: {

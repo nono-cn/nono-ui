@@ -43,14 +43,27 @@ const loadingConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible loading state',
+      title: 'Roles and attributes',
       description:
-        'Loading renders role="status" and aria-busy on the root element. While loading is true, use aria-label to provide a specific name; if omitted, the configured loading translation is used. When loading completes, aria-label is removed so the content is exposed with its own accessible name.',
+        'While loading, the root is announced as a status with its own name. When loading ends, the name is removed so the content is exposed with its own.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="status"', 'Root', 'Announces changes in the loading state.'],
+          ['aria-busy', 'Root', 'true while loading, false afterwards.'],
+          [
+            'aria-label',
+            'Root',
+            'Only while loading: your aria-label, or "Loading" in the current locale.',
+          ],
+          ['aria-hidden="true"', 'Icon', 'The spinner is decorative.'],
+        ],
+      },
     },
     {
       title: 'Content and spinner',
       description:
-        'Do not rely on animation or the icon alone to communicate the state. The Icon is hidden from assistive technologies by default; provide a clear accessible name on Loading or text in the loading slot.',
+        'Do not rely on the animation or the icon alone to communicate the state. Give Loading a specific aria-label, or put text in the loading slot.',
     },
   ],
   api: {

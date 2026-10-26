@@ -68,14 +68,26 @@ const timelineConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'List semantics',
+      title: 'Roles and attributes',
       description:
-        'Timeline renders a list with list items. Supply meaningful labels and descriptions; the indicator and separator are decorative and hidden from assistive technology.',
+        'Timeline is announced as a list, so screen readers tell how many items it has. Supply meaningful labels and descriptions.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="list"', 'Root', 'Announces the items as a list.'],
+          ['role="listitem"', 'Item', 'Each item of the timeline.'],
+          [
+            'aria-hidden="true"',
+            'Indicator, separator',
+            'The dot, its icon, and the connecting line are decorative.',
+          ],
+        ],
+      },
     },
     {
       title: 'Current position',
       description:
-        'The modelValue prop changes the visual completed state. If the current position must be announced, add aria-current to the active item through ui.item.',
+        'modelValue only changes the visual completed state. If the current position must be announced, add aria-current to the active item through ui.item.',
     },
   ],
   api: {

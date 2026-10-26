@@ -93,20 +93,43 @@ const radioGroupConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Radio group pattern',
+      title: 'Roles and attributes',
       description:
-        'The root has role="radiogroup" and each option is a button with role="radio" and aria-checked. Focus uses a roving tabindex: Tab moves into the group on the checked option, arrow keys move and check the next or previous option, and Space checks the focused one.',
-      links: [
-        {
-          label: 'WAI-ARIA radio group pattern',
-          href: 'https://www.w3.org/WAI/ARIA/apg/patterns/radio/',
-        },
-      ],
+        'Each radio is named by its label and described by its description, so the whole row or card can be clicked without repeating the description in the name. Without a legend, give the group a name with aria-label.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="radiogroup"', 'Root', 'Groups the radios.'],
+          ['aria-labelledby', 'Root', 'Id of the legend, when there is one.'],
+          ['aria-orientation', 'Root', 'The orientation prop.'],
+          ['aria-required', 'Root', 'The required prop.'],
+          ['role="radio"', 'Radio', 'Each option is a button announced as a radio.'],
+          ['aria-checked', 'Radio', 'true for the selected option.'],
+          ['aria-labelledby', 'Radio', 'Id of the label of the option.'],
+          ['aria-describedby', 'Radio', 'Id of the description of the option, when it has one.'],
+          [
+            'disabled',
+            'Radio',
+            'Set on disabled options and on every option while the group is disabled.',
+          ],
+        ],
+      },
     },
     {
-      title: 'Accessible names',
+      title: 'Keyboard',
       description:
-        'The legend names the group through aria-labelledby. Each radio is named by its label and described by its description, so the whole row or card can be clicked without repeating the description in the name. Without a legend, give the group a name with aria-label.',
+        'Only one radio is in the tab order at a time. The arrows follow the orientation, skip disabled options, and wrap around while loop is true. In a right-to-left layout ArrowLeft and ArrowRight are swapped.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus into the group, on the selected option, or out of it.'],
+          ['Space', 'Selects the focused option.'],
+          ['ArrowDown, ArrowRight', 'Moves focus to the next option and selects it.'],
+          ['ArrowUp, ArrowLeft', 'Moves focus to the previous option and selects it.'],
+          ['Home, PageUp', 'Moves focus to the first option without selecting it.'],
+          ['End, PageDown', 'Moves focus to the last option without selecting it.'],
+        ],
+      },
     },
     {
       title: 'Hidden indicator',

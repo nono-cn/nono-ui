@@ -38,15 +38,37 @@ const popoverConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Focus and dismissal',
+      title: 'Roles and attributes',
       description:
-        'Use a focusable trigger such as a button. Focus moves into the content when it opens and returns to the trigger when it closes. Escape and outside interactions dismiss the popover. Set modal to true to trap focus and block interaction with the rest of the page.',
-      links: [
-        {
-          label: 'See the Reka UI Popover accessibility guide',
-          href: 'https://reka-ui.com/docs/components/popover#accessibility',
-        },
-      ],
+        'The default slot becomes the trigger, so use a focusable element with a clear accessible name, such as a button.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['aria-haspopup="dialog"', 'Trigger', 'Announces that the trigger opens a dialog.'],
+          ['aria-expanded', 'Trigger', 'true while the popover is open.'],
+          ['aria-controls', 'Trigger', 'Id of the content.'],
+          ['role="dialog"', 'Content', 'Announces the content as a dialog.'],
+          ['aria-labelledby', 'Content', 'Id of the trigger, so the content is named by it.'],
+          ['aria-hidden="true"', 'Rest of the page', 'Set while a modal popover is open.'],
+        ],
+      },
+    },
+    {
+      title: 'Focus and keyboard',
+      description:
+        'When the popover opens, focus moves into the content, and when it closes focus returns to the trigger. By default focus can leave the content, and moving it outside closes the popover. With modal set to true, focus stays inside, the page cannot scroll, and the rest of the page is hidden from assistive technology.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Space, Enter', 'Opens or closes the popover from the trigger.'],
+          [
+            'Tab',
+            'Moves focus to the next focusable element. In a modal popover it wraps inside the content.',
+          ],
+          ['Shift + Tab', 'Moves focus to the previous focusable element.'],
+          ['Escape', 'Closes the popover.'],
+        ],
+      },
     },
   ],
   api: {

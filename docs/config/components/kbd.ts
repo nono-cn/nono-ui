@@ -49,9 +49,18 @@ const kbdConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible content',
+      title: 'Roles and attributes',
       description:
-        'Kbd and KbdGroup render semantic kbd elements and forward HTML and ARIA attributes, class, and style to their roots. Keep the shortcut visible and give combined keys a readable name or nearby text context. Do not rely on color alone to communicate an action.',
+        'Kbd renders a semantic kbd element and forwards HTML and ARIA attributes, class, and style to it.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [['kbd', 'Root', 'Marks the text as keyboard input.']],
+      },
+    },
+    {
+      title: 'Readable shortcuts',
+      description:
+        'Keep the shortcut visible. Symbols such as ⌘ or ⇧ may be read literally or not at all, so give them a readable name with aria-label or nearby text. Do not rely on color alone to communicate an action.',
     },
   ],
   api: {

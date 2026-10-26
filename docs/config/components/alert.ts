@@ -61,9 +61,34 @@ const alertConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Informative and decorative alerts',
+      title: 'Roles and attributes',
       description:
-        'Alert uses role="alert" by default. Set decorative=true only for visual content that should not be announced. Give informative icons an accessible name (aria-label / aria-labelledby) and ensure custom close controls have a clear accessible name. Do not rely on color alone to communicate meaning.',
+        'An alert is announced as soon as it appears. Set decorative to true only for visual content that should not be announced.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="alert"', 'Root', 'Announces the content immediately.'],
+          ['role="none"', 'Root', 'Used instead of alert when decorative is true.'],
+          ['aria-label', 'Close button', '"Close" in the current locale.'],
+          ['aria-hidden="true"', 'Icon', 'The icon is decorative.'],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description: 'Only a closable alert has something to focus.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the close button.'],
+          ['Space, Enter', 'Closes the alert.'],
+        ],
+      },
+    },
+    {
+      title: 'Meaning',
+      description:
+        'Do not rely on color alone to communicate meaning: say it in the label or description. Give informative custom icons an accessible name, and keep custom close controls named.',
     },
   ],
   api: {

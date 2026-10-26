@@ -31,15 +31,51 @@ const dialogConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Names and focus',
+      title: 'Roles and attributes',
       description:
-        'Provide a label and description so assistive technology can identify the dialog and its purpose. Dialog manages focus while open and supports dismissal with Escape. Set modal to false when users should continue interacting with the page behind the dialog.',
-      links: [
-        {
-          label: 'See the Reka UI Dialog accessibility guide',
-          href: 'https://reka-ui.com/docs/components/dialog#accessibility',
-        },
-      ],
+        'Provide a label and a description so assistive technology can identify the dialog and its purpose.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['aria-haspopup="dialog"', 'Trigger', 'Announces that the trigger opens a dialog.'],
+          ['aria-expanded', 'Trigger', 'true while the dialog is open.'],
+          ['aria-controls', 'Trigger', 'Id of the dialog content.'],
+          ['role="dialog"', 'Content', 'Announces the content as a dialog.'],
+          [
+            'aria-labelledby',
+            'Content',
+            'Id of the h2 that renders label, so the dialog is named by it.',
+          ],
+          ['aria-describedby', 'Content', 'Id of the paragraph that renders description.'],
+          [
+            'aria-label',
+            'Close button',
+            '"Close" in the current locale, unless ui sets another one.',
+          ],
+          ['aria-hidden="true"', 'Rest of the page', 'Set while a modal dialog is open.'],
+        ],
+      },
+    },
+    {
+      title: 'Focus and keyboard',
+      description:
+        'When the dialog opens, focus moves inside it, and when it closes focus returns to the trigger. A modal dialog keeps focus inside and blocks the page behind it; with modal set to false, focus can leave and the page stays usable.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          [
+            'Tab',
+            'Moves focus to the next focusable element. In a modal dialog it wraps inside the dialog.',
+          ],
+          ['Shift + Tab', 'Moves focus to the previous focusable element.'],
+          ['Escape', 'Closes the dialog, unless block is true.'],
+        ],
+      },
+    },
+    {
+      title: 'Blocked dialogs',
+      description:
+        'With block set to true, Escape, clicking outside, and the close function do nothing, and the close button is hidden. Always offer an action inside the dialog that resolves it, so keyboard users are not trapped.',
     },
   ],
   api: {

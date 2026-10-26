@@ -73,15 +73,38 @@ const accordionConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Triggers and content',
+      title: 'Roles and attributes',
       description:
-        'The component renders triggers and content with the semantics and accessible states provided by Reka UI. Use descriptive labels and preserve keyboard access to open and close each section.',
-      links: [
-        {
-          label: 'Read the Reka UI Accordion accessibility guide',
-          href: 'https://www.reka-ui.com/docs/components/accordion#accessibility',
-        },
-      ],
+        'Each item has a heading that wraps its trigger button, and a content region named by that trigger. The item label is the name of the trigger, so keep it descriptive.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['h3', 'Item header', 'Wraps the trigger so items appear in the heading outline.'],
+          ['aria-expanded', 'Trigger', 'true while the item is open, false while it is closed.'],
+          ['aria-controls', 'Trigger', 'Id of the content region of the item.'],
+          ['disabled', 'Trigger', 'Set on disabled items, with aria-disabled="true".'],
+          ['role="region"', 'Content', 'Marks the content as a region of the page.'],
+          ['aria-labelledby', 'Content', 'Id of the trigger, so the region is named by its label.'],
+          ['hidden', 'Content', 'Set while the item is closed.'],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description:
+        'Arrow keys skip disabled triggers and wrap from the last trigger to the first. Home and End go to the first and last trigger even when it is disabled.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Space, Enter', 'Opens or closes the focused item.'],
+          ['Tab', 'Moves focus to the next focusable element.'],
+          ['Shift + Tab', 'Moves focus to the previous focusable element.'],
+          ['ArrowDown', 'Moves focus to the next trigger.'],
+          ['ArrowUp', 'Moves focus to the previous trigger.'],
+          ['Home', 'Moves focus to the first trigger.'],
+          ['End', 'Moves focus to the last trigger.'],
+        ],
+      },
     },
   ],
   api: {

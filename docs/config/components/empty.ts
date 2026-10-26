@@ -40,9 +40,21 @@ const emptyConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Meaningful empty state',
+      title: 'Roles and attributes',
       description:
-        'Empty renders a generic container and does not announce updates automatically. Provide a clear label and description, give actions accessible names, and use an appropriate live region in the surrounding context when the empty state changes dynamically.',
+        'Empty is a generic container and does not announce itself. Provide a clear label and description, and give actions accessible names.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container with no role.'],
+          ['div', 'Label, description', 'Plain text, not headings.'],
+        ],
+      },
+    },
+    {
+      title: 'Dynamic empty states',
+      description:
+        'When the empty state appears after an action, such as a search with no results, announce it with a live region, such as Announcer, in the surrounding context.',
     },
   ],
   api: {

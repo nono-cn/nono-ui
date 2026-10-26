@@ -73,9 +73,38 @@ const buttonConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible actions',
+      title: 'Roles and attributes',
       description:
-        'Give icon-only buttons a clear accessible name (aria-label / aria-labelledby) and preserve aria-busy and aria-disabled while loading. HTML and ARIA attributes, class, and style are forwarded to the root element. Do not rely on color or the icon alone to communicate an action.',
+        'Button renders a native button and forwards HTML and ARIA attributes, class, and style to it. Icon-only buttons need a name with aria-label or aria-labelledby.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['button', 'Root', 'Native button, unless as or asChild render another element.'],
+          ['aria-busy="true"', 'Root', 'Set while loading.'],
+          [
+            'aria-disabled="true"',
+            'Root',
+            'Set while loading. The button stays focusable, but clicks are ignored and click is not emitted.',
+          ],
+          [
+            'aria-hidden="true"',
+            'Icons',
+            'Icons are decorative, so the label must carry the meaning.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description:
+        'The button has no type by default, so inside a form it submits it. Set type="button" for buttons that do something else.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the button.'],
+          ['Space, Enter', 'Activates the button, unless it is loading.'],
+        ],
+      },
     },
   ],
   api: {

@@ -25,15 +25,26 @@ const collapsibleConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Trigger and content',
+      title: 'Roles and attributes',
       description:
-        'Use a button as the default slot so the trigger is focusable and has a clear accessible name. Reka UI supplies the expanded state and supports Enter and Space. Disabled triggers cannot be activated.',
-      links: [
-        {
-          label: 'Read the Reka UI Collapsible accessibility guide',
-          href: 'https://reka-ui.com/docs/components/collapsible#accessibility',
-        },
-      ],
+        'The default slot becomes the trigger, so use a button with a clear accessible name. The attributes below are added to it.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['aria-expanded', 'Trigger', 'true while the content is open, false while it is closed.'],
+          ['aria-controls', 'Trigger', 'Id of the content.'],
+          ['disabled', 'Trigger', 'Set while the collapsible is disabled.'],
+          ['id', 'Content', 'Referenced by the trigger through aria-controls.'],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description: 'A disabled trigger cannot be activated.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [['Space, Enter', 'Opens or closes the content.']],
+      },
     },
   ],
   api: {

@@ -25,9 +25,20 @@ const labelConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Associating labels with controls',
+      title: 'Roles and attributes',
       description:
-        'Set for to the same id as the control so assistive technologies associate the label with the field. Keep the text visible and descriptive. HTML and ARIA attributes, class, and style are forwarded to the root label.',
+        'Set for to the id of the control so assistive technology announces the label with it, and clicking the label focuses the control. Keep the text visible and descriptive.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          [
+            'label',
+            'Root',
+            'Native label, which forwards HTML and ARIA attributes, class, and style.',
+          ],
+          ['for', 'Root', 'Id of the control the label names.'],
+        ],
+      },
     },
   ],
   api: {

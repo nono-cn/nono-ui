@@ -55,9 +55,33 @@ const checkboxConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Accessible name',
+      title: 'Roles and attributes',
       description:
-        'Associate the checkbox with a visible label or provide an accessible name (aria-label / aria-labelledby) when no text is available. HTML and ARIA attributes are forwarded to the root button.',
+        'Associate the checkbox with a visible label, or give it a name with aria-label or aria-labelledby. HTML and ARIA attributes are forwarded to the root button.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="checkbox"', 'Root', 'A button announced as a checkbox.'],
+          [
+            'aria-checked',
+            'Root',
+            'true when checked, false when unchecked, and "mixed" when indeterminate.',
+          ],
+          ['aria-required', 'Root', 'Whether a value is required.'],
+          ['aria-hidden="true"', 'Icons', 'The check and indeterminate icons are decorative.'],
+        ],
+      },
+    },
+    {
+      title: 'Keyboard',
+      description: 'Enter does nothing, as in a native checkbox.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus to the checkbox.'],
+          ['Space', 'Checks or unchecks the checkbox.'],
+        ],
+      },
     },
   ],
   api: {

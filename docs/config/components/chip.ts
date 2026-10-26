@@ -61,9 +61,21 @@ const chipConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Visual information',
+      title: 'Roles and attributes',
       description:
-        'Do not rely on color or size alone to convey important information. Add accessible content to the associated element when the chip communicates a status.',
+        'The chip is a purely visual dot on top of the default slot. It has no text, role, or name, so assistive technology does not notice it.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container that wraps the default slot.'],
+          ['span', 'Chip', 'Visual indicator with no role or name.'],
+        ],
+      },
+    },
+    {
+      title: 'Communicating the status',
+      description:
+        'When the chip means something, such as unread messages, say it on the element it decorates, for example with aria-label="Inbox, 3 unread" on the button. Do not rely on color or size alone.',
     },
   ],
   api: {

@@ -61,9 +61,20 @@ const bubbleConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
+      title: 'Roles and attributes',
+      description: 'Bubble is a generic container, unless as or asChild render another element.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container with no role.'],
+          ['div', 'Reactions', 'Generic container for the reactions slot.'],
+        ],
+      },
+    },
+    {
       title: 'Conversation content',
       description:
-        'Use clear text and do not rely only on color or alignment to identify the message sender. Interactive reactions need accessible names.',
+        'Use clear text, and do not rely only on color or alignment to identify who sent the message. Interactive reactions need accessible names.',
     },
   ],
   api: {

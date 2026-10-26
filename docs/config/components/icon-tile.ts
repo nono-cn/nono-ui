@@ -49,9 +49,20 @@ const iconTileConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Decorative and informative tiles',
+      title: 'Roles and attributes',
+      description: 'The tile is not interactive and its icon is decorative.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container with no role.'],
+          ['aria-hidden="true"', 'Icon', 'The icon is hidden from assistive technology.'],
+        ],
+      },
+    },
+    {
+      title: 'Informative and interactive tiles',
       description:
-        'The tile is a non-interactive div. Decorative icons are hidden from assistive technology by Icon. Add an accessible name with aria-label when the tile itself conveys information, and wrap it in a button or link when it is interactive.',
+        'Add an accessible name with aria-label when the tile itself conveys information, and wrap it in a button or link when it is interactive.',
     },
   ],
   api: {

@@ -72,9 +72,26 @@ const separatorConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Decorative and semantic separators',
+      title: 'Roles and attributes',
       description:
-        'The default decorative separator is hidden from assistive technology. Set decorative to false only when the division between sections carries meaning; it then has the separator role. A semantic vertical separator also announces its orientation.',
+        'By default the separator is decorative and hidden from assistive technology. Set decorative to false only when the division between sections carries meaning.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="none"', 'Root', 'Used while decorative is true, so the separator is ignored.'],
+          ['role="separator"', 'Root', 'Used when decorative is false.'],
+          [
+            'aria-orientation="vertical"',
+            'Root',
+            'Set on a semantic separator when orientation is vertical.',
+          ],
+        ],
+      },
+    },
+    {
+      title: 'Labels',
+      description:
+        'A separator with role="separator" is announced as a single element, so screen readers may skip a label inside it. If the label matters, such as "Or" between two options, repeat it in the content around the separator.',
     },
   ],
   api: {

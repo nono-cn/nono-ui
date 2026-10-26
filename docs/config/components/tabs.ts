@@ -66,14 +66,40 @@ const tabsConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Names and keyboard navigation',
+      title: 'Roles and attributes',
       description:
-        'Give the tab list an accessible name through ui.list, for example with aria-label or aria-labelledby. Arrow keys move focus between triggers; automatic activation opens the focused tab, while manual activation requires Enter or Space.',
+        'Give the tab list a name through ui.list, for example with aria-label or aria-labelledby. Use concise trigger labels.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="tablist"', 'List', 'Groups the triggers.'],
+          ['aria-orientation', 'List', 'The orientation prop.'],
+          ['role="tab"', 'Trigger', 'Announces each trigger as a tab.'],
+          ['aria-selected', 'Trigger', 'true for the active tab.'],
+          ['aria-controls', 'Trigger', 'Id of the panel of the tab.'],
+          ['disabled', 'Trigger', 'Set on disabled tabs, which cannot be selected.'],
+          ['role="tabpanel"', 'Panel', 'Announces the content of the tab.'],
+          ['aria-labelledby', 'Panel', 'Id of the trigger, so the panel is named by it.'],
+          ['tabindex="0"', 'Panel', 'Lets Tab move from the tab list into the panel.'],
+          ['hidden', 'Panel', 'Set on panels of inactive tabs.'],
+        ],
+      },
     },
     {
-      title: 'Panel content',
+      title: 'Keyboard',
       description:
-        'Use concise trigger labels and keep each panel associated with its matching tab value. Disabled tabs cannot be selected.',
+        'Only one trigger is in the tab order at a time. The arrows follow the orientation, skip disabled tabs, and wrap around while loop is true. With activationMode set to automatic, moving focus opens the tab; with manual, press Space or Enter to open it.',
+      table: {
+        columns: ['Key', 'Action'],
+        rows: [
+          ['Tab', 'Moves focus into the tab list, on the active tab, and then into the panel.'],
+          ['ArrowRight, ArrowDown', 'Moves focus to the next tab.'],
+          ['ArrowLeft, ArrowUp', 'Moves focus to the previous tab.'],
+          ['Home, PageUp', 'Moves focus to the first tab.'],
+          ['End, PageDown', 'Moves focus to the last tab.'],
+          ['Space, Enter', 'Opens the focused tab.'],
+        ],
+      },
     },
   ],
   api: {

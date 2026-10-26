@@ -50,9 +50,22 @@ const cardConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Content and headings',
+      title: 'Roles and attributes',
       description:
-        'Use label to generate an h3 heading, or provide a semantic heading through the header slot. Keep a logical reading order across the header, content, and footer.',
+        'Card is a generic container. Its label becomes a heading, so cards appear in the heading outline of the page.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container with no role.'],
+          ['h3', 'Label', 'Heading generated from label.'],
+          ['p', 'Description', 'Paragraph generated from description.'],
+        ],
+      },
+    },
+    {
+      title: 'Headings and order',
+      description:
+        'If you replace the header, keep a heading at the right level for the page. Keep a logical reading order across the header, content, and footer.',
     },
   ],
   api: {

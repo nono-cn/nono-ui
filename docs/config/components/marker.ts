@@ -36,9 +36,26 @@ const markerConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
+      title: 'Roles and attributes',
+      description:
+        'The component forwards HTML attributes, class, style, data-*, and ARIA to the root element.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['div', 'Root', 'Generic container with no role by default.'],
+          [
+            'role="status"',
+            'Root',
+            'Set when status is true, so changes in the content are announced.',
+          ],
+          ['aria-hidden="true"', 'Icon', 'The icon is decorative.'],
+        ],
+      },
+    },
+    {
       title: 'Status messages',
       description:
-        'Use status=true only for status updates that should be exposed as role="status", and keep visible text that explains the change. The component forwards HTML attributes, class, style, data-*, and ARIA to the root element. Configured icons are marked as decorative with aria-hidden="true", so they should not be the only source of information.',
+        'Use status only for updates that should be announced, and keep visible text that explains the change. The icon and its color should not be the only source of information.',
     },
   ],
   api: {

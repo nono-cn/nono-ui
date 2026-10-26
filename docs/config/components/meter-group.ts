@@ -81,19 +81,31 @@ const meterGroupConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
-      title: 'Meter role',
+      title: 'Roles and attributes',
       description:
-        'The track is rendered with role="meter" and exposes the total, clamped to max, through aria-valuenow and aria-valuemax. Individual items are not announced by the meter; the legend is the textual equivalent.',
+        'The track is a single meter that reports the total of all items. Individual items are not announced by the meter; the legend is their text equivalent.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['role="meter"', 'Track', 'Announces the total as a measurement.'],
+          ['aria-valuenow', 'Track', 'Sum of the item values, clamped to max.'],
+          ['aria-valuemin, aria-valuemax', 'Track', '0 and max.'],
+          ['aria-label', 'Track', 'From getValueLabel; the percentage by default.'],
+          ['aria-valuetext', 'Track', 'From getValueText, when you pass it.'],
+          ['ul, li', 'Legend', 'One list item per item, with its label and percentage.'],
+          ['aria-hidden="true"', 'Markers, icons', 'Legend markers and icons are decorative.'],
+        ],
+      },
     },
     {
       title: 'Accessible name and value',
       description:
-        'The accessible name comes from getValueLabel, which defaults to the percentage. Use getValueLabel for a descriptive name such as "Storage usage", and getValueText for a spoken value other than the number.',
+        'Use getValueLabel for a descriptive name such as "Storage usage", and getValueText for a spoken value other than the number. The status text above the track is visible only and is not announced when it changes.',
     },
     {
-      title: 'Decorative markers',
+      title: 'Color',
       description:
-        'Legend markers and icons are hidden from assistive technologies; the item label carries the meaning, so do not rely on color alone.',
+        'The item label carries the meaning, so do not rely on the color of each segment alone.',
     },
   ],
   api: {

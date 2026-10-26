@@ -30,15 +30,30 @@ const formConfig: ComponentDocConfig = {
   ],
   accessibility: [
     {
+      title: 'Roles and attributes',
+      description:
+        'Form renders a native form, so the browser keeps its usual behavior: Enter in a text field submits it, and controls with a name are sent with it.',
+      table: {
+        columns: ['Attribute', 'Element', 'Value'],
+        rows: [
+          ['form', 'Root', 'Native form element, which forwards HTML and ARIA attributes.'],
+          [
+            'novalidate',
+            'Root',
+            'Turns off the browser validation bubbles, so Reka validation runs instead.',
+          ],
+        ],
+      },
+    },
+    {
       title: 'Validation and focus',
       description:
-        'Form renders a native form with novalidate. Registered Reka fields are validated on submit; if a field is invalid, submission stops and focus moves to its control. Give every control a visible label. Plain native controls such as nono-ui Input still participate in native form submission, but do not register with Reka validation or formSubmit values.',
-      links: [
-        {
-          label: 'Read the Reka UI Form guide',
-          href: 'https://reka-ui.com/docs/components/form',
-        },
-      ],
+        'Registered Reka fields are validated on submit. If a field is invalid, submission stops and focus moves to its control. Give every control a visible label, and show validation errors as text near the control.',
+    },
+    {
+      title: 'Native controls',
+      description:
+        'Plain native controls, such as nono-ui Input, are still submitted with the form, but they do not register with Reka validation and are not part of the formSubmit values.',
     },
   ],
   api: {
