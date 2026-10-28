@@ -35,6 +35,7 @@ import meterGroup from './components/meter-group'
 import pagination from './components/pagination'
 import popover from './components/popover'
 import progress from './components/progress'
+import progressCircular from './components/progress-circular'
 import radioGroup from './components/radio-group'
 import rating from './components/rating'
 import ribbon from './components/ribbon'
@@ -89,6 +90,7 @@ export const docsComponents = [
   pagination,
   popover,
   progress,
+  progressCircular,
   radioGroup,
   rating,
   ribbon,
