@@ -1,31 +1,40 @@
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from 'vue'
-import { ProgressRoot, ProgressIndicator } from 'reka-ui'
+import { computed, useAttrs } from 'vue'
+import { ProgressIndicator, ProgressRoot } from 'reka-ui'
+import { useTheme } from '@/composables'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { useColor } from '@/composables'
-import type { ProgressCircularContext, ProgressCircularProps, ProgressCircularSlots } from '.'
 import type { ProgressValue } from '@/components/ui/Progress'
-import { progressCircularDefaults } from './defaults'
+import {
+  progressCircularIndicatorVariants,
+  progressCircularLabelVariants,
+  progressCircularSvgVariants,
+  progressCircularTrackVariants,
+  progressCircularVariants,
+  type ProgressCircularContext,
+  type ProgressCircularProps,
+  type ProgressCircularSlots,
+} from '.'
+import { progressCircularDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
-defineSlots<ProgressCircularSlots>()
-
-const props = withDefaults(defineProps<ProgressCircularProps>(), progressCircularDefaults)
-const value = defineModel<ProgressValue>('value', { default: progressCircularDefaults.value })
+const slots = defineSlots<ProgressCircularSlots>()
 
 const attrs = useAttrs()
-const slots = useSlots()
+const props = withDefaults(defineProps<ProgressCircularProps>(), progressCircularDefaults)
+const value = defineModel<ProgressValue>({ default: progressCircularDefaults.modelValue })
 
-const { colorStyle } = useColor(
-  computed(() => props.color),
-  'progress-circular',
-)
-const { colorStyle: trackColorStyle } = useColor(
-  computed(() => props.trackColor),
-  'progress-circular-track',
-)
+const { colorStyle } = useTheme({
+  color: () => props.color,
+  prefix: 'progress-circular',
+  defaultColor: progressCircularDefaults.color,
+})
+const { colorStyle: trackColorStyle } = useTheme({
+  color: () => props.trackColor,
+  prefix: 'progress-circular-track',
+  defaultColor: progressCircularDefaults.color,
+})
 
 const percentage = computed(() => {
   if (value.value === null) return 0
@@ -35,8 +44,11 @@ const percentage = computed(() => {
 
 const radius = computed(() => (100 - props.thickness) / 2)
 const circumference = computed(() => 2 * Math.PI * radius.value)
-const dashOffset = computed(() => circumference.value * (1 - percentage.value / 100))
-const cssSize = computed(() => (typeof props.size === 'number' ? `${props.size}px` : props.size))
+const dashOffset = computed(() =>
+  value.value === null
+    ? circumference.value * 0.75
+    : circumference.value * (1 - percentage.value / 100),
+)
 
 const progressCircularContext = computed<ProgressCircularContext>(() => {
   return {
@@ -52,17 +64,8 @@ const rootProps = computed(() => {
     max: props.max,
     getValueLabel: props.getValueLabel,
     getValueText: props.getValueText,
-    'aria-label': attrs['aria-label'],
-    class: cn(
-      'relative inline-grid shrink-0 place-items-center overflow-visible bg-transparent',
-      attrs.class,
-    ),
-    style: [
-      { width: cssSize.value, height: cssSize.value },
-      colorStyle.value,
-      trackColorStyle.value,
-      attrs.style,
-    ],
+    class: cn(progressCircularVariants({ size: props.size }), attrs.class),
+    style: [colorStyle.value, trackColorStyle.value, attrs.style],
   }
 })
 
@@ -72,7 +75,7 @@ const svgProps = computed(() => {
   return {
     ...svgUI,
     'aria-hidden': true,
-    class: cn('size-full -rotate-90', svgUI.class),
+    class: cn(progressCircularSvgVariants(), svgUI.class),
   }
 })
 
@@ -81,38 +84,27 @@ const trackProps = computed(() => {
 
   return {
     ...trackUI,
-    cx: '50',
-    cy: '50',
+    cx: 50,
+    cy: 50,
     r: radius.value,
     'stroke-width': props.thickness,
-    class: cn(
-      'fill-none stroke-primary/20',
-      props.trackColor
-        ? 'stroke-(--progress-circular-track-color)'
-        : props.color && 'stroke-(--progress-circular-color)/20',
-      trackUI.class,
-    ),
+    class: cn(progressCircularTrackVariants({ trackColor: !!props.trackColor }), trackUI.class),
   }
 })
 
-const indicatorCircleProps = computed(() => {
+const indicatorProps = computed(() => {
   const indicatorUI = useUi(props.ui?.indicator, progressCircularContext.value)
 
   return {
+    'stroke-linecap': 'round' as const,
     ...indicatorUI,
-    cx: '50',
-    cy: '50',
+    cx: 50,
+    cy: 50,
     r: radius.value,
     'stroke-width': props.thickness,
-    'stroke-linecap': 'round' as const,
     'stroke-dasharray': circumference.value,
     'stroke-dashoffset': dashOffset.value,
-    class: cn(
-      'h-auto w-auto flex-none fill-none stroke-primary transition-[stroke-dashoffset] duration-300 ease-out',
-      props.color && 'stroke-(--progress-circular-color)',
-      indicatorUI.class,
-    ),
-    style: indicatorUI.style,
+    class: cn(progressCircularIndicatorVariants(), indicatorUI.class),
   }
 })
 
@@ -122,44 +114,22 @@ const labelProps = computed(() => {
   return {
     ...labelUI,
     'aria-hidden': true,
-    class: cn(
-      'pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-center text-sm font-semibold',
-      labelUI.class,
-    ),
+    class: cn(progressCircularLabelVariants({ size: props.size }), labelUI.class),
   }
 })
 </script>
 
 <template>
-  <ProgressRoot
-    v-bind="rootProps"
-    v-model="value"
-    data-slot="progress-circular"
-    data-test-progress-circular-root
-  >
-    <svg
-      v-bind="svgProps"
-      data-slot="progress-circular-svg"
-      data-test-progress-circular-svg
-      viewBox="0 0 100 100"
-    >
-      <circle
-        v-bind="trackProps"
-        data-slot="progress-circular-track"
-        data-test-progress-circular-track
-      />
+  <ProgressRoot v-bind="rootProps" v-model="value" data-test-progress-circular-root>
+    <svg v-bind="svgProps" viewBox="0 0 100 100" data-test-progress-circular-svg>
+      <circle v-bind="trackProps" data-test-progress-circular-track />
 
-      <ProgressIndicator as-child data-slot="progress-circular-indicator">
-        <circle v-bind="indicatorCircleProps" data-test-progress-circular-indicator />
+      <ProgressIndicator as-child>
+        <circle v-bind="indicatorProps" data-test-progress-circular-indicator />
       </ProgressIndicator>
     </svg>
 
-    <span
-      v-if="props.label || slots.label"
-      v-bind="labelProps"
-      data-slot="progress-circular-label"
-      data-test-progress-circular-label
-    >
+    <span v-if="props.label || slots.label" v-bind="labelProps" data-test-progress-circular-label>
       <slot name="label" v-bind="progressCircularContext">{{ props.label }}</slot>
     </span>
   </ProgressRoot>
