@@ -4,15 +4,18 @@ import {
   bubbleDefaults,
   bubbleReactionsAlignments,
   bubbleReactionsSides,
+  bubbleSizes,
   bubbleVariantNames,
 } from '@/components/ui/Bubble'
 import BubbleBasicExample from '../../components/examples/bubble/BubbleBasicExample.vue'
 import BubbleAlignExample from '../../components/examples/bubble/BubbleAlignExample.vue'
 import BubbleVariantExample from '../../components/examples/bubble/BubbleVariantExample.vue'
+import BubbleSizeExample from '../../components/examples/bubble/BubbleSizeExample.vue'
 import BubbleRadiusExample from '../../components/examples/bubble/BubbleRadiusExample.vue'
 import BubbleColorExample from '../../components/examples/bubble/BubbleColorExample.vue'
 import BubbleReactionsExample from '../../components/examples/bubble/BubbleReactionsExample.vue'
 import BubbleElementExample from '../../components/examples/bubble/BubbleElementExample.vue'
+import BubbleUiExample from '../../components/examples/bubble/BubbleUiExample.vue'
 
 const bubbleConfig: ComponentDocConfig = {
   slug: 'bubble',
@@ -39,6 +42,11 @@ const bubbleConfig: ComponentDocConfig = {
       component: BubbleVariantExample,
     },
     {
+      title: 'Size',
+      description: 'Change the padding and text size of the bubble.',
+      component: BubbleSizeExample,
+    },
+    {
       title: 'Color',
       description: 'Choose a theme token or custom color and see how each variant applies it.',
       component: BubbleColorExample,
@@ -57,6 +65,11 @@ const bubbleConfig: ComponentDocConfig = {
       title: 'Element',
       description: 'Render the surface as a chosen element or merge it onto the child element.',
       component: BubbleElementExample,
+    },
+    {
+      title: 'UI',
+      description: 'Customize the surface and reactions attributes.',
+      component: BubbleUiExample,
     },
   ],
   accessibility: [
@@ -92,6 +105,12 @@ const bubbleConfig: ComponentDocConfig = {
         description: 'Visual style of the surface.',
       },
       {
+        name: 'size',
+        type: bubbleSizes.map((size) => `'${size}'`).join(' | '),
+        default: `'${bubbleDefaults.size}'`,
+        description: 'Padding and text size of the surface.',
+      },
+      {
         name: 'radius',
         type: 'string | number',
         default: `'${bubbleDefaults.radius}'`,
@@ -104,15 +123,15 @@ const bubbleConfig: ComponentDocConfig = {
         description: 'Theme token or CSS color used by the bubble variants.',
       },
       {
-        name: 'sideReaction',
+        name: 'reactionsSide',
         type: bubbleReactionsSides.map((side) => `'${side}'`).join(' | '),
-        default: `'${bubbleDefaults.sideReaction}'`,
+        default: `'${bubbleDefaults.reactionsSide}'`,
         description: 'Side where reactions appear.',
       },
       {
-        name: 'alignReaction',
+        name: 'reactionsAlign',
         type: bubbleReactionsAlignments.map((align) => `'${align}'`).join(' | '),
-        default: `'${bubbleDefaults.alignReaction}'`,
+        default: `'${bubbleDefaults.reactionsAlign}'`,
         description: 'Alignment of the reactions.',
       },
       {
@@ -130,11 +149,12 @@ const bubbleConfig: ComponentDocConfig = {
       {
         name: 'ui',
         type: `{
+  surface?: () => HTMLAttributes
   reactions?: () => HTMLAttributes
 }`,
         typePre: true,
         default: String(bubbleDefaults.ui),
-        description: 'Resolver for customizing the reactions container attributes and classes.',
+        description: 'Resolvers for customizing the surface and reactions attributes and classes.',
       },
     ],
     emits: [],
