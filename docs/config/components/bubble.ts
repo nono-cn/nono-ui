@@ -137,22 +137,6 @@ const bubbleConfig: ComponentDocConfig = {
         description: 'Resolver for customizing the reactions container attributes and classes.',
       },
     ],
-    configs: [
-      {
-        id: 'bubble-config',
-        title: 'BubbleConfig',
-        description: 'Alias of BubbleProps used to configure bubbles in composite components.',
-        showDefault: false,
-        rows: [
-          {
-            name: 'BubbleProps',
-            type: 'BubbleProps',
-            typeLink: '#props',
-            description: 'Includes the public Bubble props.',
-          },
-        ],
-      },
-    ],
     emits: [],
     slots: [
       { name: 'default', type: '-', description: 'Main bubble content.' },

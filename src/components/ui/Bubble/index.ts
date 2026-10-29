@@ -1,12 +1,13 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
 import type { PrimitiveProps } from 'reka-ui'
 import {
-  bubbleAlignments,
   bubbleDefaults,
-  bubbleReactionsAlignments,
-  bubbleReactionsSides,
-  bubbleVariantNames,
+  type bubbleAlignments,
+  type bubbleReactionsAlignments,
+  type bubbleReactionsSides,
+  type bubbleSizes,
+  type bubbleVariantNames,
 } from './constants'
 
 export { default as Bubble } from './Bubble.vue'
@@ -15,21 +16,31 @@ export {
   bubbleDefaults,
   bubbleReactionsAlignments,
   bubbleReactionsSides,
+  bubbleSizes,
   bubbleVariantNames,
 } from './constants'
 
-export const bubbleWrapperVariants = cva('relative flex w-fit max-w-[80%]', {
+export type BubbleAlign = (typeof bubbleAlignments)[number]
+export type BubbleVariant = (typeof bubbleVariantNames)[number]
+export type BubbleSize = (typeof bubbleSizes)[number]
+export type BubbleRadius = string | number
+export type BubbleReactionsSide = (typeof bubbleReactionsSides)[number]
+export type BubbleReactionsAlign = (typeof bubbleReactionsAlignments)[number]
+
+export const bubbleVariants = cva('relative flex w-fit max-w-[80%]', {
   variants: {
-    align: { start: 'self-start', end: 'self-end' } satisfies Record<
-      (typeof bubbleAlignments)[number],
-      string
-    >,
+    align: {
+      start: 'self-start',
+      end: 'self-end',
+    } satisfies Record<BubbleAlign, string>,
   },
-  defaultVariants: { align: bubbleDefaults.align },
+  defaultVariants: {
+    align: bubbleDefaults.align,
+  },
 })
 
-export const bubbleVariants = cva(
-  'block w-full rounded-(--bubble-radius) border px-4 py-2.5 text-sm shadow-sm',
+export const bubbleSurfaceVariants = cva(
+  'block w-full rounded-(--bubble-radius) border shadow-sm',
   {
     variants: {
       variant: {
@@ -38,40 +49,64 @@ export const bubbleVariants = cva(
         plain: 'border-transparent bg-transparent text-(--bubble-color)',
         subtle: 'border-(--bubble-color)/20 bg-(--bubble-color)/10 text-(--bubble-color)',
         soft: 'border-transparent bg-(--bubble-color)/10 text-(--bubble-color)',
-      } satisfies Record<(typeof bubbleVariantNames)[number], string>,
+      } satisfies Record<BubbleVariant, string>,
+      size: {
+        xs: 'px-2.5 py-1.5 text-xs',
+        sm: 'px-3 py-2 text-sm',
+        md: 'px-4 py-2.5 text-sm',
+        lg: 'px-5 py-3 text-base',
+        xl: 'px-6 py-3.5 text-lg',
+      } satisfies Record<BubbleSize, string>,
     },
-    defaultVariants: { variant: bubbleDefaults.variant },
+    defaultVariants: {
+      variant: bubbleDefaults.variant,
+      size: bubbleDefaults.size,
+    },
   },
 )
 
-export type BubbleVariants = VariantProps<typeof bubbleVariants>
-export type BubbleAlign = NonNullable<VariantProps<typeof bubbleWrapperVariants>['align']>
-export type BubbleVariant = NonNullable<BubbleVariants['variant']>
-export type BubbleRadius = string | number
-export type BubbleReactionsSide = (typeof bubbleReactionsSides)[number]
-export type BubbleReactionsAlign = (typeof bubbleReactionsAlignments)[number]
+export const bubbleReactionsVariants = cva(
+  'absolute flex items-center gap-1 rounded-full bg-background px-1 py-0.5 text-xs shadow-sm',
+  {
+    variants: {
+      side: {
+        top: '-top-3',
+        bottom: '-bottom-3',
+      } satisfies Record<BubbleReactionsSide, string>,
+      align: {
+        start: 'start-2',
+        end: 'end-2',
+      } satisfies Record<BubbleReactionsAlign, string>,
+    },
+    defaultVariants: {
+      side: bubbleDefaults.reactionsSide,
+      align: bubbleDefaults.reactionsAlign,
+    },
+  },
+)
 
-export interface BubbleReactionsProps {
-  side?: BubbleReactionsSide
-  align?: BubbleReactionsAlign
-}
-
-export type BubbleFn<T> = () => T
-
-export interface BubbleUI {
-  reactions?: BubbleFn<HTMLAttributes>
-}
-
+// Props
 export interface BubbleProps extends Pick<PrimitiveProps, 'as' | 'asChild'> {
   align?: BubbleAlign
   variant?: BubbleVariant
+  size?: BubbleSize
   radius?: BubbleRadius
   color?: string
-  sideReaction?: BubbleReactionsSide
-  alignReaction?: BubbleReactionsAlign
+  reactionsSide?: BubbleReactionsSide
+  reactionsAlign?: BubbleReactionsAlign
   ui?: BubbleUI
 }
 
+// Fn
+export type BubbleFn<T> = () => T
+
+// UI
+export interface BubbleUI {
+  surface?: BubbleFn<HTMLAttributes>
+  reactions?: BubbleFn<HTMLAttributes>
+}
+
+// Slots
 export interface BubbleSlots {
   default?(): unknown
   reactions?(): unknown
