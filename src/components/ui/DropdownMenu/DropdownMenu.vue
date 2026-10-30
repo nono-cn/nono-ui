@@ -37,10 +37,13 @@ const rootProps = computed(() => {
   }
 })
 
-const triggerProps = {
-  as: 'button' as const,
-  asChild: true,
-}
+const triggerProps = computed(() => {
+  return {
+    as: 'button' as const,
+    asChild: true,
+    disabled: props.disabled,
+  }
+})
 
 const portalProps = {
   to: 'body',

@@ -3,6 +3,7 @@ import { dropdownMenuDefaults } from '@/components/ui/DropdownMenu'
 import DropdownMenuBasicExample from '../../components/examples/dropdown-menu/DropdownMenuBasicExample.vue'
 import DropdownMenuOpenExample from '../../components/examples/dropdown-menu/DropdownMenuOpenExample.vue'
 import DropdownMenuModalExample from '../../components/examples/dropdown-menu/DropdownMenuModalExample.vue'
+import DropdownMenuDisabledExample from '../../components/examples/dropdown-menu/DropdownMenuDisabledExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -28,6 +29,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
       description: 'With modal, the rest of the page cannot be used while the menu is open.',
       component: DropdownMenuModalExample,
     },
+    {
+      title: 'Disabled',
+      description: 'Disable the trigger so the menu cannot be opened.',
+      component: DropdownMenuDisabledExample,
+    },
   ],
   accessibility: [
     {
@@ -40,6 +46,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
           ['aria-haspopup="menu"', 'Trigger', 'Announces that the trigger opens a menu.'],
           ['aria-expanded', 'Trigger', 'true while the menu is open.'],
           ['aria-controls', 'Trigger', 'Id of the content while the menu is open.'],
+          [
+            'disabled, data-disabled',
+            'Trigger',
+            'Set while disabled; the trigger cannot be focused or open the menu.',
+          ],
           ['role="menu"', 'Content', 'Announces the content as a menu.'],
           ['aria-labelledby', 'Content', 'Id of the trigger, so the menu is named by it.'],
           ['role="menuitem"', 'Item', 'Announces each item as a menu item.'],
@@ -77,6 +88,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
         default: String(dropdownMenuDefaults.modal),
         description:
           'Disables interaction outside the content and hides the rest of the page from assistive technology while the menu is open.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        default: String(dropdownMenuDefaults.disabled),
+        description: 'Disables the trigger, so the menu cannot be opened.',
       },
       {
         name: 'items',

@@ -37,6 +37,12 @@ const casesModal = [
   { input: undefined, expected: dropdownMenuDefaults.modal },
 ] satisfies Array<{ input: DropdownMenuProps['modal']; expected: boolean }>
 
+const casesDisabled = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: dropdownMenuDefaults.disabled },
+] satisfies Array<{ input: DropdownMenuProps['disabled']; expected: boolean }>
+
 const casesItemsVacios = [
   { input: undefined, expected: dropdownMenuDefaults.items },
   { input: [], expected: undefined },
@@ -164,6 +170,17 @@ describe('DropdownMenu', () => {
           const dropdownMenu = mountDropdownMenu({ props: { modal: input } })
 
           expect(dropdownMenu.getComponent(DropdownMenuRoot).props('modal')).toBe(expected)
+        },
+      )
+    })
+
+    describe('disabled', () => {
+      it.each(casesDisabled)(
+        'pasa disabled=$input al DropdownMenuTrigger como $expected',
+        ({ input, expected }) => {
+          const dropdownMenu = mountDropdownMenu({ props: { disabled: input } })
+
+          expect(dropdownMenu.getComponent(DropdownMenuTrigger).props('disabled')).toBe(expected)
         },
       )
     })

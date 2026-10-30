@@ -2,6 +2,7 @@ import { cva } from 'class-variance-authority'
 import type {
   DropdownMenuRootEmits as RekaDropdownMenuRootEmits,
   DropdownMenuRootProps as RekaDropdownMenuRootProps,
+  DropdownMenuTriggerProps as RekaDropdownMenuTriggerProps,
 } from 'reka-ui'
 
 export { default as DropdownMenu } from './DropdownMenu.vue'
@@ -16,6 +17,7 @@ export const dropdownMenuItemVariants = cva(
 
 // Props Reka
 export type DropdownMenuRootProps = Pick<RekaDropdownMenuRootProps, 'modal'>
+export type DropdownMenuTriggerProps = Pick<RekaDropdownMenuTriggerProps, 'disabled'>
 
 // Item
 export interface DropdownMenuItem {
@@ -23,7 +25,7 @@ export interface DropdownMenuItem {
 }
 
 // Props
-export interface DropdownMenuProps extends DropdownMenuRootProps {
+export interface DropdownMenuProps extends DropdownMenuRootProps, DropdownMenuTriggerProps {
   open?: boolean
   items?: DropdownMenuItem[]
 }
