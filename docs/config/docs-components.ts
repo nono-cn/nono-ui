@@ -16,6 +16,7 @@ import chip from './components/chip'
 import collapsible from './components/collapsible'
 import colorArea from './components/color-area'
 import dialog from './components/dialog'
+import dropdownMenu from './components/dropdown-menu'
 import empty from './components/empty'
 import fieldSet from './components/field-set'
 import form from './components/form'
@@ -72,6 +73,7 @@ export const docsComponents = [
   collapsible,
   colorArea,
   dialog,
+  dropdownMenu,
   empty,
   fieldSet,
   form,

@@ -1,0 +1,82 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuRoot,
+  DropdownMenuTrigger,
+} from 'reka-ui'
+import {
+  dropdownMenuContentVariants,
+  dropdownMenuItemVariants,
+  type DropdownMenuContext,
+  type DropdownMenuEmits,
+  type DropdownMenuProps,
+  type DropdownMenuSlots,
+} from '.'
+import { dropdownMenuDefaults } from './constants'
+
+defineOptions({ inheritAttrs: false })
+defineSlots<DropdownMenuSlots>()
+
+const props = withDefaults(defineProps<DropdownMenuProps>(), dropdownMenuDefaults)
+defineEmits<DropdownMenuEmits>()
+
+const open = defineModel<boolean>('open', { default: dropdownMenuDefaults.open })
+
+function close() {
+  open.value = false
+}
+
+const dropdownMenuContext = computed<DropdownMenuContext>(() => ({ open: open.value, close }))
+
+const triggerProps = {
+  as: 'button' as const,
+  asChild: true,
+}
+
+const portalProps = {
+  to: 'body',
+  forceMount: false,
+  defer: undefined,
+  disabled: undefined,
+}
+
+const contentProps = computed(() => {
+  return {
+    class: dropdownMenuContentVariants(),
+  }
+})
+
+const itemProps = computed(() => {
+  return {
+    class: dropdownMenuItemVariants(),
+  }
+})
+</script>
+
+<template>
+  <DropdownMenuRoot v-model:open="open">
+    <DropdownMenuTrigger v-bind="triggerProps" data-test-dropdown-menu-trigger>
+      <slot v-bind="dropdownMenuContext" />
+    </DropdownMenuTrigger>
+
+    <DropdownMenuPortal v-bind="portalProps">
+      <DropdownMenuContent
+        v-if="props.items?.length"
+        v-bind="contentProps"
+        data-test-dropdown-menu-content
+      >
+        <DropdownMenuItem
+          v-for="(item, index) in props.items"
+          :key="index"
+          v-bind="itemProps"
+          data-test-dropdown-menu-item
+        >
+          {{ item.label }}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenuPortal>
+  </DropdownMenuRoot>
+</template>
