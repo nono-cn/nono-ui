@@ -31,6 +31,12 @@ const casesOpen = [
   { input: undefined, expected: dropdownMenuDefaults.open },
 ] satisfies Array<{ input: DropdownMenuProps['open']; expected: boolean }>
 
+const casesModal = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: dropdownMenuDefaults.modal },
+] satisfies Array<{ input: DropdownMenuProps['modal']; expected: boolean }>
+
 const casesItemsVacios = [
   { input: undefined, expected: dropdownMenuDefaults.items },
   { input: [], expected: undefined },
@@ -147,6 +153,17 @@ describe('DropdownMenu', () => {
           const dropdownMenu = mountDropdownMenu({ props: { open: input } })
 
           expect(dropdownMenu.getComponent(DropdownMenuRoot).props('open')).toBe(expected)
+        },
+      )
+    })
+
+    describe('modal', () => {
+      it.each(casesModal)(
+        'pasa modal=$input al DropdownMenuRoot como $expected',
+        ({ input, expected }) => {
+          const dropdownMenu = mountDropdownMenu({ props: { modal: input } })
+
+          expect(dropdownMenu.getComponent(DropdownMenuRoot).props('modal')).toBe(expected)
         },
       )
     })

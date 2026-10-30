@@ -31,6 +31,12 @@ function close() {
 
 const dropdownMenuContext = computed<DropdownMenuContext>(() => ({ open: open.value, close }))
 
+const rootProps = computed(() => {
+  return {
+    modal: props.modal,
+  }
+})
+
 const triggerProps = {
   as: 'button' as const,
   asChild: true,
@@ -57,7 +63,7 @@ const itemProps = computed(() => {
 </script>
 
 <template>
-  <DropdownMenuRoot v-model:open="open">
+  <DropdownMenuRoot v-bind="rootProps" v-model:open="open">
     <DropdownMenuTrigger v-bind="triggerProps" data-test-dropdown-menu-trigger>
       <slot v-bind="dropdownMenuContext" />
     </DropdownMenuTrigger>

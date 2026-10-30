@@ -1,5 +1,8 @@
 import { cva } from 'class-variance-authority'
-import type { DropdownMenuRootEmits as RekaDropdownMenuRootEmits } from 'reka-ui'
+import type {
+  DropdownMenuRootEmits as RekaDropdownMenuRootEmits,
+  DropdownMenuRootProps as RekaDropdownMenuRootProps,
+} from 'reka-ui'
 
 export { default as DropdownMenu } from './DropdownMenu.vue'
 export { dropdownMenuDefaults } from './constants'
@@ -11,13 +14,16 @@ export const dropdownMenuItemVariants = cva(
   'relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:bg-accent data-highlighted:text-accent-foreground',
 )
 
+// Props Reka
+export type DropdownMenuRootProps = Pick<RekaDropdownMenuRootProps, 'modal'>
+
 // Item
 export interface DropdownMenuItem {
   label?: string
 }
 
 // Props
-export interface DropdownMenuProps {
+export interface DropdownMenuProps extends DropdownMenuRootProps {
   open?: boolean
   items?: DropdownMenuItem[]
 }

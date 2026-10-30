@@ -2,6 +2,7 @@ import type { ComponentDocConfig } from '../component-docs'
 import { dropdownMenuDefaults } from '@/components/ui/DropdownMenu'
 import DropdownMenuBasicExample from '../../components/examples/dropdown-menu/DropdownMenuBasicExample.vue'
 import DropdownMenuOpenExample from '../../components/examples/dropdown-menu/DropdownMenuOpenExample.vue'
+import DropdownMenuModalExample from '../../components/examples/dropdown-menu/DropdownMenuModalExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -22,6 +23,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
       description: 'Bind v-model:open to read or set whether the menu is open.',
       component: DropdownMenuOpenExample,
     },
+    {
+      title: 'Modal',
+      description: 'With modal, the rest of the page cannot be used while the menu is open.',
+      component: DropdownMenuModalExample,
+    },
   ],
   accessibility: [
     {
@@ -37,13 +43,14 @@ const dropdownMenuConfig: ComponentDocConfig = {
           ['role="menu"', 'Content', 'Announces the content as a menu.'],
           ['aria-labelledby', 'Content', 'Id of the trigger, so the menu is named by it.'],
           ['role="menuitem"', 'Item', 'Announces each item as a menu item.'],
+          ['aria-hidden="true"', 'Rest of the page', 'Set while a modal menu is open.'],
         ],
       },
     },
     {
       title: 'Focus and keyboard',
       description:
-        'When the menu opens, focus moves into the content, and when it closes focus returns to the trigger. Typing a character moves focus to the next item whose label starts with it.',
+        'When the menu opens, focus moves into the content, and when it closes focus returns to the trigger. Typing a character moves focus to the next item whose label starts with it. By default the menu is modal: the page cannot scroll, pointer events outside the content are disabled, and the rest of the page is hidden from assistive technology. With modal set to false, the page stays usable while the menu is open.',
       table: {
         columns: ['Key', 'Action'],
         rows: [
@@ -63,6 +70,13 @@ const dropdownMenuConfig: ComponentDocConfig = {
         type: 'boolean',
         default: String(dropdownMenuDefaults.open),
         description: 'Open state; supports v-model:open.',
+      },
+      {
+        name: 'modal',
+        type: 'boolean',
+        default: String(dropdownMenuDefaults.modal),
+        description:
+          'Disables interaction outside the content and hides the rest of the page from assistive technology while the menu is open.',
       },
       {
         name: 'items',
