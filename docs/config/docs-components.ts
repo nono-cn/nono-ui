@@ -31,6 +31,7 @@ import linearChart from './components/linear-chart'
 import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
+import message from './components/message'
 import meterGroup from './components/meter-group'
 import pagination from './components/pagination'
 import popover from './components/popover'
@@ -86,6 +87,7 @@ export const docsComponents = [
   loading,
   marker,
   masonry,
+  message,
   meterGroup,
   pagination,
   popover,

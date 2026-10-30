@@ -144,22 +144,7 @@ const avatarConfig: ComponentDocConfig = {
         description: 'Replaces the avatar’s fallback content entirely.',
       },
     ],
-    configs: [
-      {
-        id: 'avatar-config',
-        title: 'AvatarConfig',
-        description: 'Alias for AvatarProps, used to configure avatars in composite components.',
-        showDefault: false,
-        rows: [
-          {
-            name: 'AvatarProps',
-            type: 'AvatarProps',
-            typeLink: '#props',
-            description: 'Includes Avatar’s public props.',
-          },
-        ],
-      },
-    ],
+    configs: [],
     expose: [],
   },
 }
