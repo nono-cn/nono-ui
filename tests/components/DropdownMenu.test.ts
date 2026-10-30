@@ -76,6 +76,23 @@ const casesNodos = [
   expected: { class: string[]; attrs: Record<string, string> }
 }>
 
+const casesNodoReka = [
+  {
+    name: 'DropdownMenuTrigger',
+    input: DropdownMenuTrigger,
+    expected: { reka: { as: 'button', asChild: true } },
+  },
+  {
+    name: 'DropdownMenuPortal',
+    input: DropdownMenuPortal,
+    expected: { reka: { to: 'body', forceMount: false, defer: undefined, disabled: undefined } },
+  },
+] satisfies Array<{
+  name: string
+  input: typeof DropdownMenuTrigger | typeof DropdownMenuPortal
+  expected: { reka: Record<string, unknown> }
+}>
+
 const contextFunctions = {
   close: expect.any(Function),
 }
@@ -159,30 +176,6 @@ describe('DropdownMenu', () => {
         })
       })
     })
-
-    describe('trigger', () => {
-      it('usa un button con asChild en el DropdownMenuTrigger', () => {
-        expect(mountDropdownMenu().getComponent(DropdownMenuTrigger).props()).toMatchObject({
-          as: 'button',
-          asChild: true,
-        })
-      })
-    })
-
-    describe('portal', () => {
-      it('teletransporta al body con opciones de portal fijas', () => {
-        const dropdownMenu = mountDropdownMenu({
-          props: { open: true, items: [{ label: 'Perfil' }] },
-        })
-
-        expect(dropdownMenu.getComponent(DropdownMenuPortal).vm.$.vnode.props).toMatchObject({
-          to: 'body',
-          forceMount: false,
-          defer: undefined,
-          disabled: undefined,
-        })
-      })
-    })
   })
 
   describe('slots', () => {
@@ -207,6 +200,14 @@ describe('DropdownMenu', () => {
         })
       },
     )
+
+    it.each(casesNodoReka)('pasa las props fijas de Reka a $name', ({ input, expected }) => {
+      const node = mountDropdownMenu({
+        props: { open: true, items: [{ label: 'Perfil' }] },
+      }).getComponent(input)
+
+      expect(node.vm.$.vnode.props).toMatchObject(expected.reka)
+    })
   })
 
   describe('emits', () => {
