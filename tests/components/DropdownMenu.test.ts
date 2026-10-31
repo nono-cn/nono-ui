@@ -3,7 +3,7 @@ import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { DropdownMenuRoot, DropdownMenuTrigger } from 'reka-ui'
 
-import { DropdownMenu } from '@/components/ui/DropdownMenu'
+import { DropdownMenu, type DropdownMenuSize } from '@/components/ui/DropdownMenu'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -99,6 +99,77 @@ describe('DropdownMenu', () => {
 
         expect(dropdownMenu.getComponent(DropdownMenuTrigger).props('disabled')).toBe(false)
       })
+    })
+
+    describe('size', () => {
+      const sizes = [
+        {
+          size: undefined,
+          item: 'gap-2 px-2 py-1.5 text-sm',
+          itemLeading: 'size-5',
+          itemDescription: 'text-xs',
+        },
+        {
+          size: 'xs',
+          item: 'gap-1 px-1.5 py-1 text-xs',
+          itemLeading: 'size-3',
+          itemDescription: 'text-xs',
+        },
+        {
+          size: 'sm',
+          item: 'gap-1.5 px-2 py-1 text-xs',
+          itemLeading: 'size-4',
+          itemDescription: 'text-xs',
+        },
+        {
+          size: 'md',
+          item: 'gap-2 px-2 py-1.5 text-sm',
+          itemLeading: 'size-5',
+          itemDescription: 'text-xs',
+        },
+        {
+          size: 'lg',
+          item: 'gap-2 px-2.5 py-1.5 text-base',
+          itemLeading: 'size-6',
+          itemDescription: 'text-sm',
+        },
+        {
+          size: 'xl',
+          item: 'gap-2.5 px-3 py-2 text-base',
+          itemLeading: 'size-7',
+          itemDescription: 'text-sm',
+        },
+      ] satisfies Array<{
+        size: DropdownMenuSize
+        item: string
+        itemLeading: string
+        itemDescription: string
+      }>
+
+      it.each(sizes)(
+        'con size=$size el item usa $item, el leading $itemLeading y la description $itemDescription',
+        ({ size, item, itemLeading, itemDescription }) => {
+          const dropdownMenu = mountDropdownMenu({
+            props: {
+              open: true,
+              size,
+              items: [{ label: 'Perfil', description: 'Tu cuenta', icon: 'user' }],
+            },
+          })
+
+          expect({
+            item: dropdownMenu.get('[data-test-dropdown-menu-item]').classes(),
+            itemLeading: dropdownMenu.get('[data-test-dropdown-menu-item-leading]').classes(),
+            itemDescription: dropdownMenu
+              .get('[data-test-dropdown-menu-item-description]')
+              .classes(),
+          }).toEqual({
+            item: expect.arrayContaining(item.split(' ')),
+            itemLeading: expect.arrayContaining(itemLeading.split(' ')),
+            itemDescription: expect.arrayContaining(itemDescription.split(' ')),
+          })
+        },
+      )
     })
   })
 
