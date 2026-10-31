@@ -8,6 +8,8 @@ import DropdownMenuDisabledExample from '../../components/examples/dropdown-menu
 import DropdownMenuSizeExample from '../../components/examples/dropdown-menu/DropdownMenuSizeExample.vue'
 import DropdownMenuContentExample from '../../components/examples/dropdown-menu/DropdownMenuContentExample.vue'
 import DropdownMenuArrowExample from '../../components/examples/dropdown-menu/DropdownMenuArrowExample.vue'
+import DropdownMenuIconExample from '../../components/examples/dropdown-menu/DropdownMenuIconExample.vue'
+import DropdownMenuLeadingExample from '../../components/examples/dropdown-menu/DropdownMenuLeadingExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -53,6 +55,16 @@ const dropdownMenuConfig: ComponentDocConfig = {
       title: 'Arrow',
       description: 'Show an arrow pointing to the trigger and change its size and shape.',
       component: DropdownMenuArrowExample,
+    },
+    {
+      title: 'Icon',
+      description: 'Show an icon before the label of each item.',
+      component: DropdownMenuIconExample,
+    },
+    {
+      title: 'Leading slot',
+      description: 'Replace the icon of every item; the slot receives the item and its index.',
+      component: DropdownMenuLeadingExample,
     },
   ],
   accessibility: [
@@ -368,7 +380,15 @@ const dropdownMenuConfig: ComponentDocConfig = {
         title: 'DropdownMenuItem',
         showDefault: false,
         description: 'Each entry of items.',
-        rows: [{ name: 'label', type: 'string', description: 'Text of the item.' }],
+        rows: [
+          { name: 'label', type: 'string', description: 'Text of the item.' },
+          {
+            name: 'icon',
+            type: 'IconName',
+            typeLink: '/components/icon',
+            description: 'Icon shown before the label; its size follows the menu size.',
+          },
+        ],
       },
       {
         id: 'dropdown-menu-context',
@@ -379,6 +399,22 @@ const dropdownMenuConfig: ComponentDocConfig = {
         rows: [
           { name: 'open', type: 'boolean', description: 'Current open state.' },
           { name: 'close', type: '() => void', description: 'Closes the menu.' },
+        ],
+      },
+      {
+        id: 'dropdown-menu-item-context',
+        title: 'DropdownMenuItemContext',
+        typeLabel: 'slotProps',
+        showDefault: false,
+        description: 'Context passed to the item slots.',
+        rows: [
+          {
+            name: 'item',
+            type: 'DropdownMenuItem',
+            typeLink: '#dropdown-menu-item',
+            description: 'The item being rendered.',
+          },
+          { name: 'index', type: 'number', description: 'Position of the item in items.' },
         ],
       },
     ],
@@ -395,6 +431,13 @@ const dropdownMenuConfig: ComponentDocConfig = {
         type: 'DropdownMenuContext',
         typeLink: '#dropdown-menu-context',
         description: 'Trigger element. Receives open and close.',
+      },
+      {
+        name: 'leading',
+        type: 'DropdownMenuItemContext',
+        typeLink: '#dropdown-menu-item-context',
+        description:
+          'Content before the label of every item; replaces item.icon and takes the size of the menu.',
       },
     ],
     expose: [],

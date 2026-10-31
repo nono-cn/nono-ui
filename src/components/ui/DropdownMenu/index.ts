@@ -8,6 +8,7 @@ import type {
   FocusOutsideEvent,
   PointerDownOutsideEvent,
 } from 'reka-ui'
+import type { IconName } from '@/components/ui/Icon'
 
 import { dropdownMenuDefaults, type dropdownMenuSizes } from './constants'
 
@@ -37,6 +38,24 @@ export const dropdownMenuItemVariants = cva(
     defaultVariants: { size: dropdownMenuDefaults.size },
   },
 )
+
+export const dropdownMenuItemLeadingVariants = cva(
+  'inline-flex shrink-0 items-center justify-center',
+  {
+    variants: {
+      size: {
+        xs: 'size-3',
+        sm: 'size-4',
+        md: 'size-5',
+        lg: 'size-6',
+        xl: 'size-7',
+      } satisfies Record<DropdownMenuSize, string>,
+    },
+    defaultVariants: { size: dropdownMenuDefaults.size },
+  },
+)
+
+export const dropdownMenuItemIconVariants = cva('size-full')
 
 // Props Reka
 export type DropdownMenuRootProps = Pick<RekaDropdownMenuRootProps, 'modal'>
@@ -83,6 +102,7 @@ export type DropdownMenuArrowConfig = DropdownMenuArrowProps
 // Item
 export interface DropdownMenuItem {
   label?: string
+  icon?: IconName
 }
 
 // Props
@@ -101,10 +121,16 @@ export interface DropdownMenuContext {
   close: () => void
 }
 
+export interface DropdownMenuItemContext {
+  item: DropdownMenuItem
+  index: number
+}
+
 // Emits
 export type DropdownMenuEmits = RekaDropdownMenuRootEmits
 
 // Slots
 export interface DropdownMenuSlots {
   default?(props: DropdownMenuContext): unknown
+  leading?(props: DropdownMenuItemContext): unknown
 }
