@@ -5,6 +5,7 @@ export const dropdownMenuDefaults = {
   modal: true,
   disabled: false,
   size: 'md' as const,
+  showArrow: false,
   items: undefined,
   content: {
     as: 'div' as const,
@@ -28,5 +29,12 @@ export const dropdownMenuDefaults = {
     disableUpdateOnLayoutShift: false,
     prioritizePosition: false,
     forceMount: false,
+  },
+  arrow: {
+    as: 'svg' as const,
+    asChild: false,
+    width: 10,
+    height: 5,
+    rounded: false,
   },
 }

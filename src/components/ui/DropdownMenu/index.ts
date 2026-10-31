@@ -1,5 +1,6 @@
 import { cva } from 'class-variance-authority'
 import type {
+  DropdownMenuArrowProps as RekaDropdownMenuArrowProps,
   DropdownMenuContentProps as RekaDropdownMenuContentProps,
   DropdownMenuRootEmits as RekaDropdownMenuRootEmits,
   DropdownMenuRootProps as RekaDropdownMenuRootProps,
@@ -18,6 +19,8 @@ export type DropdownMenuSize = (typeof dropdownMenuSizes)[number]
 export const dropdownMenuContentVariants = cva(
   'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 max-h-(--reka-dropdown-menu-content-available-height) min-w-32 origin-(--reka-dropdown-menu-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md outline-hidden',
 )
+
+export const dropdownMenuArrowVariants = cva('fill-popover stroke-border -translate-y-px')
 
 export const dropdownMenuItemVariants = cva(
   'relative flex cursor-default items-center rounded-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground',
@@ -71,6 +74,11 @@ export interface DropdownMenuContentCallbacks {
   onCloseAutoFocus?: (event: Event) => void
 }
 export type DropdownMenuContentConfig = DropdownMenuContentProps & DropdownMenuContentCallbacks
+export type DropdownMenuArrowProps = Pick<
+  RekaDropdownMenuArrowProps,
+  'as' | 'asChild' | 'width' | 'height' | 'rounded'
+>
+export type DropdownMenuArrowConfig = DropdownMenuArrowProps
 
 // Item
 export interface DropdownMenuItem {
@@ -83,6 +91,8 @@ export interface DropdownMenuProps extends DropdownMenuRootProps, DropdownMenuTr
   size?: DropdownMenuSize
   items?: DropdownMenuItem[]
   content?: DropdownMenuContentConfig
+  arrow?: DropdownMenuArrowConfig
+  showArrow?: boolean
 }
 
 // Context

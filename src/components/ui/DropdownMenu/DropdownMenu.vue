@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import {
+  DropdownMenuArrow,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuRoot,
   DropdownMenuTrigger,
 } from 'reka-ui'
+import { arrowPaths } from '@/components/ui/constants'
 import {
+  dropdownMenuArrowVariants,
   dropdownMenuContentVariants,
   dropdownMenuItemVariants,
   type DropdownMenuContext,
@@ -23,6 +26,7 @@ defineSlots<DropdownMenuSlots>()
 const props = withDefaults(defineProps<DropdownMenuProps>(), {
   ...dropdownMenuDefaults,
   content: undefined,
+  arrow: undefined,
 })
 defineEmits<DropdownMenuEmits>()
 
@@ -63,6 +67,14 @@ const contentProps = computed(() => {
   }
 })
 
+const arrowProps = computed(() => {
+  return {
+    ...dropdownMenuDefaults.arrow,
+    ...props.arrow,
+    class: dropdownMenuArrowVariants(),
+  }
+})
+
 const itemProps = computed(() => {
   return {
     class: dropdownMenuItemVariants({ size: props.size }),
@@ -90,6 +102,12 @@ const itemProps = computed(() => {
         >
           {{ item.label }}
         </DropdownMenuItem>
+        <DropdownMenuArrow v-if="props.showArrow" v-bind="arrowProps" data-test-dropdown-menu-arrow>
+          <path
+            :d="arrowProps.rounded ? arrowPaths.rounded : arrowPaths.sharp"
+            vector-effect="non-scaling-stroke"
+          />
+        </DropdownMenuArrow>
       </DropdownMenuContent>
     </DropdownMenuPortal>
   </DropdownMenuRoot>

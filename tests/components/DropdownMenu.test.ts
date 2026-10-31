@@ -2,6 +2,7 @@ import { h } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
+  DropdownMenuArrow,
   DropdownMenuContent,
   DropdownMenuPortal,
   DropdownMenuRoot,
@@ -11,11 +12,13 @@ import {
 import {
   DropdownMenu,
   dropdownMenuDefaults,
+  type DropdownMenuArrowConfig,
   type DropdownMenuContentConfig,
   type DropdownMenuContext,
   type DropdownMenuItem,
   type DropdownMenuProps,
 } from '@/components/ui/DropdownMenu'
+import { arrowPaths } from '@/components/ui/constants'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -79,6 +82,7 @@ const customContent = {
   onCloseAutoFocus: () => {},
 } satisfies DropdownMenuContentConfig
 
+// Content
 const casesContent = [
   { name: 'sin configuración', input: undefined, expected: dropdownMenuDefaults.content },
   {
@@ -88,6 +92,31 @@ const casesContent = [
   },
 ] satisfies Array<{ name: string; input: DropdownMenuProps['content']; expected: object }>
 
+// Arrow
+const customArrow = { width: 16, height: 8, rounded: true } satisfies DropdownMenuArrowConfig
+
+const casesArrow = [
+  { name: 'sin configuración', input: undefined, expected: dropdownMenuDefaults.arrow },
+  {
+    name: 'con configuración',
+    input: customArrow,
+    expected: { ...dropdownMenuDefaults.arrow, ...customArrow },
+  },
+] satisfies Array<{ name: string; input: DropdownMenuProps['arrow']; expected: object }>
+
+const casesArrowPath = [
+  { name: 'redondeado', input: true, expected: arrowPaths.rounded },
+  { name: 'recto', input: false, expected: arrowPaths.sharp },
+  { name: 'por defecto', input: undefined, expected: arrowPaths.sharp },
+] satisfies Array<{ name: string; input: DropdownMenuArrowConfig['rounded']; expected: string }>
+
+const casesShowArrow = [
+  { input: true, expected: true },
+  { input: false, expected: false },
+  { input: undefined, expected: dropdownMenuDefaults.showArrow },
+] satisfies Array<{ input: DropdownMenuProps['showArrow']; expected: boolean }>
+
+// Nodes
 const casesNodos = [
   {
     input: 'content',
@@ -113,11 +142,16 @@ const casesNodos = [
       attrs: { role: 'menuitem' },
     },
   },
+  {
+    input: 'arrow',
+    expected: { class: ['fill-popover', 'stroke-border', '-translate-y-px'], attrs: {} },
+  },
 ] satisfies Array<{
-  input: 'content' | 'item'
+  input: 'content' | 'item' | 'arrow'
   expected: { class: string[]; attrs: Record<string, string> }
 }>
 
+// Reka
 const casesNodoReka = [
   {
     name: 'DropdownMenuTrigger',
@@ -264,6 +298,42 @@ describe('DropdownMenu', () => {
         )
       })
     })
+
+    describe('arrow', () => {
+      it.each(casesArrow)('pasa arrow $name al DropdownMenuArrow', ({ input, expected }) => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, showArrow: true, arrow: input, items: [{ label: 'Perfil' }] },
+        })
+
+        expect(dropdownMenu.getComponent(DropdownMenuArrow).props()).toMatchObject(expected)
+      })
+
+      it.each(casesArrowPath)('con rounded=$input pinta el path $name', ({ input, expected }) => {
+        const path = mountDropdownMenu({
+          props: {
+            open: true,
+            showArrow: true,
+            arrow: { rounded: input },
+            items: [{ label: 'Perfil' }],
+          },
+        }).get('[data-test-dropdown-menu-arrow] path')
+
+        expect(path.attributes('d')).toBe(expected)
+      })
+    })
+
+    describe('showArrow', () => {
+      it.each(casesShowArrow)(
+        'con showArrow=$input renderiza la flecha: $expected',
+        ({ input, expected }) => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, showArrow: input, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-arrow]').exists()).toBe(expected)
+        },
+      )
+    })
   })
 
   describe('slots', () => {
@@ -279,7 +349,7 @@ describe('DropdownMenu', () => {
       'aplica las class y los attrs fijos al nodo $input',
       ({ input, expected }) => {
         const node = mountDropdownMenu({
-          props: { open: true, items: [{ label: 'Perfil' }] },
+          props: { open: true, showArrow: true, items: [{ label: 'Perfil' }] },
         }).get(`[data-test-dropdown-menu-${input}]`)
 
         expect({ class: node.classes(), attrs: node.attributes() }).toEqual({

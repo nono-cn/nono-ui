@@ -7,6 +7,7 @@ import DropdownMenuModalExample from '../../components/examples/dropdown-menu/Dr
 import DropdownMenuDisabledExample from '../../components/examples/dropdown-menu/DropdownMenuDisabledExample.vue'
 import DropdownMenuSizeExample from '../../components/examples/dropdown-menu/DropdownMenuSizeExample.vue'
 import DropdownMenuContentExample from '../../components/examples/dropdown-menu/DropdownMenuContentExample.vue'
+import DropdownMenuArrowExample from '../../components/examples/dropdown-menu/DropdownMenuArrowExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -47,6 +48,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
       description:
         'Choose the side, alignment and offset of the menu, and whether keyboard navigation loops.',
       component: DropdownMenuContentExample,
+    },
+    {
+      title: 'Arrow',
+      description: 'Show an arrow pointing to the trigger and change its size and shape.',
+      component: DropdownMenuArrowExample,
     },
   ],
   accessibility: [
@@ -134,6 +140,19 @@ const dropdownMenuConfig: ComponentDocConfig = {
         typeLink: '#dropdown-menu-content-config',
         default: formatDefaultObject(dropdownMenuDefaults.content),
         description: 'Grouped DropdownMenuContent props and event callbacks.',
+      },
+      {
+        name: 'arrow',
+        type: 'DropdownMenuArrowConfig',
+        typeLink: '#dropdown-menu-arrow-config',
+        default: formatDefaultObject(dropdownMenuDefaults.arrow),
+        description: 'Arrow size and shape.',
+      },
+      {
+        name: 'showArrow',
+        type: 'boolean',
+        default: String(dropdownMenuDefaults.showArrow),
+        description: 'Renders an arrow pointing to the trigger.',
       },
     ],
     configs: [
@@ -304,6 +323,43 @@ const dropdownMenuConfig: ComponentDocConfig = {
             type: '(event: Event) => void',
             default: 'undefined',
             description: 'Handles the event fired when focus returns after closing.',
+          },
+        ],
+      },
+      {
+        id: 'dropdown-menu-arrow-config',
+        title: 'DropdownMenuArrowConfig',
+        description: 'Reka UI arrow props.',
+        rows: [
+          {
+            name: 'as',
+            type: 'AsTag | Component',
+            default: formatValue(dropdownMenuDefaults.arrow.as),
+            description: 'Element or component the arrow renders as.',
+          },
+          {
+            name: 'asChild',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.arrow.asChild),
+            description: 'Renders the child element instead of the default arrow.',
+          },
+          {
+            name: 'width',
+            type: 'number',
+            default: formatValue(dropdownMenuDefaults.arrow.width),
+            description: 'Arrow width in pixels.',
+          },
+          {
+            name: 'height',
+            type: 'number',
+            default: formatValue(dropdownMenuDefaults.arrow.height),
+            description: 'Arrow height in pixels.',
+          },
+          {
+            name: 'rounded',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.arrow.rounded),
+            description: 'Renders a rounded arrow tip.',
           },
         ],
       },
