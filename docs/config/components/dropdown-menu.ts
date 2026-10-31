@@ -1,9 +1,10 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { dropdownMenuDefaults } from '@/components/ui/DropdownMenu'
+import { dropdownMenuDefaults, dropdownMenuSizes } from '@/components/ui/DropdownMenu'
 import DropdownMenuBasicExample from '../../components/examples/dropdown-menu/DropdownMenuBasicExample.vue'
 import DropdownMenuOpenExample from '../../components/examples/dropdown-menu/DropdownMenuOpenExample.vue'
 import DropdownMenuModalExample from '../../components/examples/dropdown-menu/DropdownMenuModalExample.vue'
 import DropdownMenuDisabledExample from '../../components/examples/dropdown-menu/DropdownMenuDisabledExample.vue'
+import DropdownMenuSizeExample from '../../components/examples/dropdown-menu/DropdownMenuSizeExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -33,6 +34,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
       title: 'Disabled',
       description: 'Disable the trigger so the menu cannot be opened.',
       component: DropdownMenuDisabledExample,
+    },
+    {
+      title: 'Size',
+      description: 'Change the padding and text size of the items.',
+      component: DropdownMenuSizeExample,
     },
   ],
   accessibility: [
@@ -94,6 +100,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
         type: 'boolean',
         default: String(dropdownMenuDefaults.disabled),
         description: 'Disables the trigger, so the menu cannot be opened.',
+      },
+      {
+        name: 'size',
+        type: dropdownMenuSizes.map((size) => `'${size}'`).join(' | '),
+        default: `'${dropdownMenuDefaults.size}'`,
+        description: 'Padding and text size of the items.',
       },
       {
         name: 'items',

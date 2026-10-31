@@ -43,6 +43,15 @@ const casesDisabled = [
   { input: undefined, expected: dropdownMenuDefaults.disabled },
 ] satisfies Array<{ input: DropdownMenuProps['disabled']; expected: boolean }>
 
+const casesSize = [
+  { input: undefined, expected: { class: { item: ['gap-2', 'px-2', 'py-1.5', 'text-sm'] } } },
+  { input: 'xs', expected: { class: { item: ['gap-1', 'px-1.5', 'py-1', 'text-xs'] } } },
+  { input: 'sm', expected: { class: { item: ['gap-1.5', 'px-2', 'py-1', 'text-xs'] } } },
+  { input: 'md', expected: { class: { item: ['gap-2', 'px-2', 'py-1.5', 'text-sm'] } } },
+  { input: 'lg', expected: { class: { item: ['gap-2', 'px-2.5', 'py-1.5', 'text-base'] } } },
+  { input: 'xl', expected: { class: { item: ['gap-2.5', 'px-3', 'py-2', 'text-base'] } } },
+] satisfies Array<{ input: DropdownMenuProps['size']; expected: { class: { item: string[] } } }>
+
 const casesItemsVacios = [
   { input: undefined, expected: dropdownMenuDefaults.items },
   { input: [], expected: undefined },
@@ -69,17 +78,7 @@ const casesNodos = [
   {
     input: 'item',
     expected: {
-      class: [
-        'relative',
-        'flex',
-        'items-center',
-        'gap-2',
-        'rounded-sm',
-        'px-2',
-        'py-1.5',
-        'text-sm',
-        'select-none',
-      ],
+      class: ['relative', 'flex', 'items-center', 'rounded-sm', 'select-none'],
       attrs: { role: 'menuitem' },
     },
   },
@@ -183,6 +182,18 @@ describe('DropdownMenu', () => {
           expect(dropdownMenu.getComponent(DropdownMenuTrigger).props('disabled')).toBe(expected)
         },
       )
+    })
+
+    describe('size', () => {
+      it.each(casesSize)('aplica las class size=$input al item', ({ input, expected }) => {
+        const item = mountDropdownMenu({
+          props: { open: true, size: input, items: [{ label: 'Perfil' }] },
+        }).get('[data-test-dropdown-menu-item]')
+
+        expect({ item: item.classes() }).toEqual({
+          item: expect.arrayContaining(expected.class.item),
+        })
+      })
     })
 
     describe('items', () => {

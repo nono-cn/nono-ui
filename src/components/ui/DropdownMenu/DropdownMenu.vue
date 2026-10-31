@@ -60,7 +60,7 @@ const contentProps = computed(() => {
 
 const itemProps = computed(() => {
   return {
-    class: dropdownMenuItemVariants(),
+    class: dropdownMenuItemVariants({ size: props.size }),
   }
 })
 </script>
