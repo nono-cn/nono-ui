@@ -1,9 +1,13 @@
 import { h } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { DropdownMenuRoot, DropdownMenuTrigger } from 'reka-ui'
+import { DropdownMenuContent, DropdownMenuRoot, DropdownMenuTrigger } from 'reka-ui'
 
-import { DropdownMenu, type DropdownMenuSize } from '@/components/ui/DropdownMenu'
+import {
+  DropdownMenu,
+  dropdownMenuDefaults,
+  type DropdownMenuSize,
+} from '@/components/ui/DropdownMenu'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -170,6 +174,52 @@ describe('DropdownMenu', () => {
           })
         },
       )
+    })
+
+    describe('content', () => {
+      it('por defecto pasa dropdownMenuDefaults.content a Reka', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil' }] },
+        })
+
+        expect(dropdownMenu.getComponent(DropdownMenuContent).props()).toMatchObject(
+          dropdownMenuDefaults.content,
+        )
+      })
+
+      it('lo que se pasa en content llega a Reka y sustituye al default', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, content: { side: 'top' }, items: [{ label: 'Perfil' }] },
+        })
+
+        expect(dropdownMenu.getComponent(DropdownMenuContent).props('side')).toBe('top')
+      })
+    })
+
+    describe('showArrow', () => {
+      it('por defecto no pinta la flecha', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil' }] },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-arrow]').exists()).toBe(false)
+      })
+
+      it('con showArrow=true pinta la flecha', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, showArrow: true, items: [{ label: 'Perfil' }] },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-arrow]').exists()).toBe(true)
+      })
+
+      it('con showArrow=false no pinta la flecha', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, showArrow: false, items: [{ label: 'Perfil' }] },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-arrow]').exists()).toBe(false)
+      })
     })
   })
 
