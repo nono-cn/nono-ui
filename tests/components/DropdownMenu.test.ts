@@ -1,7 +1,12 @@
 import { h } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { DropdownMenuContent, DropdownMenuRoot, DropdownMenuTrigger } from 'reka-ui'
+import {
+  DropdownMenuArrow,
+  DropdownMenuContent,
+  DropdownMenuRoot,
+  DropdownMenuTrigger,
+} from 'reka-ui'
 
 import {
   DropdownMenu,
@@ -219,6 +224,31 @@ describe('DropdownMenu', () => {
         })
 
         expect(dropdownMenu.find('[data-test-dropdown-menu-arrow]').exists()).toBe(false)
+      })
+    })
+
+    describe('arrow', () => {
+      it('por defecto pasa dropdownMenuDefaults.arrow a Reka', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, showArrow: true, items: [{ label: 'Perfil' }] },
+        })
+
+        expect(dropdownMenu.getComponent(DropdownMenuArrow).props()).toMatchObject(
+          dropdownMenuDefaults.arrow,
+        )
+      })
+
+      it('lo que se pasa en arrow llega a Reka y sustituye al default', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: {
+            open: true,
+            showArrow: true,
+            arrow: { width: 16 },
+            items: [{ label: 'Perfil' }],
+          },
+        })
+
+        expect(dropdownMenu.getComponent(DropdownMenuArrow).props('width')).toBe(16)
       })
     })
   })

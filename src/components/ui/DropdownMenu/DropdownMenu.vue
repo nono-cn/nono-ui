@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
-import { arrowPaths } from '@/components/ui/constants'
 import {
   dropdownMenuArrowVariants,
   dropdownMenuContentVariants,
@@ -161,12 +160,11 @@ function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenu
             </span>
           </span>
         </DropdownMenuItem>
-        <DropdownMenuArrow v-if="props.showArrow" v-bind="arrowProps" data-test-dropdown-menu-arrow>
-          <path
-            :d="arrowProps.rounded ? arrowPaths.rounded : arrowPaths.sharp"
-            vector-effect="non-scaling-stroke"
-          />
-        </DropdownMenuArrow>
+        <DropdownMenuArrow
+          v-if="props.showArrow"
+          v-bind="arrowProps"
+          data-test-dropdown-menu-arrow
+        />
       </DropdownMenuContent>
     </DropdownMenuPortal>
   </DropdownMenuRoot>
