@@ -147,7 +147,7 @@ describe('DropdownMenu', () => {
       }>
 
       it.each(sizes)(
-        'con size=$size el item usa $item, el leading $itemLeading y la description $itemDescription',
+        'con size=$size el item, itemLeading y itemDescription tienen las clases correctas',
         ({ size, item, itemLeading, itemDescription }) => {
           const dropdownMenu = mountDropdownMenu({
             props: {
@@ -181,6 +181,26 @@ describe('DropdownMenu', () => {
         })
 
         expect(dropdownMenu.get('[data-test-dropdown-menu-trigger]').text()).toBe('Opciones')
+      })
+    })
+  })
+
+  describe('emits', () => {
+    describe('update:open', () => {
+      it('cuando Reka abre el menú emite update:open con true', () => {
+        const dropdownMenu = mountDropdownMenu({ props: { open: false } })
+
+        dropdownMenu.getComponent(DropdownMenuRoot).vm.$emit('update:open', true)
+
+        expect(dropdownMenu.emitted('update:open')).toEqual([[true]])
+      })
+
+      it('cuando Reka cierra el menú emite update:open con false', () => {
+        const dropdownMenu = mountDropdownMenu({ props: { open: true } })
+
+        dropdownMenu.getComponent(DropdownMenuRoot).vm.$emit('update:open', false)
+
+        expect(dropdownMenu.emitted('update:open')).toEqual([[false]])
       })
     })
   })
