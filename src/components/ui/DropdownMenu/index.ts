@@ -1,8 +1,11 @@
 import { cva } from 'class-variance-authority'
 import type {
+  DropdownMenuContentProps as RekaDropdownMenuContentProps,
   DropdownMenuRootEmits as RekaDropdownMenuRootEmits,
   DropdownMenuRootProps as RekaDropdownMenuRootProps,
   DropdownMenuTriggerProps as RekaDropdownMenuTriggerProps,
+  FocusOutsideEvent,
+  PointerDownOutsideEvent,
 } from 'reka-ui'
 
 import { dropdownMenuDefaults, type dropdownMenuSizes } from './constants'
@@ -35,6 +38,39 @@ export const dropdownMenuItemVariants = cva(
 // Props Reka
 export type DropdownMenuRootProps = Pick<RekaDropdownMenuRootProps, 'modal'>
 export type DropdownMenuTriggerProps = Pick<RekaDropdownMenuTriggerProps, 'disabled'>
+export type DropdownMenuContentProps = Pick<
+  RekaDropdownMenuContentProps,
+  | 'as'
+  | 'asChild'
+  | 'loop'
+  | 'side'
+  | 'sideOffset'
+  | 'sideFlip'
+  | 'align'
+  | 'alignOffset'
+  | 'alignFlip'
+  | 'avoidCollisions'
+  | 'collisionBoundary'
+  | 'collisionPadding'
+  | 'arrowPadding'
+  | 'hideShiftedArrow'
+  | 'sticky'
+  | 'hideWhenDetached'
+  | 'positionStrategy'
+  | 'updatePositionStrategy'
+  | 'disableUpdateOnLayoutShift'
+  | 'prioritizePosition'
+  | 'forceMount'
+>
+export interface DropdownMenuContentCallbacks {
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
+  onPointerDownOutside?: (event: PointerDownOutsideEvent) => void
+  onFocusOutside?: (event: FocusOutsideEvent) => void
+  onInteractOutside?: (event: PointerDownOutsideEvent | FocusOutsideEvent) => void
+  onOpenAutoFocus?: (event: Event) => void
+  onCloseAutoFocus?: (event: Event) => void
+}
+export type DropdownMenuContentConfig = DropdownMenuContentProps & DropdownMenuContentCallbacks
 
 // Item
 export interface DropdownMenuItem {
@@ -46,6 +82,7 @@ export interface DropdownMenuProps extends DropdownMenuRootProps, DropdownMenuTr
   open?: boolean
   size?: DropdownMenuSize
   items?: DropdownMenuItem[]
+  content?: DropdownMenuContentConfig
 }
 
 // Context

@@ -1,10 +1,12 @@
 import type { ComponentDocConfig } from '../component-docs'
 import { dropdownMenuDefaults, dropdownMenuSizes } from '@/components/ui/DropdownMenu'
+import { formatDefaultObject, formatValue } from '../format-default'
 import DropdownMenuBasicExample from '../../components/examples/dropdown-menu/DropdownMenuBasicExample.vue'
 import DropdownMenuOpenExample from '../../components/examples/dropdown-menu/DropdownMenuOpenExample.vue'
 import DropdownMenuModalExample from '../../components/examples/dropdown-menu/DropdownMenuModalExample.vue'
 import DropdownMenuDisabledExample from '../../components/examples/dropdown-menu/DropdownMenuDisabledExample.vue'
 import DropdownMenuSizeExample from '../../components/examples/dropdown-menu/DropdownMenuSizeExample.vue'
+import DropdownMenuContentExample from '../../components/examples/dropdown-menu/DropdownMenuContentExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -40,6 +42,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
       description: 'Change the padding and text size of the items.',
       component: DropdownMenuSizeExample,
     },
+    {
+      title: 'Content',
+      description:
+        'Choose the side, alignment and offset of the menu, and whether keyboard navigation loops.',
+      component: DropdownMenuContentExample,
+    },
   ],
   accessibility: [
     {
@@ -72,8 +80,14 @@ const dropdownMenuConfig: ComponentDocConfig = {
         columns: ['Key', 'Action'],
         rows: [
           ['Space, Enter', 'Opens the menu from the trigger, or selects the focused item.'],
-          ['ArrowDown', 'Opens the menu from the trigger, or moves focus to the next item.'],
-          ['ArrowUp', 'Moves focus to the previous item.'],
+          [
+            'ArrowDown',
+            'Opens the menu from the trigger, or moves focus to the next item. With content.loop it wraps from the last item to the first.',
+          ],
+          [
+            'ArrowUp',
+            'Moves focus to the previous item. With content.loop it wraps from the first item to the last.',
+          ],
           ['Home, End', 'Moves focus to the first or last item.'],
           ['Escape', 'Closes the menu.'],
         ],
@@ -114,8 +128,185 @@ const dropdownMenuConfig: ComponentDocConfig = {
         default: String(dropdownMenuDefaults.items),
         description: 'Items of the menu; the content is only rendered when there are items.',
       },
+      {
+        name: 'content',
+        type: 'DropdownMenuContentConfig',
+        typeLink: '#dropdown-menu-content-config',
+        default: formatDefaultObject(dropdownMenuDefaults.content),
+        description: 'Grouped DropdownMenuContent props and event callbacks.',
+      },
     ],
     configs: [
+      {
+        id: 'dropdown-menu-content-config',
+        title: 'DropdownMenuContentConfig',
+        description: 'Reka UI content props and event callbacks.',
+        rows: [
+          {
+            name: 'as',
+            type: 'AsTag | Component',
+            default: formatValue(dropdownMenuDefaults.content.as),
+            description: 'Element or component the content renders as.',
+          },
+          {
+            name: 'asChild',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.asChild),
+            description: 'Renders the child element instead, merging props and behavior.',
+          },
+          {
+            name: 'loop',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.loop),
+            description: 'Keyboard navigation wraps from the last item to the first, and back.',
+          },
+          {
+            name: 'side',
+            type: "'top' | 'right' | 'bottom' | 'left'",
+            default: formatValue(dropdownMenuDefaults.content.side),
+            description: 'Preferred side of the trigger to render against.',
+          },
+          {
+            name: 'sideOffset',
+            type: 'number',
+            default: formatValue(dropdownMenuDefaults.content.sideOffset),
+            description: 'Distance in pixels from the trigger.',
+          },
+          {
+            name: 'sideFlip',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.sideFlip),
+            description: 'Flips to the opposite side when colliding with the boundary.',
+          },
+          {
+            name: 'align',
+            type: "'start' | 'center' | 'end'",
+            default: formatValue(dropdownMenuDefaults.content.align),
+            description: 'Preferred alignment against the trigger.',
+          },
+          {
+            name: 'alignOffset',
+            type: 'number',
+            default: formatValue(dropdownMenuDefaults.content.alignOffset),
+            description: 'Offset in pixels from the start or end alignment.',
+          },
+          {
+            name: 'alignFlip',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.alignFlip),
+            description: 'Flips alignment when colliding with the boundary.',
+          },
+          {
+            name: 'avoidCollisions',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.avoidCollisions),
+            description: 'Changes side and alignment to prevent collisions with the boundary.',
+          },
+          {
+            name: 'collisionBoundary',
+            type: 'Element | null | Array<Element | null>',
+            default: formatValue(dropdownMenuDefaults.content.collisionBoundary),
+            description: 'Elements used as the collision boundary. Defaults to the viewport.',
+          },
+          {
+            name: 'collisionPadding',
+            type: 'number | Partial<Record<Side, number>>',
+            default: formatValue(dropdownMenuDefaults.content.collisionPadding),
+            description:
+              'Distance in pixels from the boundary edges where collision detection occurs.',
+          },
+          {
+            name: 'arrowPadding',
+            type: 'number',
+            default: formatValue(dropdownMenuDefaults.content.arrowPadding),
+            description: 'Padding between the arrow and the content edges.',
+          },
+          {
+            name: 'hideShiftedArrow',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.hideShiftedArrow),
+            description: 'Hides the arrow when it cannot stay centered on the trigger.',
+          },
+          {
+            name: 'sticky',
+            type: "'partial' | 'always'",
+            default: formatValue(dropdownMenuDefaults.content.sticky),
+            description: 'Sticky behavior on the align axis when the trigger leaves the boundary.',
+          },
+          {
+            name: 'hideWhenDetached',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.hideWhenDetached),
+            description: 'Hides the content when the trigger is fully occluded.',
+          },
+          {
+            name: 'positionStrategy',
+            type: "'absolute' | 'fixed'",
+            default: formatValue(dropdownMenuDefaults.content.positionStrategy),
+            description: 'CSS position strategy used for the content.',
+          },
+          {
+            name: 'updatePositionStrategy',
+            type: "'optimized' | 'always'",
+            default: formatValue(dropdownMenuDefaults.content.updatePositionStrategy),
+            description: 'Whether to update the position on every animation frame.',
+          },
+          {
+            name: 'disableUpdateOnLayoutShift',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.disableUpdateOnLayoutShift),
+            description: 'Skips position updates when the layout shifts.',
+          },
+          {
+            name: 'prioritizePosition',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.prioritizePosition),
+            description: 'Keeps the content in the viewport even if it overlaps the trigger.',
+          },
+          {
+            name: 'forceMount',
+            type: 'boolean',
+            default: formatValue(dropdownMenuDefaults.content.forceMount),
+            description: 'Keeps the content mounted for custom presence and animation handling.',
+          },
+          {
+            name: 'onEscapeKeyDown',
+            type: '(event: KeyboardEvent) => void',
+            default: 'undefined',
+            description: 'Handles Escape before the menu closes.',
+          },
+          {
+            name: 'onPointerDownOutside',
+            type: '(event: PointerDownOutsideEvent) => void',
+            default: 'undefined',
+            description: 'Handles a pointer interaction outside the content.',
+          },
+          {
+            name: 'onFocusOutside',
+            type: '(event: FocusOutsideEvent) => void',
+            default: 'undefined',
+            description: 'Handles focus moving outside the content.',
+          },
+          {
+            name: 'onInteractOutside',
+            type: '(event: PointerDownOutsideEvent | FocusOutsideEvent) => void',
+            default: 'undefined',
+            description: 'Handles pointer or focus interaction outside the content.',
+          },
+          {
+            name: 'onOpenAutoFocus',
+            type: '(event: Event) => void',
+            default: 'undefined',
+            description: 'Handles the event fired when focus moves into the content.',
+          },
+          {
+            name: 'onCloseAutoFocus',
+            type: '(event: Event) => void',
+            default: 'undefined',
+            description: 'Handles the event fired when focus returns after closing.',
+          },
+        ],
+      },
       {
         id: 'dropdown-menu-item',
         title: 'DropdownMenuItem',

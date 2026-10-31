@@ -20,7 +20,10 @@ import { dropdownMenuDefaults } from './constants'
 defineOptions({ inheritAttrs: false })
 defineSlots<DropdownMenuSlots>()
 
-const props = withDefaults(defineProps<DropdownMenuProps>(), dropdownMenuDefaults)
+const props = withDefaults(defineProps<DropdownMenuProps>(), {
+  ...dropdownMenuDefaults,
+  content: undefined,
+})
 defineEmits<DropdownMenuEmits>()
 
 const open = defineModel<boolean>('open', { default: dropdownMenuDefaults.open })
@@ -54,6 +57,8 @@ const portalProps = {
 
 const contentProps = computed(() => {
   return {
+    ...dropdownMenuDefaults.content,
+    ...props.content,
     class: dropdownMenuContentVariants(),
   }
 })

@@ -1,11 +1,17 @@
 import { h } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { DropdownMenuPortal, DropdownMenuRoot, DropdownMenuTrigger } from 'reka-ui'
+import {
+  DropdownMenuContent,
+  DropdownMenuPortal,
+  DropdownMenuRoot,
+  DropdownMenuTrigger,
+} from 'reka-ui'
 
 import {
   DropdownMenu,
   dropdownMenuDefaults,
+  type DropdownMenuContentConfig,
   type DropdownMenuContext,
   type DropdownMenuItem,
   type DropdownMenuProps,
@@ -56,6 +62,31 @@ const casesItemsVacios = [
   { input: undefined, expected: dropdownMenuDefaults.items },
   { input: [], expected: undefined },
 ] satisfies Array<{ input: DropdownMenuProps['items']; expected: undefined }>
+
+const customContent = {
+  side: 'top',
+  sideOffset: 12,
+  align: 'end',
+  alignOffset: 6,
+  collisionPadding: 16,
+  avoidCollisions: false,
+  loop: true,
+  onEscapeKeyDown: () => {},
+  onPointerDownOutside: () => {},
+  onFocusOutside: () => {},
+  onInteractOutside: () => {},
+  onOpenAutoFocus: () => {},
+  onCloseAutoFocus: () => {},
+} satisfies DropdownMenuContentConfig
+
+const casesContent = [
+  { name: 'sin configuración', input: undefined, expected: dropdownMenuDefaults.content },
+  {
+    name: 'con configuración',
+    input: customContent,
+    expected: { ...dropdownMenuDefaults.content, ...customContent },
+  },
+] satisfies Array<{ name: string; input: DropdownMenuProps['content']; expected: object }>
 
 const casesNodos = [
   {
@@ -219,6 +250,18 @@ describe('DropdownMenu', () => {
             dropdownMenu.findAll('[data-test-dropdown-menu-item]').map((item) => item.text()),
           ).toEqual(['Perfil', 'Ajustes'])
         })
+      })
+    })
+
+    describe('content', () => {
+      it.each(casesContent)('pasa content $name al DropdownMenuContent', ({ input, expected }) => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, content: input, items: [{ label: 'Perfil' }] },
+        })
+
+        expect(dropdownMenu.getComponent(DropdownMenuContent).vm.$.vnode.props).toMatchObject(
+          expected,
+        )
       })
     })
   })
