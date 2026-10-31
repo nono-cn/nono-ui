@@ -134,11 +134,6 @@ export interface DropdownMenuProps extends DropdownMenuRootProps, DropdownMenuTr
 }
 
 // Context
-export interface DropdownMenuContext {
-  open: boolean
-  close: () => void
-}
-
 export interface DropdownMenuItemContext {
   item: DropdownMenuItem
   index: number
@@ -149,7 +144,7 @@ export type DropdownMenuEmits = RekaDropdownMenuRootEmits
 
 // Slots
 export interface DropdownMenuSlots {
-  default?(props: DropdownMenuContext): unknown
+  default?(): unknown
   'item-leading'?(props: DropdownMenuItemContext): unknown
   'item-label'?(props: DropdownMenuItemContext): unknown
 }

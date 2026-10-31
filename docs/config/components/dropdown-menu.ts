@@ -403,17 +403,6 @@ const dropdownMenuConfig: ComponentDocConfig = {
         ],
       },
       {
-        id: 'dropdown-menu-context',
-        title: 'DropdownMenuContext',
-        typeLabel: 'slotProps',
-        showDefault: false,
-        description: 'Context passed to the default slot.',
-        rows: [
-          { name: 'open', type: 'boolean', description: 'Current open state.' },
-          { name: 'close', type: '() => void', description: 'Closes the menu.' },
-        ],
-      },
-      {
         id: 'dropdown-menu-item-context',
         title: 'DropdownMenuItemContext',
         typeLabel: 'slotProps',
@@ -440,9 +429,8 @@ const dropdownMenuConfig: ComponentDocConfig = {
     slots: [
       {
         name: 'default',
-        type: 'DropdownMenuContext',
-        typeLink: '#dropdown-menu-context',
-        description: 'Trigger element. Receives open and close.',
+        type: '-',
+        description: 'Trigger element.',
       },
       {
         name: 'item-leading',

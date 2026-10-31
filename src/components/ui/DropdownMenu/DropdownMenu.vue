@@ -19,7 +19,6 @@ import {
   dropdownMenuItemLeadingVariants,
   dropdownMenuItemWrapperVariants,
   dropdownMenuItemVariants,
-  type DropdownMenuContext,
   type DropdownMenuEmits,
   type DropdownMenuItem as DropdownMenuItemType,
   type DropdownMenuItemContext,
@@ -40,12 +39,6 @@ defineEmits<DropdownMenuEmits>()
 
 const open = defineModel<boolean>('open', { default: dropdownMenuDefaults.open })
 
-function close() {
-  open.value = false
-}
-
-const dropdownMenuContext = computed<DropdownMenuContext>(() => ({ open: open.value, close }))
-
 const rootProps = computed(() => {
   return {
     modal: props.modal,
@@ -54,7 +47,6 @@ const rootProps = computed(() => {
 
 const triggerProps = computed(() => {
   return {
-    as: 'button' as const,
     asChild: true,
     disabled: props.disabled,
   }
@@ -121,7 +113,7 @@ function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenu
 <template>
   <DropdownMenuRoot v-bind="rootProps" v-model:open="open">
     <DropdownMenuTrigger v-bind="triggerProps" data-test-dropdown-menu-trigger>
-      <slot v-bind="dropdownMenuContext" />
+      <slot />
     </DropdownMenuTrigger>
 
     <DropdownMenuPortal v-bind="portalProps">
