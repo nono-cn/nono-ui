@@ -9,7 +9,8 @@ import DropdownMenuSizeExample from '../../components/examples/dropdown-menu/Dro
 import DropdownMenuContentExample from '../../components/examples/dropdown-menu/DropdownMenuContentExample.vue'
 import DropdownMenuArrowExample from '../../components/examples/dropdown-menu/DropdownMenuArrowExample.vue'
 import DropdownMenuIconExample from '../../components/examples/dropdown-menu/DropdownMenuIconExample.vue'
-import DropdownMenuLeadingExample from '../../components/examples/dropdown-menu/DropdownMenuLeadingExample.vue'
+import DropdownMenuDescriptionExample from '../../components/examples/dropdown-menu/DropdownMenuDescriptionExample.vue'
+import DropdownMenuItemSlotsExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotsExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -62,9 +63,15 @@ const dropdownMenuConfig: ComponentDocConfig = {
       component: DropdownMenuIconExample,
     },
     {
-      title: 'Leading slot',
-      description: 'Replace the icon of every item; the slot receives the item and its index.',
-      component: DropdownMenuLeadingExample,
+      title: 'Description',
+      description: 'Show a secondary line below the label of each item.',
+      component: DropdownMenuDescriptionExample,
+    },
+    {
+      title: 'Item slots',
+      description:
+        'Replace the leading and the label of every item; the slots receive the item and its index.',
+      component: DropdownMenuItemSlotsExample,
     },
   ],
   accessibility: [
@@ -383,6 +390,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
         rows: [
           { name: 'label', type: 'string', description: 'Text of the item.' },
           {
+            name: 'description',
+            type: 'string',
+            description: 'Secondary text shown below the label.',
+          },
+          {
             name: 'icon',
             type: 'IconName',
             typeLink: '/components/icon',
@@ -433,11 +445,17 @@ const dropdownMenuConfig: ComponentDocConfig = {
         description: 'Trigger element. Receives open and close.',
       },
       {
-        name: 'leading',
+        name: 'item-leading',
         type: 'DropdownMenuItemContext',
         typeLink: '#dropdown-menu-item-context',
         description:
           'Content before the label of every item; replaces item.icon and takes the size of the menu.',
+      },
+      {
+        name: 'item-label',
+        type: 'DropdownMenuItemContext',
+        typeLink: '#dropdown-menu-item-context',
+        description: 'Label of every item; replaces item.label.',
       },
     ],
     expose: [],

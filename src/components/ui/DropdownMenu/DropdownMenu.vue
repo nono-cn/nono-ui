@@ -13,8 +13,11 @@ import { arrowPaths } from '@/components/ui/constants'
 import {
   dropdownMenuArrowVariants,
   dropdownMenuContentVariants,
+  dropdownMenuItemDescriptionVariants,
   dropdownMenuItemIconVariants,
+  dropdownMenuItemLabelVariants,
   dropdownMenuItemLeadingVariants,
+  dropdownMenuItemWrapperVariants,
   dropdownMenuItemVariants,
   type DropdownMenuContext,
   type DropdownMenuEmits,
@@ -86,15 +89,29 @@ const itemProps = computed(() => {
   }
 })
 
-const leadingProps = computed(() => {
+const itemLeadingProps = computed(() => {
   return {
     class: dropdownMenuItemLeadingVariants({ size: props.size }),
   }
 })
 
-const iconProps = {
+const itemIconProps = {
   class: dropdownMenuItemIconVariants(),
 }
+
+const itemWrapperProps = {
+  class: dropdownMenuItemWrapperVariants(),
+}
+
+const itemLabelProps = {
+  class: dropdownMenuItemLabelVariants(),
+}
+
+const itemDescriptionProps = computed(() => {
+  return {
+    class: dropdownMenuItemDescriptionVariants({ size: props.size }),
+  }
+})
 
 function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenuItemContext {
   return { item, index }
@@ -120,20 +137,37 @@ function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenu
           data-test-dropdown-menu-item
         >
           <span
-            v-if="item.icon || slots.leading"
-            v-bind="leadingProps"
+            v-if="item.icon || slots['item-leading']"
+            v-bind="itemLeadingProps"
             data-test-dropdown-menu-item-leading
           >
-            <slot name="leading" v-bind="getItemContext(item, index)">
+            <slot name="item-leading" v-bind="getItemContext(item, index)">
               <Icon
                 v-if="item.icon"
                 :name="item.icon"
-                v-bind="iconProps"
+                v-bind="itemIconProps"
                 data-test-dropdown-menu-item-icon
               />
             </slot>
           </span>
-          {{ item.label }}
+          <span v-bind="itemWrapperProps" data-test-dropdown-menu-item-wrapper>
+            <span
+              v-if="item.label || slots['item-label']"
+              v-bind="itemLabelProps"
+              data-test-dropdown-menu-item-label
+            >
+              <slot name="item-label" v-bind="getItemContext(item, index)">
+                {{ item.label }}
+              </slot>
+            </span>
+            <span
+              v-if="item.description"
+              v-bind="itemDescriptionProps"
+              data-test-dropdown-menu-item-description
+            >
+              {{ item.description }}
+            </span>
+          </span>
         </DropdownMenuItem>
         <DropdownMenuArrow v-if="props.showArrow" v-bind="arrowProps" data-test-dropdown-menu-arrow>
           <path

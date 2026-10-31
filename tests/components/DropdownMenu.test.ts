@@ -18,6 +18,7 @@ import {
   type DropdownMenuItem,
   type DropdownMenuItemContext,
   type DropdownMenuProps,
+  type DropdownMenuSlots,
 } from '@/components/ui/DropdownMenu'
 import { arrowPaths } from '@/components/ui/constants'
 import { Icon } from '@/components/ui/Icon'
@@ -57,31 +58,67 @@ const casesDisabled = [
 const casesSize = [
   {
     input: undefined,
-    expected: { class: { item: ['gap-2', 'px-2', 'py-1.5', 'text-sm'], leading: ['size-5'] } },
+    expected: {
+      class: {
+        item: ['gap-2', 'px-2', 'py-1.5', 'text-sm'],
+        itemLeading: ['size-5'],
+        itemDescription: ['text-xs'],
+      },
+    },
   },
   {
     input: 'xs',
-    expected: { class: { item: ['gap-1', 'px-1.5', 'py-1', 'text-xs'], leading: ['size-3'] } },
+    expected: {
+      class: {
+        item: ['gap-1', 'px-1.5', 'py-1', 'text-xs'],
+        itemLeading: ['size-3'],
+        itemDescription: ['text-xs'],
+      },
+    },
   },
   {
     input: 'sm',
-    expected: { class: { item: ['gap-1.5', 'px-2', 'py-1', 'text-xs'], leading: ['size-4'] } },
+    expected: {
+      class: {
+        item: ['gap-1.5', 'px-2', 'py-1', 'text-xs'],
+        itemLeading: ['size-4'],
+        itemDescription: ['text-xs'],
+      },
+    },
   },
   {
     input: 'md',
-    expected: { class: { item: ['gap-2', 'px-2', 'py-1.5', 'text-sm'], leading: ['size-5'] } },
+    expected: {
+      class: {
+        item: ['gap-2', 'px-2', 'py-1.5', 'text-sm'],
+        itemLeading: ['size-5'],
+        itemDescription: ['text-xs'],
+      },
+    },
   },
   {
     input: 'lg',
-    expected: { class: { item: ['gap-2', 'px-2.5', 'py-1.5', 'text-base'], leading: ['size-6'] } },
+    expected: {
+      class: {
+        item: ['gap-2', 'px-2.5', 'py-1.5', 'text-base'],
+        itemLeading: ['size-6'],
+        itemDescription: ['text-sm'],
+      },
+    },
   },
   {
     input: 'xl',
-    expected: { class: { item: ['gap-2.5', 'px-3', 'py-2', 'text-base'], leading: ['size-7'] } },
+    expected: {
+      class: {
+        item: ['gap-2.5', 'px-3', 'py-2', 'text-base'],
+        itemLeading: ['size-7'],
+        itemDescription: ['text-sm'],
+      },
+    },
   },
 ] satisfies Array<{
   input: DropdownMenuProps['size']
-  expected: { class: { item: string[]; leading: string[] } }
+  expected: { class: { item: string[]; itemLeading: string[]; itemDescription: string[] } }
 }>
 
 const casesItemsVacios = [
@@ -107,9 +144,9 @@ const customContent = {
 
 // Content
 const casesContent = [
-  { name: 'sin configuración', input: undefined, expected: dropdownMenuDefaults.content },
+  { name: 'sin configuraciÃ³n', input: undefined, expected: dropdownMenuDefaults.content },
   {
-    name: 'con configuración',
+    name: 'con configuraciÃ³n',
     input: customContent,
     expected: { ...dropdownMenuDefaults.content, ...customContent },
   },
@@ -119,9 +156,9 @@ const casesContent = [
 const customArrow = { width: 16, height: 8, rounded: true } satisfies DropdownMenuArrowConfig
 
 const casesArrow = [
-  { name: 'sin configuración', input: undefined, expected: dropdownMenuDefaults.arrow },
+  { name: 'sin configuraciÃ³n', input: undefined, expected: dropdownMenuDefaults.arrow },
   {
-    name: 'con configuración',
+    name: 'con configuraciÃ³n',
     input: customArrow,
     expected: { ...dropdownMenuDefaults.arrow, ...customArrow },
   },
@@ -174,11 +211,28 @@ const casesNodos = [
   },
   { input: 'item-icon', expected: { class: ['size-full'], attrs: { 'aria-hidden': 'true' } } },
   {
+    input: 'item-wrapper',
+    expected: { class: ['flex', 'min-w-0', 'flex-1', 'flex-col', 'text-start'], attrs: {} },
+  },
+  { input: 'item-label', expected: { class: ['truncate'], attrs: {} } },
+  {
+    input: 'item-description',
+    expected: { class: ['truncate', 'text-muted-foreground'], attrs: {} },
+  },
+  {
     input: 'arrow',
     expected: { class: ['fill-popover', 'stroke-border', '-translate-y-px'], attrs: {} },
   },
 ] satisfies Array<{
-  input: 'content' | 'item' | 'item-leading' | 'item-icon' | 'arrow'
+  input:
+    | 'content'
+    | 'item'
+    | 'item-leading'
+    | 'item-icon'
+    | 'item-wrapper'
+    | 'item-label'
+    | 'item-description'
+    | 'arrow'
   expected: { class: string[]; attrs: Record<string, string> }
 }>
 
@@ -226,6 +280,8 @@ const casesDropdownMenuContext = [
   expected: Omit<DropdownMenuContext, keyof typeof contextFunctions>
 }>
 
+const casesItemSlotContext = ['item-leading', 'item-label'] satisfies Array<keyof DropdownMenuSlots>
+
 const casesUpdateOpen = [
   { input: false, expected: true },
   { input: true, expected: false },
@@ -237,7 +293,7 @@ function mountDropdownMenu(options: ComponentMountingOptions<typeof DropdownMenu
     attachTo: document.body,
     global: {
       ...global,
-      // el portal se pinta en línea para poder buscar el contenido dentro del wrapper
+      // el portal se pinta en lÃ­nea para poder buscar el contenido dentro del wrapper
       stubs: { DropdownMenuPortal: { template: '<div><slot /></div>' }, ...global?.stubs },
     },
     slots: { default: () => h('button', 'Abrir'), ...slots },
@@ -282,18 +338,26 @@ describe('DropdownMenu', () => {
 
     describe('size', () => {
       it.each(casesSize)(
-        'aplica las class size=$input al item y a su leading',
+        'aplica las class size=$input al item, a su leading y a su description',
         ({ input, expected }) => {
           const dropdownMenu = mountDropdownMenu({
-            props: { open: true, size: input, items: [{ label: 'Perfil', icon: 'user' }] },
+            props: {
+              open: true,
+              size: input,
+              items: [{ label: 'Perfil', description: 'Tu cuenta', icon: 'user' }],
+            },
           })
 
           expect({
             item: dropdownMenu.get('[data-test-dropdown-menu-item]').classes(),
-            leading: dropdownMenu.get('[data-test-dropdown-menu-item-leading]').classes(),
+            itemLeading: dropdownMenu.get('[data-test-dropdown-menu-item-leading]').classes(),
+            itemDescription: dropdownMenu
+              .get('[data-test-dropdown-menu-item-description]')
+              .classes(),
           }).toEqual({
             item: expect.arrayContaining(expected.class.item),
-            leading: expect.arrayContaining(expected.class.leading),
+            itemLeading: expect.arrayContaining(expected.class.itemLeading),
+            itemDescription: expect.arrayContaining(expected.class.itemDescription),
           })
         },
       )
@@ -319,8 +383,36 @@ describe('DropdownMenu', () => {
           const dropdownMenu = mountDropdownMenu({ props: { open: true, items } })
 
           expect(
-            dropdownMenu.findAll('[data-test-dropdown-menu-item]').map((item) => item.text()),
+            dropdownMenu
+              .findAll('[data-test-dropdown-menu-item-label]')
+              .map((label) => label.text()),
           ).toEqual(['Perfil', 'Ajustes'])
+        })
+      })
+
+      describe('description', () => {
+        it('pinta la description de cada item', () => {
+          const items: DropdownMenuItem[] = [
+            { label: 'Perfil', description: 'Tu cuenta' },
+            { label: 'Ajustes', description: 'Preferencias' },
+          ]
+          const dropdownMenu = mountDropdownMenu({ props: { open: true, items } })
+
+          expect(
+            dropdownMenu
+              .findAll('[data-test-dropdown-menu-item-description]')
+              .map((description) => description.text()),
+          ).toEqual(['Tu cuenta', 'Preferencias'])
+        })
+
+        it('no pinta la description si el item no tiene description', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-item-description]').exists()).toBe(
+            false,
+          )
         })
       })
 
@@ -399,7 +491,7 @@ describe('DropdownMenu', () => {
       })
     })
 
-    describe('leading', () => {
+    describe('item-leading', () => {
       it('renderiza el slot en el leading de todos los items y oculta item.icon', () => {
         const dropdownMenu = mountDropdownMenu({
           props: {
@@ -409,7 +501,7 @@ describe('DropdownMenu', () => {
               { label: 'Ajustes', icon: 'star' },
             ],
           },
-          slots: { leading: () => h('span', 'Leading') },
+          slots: { 'item-leading': () => h('span', 'Leading') },
         })
 
         expect({
@@ -420,6 +512,19 @@ describe('DropdownMenu', () => {
         }).toEqual({ leadings: ['Leading', 'Leading'], icon: false })
       })
     })
+
+    describe('item-label', () => {
+      it('renderiza el slot en el label de todos los items y oculta item.label', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil' }, { label: 'Ajustes' }] },
+          slots: { 'item-label': () => h('span', 'Label') },
+        })
+
+        expect(
+          dropdownMenu.findAll('[data-test-dropdown-menu-item-label]').map((label) => label.text()),
+        ).toEqual(['Label', 'Label'])
+      })
+    })
   })
 
   describe('nodos', () => {
@@ -427,7 +532,11 @@ describe('DropdownMenu', () => {
       'aplica las class y los attrs fijos al nodo $input',
       ({ input, expected }) => {
         const node = mountDropdownMenu({
-          props: { open: true, showArrow: true, items: [{ label: 'Perfil', icon: 'user' }] },
+          props: {
+            open: true,
+            showArrow: true,
+            items: [{ label: 'Perfil', description: 'Tu cuenta', icon: 'user' }],
+          },
         }).get(`[data-test-dropdown-menu-${input}]`)
 
         expect({ class: node.classes(), attrs: node.attributes() }).toEqual({
@@ -483,27 +592,30 @@ describe('DropdownMenu', () => {
     })
 
     describe('DropdownMenuItemContext', () => {
-      it('pasa DropdownMenuItemContext al slot leading de cada item', () => {
-        const items: DropdownMenuItem[] = [{ label: 'Perfil' }, { label: 'Ajustes' }]
-        const contexts: DropdownMenuItemContext[] = []
-        mountDropdownMenu({
-          props: { open: true, items },
-          slots: {
-            // Vue añade ref_for a los slots dentro de un v-for; no es parte del contexto
-            leading: (slotProps: DropdownMenuItemContext & { ref_for?: boolean }) => {
-              const { ref_for: _refFor, ...value } = slotProps
-              void _refFor
-              contexts.push(value)
-              return h('span', 'Leading')
+      it.each(casesItemSlotContext)(
+        'pasa DropdownMenuItemContext al slot %s de cada item',
+        (name) => {
+          const items: DropdownMenuItem[] = [{ label: 'Perfil' }, { label: 'Ajustes' }]
+          const contexts: DropdownMenuItemContext[] = []
+          mountDropdownMenu({
+            props: { open: true, items },
+            slots: {
+              // Vue aÃ±ade ref_for a los slots dentro de un v-for; no es parte del contexto
+              [name]: (slotProps: DropdownMenuItemContext & { ref_for?: boolean }) => {
+                const { ref_for: _refFor, ...value } = slotProps
+                void _refFor
+                contexts.push(value)
+                return h('span', 'Leading')
+              },
             },
-          },
-        })
+          })
 
-        expect(contexts).toEqual([
-          { item: items[0], index: 0 },
-          { item: items[1], index: 1 },
-        ])
-      })
+          expect(contexts).toEqual([
+            { item: items[0], index: 0 },
+            { item: items[1], index: 1 },
+          ])
+        },
+      )
     })
   })
 })

@@ -18,8 +18,11 @@ ${scriptEnd}
 <template>
   <DropdownMenu :items="items">
     <Button label="Status" variant="outline" />
-    <template #leading="{ index }">
+    <template #item-leading="{ index }">
       <span class="size-2 rounded-full" :class="colors[index]" />
+    </template>
+    <template #item-label="{ item }">
+      <strong>{{ item.label }}</strong>
     </template>
   </DropdownMenu>
 </template>`
@@ -27,15 +30,18 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Leading slot"
-    description="Replace the icon of every item; the slot receives the item and its index."
+    title="Item slots"
+    description="Replace the leading and the label of every item; the slots receive the item and its index."
     :code="code"
     :show-reset="false"
   >
     <DropdownMenu :items="items">
       <Button label="Status" variant="outline" />
-      <template #leading="{ index }">
+      <template #item-leading="{ index }">
         <span class="size-2 rounded-full" :class="colors[index]" />
+      </template>
+      <template #item-label="{ item }">
+        <strong>{{ item.label }}</strong>
       </template>
     </DropdownMenu>
   </ComponentExample>

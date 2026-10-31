@@ -57,6 +57,23 @@ export const dropdownMenuItemLeadingVariants = cva(
 
 export const dropdownMenuItemIconVariants = cva('size-full')
 
+export const dropdownMenuItemWrapperVariants = cva('flex min-w-0 flex-1 flex-col text-start')
+
+export const dropdownMenuItemLabelVariants = cva('truncate')
+
+export const dropdownMenuItemDescriptionVariants = cva('truncate text-muted-foreground', {
+  variants: {
+    size: {
+      xs: 'text-xs',
+      sm: 'text-xs',
+      md: 'text-xs',
+      lg: 'text-sm',
+      xl: 'text-sm',
+    } satisfies Record<DropdownMenuSize, string>,
+  },
+  defaultVariants: { size: dropdownMenuDefaults.size },
+})
+
 // Props Reka
 export type DropdownMenuRootProps = Pick<RekaDropdownMenuRootProps, 'modal'>
 export type DropdownMenuTriggerProps = Pick<RekaDropdownMenuTriggerProps, 'disabled'>
@@ -102,6 +119,7 @@ export type DropdownMenuArrowConfig = DropdownMenuArrowProps
 // Item
 export interface DropdownMenuItem {
   label?: string
+  description?: string
   icon?: IconName
 }
 
@@ -132,5 +150,6 @@ export type DropdownMenuEmits = RekaDropdownMenuRootEmits
 // Slots
 export interface DropdownMenuSlots {
   default?(props: DropdownMenuContext): unknown
-  leading?(props: DropdownMenuItemContext): unknown
+  'item-leading'?(props: DropdownMenuItemContext): unknown
+  'item-label'?(props: DropdownMenuItemContext): unknown
 }
