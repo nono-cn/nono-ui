@@ -8,13 +8,8 @@ import DropdownMenuDisabledExample from '../../components/examples/dropdown-menu
 import DropdownMenuSizeExample from '../../components/examples/dropdown-menu/DropdownMenuSizeExample.vue'
 import DropdownMenuContentExample from '../../components/examples/dropdown-menu/DropdownMenuContentExample.vue'
 import DropdownMenuArrowExample from '../../components/examples/dropdown-menu/DropdownMenuArrowExample.vue'
-import DropdownMenuIconExample from '../../components/examples/dropdown-menu/DropdownMenuIconExample.vue'
-import DropdownMenuDescriptionExample from '../../components/examples/dropdown-menu/DropdownMenuDescriptionExample.vue'
-import DropdownMenuSelectExample from '../../components/examples/dropdown-menu/DropdownMenuSelectExample.vue'
-import DropdownMenuItemDisabledExample from '../../components/examples/dropdown-menu/DropdownMenuItemDisabledExample.vue'
-import DropdownMenuTextValueExample from '../../components/examples/dropdown-menu/DropdownMenuTextValueExample.vue'
+import DropdownMenuItemsExample from '../../components/examples/dropdown-menu/DropdownMenuItemsExample.vue'
 import DropdownMenuItemSlotsExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotsExample.vue'
-import DropdownMenuItemSlotExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -62,42 +57,16 @@ const dropdownMenuConfig: ComponentDocConfig = {
       component: DropdownMenuArrowExample,
     },
     {
-      title: 'Icon',
-      description: 'Show an icon before the label of each item.',
-      component: DropdownMenuIconExample,
-    },
-    {
-      title: 'Description',
-      description: 'Show a secondary line below the label of each item.',
-      component: DropdownMenuDescriptionExample,
-    },
-    {
-      title: 'Select',
-      description: 'Run an action when an item is selected with item.onSelect.',
-      component: DropdownMenuSelectExample,
-    },
-    {
-      title: 'Item disabled',
-      description: 'Disable single items with item.disabled; they cannot be focused or selected.',
-      component: DropdownMenuItemDisabledExample,
-    },
-    {
-      title: 'Text value',
+      title: 'Items',
       description:
-        'Set item.textValue so typeahead matches the item when its slot does not start with the label.',
-      component: DropdownMenuTextValueExample,
+        'Combine label, description, icon, disabled and onSelect in each item; call event.preventDefault() in onSelect to keep the menu open.',
+      component: DropdownMenuItemsExample,
     },
     {
       title: 'Item slots',
       description:
-        'Replace the leading, the label and the description of every item; the slots receive the item and its index.',
+        'Replace the leading, the label and the description of every item, or its whole content with the item slot; the slots receive the item and its index. When the slot does not start with the label, set item.textValue for typeahead.',
       component: DropdownMenuItemSlotsExample,
-    },
-    {
-      title: 'Item slot',
-      description:
-        'Replace the whole content of every item; the slot receives the item and its index.',
-      component: DropdownMenuItemSlotExample,
     },
   ],
   accessibility: [

@@ -8,16 +8,29 @@ import { scriptEnd } from '../example-code'
 const lastAction = ref('None')
 
 const items: DropdownMenuItem[] = [
-  { label: 'Save', icon: 'save', onSelect: () => (lastAction.value = 'Save') },
-  { label: 'Star', icon: 'star', onSelect: () => (lastAction.value = 'Star') },
+  { label: 'Copy', onSelect: () => (lastAction.value = 'Copy') },
+  { label: 'Profile', icon: 'user', onSelect: () => (lastAction.value = 'Profile') },
+  {
+    label: 'Favorites',
+    description: 'Items you starred',
+    onSelect: () => (lastAction.value = 'Favorites'),
+  },
+  {
+    label: 'Save',
+    description: 'Store the current changes',
+    icon: 'save',
+    onSelect: () => (lastAction.value = 'Save'),
+  },
   {
     label: 'Keep open',
+    description: 'The menu stays open',
     icon: 'heart',
     onSelect: (event) => {
       event.preventDefault()
       lastAction.value = 'Keep open'
     },
   },
+  { label: 'Delete', description: 'Remove this project', icon: 'trash2', disabled: true },
 ]
 
 const code = `<script setup lang="ts">
@@ -28,16 +41,29 @@ import { DropdownMenu, type DropdownMenuItem } from '__DOCS_PACKAGE__/components
 const lastAction = ref('None')
 
 const items: DropdownMenuItem[] = [
-  { label: 'Save', icon: 'save', onSelect: () => (lastAction.value = 'Save') },
-  { label: 'Star', icon: 'star', onSelect: () => (lastAction.value = 'Star') },
+  { label: 'Copy', onSelect: () => (lastAction.value = 'Copy') },
+  { label: 'Profile', icon: 'user', onSelect: () => (lastAction.value = 'Profile') },
+  {
+    label: 'Favorites',
+    description: 'Items you starred',
+    onSelect: () => (lastAction.value = 'Favorites'),
+  },
+  {
+    label: 'Save',
+    description: 'Store the current changes',
+    icon: 'save',
+    onSelect: () => (lastAction.value = 'Save'),
+  },
   {
     label: 'Keep open',
+    description: 'The menu stays open',
     icon: 'heart',
     onSelect: (event) => {
       event.preventDefault()
       lastAction.value = 'Keep open'
     },
   },
+  { label: 'Delete', description: 'Remove this project', icon: 'trash2', disabled: true },
 ]
 ${scriptEnd}
 
@@ -53,8 +79,8 @@ ${scriptEnd}
 
 <template>
   <ComponentExample
-    title="Select"
-    description="Run an action when an item is selected with item.onSelect."
+    title="Items"
+    description="Combine label, description, icon, disabled and onSelect in each item; call event.preventDefault() in onSelect to keep the menu open."
     :code="code"
     :show-reset="false"
   >
