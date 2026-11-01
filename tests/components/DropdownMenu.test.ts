@@ -13,6 +13,7 @@ import {
   dropdownMenuDefaults,
   type DropdownMenuSize,
 } from '@/components/ui/DropdownMenu'
+import { Icon } from '@/components/ui/Icon'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver
 vi.stubGlobal(
@@ -249,6 +250,86 @@ describe('DropdownMenu', () => {
         })
 
         expect(dropdownMenu.getComponent(DropdownMenuArrow).props('width')).toBe(16)
+      })
+    })
+
+    describe('items', () => {
+      it('sin items no pinta el menú', () => {
+        const dropdownMenu = mountDropdownMenu({ props: { open: true } })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-content]').exists()).toBe(false)
+      })
+
+      it('con items vacío no pinta el menú', () => {
+        const dropdownMenu = mountDropdownMenu({ props: { open: true, items: [] } })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-content]').exists()).toBe(false)
+      })
+
+      it('pinta un item por cada entrada de items', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil' }, { label: 'Ajustes' }] },
+        })
+
+        expect(dropdownMenu.findAll('[data-test-dropdown-menu-item]')).toHaveLength(2)
+      })
+
+      describe('label', () => {
+        it('pinta el label del item', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item-label]').text()).toBe('Perfil')
+        })
+
+        it('si el item no tiene label, no pinta el label', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ icon: 'user' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-item-label]').exists()).toBe(false)
+        })
+      })
+
+      describe('description', () => {
+        it('pinta la description del item', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil', description: 'Tu cuenta' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item-description]').text()).toBe(
+            'Tu cuenta',
+          )
+        })
+
+        it('si el item no tiene description, no la pinta', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-item-description]').exists()).toBe(
+            false,
+          )
+        })
+      })
+
+      describe('icon', () => {
+        it('pinta el icono indicado en item.icon', () => {
+          const icon = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil', icon: 'user' }] },
+          }).getComponent<typeof Icon>('[data-test-dropdown-menu-item-icon]')
+
+          expect(icon.props('name')).toBe('user')
+        })
+
+        it('si el item no tiene icon, no pinta el leading', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-item-leading]').exists()).toBe(false)
+        })
       })
     })
   })
