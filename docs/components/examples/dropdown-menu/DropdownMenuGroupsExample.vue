@@ -5,8 +5,9 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const items: DropdownMenuItem[][] = [
-  [{ label: 'Profile', icon: 'user' }, { label: 'Settings' }],
+  [{ type: 'label', label: 'Account' }, { label: 'Profile', icon: 'user' }, { label: 'Settings' }],
   [
+    { type: 'label', label: 'Actions', icon: 'star' },
     { label: 'Save', icon: 'save' },
     { label: 'Star', icon: 'star' },
   ],
@@ -18,8 +19,13 @@ import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
 import { DropdownMenu, type DropdownMenuItem } from '__DOCS_PACKAGE__/components/ui/DropdownMenu'
 
 const items: DropdownMenuItem[][] = [
-  [{ label: 'Profile', icon: 'user' }, { label: 'Settings' }],
   [
+    { type: 'label', label: 'Account' },
+    { label: 'Profile', icon: 'user' },
+    { label: 'Settings' },
+  ],
+  [
+    { type: 'label', label: 'Actions', icon: 'star' },
     { label: 'Save', icon: 'save' },
     { label: 'Star', icon: 'star' },
   ],
@@ -37,7 +43,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Groups"
-    description="Pass an array of arrays to split the items into groups with a separator between them."
+    description="Pass an array of arrays to split the items into groups with a separator between them; an item with type label titles its group."
     :code="code"
     :show-reset="false"
   >

@@ -10,10 +10,14 @@ import type {
 } from 'reka-ui'
 import type { IconName } from '@/components/ui/Icon'
 
-import { dropdownMenuDefaults, type dropdownMenuSizes } from './constants'
+import {
+  dropdownMenuDefaults,
+  type dropdownMenuItemTypes,
+  type dropdownMenuSizes,
+} from './constants'
 
 export { default as DropdownMenu } from './DropdownMenu.vue'
-export { dropdownMenuDefaults, dropdownMenuSizes } from './constants'
+export { dropdownMenuDefaults, dropdownMenuItemTypes, dropdownMenuSizes } from './constants'
 
 export type DropdownMenuSize = (typeof dropdownMenuSizes)[number]
 
@@ -44,6 +48,22 @@ export const dropdownMenuItemVariants = cva(
       },
     },
     defaultVariants: { size: dropdownMenuDefaults.size, disabled: false, color: false },
+  },
+)
+
+export const dropdownMenuLabelVariants = cva(
+  'flex items-center font-semibold text-muted-foreground select-none',
+  {
+    variants: {
+      size: {
+        xs: 'gap-1 px-1.5 py-1 text-xs',
+        sm: 'gap-1.5 px-2 py-1 text-xs',
+        md: 'gap-2 px-2 py-1.5 text-xs',
+        lg: 'gap-2 px-2.5 py-1.5 text-sm',
+        xl: 'gap-2.5 px-3 py-2 text-sm',
+      } satisfies Record<DropdownMenuSize, string>,
+    },
+    defaultVariants: { size: dropdownMenuDefaults.size },
   },
 )
 
@@ -128,6 +148,7 @@ export type DropdownMenuArrowConfig = DropdownMenuArrowProps
 
 // Item
 export interface DropdownMenuItem {
+  type?: (typeof dropdownMenuItemTypes)[number]
   label?: string
   description?: string
   icon?: IconName

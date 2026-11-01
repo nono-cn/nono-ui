@@ -1,5 +1,9 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { dropdownMenuDefaults, dropdownMenuSizes } from '@/components/ui/DropdownMenu'
+import {
+  dropdownMenuDefaults,
+  dropdownMenuItemTypes,
+  dropdownMenuSizes,
+} from '@/components/ui/DropdownMenu'
 import { formatDefaultObject, formatValue } from '../format-default'
 import DropdownMenuBasicExample from '../../components/examples/dropdown-menu/DropdownMenuBasicExample.vue'
 import DropdownMenuOpenExample from '../../components/examples/dropdown-menu/DropdownMenuOpenExample.vue'
@@ -66,7 +70,7 @@ const dropdownMenuConfig: ComponentDocConfig = {
     {
       title: 'Groups',
       description:
-        'Pass an array of arrays to split the items into groups with a separator between them.',
+        'Pass an array of arrays to split the items into groups with a separator between them; an item with type label titles its group.',
       component: DropdownMenuGroupsExample,
     },
     {
@@ -398,6 +402,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
         showDefault: false,
         description: 'Each entry of items.',
         rows: [
+          {
+            name: 'type',
+            type: dropdownMenuItemTypes.map((type) => `'${type}'`).join(' | '),
+            description:
+              "Kind of entry, 'item' by default; a label only uses label and icon and titles the group it is in.",
+          },
           { name: 'label', type: 'string', description: 'Text of the item.' },
           {
             name: 'description',

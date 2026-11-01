@@ -340,6 +340,102 @@ describe('DropdownMenu', () => {
         })
       })
 
+      describe('type', () => {
+        it('por defecto pinta el item como item', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-item]').exists()).toBe(true)
+        })
+
+        it('con type=item pinta el item como item', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ type: 'item', label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-item]').exists()).toBe(true)
+        })
+
+        it('con type=label pinta un label', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ type: 'label', label: 'Cuenta' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-label]').exists()).toBe(true)
+        })
+
+        it('con type=label no pinta un item', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ type: 'label', label: 'Cuenta' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-item]').exists()).toBe(false)
+        })
+
+        it('con type=label pinta el texto de label', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ type: 'label', label: 'Cuenta' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-label]').text()).toBe('Cuenta')
+        })
+
+        it('con type=label e icon pinta el icono indicado', () => {
+          const icon = mountDropdownMenu({
+            props: { open: true, items: [{ type: 'label', label: 'Cuenta', icon: 'user' }] },
+          })
+            .get('[data-test-dropdown-menu-label]')
+            .getComponent<typeof Icon>('[data-test-dropdown-menu-item-icon]')
+
+          expect(icon.props('name')).toBe('user')
+        })
+
+        it('con type=label sin icon no pinta el leading', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ type: 'label', label: 'Cuenta' }] },
+          })
+
+          expect(
+            dropdownMenu
+              .get('[data-test-dropdown-menu-label]')
+              .find('[data-test-dropdown-menu-item-leading]')
+              .exists(),
+          ).toBe(false)
+        })
+
+        it('con type=label no pinta la description', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: {
+              open: true,
+              items: [{ type: 'label', label: 'Cuenta', description: 'Tu cuenta' }],
+            },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-label]').text()).toBe('Cuenta')
+        })
+
+        it('por defecto el label tiene las class del size md', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ type: 'label', label: 'Cuenta' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-label]').classes()).toEqual(
+            expect.arrayContaining(['gap-2', 'px-2', 'py-1.5', 'text-xs']),
+          )
+        })
+
+        it('con size=xl el label tiene las class del size xl', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, size: 'xl', items: [{ type: 'label', label: 'Cuenta' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-label]').classes()).toEqual(
+            expect.arrayContaining(['gap-2.5', 'px-3', 'py-2', 'text-sm']),
+          )
+        })
+      })
+
       describe('label', () => {
         it('pinta el label del item', () => {
           const dropdownMenu = mountDropdownMenu({

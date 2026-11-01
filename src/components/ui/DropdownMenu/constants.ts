@@ -1,4 +1,5 @@
 export const dropdownMenuSizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+export const dropdownMenuItemTypes = ['item', 'label'] as const
 
 export const dropdownMenuDefaults = {
   open: false,

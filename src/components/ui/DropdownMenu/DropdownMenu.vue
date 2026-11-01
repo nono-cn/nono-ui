@@ -5,22 +5,18 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuRoot,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'reka-ui'
-import { Icon } from '@/components/ui/Icon'
 import { getThemeColorStyle } from '@/composables/useTheme'
 import {
   dropdownMenuArrowVariants,
   dropdownMenuContentVariants,
-  dropdownMenuItemDescriptionVariants,
-  dropdownMenuItemIconVariants,
-  dropdownMenuItemLabelVariants,
-  dropdownMenuItemLeadingVariants,
-  dropdownMenuItemWrapperVariants,
   dropdownMenuItemVariants,
+  dropdownMenuLabelVariants,
   dropdownMenuSeparatorVariants,
   type DropdownMenuEmits,
   type DropdownMenuItem as DropdownMenuItemType,
@@ -29,6 +25,7 @@ import {
   type DropdownMenuSlots,
 } from '.'
 import { dropdownMenuDefaults } from './constants'
+import DropdownMenuItemContent from './DropdownMenuItemContent.vue'
 
 defineOptions({ inheritAttrs: false })
 const slots = defineSlots<DropdownMenuSlots>()
@@ -89,6 +86,12 @@ const separatorProps = {
   class: dropdownMenuSeparatorVariants(),
 }
 
+const labelProps = computed(() => {
+  return {
+    class: dropdownMenuLabelVariants({ size: props.size }),
+  }
+})
+
 function getItemProps(item: DropdownMenuItemType) {
   return {
     disabled: item.disabled,
@@ -101,30 +104,6 @@ function getItemProps(item: DropdownMenuItemType) {
     style: item.color ? getThemeColorStyle(item.color, 'dropdown-menu-item', 'neutral') : undefined,
   }
 }
-
-const itemLeadingProps = computed(() => {
-  return {
-    class: dropdownMenuItemLeadingVariants({ size: props.size }),
-  }
-})
-
-const itemIconProps = {
-  class: dropdownMenuItemIconVariants(),
-}
-
-const itemWrapperProps = {
-  class: dropdownMenuItemWrapperVariants(),
-}
-
-const itemLabelProps = {
-  class: dropdownMenuItemLabelVariants(),
-}
-
-const itemDescriptionProps = computed(() => {
-  return {
-    class: dropdownMenuItemDescriptionVariants({ size: props.size }),
-  }
-})
 
 function getItemContext(
   item: DropdownMenuItemType,
@@ -154,50 +133,41 @@ function getItemContext(
             data-test-dropdown-menu-separator
           />
           <DropdownMenuGroup data-test-dropdown-menu-group>
-            <DropdownMenuItem
-              v-for="(item, index) in group"
-              :key="index"
-              v-bind="getItemProps(item)"
-              data-test-dropdown-menu-item
-              @select="item.onSelect"
-            >
-              <slot name="item" v-bind="getItemContext(item, index, groupIndex)">
-                <span
-                  v-if="item.icon || slots['item-leading']"
-                  v-bind="itemLeadingProps"
-                  data-test-dropdown-menu-item-leading
-                >
-                  <slot name="item-leading" v-bind="getItemContext(item, index, groupIndex)">
-                    <Icon
-                      v-if="item.icon"
-                      :name="item.icon"
-                      v-bind="itemIconProps"
-                      data-test-dropdown-menu-item-icon
-                    />
-                  </slot>
-                </span>
-                <span v-bind="itemWrapperProps" data-test-dropdown-menu-item-wrapper>
-                  <span
-                    v-if="item.label || slots['item-label']"
-                    v-bind="itemLabelProps"
-                    data-test-dropdown-menu-item-label
+            <template v-for="(item, index) in group" :key="index">
+              <DropdownMenuLabel
+                v-if="item.type === 'label'"
+                v-bind="labelProps"
+                data-test-dropdown-menu-label
+              >
+                <DropdownMenuItemContent
+                  :context="getItemContext(item, index, groupIndex)"
+                  :size="props.size"
+                />
+              </DropdownMenuLabel>
+              <DropdownMenuItem
+                v-else
+                v-bind="getItemProps(item)"
+                data-test-dropdown-menu-item
+                @select="item.onSelect"
+              >
+                <slot name="item" v-bind="getItemContext(item, index, groupIndex)">
+                  <DropdownMenuItemContent
+                    :context="getItemContext(item, index, groupIndex)"
+                    :size="props.size"
                   >
-                    <slot name="item-label" v-bind="getItemContext(item, index, groupIndex)">
-                      {{ item.label }}
-                    </slot>
-                  </span>
-                  <span
-                    v-if="item.description || slots['item-description']"
-                    v-bind="itemDescriptionProps"
-                    data-test-dropdown-menu-item-description
-                  >
-                    <slot name="item-description" v-bind="getItemContext(item, index, groupIndex)">
-                      {{ item.description }}
-                    </slot>
-                  </span>
-                </span>
-              </slot>
-            </DropdownMenuItem>
+                    <template v-if="slots['item-leading']" #item-leading="slotProps">
+                      <slot name="item-leading" v-bind="slotProps" />
+                    </template>
+                    <template v-if="slots['item-label']" #item-label="slotProps">
+                      <slot name="item-label" v-bind="slotProps" />
+                    </template>
+                    <template v-if="slots['item-description']" #item-description="slotProps">
+                      <slot name="item-description" v-bind="slotProps" />
+                    </template>
+                  </DropdownMenuItemContent>
+                </slot>
+              </DropdownMenuItem>
+            </template>
           </DropdownMenuGroup>
         </template>
         <DropdownMenuArrow
