@@ -47,6 +47,8 @@ export const dropdownMenuItemVariants = cva(
   },
 )
 
+export const dropdownMenuSeparatorVariants = cva('-mx-1 my-1 h-px bg-border')
+
 export const dropdownMenuItemLeadingVariants = cva(
   'inline-flex shrink-0 items-center justify-center',
   {
@@ -139,7 +141,7 @@ export interface DropdownMenuItem {
 export interface DropdownMenuProps extends DropdownMenuRootProps, DropdownMenuTriggerProps {
   open?: boolean
   size?: DropdownMenuSize
-  items?: DropdownMenuItem[]
+  items?: DropdownMenuItem[] | DropdownMenuItem[][]
   content?: DropdownMenuContentConfig
   arrow?: DropdownMenuArrowConfig
   showArrow?: boolean
@@ -149,6 +151,7 @@ export interface DropdownMenuProps extends DropdownMenuRootProps, DropdownMenuTr
 export interface DropdownMenuItemContext {
   item: DropdownMenuItem
   index: number
+  groupIndex: number
 }
 
 // Emits

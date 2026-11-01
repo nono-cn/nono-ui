@@ -3,9 +3,11 @@ import { computed } from 'vue'
 import {
   DropdownMenuArrow,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuRoot,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
@@ -19,6 +21,7 @@ import {
   dropdownMenuItemLeadingVariants,
   dropdownMenuItemWrapperVariants,
   dropdownMenuItemVariants,
+  dropdownMenuSeparatorVariants,
   type DropdownMenuEmits,
   type DropdownMenuItem as DropdownMenuItemType,
   type DropdownMenuItemContext,
@@ -75,6 +78,17 @@ const arrowProps = computed(() => {
   }
 })
 
+const groups = computed<DropdownMenuItemType[][]>(() => {
+  const items = props.items ?? []
+  return Array.isArray(items[0])
+    ? (items as DropdownMenuItemType[][])
+    : [items as DropdownMenuItemType[]]
+})
+
+const separatorProps = {
+  class: dropdownMenuSeparatorVariants(),
+}
+
 function getItemProps(item: DropdownMenuItemType) {
   return {
     disabled: item.disabled,
@@ -112,8 +126,12 @@ const itemDescriptionProps = computed(() => {
   }
 })
 
-function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenuItemContext {
-  return { item, index }
+function getItemContext(
+  item: DropdownMenuItemType,
+  index: number,
+  groupIndex: number,
+): DropdownMenuItemContext {
+  return { item, index, groupIndex }
 }
 </script>
 
@@ -129,50 +147,59 @@ function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenu
         v-bind="contentProps"
         data-test-dropdown-menu-content
       >
-        <DropdownMenuItem
-          v-for="(item, index) in props.items"
-          :key="index"
-          v-bind="getItemProps(item)"
-          data-test-dropdown-menu-item
-          @select="item.onSelect"
-        >
-          <slot name="item" v-bind="getItemContext(item, index)">
-            <span
-              v-if="item.icon || slots['item-leading']"
-              v-bind="itemLeadingProps"
-              data-test-dropdown-menu-item-leading
+        <template v-for="(group, groupIndex) in groups" :key="groupIndex">
+          <DropdownMenuSeparator
+            v-if="groupIndex > 0"
+            v-bind="separatorProps"
+            data-test-dropdown-menu-separator
+          />
+          <DropdownMenuGroup data-test-dropdown-menu-group>
+            <DropdownMenuItem
+              v-for="(item, index) in group"
+              :key="index"
+              v-bind="getItemProps(item)"
+              data-test-dropdown-menu-item
+              @select="item.onSelect"
             >
-              <slot name="item-leading" v-bind="getItemContext(item, index)">
-                <Icon
-                  v-if="item.icon"
-                  :name="item.icon"
-                  v-bind="itemIconProps"
-                  data-test-dropdown-menu-item-icon
-                />
+              <slot name="item" v-bind="getItemContext(item, index, groupIndex)">
+                <span
+                  v-if="item.icon || slots['item-leading']"
+                  v-bind="itemLeadingProps"
+                  data-test-dropdown-menu-item-leading
+                >
+                  <slot name="item-leading" v-bind="getItemContext(item, index, groupIndex)">
+                    <Icon
+                      v-if="item.icon"
+                      :name="item.icon"
+                      v-bind="itemIconProps"
+                      data-test-dropdown-menu-item-icon
+                    />
+                  </slot>
+                </span>
+                <span v-bind="itemWrapperProps" data-test-dropdown-menu-item-wrapper>
+                  <span
+                    v-if="item.label || slots['item-label']"
+                    v-bind="itemLabelProps"
+                    data-test-dropdown-menu-item-label
+                  >
+                    <slot name="item-label" v-bind="getItemContext(item, index, groupIndex)">
+                      {{ item.label }}
+                    </slot>
+                  </span>
+                  <span
+                    v-if="item.description || slots['item-description']"
+                    v-bind="itemDescriptionProps"
+                    data-test-dropdown-menu-item-description
+                  >
+                    <slot name="item-description" v-bind="getItemContext(item, index, groupIndex)">
+                      {{ item.description }}
+                    </slot>
+                  </span>
+                </span>
               </slot>
-            </span>
-            <span v-bind="itemWrapperProps" data-test-dropdown-menu-item-wrapper>
-              <span
-                v-if="item.label || slots['item-label']"
-                v-bind="itemLabelProps"
-                data-test-dropdown-menu-item-label
-              >
-                <slot name="item-label" v-bind="getItemContext(item, index)">
-                  {{ item.label }}
-                </slot>
-              </span>
-              <span
-                v-if="item.description || slots['item-description']"
-                v-bind="itemDescriptionProps"
-                data-test-dropdown-menu-item-description
-              >
-                <slot name="item-description" v-bind="getItemContext(item, index)">
-                  {{ item.description }}
-                </slot>
-              </span>
-            </span>
-          </slot>
-        </DropdownMenuItem>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </template>
         <DropdownMenuArrow
           v-if="props.showArrow"
           v-bind="arrowProps"

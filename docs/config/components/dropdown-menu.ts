@@ -9,6 +9,7 @@ import DropdownMenuSizeExample from '../../components/examples/dropdown-menu/Dro
 import DropdownMenuContentExample from '../../components/examples/dropdown-menu/DropdownMenuContentExample.vue'
 import DropdownMenuArrowExample from '../../components/examples/dropdown-menu/DropdownMenuArrowExample.vue'
 import DropdownMenuItemsExample from '../../components/examples/dropdown-menu/DropdownMenuItemsExample.vue'
+import DropdownMenuGroupsExample from '../../components/examples/dropdown-menu/DropdownMenuGroupsExample.vue'
 import DropdownMenuItemSlotsExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotsExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
@@ -63,6 +64,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
       component: DropdownMenuItemsExample,
     },
     {
+      title: 'Groups',
+      description:
+        'Pass an array of arrays to split the items into groups with a separator between them.',
+      component: DropdownMenuGroupsExample,
+    },
+    {
       title: 'Item slots',
       description:
         'Replace the leading, the label and the description of every item, or its whole content with the item slot; the slots receive the item and its index. When the slot does not start with the label, set item.textValue for typeahead.',
@@ -88,6 +95,8 @@ const dropdownMenuConfig: ComponentDocConfig = {
           ['role="menu"', 'Content', 'Announces the content as a menu.'],
           ['aria-labelledby', 'Content', 'Id of the trigger, so the menu is named by it.'],
           ['role="menuitem"', 'Item', 'Announces each item as a menu item.'],
+          ['role="group"', 'Group', 'Groups the items of each array of items.'],
+          ['role="separator"', 'Separator', 'Separates the groups.'],
           [
             'aria-disabled, data-disabled',
             'Item',
@@ -148,10 +157,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
       },
       {
         name: 'items',
-        type: 'DropdownMenuItem[]',
+        type: 'DropdownMenuItem[] | DropdownMenuItem[][]',
         typeLink: '#dropdown-menu-item',
         default: String(dropdownMenuDefaults.items),
-        description: 'Items of the menu; the content is only rendered when there are items.',
+        description:
+          'Items of the menu; an array of arrays renders each array as a group with a separator between groups. The content is only rendered when there are items.',
       },
       {
         name: 'content',
@@ -438,7 +448,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
             typeLink: '#dropdown-menu-item',
             description: 'The item being rendered.',
           },
-          { name: 'index', type: 'number', description: 'Position of the item in items.' },
+          { name: 'index', type: 'number', description: 'Position of the item in its group.' },
+          {
+            name: 'groupIndex',
+            type: 'number',
+            description: 'Position of the group in items; 0 when items is a flat array.',
+          },
         ],
       },
     ],

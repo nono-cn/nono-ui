@@ -275,6 +275,71 @@ describe('DropdownMenu', () => {
         expect(dropdownMenu.findAll('[data-test-dropdown-menu-item]')).toHaveLength(2)
       })
 
+      describe('groups', () => {
+        it('con un array plano pinta un solo grupo', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }, { label: 'Ajustes' }] },
+          })
+
+          expect(dropdownMenu.findAll('[data-test-dropdown-menu-group]')).toHaveLength(1)
+        })
+
+        it('con un array plano no pinta separadores', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }, { label: 'Ajustes' }] },
+          })
+
+          expect(dropdownMenu.find('[data-test-dropdown-menu-separator]').exists()).toBe(false)
+        })
+
+        it('con un array de arrays pinta un grupo por cada array', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: {
+              open: true,
+              items: [[{ label: 'Perfil' }], [{ label: 'Guardar' }], [{ label: 'Eliminar' }]],
+            },
+          })
+
+          expect(dropdownMenu.findAll('[data-test-dropdown-menu-group]')).toHaveLength(3)
+        })
+
+        it('con un array de arrays pinta un separador entre cada grupo', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: {
+              open: true,
+              items: [[{ label: 'Perfil' }], [{ label: 'Guardar' }], [{ label: 'Eliminar' }]],
+            },
+          })
+
+          expect(dropdownMenu.findAll('[data-test-dropdown-menu-separator]')).toHaveLength(2)
+        })
+
+        it('cada grupo pinta los items de su array', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: {
+              open: true,
+              items: [[{ label: 'Perfil' }], [{ label: 'Guardar' }, { label: 'Favorito' }]],
+            },
+          })
+
+          expect(
+            dropdownMenu
+              .findAll('[data-test-dropdown-menu-group]')[1]!
+              .findAll('[data-test-dropdown-menu-item]'),
+          ).toHaveLength(2)
+        })
+
+        it('el separador tiene las class correctas', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [[{ label: 'Perfil' }], [{ label: 'Guardar' }]] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-separator]').classes()).toEqual(
+            expect.arrayContaining(['-mx-1', 'my-1', 'h-px', 'bg-border']),
+          )
+        })
+      })
+
       describe('label', () => {
         it('pinta el label del item', () => {
           const dropdownMenu = mountDropdownMenu({
