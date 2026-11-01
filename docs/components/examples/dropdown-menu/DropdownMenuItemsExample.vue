@@ -30,7 +30,14 @@ const items: DropdownMenuItem[] = [
       lastAction.value = 'Keep open'
     },
   },
-  { label: 'Delete', description: 'Remove this project', icon: 'trash2', disabled: true },
+  { label: 'Archive', description: 'Not available in your plan', disabled: true },
+  {
+    label: 'Delete',
+    description: 'Remove this project',
+    icon: 'trash2',
+    color: 'error',
+    onSelect: () => (lastAction.value = 'Delete'),
+  },
 ]
 
 const code = `<script setup lang="ts">
@@ -63,7 +70,14 @@ const items: DropdownMenuItem[] = [
       lastAction.value = 'Keep open'
     },
   },
-  { label: 'Delete', description: 'Remove this project', icon: 'trash2', disabled: true },
+  { label: 'Archive', description: 'Not available in your plan', disabled: true },
+  {
+    label: 'Delete',
+    description: 'Remove this project',
+    icon: 'trash2',
+    color: 'error',
+    onSelect: () => (lastAction.value = 'Delete'),
+  },
 ]
 ${scriptEnd}
 
@@ -80,7 +94,7 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Items"
-    description="Combine label, description, icon, disabled and onSelect in each item; call event.preventDefault() in onSelect to keep the menu open."
+    description="Combine label, description, icon, color, disabled and onSelect in each item; call event.preventDefault() in onSelect to keep the menu open."
     :code="code"
     :show-reset="false"
   >

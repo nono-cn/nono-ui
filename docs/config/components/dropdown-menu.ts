@@ -59,7 +59,7 @@ const dropdownMenuConfig: ComponentDocConfig = {
     {
       title: 'Items',
       description:
-        'Combine label, description, icon, disabled and onSelect in each item; call event.preventDefault() in onSelect to keep the menu open.',
+        'Combine label, description, icon, color, disabled and onSelect in each item; call event.preventDefault() in onSelect to keep the menu open.',
       component: DropdownMenuItemsExample,
     },
     {
@@ -410,6 +410,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
             type: 'string',
             description:
               'Text used by typeahead instead of the text content of the item; useful when a slot renders other content.',
+          },
+          {
+            name: 'color',
+            type: 'string',
+            description:
+              'Theme token or CSS color for the text, the icon and the highlight of the item.',
           },
           {
             name: 'onSelect',

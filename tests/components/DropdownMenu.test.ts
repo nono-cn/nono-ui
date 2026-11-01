@@ -407,6 +407,74 @@ describe('DropdownMenu', () => {
         })
       })
 
+      describe('color', () => {
+        it('por defecto el item no tiene la variable de color', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(
+            dropdownMenu.get('[data-test-dropdown-menu-item]').attributes('style') ?? '',
+          ).not.toContain('--dropdown-menu-item-color')
+        })
+
+        it('con item.color de tema resuelve la variable con el token', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Eliminar', color: 'error' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item]').attributes('style')).toContain(
+            '--dropdown-menu-item-color: var(--error, var(--neutral))',
+          )
+        })
+
+        it('con item.color CSS usa ese color en la variable', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Eliminar', color: '#ff0000' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item]').attributes('style')).toContain(
+            '--dropdown-menu-item-color: #ff0000',
+          )
+        })
+
+        it('por defecto el item tiene las class de resaltado neutras', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item]').classes()).toEqual(
+            expect.arrayContaining([
+              'data-highlighted:bg-accent',
+              'data-highlighted:text-accent-foreground',
+            ]),
+          )
+        })
+
+        it('con item.color el item tiene las class del color', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Eliminar', color: 'error' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item]').classes()).toEqual(
+            expect.arrayContaining([
+              'text-(--dropdown-menu-item-color)',
+              'data-highlighted:bg-(--dropdown-menu-item-color)/10',
+            ]),
+          )
+        })
+
+        it('con item.color el item no tiene las class de resaltado neutras', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Eliminar', color: 'error' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item]').classes()).not.toContain(
+            'data-highlighted:bg-accent',
+          )
+        })
+      })
+
       describe('onSelect', () => {
         it('cuando Reka selecciona el item llama a item.onSelect con el evento', () => {
           const onSelect = vi.fn()

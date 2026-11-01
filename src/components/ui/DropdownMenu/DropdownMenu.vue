@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from 'reka-ui'
 import { Icon } from '@/components/ui/Icon'
+import { getThemeColorStyle } from '@/composables/useTheme'
 import {
   dropdownMenuArrowVariants,
   dropdownMenuContentVariants,
@@ -78,7 +79,12 @@ function getItemProps(item: DropdownMenuItemType) {
   return {
     disabled: item.disabled,
     textValue: item.textValue,
-    class: dropdownMenuItemVariants({ size: props.size, disabled: item.disabled }),
+    class: dropdownMenuItemVariants({
+      size: props.size,
+      disabled: item.disabled,
+      color: Boolean(item.color),
+    }),
+    style: item.color ? getThemeColorStyle(item.color, 'dropdown-menu-item', 'neutral') : undefined,
   }
 }
 

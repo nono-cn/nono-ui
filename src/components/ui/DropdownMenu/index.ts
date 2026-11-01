@@ -24,7 +24,7 @@ export const dropdownMenuContentVariants = cva(
 export const dropdownMenuArrowVariants = cva('fill-popover stroke-border -translate-y-px')
 
 export const dropdownMenuItemVariants = cva(
-  'relative flex cursor-default items-center rounded-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground',
+  'relative flex cursor-default items-center rounded-sm outline-hidden select-none',
   {
     variants: {
       size: {
@@ -38,8 +38,12 @@ export const dropdownMenuItemVariants = cva(
         true: 'pointer-events-none opacity-50',
         false: '',
       },
+      color: {
+        true: 'text-(--dropdown-menu-item-color) data-highlighted:bg-(--dropdown-menu-item-color)/10',
+        false: 'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
+      },
     },
-    defaultVariants: { size: dropdownMenuDefaults.size, disabled: false },
+    defaultVariants: { size: dropdownMenuDefaults.size, disabled: false, color: false },
   },
 )
 
@@ -127,6 +131,7 @@ export interface DropdownMenuItem {
   icon?: IconName
   disabled?: boolean
   textValue?: string
+  color?: string
   onSelect?: (event: Event) => void
 }
 
