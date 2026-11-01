@@ -121,6 +121,7 @@ export interface DropdownMenuItem {
   label?: string
   description?: string
   icon?: IconName
+  onSelect?: (event: Event) => void
 }
 
 // Props

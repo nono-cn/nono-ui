@@ -126,6 +126,7 @@ function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenu
           :key="index"
           v-bind="itemProps"
           data-test-dropdown-menu-item
+          @select="item.onSelect"
         >
           <slot name="item" v-bind="getItemContext(item, index)">
             <span

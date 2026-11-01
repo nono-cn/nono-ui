@@ -10,6 +10,7 @@ import DropdownMenuContentExample from '../../components/examples/dropdown-menu/
 import DropdownMenuArrowExample from '../../components/examples/dropdown-menu/DropdownMenuArrowExample.vue'
 import DropdownMenuIconExample from '../../components/examples/dropdown-menu/DropdownMenuIconExample.vue'
 import DropdownMenuDescriptionExample from '../../components/examples/dropdown-menu/DropdownMenuDescriptionExample.vue'
+import DropdownMenuSelectExample from '../../components/examples/dropdown-menu/DropdownMenuSelectExample.vue'
 import DropdownMenuItemSlotsExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotsExample.vue'
 import DropdownMenuItemSlotExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotExample.vue'
 
@@ -67,6 +68,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
       title: 'Description',
       description: 'Show a secondary line below the label of each item.',
       component: DropdownMenuDescriptionExample,
+    },
+    {
+      title: 'Select',
+      description: 'Run an action when an item is selected with item.onSelect.',
+      component: DropdownMenuSelectExample,
     },
     {
       title: 'Item slots',
@@ -406,6 +412,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
             type: 'IconName',
             typeLink: '/components/icon',
             description: 'Icon shown before the label; its size follows the menu size.',
+          },
+          {
+            name: 'onSelect',
+            type: '(event: Event) => void',
+            description:
+              'Called when the item is selected with the mouse or the keyboard; call event.preventDefault() to keep the menu open.',
           },
         ],
       },

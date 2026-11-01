@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   DropdownMenuArrow,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuRoot,
   DropdownMenuTrigger,
 } from 'reka-ui'
@@ -331,6 +332,20 @@ describe('DropdownMenu', () => {
           expect(dropdownMenu.find('[data-test-dropdown-menu-item-leading]').exists()).toBe(false)
         })
       })
+
+      describe('onSelect', () => {
+        it('cuando Reka selecciona el item llama a item.onSelect con el evento', () => {
+          const onSelect = vi.fn()
+          const event = new Event('select')
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil', onSelect }] },
+          })
+
+          dropdownMenu.getComponent(DropdownMenuItem).vm.$emit('select', event)
+
+          expect(onSelect).toHaveBeenCalledWith(event)
+        })
+      })
     })
   })
 
@@ -441,9 +456,7 @@ describe('DropdownMenu', () => {
           slots: { 'item-description': () => h('em', 'Datos de tu cuenta') },
         })
 
-        expect(dropdownMenu.find('[data-test-dropdown-menu-item-description]').exists()).toBe(
-          true,
-        )
+        expect(dropdownMenu.find('[data-test-dropdown-menu-item-description]').exists()).toBe(true)
       })
     })
   })
