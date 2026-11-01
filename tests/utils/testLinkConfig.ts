@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it, vi } from 'vitest'
 
-import { Link, type NormalizeLinkProps } from '@/components/ui/Link'
+import { Link, type NormalizeLinkProps } from '@/components/Link'
 
 interface TestLinkConfigOptions {
   text: string

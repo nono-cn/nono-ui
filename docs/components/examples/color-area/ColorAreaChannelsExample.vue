@@ -7,7 +7,7 @@ import {
   colorAreaChannels,
   type ColorAreaChannel,
   type ColorAreaColorSpace,
-} from '@/components/ui/ColorArea'
+} from '@/components/ColorArea'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -22,7 +22,7 @@ import {
   ColorArea,
   type ColorAreaChannel,
   type ColorAreaColorSpace,
-} from '__DOCS_PACKAGE__/components/ui/ColorArea'
+} from '__DOCS_PACKAGE__/components/ColorArea'
 
 const colorSpace = ref<ColorAreaColorSpace>('${colorSpace.value}')
 const xChannel = ref<ColorAreaChannel>('${xChannel.value}')

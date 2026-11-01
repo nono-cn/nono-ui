@@ -5,7 +5,7 @@ import {
   iconTileDefaults,
   iconTileVariantNames,
   type IconTileVariant,
-} from '@/components/ui/IconTile'
+} from '@/components/IconTile'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ import { scriptEnd } from '../example-code'
 const variant = ref<IconTileVariant>(iconTileDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
-import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
+import { IconTile } from '__DOCS_PACKAGE__/components/IconTile'
 ${scriptEnd}
 
 <template>

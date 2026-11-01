@@ -2,15 +2,15 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Icon, type IconName } from '@/components/ui/Icon'
+import { Icon, type IconName } from '@/components/Icon'
 import {
   Input,
   inputDefaults,
   type InputProps,
   type InputSize,
   type InputVariant,
-} from '@/components/ui/Input'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/Input'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

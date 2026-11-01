@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Checkbox } from '@/components/ui/Checkbox'
-import { Label } from '@/components/ui/Label'
+import { Checkbox } from '@/components/Checkbox'
+import { Label } from '@/components/Label'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,8 +10,8 @@ const controlId = ref('updates')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Checkbox } from '__DOCS_PACKAGE__/components/Checkbox'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 
 const controlId = ref(${JSON.stringify(controlId.value)})
 ${scriptEnd}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble, type BubbleUI } from '@/components/ui/Bubble'
+import { Bubble, type BubbleUI } from '@/components/Bubble'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ const ui = computed<BubbleUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { Bubble, type BubbleUI } from '__DOCS_PACKAGE__/components/ui/Bubble'
+import { Bubble, type BubbleUI } from '__DOCS_PACKAGE__/components/Bubble'
 
 const ui: BubbleUI = {
   surface: () => ({ class: '${italicSurface.value ? 'italic' : ''}' }),

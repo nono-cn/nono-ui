@@ -9,8 +9,8 @@ import {
   type ChipPosition,
   type ChipProps,
   type ChipSize,
-} from '@/components/ui/Chip'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/Chip'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

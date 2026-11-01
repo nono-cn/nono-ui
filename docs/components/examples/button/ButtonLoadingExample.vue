@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,7 +11,7 @@ const loading = computed(() => selectedLoading.value === 'true')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 
 const loading = ref(${loading.value})
 ${scriptEnd}

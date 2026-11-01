@@ -1,7 +1,7 @@
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it } from 'vitest'
 
-import { Avatar, type AvatarProps } from '@/components/ui/Avatar'
+import { Avatar, type AvatarProps } from '@/components/Avatar'
 
 interface TestAvatarConfigOptions {
   text: string

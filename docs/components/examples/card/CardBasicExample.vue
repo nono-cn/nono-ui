@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Card } from '@/components/ui/Card'
+import { Card } from '@/components/Card'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
+import { Card } from '__DOCS_PACKAGE__/components/Card'
 ${scriptEnd}
 
 <template>

@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { textareaDefaults, textareaSizes, textareaVariantNames } from '@/components/ui/Textarea'
+import { textareaDefaults, textareaSizes, textareaVariantNames } from '@/components/Textarea'
 import TextareaBasicExample from '../../components/examples/textarea/TextareaBasicExample.vue'
 import TextareaSizesExample from '../../components/examples/textarea/TextareaSizesExample.vue'
 import TextareaVariantsExample from '../../components/examples/textarea/TextareaVariantsExample.vue'
@@ -11,7 +11,7 @@ const textareaConfig: ComponentDocConfig = {
   title: 'Textarea',
   language: 'en',
   description: 'A multiline text field for entering longer content.',
-  importPath: '@nono-ui/components/ui/Textarea',
+  importPath: '@nono-ui/components/Textarea',
   usage: [
     {
       title: 'Basic usage',

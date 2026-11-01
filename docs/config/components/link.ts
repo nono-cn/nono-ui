@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { linkDefaults } from '@/components/ui/Link'
+import { linkDefaults } from '@/components/Link'
 import LinkUsageExample from '../../components/examples/link/LinkUsageExample.vue'
 import LinkDestinationsExample from '../../components/examples/link/LinkDestinationsExample.vue'
 import LinkReplaceExample from '../../components/examples/link/LinkReplaceExample.vue'
@@ -12,7 +12,7 @@ const linkConfig: ComponentDocConfig = {
   title: 'Link',
   language: 'en',
   description: 'Navigation link with Button appearance, icons, and router integration.',
-  importPath: '@nono-ui/components/ui/Link',
+  importPath: '@nono-ui/components/Link',
   usage: [
     {
       title: 'Basic usage',

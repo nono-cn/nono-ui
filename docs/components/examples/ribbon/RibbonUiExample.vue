@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Card } from '@/components/ui/Card'
-import { Ribbon, type RibbonItem, type RibbonUI } from '@/components/ui/Ribbon'
+import { Card } from '@/components/Card'
+import { Ribbon, type RibbonItem, type RibbonUI } from '@/components/Ribbon'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -17,8 +17,8 @@ const ui = computed<RibbonUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
-import { Ribbon, type RibbonUI } from '__DOCS_PACKAGE__/components/ui/Ribbon'
+import { Card } from '__DOCS_PACKAGE__/components/Card'
+import { Ribbon, type RibbonUI } from '__DOCS_PACKAGE__/components/Ribbon'
 
 const ribbons = [{ label: 'Beta' }]
 const ui: RibbonUI = {

@@ -5,7 +5,7 @@ import {
   checkboxDefaults,
   checkboxSizes,
   type CheckboxSize,
-} from '@/components/ui/Checkbox'
+} from '@/components/Checkbox'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -14,7 +14,7 @@ const size = ref<CheckboxSize>(checkboxDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Checkbox, type CheckboxSize } from '__DOCS_PACKAGE__/components/ui/Checkbox'
+import { Checkbox, type CheckboxSize } from '__DOCS_PACKAGE__/components/Checkbox'
 
 const size = ref<CheckboxSize>('${size.value}')
 ${scriptEnd}

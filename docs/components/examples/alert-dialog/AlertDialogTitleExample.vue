@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { AlertDialog } from '@/components/ui/AlertDialog'
-import { Button } from '@/components/ui/Button'
+import { AlertDialog } from '@/components/AlertDialog'
+import { Button } from '@/components/Button'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,8 +10,8 @@ const label = ref('Delete this project?')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { AlertDialog } from '__DOCS_PACKAGE__/components/ui/AlertDialog'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { AlertDialog } from '__DOCS_PACKAGE__/components/AlertDialog'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 
 const label = ref(${JSON.stringify(label.value)})
 ${scriptEnd}

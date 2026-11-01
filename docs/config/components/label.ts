@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { labelDefaults } from '@/components/ui/Label'
+import { labelDefaults } from '@/components/Label'
 import LabelForExample from '../../components/examples/label/LabelForExample.vue'
 import LabelUsageExample from '../../components/examples/label/LabelUsageExample.vue'
 
@@ -8,7 +8,7 @@ const labelConfig: ComponentDocConfig = {
   title: 'Label',
   language: 'en',
   description: 'Accessible label for identifying form controls.',
-  importPath: '@nono-ui/components/ui/Label',
+  importPath: '@nono-ui/components/Label',
   usage: [
     {
       title: 'Basic usage',

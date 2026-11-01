@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { iconTileDefaults, iconTileSizes, iconTileVariantNames } from '@/components/ui/IconTile'
+import { iconTileDefaults, iconTileSizes, iconTileVariantNames } from '@/components/IconTile'
 import IconTileIconExample from '../../components/examples/icon-tile/IconTileIconExample.vue'
 import IconTileUsageExample from '../../components/examples/icon-tile/IconTileUsageExample.vue'
 import IconTileVariantExample from '../../components/examples/icon-tile/IconTileVariantExample.vue'
@@ -12,7 +12,7 @@ const iconTileConfig: ComponentDocConfig = {
   title: 'Icon Tile',
   language: 'en',
   description: 'Displays an icon inside a consistently sized decorative surface.',
-  importPath: '@nono-ui/components/ui/IconTile',
+  importPath: '@nono-ui/components/IconTile',
   usage: [
     {
       title: 'Basic usage',

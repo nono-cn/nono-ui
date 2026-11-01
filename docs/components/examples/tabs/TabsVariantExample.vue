@@ -6,7 +6,7 @@ import {
   tabsVariantNames,
   type TabItem,
   type TabsVariants,
-} from '@/components/ui/Tabs'
+} from '@/components/Tabs'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -18,7 +18,7 @@ const tabs: TabItem[] = [
 const variant = ref<NonNullable<TabsVariants['variant']>>(tabsDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
-import { Tabs } from '__DOCS_PACKAGE__/components/ui/Tabs'
+import { Tabs } from '__DOCS_PACKAGE__/components/Tabs'
 
 const tabs = [
   { slot: 'account', value: 'account', label: 'Account' },

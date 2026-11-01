@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Attachment } from '@/components/ui/Attachment'
+import { Attachment } from '@/components/Attachment'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Attachment } from '__DOCS_PACKAGE__/components/ui/Attachment'
+import { Attachment } from '__DOCS_PACKAGE__/components/Attachment'
 ${scriptEnd}
 
 <template>

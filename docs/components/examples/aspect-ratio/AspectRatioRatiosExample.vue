@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { AspectRatio, aspectRatioDefaults } from '@/components/ui/AspectRatio'
+import { AspectRatio, aspectRatioDefaults } from '@/components/AspectRatio'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -18,7 +18,7 @@ const ratio = computed(() => ratioValues[selectedPreset.value])
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { AspectRatio } from '__DOCS_PACKAGE__/components/ui/AspectRatio'
+import { AspectRatio } from '__DOCS_PACKAGE__/components/AspectRatio'
 
 const ratio = ref(${selectedPreset.value.replace(':', ' / ')})
 ${scriptEnd}

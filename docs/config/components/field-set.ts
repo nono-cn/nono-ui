@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { fieldSetDefaults } from '@/components/ui/FieldSet'
+import { fieldSetDefaults } from '@/components/FieldSet'
 import FieldSetDetailsExample from '../../components/examples/field-set/FieldSetDetailsExample.vue'
 import FieldSetSlotsExample from '../../components/examples/field-set/FieldSetSlotsExample.vue'
 import FieldSetUiExample from '../../components/examples/field-set/FieldSetUiExample.vue'
@@ -10,7 +10,7 @@ const fieldSetConfig: ComponentDocConfig = {
   title: 'FieldSet',
   language: 'en',
   description: 'Groups related form controls under a legend and description.',
-  importPath: '@nono-ui/components/ui/FieldSet',
+  importPath: '@nono-ui/components/FieldSet',
   usage: [
     {
       title: 'Basic usage',

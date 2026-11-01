@@ -5,7 +5,7 @@ import {
   paginationDefaults,
   paginationSizes,
   type PaginationSize,
-} from '@/components/ui/Pagination'
+} from '@/components/Pagination'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ const size = ref<PaginationSize>(paginationDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Pagination } from '__DOCS_PACKAGE__/components/ui/Pagination'
+import { Pagination } from '__DOCS_PACKAGE__/components/Pagination'
 
 const page = ref(${page.value})
 ${scriptEnd}

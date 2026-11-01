@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { alertDialogCancelButtonDefaults, alertDialogDefaults } from '@/components/ui/AlertDialog'
+import { alertDialogCancelButtonDefaults, alertDialogDefaults } from '@/components/AlertDialog'
 import AlertDialogBasicExample from '../../components/examples/alert-dialog/AlertDialogBasicExample.vue'
 import AlertDialogTitleExample from '../../components/examples/alert-dialog/AlertDialogTitleExample.vue'
 import AlertDialogDescriptionExample from '../../components/examples/alert-dialog/AlertDialogDescriptionExample.vue'
@@ -11,7 +11,7 @@ const alertDialogConfig: ComponentDocConfig = {
   title: 'AlertDialog',
   language: 'en',
   description: 'Prompts the user to explicitly confirm before performing an important action.',
-  importPath: '@nono-ui/components/ui/AlertDialog',
+  importPath: '@nono-ui/components/AlertDialog',
   usage: [
     {
       title: 'Basic confirmation',

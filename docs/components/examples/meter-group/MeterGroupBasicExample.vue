@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MeterGroup, type MeterGroupItem } from '@/components/ui/MeterGroup'
+import { MeterGroup, type MeterGroupItem } from '@/components/MeterGroup'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -9,7 +9,7 @@ const items: MeterGroupItem[] = [
   { label: 'Videos', value: 16, color: 'warning' },
 ]
 const code = `<script setup lang="ts">
-import { MeterGroup, type MeterGroupItem } from '__DOCS_PACKAGE__/components/ui/MeterGroup'
+import { MeterGroup, type MeterGroupItem } from '__DOCS_PACKAGE__/components/MeterGroup'
 
 const items: MeterGroupItem[] = [
   { label: 'Apps', value: 18 },

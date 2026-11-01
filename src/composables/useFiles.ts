@@ -1,4 +1,4 @@
-import type { IconName } from '@/components/ui/Icon'
+import type { IconName } from '@/components/Icon'
 import { getCurrentScope, onScopeDispose, toValue, watch, type MaybeRefOrGetter } from 'vue'
 
 export type FileState = 'idle' | 'uploading' | 'processing' | 'error' | 'done'

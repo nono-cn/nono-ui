@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Message } from '@/components/ui/Message'
+import { Message } from '@/components/Message'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Message } from '__DOCS_PACKAGE__/components/ui/Message'
+import { Message } from '__DOCS_PACKAGE__/components/Message'
 ${scriptEnd}
 
 <template>

@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest'
 import { Separator as RekaSeparator } from 'reka-ui'
 import { h } from 'vue'
 
-import { Separator, type SeparatorProps } from '@/components/ui/Separator'
-import { themeColors } from '@/components/ui/constants'
+import { Separator, type SeparatorProps } from '@/components/Separator'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

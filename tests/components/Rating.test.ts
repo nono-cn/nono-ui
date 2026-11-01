@@ -9,9 +9,9 @@ import {
   type RatingItemContext,
   type RatingProps,
   type RatingSize,
-} from '@/components/ui/Rating'
-import { themeColors } from '@/components/ui/constants'
-import { Icon } from '@/components/ui/Icon'
+} from '@/components/Rating'
+import { themeColors } from '@/components/constants'
+import { Icon } from '@/components/Icon'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'

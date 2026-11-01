@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Icon, iconSizes, type IconSize } from '@/components/ui/Icon'
+import { Icon, iconSizes, type IconSize } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -8,7 +8,7 @@ import { scriptEnd } from '../example-code'
 const size = ref<IconSize>('md')
 const code = computed(
   () => `<script setup lang="ts">
-import { Icon } from '__DOCS_PACKAGE__/components/ui/Icon'
+import { Icon } from '__DOCS_PACKAGE__/components/Icon'
 ${scriptEnd}
 
 <template>

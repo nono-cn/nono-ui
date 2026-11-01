@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge, badgeDefaults } from '@/components/ui/Badge'
+import { Badge, badgeDefaults } from '@/components/Badge'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const radius = ref<string>(badgeDefaults.radius)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
+import { Badge } from '__DOCS_PACKAGE__/components/Badge'
 
 const radius = ref(${JSON.stringify(radius.value)})
 ${scriptEnd}

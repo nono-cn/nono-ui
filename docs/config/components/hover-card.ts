@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { hoverCardDefaults } from '@/components/ui/HoverCard'
+import { hoverCardDefaults } from '@/components/HoverCard'
 import { formatDefaultObject, formatValue } from '../format-default'
 import HoverCardBasicExample from '../../components/examples/hover-card/HoverCardBasicExample.vue'
 import HoverCardContentExample from '../../components/examples/hover-card/HoverCardContentExample.vue'
@@ -11,7 +11,7 @@ const hoverCardConfig: ComponentDocConfig = {
   title: 'HoverCard',
   language: 'en',
   description: 'Shows contextual information when a trigger is hovered or focused.',
-  importPath: '@nono-ui/components/ui/HoverCard',
+  importPath: '@nono-ui/components/HoverCard',
   usage: [
     {
       title: 'Basic usage',

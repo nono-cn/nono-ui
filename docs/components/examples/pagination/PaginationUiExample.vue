@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Pagination, type PaginationUI } from '@/components/ui/Pagination'
+import { Pagination, type PaginationUI } from '@/components/Pagination'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -21,7 +21,7 @@ const ui = computed<PaginationUI>(() => ({
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Pagination, type PaginationUI } from '__DOCS_PACKAGE__/components/ui/Pagination'
+import { Pagination, type PaginationUI } from '__DOCS_PACKAGE__/components/Pagination'
 
 const page = ref(${page.value})
 const ui: PaginationUI = {

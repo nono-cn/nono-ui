@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Announcer, announcerDefaults } from '@/components/ui/Announcer'
+import { Announcer, announcerDefaults } from '@/components/Announcer'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -12,7 +12,7 @@ const atomic = computed(() => selectedAtomic.value === 'true')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Announcer } from '__DOCS_PACKAGE__/components/ui/Announcer'
+import { Announcer } from '__DOCS_PACKAGE__/components/Announcer'
 
 const atomic = ref(${atomic.value})
 ${scriptEnd}

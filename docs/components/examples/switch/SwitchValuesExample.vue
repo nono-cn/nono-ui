@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Switch } from '@/components/ui/Switch'
+import { Switch } from '@/components/Switch'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -8,7 +8,7 @@ const value = ref<'yes' | 'no'>('no')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Switch } from '__DOCS_PACKAGE__/components/ui/Switch'
+import { Switch } from '__DOCS_PACKAGE__/components/Switch'
 
 const value = ref<'yes' | 'no'>('${value.value}')
 ${scriptEnd}

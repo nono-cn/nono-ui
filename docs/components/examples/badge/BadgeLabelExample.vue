@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge } from '@/components/ui/Badge'
+import { Badge } from '@/components/Badge'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const label = ref('Active')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
+import { Badge } from '__DOCS_PACKAGE__/components/Badge'
 
 const label = ref(${JSON.stringify(label.value)})
 ${scriptEnd}

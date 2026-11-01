@@ -5,8 +5,8 @@ import {
   toggleDefaults,
   toggleVariantNames,
   type ToggleVariant,
-} from '@/components/ui/Toggle'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/Toggle'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -21,7 +21,7 @@ const color = computed(() =>
 )
 const code = computed(
   () => `<script setup lang="ts">
-import { Toggle } from '__DOCS_PACKAGE__/components/ui/Toggle'
+import { Toggle } from '__DOCS_PACKAGE__/components/Toggle'
 ${scriptEnd}
 
 <template>

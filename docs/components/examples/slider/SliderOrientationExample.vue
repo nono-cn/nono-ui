@@ -5,7 +5,7 @@ import {
   sliderDefaults,
   sliderOrientations,
   type SliderOrientation,
-} from '@/components/ui/Slider'
+} from '@/components/Slider'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -14,7 +14,7 @@ const orientation = ref<SliderOrientation>(sliderDefaults.orientation)
 const wrapperClass = computed(() => (orientation.value === 'vertical' ? 'h-40' : 'w-full max-w-md'))
 const code = computed(
   () => `<script setup lang="ts">
-import { Slider } from '__DOCS_PACKAGE__/components/ui/Slider'
+import { Slider } from '__DOCS_PACKAGE__/components/Slider'
 ${scriptEnd}
 
 <template>

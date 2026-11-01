@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Slider, type SliderUI } from '@/components/ui/Slider'
+import { Slider, type SliderUI } from '@/components/Slider'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -20,7 +20,7 @@ const ui = computed<SliderUI>(() => ({
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Slider, type SliderUI } from '__DOCS_PACKAGE__/components/ui/Slider'
+import { Slider, type SliderUI } from '__DOCS_PACKAGE__/components/Slider'
 
 const value = ref([${value.value.join(', ')}])
 const ui: SliderUI = {

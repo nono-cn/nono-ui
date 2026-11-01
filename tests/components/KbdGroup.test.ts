@@ -2,7 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { KbdGroup, type KbdGroupProps } from '@/components/ui/Kbd'
+import { KbdGroup, type KbdGroupProps } from '@/components/Kbd'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountKbdGroup(options: MountingOptions<KbdGroupProps> = {}) {

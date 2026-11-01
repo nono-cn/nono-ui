@@ -27,7 +27,6 @@ import kbd from './components/kbd'
 import kbdGroup from './components/kbd-group'
 import label from './components/label'
 import link from './components/link'
-import linearChart from './components/linear-chart'
 import loading from './components/loading'
 import marker from './components/marker'
 import masonry from './components/masonry'
@@ -83,7 +82,6 @@ export const docsComponents = [
   kbdGroup,
   label,
   link,
-  linearChart,
   loading,
   marker,
   masonry,

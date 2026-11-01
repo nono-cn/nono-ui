@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Bubble, bubbleDefaults, type BubbleProps } from '@/components/ui/Bubble'
+import { Bubble, bubbleDefaults, type BubbleProps } from '@/components/Bubble'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountBubble(options: ComponentMountingOptions<typeof Bubble> = {}) {

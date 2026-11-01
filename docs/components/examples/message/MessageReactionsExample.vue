@@ -4,8 +4,8 @@ import {
   bubbleDefaults,
   bubbleReactionsSides,
   type BubbleReactionsSide,
-} from '@/components/ui/Bubble'
-import { Message } from '@/components/ui/Message'
+} from '@/components/Bubble'
+import { Message } from '@/components/Message'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ import { scriptEnd } from '../example-code'
 const side = ref<BubbleReactionsSide>(bubbleDefaults.reactionsSide)
 const code = computed(
   () => `<script setup lang="ts">
-import { Message } from '__DOCS_PACKAGE__/components/ui/Message'
+import { Message } from '__DOCS_PACKAGE__/components/Message'
 ${scriptEnd}
 
 <template>

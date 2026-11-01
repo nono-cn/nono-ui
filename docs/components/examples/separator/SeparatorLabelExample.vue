@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Separator } from '@/components/ui/Separator'
+import { Separator } from '@/components/Separator'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const label = ref('OR')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
+import { Separator } from '__DOCS_PACKAGE__/components/Separator'
 
 const label = ref(${JSON.stringify(label.value)})
 ${scriptEnd}

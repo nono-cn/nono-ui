@@ -6,7 +6,7 @@ const kbdGroupConfig: ComponentDocConfig = {
   title: 'KbdGroup',
   language: 'en',
   description: 'Groups keys into a keyboard shortcut.',
-  importPath: '@nono-ui/components/ui/Kbd',
+  importPath: '@nono-ui/components/Kbd',
   usage: [
     {
       title: 'Keyboard shortcut',

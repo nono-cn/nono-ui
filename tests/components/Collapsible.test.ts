@@ -7,7 +7,7 @@ import {
   Collapsible,
   type CollapsibleContext,
   type CollapsibleProps,
-} from '@/components/ui/Collapsible'
+} from '@/components/Collapsible'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountCollapsible(options: MountingOptions<CollapsibleProps> = {}) {

@@ -10,9 +10,9 @@ import {
   type RadioGroupItem,
   type RadioGroupItemContext,
   type RadioGroupProps,
-} from '@/components/ui/RadioGroup'
-import { themeColors } from '@/components/ui/constants'
-import { Icon } from '@/components/ui/Icon'
+} from '@/components/RadioGroup'
+import { themeColors } from '@/components/constants'
+import { Icon } from '@/components/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

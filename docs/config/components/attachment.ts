@@ -5,7 +5,7 @@ import {
   attachmentOrientationNames,
   attachmentSizes,
   attachmentStateNames,
-} from '@/components/ui/Attachment'
+} from '@/components/Attachment'
 import AttachmentBasicExample from '../../components/examples/attachment/AttachmentBasicExample.vue'
 import AttachmentTitleExample from '../../components/examples/attachment/AttachmentTitleExample.vue'
 import AttachmentDescriptionExample from '../../components/examples/attachment/AttachmentDescriptionExample.vue'
@@ -24,7 +24,7 @@ const attachmentConfig: ComponentDocConfig = {
   title: 'Attachment',
   language: 'en',
   description: 'Presents a file with its details, state, and related actions.',
-  importPath: '@nono-ui/components/ui/Attachment',
+  importPath: '@nono-ui/components/Attachment',
   usage: [
     {
       title: 'Basic file',

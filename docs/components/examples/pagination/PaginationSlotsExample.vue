@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button } from '@/components/ui/Button'
-import { Pagination } from '@/components/ui/Pagination'
+import { Button } from '@/components/Button'
+import { Pagination } from '@/components/Pagination'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -9,8 +9,8 @@ const page = ref(1)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Pagination } from '__DOCS_PACKAGE__/components/ui/Pagination'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Pagination } from '__DOCS_PACKAGE__/components/Pagination'
 
 const page = ref(${page.value})
 ${scriptEnd}

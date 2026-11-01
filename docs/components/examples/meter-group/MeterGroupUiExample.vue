@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { MeterGroup, type MeterGroupItem, type MeterGroupUI } from '@/components/ui/MeterGroup'
+import { MeterGroup, type MeterGroupItem, type MeterGroupUI } from '@/components/MeterGroup'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -24,7 +24,7 @@ const ui = computed<MeterGroupUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { MeterGroup, type MeterGroupItem, type MeterGroupUI } from '__DOCS_PACKAGE__/components/ui/MeterGroup'
+import { MeterGroup, type MeterGroupItem, type MeterGroupUI } from '__DOCS_PACKAGE__/components/MeterGroup'
 
 const items: MeterGroupItem[] = [
   { label: 'Apps', value: 18 },

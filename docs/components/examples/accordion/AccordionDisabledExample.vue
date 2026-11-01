@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Accordion } from '@/components/ui/Accordion'
+import { Accordion } from '@/components/Accordion'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -28,7 +28,7 @@ const rootDisabledItems = [
 
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
+import { Accordion } from '__DOCS_PACKAGE__/components/Accordion'
 
 const rootDisabledValue = ref<string | undefined>('account')
 const rootDisabledItems = [

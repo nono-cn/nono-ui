@@ -8,7 +8,7 @@ const formConfig: ComponentDocConfig = {
   title: 'Form',
   language: 'en',
   description: 'A native form backed by Reka UI for field validation and server errors.',
-  importPath: '@nono-ui/components/ui/Form',
+  importPath: '@nono-ui/components/Form',
   usage: [
     {
       title: 'Basic usage',

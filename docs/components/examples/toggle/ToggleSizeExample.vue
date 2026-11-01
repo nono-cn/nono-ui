@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Toggle, toggleDefaults, toggleSizes, type ToggleSize } from '@/components/ui/Toggle'
+import { Toggle, toggleDefaults, toggleSizes, type ToggleSize } from '@/components/Toggle'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const size = ref<ToggleSize>(toggleDefaults.size)
 const isIconSize = computed(() => size.value.startsWith('icon'))
 const code = computed(
   () => `<script setup lang="ts">
-import { Toggle } from '__DOCS_PACKAGE__/components/ui/Toggle'
+import { Toggle } from '__DOCS_PACKAGE__/components/Toggle'
 ${scriptEnd}
 
 <template>

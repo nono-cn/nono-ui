@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Accordion, accordionTypes } from '@/components/ui/Accordion'
+import { Accordion, accordionTypes } from '@/components/Accordion'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -31,7 +31,7 @@ const items = [
 const value = computed(() => (type.value === 'multiple' ? ['account', 'security'] : 'account'))
 const code = computed(
   () => `<script setup lang="ts">
-import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
+import { Accordion } from '__DOCS_PACKAGE__/components/Accordion'
 
 const items = [
   {

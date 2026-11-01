@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Alert } from '@/components/ui/Alert'
-import type { IconName } from '@/components/ui/Icon'
+import { Alert } from '@/components/Alert'
+import type { IconName } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -12,7 +12,7 @@ const icon = ref<IconName>('check')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Alert } from '__DOCS_PACKAGE__/components/ui/Alert'
+import { Alert } from '__DOCS_PACKAGE__/components/Alert'
 
 const icon = ref('${icon.value}' as const)
 ${scriptEnd}

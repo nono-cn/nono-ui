@@ -5,8 +5,8 @@ import {
   emptyDefaults,
   emptyMediaVariantNames,
   type EmptyMediaVariant,
-} from '@/components/ui/Empty'
-import { Icon } from '@/components/ui/Icon'
+} from '@/components/Empty'
+import { Icon } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -21,8 +21,8 @@ const mediaVariant = ref<EmptyMediaVariant>(emptyDefaults.mediaVariant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Empty, type EmptyMediaVariant } from '__DOCS_PACKAGE__/components/ui/Empty'
-import { Icon } from '__DOCS_PACKAGE__/components/ui/Icon'
+import { Empty, type EmptyMediaVariant } from '__DOCS_PACKAGE__/components/Empty'
+import { Icon } from '__DOCS_PACKAGE__/components/Icon'
 
 const label = ref(${JSON.stringify(label.value)})
 const description = ref(${JSON.stringify(description.value)})

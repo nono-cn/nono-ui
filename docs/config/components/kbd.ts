@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { kbdDefaults, kbdSizes, kbdVariantNames } from '@/components/ui/Kbd'
+import { kbdDefaults, kbdSizes, kbdVariantNames } from '@/components/Kbd'
 import KbdColorExample from '../../components/examples/kbd/KbdColorExample.vue'
 import KbdRadiusExample from '../../components/examples/kbd/KbdRadiusExample.vue'
 import KbdGroupExample from '../../components/examples/kbd/KbdGroupExample.vue'
@@ -12,7 +12,7 @@ const kbdConfig: ComponentDocConfig = {
   title: 'Kbd',
   language: 'en',
   description: 'Displays a key or keyboard shortcut with consistent semantic styling.',
-  importPath: '@nono-ui/components/ui/Kbd',
+  importPath: '@nono-ui/components/Kbd',
   usage: [
     {
       title: 'Basic usage',

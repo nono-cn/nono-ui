@@ -5,8 +5,8 @@ import {
   buttonDefaults,
   buttonVariantNames,
   type ButtonVariant,
-} from '@/components/ui/Button'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/Button'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -22,7 +22,7 @@ const variant = ref<ButtonVariant>(buttonDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 
 const color = ref('${color.value}')
 const variant = ref('${variant.value}' as const)

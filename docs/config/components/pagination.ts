@@ -1,6 +1,6 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { buttonVariantNames } from '@/components/ui/Button'
-import { paginationDefaults, paginationSizes } from '@/components/ui/Pagination'
+import { buttonVariantNames } from '@/components/Button'
+import { paginationDefaults, paginationSizes } from '@/components/Pagination'
 import { formatValue } from '../format-default'
 import PaginationBasicExample from '../../components/examples/pagination/PaginationBasicExample.vue'
 import PaginationRangeExample from '../../components/examples/pagination/PaginationRangeExample.vue'
@@ -19,7 +19,7 @@ const paginationConfig: ComponentDocConfig = {
   title: 'Pagination',
   language: 'en',
   description: 'Navigation between the pages of a long list or table.',
-  importPath: '@nono-ui/components/ui/Pagination',
+  importPath: '@nono-ui/components/Pagination',
   usage: [
     {
       title: 'Basic usage',

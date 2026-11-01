@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Alert } from '@/components/ui/Alert'
+import { Alert } from '@/components/Alert'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Alert } from '__DOCS_PACKAGE__/components/ui/Alert'
+import { Alert } from '__DOCS_PACKAGE__/components/Alert'
 ${scriptEnd}
 
 <template>

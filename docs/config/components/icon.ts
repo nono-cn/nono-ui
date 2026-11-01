@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { iconSizes } from '@/components/ui/Icon'
+import { iconSizes } from '@/components/Icon'
 import IconColorExample from '../../components/examples/icon/IconColorExample.vue'
 import IconNameExample from '../../components/examples/icon/IconNameExample.vue'
 import IconSizeExample from '../../components/examples/icon/IconSizeExample.vue'
@@ -11,7 +11,7 @@ const iconConfig: ComponentDocConfig = {
   title: 'Icon',
   language: 'en',
   description: 'Renders a Lucide icon with a compact, consistent API.',
-  importPath: '@nono-ui/components/ui/Icon',
+  importPath: '@nono-ui/components/Icon',
   usage: [
     {
       title: 'Basic usage',

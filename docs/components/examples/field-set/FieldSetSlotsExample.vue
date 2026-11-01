@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { FieldSet } from '@/components/ui/FieldSet'
-import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
+import { FieldSet } from '@/components/FieldSet'
+import { Input } from '@/components/Input'
+import { Label } from '@/components/Label'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { FieldSet } from '__DOCS_PACKAGE__/components/ui/FieldSet'
-import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { FieldSet } from '__DOCS_PACKAGE__/components/FieldSet'
+import { Input } from '__DOCS_PACKAGE__/components/Input'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 ${scriptEnd}
 
 <template>

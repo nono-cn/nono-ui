@@ -5,8 +5,8 @@ import {
   bubbleDefaults,
   bubbleVariantNames,
   type BubbleVariant,
-} from '@/components/ui/Bubble'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/Bubble'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -22,7 +22,7 @@ const variant = ref<BubbleVariant>(bubbleDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Bubble, type BubbleVariant } from '__DOCS_PACKAGE__/components/ui/Bubble'
+import { Bubble, type BubbleVariant } from '__DOCS_PACKAGE__/components/Bubble'
 
 const color = ref('${color.value}')
 const variant = ref<BubbleVariant>('${variant.value}')

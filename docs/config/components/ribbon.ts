@@ -4,7 +4,7 @@ import {
   ribbonItemDefaults,
   ribbonPositions,
   ribbonRotations,
-} from '@/components/ui/Ribbon'
+} from '@/components/Ribbon'
 import { formatValue } from '../format-default'
 import RibbonBasicExample from '../../components/examples/ribbon/RibbonBasicExample.vue'
 import RibbonPositionExample from '../../components/examples/ribbon/RibbonPositionExample.vue'
@@ -18,7 +18,7 @@ const ribbonConfig: ComponentDocConfig = {
   title: 'Ribbon',
   language: 'en',
   description: 'Highlights a card or container with diagonal corner ribbons.',
-  importPath: '@nono-ui/components/ui/Ribbon',
+  importPath: '@nono-ui/components/Ribbon',
   usage: [
     {
       title: 'Basic usage',

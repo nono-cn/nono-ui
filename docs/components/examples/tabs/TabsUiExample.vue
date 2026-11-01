@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Tabs, type TabItem, type TabsUI } from '@/components/ui/Tabs'
+import { Tabs, type TabItem, type TabsUI } from '@/components/Tabs'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -19,7 +19,7 @@ const ui = computed<TabsUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { Tabs, type TabsUI } from '__DOCS_PACKAGE__/components/ui/Tabs'
+import { Tabs, type TabsUI } from '__DOCS_PACKAGE__/components/Tabs'
 
 const tabs = [
   { slot: 'drafts', value: 'drafts', label: 'Drafts' },

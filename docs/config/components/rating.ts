@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { ratingDefaults, ratingOrientations, ratingSizes } from '@/components/ui/Rating'
+import { ratingDefaults, ratingOrientations, ratingSizes } from '@/components/Rating'
 import RatingBasicExample from '../../components/examples/rating/RatingBasicExample.vue'
 import RatingSizeExample from '../../components/examples/rating/RatingSizeExample.vue'
 import RatingColorExample from '../../components/examples/rating/RatingColorExample.vue'
@@ -19,7 +19,7 @@ const ratingConfig: ComponentDocConfig = {
   title: 'Rating',
   language: 'en',
   description: 'An interactive rating control with configurable stars and increments.',
-  importPath: '@nono-ui/components/ui/Rating',
+  importPath: '@nono-ui/components/Rating',
   usage: [
     {
       title: 'Basic usage',

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { Card } from '@/components/ui/Card'
+import { Card } from '@/components/Card'
 import {
   Ribbon,
   ribbonItemDefaults,
   ribbonPositions,
   ribbonRotations,
   type RibbonPosition,
-} from '@/components/ui/Ribbon'
+} from '@/components/Ribbon'
 import ExampleNumberControl from '../../controls/ExampleNumberControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -27,8 +27,8 @@ const ribbons = computed(() => [
 ])
 const code = computed(
   () => `<script setup lang="ts">
-import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
-import { Ribbon } from '__DOCS_PACKAGE__/components/ui/Ribbon'
+import { Card } from '__DOCS_PACKAGE__/components/Card'
+import { Ribbon } from '__DOCS_PACKAGE__/components/Ribbon'
 
 const ribbons = [
   { label: 'Featured', position: '${position.value}'${customRotate.value === undefined ? '' : `, rotate: ${customRotate.value}`} },

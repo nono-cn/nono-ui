@@ -5,7 +5,7 @@ import {
   attachmentDefaults,
   attachmentStateNames,
   type AttachmentState,
-} from '@/components/ui/Attachment'
+} from '@/components/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -22,7 +22,7 @@ const description = computed(() => descriptions[state.value])
 const code = computed(
   () => `<script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment, type AttachmentState } from '__DOCS_PACKAGE__/components/ui/Attachment'
+import { Attachment, type AttachmentState } from '__DOCS_PACKAGE__/components/Attachment'
 
 const state = ref<AttachmentState>('${state.value}')
 const descriptions: Record<AttachmentState, string> = ${JSON.stringify(descriptions, null, 2)}

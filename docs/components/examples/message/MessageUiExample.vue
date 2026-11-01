@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Message, type MessageUI } from '@/components/ui/Message'
+import { Message, type MessageUI } from '@/components/Message'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,7 +11,7 @@ const ui = computed<MessageUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { Message, type MessageUI } from '__DOCS_PACKAGE__/components/ui/Message'
+import { Message, type MessageUI } from '__DOCS_PACKAGE__/components/Message'
 
 const ui: MessageUI = {
   footer: () => ({ class: '${italic.value ? 'italic' : ''}' }),

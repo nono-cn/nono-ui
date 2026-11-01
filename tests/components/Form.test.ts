@@ -3,7 +3,7 @@ import { FieldControl, FieldLabel, FieldRoot, FormRoot } from 'reka-ui'
 import { describe, expect, it, vi } from 'vitest'
 import { h } from 'vue'
 
-import { Form, type FormProps } from '@/components/ui/Form'
+import { Form, type FormProps } from '@/components/Form'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountForm(options: MountingOptions<FormProps> = {}) {

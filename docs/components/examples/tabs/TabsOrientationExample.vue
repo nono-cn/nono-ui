@@ -6,7 +6,7 @@ import {
   tabsOrientations,
   type TabItem,
   type TabsProps,
-} from '@/components/ui/Tabs'
+} from '@/components/Tabs'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -18,7 +18,7 @@ const tabs: TabItem[] = [
 const orientation = ref<NonNullable<TabsProps['orientation']>>(tabsDefaults.orientation)
 const code = computed(
   () => `<script setup lang="ts">
-import { Tabs } from '__DOCS_PACKAGE__/components/ui/Tabs'
+import { Tabs } from '__DOCS_PACKAGE__/components/Tabs'
 
 const tabs = [
   { slot: 'general', value: 'general', label: 'General' },

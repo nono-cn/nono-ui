@@ -5,7 +5,7 @@ import {
   separatorDefaults,
   separatorTypes,
   type SeparatorType,
-} from '@/components/ui/Separator'
+} from '@/components/Separator'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ import { scriptEnd } from '../example-code'
 const type = ref<SeparatorType>(separatorDefaults.type)
 const code = computed(
   () => `<script setup lang="ts">
-import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
+import { Separator } from '__DOCS_PACKAGE__/components/Separator'
 ${scriptEnd}
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Rating, type RatingUI } from '@/components/ui/Rating'
+import { Rating, type RatingUI } from '@/components/Rating'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -18,7 +18,7 @@ const ui = computed<RatingUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { Rating, type RatingUI } from '__DOCS_PACKAGE__/components/ui/Rating'
+import { Rating, type RatingUI } from '__DOCS_PACKAGE__/components/Rating'
 
 const ui: RatingUI = {
   item: ({ item }) => ({ 'data-item': item, class: '${highlight.value ? 'rounded-md bg-primary/10' : ''}' }),

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import type { AvatarProps } from '@/components/ui/Avatar'
-import { Message } from '@/components/ui/Message'
+import type { AvatarProps } from '@/components/Avatar'
+import { Message } from '@/components/Message'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ const avatar = computed<AvatarProps | undefined>(() => {
 })
 const code = computed(
   () => `<script setup lang="ts">
-import { Message } from '__DOCS_PACKAGE__/components/ui/Message'
+import { Message } from '__DOCS_PACKAGE__/components/Message'
 ${avatar.value ? `\nconst avatar = ${JSON.stringify(avatar.value)}\n` : ''}${scriptEnd}
 
 <template>

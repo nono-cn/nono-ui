@@ -11,7 +11,7 @@ Usa esta skill cuando el usuario pida documentar un componente Vue de esta libre
 
 Antes de escribir, inspecciona:
 
-- `src/components/ui/<Component>/index.ts` para props, tipos, emits, slots, expose y configuraciones exportadas.
+- `src/components/<Component>/index.ts` para props, tipos, emits, slots, expose y configuraciones exportadas.
 - La implementación `.vue`, defaults, hijos y composables para confirmar el comportamiento observable, el elemento raíz y el paso de attrs.
 - Los tests existentes para comprobar accesibilidad, estados e interacciones ya soportadas.
 - La infraestructura existente en `docs/components`, `docs/config/component-docs.ts` y `docs/components/examples` antes de crear componentes genéricos nuevos.

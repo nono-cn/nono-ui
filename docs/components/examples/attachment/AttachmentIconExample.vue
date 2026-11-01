@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment } from '@/components/ui/Attachment'
-import type { IconName } from '@/components/ui/Icon'
+import { Attachment } from '@/components/Attachment'
+import type { IconName } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,8 +11,8 @@ const icon = ref<IconName>('fileText')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import type { IconName } from '__DOCS_PACKAGE__/components/ui/Icon'
-import { Attachment } from '__DOCS_PACKAGE__/components/ui/Attachment'
+import type { IconName } from '__DOCS_PACKAGE__/components/Icon'
+import { Attachment } from '__DOCS_PACKAGE__/components/Attachment'
 
 const icon = ref<IconName>('${icon.value}')
 ${scriptEnd}

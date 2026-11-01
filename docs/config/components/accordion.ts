@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { accordionDefaults, accordionTypes, accordionVariantNames } from '@/components/ui/Accordion'
+import { accordionDefaults, accordionTypes, accordionVariantNames } from '@/components/Accordion'
 import AccordionBasicExample from '../../components/examples/accordion/AccordionBasicExample.vue'
 import AccordionTypeExample from '../../components/examples/accordion/AccordionTypeExample.vue'
 import AccordionValueExample from '../../components/examples/accordion/AccordionValueExample.vue'
@@ -16,7 +16,7 @@ const accordionConfig: ComponentDocConfig = {
   title: 'Accordion',
   language: 'en',
   description: 'Show and hide related content sections with accessible triggers.',
-  importPath: '@nono-ui/components/ui/Accordion',
+  importPath: '@nono-ui/components/Accordion',
   usage: [
     {
       title: 'Basic usage',

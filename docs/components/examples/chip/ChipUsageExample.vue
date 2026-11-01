@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Avatar } from '@/components/ui/Avatar'
-import { Chip } from '@/components/ui/Chip'
+import { Avatar } from '@/components/Avatar'
+import { Chip } from '@/components/Chip'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
-import { Chip } from '__DOCS_PACKAGE__/components/ui/Chip'
+import { Avatar } from '__DOCS_PACKAGE__/components/Avatar'
+import { Chip } from '__DOCS_PACKAGE__/components/Chip'
 ${scriptEnd}
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/Breadcrumb'
+import { Breadcrumb, type BreadcrumbItem } from '@/components/Breadcrumb'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -10,7 +10,7 @@ const items: (BreadcrumbItem & { 'aria-label': string })[] = [
 ]
 
 const code = `<script setup lang="ts">
-import { Breadcrumb, type BreadcrumbItem } from '__DOCS_PACKAGE__/components/ui/Breadcrumb'
+import { Breadcrumb, type BreadcrumbItem } from '__DOCS_PACKAGE__/components/Breadcrumb'
 
 const items: (BreadcrumbItem & { 'aria-label': string })[] = [
   { slot: 'home', 'aria-label': 'Home', icon: 'folder', to: '/' },

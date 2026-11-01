@@ -2,8 +2,8 @@ import { h } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { i18n } from '@/i18n'
-import { Loading, type LoadingContext, type LoadingProps } from '@/components/ui/Loading'
-import { Icon, type IconName } from '@/components/ui/Icon'
+import { Loading, type LoadingContext, type LoadingProps } from '@/components/Loading'
+import { Icon, type IconName } from '@/components/Icon'
 import { testAttrs } from '../utils/testAttrs'
 
 const casesLoading = [

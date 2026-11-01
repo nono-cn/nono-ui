@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge, badgeDefaults, badgeVariantNames, type BadgeVariant } from '@/components/ui/Badge'
+import { Badge, badgeDefaults, badgeVariantNames, type BadgeVariant } from '@/components/Badge'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const variant = ref<BadgeVariant>(badgeDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Badge, type BadgeVariant } from '__DOCS_PACKAGE__/components/ui/Badge'
+import { Badge, type BadgeVariant } from '__DOCS_PACKAGE__/components/Badge'
 
 const variant = ref<BadgeVariant>('${variant.value}')
 ${scriptEnd}

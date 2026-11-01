@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '@/components/ui/Button'
-import { Dialog } from '@/components/ui/Dialog'
+import { Button } from '@/components/Button'
+import { Dialog } from '@/components/Dialog'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -9,8 +9,8 @@ const open = ref(false)
 
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Dialog } from '__DOCS_PACKAGE__/components/ui/Dialog'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Dialog } from '__DOCS_PACKAGE__/components/Dialog'
 
 const open = ref(false)
 ${scriptEnd}

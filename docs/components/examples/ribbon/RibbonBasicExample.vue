@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Card } from '@/components/ui/Card'
-import { Ribbon } from '@/components/ui/Ribbon'
+import { Card } from '@/components/Card'
+import { Ribbon } from '@/components/Ribbon'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
-import { Ribbon } from '__DOCS_PACKAGE__/components/ui/Ribbon'
+import { Card } from '__DOCS_PACKAGE__/components/Card'
+import { Ribbon } from '__DOCS_PACKAGE__/components/Ribbon'
 ${scriptEnd}
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Loading, type LoadingUI } from '@/components/ui/Loading'
+import { Loading, type LoadingUI } from '@/components/Loading'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -17,7 +17,7 @@ const ui: LoadingUI = {
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Loading, type LoadingUI } from '__DOCS_PACKAGE__/components/ui/Loading'
+import { Loading, type LoadingUI } from '__DOCS_PACKAGE__/components/Loading'
 
 const loading = ref(${loading.value})
 const ui: LoadingUI = {

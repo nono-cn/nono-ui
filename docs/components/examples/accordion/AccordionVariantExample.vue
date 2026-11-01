@@ -6,7 +6,7 @@ import {
   accordionTypes,
   accordionVariantNames,
   type AccordionVariant,
-} from '@/components/ui/Accordion'
+} from '@/components/Accordion'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -40,7 +40,7 @@ const items = [
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
+import { Accordion } from '__DOCS_PACKAGE__/components/Accordion'
 
 const highlight = ref(${highlight.value})
 const items = [

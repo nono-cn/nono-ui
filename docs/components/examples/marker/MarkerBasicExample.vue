@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Marker } from '@/components/ui/Marker'
+import { Marker } from '@/components/Marker'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Marker } from '__DOCS_PACKAGE__/components/ui/Marker'
+import { Marker } from '__DOCS_PACKAGE__/components/Marker'
 ${scriptEnd}
 
 <template>

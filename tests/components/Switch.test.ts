@@ -11,8 +11,8 @@ import {
   type SwitchProps,
   type SwitchSize,
   type SwitchValue,
-} from '@/components/ui/Switch'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/Switch'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

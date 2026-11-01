@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Progress } from '@/components/ui/Progress'
+import { Progress } from '@/components/Progress'
 import ExampleSliderControl from '../../controls/ExampleSliderControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -8,7 +8,7 @@ import { scriptEnd } from '../example-code'
 const value = ref(80)
 const code = computed(
   () => `<script setup lang="ts">
-import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
+import { Progress } from '__DOCS_PACKAGE__/components/Progress'
 ${scriptEnd}
 
 <template>

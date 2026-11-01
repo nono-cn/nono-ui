@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Loading } from '@/components/ui/Loading'
+import { Loading } from '@/components/Loading'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Loading } from '__DOCS_PACKAGE__/components/ui/Loading'
+import { Loading } from '__DOCS_PACKAGE__/components/Loading'
 ${scriptEnd}
 
 <template>

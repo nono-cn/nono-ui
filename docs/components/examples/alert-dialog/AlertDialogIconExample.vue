@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { AlertDialog } from '@/components/ui/AlertDialog'
-import { Button } from '@/components/ui/Button'
-import type { IconName } from '@/components/ui/Icon'
+import { AlertDialog } from '@/components/AlertDialog'
+import { Button } from '@/components/Button'
+import type { IconName } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -12,9 +12,9 @@ const icon = ref<IconName>('warning')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import type { IconName } from '__DOCS_PACKAGE__/components/ui/Icon'
-import { AlertDialog } from '__DOCS_PACKAGE__/components/ui/AlertDialog'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import type { IconName } from '__DOCS_PACKAGE__/components/Icon'
+import { AlertDialog } from '__DOCS_PACKAGE__/components/AlertDialog'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 
 const icon = ref<IconName>('${icon.value}')
 ${scriptEnd}

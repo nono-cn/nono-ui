@@ -4,7 +4,7 @@ import {
   sliderOrientations,
   sliderSizes,
   sliderThumbAlignments,
-} from '@/components/ui/Slider'
+} from '@/components/Slider'
 import SliderBasicExample from '../../components/examples/slider/SliderBasicExample.vue'
 import SliderMultipleExample from '../../components/examples/slider/SliderMultipleExample.vue'
 import SliderMinMaxExample from '../../components/examples/slider/SliderMinMaxExample.vue'
@@ -23,7 +23,7 @@ const sliderConfig: ComponentDocConfig = {
   title: 'Slider',
   language: 'en',
   description: 'Select a value or a range of values by dragging thumbs along a track.',
-  importPath: '@nono-ui/components/ui/Slider',
+  importPath: '@nono-ui/components/Slider',
   usage: [
     {
       title: 'Basic usage',

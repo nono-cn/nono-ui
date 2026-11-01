@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Card } from '@/components/ui/Card'
+import { Card } from '@/components/Card'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ const description = ref(initialDescription)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
+import { Card } from '__DOCS_PACKAGE__/components/Card'
 
 const label = ref(${JSON.stringify(label.value)})
 const description = ref(${JSON.stringify(description.value)})

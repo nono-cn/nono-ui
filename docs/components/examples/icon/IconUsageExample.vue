@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Icon } from '@/components/ui/Icon'
+import { Icon } from '@/components/Icon'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Icon } from '__DOCS_PACKAGE__/components/ui/Icon'
+import { Icon } from '__DOCS_PACKAGE__/components/Icon'
 ${scriptEnd}
 
 <template>

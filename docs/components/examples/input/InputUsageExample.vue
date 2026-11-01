@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Input, inputDefaults } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
+import { Input, inputDefaults } from '@/components/Input'
+import { Label } from '@/components/Label'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const value = ref(inputDefaults.modelValue)
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Input } from '__DOCS_PACKAGE__/components/Input'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 
 const value = ref('')
 ${scriptEnd}

@@ -8,8 +8,8 @@ import {
   AlertDialogRoot,
   AlertDialogTitle,
 } from 'reka-ui'
-import { AlertDialog, type AlertDialogProps } from '@/components/ui/AlertDialog'
-import { Icon } from '@/components/ui/Icon'
+import { AlertDialog, type AlertDialogProps } from '@/components/AlertDialog'
+import { Icon } from '@/components/Icon'
 import { i18n } from '@/i18n'
 import { testButtonConfig } from '../utils/testButtonConfig'
 import { testAttrs } from '../utils/testAttrs'

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Attachment } from '@/components/ui/Attachment'
+import { Attachment } from '@/components/Attachment'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const label = ref('document.pdf')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Attachment } from '__DOCS_PACKAGE__/components/ui/Attachment'
+import { Attachment } from '__DOCS_PACKAGE__/components/Attachment'
 
 const label = ref(${JSON.stringify(label.value)})
 ${scriptEnd}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble } from '@/components/ui/Bubble'
+import { Bubble } from '@/components/Bubble'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ const element = ref<SurfaceElement>('article')
 const code = computed(() => {
   if (mode.value === 'asChild') {
     return `<script setup lang="ts">
-import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
+import { Bubble } from '__DOCS_PACKAGE__/components/Bubble'
 ${scriptEnd}
 
 <template>
@@ -27,7 +27,7 @@ ${scriptEnd}
 
   return `<script setup lang="ts">
 import { ref } from 'vue'
-import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
+import { Bubble } from '__DOCS_PACKAGE__/components/Bubble'
 
 type SurfaceElement = 'div' | 'article' | 'section'
 const element = ref<SurfaceElement>('${element.value}')

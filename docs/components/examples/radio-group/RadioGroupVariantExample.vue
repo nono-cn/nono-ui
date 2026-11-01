@@ -8,7 +8,7 @@ import {
   type RadioGroupItem,
   type RadioGroupOrientation,
   type RadioGroupVariant,
-} from '@/components/ui/RadioGroup'
+} from '@/components/RadioGroup'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -24,7 +24,7 @@ const orientation = ref<RadioGroupOrientation>(radioGroupDefaults.orientation)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { RadioGroup, type RadioGroupItem } from '__DOCS_PACKAGE__/components/ui/RadioGroup'
+import { RadioGroup, type RadioGroupItem } from '__DOCS_PACKAGE__/components/RadioGroup'
 
 const items: RadioGroupItem[] = [
   { label: 'Hobby', description: 'For personal projects.', value: 'hobby' },

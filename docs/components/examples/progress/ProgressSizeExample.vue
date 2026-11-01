@@ -5,7 +5,7 @@ import {
   progressDefaults,
   progressSizes,
   type ProgressSize,
-} from '@/components/ui/Progress'
+} from '@/components/Progress'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ import { scriptEnd } from '../example-code'
 const size = ref<ProgressSize>(progressDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
-import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
+import { Progress } from '__DOCS_PACKAGE__/components/Progress'
 ${scriptEnd}
 
 <template>

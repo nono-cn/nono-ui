@@ -5,9 +5,9 @@ import {
   textareaDefaults,
   textareaVariantNames,
   type TextareaVariant,
-} from '@/components/ui/Textarea'
-import { themeColors } from '@/components/ui/constants'
-import { Label } from '@/components/ui/Label'
+} from '@/components/Textarea'
+import { themeColors } from '@/components/constants'
+import { Label } from '@/components/Label'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
@@ -24,8 +24,8 @@ const color = computed(() =>
 const highlight = ref(true)
 const code = computed(
   () => `<script setup lang="ts">
-import { Textarea } from '__DOCS_PACKAGE__/components/ui/Textarea'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Textarea } from '__DOCS_PACKAGE__/components/Textarea'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 ${scriptEnd}
 
 <template>

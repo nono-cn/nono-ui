@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { describe, expect, it, vi } from 'vitest'
-import type { DialogContentConfig } from '@/components/ui/Dialog'
+import type { DialogContentConfig } from '@/components/Dialog'
 import { useDialogContent } from '@/composables/useDialogContent'
 
 describe('useDialogContent', () => {

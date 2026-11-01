@@ -3,15 +3,15 @@ import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { PaginationRoot } from 'reka-ui'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Button } from '@/components/ui/Button'
-import { Icon } from '@/components/ui/Icon'
+import { Button } from '@/components/Button'
+import { Icon } from '@/components/Icon'
 import {
   Pagination,
   paginationDefaults,
   type PaginationContext,
   type PaginationItemContext,
   type PaginationProps,
-} from '@/components/ui/Pagination'
+} from '@/components/Pagination'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 

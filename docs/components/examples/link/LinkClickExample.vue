@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Link } from '@/components/ui/Link'
+import { Link } from '@/components/Link'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const clicks = ref(0)
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Link } from '__DOCS_PACKAGE__/components/ui/Link'
+import { Link } from '__DOCS_PACKAGE__/components/Link'
 
 const clicks = ref(0)
 ${scriptEnd}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar, avatarDefaults } from '@/components/ui/Avatar'
+import { Avatar, avatarDefaults } from '@/components/Avatar'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const radius = ref<string>(avatarDefaults.radius)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
+import { Avatar } from '__DOCS_PACKAGE__/components/Avatar'
 
 const radius = ref(${JSON.stringify(radius.value)})
 ${scriptEnd}

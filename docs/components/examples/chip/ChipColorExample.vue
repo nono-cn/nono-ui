@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar } from '@/components/ui/Avatar'
-import { Chip, chipDefaults } from '@/components/ui/Chip'
-import { themeColors } from '@/components/ui/constants'
+import { Avatar } from '@/components/Avatar'
+import { Chip, chipDefaults } from '@/components/Chip'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -17,8 +17,8 @@ const color = computed(() =>
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
-import { Chip } from '__DOCS_PACKAGE__/components/ui/Chip'
+import { Avatar } from '__DOCS_PACKAGE__/components/Avatar'
+import { Chip } from '__DOCS_PACKAGE__/components/Chip'
 
 const color = ref('${color.value}')
 ${scriptEnd}

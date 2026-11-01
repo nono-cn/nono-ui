@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Loading, loadingDefaults } from '@/components/ui/Loading'
-import type { IconName } from '@/components/ui/Icon'
+import { Loading, loadingDefaults } from '@/components/Loading'
+import type { IconName } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,8 +11,8 @@ const icon = ref<IconName>(loadingDefaults.icon)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Loading } from '__DOCS_PACKAGE__/components/ui/Loading'
-import type { IconName } from '__DOCS_PACKAGE__/components/ui/Icon'
+import { Loading } from '__DOCS_PACKAGE__/components/Loading'
+import type { IconName } from '__DOCS_PACKAGE__/components/Icon'
 
 const icon = ref<IconName>('${icon.value}')
 ${scriptEnd}

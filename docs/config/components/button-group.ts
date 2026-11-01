@@ -3,7 +3,7 @@ import {
   buttonGroupDefaults,
   buttonGroupOrientations,
   buttonGroupSizes,
-} from '@/components/ui/ButtonGroup'
+} from '@/components/ButtonGroup'
 import ButtonGroupBasicExample from '../../components/examples/button-group/ButtonGroupBasicExample.vue'
 import ButtonGroupVerticalExample from '../../components/examples/button-group/ButtonGroupVerticalExample.vue'
 import ButtonGroupSizesExample from '../../components/examples/button-group/ButtonGroupSizesExample.vue'
@@ -13,7 +13,7 @@ const buttonGroupConfig: ComponentDocConfig = {
   title: 'ButtonGroup',
   language: 'en',
   description: 'Groups related buttons and applies a shared orientation and size.',
-  importPath: '@nono-ui/components/ui/ButtonGroup',
+  importPath: '@nono-ui/components/ButtonGroup',
   usage: [
     {
       title: 'Basic usage',

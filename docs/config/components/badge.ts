@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { badgeDefaults, badgeSizes, badgeVariantNames } from '@/components/ui/Badge'
+import { badgeDefaults, badgeSizes, badgeVariantNames } from '@/components/Badge'
 import BadgeLabelExample from '../../components/examples/badge/BadgeLabelExample.vue'
 import BadgeColorExample from '../../components/examples/badge/BadgeColorExample.vue'
 import BadgeIconExample from '../../components/examples/badge/BadgeIconExample.vue'
@@ -15,7 +15,7 @@ const badgeConfig: ComponentDocConfig = {
   title: 'Badge',
   language: 'en',
   description: 'A compact label for statuses, categories, and metadata.',
-  importPath: '@nono-ui/components/ui/Badge',
+  importPath: '@nono-ui/components/Badge',
   usage: [
     {
       title: 'Basic usage',

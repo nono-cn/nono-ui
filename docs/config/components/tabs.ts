@@ -4,7 +4,7 @@ import {
   tabsDefaults,
   tabsOrientations,
   tabsVariantNames,
-} from '@/components/ui/Tabs'
+} from '@/components/Tabs'
 import TabsBasicExample from '../../components/examples/tabs/TabsBasicExample.vue'
 import TabsVariantExample from '../../components/examples/tabs/TabsVariantExample.vue'
 import TabsColorExample from '../../components/examples/tabs/TabsColorExample.vue'
@@ -19,7 +19,7 @@ const tabsConfig: ComponentDocConfig = {
   title: 'Tabs',
   language: 'en',
   description: 'Organize related content into accessible tab panels.',
-  importPath: '@nono-ui/components/ui/Tabs',
+  importPath: '@nono-ui/components/Tabs',
   usage: [
     {
       title: 'Basic usage',

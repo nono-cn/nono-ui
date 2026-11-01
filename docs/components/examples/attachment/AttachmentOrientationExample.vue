@@ -5,7 +5,7 @@ import {
   attachmentDefaults,
   attachmentOrientationNames,
   type AttachmentOrientation,
-} from '@/components/ui/Attachment'
+} from '@/components/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -14,7 +14,7 @@ const orientation = ref<AttachmentOrientation>(attachmentDefaults.orientation)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Attachment, type AttachmentOrientation } from '__DOCS_PACKAGE__/components/ui/Attachment'
+import { Attachment, type AttachmentOrientation } from '__DOCS_PACKAGE__/components/Attachment'
 
 const orientation = ref<AttachmentOrientation>('${orientation.value}')
 ${scriptEnd}

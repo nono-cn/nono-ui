@@ -4,7 +4,7 @@ import {
   timelineDefaults,
   timelineSizes,
   timelineOrientations,
-} from '@/components/ui/Timeline'
+} from '@/components/Timeline'
 import TimelineBasicExample from '../../components/examples/timeline/TimelineBasicExample.vue'
 import TimelineLayoutExample from '../../components/examples/timeline/TimelineLayoutExample.vue'
 import TimelineSizeExample from '../../components/examples/timeline/TimelineSizeExample.vue'
@@ -30,7 +30,7 @@ const timelineConfig: ComponentDocConfig = {
   title: 'Timeline',
   language: 'en',
   description: 'Display ordered events and highlight the current position.',
-  importPath: '@nono-ui/components/ui/Timeline',
+  importPath: '@nono-ui/components/Timeline',
   usage: [
     {
       title: 'Basic usage',

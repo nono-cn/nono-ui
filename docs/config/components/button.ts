@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { buttonDefaults, buttonSizes, buttonVariantNames } from '@/components/ui/Button'
+import { buttonDefaults, buttonSizes, buttonVariantNames } from '@/components/Button'
 import ButtonColorExample from '../../components/examples/button/ButtonColorExample.vue'
 import ButtonIconExample from '../../components/examples/button/ButtonIconExample.vue'
 import ButtonDisabledExample from '../../components/examples/button/ButtonDisabledExample.vue'
@@ -16,7 +16,7 @@ const buttonConfig: ComponentDocConfig = {
   title: 'Button',
   language: 'en',
   description: 'Interactive action with configurable variants, states, icons, and root elements.',
-  importPath: '@nono-ui/components/ui/Button',
+  importPath: '@nono-ui/components/Button',
   usage: [
     {
       title: 'Basic usage',

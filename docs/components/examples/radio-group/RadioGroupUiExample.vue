@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { RadioGroup, type RadioGroupItem, type RadioGroupUI } from '@/components/ui/RadioGroup'
+import { RadioGroup, type RadioGroupItem, type RadioGroupUI } from '@/components/RadioGroup'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -24,7 +24,7 @@ const ui = computed<RadioGroupUI>(() => ({
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { RadioGroup, type RadioGroupItem, type RadioGroupUI } from '__DOCS_PACKAGE__/components/ui/RadioGroup'
+import { RadioGroup, type RadioGroupItem, type RadioGroupUI } from '__DOCS_PACKAGE__/components/RadioGroup'
 
 const items: RadioGroupItem[] = [
   { label: 'Draft', description: 'Only you can see it.', value: 'draft' },

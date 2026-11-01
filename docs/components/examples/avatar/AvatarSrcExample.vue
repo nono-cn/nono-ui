@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar } from '@/components/ui/Avatar'
+import { Avatar } from '@/components/Avatar'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,7 +10,7 @@ const alt = ref('Example profile')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
+import { Avatar } from '__DOCS_PACKAGE__/components/Avatar'
 
 const src = ref(${JSON.stringify(src.value)})
 const alt = ref(${JSON.stringify(alt.value)})

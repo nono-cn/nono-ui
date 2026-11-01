@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { AlertDialog } from '@/components/ui/AlertDialog'
-import { Button } from '@/components/ui/Button'
-import { themeColors } from '@/components/ui/constants'
+import { AlertDialog } from '@/components/AlertDialog'
+import { Button } from '@/components/Button'
+import { themeColors } from '@/components/constants'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -14,8 +14,8 @@ const actionColor = ref<(typeof themeColors)[number]>('success')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { AlertDialog } from '__DOCS_PACKAGE__/components/ui/AlertDialog'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { AlertDialog } from '__DOCS_PACKAGE__/components/AlertDialog'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 
 const actionLabel = ref(${JSON.stringify(actionLabel.value)})
 const cancelLabel = ref(${JSON.stringify(cancelLabel.value)})

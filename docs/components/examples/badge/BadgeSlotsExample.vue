@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Badge } from '@/components/ui/Badge'
+import { Badge } from '@/components/Badge'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
+import { Badge } from '__DOCS_PACKAGE__/components/Badge'
 ${scriptEnd}
 
 <template>

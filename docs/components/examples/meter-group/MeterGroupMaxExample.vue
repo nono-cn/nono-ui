@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { MeterGroup, meterGroupDefaults, type MeterGroupItem } from '@/components/ui/MeterGroup'
+import { MeterGroup, meterGroupDefaults, type MeterGroupItem } from '@/components/MeterGroup'
 import ExampleNumberControl from '../../controls/ExampleNumberControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ const items: MeterGroupItem[] = [
 const max = ref(meterGroupDefaults.max)
 const code = computed(
   () => `<script setup lang="ts">
-import { MeterGroup, type MeterGroupItem } from '__DOCS_PACKAGE__/components/ui/MeterGroup'
+import { MeterGroup, type MeterGroupItem } from '__DOCS_PACKAGE__/components/MeterGroup'
 
 const items: MeterGroupItem[] = [
   { label: 'Apps', value: 40 },

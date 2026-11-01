@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Collapsible } from '@/components/ui/Collapsible'
-import { Button } from '@/components/ui/Button'
+import { Collapsible } from '@/components/Collapsible'
+import { Button } from '@/components/Button'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,8 +11,8 @@ const disabled = ref(false)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Collapsible } from '__DOCS_PACKAGE__/components/ui/Collapsible'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Collapsible } from '__DOCS_PACKAGE__/components/Collapsible'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 
 const open = ref(${open.value})
 const disabled = ref(${disabled.value})

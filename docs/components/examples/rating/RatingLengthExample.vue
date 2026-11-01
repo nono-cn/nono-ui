@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Rating, ratingDefaults } from '@/components/ui/Rating'
+import { Rating, ratingDefaults } from '@/components/Rating'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const options = ['3', '5', '7']
 const length = ref(String(ratingDefaults.length))
 const code = computed(
   () => `<script setup lang="ts">
-import { Rating } from '__DOCS_PACKAGE__/components/ui/Rating'
+import { Rating } from '__DOCS_PACKAGE__/components/Rating'
 ${scriptEnd}
 
 <template>

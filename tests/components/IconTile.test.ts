@@ -1,8 +1,8 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { IconTile, type IconTileProps, type IconTileVariant } from '@/components/ui/IconTile'
-import { themeColors } from '@/components/ui/constants'
+import { IconTile, type IconTileProps, type IconTileVariant } from '@/components/IconTile'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 import { testRadius } from '../utils/testRadius'

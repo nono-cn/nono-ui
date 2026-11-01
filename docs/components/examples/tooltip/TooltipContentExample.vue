@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button } from '@/components/ui/Button'
-import { Tooltip, type TooltipContentConfig } from '@/components/ui/Tooltip'
+import { Button } from '@/components/Button'
+import { Tooltip, type TooltipContentConfig } from '@/components/Tooltip'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,8 +11,8 @@ const align = ref<NonNullable<TooltipContentConfig['align']>>('center')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Tooltip, type TooltipContentConfig } from '__DOCS_PACKAGE__/components/ui/Tooltip'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Tooltip, type TooltipContentConfig } from '__DOCS_PACKAGE__/components/Tooltip'
 
 const side = ref<NonNullable<TooltipContentConfig['side']>>(${JSON.stringify(side.value)})
 const align = ref<NonNullable<TooltipContentConfig['align']>>(${JSON.stringify(align.value)})

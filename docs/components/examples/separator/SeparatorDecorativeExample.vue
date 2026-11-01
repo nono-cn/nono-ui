@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Separator } from '@/components/ui/Separator'
+import { Separator } from '@/components/Separator'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -8,7 +8,7 @@ import { scriptEnd } from '../example-code'
 const decorative = ref(true)
 const code = computed(
   () => `<script setup lang="ts">
-import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
+import { Separator } from '__DOCS_PACKAGE__/components/Separator'
 ${scriptEnd}
 
 <template>

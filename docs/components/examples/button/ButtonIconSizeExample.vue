@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button, buttonIconSizes, type IconButtonSize } from '@/components/ui/Button'
+import { Button, buttonIconSizes, type IconButtonSize } from '@/components/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -8,7 +8,7 @@ import { scriptEnd } from '../example-code'
 const size = ref<IconButtonSize>('icon')
 const code = computed(
   () => `<script setup lang="ts">
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 ${scriptEnd}
 
 <template>

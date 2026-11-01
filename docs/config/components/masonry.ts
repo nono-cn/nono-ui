@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { masonryDefaults } from '@/components/ui/Masonry'
+import { masonryDefaults } from '@/components/Masonry'
 import MasonryBasicExample from '../../components/examples/masonry/MasonryBasicExample.vue'
 import MasonryResponsiveExample from '../../components/examples/masonry/MasonryResponsiveExample.vue'
 import MasonrySequentialExample from '../../components/examples/masonry/MasonrySequentialExample.vue'
@@ -10,7 +10,7 @@ const masonryConfig: ComponentDocConfig = {
   language: 'en',
   description:
     'Arranges items of varying heights into columns to make efficient use of available space.',
-  importPath: '@nono-ui/components/ui/Masonry',
+  importPath: '@nono-ui/components/Masonry',
   usage: [
     {
       title: 'Basic masonry',

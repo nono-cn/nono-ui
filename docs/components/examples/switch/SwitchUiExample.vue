@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Switch, type SwitchUI } from '@/components/ui/Switch'
+import { Switch, type SwitchUI } from '@/components/Switch'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -13,7 +13,7 @@ const ui: SwitchUI = {
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Switch, type SwitchUI } from '__DOCS_PACKAGE__/components/ui/Switch'
+import { Switch, type SwitchUI } from '__DOCS_PACKAGE__/components/Switch'
 
 const value = ref(${value.value})
 const ui: SwitchUI = {

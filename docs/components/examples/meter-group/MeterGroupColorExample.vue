@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { MeterGroup, meterGroupItemDefaults } from '@/components/ui/MeterGroup'
-import { themeColors } from '@/components/ui/constants'
+import { MeterGroup, meterGroupItemDefaults } from '@/components/MeterGroup'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -16,7 +16,7 @@ const items = computed(() => [
 ])
 const code = computed(
   () => `<script setup lang="ts">
-import { MeterGroup } from '__DOCS_PACKAGE__/components/ui/MeterGroup'
+import { MeterGroup } from '__DOCS_PACKAGE__/components/MeterGroup'
 
 const items = [
   { label: 'Used', value: 42, color: '${color.value}' },

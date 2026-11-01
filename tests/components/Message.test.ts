@@ -1,15 +1,15 @@
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Avatar } from '@/components/ui/Avatar'
-import { Bubble } from '@/components/ui/Bubble'
+import { Avatar } from '@/components/Avatar'
+import { Bubble } from '@/components/Bubble'
 import {
   Message,
   messageDefaults,
   type MessageAlign,
   type MessageBubbleProps,
   type MessageProps,
-} from '@/components/ui/Message'
+} from '@/components/Message'
 import { testAttrs } from '../utils/testAttrs'
 import { testAvatarConfig } from '../utils/testAvatarConfig'
 import { testBubbleConfig } from '../utils/testBubbleConfig'

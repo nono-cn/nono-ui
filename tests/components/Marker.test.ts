@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Marker, type MarkerProps } from '@/components/ui/Marker'
+import { Marker, type MarkerProps } from '@/components/Marker'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountMarker(options: MountingOptions<MarkerProps> = {}) {

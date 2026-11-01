@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { popoverDefaults } from '@/components/ui/Popover'
+import { popoverDefaults } from '@/components/Popover'
 import { formatDefaultObject, formatValue } from '../format-default'
 import PopoverBasicExample from '../../components/examples/popover/PopoverBasicExample.vue'
 import PopoverContentExample from '../../components/examples/popover/PopoverContentExample.vue'
@@ -11,7 +11,7 @@ const popoverConfig: ComponentDocConfig = {
   title: 'Popover',
   language: 'en',
   description: 'Displays rich content in a portal, triggered by a button.',
-  importPath: '@nono-ui/components/ui/Popover',
+  importPath: '@nono-ui/components/Popover',
   usage: [
     {
       title: 'Basic usage',

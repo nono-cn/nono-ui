@@ -5,7 +5,7 @@ import {
   announcerDefaults,
   announcerPolitenessOptions,
   type AnnouncerPoliteness,
-} from '@/components/ui/Announcer'
+} from '@/components/Announcer'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -19,7 +19,7 @@ const role = computed(() => {
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Announcer, type AnnouncerPoliteness } from '__DOCS_PACKAGE__/components/ui/Announcer'
+import { Announcer, type AnnouncerPoliteness } from '__DOCS_PACKAGE__/components/Announcer'
 
 const politeness = ref<AnnouncerPoliteness>('${politeness.value}')
 ${scriptEnd}

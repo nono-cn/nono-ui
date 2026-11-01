@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { checkboxDefaults, checkboxSizes } from '@/components/ui/Checkbox'
+import { checkboxDefaults, checkboxSizes } from '@/components/Checkbox'
 import CheckboxBasicExample from '../../components/examples/checkbox/CheckboxBasicExample.vue'
 import CheckboxValuesExample from '../../components/examples/checkbox/CheckboxValuesExample.vue'
 import CheckboxIndeterminateExample from '../../components/examples/checkbox/CheckboxIndeterminateExample.vue'
@@ -13,7 +13,7 @@ const checkboxConfig: ComponentDocConfig = {
   title: 'Checkbox',
   language: 'en',
   description: 'Accessible control for selecting an option or representing a partial selection.',
-  importPath: '@nono-ui/components/ui/Checkbox',
+  importPath: '@nono-ui/components/Checkbox',
   usage: [
     {
       title: 'Basic usage',

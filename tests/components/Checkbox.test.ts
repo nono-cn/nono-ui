@@ -2,8 +2,8 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { CheckboxRoot } from 'reka-ui'
 
-import { Checkbox, type CheckboxProps, type CheckboxSize } from '@/components/ui/Checkbox'
-import { themeColors } from '@/components/ui/constants'
+import { Checkbox, type CheckboxProps, type CheckboxSize } from '@/components/Checkbox'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Empty, emptyMediaVariantNames, type EmptyProps } from '@/components/ui/Empty'
+import { Empty, emptyMediaVariantNames, type EmptyProps } from '@/components/Empty'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountEmpty(options: MountingOptions<EmptyProps> = {}) {

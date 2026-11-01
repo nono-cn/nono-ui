@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { Link, type LinkProps } from '@/components/ui/Link'
+import { Link, type LinkProps } from '@/components/Link'
 import type { VueWrapper } from '@vue/test-utils'
 
 interface TestLinkPropsOptions {

@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { alertDefaults, alertVariantNames } from '@/components/ui/Alert'
+import { alertDefaults, alertVariantNames } from '@/components/Alert'
 import AlertBasicExample from '../../components/examples/alert/AlertBasicExample.vue'
 import AlertVariantExample from '../../components/examples/alert/AlertVariantExample.vue'
 import AlertTitleExample from '../../components/examples/alert/AlertTitleExample.vue'
@@ -14,7 +14,7 @@ const alertConfig: ComponentDocConfig = {
   title: 'Alert',
   language: 'en',
   description: 'Communicates important information, statuses, and actions within an interface.',
-  importPath: '@nono-ui/components/ui/Alert',
+  importPath: '@nono-ui/components/Alert',
   usage: [
     {
       title: 'Basic usage',

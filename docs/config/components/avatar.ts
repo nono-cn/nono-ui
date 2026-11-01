@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { avatarDefaults, avatarSizes } from '@/components/ui/Avatar'
+import { avatarDefaults, avatarSizes } from '@/components/Avatar'
 import AvatarSrcExample from '../../components/examples/avatar/AvatarSrcExample.vue'
 import AvatarSizeExample from '../../components/examples/avatar/AvatarSizeExample.vue'
 import AvatarRadiusExample from '../../components/examples/avatar/AvatarRadiusExample.vue'
@@ -14,7 +14,7 @@ const avatarConfig: ComponentDocConfig = {
   title: 'Avatar',
   language: 'en',
   description: 'Displays a profile image with fallback content when the image is unavailable.',
-  importPath: '@nono-ui/components/ui/Avatar',
+  importPath: '@nono-ui/components/Avatar',
   usage: [
     {
       title: 'Basic usage',

@@ -6,8 +6,8 @@ import {
   attachmentStateNames,
   type AttachmentState,
   type AttachmentUI,
-} from '@/components/ui/Attachment'
-import { Button } from '@/components/ui/Button'
+} from '@/components/Attachment'
+import { Button } from '@/components/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -33,8 +33,8 @@ const ui: AttachmentUI = {
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Attachment, type AttachmentState, type AttachmentUI } from '__DOCS_PACKAGE__/components/ui/Attachment'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Attachment, type AttachmentState, type AttachmentUI } from '__DOCS_PACKAGE__/components/Attachment'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 
 const state = ref<AttachmentState>('${state.value}')
 const ui: AttachmentUI = {

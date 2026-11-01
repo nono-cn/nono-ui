@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Card, type CardUI } from '@/components/ui/Card'
+import { Card, type CardUI } from '@/components/Card'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -13,7 +13,7 @@ const ui: CardUI = {
 }
 
 const code = `<script setup lang="ts">
-import { Card, type CardUI } from '__DOCS_PACKAGE__/components/ui/Card'
+import { Card, type CardUI } from '__DOCS_PACKAGE__/components/Card'
 
 const ui: CardUI = {
   header: () => ({ class: 'border-b border-dashed pb-6' }),

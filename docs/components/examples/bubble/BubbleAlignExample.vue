@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble, bubbleAlignments, bubbleDefaults, type BubbleAlign } from '@/components/ui/Bubble'
+import { Bubble, bubbleAlignments, bubbleDefaults, type BubbleAlign } from '@/components/Bubble'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const align = ref<BubbleAlign>(bubbleDefaults.align)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Bubble, type BubbleAlign } from '__DOCS_PACKAGE__/components/ui/Bubble'
+import { Bubble, type BubbleAlign } from '__DOCS_PACKAGE__/components/Bubble'
 
 const align = ref<BubbleAlign>('${align.value}')
 ${scriptEnd}

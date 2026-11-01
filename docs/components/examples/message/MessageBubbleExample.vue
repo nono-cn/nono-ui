@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { bubbleVariantNames, type BubbleVariant } from '@/components/ui/Bubble'
-import { themeColors } from '@/components/ui/constants'
-import { Message, type MessageBubbleProps } from '@/components/ui/Message'
+import { bubbleVariantNames, type BubbleVariant } from '@/components/Bubble'
+import { themeColors } from '@/components/constants'
+import { Message, type MessageBubbleProps } from '@/components/Message'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ const bubble = computed<MessageBubbleProps>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { Message } from '__DOCS_PACKAGE__/components/ui/Message'
+import { Message } from '__DOCS_PACKAGE__/components/Message'
 
 const bubble = ${JSON.stringify(bubble.value)}
 ${scriptEnd}

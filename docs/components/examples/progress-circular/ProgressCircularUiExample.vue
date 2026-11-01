@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ProgressCircular, type ProgressCircularUI } from '@/components/ui/ProgressCircular'
+import { ProgressCircular, type ProgressCircularUI } from '@/components/ProgressCircular'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ const ui = computed<ProgressCircularUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { ProgressCircular, type ProgressCircularUI } from '__DOCS_PACKAGE__/components/ui/ProgressCircular'
+import { ProgressCircular, type ProgressCircularUI } from '__DOCS_PACKAGE__/components/ProgressCircular'
 
 const ui: ProgressCircularUI = {
   indicator: ({ percentage }) => ({ 'data-percentage': Math.round(percentage), 'stroke-linecap': '${decorated.value ? 'butt' : 'round'}' }),

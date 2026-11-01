@@ -30,7 +30,7 @@ Usar la configuración establecida:
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Component, type ComponentProps } from '@/components/ui/Component'
+import { Component, type ComponentProps } from '@/components/Component'
 
 function mountComponent(options: MountingOptions<ComponentProps> = {}) {
   return mount(Component, options)

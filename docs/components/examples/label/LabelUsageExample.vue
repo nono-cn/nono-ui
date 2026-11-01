@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
+import { Input } from '@/components/Input'
+import { Label } from '@/components/Label'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Input } from '__DOCS_PACKAGE__/components/Input'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 ${scriptEnd}
 
 <template>

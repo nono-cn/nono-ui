@@ -2,8 +2,8 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Timeline, type TimelineItemContext, type TimelineProps } from '@/components/ui/Timeline'
-import { themeColors } from '@/components/ui/constants'
+import { Timeline, type TimelineItemContext, type TimelineProps } from '@/components/Timeline'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

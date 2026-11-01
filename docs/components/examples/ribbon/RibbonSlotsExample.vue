@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Card } from '@/components/ui/Card'
-import { Icon } from '@/components/ui/Icon'
-import { Ribbon, type RibbonItem } from '@/components/ui/Ribbon'
+import { Card } from '@/components/Card'
+import { Icon } from '@/components/Icon'
+import { Ribbon, type RibbonItem } from '@/components/Ribbon'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -10,9 +10,9 @@ const ribbons: RibbonItem[] = [
   { label: 'New' },
 ]
 const code = `<script setup lang="ts">
-import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
-import { Icon } from '__DOCS_PACKAGE__/components/ui/Icon'
-import { Ribbon, type RibbonItem } from '__DOCS_PACKAGE__/components/ui/Ribbon'
+import { Card } from '__DOCS_PACKAGE__/components/Card'
+import { Icon } from '__DOCS_PACKAGE__/components/Icon'
+import { Ribbon, type RibbonItem } from '__DOCS_PACKAGE__/components/Ribbon'
 
 const ribbons: RibbonItem[] = [
   { label: 'Top rated', slot: 'rated', position: 'top-left', color: 'warning' },

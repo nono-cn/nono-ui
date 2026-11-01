@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Card } from '@/components/ui/Card'
-import { Ribbon, ribbonItemDefaults } from '@/components/ui/Ribbon'
-import { themeColors } from '@/components/ui/constants'
+import { Card } from '@/components/Card'
+import { Ribbon, ribbonItemDefaults } from '@/components/Ribbon'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -14,8 +14,8 @@ const color = computed(() => (choice.value === 'custom' ? customColor.value : ch
 const ribbons = computed(() => [{ label: 'Sale', color: color.value }])
 const code = computed(
   () => `<script setup lang="ts">
-import { Card } from '__DOCS_PACKAGE__/components/ui/Card'
-import { Ribbon } from '__DOCS_PACKAGE__/components/ui/Ribbon'
+import { Card } from '__DOCS_PACKAGE__/components/Card'
+import { Ribbon } from '__DOCS_PACKAGE__/components/Ribbon'
 
 const ribbons = [{ label: 'Sale', color: '${color.value}' }]
 ${scriptEnd}

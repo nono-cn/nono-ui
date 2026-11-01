@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Accordion } from '@/components/ui/Accordion'
+import { Accordion } from '@/components/Accordion'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -26,7 +26,7 @@ const items = [
 ]
 
 const code = `<script setup lang="ts">
-import { Accordion } from '__DOCS_PACKAGE__/components/ui/Accordion'
+import { Accordion } from '__DOCS_PACKAGE__/components/Accordion'
 
 const items = [
   {

@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { announcerDefaults, announcerPolitenessOptions } from '@/components/ui/Announcer'
+import { announcerDefaults, announcerPolitenessOptions } from '@/components/Announcer'
 import AnnouncerBasicExample from '../../components/examples/announcer/AnnouncerBasicExample.vue'
 import AnnouncerMessageExample from '../../components/examples/announcer/AnnouncerMessageExample.vue'
 import AnnouncerPolitenessExample from '../../components/examples/announcer/AnnouncerPolitenessExample.vue'
@@ -11,7 +11,7 @@ const announcerConfig: ComponentDocConfig = {
   title: 'Announcer',
   language: 'en',
   description: 'Announces dynamic updates to screen readers without adding visible content.',
-  importPath: '@nono-ui/components/ui/Announcer',
+  importPath: '@nono-ui/components/Announcer',
   usage: [
     {
       title: 'Basic message',

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ColorArea, colorAreaDefaults } from '@/components/ui/ColorArea'
+import { ColorArea, colorAreaDefaults } from '@/components/ColorArea'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -13,7 +13,7 @@ function handleSubmit(event: SubmitEvent) {
 
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { ColorArea, colorAreaDefaults } from '__DOCS_PACKAGE__/components/ui/ColorArea'
+import { ColorArea, colorAreaDefaults } from '__DOCS_PACKAGE__/components/ColorArea'
 
 const submittedValues = ref('Submit the form to inspect the channel values.')
 

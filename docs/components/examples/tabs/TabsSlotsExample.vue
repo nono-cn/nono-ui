@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Tabs, type TabItem } from '@/components/ui/Tabs'
+import { Tabs, type TabItem } from '@/components/Tabs'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -12,7 +12,7 @@ const value = ref('profile')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Tabs } from '__DOCS_PACKAGE__/components/ui/Tabs'
+import { Tabs } from '__DOCS_PACKAGE__/components/Tabs'
 
 const value = ref('${value.value}')
 const tabs = [

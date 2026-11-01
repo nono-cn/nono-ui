@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Announcer } from '@/components/ui/Announcer'
+import { Announcer } from '@/components/Announcer'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const message = ref('Sync complete.')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Announcer } from '__DOCS_PACKAGE__/components/ui/Announcer'
+import { Announcer } from '__DOCS_PACKAGE__/components/Announcer'
 
 const message = ref(${JSON.stringify(message.value)})
 ${scriptEnd}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Progress } from '@/components/ui/Progress'
-import { themeColors } from '@/components/ui/constants'
+import { Progress } from '@/components/Progress'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -13,7 +13,7 @@ const customColor = ref('#8b5cf6')
 const color = computed(() => (choice.value === 'custom' ? customColor.value : choice.value))
 const code = computed(
   () => `<script setup lang="ts">
-import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
+import { Progress } from '__DOCS_PACKAGE__/components/Progress'
 ${scriptEnd}
 
 <template>

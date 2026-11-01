@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Timeline } from '@/components/ui/Timeline'
+import { Timeline } from '@/components/Timeline'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -19,7 +19,7 @@ const items = [
   },
 ]
 const code = `<script setup lang="ts">
-import { Timeline } from '__DOCS_PACKAGE__/components/ui/Timeline'
+import { Timeline } from '__DOCS_PACKAGE__/components/Timeline'
 
 const items = ${JSON.stringify(items, null, 2)}
 ${scriptEnd}

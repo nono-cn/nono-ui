@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Masonry, type MasonryItem } from '@/components/ui/Masonry'
+import { Masonry, type MasonryItem } from '@/components/Masonry'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -18,7 +18,7 @@ const sequential = ref(true)
 
 const code = computed(
   () => `<script setup lang="ts">
-import { Masonry, type MasonryItem } from '__DOCS_PACKAGE__/components/ui/Masonry'
+import { Masonry, type MasonryItem } from '__DOCS_PACKAGE__/components/Masonry'
 
 const items = [
   { label: 'First', height: 128 },

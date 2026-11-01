@@ -12,8 +12,8 @@ import {
   type RibbonPosition,
   type RibbonProps,
   type RibbonUI,
-} from '@/components/ui/Ribbon'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/Ribbon'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

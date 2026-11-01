@@ -1,7 +1,7 @@
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it, vi } from 'vitest'
 
-import { Button, type NormalizeButtonProps } from '@/components/ui/Button'
+import { Button, type NormalizeButtonProps } from '@/components/Button'
 
 interface TestButtonConfigOptions {
   text: string

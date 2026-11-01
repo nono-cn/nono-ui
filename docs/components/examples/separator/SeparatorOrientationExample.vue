@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Separator, type SeparatorProps } from '@/components/ui/Separator'
+import { Separator, type SeparatorProps } from '@/components/Separator'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -14,7 +14,7 @@ const layoutClass = computed(() =>
 )
 const code = computed(
   () => `<script setup lang="ts">
-import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
+import { Separator } from '__DOCS_PACKAGE__/components/Separator'
 ${scriptEnd}
 
 <template>

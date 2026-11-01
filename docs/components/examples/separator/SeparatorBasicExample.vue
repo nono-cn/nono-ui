@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Separator } from '@/components/ui/Separator'
+import { Separator } from '@/components/Separator'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Separator } from '__DOCS_PACKAGE__/components/ui/Separator'
+import { Separator } from '__DOCS_PACKAGE__/components/Separator'
 ${scriptEnd}
 
 <template>

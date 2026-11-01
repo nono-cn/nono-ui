@@ -17,8 +17,8 @@ import {
   type HoverCardProps,
   type HoverCardSlots,
   type HoverCardUI,
-} from '@/components/ui/HoverCard'
-import { arrowPaths } from '@/components/ui/constants'
+} from '@/components/HoverCard'
+import { arrowPaths } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 
 vi.stubGlobal(

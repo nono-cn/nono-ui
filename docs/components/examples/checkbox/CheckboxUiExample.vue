@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Checkbox, type CheckboxUI } from '@/components/ui/Checkbox'
+import { Checkbox, type CheckboxUI } from '@/components/Checkbox'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -22,7 +22,7 @@ const ui: CheckboxUI = {
 const code = computed(
   () => `<script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Checkbox, type CheckboxUI } from '__DOCS_PACKAGE__/components/ui/Checkbox'
+import { Checkbox, type CheckboxUI } from '__DOCS_PACKAGE__/components/Checkbox'
 
 const state = ref<'unchecked' | 'checked' | 'indeterminate'>('${state.value}')
 const value = computed(() =>

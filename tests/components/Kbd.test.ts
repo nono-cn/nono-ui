@@ -1,8 +1,8 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Kbd, kbdDefaults, type KbdProps, type KbdSize, type KbdVariant } from '@/components/ui/Kbd'
-import { themeColors } from '@/components/ui/constants'
+import { Kbd, kbdDefaults, type KbdProps, type KbdSize, type KbdVariant } from '@/components/Kbd'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 import { testRadius } from '../utils/testRadius'

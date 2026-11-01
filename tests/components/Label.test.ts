@@ -2,7 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Label, type LabelProps } from '@/components/ui/Label'
+import { Label, type LabelProps } from '@/components/Label'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountLabel(options: MountingOptions<LabelProps> = {}) {

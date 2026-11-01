@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import type { IconName } from '@/components/ui/Icon'
-import { IconTile } from '@/components/ui/IconTile'
+import type { IconName } from '@/components/Icon'
+import { IconTile } from '@/components/IconTile'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,7 +10,7 @@ const icons: IconName[] = ['info', 'check', 'warning', 'error']
 const icon = ref<IconName>('info')
 const code = computed(
   () => `<script setup lang="ts">
-import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
+import { IconTile } from '__DOCS_PACKAGE__/components/IconTile'
 ${scriptEnd}
 
 <template>

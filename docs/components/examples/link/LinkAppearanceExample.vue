@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Link, linkDefaults, type LinkSize, type LinkVariant } from '@/components/ui/Link'
-import { buttonSizes, buttonVariantNames } from '@/components/ui/Button'
+import { Link, linkDefaults, type LinkSize, type LinkVariant } from '@/components/Link'
+import { buttonSizes, buttonVariantNames } from '@/components/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -13,7 +13,7 @@ const color = ref(linkDefaults.color)
 const radius = ref<string>(linkDefaults.radius)
 const code = computed(
   () => `<script setup lang="ts">
-import { Link } from '__DOCS_PACKAGE__/components/ui/Link'
+import { Link } from '__DOCS_PACKAGE__/components/Link'
 
 const radius = ${JSON.stringify(radius.value)}
 ${scriptEnd}

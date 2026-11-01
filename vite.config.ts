@@ -8,16 +8,17 @@ import dts from 'vite-plugin-dts'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const sourceRoot = path.resolve(__dirname, 'src')
-const uiRoot = path.join(sourceRoot, 'components/ui')
+const componentsRoot = path.join(sourceRoot, 'components')
 const entries = {
   index: path.join(sourceRoot, 'index.js'),
-  'components/ui/constants': path.join(uiRoot, 'constants.ts'),
+  'components/constants': path.join(componentsRoot, 'constants.ts'),
   ...Object.fromEntries(
-    readdirSync(uiRoot, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
+    readdirSync(componentsRoot, { withFileTypes: true })
+      // internal no es un componente público
+      .filter((entry) => entry.isDirectory() && entry.name !== 'internal')
       .map((entry) => [
-        `components/ui/${entry.name}/index`,
-        path.join(uiRoot, entry.name, 'index.ts'),
+        `components/${entry.name}/index`,
+        path.join(componentsRoot, entry.name, 'index.ts'),
       ]),
   ),
   ...Object.fromEntries(
@@ -39,7 +40,7 @@ export default defineConfig({
     dts({
       tsconfigPath: './tsconfig.app.json',
       include: [
-        'src/components/ui/**/*',
+        'src/components/**/*',
         'src/composables/**/*.ts',
         'src/i18n/**/*',
         'src/lib/**/*.ts',
@@ -71,8 +72,6 @@ export default defineConfig({
         'vue-router',
         'vue-i18n',
         '@vueuse/core',
-        '@unovis/ts',
-        '@unovis/vue',
       ],
       output: {
         preserveModules: true,

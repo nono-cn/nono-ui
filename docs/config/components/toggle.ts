@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { toggleDefaults, toggleSizes, toggleVariantNames } from '@/components/ui/Toggle'
+import { toggleDefaults, toggleSizes, toggleVariantNames } from '@/components/Toggle'
 import ToggleBasicExample from '../../components/examples/toggle/ToggleBasicExample.vue'
 import ToggleVariantExample from '../../components/examples/toggle/ToggleVariantExample.vue'
 import ToggleSizeExample from '../../components/examples/toggle/ToggleSizeExample.vue'
@@ -13,7 +13,7 @@ const toggleConfig: ComponentDocConfig = {
   title: 'Toggle',
   language: 'en',
   description: 'A button that switches between pressed and unpressed states.',
-  importPath: '@nono-ui/components/ui/Toggle',
+  importPath: '@nono-ui/components/Toggle',
   usage: [
     { title: 'Basic usage', description: 'Toggle a pressed state.', component: ToggleBasicExample },
   ],

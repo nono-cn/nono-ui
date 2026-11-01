@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Kbd } from '@/components/ui/Kbd'
+import { Kbd } from '@/components/Kbd'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Kbd } from '__DOCS_PACKAGE__/components/ui/Kbd'
+import { Kbd } from '__DOCS_PACKAGE__/components/Kbd'
 ${scriptEnd}
 
 <template>

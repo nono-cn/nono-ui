@@ -2,7 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { defineComponent, h, inject } from 'vue'
 
-import { ButtonGroup, buttonGroupSizeKey, type ButtonGroupProps } from '@/components/ui/ButtonGroup'
+import { ButtonGroup, buttonGroupSizeKey, type ButtonGroupProps } from '@/components/ButtonGroup'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountButtonGroup(options: MountingOptions<ButtonGroupProps> = {}) {

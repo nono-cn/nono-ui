@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Pagination, paginationDefaults } from '@/components/ui/Pagination'
-import { themeColors } from '@/components/ui/constants'
+import { Pagination, paginationDefaults } from '@/components/Pagination'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -26,7 +26,7 @@ const usesCustomColor = computed(
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Pagination } from '__DOCS_PACKAGE__/components/ui/Pagination'
+import { Pagination } from '__DOCS_PACKAGE__/components/Pagination'
 
 const page = ref(${page.value})
 ${scriptEnd}

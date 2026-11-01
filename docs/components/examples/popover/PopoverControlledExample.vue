@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '@/components/ui/Button'
-import { Popover } from '@/components/ui/Popover'
+import { Button } from '@/components/Button'
+import { Popover } from '@/components/Popover'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const open = ref(false)
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Popover } from '__DOCS_PACKAGE__/components/ui/Popover'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Popover } from '__DOCS_PACKAGE__/components/Popover'
 
 const open = ref(false)
 ${scriptEnd}

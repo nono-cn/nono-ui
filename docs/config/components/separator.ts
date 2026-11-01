@@ -4,7 +4,7 @@ import {
   separatorPositions,
   separatorSizes,
   separatorTypes,
-} from '@/components/ui/Separator'
+} from '@/components/Separator'
 import SeparatorBasicExample from '../../components/examples/separator/SeparatorBasicExample.vue'
 import SeparatorOrientationExample from '../../components/examples/separator/SeparatorOrientationExample.vue'
 import SeparatorTypeExample from '../../components/examples/separator/SeparatorTypeExample.vue'
@@ -20,7 +20,7 @@ const separatorConfig: ComponentDocConfig = {
   title: 'Separator',
   language: 'en',
   description: 'Visually or semantically separates groups of content.',
-  importPath: '@nono-ui/components/ui/Separator',
+  importPath: '@nono-ui/components/Separator',
   usage: [
     {
       title: 'Basic usage',

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Checkbox } from '@/components/ui/Checkbox'
+import { Checkbox } from '@/components/Checkbox'
 import {
   FieldSet,
   fieldSetDefaults,
   fieldSetLegendVariantNames,
   type FieldSetLegendVariant,
-} from '@/components/ui/FieldSet'
-import { Label } from '@/components/ui/Label'
+} from '@/components/FieldSet'
+import { Label } from '@/components/Label'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -22,9 +22,9 @@ const legendVariant = ref<FieldSetLegendVariant>(fieldSetDefaults.legendVariant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
-import { FieldSet, type FieldSetLegendVariant } from '__DOCS_PACKAGE__/components/ui/FieldSet'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Checkbox } from '__DOCS_PACKAGE__/components/Checkbox'
+import { FieldSet, type FieldSetLegendVariant } from '__DOCS_PACKAGE__/components/FieldSet'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 
 const legend = ref(${JSON.stringify(legend.value)})
 const description = ref(${JSON.stringify(description.value)})

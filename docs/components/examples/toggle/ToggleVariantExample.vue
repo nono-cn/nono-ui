@@ -5,7 +5,7 @@ import {
   toggleDefaults,
   toggleVariantNames,
   type ToggleVariant,
-} from '@/components/ui/Toggle'
+} from '@/components/Toggle'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ import { scriptEnd } from '../example-code'
 const variant = ref<ToggleVariant>(toggleDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
-import { Toggle } from '__DOCS_PACKAGE__/components/ui/Toggle'
+import { Toggle } from '__DOCS_PACKAGE__/components/Toggle'
 ${scriptEnd}
 
 <template>

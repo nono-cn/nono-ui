@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Slider, sliderDefaults, sliderSizes, type SliderSize } from '@/components/ui/Slider'
+import { Slider, sliderDefaults, sliderSizes, type SliderSize } from '@/components/Slider'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -8,7 +8,7 @@ import { scriptEnd } from '../example-code'
 const size = ref<SliderSize>(sliderDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
-import { Slider } from '__DOCS_PACKAGE__/components/ui/Slider'
+import { Slider } from '__DOCS_PACKAGE__/components/Slider'
 ${scriptEnd}
 
 <template>

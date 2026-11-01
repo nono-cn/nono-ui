@@ -9,7 +9,7 @@ const markerConfig: ComponentDocConfig = {
   title: 'Marker',
   language: 'en',
   description: 'Status indicator for displaying brief information about an operation or process.',
-  importPath: '@nono-ui/components/ui/Marker',
+  importPath: '@nono-ui/components/Marker',
   usage: [
     {
       title: 'Basic marker',

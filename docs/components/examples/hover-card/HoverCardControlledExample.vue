@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { HoverCard } from '@/components/ui/HoverCard'
-import { Button } from '@/components/ui/Button'
-import { Link } from '@/components/ui/Link'
+import { HoverCard } from '@/components/HoverCard'
+import { Button } from '@/components/Button'
+import { Link } from '@/components/Link'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const open = ref(false)
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { HoverCard } from '__DOCS_PACKAGE__/components/ui/HoverCard'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Link } from '__DOCS_PACKAGE__/components/ui/Link'
+import { HoverCard } from '__DOCS_PACKAGE__/components/HoverCard'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Link } from '__DOCS_PACKAGE__/components/Link'
 
 const open = ref(false)
 ${scriptEnd}

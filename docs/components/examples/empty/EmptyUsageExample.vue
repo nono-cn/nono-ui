@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/Button'
-import { Empty } from '@/components/ui/Empty'
+import { Button } from '@/components/Button'
+import { Empty } from '@/components/Empty'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Empty } from '__DOCS_PACKAGE__/components/ui/Empty'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Empty } from '__DOCS_PACKAGE__/components/Empty'
 ${scriptEnd}
 
 <template>

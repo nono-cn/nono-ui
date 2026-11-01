@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it, vi } from 'vitest'
 
-import { Input, type NormalizeInputProps } from '@/components/ui/Input'
+import { Input, type NormalizeInputProps } from '@/components/Input'
 
 interface TestInputConfigOptions {
   text: string

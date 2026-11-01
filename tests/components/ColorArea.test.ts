@@ -12,7 +12,7 @@ import {
   type ColorAreaProps,
   type ColorAreaSize,
   type ColorAreaValue,
-} from '@/components/ui/ColorArea'
+} from '@/components/ColorArea'
 import { testAttrs } from '../utils/testAttrs'
 
 const casesValue: Array<{ input: ColorAreaValue | undefined; expected: ColorAreaValue }> = [

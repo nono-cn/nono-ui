@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Message, messageAligns, messageDefaults, type MessageAlign } from '@/components/ui/Message'
+import { Message, messageAligns, messageDefaults, type MessageAlign } from '@/components/Message'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const align = ref<MessageAlign>(messageDefaults.align)
 const avatar = { label: 'AL' }
 const code = computed(
   () => `<script setup lang="ts">
-import { Message } from '__DOCS_PACKAGE__/components/ui/Message'
+import { Message } from '__DOCS_PACKAGE__/components/Message'
 
 const avatar = ${JSON.stringify(avatar)}
 ${scriptEnd}

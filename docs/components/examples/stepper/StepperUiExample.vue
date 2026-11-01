@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Stepper, type StepperStep, type StepperUI } from '@/components/ui/Stepper'
+import { Stepper, type StepperStep, type StepperUI } from '@/components/Stepper'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -31,7 +31,7 @@ const steps: StepperStep[] = [
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Stepper, type StepperStep, type StepperUI } from '__DOCS_PACKAGE__/components/ui/Stepper'
+import { Stepper, type StepperStep, type StepperUI } from '__DOCS_PACKAGE__/components/Stepper'
 
 const value = ref(${value.value})
 const ui: StepperUI = {

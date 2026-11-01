@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Alert, alertDefaults, alertVariantNames, type AlertVariant } from '@/components/ui/Alert'
+import { Alert, alertDefaults, alertVariantNames, type AlertVariant } from '@/components/Alert'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,7 +10,7 @@ const variant = ref<AlertVariant>(alertDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Alert } from '__DOCS_PACKAGE__/components/ui/Alert'
+import { Alert } from '__DOCS_PACKAGE__/components/Alert'
 
 const variant = ref('${variant.value}' as const)
 ${scriptEnd}

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Label } from '@/components/ui/Label'
+import { Label } from '@/components/Label'
 import {
   Textarea,
   textareaDefaults,
   textareaSizes,
   type TextareaSize,
-} from '@/components/ui/Textarea'
+} from '@/components/Textarea'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,8 +15,8 @@ const size = ref<TextareaSize>(textareaDefaults.size)
 
 const code = computed(
   () => `<script setup lang="ts">
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
-import { Textarea } from '__DOCS_PACKAGE__/components/ui/Textarea'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
+import { Textarea } from '__DOCS_PACKAGE__/components/Textarea'
 ${scriptEnd}
 
 <template>

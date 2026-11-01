@@ -10,9 +10,9 @@ import {
   type BreadcrumbItemContext,
   type BreadcrumbProps,
   type BreadcrumbVariant,
-} from '@/components/ui/Breadcrumb'
-import { Icon } from '@/components/ui/Icon'
-import { Link } from '@/components/ui/Link'
+} from '@/components/Breadcrumb'
+import { Icon } from '@/components/Icon'
+import { Link } from '@/components/Link'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 

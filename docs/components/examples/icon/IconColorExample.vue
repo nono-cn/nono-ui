@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Icon } from '@/components/ui/Icon'
-import { themeColors } from '@/components/ui/constants'
+import { Icon } from '@/components/Icon'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -15,7 +15,7 @@ const color = computed(() =>
 )
 const code = computed(
   () => `<script setup lang="ts">
-import { Icon } from '__DOCS_PACKAGE__/components/ui/Icon'
+import { Icon } from '__DOCS_PACKAGE__/components/Icon'
 ${scriptEnd}
 
 <template>

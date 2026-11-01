@@ -47,6 +47,6 @@ export async function init(options = {}) {
   import '${packageName}/style.css'
 
 Importa componentes desde:
-  import { Button } from '${packageName}/components/ui/Button'
+  import { Button } from '${packageName}/components/Button'
 `)
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ProgressCircular } from '@/components/ui/ProgressCircular'
+import { ProgressCircular } from '@/components/ProgressCircular'
 import ExampleSliderControl from '../../controls/ExampleSliderControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const value = ref(35)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { ProgressCircular } from '__DOCS_PACKAGE__/components/ui/ProgressCircular'
+import { ProgressCircular } from '__DOCS_PACKAGE__/components/ProgressCircular'
 
 const value = ref(${value.value})
 ${scriptEnd}

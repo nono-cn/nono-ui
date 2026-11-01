@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Progress } from '@/components/ui/Progress'
+import { Progress } from '@/components/Progress'
 import ExampleSliderControl from '../../controls/ExampleSliderControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const value = ref(70)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
+import { Progress } from '__DOCS_PACKAGE__/components/Progress'
 
 const value = ref(${value.value})
 ${scriptEnd}

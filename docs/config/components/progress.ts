@@ -4,7 +4,7 @@ import {
   progressDefaults,
   progressOrientations,
   progressSizes,
-} from '@/components/ui/Progress'
+} from '@/components/Progress'
 import ProgressBasicExample from '../../components/examples/progress/ProgressBasicExample.vue'
 import ProgressSizeExample from '../../components/examples/progress/ProgressSizeExample.vue'
 import ProgressColorExample from '../../components/examples/progress/ProgressColorExample.vue'
@@ -23,7 +23,7 @@ const progressConfig: ComponentDocConfig = {
   title: 'Progress',
   language: 'en',
   description: 'Show determinate or indeterminate progress with a linear indicator.',
-  importPath: '@nono-ui/components/ui/Progress',
+  importPath: '@nono-ui/components/Progress',
   usage: [
     {
       title: 'Basic usage',

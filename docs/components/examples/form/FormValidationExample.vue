@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { FieldControl, FieldError, FieldLabel, FieldRoot } from 'reka-ui'
-import { Button } from '@/components/ui/Button'
-import { Form, type FormProps } from '@/components/ui/Form'
+import { Button } from '@/components/Button'
+import { Form, type FormProps } from '@/components/Form'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -32,8 +32,8 @@ const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
 import { FieldControl, FieldError, FieldLabel, FieldRoot } from 'reka-ui'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Form } from '__DOCS_PACKAGE__/components/ui/Form'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Form } from '__DOCS_PACKAGE__/components/Form'
 
 const message = ref('')
 

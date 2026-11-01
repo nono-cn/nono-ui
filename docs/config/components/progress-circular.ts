@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { progressCircularDefaults, progressCircularSizes } from '@/components/ui/ProgressCircular'
+import { progressCircularDefaults, progressCircularSizes } from '@/components/ProgressCircular'
 import ProgressCircularBasicExample from '../../components/examples/progress-circular/ProgressCircularBasicExample.vue'
 import ProgressCircularSizeExample from '../../components/examples/progress-circular/ProgressCircularSizeExample.vue'
 import ProgressCircularThicknessExample from '../../components/examples/progress-circular/ProgressCircularThicknessExample.vue'
@@ -17,7 +17,7 @@ const progressCircularConfig: ComponentDocConfig = {
   title: 'ProgressCircular',
   language: 'en',
   description: 'Show determinate or indeterminate progress with a circular indicator.',
-  importPath: '@nono-ui/components/ui/ProgressCircular',
+  importPath: '@nono-ui/components/ProgressCircular',
   usage: [
     {
       title: 'Basic usage',

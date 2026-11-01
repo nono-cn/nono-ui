@@ -5,7 +5,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import packageJson from '../../package.json'
 import DocsComponentsSidebar from './DocsComponentsSidebar.vue'
 import ComponentDocsPage from './ComponentDocsPage.vue'
-import { App, neutralColors, type NeutralColor } from '@/components/ui/App'
+import { App, neutralColors, type NeutralColor } from '@/components/App'
 import { docsComponentsBySlug } from '../config/docs-components'
 import { exampleAnchor } from '../config/docs-anchors'
 

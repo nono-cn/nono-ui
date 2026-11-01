@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Accordion, type AccordionValue } from '@/components/ui/Accordion'
+import { Accordion, type AccordionValue } from '@/components/Accordion'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -28,7 +28,7 @@ const items = [
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Accordion, type AccordionValue } from '__DOCS_PACKAGE__/components/ui/Accordion'
+import { Accordion, type AccordionValue } from '__DOCS_PACKAGE__/components/Accordion'
 
 const highlight = ref(${highlight.value})
 const value = ref<AccordionValue>('security')

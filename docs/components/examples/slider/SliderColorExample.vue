@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Slider } from '@/components/ui/Slider'
-import { themeColors } from '@/components/ui/constants'
+import { Slider } from '@/components/Slider'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -13,7 +13,7 @@ const customColor = ref('#8b5cf6')
 const color = computed(() => (choice.value === 'custom' ? customColor.value : choice.value))
 const code = computed(
   () => `<script setup lang="ts">
-import { Slider } from '__DOCS_PACKAGE__/components/ui/Slider'
+import { Slider } from '__DOCS_PACKAGE__/components/Slider'
 ${scriptEnd}
 
 <template>

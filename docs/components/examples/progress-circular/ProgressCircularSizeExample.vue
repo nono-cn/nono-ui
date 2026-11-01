@@ -5,7 +5,7 @@ import {
   progressCircularDefaults,
   progressCircularSizes,
   type ProgressCircularSize,
-} from '@/components/ui/ProgressCircular'
+} from '@/components/ProgressCircular'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ import { scriptEnd } from '../example-code'
 const size = ref<ProgressCircularSize>(progressCircularDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
-import { ProgressCircular } from '__DOCS_PACKAGE__/components/ui/ProgressCircular'
+import { ProgressCircular } from '__DOCS_PACKAGE__/components/ProgressCircular'
 ${scriptEnd}
 
 <template>

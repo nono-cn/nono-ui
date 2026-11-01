@@ -5,7 +5,7 @@ import {
   markerDefaults,
   markerVariantNames,
   type MarkerVariant,
-} from '@/components/ui/Marker'
+} from '@/components/Marker'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -14,7 +14,7 @@ const variant = ref<MarkerVariant>(markerDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Marker, type MarkerVariant } from '__DOCS_PACKAGE__/components/ui/Marker'
+import { Marker, type MarkerVariant } from '__DOCS_PACKAGE__/components/Marker'
 
 const variant = ref<MarkerVariant>('${variant.value}')
 ${scriptEnd}

@@ -4,7 +4,7 @@ import {
   meterGroupItemDefaults,
   meterGroupOrientations,
   meterGroupSizes,
-} from '@/components/ui/MeterGroup'
+} from '@/components/MeterGroup'
 import { formatValue } from '../format-default'
 import MeterGroupBasicExample from '../../components/examples/meter-group/MeterGroupBasicExample.vue'
 import MeterGroupSizeExample from '../../components/examples/meter-group/MeterGroupSizeExample.vue'
@@ -22,7 +22,7 @@ const meterGroupConfig: ComponentDocConfig = {
   title: 'MeterGroup',
   language: 'en',
   description: 'Show several values that share one track, with a legend for each item.',
-  importPath: '@nono-ui/components/ui/MeterGroup',
+  importPath: '@nono-ui/components/MeterGroup',
   usage: [
     {
       title: 'Basic usage',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Rating, ratingDefaults } from '@/components/ui/Rating'
-import { themeColors } from '@/components/ui/constants'
+import { Rating, ratingDefaults } from '@/components/Rating'
+import { themeColors } from '@/components/constants'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -13,7 +13,7 @@ const customColor = ref('#8b5cf6')
 const color = computed(() => (choice.value === 'custom' ? customColor.value : choice.value))
 const code = computed(
   () => `<script setup lang="ts">
-import { Rating } from '__DOCS_PACKAGE__/components/ui/Rating'
+import { Rating } from '__DOCS_PACKAGE__/components/Rating'
 ${scriptEnd}
 
 <template>

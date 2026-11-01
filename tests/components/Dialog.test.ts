@@ -9,8 +9,8 @@ import {
   DialogRoot,
   DialogTitle,
 } from 'reka-ui'
-import { Dialog, type DialogContext, type DialogProps } from '@/components/ui/Dialog'
-import type { IconName } from '@/components/ui/Icon'
+import { Dialog, type DialogContext, type DialogProps } from '@/components/Dialog'
+import type { IconName } from '@/components/Icon'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 

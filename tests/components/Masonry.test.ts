@@ -2,7 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Masonry, type MasonryItem, type MasonryProps } from '@/components/ui/Masonry'
+import { Masonry, type MasonryItem, type MasonryProps } from '@/components/Masonry'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountMasonry(options: MountingOptions<MasonryProps> = {}) {

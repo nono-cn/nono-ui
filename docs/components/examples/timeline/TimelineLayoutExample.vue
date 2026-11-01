@@ -6,7 +6,7 @@ import {
   timelineDefaults,
   timelineOrientations,
   type TimelineAlign,
-} from '@/components/ui/Timeline'
+} from '@/components/Timeline'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -36,7 +36,7 @@ const timelineClass = computed(() => {
 })
 const code = computed(
   () => `<script setup lang="ts">
-import { Timeline } from '__DOCS_PACKAGE__/components/ui/Timeline'
+import { Timeline } from '__DOCS_PACKAGE__/components/Timeline'
 
 const items = ${JSON.stringify(items, null, 2)}
 ${scriptEnd}

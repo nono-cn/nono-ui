@@ -9,8 +9,8 @@ import {
   type AccordionProps,
   type AccordionVariant,
   type AccordionValue,
-} from '@/components/ui/Accordion'
-import { Icon } from '@/components/ui/Icon'
+} from '@/components/Accordion'
+import { Icon } from '@/components/Icon'
 import { testAttrs } from '../utils/testAttrs'
 
 const items = [

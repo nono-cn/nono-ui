@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar } from '@/components/ui/Avatar'
-import { Chip, chipDefaults, chipPositions, type ChipPosition } from '@/components/ui/Chip'
+import { Avatar } from '@/components/Avatar'
+import { Chip, chipDefaults, chipPositions, type ChipPosition } from '@/components/Chip'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,8 +10,8 @@ const position = ref<ChipPosition>(chipDefaults.position)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
-import { Chip, type ChipPosition } from '__DOCS_PACKAGE__/components/ui/Chip'
+import { Avatar } from '__DOCS_PACKAGE__/components/Avatar'
+import { Chip, type ChipPosition } from '__DOCS_PACKAGE__/components/Chip'
 
 const position = ref<ChipPosition>('${position.value}')
 ${scriptEnd}

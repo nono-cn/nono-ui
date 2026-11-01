@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Input, inputDefaults, inputSizes, type InputSize } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
+import { Input, inputDefaults, inputSizes, type InputSize } from '@/components/Input'
+import { Label } from '@/components/Label'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,8 +9,8 @@ import { scriptEnd } from '../example-code'
 const size = ref<InputSize>(inputDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
-import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Input } from '__DOCS_PACKAGE__/components/Input'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 ${scriptEnd}
 
 <template>

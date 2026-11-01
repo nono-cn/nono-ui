@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/Button'
-import { Popover } from '@/components/ui/Popover'
+import { Button } from '@/components/Button'
+import { Popover } from '@/components/Popover'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Popover } from '__DOCS_PACKAGE__/components/ui/Popover'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Popover } from '__DOCS_PACKAGE__/components/Popover'
 ${scriptEnd}
 
 <template>

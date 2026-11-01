@@ -4,7 +4,7 @@ import {
   colorAreaColorSpaces,
   colorAreaDefaults,
   colorAreaSizes,
-} from '@/components/ui/ColorArea'
+} from '@/components/ColorArea'
 import ColorAreaBasicExample from '../../components/examples/color-area/ColorAreaBasicExample.vue'
 import ColorAreaValueExample from '../../components/examples/color-area/ColorAreaValueExample.vue'
 import ColorAreaChannelsExample from '../../components/examples/color-area/ColorAreaChannelsExample.vue'
@@ -17,7 +17,7 @@ const colorAreaConfig: ComponentDocConfig = {
   title: 'ColorArea',
   language: 'en',
   description: 'A two-dimensional control for selecting a color value.',
-  importPath: '@nono-ui/components/ui/ColorArea',
+  importPath: '@nono-ui/components/ColorArea',
   usage: [
     {
       title: 'Basic usage',

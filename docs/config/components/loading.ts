@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { loadingDefaults } from '@/components/ui/Loading'
+import { loadingDefaults } from '@/components/Loading'
 import LoadingBasicExample from '../../components/examples/loading/LoadingBasicExample.vue'
 import LoadingCustomExample from '../../components/examples/loading/LoadingCustomExample.vue'
 import LoadingContentExample from '../../components/examples/loading/LoadingContentExample.vue'
@@ -11,7 +11,7 @@ const loadingConfig: ComponentDocConfig = {
   title: 'Loading',
   language: 'en',
   description: 'Switches between a loading indicator and content as an operation changes state.',
-  importPath: '@nono-ui/components/ui/Loading',
+  importPath: '@nono-ui/components/Loading',
   usage: [
     {
       title: 'Basic loading',

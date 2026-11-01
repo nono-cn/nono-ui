@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Progress, type ProgressUI } from '@/components/ui/Progress'
+import { Progress, type ProgressUI } from '@/components/Progress'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ const ui = computed<ProgressUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { Progress, type ProgressUI } from '__DOCS_PACKAGE__/components/ui/Progress'
+import { Progress, type ProgressUI } from '__DOCS_PACKAGE__/components/Progress'
 
 const ui: ProgressUI = {
   indicator: ({ percentage }) => ({ 'data-percentage': Math.round(percentage), class: '${decorated.value ? 'ring-2 ring-inset ring-white/50' : ''}' }),

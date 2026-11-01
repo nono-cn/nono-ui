@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { emptyDefaults, emptyMediaVariantNames } from '@/components/ui/Empty'
+import { emptyDefaults, emptyMediaVariantNames } from '@/components/Empty'
 import EmptyDefaultExample from '../../components/examples/empty/EmptyDefaultExample.vue'
 import EmptyMediaLabelDescriptionExample from '../../components/examples/empty/EmptyMediaLabelDescriptionExample.vue'
 import EmptySlotsExample from '../../components/examples/empty/EmptySlotsExample.vue'
@@ -13,7 +13,7 @@ const emptyConfig: ComponentDocConfig = {
   title: 'Empty',
   language: 'en',
   description: 'Visual state for a section with no data or results.',
-  importPath: '@nono-ui/components/ui/Empty',
+  importPath: '@nono-ui/components/Empty',
   usage: [
     {
       title: 'Basic usage',

@@ -2,7 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { AspectRatio, type AspectRatioProps } from '@/components/ui/AspectRatio'
+import { AspectRatio, type AspectRatioProps } from '@/components/AspectRatio'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountAspectRatio(options: MountingOptions<AspectRatioProps> = {}) {

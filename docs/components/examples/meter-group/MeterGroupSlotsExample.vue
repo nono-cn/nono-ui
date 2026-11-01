@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Badge } from '@/components/ui/Badge'
-import { MeterGroup, type MeterGroupItem } from '@/components/ui/MeterGroup'
+import { Badge } from '@/components/Badge'
+import { MeterGroup, type MeterGroupItem } from '@/components/MeterGroup'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -10,8 +10,8 @@ const items: MeterGroupItem[] = [
   { label: 'System', value: 9, color: 'neutral', slot: 'system' },
 ]
 const code = `<script setup lang="ts">
-import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
-import { MeterGroup, type MeterGroupItem } from '__DOCS_PACKAGE__/components/ui/MeterGroup'
+import { Badge } from '__DOCS_PACKAGE__/components/Badge'
+import { MeterGroup, type MeterGroupItem } from '__DOCS_PACKAGE__/components/MeterGroup'
 
 const items: MeterGroupItem[] = [
   { label: 'Apps', value: 18 },

@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { inputDefaults, inputSizes, inputVariantNames } from '@/components/ui/Input'
+import { inputDefaults, inputSizes, inputVariantNames } from '@/components/Input'
 import InputUsageExample from '../../components/examples/input/InputUsageExample.vue'
 import InputSizeExample from '../../components/examples/input/InputSizeExample.vue'
 import InputAppearanceExample from '../../components/examples/input/InputAppearanceExample.vue'
@@ -11,7 +11,7 @@ const inputConfig: ComponentDocConfig = {
   title: 'Input',
   language: 'en',
   description: 'A single-line text field with optional leading and trailing content.',
-  importPath: '@nono-ui/components/ui/Input',
+  importPath: '@nono-ui/components/Input',
   usage: [
     {
       title: 'Basic usage',

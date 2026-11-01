@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Toggle } from '@/components/ui/Toggle'
+import { Toggle } from '@/components/Toggle'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -8,7 +8,7 @@ import { scriptEnd } from '../example-code'
 const disabled = ref(true)
 const code = computed(
   () => `<script setup lang="ts">
-import { Toggle } from '__DOCS_PACKAGE__/components/ui/Toggle'
+import { Toggle } from '__DOCS_PACKAGE__/components/Toggle'
 ${scriptEnd}
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { RadioGroup, type RadioGroupItem } from '@/components/ui/RadioGroup'
+import { RadioGroup, type RadioGroupItem } from '@/components/RadioGroup'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -12,7 +12,7 @@ const items: RadioGroupItem[] = [
 const legend = ref('Billing period')
 const code = computed(
   () => `<script setup lang="ts">
-import { RadioGroup, type RadioGroupItem } from '__DOCS_PACKAGE__/components/ui/RadioGroup'
+import { RadioGroup, type RadioGroupItem } from '__DOCS_PACKAGE__/components/RadioGroup'
 
 const items: RadioGroupItem[] = [
   { label: 'Monthly', value: 'monthly' },

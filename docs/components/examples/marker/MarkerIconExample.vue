@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Marker } from '@/components/ui/Marker'
-import type { IconName } from '@/components/ui/Icon'
+import { Marker } from '@/components/Marker'
+import type { IconName } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,8 +11,8 @@ const icon = ref<IconName>('check')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Marker } from '__DOCS_PACKAGE__/components/ui/Marker'
-import type { IconName } from '__DOCS_PACKAGE__/components/ui/Icon'
+import { Marker } from '__DOCS_PACKAGE__/components/Marker'
+import type { IconName } from '__DOCS_PACKAGE__/components/Icon'
 
 const icon = ref<IconName>('${icon.value}')
 ${scriptEnd}

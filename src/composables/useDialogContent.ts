@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import type { DialogContentConfig } from '@/components/ui/Dialog'
+import type { DialogContentConfig } from '@/components/Dialog'
 
 interface DialogContentOptions {
   content: Ref<DialogContentConfig>

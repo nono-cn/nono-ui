@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Slider } from '@/components/ui/Slider'
+import { Slider } from '@/components/Slider'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -8,7 +8,7 @@ const value = ref([50])
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Slider } from '__DOCS_PACKAGE__/components/ui/Slider'
+import { Slider } from '__DOCS_PACKAGE__/components/Slider'
 
 const value = ref([${value.value.join(', ')}])
 ${scriptEnd}

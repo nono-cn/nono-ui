@@ -5,7 +5,7 @@ import {
   colorAreaDefaults,
   colorAreaSizes,
   type ColorAreaSize,
-} from '@/components/ui/ColorArea'
+} from '@/components/ColorArea'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -14,7 +14,7 @@ const size = ref<ColorAreaSize>(colorAreaDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { ColorArea, type ColorAreaSize } from '__DOCS_PACKAGE__/components/ui/ColorArea'
+import { ColorArea, type ColorAreaSize } from '__DOCS_PACKAGE__/components/ColorArea'
 
 const size = ref<ColorAreaSize>('${size.value}')
 ${scriptEnd}

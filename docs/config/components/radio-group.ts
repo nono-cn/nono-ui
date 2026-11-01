@@ -5,7 +5,7 @@ import {
   radioGroupOrientations,
   radioGroupSizes,
   radioGroupVariantNames,
-} from '@/components/ui/RadioGroup'
+} from '@/components/RadioGroup'
 import { formatValue } from '../format-default'
 import RadioGroupBasicExample from '../../components/examples/radio-group/RadioGroupBasicExample.vue'
 import RadioGroupDescriptionExample from '../../components/examples/radio-group/RadioGroupDescriptionExample.vue'
@@ -26,7 +26,7 @@ const radioGroupConfig: ComponentDocConfig = {
   title: 'RadioGroup',
   language: 'en',
   description: 'Set of options where only one can be selected at a time.',
-  importPath: '@nono-ui/components/ui/RadioGroup',
+  importPath: '@nono-ui/components/RadioGroup',
   usage: [
     {
       title: 'Basic usage',

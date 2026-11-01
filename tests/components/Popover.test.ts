@@ -12,8 +12,8 @@ import {
   type PopoverProps,
   type PopoverSlots,
   type PopoverUI,
-} from '@/components/ui/Popover'
-import { arrowPaths } from '@/components/ui/constants'
+} from '@/components/Popover'
+import { arrowPaths } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver

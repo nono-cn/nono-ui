@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { tooltipDefaults } from '@/components/ui/Tooltip'
+import { tooltipDefaults } from '@/components/Tooltip'
 import { formatDefaultObject, formatValue } from '../format-default'
 import TooltipBasicExample from '../../components/examples/tooltip/TooltipBasicExample.vue'
 import TooltipContentSlotExample from '../../components/examples/tooltip/TooltipContentSlotExample.vue'
@@ -12,7 +12,7 @@ const tooltipConfig: ComponentDocConfig = {
   title: 'Tooltip',
   language: 'en',
   description: 'Shows a short hint when a trigger is hovered or focused.',
-  importPath: '@nono-ui/components/ui/Tooltip',
+  importPath: '@nono-ui/components/Tooltip',
   usage: [
     {
       title: 'Basic usage',

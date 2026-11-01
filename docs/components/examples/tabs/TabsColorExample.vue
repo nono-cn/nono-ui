@@ -6,8 +6,8 @@ import {
   tabsVariantNames,
   type TabItem,
   type TabsVariants,
-} from '@/components/ui/Tabs'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/Tabs'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -23,7 +23,7 @@ const color = computed(() => (choice.value === 'custom' ? customColor.value : ch
 const variant = ref<NonNullable<TabsVariants['variant']>>(tabsDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
-import { Tabs } from '__DOCS_PACKAGE__/components/ui/Tabs'
+import { Tabs } from '__DOCS_PACKAGE__/components/Tabs'
 
 const tabs = [
   { slot: 'overview', value: 'overview', label: 'Overview' },

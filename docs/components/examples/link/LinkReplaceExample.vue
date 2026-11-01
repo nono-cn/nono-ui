@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Link } from '@/components/ui/Link'
+import { Link } from '@/components/Link'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const replace = ref(false)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Link } from '__DOCS_PACKAGE__/components/ui/Link'
+import { Link } from '__DOCS_PACKAGE__/components/Link'
 
 const replace = ref(${replace.value})
 ${scriptEnd}

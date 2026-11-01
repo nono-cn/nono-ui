@@ -7,7 +7,7 @@ import {
   attachmentStateNames,
   type AttachmentMediaVariant,
   type AttachmentState,
-} from '@/components/ui/Attachment'
+} from '@/components/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -17,7 +17,7 @@ const state = ref<AttachmentState>(attachmentDefaults.state)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Attachment, type AttachmentMediaVariant, type AttachmentState } from '__DOCS_PACKAGE__/components/ui/Attachment'
+import { Attachment, type AttachmentMediaVariant, type AttachmentState } from '__DOCS_PACKAGE__/components/Attachment'
 
 const mediaVariant = ref<AttachmentMediaVariant>('${mediaVariant.value}')
 const state = ref<AttachmentState>('${state.value}')

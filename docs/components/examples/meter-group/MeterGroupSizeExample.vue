@@ -6,7 +6,7 @@ import {
   meterGroupSizes,
   type MeterGroupItem,
   type MeterGroupSize,
-} from '@/components/ui/MeterGroup'
+} from '@/components/MeterGroup'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -19,7 +19,7 @@ const items: MeterGroupItem[] = [
 const size = ref<MeterGroupSize>(meterGroupDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
-import { MeterGroup, type MeterGroupItem } from '__DOCS_PACKAGE__/components/ui/MeterGroup'
+import { MeterGroup, type MeterGroupItem } from '__DOCS_PACKAGE__/components/MeterGroup'
 
 const items: MeterGroupItem[] = [
   { label: 'Apps', value: 18 },

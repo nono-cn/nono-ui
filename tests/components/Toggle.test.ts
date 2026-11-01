@@ -11,9 +11,9 @@ import {
   type ToggleSize,
   type ToggleValue,
   type ToggleVariant,
-} from '@/components/ui/Toggle'
-import { themeColors } from '@/components/ui/constants'
-import type { IconName } from '@/components/ui/Icon'
+} from '@/components/Toggle'
+import { themeColors } from '@/components/constants'
+import type { IconName } from '@/components/Icon'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

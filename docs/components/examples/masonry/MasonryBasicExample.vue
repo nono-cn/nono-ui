@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Masonry, type MasonryItem } from '@/components/ui/Masonry'
+import { Masonry, type MasonryItem } from '@/components/Masonry'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -26,7 +26,7 @@ const spacing = ref('4')
 
 const code = computed(
   () => `<script setup lang="ts">
-import { Masonry, type MasonryItem } from '__DOCS_PACKAGE__/components/ui/Masonry'
+import { Masonry, type MasonryItem } from '__DOCS_PACKAGE__/components/Masonry'
 
 const items = [
   { label: 'One', height: ${firstHeight.value} },

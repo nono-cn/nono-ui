@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Progress } from '@/components/ui/Progress'
+import { Progress } from '@/components/Progress'
 import ExampleNumberControl from '../../controls/ExampleNumberControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const max = ref(200)
 const safeMax = computed(() => Math.max(80, Number(max.value) || 80))
 const code = computed(
   () => `<script setup lang="ts">
-import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
+import { Progress } from '__DOCS_PACKAGE__/components/Progress'
 ${scriptEnd}
 
 <template>

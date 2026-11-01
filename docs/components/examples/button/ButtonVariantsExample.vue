@@ -5,7 +5,7 @@ import {
   buttonDefaults,
   buttonVariantNames,
   type ButtonVariant,
-} from '@/components/ui/Button'
+} from '@/components/Button'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ const variant = ref<ButtonVariant>(buttonDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 
 const variant = ref('${variant.value}' as const)
 ${scriptEnd}

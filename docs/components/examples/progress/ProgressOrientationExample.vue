@@ -5,7 +5,7 @@ import {
   progressDefaults,
   progressOrientations,
   type ProgressOrientation,
-} from '@/components/ui/Progress'
+} from '@/components/Progress'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -15,7 +15,7 @@ const orientation = ref<ProgressOrientation>(progressDefaults.orientation)
 const inverted = ref(progressDefaults.inverted)
 const code = computed(
   () => `<script setup lang="ts">
-import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
+import { Progress } from '__DOCS_PACKAGE__/components/Progress'
 ${scriptEnd}
 
 <template>

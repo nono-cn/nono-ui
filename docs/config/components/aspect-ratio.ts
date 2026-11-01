@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { aspectRatioDefaults } from '@/components/ui/AspectRatio'
+import { aspectRatioDefaults } from '@/components/AspectRatio'
 import AspectRatioBasicExample from '../../components/examples/aspect-ratio/AspectRatioBasicExample.vue'
 import AspectRatioRatiosExample from '../../components/examples/aspect-ratio/AspectRatioRatiosExample.vue'
 
@@ -8,7 +8,7 @@ const aspectRatioConfig: ComponentDocConfig = {
   title: 'AspectRatio',
   language: 'en',
   description: 'Maintains a consistent aspect ratio for images, videos, and other content.',
-  importPath: '@nono-ui/components/ui/AspectRatio',
+  importPath: '@nono-ui/components/AspectRatio',
   usage: [
     {
       title: 'Basic usage',

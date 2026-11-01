@@ -2,7 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Card, type CardProps } from '@/components/ui/Card'
+import { Card, type CardProps } from '@/components/Card'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountCard(options: MountingOptions<CardProps> = {}) {

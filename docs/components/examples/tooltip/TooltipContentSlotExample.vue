@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/Button'
-import { Kbd } from '@/components/ui/Kbd'
-import { Tooltip } from '@/components/ui/Tooltip'
+import { Button } from '@/components/Button'
+import { Kbd } from '@/components/Kbd'
+import { Tooltip } from '@/components/Tooltip'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Kbd } from '__DOCS_PACKAGE__/components/ui/Kbd'
-import { Tooltip } from '__DOCS_PACKAGE__/components/ui/Tooltip'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Kbd } from '__DOCS_PACKAGE__/components/Kbd'
+import { Tooltip } from '__DOCS_PACKAGE__/components/Tooltip'
 ${scriptEnd}
 
 <template>

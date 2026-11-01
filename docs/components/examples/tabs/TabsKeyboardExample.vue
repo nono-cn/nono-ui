@@ -6,7 +6,7 @@ import {
   tabsDefaults,
   type TabItem,
   type TabsProps,
-} from '@/components/ui/Tabs'
+} from '@/components/Tabs'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -21,7 +21,7 @@ const activationMode = ref<NonNullable<TabsProps['activationMode']>>(tabsDefault
 const loop = ref(tabsDefaults.loop)
 const code = computed(
   () => `<script setup lang="ts">
-import { Tabs } from '__DOCS_PACKAGE__/components/ui/Tabs'
+import { Tabs } from '__DOCS_PACKAGE__/components/Tabs'
 
 const tabs = [
   { slot: 'first', value: 'first', label: 'First' },

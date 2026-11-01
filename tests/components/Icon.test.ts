@@ -1,8 +1,8 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { Icon, type IconProps } from '@/components/ui/Icon'
-import { themeColors } from '@/components/ui/constants'
+import { Icon, type IconProps } from '@/components/Icon'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

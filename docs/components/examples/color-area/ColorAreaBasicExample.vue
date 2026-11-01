@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ColorArea } from '@/components/ui/ColorArea'
+import { ColorArea } from '@/components/ColorArea'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { ColorArea } from '__DOCS_PACKAGE__/components/ui/ColorArea'
+import { ColorArea } from '__DOCS_PACKAGE__/components/ColorArea'
 ${scriptEnd}
 
 <template>

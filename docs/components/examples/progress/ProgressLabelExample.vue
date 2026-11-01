@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Progress } from '@/components/ui/Progress'
+import { Progress } from '@/components/Progress'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const label = ref('65%')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Progress } from '__DOCS_PACKAGE__/components/ui/Progress'
+import { Progress } from '__DOCS_PACKAGE__/components/Progress'
 
 const label = ref(${JSON.stringify(label.value)})
 ${scriptEnd}

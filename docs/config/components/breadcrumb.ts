@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { breadcrumbDefaults, breadcrumbVariantNames } from '@/components/ui/Breadcrumb'
+import { breadcrumbDefaults, breadcrumbVariantNames } from '@/components/Breadcrumb'
 import BreadcrumbUsageExample from '../../components/examples/breadcrumb/BreadcrumbUsageExample.vue'
 import BreadcrumbEllipsisExample from '../../components/examples/breadcrumb/BreadcrumbEllipsisExample.vue'
 import BreadcrumbSeparatorIconExample from '../../components/examples/breadcrumb/BreadcrumbSeparatorIconExample.vue'
@@ -13,7 +13,7 @@ const breadcrumbConfig: ComponentDocConfig = {
   title: 'Breadcrumb',
   language: 'en',
   description: 'Shows the current page within a navigable hierarchy.',
-  importPath: '@nono-ui/components/ui/Breadcrumb',
+  importPath: '@nono-ui/components/Breadcrumb',
   usage: [
     {
       title: 'Basic usage',

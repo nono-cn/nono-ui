@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
+import { Input } from '@/components/Input'
+import { Label } from '@/components/Label'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,8 +10,8 @@ const loading = ref(false)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Input } from '__DOCS_PACKAGE__/components/Input'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 
 const loading = ref(${loading.value})
 ${scriptEnd}

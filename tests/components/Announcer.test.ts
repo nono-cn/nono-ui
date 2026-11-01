@@ -2,7 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { Announcer, type AnnouncerProps } from '@/components/ui/Announcer'
+import { Announcer, type AnnouncerProps } from '@/components/Announcer'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountAnnouncer(options: MountingOptions<AnnouncerProps> = {}) {

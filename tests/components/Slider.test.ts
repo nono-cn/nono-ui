@@ -9,7 +9,7 @@ import {
   type SliderContext,
   type SliderProps,
   type SliderThumbContext,
-} from '@/components/ui/Slider'
+} from '@/components/Slider'
 import { i18n } from '@/i18n'
 import { testAttrs } from '../utils/testAttrs'
 

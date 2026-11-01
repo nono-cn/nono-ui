@@ -3,8 +3,8 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { createMemoryHistory, createRouter, RouterLink } from 'vue-router'
 import { describe, expect, it } from 'vitest'
 
-import { Button } from '@/components/ui/Button'
-import { Link, type LinkProps } from '@/components/ui/Link'
+import { Button } from '@/components/Button'
+import { Link, type LinkProps } from '@/components/Link'
 import { testAttrs } from '../utils/testAttrs'
 import { testButtonConfig } from '../utils/testButtonConfig'
 

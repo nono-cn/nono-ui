@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Badge } from '@/components/ui/Badge'
-import type { IconName } from '@/components/ui/Icon'
+import { Badge } from '@/components/Badge'
+import type { IconName } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,8 +11,8 @@ const iconName = ref<IconName>('chevronRight')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import type { IconName } from '__DOCS_PACKAGE__/components/ui/Icon'
-import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
+import type { IconName } from '__DOCS_PACKAGE__/components/Icon'
+import { Badge } from '__DOCS_PACKAGE__/components/Badge'
 
 const iconName = ref<IconName>('${iconName.value}')
 ${scriptEnd}

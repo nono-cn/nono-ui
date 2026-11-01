@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Checkbox, checkboxDefaults } from '@/components/ui/Checkbox'
-import { themeColors } from '@/components/ui/constants'
+import { Checkbox, checkboxDefaults } from '@/components/Checkbox'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -16,7 +16,7 @@ const color = computed(() =>
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Checkbox } from '__DOCS_PACKAGE__/components/ui/Checkbox'
+import { Checkbox } from '__DOCS_PACKAGE__/components/Checkbox'
 
 const color = ref('${color.value}')
 ${scriptEnd}

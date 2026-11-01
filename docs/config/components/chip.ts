@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { chipDefaults, chipPositions, chipSizes } from '@/components/ui/Chip'
+import { chipDefaults, chipPositions, chipSizes } from '@/components/Chip'
 import ChipColorExample from '../../components/examples/chip/ChipColorExample.vue'
 import ChipDefaultExample from '../../components/examples/chip/ChipDefaultExample.vue'
 import ChipInsetExample from '../../components/examples/chip/ChipInsetExample.vue'
@@ -14,7 +14,7 @@ const chipConfig: ComponentDocConfig = {
   title: 'Chip',
   language: 'en',
   description: 'Compact indicator that can appear over an element or on its own.',
-  importPath: '@nono-ui/components/ui/Chip',
+  importPath: '@nono-ui/components/Chip',
   usage: [
     {
       title: 'Basic usage',

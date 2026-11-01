@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Badge } from '@/components/ui/Badge'
-import { RadioGroup, type RadioGroupItem } from '@/components/ui/RadioGroup'
+import { Badge } from '@/components/Badge'
+import { RadioGroup, type RadioGroupItem } from '@/components/RadioGroup'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -14,8 +14,8 @@ const prices: Record<string, string> = { starter: '$0', growth: '$29', scale: '$
 const value = ref('growth')
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Badge } from '__DOCS_PACKAGE__/components/ui/Badge'
-import { RadioGroup, type RadioGroupItem } from '__DOCS_PACKAGE__/components/ui/RadioGroup'
+import { Badge } from '__DOCS_PACKAGE__/components/Badge'
+import { RadioGroup, type RadioGroupItem } from '__DOCS_PACKAGE__/components/RadioGroup'
 
 const items: RadioGroupItem[] = [
   { label: 'Starter', value: 'starter' },

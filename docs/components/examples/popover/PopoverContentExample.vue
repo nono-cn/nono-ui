@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button } from '@/components/ui/Button'
-import { Popover, type PopoverContentConfig } from '@/components/ui/Popover'
+import { Button } from '@/components/Button'
+import { Popover, type PopoverContentConfig } from '@/components/Popover'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,8 +11,8 @@ const align = ref<NonNullable<PopoverContentConfig['align']>>('start')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Popover, type PopoverContentConfig } from '__DOCS_PACKAGE__/components/ui/Popover'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Popover, type PopoverContentConfig } from '__DOCS_PACKAGE__/components/Popover'
 
 const side = ref<NonNullable<PopoverContentConfig['side']>>(${JSON.stringify(side.value)})
 const align = ref<NonNullable<PopoverContentConfig['align']>>(${JSON.stringify(align.value)})

@@ -19,7 +19,7 @@ import {
   type TooltipProps,
   type TooltipSlots,
   type TooltipUI,
-} from '@/components/ui/Tooltip'
+} from '@/components/Tooltip'
 import { testAttrs } from '../utils/testAttrs'
 
 // reka-ui posiciona el contenido con floating-ui, que necesita ResizeObserver

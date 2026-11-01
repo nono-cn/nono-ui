@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Timeline, type TimelineUI } from '@/components/ui/Timeline'
+import { Timeline, type TimelineUI } from '@/components/Timeline'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ const ui = computed<TimelineUI>(() => ({
 }))
 const code = computed(
   () => `<script setup lang="ts">
-import { Timeline, type TimelineUI } from '__DOCS_PACKAGE__/components/ui/Timeline'
+import { Timeline, type TimelineUI } from '__DOCS_PACKAGE__/components/Timeline'
 
 const items = ${JSON.stringify(items, null, 2)}
 const ui: TimelineUI = {

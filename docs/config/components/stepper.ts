@@ -1,4 +1,4 @@
-import { stepperSizes, stepperDefaults } from '@/components/ui/Stepper'
+import { stepperSizes, stepperDefaults } from '@/components/Stepper'
 import type { ComponentDocConfig, ApiTableRow } from '../component-docs'
 import StepperSizeExample from '../../components/examples/stepper/StepperSizeExample.vue'
 import StepperUsageExample from '../../components/examples/stepper/StepperUsageExample.vue'
@@ -49,7 +49,7 @@ const config: ComponentDocConfig = {
   title: 'Stepper',
   language: 'en',
   description: 'Guides users through a sequence of steps with optional descriptions and content.',
-  importPath: '@nono-ui/components/ui/Stepper',
+  importPath: '@nono-ui/components/Stepper',
   usage: [
     {
       title: 'Basic usage',

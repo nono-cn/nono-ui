@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { AlertDialog } from '@/components/ui/AlertDialog'
-import { Button } from '@/components/ui/Button'
+import { AlertDialog } from '@/components/AlertDialog'
+import { Button } from '@/components/Button'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { AlertDialog } from '__DOCS_PACKAGE__/components/ui/AlertDialog'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
+import { AlertDialog } from '__DOCS_PACKAGE__/components/AlertDialog'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
 ${scriptEnd}
 
 <template>

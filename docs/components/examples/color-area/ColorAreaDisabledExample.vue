@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ColorArea } from '@/components/ui/ColorArea'
+import { ColorArea } from '@/components/ColorArea'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -11,7 +11,7 @@ const disabled = computed(() => selectedDisabled.value === 'true')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { ColorArea } from '__DOCS_PACKAGE__/components/ui/ColorArea'
+import { ColorArea } from '__DOCS_PACKAGE__/components/ColorArea'
 
 const disabled = ref(${disabled.value})
 ${scriptEnd}

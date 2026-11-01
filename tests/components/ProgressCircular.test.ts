@@ -3,13 +3,13 @@ import { ProgressRoot } from 'reka-ui'
 import { describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
-import type { ProgressValue } from '@/components/ui/Progress'
+import type { ProgressValue } from '@/components/Progress'
 import {
   ProgressCircular,
   progressCircularDefaults,
   type ProgressCircularContext,
   type ProgressCircularProps,
-} from '@/components/ui/ProgressCircular'
+} from '@/components/ProgressCircular'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountProgressCircular(options: ComponentMountingOptions<typeof ProgressCircular> = {}) {

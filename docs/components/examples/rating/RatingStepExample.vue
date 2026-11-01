@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { Rating } from '@/components/ui/Rating'
+import { Rating } from '@/components/Rating'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -15,7 +15,7 @@ watch(stepValue, () => {
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Rating } from '__DOCS_PACKAGE__/components/ui/Rating'
+import { Rating } from '__DOCS_PACKAGE__/components/Rating'
 
 const value = ref(${value.value})
 ${scriptEnd}

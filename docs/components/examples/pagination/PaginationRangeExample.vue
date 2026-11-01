@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Pagination, paginationDefaults } from '@/components/ui/Pagination'
+import { Pagination, paginationDefaults } from '@/components/Pagination'
 import ExampleCheckboxControl from '../../controls/ExampleCheckboxControl.vue'
 import ExampleSliderControl from '../../controls/ExampleSliderControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -12,7 +12,7 @@ const showEdges = ref<boolean>(paginationDefaults.showEdges)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Pagination } from '__DOCS_PACKAGE__/components/ui/Pagination'
+import { Pagination } from '__DOCS_PACKAGE__/components/Pagination'
 
 const page = ref(${page.value})
 ${scriptEnd}

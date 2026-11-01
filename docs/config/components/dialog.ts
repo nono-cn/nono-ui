@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { dialogDefaults } from '@/components/ui/Dialog'
+import { dialogDefaults } from '@/components/Dialog'
 import DialogBasicExample from '../../components/examples/dialog/DialogBasicExample.vue'
 import DialogContentExample from '../../components/examples/dialog/DialogContentExample.vue'
 import DialogControlledExample from '../../components/examples/dialog/DialogControlledExample.vue'
@@ -9,7 +9,7 @@ const dialogConfig: ComponentDocConfig = {
   title: 'Dialog',
   language: 'en',
   description: 'Displays content in a modal or non-modal layer above the page.',
-  importPath: '@nono-ui/components/ui/Dialog',
+  importPath: '@nono-ui/components/Dialog',
   usage: [
     {
       title: 'Basic dialog',

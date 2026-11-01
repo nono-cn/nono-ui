@@ -7,7 +7,7 @@ import {
   bubbleReactionsSides,
   type BubbleReactionsAlign,
   type BubbleReactionsSide,
-} from '@/components/ui/Bubble'
+} from '@/components/Bubble'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -21,7 +21,7 @@ import {
   Bubble,
   type BubbleReactionsAlign,
   type BubbleReactionsSide,
-} from '__DOCS_PACKAGE__/components/ui/Bubble'
+} from '__DOCS_PACKAGE__/components/Bubble'
 
 const reactionsSide = ref<BubbleReactionsSide>('${reactionsSide.value}')
 const reactionsAlign = ref<BubbleReactionsAlign>('${reactionsAlign.value}')

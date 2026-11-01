@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Alert, alertDefaults, alertVariantNames, type AlertVariant } from '@/components/ui/Alert'
-import { themeColors } from '@/components/ui/constants'
+import { Alert, alertDefaults, alertVariantNames, type AlertVariant } from '@/components/Alert'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -18,7 +18,7 @@ const variant = ref<AlertVariant>(alertDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Alert } from '__DOCS_PACKAGE__/components/ui/Alert'
+import { Alert } from '__DOCS_PACKAGE__/components/Alert'
 
 const color = ref('${color.value}')
 const variant = ref('${variant.value}' as const)

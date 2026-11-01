@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { switchDefaults, switchSizes } from '@/components/ui/Switch'
+import { switchDefaults, switchSizes } from '@/components/Switch'
 import SwitchBasicExample from '../../components/examples/switch/SwitchBasicExample.vue'
 import SwitchValuesExample from '../../components/examples/switch/SwitchValuesExample.vue'
 import SwitchSizeExample from '../../components/examples/switch/SwitchSizeExample.vue'
@@ -12,7 +12,7 @@ const switchConfig: ComponentDocConfig = {
   title: 'Switch',
   language: 'en',
   description: 'Accessible on/off control with custom values, color, and icons.',
-  importPath: '@nono-ui/components/ui/Switch',
+  importPath: '@nono-ui/components/Switch',
   usage: [
     { title: 'Basic usage', description: 'Toggle a boolean value.', component: SwitchBasicExample },
   ],

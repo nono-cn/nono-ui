@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Kbd, kbdDefaults, kbdVariantNames, type KbdVariant } from '@/components/ui/Kbd'
+import { Kbd, kbdDefaults, kbdVariantNames, type KbdVariant } from '@/components/Kbd'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const variant = ref<KbdVariant>(kbdDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Kbd, type KbdVariant } from '__DOCS_PACKAGE__/components/ui/Kbd'
+import { Kbd, type KbdVariant } from '__DOCS_PACKAGE__/components/Kbd'
 
 const variant = ref<KbdVariant>('${variant.value}')
 ${scriptEnd}

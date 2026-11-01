@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Alert } from '@/components/ui/Alert'
+import { Alert } from '@/components/Alert'
 import ExampleTextInputControl from '../../controls/ExampleTextInputControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,7 +10,7 @@ const description = ref('Your account details are up to date.')
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Alert } from '__DOCS_PACKAGE__/components/ui/Alert'
+import { Alert } from '__DOCS_PACKAGE__/components/Alert'
 
 const label = ref(${JSON.stringify(label.value)})
 const description = ref(${JSON.stringify(description.value)})

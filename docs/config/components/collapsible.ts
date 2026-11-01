@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { collapsibleDefaults } from '@/components/ui/Collapsible'
+import { collapsibleDefaults } from '@/components/Collapsible'
 import CollapsibleBasicExample from '../../components/examples/collapsible/CollapsibleBasicExample.vue'
 import CollapsibleStateExample from '../../components/examples/collapsible/CollapsibleStateExample.vue'
 
@@ -8,7 +8,7 @@ const collapsibleConfig: ComponentDocConfig = {
   title: 'Collapsible',
   language: 'en',
   description: 'Show or hide one section with an accessible trigger.',
-  importPath: '@nono-ui/components/ui/Collapsible',
+  importPath: '@nono-ui/components/Collapsible',
   usage: [
     {
       title: 'Basic usage',

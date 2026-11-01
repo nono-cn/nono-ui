@@ -5,8 +5,8 @@ import {
   iconTileDefaults,
   iconTileVariantNames,
   type IconTileVariant,
-} from '@/components/ui/IconTile'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/IconTile'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -21,7 +21,7 @@ const color = computed(() =>
 const variant = ref<IconTileVariant>('solid')
 const code = computed(
   () => `<script setup lang="ts">
-import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
+import { IconTile } from '__DOCS_PACKAGE__/components/IconTile'
 ${scriptEnd}
 
 <template>

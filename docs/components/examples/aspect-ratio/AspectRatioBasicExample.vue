@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { AspectRatio, aspectRatioDefaults } from '@/components/ui/AspectRatio'
+import { AspectRatio, aspectRatioDefaults } from '@/components/AspectRatio'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { AspectRatio } from '__DOCS_PACKAGE__/components/ui/AspectRatio'
+import { AspectRatio } from '__DOCS_PACKAGE__/components/AspectRatio'
 ${scriptEnd}
 
 <template>

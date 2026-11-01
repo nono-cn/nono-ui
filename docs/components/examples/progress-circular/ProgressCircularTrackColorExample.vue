@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ProgressCircular } from '@/components/ui/ProgressCircular'
-import { themeColors } from '@/components/ui/constants'
+import { ProgressCircular } from '@/components/ProgressCircular'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -13,7 +13,7 @@ const customColor = ref('#d8b4fe')
 const trackColor = computed(() => (choice.value === 'custom' ? customColor.value : choice.value))
 const code = computed(
   () => `<script setup lang="ts">
-import { ProgressCircular } from '__DOCS_PACKAGE__/components/ui/ProgressCircular'
+import { ProgressCircular } from '__DOCS_PACKAGE__/components/ProgressCircular'
 ${scriptEnd}
 
 <template>

@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest'
 import { ProgressRoot } from 'reka-ui'
 import { h, nextTick } from 'vue'
 
-import { Progress, type ProgressContext, type ProgressProps } from '@/components/ui/Progress'
-import { themeColors } from '@/components/ui/constants'
+import { Progress, type ProgressContext, type ProgressProps } from '@/components/Progress'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

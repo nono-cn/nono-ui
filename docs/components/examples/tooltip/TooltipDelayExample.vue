@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Button } from '@/components/ui/Button'
-import { Tooltip } from '@/components/ui/Tooltip'
+import { Button } from '@/components/Button'
+import { Tooltip } from '@/components/Tooltip'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,8 +9,8 @@ import { scriptEnd } from '../example-code'
 const delay = ref('500')
 const code = computed(
   () => `<script setup lang="ts">
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Tooltip } from '__DOCS_PACKAGE__/components/ui/Tooltip'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Tooltip } from '__DOCS_PACKAGE__/components/Tooltip'
 ${scriptEnd}
 
 <template>

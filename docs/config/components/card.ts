@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { cardDefaults } from '@/components/ui/Card'
+import { cardDefaults } from '@/components/Card'
 import CardBasicExample from '../../components/examples/card/CardBasicExample.vue'
 import CardActionExample from '../../components/examples/card/CardActionExample.vue'
 import CardHeaderExample from '../../components/examples/card/CardHeaderExample.vue'
@@ -13,7 +13,7 @@ const cardConfig: ComponentDocConfig = {
   language: 'en',
   description:
     'Surface with an optional header, content, and footer for grouping related information.',
-  importPath: '@nono-ui/components/ui/Card',
+  importPath: '@nono-ui/components/Card',
   usage: [
     {
       title: 'Basic card',

@@ -5,7 +5,7 @@ import {
   attachmentDefaults,
   attachmentSizes,
   type AttachmentSize,
-} from '@/components/ui/Attachment'
+} from '@/components/Attachment'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -14,7 +14,7 @@ const size = ref<AttachmentSize>(attachmentDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Attachment, type AttachmentSize } from '__DOCS_PACKAGE__/components/ui/Attachment'
+import { Attachment, type AttachmentSize } from '__DOCS_PACKAGE__/components/Attachment'
 
 const size = ref<AttachmentSize>('${size.value}')
 ${scriptEnd}

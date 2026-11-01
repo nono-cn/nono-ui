@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Switch, switchDefaults, switchSizes, type SwitchSize } from '@/components/ui/Switch'
+import { Switch, switchDefaults, switchSizes, type SwitchSize } from '@/components/Switch'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const size = ref<SwitchSize>(switchDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Switch, type SwitchSize } from '__DOCS_PACKAGE__/components/ui/Switch'
+import { Switch, type SwitchSize } from '__DOCS_PACKAGE__/components/Switch'
 
 const size = ref<SwitchSize>('${size.value}')
 ${scriptEnd}

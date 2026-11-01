@@ -1,7 +1,7 @@
 import type { VueWrapper } from '@vue/test-utils'
 import { expect, it } from 'vitest'
 
-import { Bubble, type BubbleProps } from '@/components/ui/Bubble'
+import { Bubble, type BubbleProps } from '@/components/Bubble'
 
 interface TestBubbleConfigOptions {
   text: string

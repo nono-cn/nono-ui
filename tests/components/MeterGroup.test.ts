@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Icon } from '@/components/ui/Icon'
+import { Icon } from '@/components/Icon'
 import {
   MeterGroup,
   meterGroupDefaults,
@@ -12,8 +12,8 @@ import {
   type MeterGroupItemContext,
   type MeterGroupProps,
   type MeterGroupUI,
-} from '@/components/ui/MeterGroup'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/MeterGroup'
+import { themeColors } from '@/components/constants'
 import { testAttrs } from '../utils/testAttrs'
 import { testColor } from '../utils/testColor'
 

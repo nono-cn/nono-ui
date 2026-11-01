@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Bubble } from '@/components/ui/Bubble'
+import { Bubble } from '@/components/Bubble'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
+import { Bubble } from '__DOCS_PACKAGE__/components/Bubble'
 ${scriptEnd}
 
 <template>

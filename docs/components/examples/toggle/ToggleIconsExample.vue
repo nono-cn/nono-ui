@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Toggle } from '@/components/ui/Toggle'
-import type { IconName } from '@/components/ui/Icon'
+import { Toggle } from '@/components/Toggle'
+import type { IconName } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -10,7 +10,7 @@ const icons: IconName[] = ['star', 'check', 'plus']
 const icon = ref<IconName>('star')
 const code = computed(
   () => `<script setup lang="ts">
-import { Toggle } from '__DOCS_PACKAGE__/components/ui/Toggle'
+import { Toggle } from '__DOCS_PACKAGE__/components/Toggle'
 ${scriptEnd}
 
 <template>

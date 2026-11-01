@@ -5,7 +5,7 @@ import {
   sliderDefaults,
   sliderThumbAlignments,
   type SliderThumbAlignment,
-} from '@/components/ui/Slider'
+} from '@/components/Slider'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -13,7 +13,7 @@ import { scriptEnd } from '../example-code'
 const thumbAlignment = ref<SliderThumbAlignment>(sliderDefaults.thumbAlignment)
 const code = computed(
   () => `<script setup lang="ts">
-import { Slider } from '__DOCS_PACKAGE__/components/ui/Slider'
+import { Slider } from '__DOCS_PACKAGE__/components/Slider'
 ${scriptEnd}
 
 <template>

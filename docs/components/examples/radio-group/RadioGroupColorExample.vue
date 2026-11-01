@@ -6,8 +6,8 @@ import {
   radioGroupVariantNames,
   type RadioGroupItem,
   type RadioGroupVariant,
-} from '@/components/ui/RadioGroup'
-import { themeColors } from '@/components/ui/constants'
+} from '@/components/RadioGroup'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
@@ -28,7 +28,7 @@ const color = computed(() =>
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { RadioGroup, type RadioGroupItem } from '__DOCS_PACKAGE__/components/ui/RadioGroup'
+import { RadioGroup, type RadioGroupItem } from '__DOCS_PACKAGE__/components/RadioGroup'
 
 const items: RadioGroupItem[] = [
   { label: 'Public', description: 'Anyone can see this project.', value: 'public' },

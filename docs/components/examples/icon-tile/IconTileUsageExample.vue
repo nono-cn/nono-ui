@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { IconTile } from '@/components/ui/IconTile'
+import { IconTile } from '@/components/IconTile'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { IconTile } from '__DOCS_PACKAGE__/components/ui/IconTile'
+import { IconTile } from '__DOCS_PACKAGE__/components/IconTile'
 ${scriptEnd}
 
 <template>

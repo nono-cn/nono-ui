@@ -1,5 +1,5 @@
 import type { ComponentDocConfig } from '../component-docs'
-import { messageAligns, messageDefaults } from '@/components/ui/Message'
+import { messageAligns, messageDefaults } from '@/components/Message'
 import MessageBasicExample from '../../components/examples/message/MessageBasicExample.vue'
 import MessageAlignExample from '../../components/examples/message/MessageAlignExample.vue'
 import MessageAvatarExample from '../../components/examples/message/MessageAvatarExample.vue'
@@ -15,7 +15,7 @@ const messageConfig: ComponentDocConfig = {
   title: 'Message',
   language: 'en',
   description: 'Display a chat message with its avatar, bubble, header and footer.',
-  importPath: '@nono-ui/components/ui/Message',
+  importPath: '@nono-ui/components/Message',
   usage: [
     {
       title: 'Basic usage',

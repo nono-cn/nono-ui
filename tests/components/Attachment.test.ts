@@ -9,8 +9,8 @@ import {
   type AttachmentSlots,
   type AttachmentState,
   type AttachmentUI,
-} from '@/components/ui/Attachment'
-import { Icon } from '@/components/ui/Icon'
+} from '@/components/Attachment'
+import { Icon } from '@/components/Icon'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountAttachment(options: MountingOptions<AttachmentProps> = {}) {

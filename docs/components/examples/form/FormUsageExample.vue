@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '@/components/ui/Button'
-import { Form } from '@/components/ui/Form'
-import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
+import { Button } from '@/components/Button'
+import { Form } from '@/components/Form'
+import { Input } from '@/components/Input'
+import { Label } from '@/components/Label'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -24,10 +24,10 @@ function reset() {
 
 const code = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '__DOCS_PACKAGE__/components/ui/Button'
-import { Form } from '__DOCS_PACKAGE__/components/ui/Form'
-import { Input } from '__DOCS_PACKAGE__/components/ui/Input'
-import { Label } from '__DOCS_PACKAGE__/components/ui/Label'
+import { Button } from '__DOCS_PACKAGE__/components/Button'
+import { Form } from '__DOCS_PACKAGE__/components/Form'
+import { Input } from '__DOCS_PACKAGE__/components/Input'
+import { Label } from '__DOCS_PACKAGE__/components/Label'
 
 const message = ref('')
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Stepper, type StepperStep } from '@/components/ui/Stepper'
-import { themeColors } from '@/components/ui/constants'
+import { Stepper, type StepperStep } from '@/components/Stepper'
+import { themeColors } from '@/components/constants'
 import ExampleColorControl from '../../controls/ExampleColorControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -34,7 +34,7 @@ const steps: StepperStep[] = [
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Stepper, type StepperStep } from '__DOCS_PACKAGE__/components/ui/Stepper'
+import { Stepper, type StepperStep } from '__DOCS_PACKAGE__/components/Stepper'
 
 const value = ref(${value.value})
 const color = ref(${JSON.stringify(color.value)})

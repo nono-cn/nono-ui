@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Breadcrumb, type BreadcrumbItem } from '@/components/ui/Breadcrumb'
-import { Link } from '@/components/ui/Link'
+import { Breadcrumb, type BreadcrumbItem } from '@/components/Breadcrumb'
+import { Link } from '@/components/Link'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
@@ -11,8 +11,8 @@ const items: BreadcrumbItem[] = [
   { slot: 'breadcrumb', label: 'Breadcrumb' },
 ]
 const code = `<script setup lang="ts">
-import { Breadcrumb, type BreadcrumbItem } from '__DOCS_PACKAGE__/components/ui/Breadcrumb'
-import { Link } from '__DOCS_PACKAGE__/components/ui/Link'
+import { Breadcrumb, type BreadcrumbItem } from '__DOCS_PACKAGE__/components/Breadcrumb'
+import { Link } from '__DOCS_PACKAGE__/components/Link'
 
 const items: BreadcrumbItem[] = [
   { slot: 'home', label: 'Home', to: '/' },

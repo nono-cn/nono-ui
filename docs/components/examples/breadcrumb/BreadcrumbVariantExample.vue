@@ -6,7 +6,7 @@ import {
   breadcrumbVariantNames,
   type BreadcrumbItem,
   type BreadcrumbVariant,
-} from '@/components/ui/Breadcrumb'
+} from '@/components/Breadcrumb'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -19,7 +19,7 @@ const items: BreadcrumbItem[] = [
 const variant = ref<BreadcrumbVariant>(breadcrumbDefaults.variant)
 const code = computed(
   () => `<script setup lang="ts">
-import { Breadcrumb, type BreadcrumbItem } from '__DOCS_PACKAGE__/components/ui/Breadcrumb'
+import { Breadcrumb, type BreadcrumbItem } from '__DOCS_PACKAGE__/components/Breadcrumb'
 
 const items: BreadcrumbItem[] = [
   { slot: 'home', label: 'Home', to: '/' },

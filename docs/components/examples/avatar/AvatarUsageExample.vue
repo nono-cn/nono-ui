@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Avatar } from '@/components/ui/Avatar'
+import { Avatar } from '@/components/Avatar'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const code = `<script setup lang="ts">
-import { Avatar } from '__DOCS_PACKAGE__/components/ui/Avatar'
+import { Avatar } from '__DOCS_PACKAGE__/components/Avatar'
 ${scriptEnd}
 
 <template>

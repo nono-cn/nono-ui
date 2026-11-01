@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Icon } from '@/components/ui/Icon'
+import { Icon } from '@/components/Icon'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const strokeValues = ['1', '1.5', '2', '2.5', '3']
 const stroke = ref('2')
 const code = computed(
   () => `<script setup lang="ts">
-import { Icon } from '__DOCS_PACKAGE__/components/ui/Icon'
+import { Icon } from '__DOCS_PACKAGE__/components/Icon'
 ${scriptEnd}
 
 <template>

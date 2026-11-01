@@ -6,7 +6,7 @@ import {
   bubbleReactionsSides,
   bubbleSizes,
   bubbleVariantNames,
-} from '@/components/ui/Bubble'
+} from '@/components/Bubble'
 import BubbleBasicExample from '../../components/examples/bubble/BubbleBasicExample.vue'
 import BubbleAlignExample from '../../components/examples/bubble/BubbleAlignExample.vue'
 import BubbleVariantExample from '../../components/examples/bubble/BubbleVariantExample.vue'
@@ -22,7 +22,7 @@ const bubbleConfig: ComponentDocConfig = {
   title: 'Bubble',
   language: 'en',
   description: 'Displays conversation messages with alignment, variants, and reactions.',
-  importPath: '@nono-ui/components/ui/Bubble',
+  importPath: '@nono-ui/components/Bubble',
   usage: [
     {
       title: 'Basic usage',

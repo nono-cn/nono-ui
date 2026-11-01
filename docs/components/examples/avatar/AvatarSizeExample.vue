@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Avatar, avatarDefaults, avatarSizes, type AvatarSize } from '@/components/ui/Avatar'
+import { Avatar, avatarDefaults, avatarSizes, type AvatarSize } from '@/components/Avatar'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -9,7 +9,7 @@ const size = ref<AvatarSize>(avatarDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
 import { ref } from 'vue'
-import { Avatar, type AvatarSize } from '__DOCS_PACKAGE__/components/ui/Avatar'
+import { Avatar, type AvatarSize } from '__DOCS_PACKAGE__/components/Avatar'
 
 const size = ref<AvatarSize>('${size.value}')
 ${scriptEnd}

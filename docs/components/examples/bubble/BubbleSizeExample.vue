@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Bubble, bubbleDefaults, bubbleSizes, type BubbleSize } from '@/components/ui/Bubble'
+import { Bubble, bubbleDefaults, bubbleSizes, type BubbleSize } from '@/components/Bubble'
 import ExampleSelectControl from '../../controls/ExampleSelectControl.vue'
 import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
@@ -8,7 +8,7 @@ import { scriptEnd } from '../example-code'
 const size = ref<BubbleSize>(bubbleDefaults.size)
 const code = computed(
   () => `<script setup lang="ts">
-import { Bubble } from '__DOCS_PACKAGE__/components/ui/Bubble'
+import { Bubble } from '__DOCS_PACKAGE__/components/Bubble'
 ${scriptEnd}
 
 <template>

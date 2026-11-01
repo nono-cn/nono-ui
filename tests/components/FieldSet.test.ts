@@ -2,7 +2,7 @@ import { mount, type MountingOptions } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 
-import { FieldSet, type FieldSetProps } from '@/components/ui/FieldSet'
+import { FieldSet, type FieldSetProps } from '@/components/FieldSet'
 import { testAttrs } from '../utils/testAttrs'
 
 function mountFieldSet(options: MountingOptions<FieldSetProps> = {}) {
