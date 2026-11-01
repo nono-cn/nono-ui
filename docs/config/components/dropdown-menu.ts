@@ -12,6 +12,7 @@ import DropdownMenuIconExample from '../../components/examples/dropdown-menu/Dro
 import DropdownMenuDescriptionExample from '../../components/examples/dropdown-menu/DropdownMenuDescriptionExample.vue'
 import DropdownMenuSelectExample from '../../components/examples/dropdown-menu/DropdownMenuSelectExample.vue'
 import DropdownMenuItemDisabledExample from '../../components/examples/dropdown-menu/DropdownMenuItemDisabledExample.vue'
+import DropdownMenuTextValueExample from '../../components/examples/dropdown-menu/DropdownMenuTextValueExample.vue'
 import DropdownMenuItemSlotsExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotsExample.vue'
 import DropdownMenuItemSlotExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotExample.vue'
 
@@ -79,6 +80,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
       title: 'Item disabled',
       description: 'Disable single items with item.disabled; they cannot be focused or selected.',
       component: DropdownMenuItemDisabledExample,
+    },
+    {
+      title: 'Text value',
+      description:
+        'Set item.textValue so typeahead matches the item when its slot does not start with the label.',
+      component: DropdownMenuTextValueExample,
     },
     {
       title: 'Item slots',
@@ -428,6 +435,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
             name: 'disabled',
             type: 'boolean',
             description: 'Prevents the item from being focused or selected.',
+          },
+          {
+            name: 'textValue',
+            type: 'string',
+            description:
+              'Text used by typeahead instead of the text content of the item; useful when a slot renders other content.',
           },
           {
             name: 'onSelect',

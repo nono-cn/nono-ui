@@ -126,6 +126,7 @@ export interface DropdownMenuItem {
   description?: string
   icon?: IconName
   disabled?: boolean
+  textValue?: string
   onSelect?: (event: Event) => void
 }
 

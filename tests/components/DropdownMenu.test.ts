@@ -389,6 +389,24 @@ describe('DropdownMenu', () => {
         })
       })
 
+      describe('textValue', () => {
+        it('por defecto no pasa textValue al item de Reka', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.getComponent(DropdownMenuItem).props('textValue')).toBeUndefined()
+        })
+
+        it('con item.textValue pasa ese textValue al item de Reka', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil', textValue: 'Cuenta' }] },
+          })
+
+          expect(dropdownMenu.getComponent(DropdownMenuItem).props('textValue')).toBe('Cuenta')
+        })
+      })
+
       describe('onSelect', () => {
         it('cuando Reka selecciona el item llama a item.onSelect con el evento', () => {
           const onSelect = vi.fn()

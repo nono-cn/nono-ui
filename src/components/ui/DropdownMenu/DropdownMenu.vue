@@ -77,6 +77,7 @@ const arrowProps = computed(() => {
 function getItemProps(item: DropdownMenuItemType) {
   return {
     disabled: item.disabled,
+    textValue: item.textValue,
     class: dropdownMenuItemVariants({ size: props.size, disabled: item.disabled }),
   }
 }
