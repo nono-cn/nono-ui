@@ -344,6 +344,108 @@ describe('DropdownMenu', () => {
         expect(dropdownMenu.get('[data-test-dropdown-menu-trigger]').text()).toBe('Opciones')
       })
     })
+
+    describe('item', () => {
+      it('pinta el contenido del slot dentro del item', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil' }] },
+          slots: { item: () => h('span', 'Mi perfil') },
+        })
+
+        expect(dropdownMenu.get('[data-test-dropdown-menu-item]').text()).toBe('Mi perfil')
+      })
+
+      it('con el slot no pinta el leading del item', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil', icon: 'user' }] },
+          slots: { item: () => h('span', 'Mi perfil') },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-item-leading]').exists()).toBe(false)
+      })
+
+      it('con el slot no pinta el wrapper del label y la description', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil', description: 'Tu cuenta' }] },
+          slots: { item: () => h('span', 'Mi perfil') },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-item-wrapper]').exists()).toBe(false)
+      })
+    })
+
+    describe('item-leading', () => {
+      it('pinta el contenido del slot en el leading del item', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil', icon: 'user' }] },
+          slots: { 'item-leading': () => h('span', 'P') },
+        })
+
+        expect(dropdownMenu.get('[data-test-dropdown-menu-item-leading]').text()).toBe('P')
+      })
+
+      it('con el slot no pinta el icono del item', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil', icon: 'user' }] },
+          slots: { 'item-leading': () => h('span', 'P') },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-item-icon]').exists()).toBe(false)
+      })
+
+      it('con el slot pinta el leading aunque el item no tenga icon', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil' }] },
+          slots: { 'item-leading': () => h('span', 'P') },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-item-leading]').exists()).toBe(true)
+      })
+    })
+
+    describe('item-label', () => {
+      it('pinta el contenido del slot en lugar del label del item', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil' }] },
+          slots: { 'item-label': () => h('strong', 'Mi perfil') },
+        })
+
+        expect(dropdownMenu.get('[data-test-dropdown-menu-item-label]').text()).toBe('Mi perfil')
+      })
+
+      it('con el slot pinta el label aunque el item no tenga label', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ icon: 'user' }] },
+          slots: { 'item-label': () => h('strong', 'Mi perfil') },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-item-label]').exists()).toBe(true)
+      })
+    })
+
+    describe('item-description', () => {
+      it('pinta el contenido del slot en lugar de la description del item', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil', description: 'Tu cuenta' }] },
+          slots: { 'item-description': () => h('em', 'Datos de tu cuenta') },
+        })
+
+        expect(dropdownMenu.get('[data-test-dropdown-menu-item-description]').text()).toBe(
+          'Datos de tu cuenta',
+        )
+      })
+
+      it('con el slot pinta la description aunque el item no tenga description', () => {
+        const dropdownMenu = mountDropdownMenu({
+          props: { open: true, items: [{ label: 'Perfil' }] },
+          slots: { 'item-description': () => h('em', 'Datos de tu cuenta') },
+        })
+
+        expect(dropdownMenu.find('[data-test-dropdown-menu-item-description]').exists()).toBe(
+          true,
+        )
+      })
+    })
   })
 
   describe('emits', () => {

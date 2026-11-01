@@ -145,6 +145,8 @@ export type DropdownMenuEmits = RekaDropdownMenuRootEmits
 // Slots
 export interface DropdownMenuSlots {
   default?(): unknown
+  item?(props: DropdownMenuItemContext): unknown
   'item-leading'?(props: DropdownMenuItemContext): unknown
   'item-label'?(props: DropdownMenuItemContext): unknown
+  'item-description'?(props: DropdownMenuItemContext): unknown
 }

@@ -11,6 +11,7 @@ import DropdownMenuArrowExample from '../../components/examples/dropdown-menu/Dr
 import DropdownMenuIconExample from '../../components/examples/dropdown-menu/DropdownMenuIconExample.vue'
 import DropdownMenuDescriptionExample from '../../components/examples/dropdown-menu/DropdownMenuDescriptionExample.vue'
 import DropdownMenuItemSlotsExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotsExample.vue'
+import DropdownMenuItemSlotExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotExample.vue'
 
 const dropdownMenuConfig: ComponentDocConfig = {
   slug: 'dropdown-menu',
@@ -70,8 +71,14 @@ const dropdownMenuConfig: ComponentDocConfig = {
     {
       title: 'Item slots',
       description:
-        'Replace the leading and the label of every item; the slots receive the item and its index.',
+        'Replace the leading, the label and the description of every item; the slots receive the item and its index.',
       component: DropdownMenuItemSlotsExample,
+    },
+    {
+      title: 'Item slot',
+      description:
+        'Replace the whole content of every item; the slot receives the item and its index.',
+      component: DropdownMenuItemSlotExample,
     },
   ],
   accessibility: [
@@ -433,6 +440,13 @@ const dropdownMenuConfig: ComponentDocConfig = {
         description: 'Trigger element.',
       },
       {
+        name: 'item',
+        type: 'DropdownMenuItemContext',
+        typeLink: '#dropdown-menu-item-context',
+        description:
+          'Whole content of every item; replaces the leading, the label and the description.',
+      },
+      {
         name: 'item-leading',
         type: 'DropdownMenuItemContext',
         typeLink: '#dropdown-menu-item-context',
@@ -444,6 +458,12 @@ const dropdownMenuConfig: ComponentDocConfig = {
         type: 'DropdownMenuItemContext',
         typeLink: '#dropdown-menu-item-context',
         description: 'Label of every item; replaces item.label.',
+      },
+      {
+        name: 'item-description',
+        type: 'DropdownMenuItemContext',
+        typeLink: '#dropdown-menu-item-context',
+        description: 'Description of every item; replaces item.description.',
       },
     ],
     expose: [],

@@ -127,38 +127,42 @@ function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenu
           v-bind="itemProps"
           data-test-dropdown-menu-item
         >
-          <span
-            v-if="item.icon || slots['item-leading']"
-            v-bind="itemLeadingProps"
-            data-test-dropdown-menu-item-leading
-          >
-            <slot name="item-leading" v-bind="getItemContext(item, index)">
-              <Icon
-                v-if="item.icon"
-                :name="item.icon"
-                v-bind="itemIconProps"
-                data-test-dropdown-menu-item-icon
-              />
-            </slot>
-          </span>
-          <span v-bind="itemWrapperProps" data-test-dropdown-menu-item-wrapper>
+          <slot name="item" v-bind="getItemContext(item, index)">
             <span
-              v-if="item.label || slots['item-label']"
-              v-bind="itemLabelProps"
-              data-test-dropdown-menu-item-label
+              v-if="item.icon || slots['item-leading']"
+              v-bind="itemLeadingProps"
+              data-test-dropdown-menu-item-leading
             >
-              <slot name="item-label" v-bind="getItemContext(item, index)">
-                {{ item.label }}
+              <slot name="item-leading" v-bind="getItemContext(item, index)">
+                <Icon
+                  v-if="item.icon"
+                  :name="item.icon"
+                  v-bind="itemIconProps"
+                  data-test-dropdown-menu-item-icon
+                />
               </slot>
             </span>
-            <span
-              v-if="item.description"
-              v-bind="itemDescriptionProps"
-              data-test-dropdown-menu-item-description
-            >
-              {{ item.description }}
+            <span v-bind="itemWrapperProps" data-test-dropdown-menu-item-wrapper>
+              <span
+                v-if="item.label || slots['item-label']"
+                v-bind="itemLabelProps"
+                data-test-dropdown-menu-item-label
+              >
+                <slot name="item-label" v-bind="getItemContext(item, index)">
+                  {{ item.label }}
+                </slot>
+              </span>
+              <span
+                v-if="item.description || slots['item-description']"
+                v-bind="itemDescriptionProps"
+                data-test-dropdown-menu-item-description
+              >
+                <slot name="item-description" v-bind="getItemContext(item, index)">
+                  {{ item.description }}
+                </slot>
+              </span>
             </span>
-          </span>
+          </slot>
         </DropdownMenuItem>
         <DropdownMenuArrow
           v-if="props.showArrow"
