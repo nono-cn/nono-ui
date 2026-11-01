@@ -333,6 +333,62 @@ describe('DropdownMenu', () => {
         })
       })
 
+      describe('disabled', () => {
+        it('por defecto no pasa disabled al item de Reka', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.getComponent(DropdownMenuItem).props('disabled')).toBeUndefined()
+        })
+
+        it('con item.disabled=true pasa disabled=true al item de Reka', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil', disabled: true }] },
+          })
+
+          expect(dropdownMenu.getComponent(DropdownMenuItem).props('disabled')).toBe(true)
+        })
+
+        it('con item.disabled=false pasa disabled=false al item de Reka', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil', disabled: false }] },
+          })
+
+          expect(dropdownMenu.getComponent(DropdownMenuItem).props('disabled')).toBe(false)
+        })
+
+        it('por defecto el item no tiene las class de deshabilitado', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil' }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item]').classes()).not.toContain(
+            'opacity-50',
+          )
+        })
+
+        it('con item.disabled=true el item tiene las class de deshabilitado', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil', disabled: true }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item]').classes()).toEqual(
+            expect.arrayContaining(['pointer-events-none', 'opacity-50']),
+          )
+        })
+
+        it('con item.disabled=false el item no tiene las clases de deshabilitado', () => {
+          const dropdownMenu = mountDropdownMenu({
+            props: { open: true, items: [{ label: 'Perfil', disabled: false }] },
+          })
+
+          expect(dropdownMenu.get('[data-test-dropdown-menu-item]').classes()).not.toContain(
+            'opacity-50',
+          )
+        })
+      })
+
       describe('onSelect', () => {
         it('cuando Reka selecciona el item llama a item.onSelect con el evento', () => {
           const onSelect = vi.fn()

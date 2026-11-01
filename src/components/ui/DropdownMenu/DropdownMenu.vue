@@ -74,11 +74,12 @@ const arrowProps = computed(() => {
   }
 })
 
-const itemProps = computed(() => {
+function getItemProps(item: DropdownMenuItemType) {
   return {
-    class: dropdownMenuItemVariants({ size: props.size }),
+    disabled: item.disabled,
+    class: dropdownMenuItemVariants({ size: props.size, disabled: item.disabled }),
   }
-})
+}
 
 const itemLeadingProps = computed(() => {
   return {
@@ -124,7 +125,7 @@ function getItemContext(item: DropdownMenuItemType, index: number): DropdownMenu
         <DropdownMenuItem
           v-for="(item, index) in props.items"
           :key="index"
-          v-bind="itemProps"
+          v-bind="getItemProps(item)"
           data-test-dropdown-menu-item
           @select="item.onSelect"
         >

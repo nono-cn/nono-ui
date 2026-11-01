@@ -34,8 +34,12 @@ export const dropdownMenuItemVariants = cva(
         lg: 'gap-2 px-2.5 py-1.5 text-base',
         xl: 'gap-2.5 px-3 py-2 text-base',
       } satisfies Record<DropdownMenuSize, string>,
+      disabled: {
+        true: 'pointer-events-none opacity-50',
+        false: '',
+      },
     },
-    defaultVariants: { size: dropdownMenuDefaults.size },
+    defaultVariants: { size: dropdownMenuDefaults.size, disabled: false },
   },
 )
 
@@ -121,6 +125,7 @@ export interface DropdownMenuItem {
   label?: string
   description?: string
   icon?: IconName
+  disabled?: boolean
   onSelect?: (event: Event) => void
 }
 

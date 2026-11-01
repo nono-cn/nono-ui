@@ -11,6 +11,7 @@ import DropdownMenuArrowExample from '../../components/examples/dropdown-menu/Dr
 import DropdownMenuIconExample from '../../components/examples/dropdown-menu/DropdownMenuIconExample.vue'
 import DropdownMenuDescriptionExample from '../../components/examples/dropdown-menu/DropdownMenuDescriptionExample.vue'
 import DropdownMenuSelectExample from '../../components/examples/dropdown-menu/DropdownMenuSelectExample.vue'
+import DropdownMenuItemDisabledExample from '../../components/examples/dropdown-menu/DropdownMenuItemDisabledExample.vue'
 import DropdownMenuItemSlotsExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotsExample.vue'
 import DropdownMenuItemSlotExample from '../../components/examples/dropdown-menu/DropdownMenuItemSlotExample.vue'
 
@@ -75,6 +76,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
       component: DropdownMenuSelectExample,
     },
     {
+      title: 'Item disabled',
+      description: 'Disable single items with item.disabled; they cannot be focused or selected.',
+      component: DropdownMenuItemDisabledExample,
+    },
+    {
       title: 'Item slots',
       description:
         'Replace the leading, the label and the description of every item; the slots receive the item and its index.',
@@ -106,6 +112,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
           ['role="menu"', 'Content', 'Announces the content as a menu.'],
           ['aria-labelledby', 'Content', 'Id of the trigger, so the menu is named by it.'],
           ['role="menuitem"', 'Item', 'Announces each item as a menu item.'],
+          [
+            'aria-disabled, data-disabled',
+            'Item',
+            'Set on items with disabled; keyboard navigation skips them.',
+          ],
           ['aria-hidden="true"', 'Rest of the page', 'Set while a modal menu is open.'],
         ],
       },
@@ -412,6 +423,11 @@ const dropdownMenuConfig: ComponentDocConfig = {
             type: 'IconName',
             typeLink: '/components/icon',
             description: 'Icon shown before the label; its size follows the menu size.',
+          },
+          {
+            name: 'disabled',
+            type: 'boolean',
+            description: 'Prevents the item from being focused or selected.',
           },
           {
             name: 'onSelect',
