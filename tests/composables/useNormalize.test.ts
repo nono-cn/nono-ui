@@ -27,6 +27,16 @@ describe('normalizeHTMLAttributes', () => {
     expect(normalizeHTMLAttributes(attributes)).toEqual(attributes)
   })
 
+  it('conserva los atributos HTML que Vue no reconoce, como role, inputmode o popover', () => {
+    const attributes = {
+      role: 'banner',
+      inputMode: 'numeric',
+      popover: 'auto',
+    }
+
+    expect(normalizeHTMLAttributes(attributes)).toEqual(attributes)
+  })
+
   it('elimina propiedades que no son atributos nativos', () => {
     const attributes = {
       id: 'elemento',
