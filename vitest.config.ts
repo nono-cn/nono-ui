@@ -16,6 +16,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
     include: ['tests/**/*.test.ts'],
+    // no corta los $text de it.each ni los valores en los mensajes de error
+    chaiConfig: { truncateThreshold: 0 },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],

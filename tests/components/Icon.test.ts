@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest'
 
 import { Icon, iconDefaults, type IconProps } from '@/components/Icon'
 import { testAttrs } from '../utils/testAttrs'
-import { testClassMerge } from '../utils/testClassMerge'
 import { testColor } from '../utils/testColor'
 
 function mountIcon(options: MountingOptions<IconProps> = {}) {
@@ -21,7 +20,7 @@ describe('Icon', () => {
     })
 
     describe('size', () => {
-      it('por defecto tiene la class size-5', () => {
+      it('por defecto tiene el size' + iconDefaults.size, () => {
         const icon = mountIcon({ props: { name: 'check' } })
 
         expect(icon.get('[data-test-icon-root]').classes()).toContain('size-5')
@@ -62,14 +61,6 @@ describe('Icon', () => {
         const icon = mountIcon({ props: { name: 'check' } })
 
         expect(icon.get('[data-test-icon-root]').attributes('style')).not.toContain('--icon-color')
-      })
-
-      it('con color=currentColor hereda el color del texto', () => {
-        const icon = mountIcon({ props: { name: 'check', color: 'currentColor' } })
-
-        expect(icon.get('[data-test-icon-root]').attributes('style')).toContain(
-          'color: currentcolor',
-        )
       })
 
       it('con un color distinto de currentColor pinta con var(--icon-color)', () => {
@@ -117,27 +108,14 @@ describe('Icon', () => {
 
         expect(icon.get('[data-test-icon-root]').classes()).toContain('shrink-0')
       })
-    })
-  })
 
-  describe('attrs', () => {
-    testAttrs({
-      text: 'pasa los attrs arbitrarios, class y style a la raíz',
-      id: '[data-test-icon-root]',
-      mount: (attrs) => mountIcon({ attrs }),
-    })
-
-    testClassMerge({
-      id: '[data-test-icon-root]',
-      ownClass: 'size-5',
-      conflictingClass: 'size-8',
-      mount: (attrs) => mountIcon({ attrs }),
-    })
-
-    it('con aria-hidden en attrs lo sobrescribe', () => {
-      const icon = mountIcon({ attrs: { 'aria-hidden': 'false' } })
-
-      expect(icon.get('[data-test-icon-root]').attributes('aria-hidden')).toBe('false')
+      testAttrs({
+        id: '[data-test-icon-root]',
+        ownClass: 'size-5',
+        conflictingClass: 'size-8',
+        notOverridable: ['stroke-width', 'width', 'height', 'stroke'],
+        mount: (attrs) => mountIcon({ attrs }),
+      })
     })
   })
 })

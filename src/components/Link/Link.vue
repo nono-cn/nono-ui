@@ -31,7 +31,6 @@ const rootProps = computed(() => {
   return mergeProps(attrs, {
     ...buttonProps.value,
     as: props.to === undefined ? 'div' : ('a' as const),
-    asChild: false,
     loading: false,
     'data-test-link-root': '',
   })

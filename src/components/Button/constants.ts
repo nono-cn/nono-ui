@@ -5,12 +5,12 @@ export const buttonVariantNames = ['solid', 'outline', 'plain', 'subtle', 'soft'
 
 export const buttonDefaults = {
   as: 'button' as const,
-  asChild: false,
   label: undefined,
   variant: 'solid' as const,
   size: 'md' as const,
   radius: 'md' as const,
   loading: false,
+  disabled: false,
   color: 'primary',
   icon: undefined,
   trailingIcon: undefined,
