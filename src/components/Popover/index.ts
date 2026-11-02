@@ -15,14 +15,14 @@ export { popoverDefaults } from './constants'
 export const popoverContentVariants = cva(
   'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-72 max-w-(--reka-popover-content-available-width) origin-(--reka-popover-content-transform-origin) rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden',
 )
-export const popoverArrowVariants = cva('fill-popover stroke-border -translate-y-px')
+export const popoverArrowVariants = cva(
+  'fill-popover stroke-border -translate-y-px [&>path]:[vector-effect:non-scaling-stroke]',
+)
 
 // Props Reka
 export type PopoverRootProps = Pick<RekaPopoverRootProps, 'modal'>
 export type PopoverContentProps = Pick<
   RekaPopoverContentProps,
-  | 'as'
-  | 'asChild'
   | 'side'
   | 'sideOffset'
   | 'sideFlip'
@@ -43,10 +43,7 @@ export type PopoverContentProps = Pick<
   | 'disableOutsidePointerEvents'
   | 'forceMount'
 >
-export type PopoverArrowProps = Pick<
-  RekaPopoverArrowProps,
-  'as' | 'asChild' | 'width' | 'height' | 'rounded'
->
+export type PopoverArrowProps = Pick<RekaPopoverArrowProps, 'width' | 'height' | 'rounded'>
 export type PopoverContentConfig = PopoverContentProps & EmitsAsProps<RekaPopoverContentEmits>
 export type PopoverArrowConfig = PopoverArrowProps
 

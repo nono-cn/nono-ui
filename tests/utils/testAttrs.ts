@@ -35,9 +35,9 @@ export function testAttrs({
 }: TestAttrsOptions) {
   describe(text, () => {
     it('añade los attrs que el nodo no tiene', async () => {
-      const node = (await mount({ id: 'mi-id', 'aria-label': 'Mi etiqueta' })).get(id)
+      const node = (await mount({ title: 'Mi título', 'aria-label': 'Mi etiqueta' })).get(id)
 
-      expect(node.attributes('id')).toBe('mi-id')
+      expect(node.attributes('title')).toBe('Mi título')
       expect(node.attributes('aria-label')).toBe('Mi etiqueta')
     })
 

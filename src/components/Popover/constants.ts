@@ -4,8 +4,6 @@ export const popoverDefaults = {
   showArrow: false,
   ui: undefined,
   content: {
-    as: 'div' as const,
-    asChild: false,
     side: 'bottom' as const,
     sideOffset: 4,
     sideFlip: true,
@@ -27,8 +25,6 @@ export const popoverDefaults = {
     forceMount: false,
   },
   arrow: {
-    as: 'svg' as const,
-    asChild: false,
     width: 10,
     height: 5,
     rounded: false,

@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'reka-ui'
 import { cn } from '@/lib/utils'
 import { useUi } from '@/composables/useUi'
-import { arrowPaths } from '@/components/constants'
 import {
   popoverArrowVariants,
   popoverContentVariants,
@@ -44,14 +43,16 @@ const triggerProps = {
 }
 
 const contentProps = computed(() => {
-  const { dir: _dir, class: uiClass, ...contentUI } = useUi(props.ui?.content, popoverContext.value)
+  const { dir: _dir, ...ui } = useUi(props.ui?.content, popoverContext.value)
   void _dir
 
   return {
-    ...contentUI,
+    ...ui,
     ...popoverDefaults.content,
     ...props.content,
-    class: cn(popoverContentVariants(), uiClass),
+    as: 'div' as const,
+    asChild: false,
+    class: cn(popoverContentVariants(), ui.class),
   }
 })
 
@@ -63,13 +64,15 @@ const portalProps = {
 }
 
 const arrowProps = computed(() => {
-  const { class: uiClass, ...arrowUI } = useUi(props.ui?.arrow, popoverContext.value)
+  const ui = useUi(props.ui?.arrow, popoverContext.value)
 
   return {
-    ...arrowUI,
+    ...ui,
     ...popoverDefaults.arrow,
     ...props.arrow,
-    class: cn(popoverArrowVariants(), uiClass),
+    as: 'svg' as const,
+    asChild: false,
+    class: cn(popoverArrowVariants(), ui.class),
   }
 })
 </script>
@@ -83,12 +86,7 @@ const arrowProps = computed(() => {
     <PopoverPortal v-bind="portalProps">
       <PopoverContent v-if="$slots.content" v-bind="contentProps" data-test-popover-content>
         <slot name="content" v-bind="popoverContext" />
-        <PopoverArrow v-if="props.showArrow" v-bind="arrowProps" data-test-popover-arrow>
-          <path
-            :d="arrowProps.rounded ? arrowPaths.rounded : arrowPaths.sharp"
-            vector-effect="non-scaling-stroke"
-          />
-        </PopoverArrow>
+        <PopoverArrow v-if="props.showArrow" v-bind="arrowProps" data-test-popover-arrow />
       </PopoverContent>
     </PopoverPortal>
   </PopoverRoot>

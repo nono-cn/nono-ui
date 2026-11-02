@@ -133,18 +133,6 @@ const popoverConfig: ComponentDocConfig = {
           'Reka UI content props and event callbacks. Set HTML attributes such as class and style through ui.content.',
         rows: [
           {
-            name: 'as',
-            type: 'AsTag | Component',
-            default: formatValue(popoverDefaults.content.as),
-            description: 'Element or component the content renders as.',
-          },
-          {
-            name: 'asChild',
-            type: 'boolean',
-            default: formatValue(popoverDefaults.content.asChild),
-            description: 'Renders the child element instead, merging props and behavior.',
-          },
-          {
             name: 'side',
             type: "'top' | 'right' | 'bottom' | 'left'",
             default: formatValue(popoverDefaults.content.side),
@@ -303,18 +291,6 @@ const popoverConfig: ComponentDocConfig = {
         description:
           'Reka UI arrow props. Set HTML attributes such as class and style through ui.arrow.',
         rows: [
-          {
-            name: 'as',
-            type: 'AsTag | Component',
-            default: formatValue(popoverDefaults.arrow.as),
-            description: 'Element or component the arrow renders as.',
-          },
-          {
-            name: 'asChild',
-            type: 'boolean',
-            default: formatValue(popoverDefaults.arrow.asChild),
-            description: 'Renders the child element instead of the default arrow.',
-          },
           {
             name: 'width',
             type: 'number',
