@@ -96,13 +96,13 @@ const chipConfig: ComponentDocConfig = {
         name: 'position',
         type: chipPositions.map((position) => `'${position}'`).join(' | '),
         default: `'${chipDefaults.position}'`,
-        description: 'Chip position when it is rendered without a default slot.',
+        description: 'Corner where the chip is positioned.',
       },
       {
         name: 'show',
         type: 'boolean',
         default: String(chipDefaults.show),
-        description: 'Controls whether the chip is visible. Use with v-model:show.',
+        description: 'Controls whether the chip is visible.',
       },
       {
         name: 'inset',
@@ -117,13 +117,7 @@ const chipConfig: ComponentDocConfig = {
         description: 'Displays the chip without absolute positioning.',
       },
     ],
-    emits: [
-      {
-        name: 'update:show',
-        type: '[value: boolean]',
-        description: 'Emitted when the chip’s visibility changes.',
-      },
-    ],
+    emits: [],
     slots: [{ name: 'default', type: '-', description: 'Element the chip is positioned over.' }],
     expose: [],
   },
