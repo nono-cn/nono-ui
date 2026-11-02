@@ -8,7 +8,7 @@ export { kbdDefaults, kbdSizes, kbdVariantNames } from './constants'
 export const kbdGroupVariants = cva('inline-flex items-center gap-1')
 
 export const kbdVariants = cva(
-  'pointer-events-none inline-flex w-fit min-w-5 items-center justify-center gap-1 rounded-(--kbd-radius) border font-sans font-medium uppercase select-none [&_svg:not([class*="size-"])]:size-3',
+  'inline-flex w-fit items-center justify-center gap-1 rounded-(--kbd-radius) border font-sans font-medium uppercase',
   {
     variants: {
       size: {
@@ -17,7 +17,7 @@ export const kbdVariants = cva(
         lg: 'h-6 min-w-6 px-1 text-xs',
       } satisfies Record<(typeof kbdSizes)[number], string>,
       variant: {
-        solid: 'border-transparent bg-(--kbd-solid) text-(--kbd-solid-foreground)',
+        solid: 'border-transparent bg-(--kbd-color) text-(--kbd-color-foreground)',
         outline: 'border-(--kbd-color)/40 bg-transparent text-(--kbd-color)',
         soft: 'border-transparent bg-(--kbd-color)/10 text-(--kbd-color)',
         subtle: 'border-(--kbd-color)/20 bg-(--kbd-color)/10 text-(--kbd-color)',
