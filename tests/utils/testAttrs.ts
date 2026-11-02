@@ -11,6 +11,8 @@ interface TestAttrsOptions {
   notOverridable?: string[]
   // valor con el que sustituir un atributo cuando 'sustituido' no es válido (p. ej. type de un button)
   values?: Record<string, string>
+  // el nodo recibe los attrs normalizados (ui con useUi): descarta los que no son nativos
+  normalized?: boolean
   mount: (attrs: Record<string, string>) => VueWrapper | Promise<VueWrapper>
 }
 
@@ -28,6 +30,7 @@ export function testAttrs({
   conflictingClass,
   notOverridable = [],
   values = {},
+  normalized = false,
   mount,
 }: TestAttrsOptions) {
   describe(text, () => {
@@ -73,6 +76,14 @@ export function testAttrs({
         }
 
         expect(replaced).toEqual({})
+      })
+    }
+
+    if (normalized) {
+      it('descarta los attrs que no son nativos', async () => {
+        const node = (await mount({ foo: 'y' })).get(id)
+
+        expect(node.attributes('foo')).toBeUndefined()
       })
     }
 
