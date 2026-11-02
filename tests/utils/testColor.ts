@@ -15,9 +15,11 @@ export function testColor({ id, variable, fallbackColor, mount }: TestColorOptio
     expect(node.attributes('style')).toContain(`${variable}: var(--error, var(--${fallbackColor}))`)
   })
 
-  it(`con un color CSS define ${variable} con ese color`, async () => {
-    const node = (await mount('#ff0000')).get(id)
+  it(`se actualiza ${variable} al cambiar color`, async () => {
+    const wrapper = await mount('error')
 
-    expect(node.attributes('style')).toContain(`${variable}: #ff0000`)
+    await wrapper.setProps({ color: '#ff0000' })
+
+    expect(wrapper.get(id).attributes('style')).toContain(`${variable}: #ff0000`)
   })
 }

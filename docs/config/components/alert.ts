@@ -114,7 +114,7 @@ const alertConfig: ComponentDocConfig = {
       {
         name: 'closeButton',
         type: 'ButtonConfig',
-        typeLink: '/components/button#button-config',
+        typeLink: '/components/button#props',
         default: String(alertDefaults.closeButton),
         description:
           'Configuration for the default close button. Only shown when closable is true.',

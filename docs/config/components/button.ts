@@ -79,7 +79,17 @@ const buttonConfig: ComponentDocConfig = {
       table: {
         columns: ['Attribute', 'Element', 'Value'],
         rows: [
-          ['button', 'Root', 'Native button, unless as or asChild render another element.'],
+          ['button', 'Root', 'Native button, unless as renders another element.'],
+          [
+            'type="button"',
+            'Root',
+            'Set on the native button so it does not submit a form; pass type="submit" to submit one.',
+          ],
+          [
+            'disabled',
+            'Root',
+            'Set on a native button while disabled; other elements get aria-disabled="true" instead.',
+          ],
           ['aria-busy="true"', 'Root', 'Set while loading.'],
           [
             'aria-disabled="true"',
@@ -143,6 +153,13 @@ const buttonConfig: ComponentDocConfig = {
           'Displays the default loading icon or the loading slot, and adds aria-busy and aria-disabled.',
       },
       {
+        name: 'disabled',
+        type: 'boolean',
+        default: String(buttonDefaults.disabled),
+        description:
+          'Prevents interaction and dims the button; a native button gets disabled and other elements get aria-disabled.',
+      },
+      {
         name: 'color',
         type: 'string',
         default: `'${buttonDefaults.color}'`,
@@ -167,48 +184,13 @@ const buttonConfig: ComponentDocConfig = {
         default: `'${buttonDefaults.as}'`,
         description: 'Element or component rendered as the root, such as button or a.',
       },
-      {
-        name: 'asChild',
-        type: 'boolean',
-        default: String(buttonDefaults.asChild),
-        description: 'Applies the props and behavior to the element provided in the default slot.',
-      },
-    ],
-    configs: [
-      {
-        id: 'button-config',
-        title: 'ButtonConfig',
-        description:
-          'Reusable type for Button configurations in other components. Combines ButtonProps, the onClick listener derived from ButtonEmits, and HTMLAttributes.',
-        showDefault: false,
-        rows: [
-          {
-            name: 'ButtonProps',
-            type: 'ButtonProps',
-            typeLink: '#props',
-            description: 'Includes Button’s public props.',
-          },
-          {
-            name: 'EmitsAsProps<ButtonEmits>',
-            type: 'EmitsAsProps<ButtonEmits>',
-            typeLink: '#emits',
-            description:
-              'Exposes the click event as the onClick property in nested configurations.',
-          },
-          {
-            name: 'HTMLAttributes',
-            type: 'HTMLAttributes',
-            description:
-              'Includes HTML and ARIA attributes, class, style, and native event listeners.',
-          },
-        ],
-      },
     ],
     emits: [
       {
         name: 'click',
         type: '[event: PointerEvent]',
-        description: 'Emitted when the button is clicked while it is not loading or aria-disabled.',
+        description:
+          'Emitted when the button is clicked while it is not disabled, loading or aria-disabled.',
       },
     ],
     slots: [

@@ -1,38 +1,102 @@
 import type { VueWrapper } from '@vue/test-utils'
-import { expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 interface TestAttrsOptions {
-  text: string
+  text?: string
   id: string
-  assertId?: boolean
-  assertAriaLabel?: boolean
+  // class propia del nodo y otra de attrs que choca con ella (tailwind-merge se queda con la de attrs)
+  ownClass: string
+  conflictingClass: string
+  // atributos propios del nodo que los attrs no pueden sustituir
+  notOverridable?: string[]
+  // valor con el que sustituir un atributo cuando 'sustituido' no es válido (p. ej. type de un button)
+  values?: Record<string, string>
   mount: (attrs: Record<string, string>) => VueWrapper | Promise<VueWrapper>
 }
 
-const attrs = {
-  id: 'test-component',
-  'aria-label': 'Component',
-  class: 'custom-component',
-  style: 'opacity: 0.5',
+function styleDeclarations(style: string | undefined) {
+  return (style ?? '')
+    .split(';')
+    .map((declaration) => declaration.trim())
+    .filter(Boolean)
 }
 
 export function testAttrs({
-  text = 'forwards arbitrary attrs, class and style to root',
+  text = 'fusiona los attrs con los del nodo',
   id,
-  assertId = true,
-  assertAriaLabel = true,
+  ownClass,
+  conflictingClass,
+  notOverridable = [],
+  values = {},
   mount,
 }: TestAttrsOptions) {
-  it(text, async () => {
-    const root = (await mount(attrs)).get(id)
+  describe(text, () => {
+    it('añade los attrs que el nodo no tiene', async () => {
+      const node = (await mount({ id: 'mi-id', 'aria-label': 'Mi etiqueta' })).get(id)
 
-    if (assertId) {
-      expect(root.attributes('id')).toBe(attrs.id)
+      expect(node.attributes('id')).toBe('mi-id')
+      expect(node.attributes('aria-label')).toBe('Mi etiqueta')
+    })
+
+    const exceptions = notOverridable.length ? ` excepto ${notOverridable.join(', ')}` : ''
+
+    it(`los attrs sustituyen a los atributos propios del nodo${exceptions}`, async () => {
+      const own = (await mount({})).get(id).attributes()
+      const names = Object.keys(own).filter(
+        (name) =>
+          name !== 'class' &&
+          name !== 'style' &&
+          !name.startsWith('data-test-') &&
+          !notOverridable.includes(name),
+      )
+
+      const notReplaced: Record<string, string | undefined> = {}
+      for (const name of names) {
+        const value = values[name] ?? 'sustituido'
+        const node = (await mount({ [name]: value })).get(id)
+
+        if (node.attributes(name) !== value) notReplaced[name] = node.attributes(name)
+      }
+
+      expect(notReplaced).toEqual({})
+    })
+
+    if (notOverridable.length) {
+      it(`con ${notOverridable.join(', ')} en attrs mantiene los suyos`, async () => {
+        const own = (await mount({})).get(id).attributes()
+
+        const replaced: Record<string, string | undefined> = {}
+        for (const name of notOverridable) {
+          const node = (await mount({ [name]: 'sustituido' })).get(id)
+
+          if (node.attributes(name) !== own[name]) replaced[name] = node.attributes(name)
+        }
+
+        expect(replaced).toEqual({})
+      })
     }
-    if (assertAriaLabel) {
-      expect(root.attributes('aria-label')).toBe(attrs['aria-label'])
-    }
-    expect(root.classes()).toContain(attrs.class)
-    expect(root.attributes('style')).toContain(attrs.style)
+
+    it('añade la class de attrs sin quitar las suyas', async () => {
+      const own = (await mount({})).get(id).classes()
+      const node = (await mount({ class: 'mi-clase' })).get(id)
+
+      expect(node.classes()).toEqual(expect.arrayContaining([...own, 'mi-clase']))
+    })
+
+    it(`con ${conflictingClass} en attrs sustituye a ${ownClass}`, async () => {
+      const node = (await mount({ class: conflictingClass })).get(id)
+
+      expect(node.classes()).toContain(conflictingClass)
+      expect(node.classes()).not.toContain(ownClass)
+    })
+
+    it('añade el style de attrs sin quitar el suyo', async () => {
+      const own = styleDeclarations((await mount({})).get(id).attributes('style'))
+      const node = (await mount({ style: 'opacity: 0.5' })).get(id)
+
+      expect(styleDeclarations(node.attributes('style'))).toEqual(
+        expect.arrayContaining([...own, 'opacity: 0.5']),
+      )
+    })
   })
 }

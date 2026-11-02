@@ -116,7 +116,7 @@ const alertDialogConfig: ComponentDocConfig = {
       {
         name: 'actionButton',
         type: 'ButtonConfig',
-        typeLink: '/components/button#button-config',
+        typeLink: '/components/button#props',
         default: String(alertDialogDefaults.actionButton),
         description:
           'Configuration for the default action Button. Its label comes from i18n; provided values override the fallback.',
@@ -124,7 +124,7 @@ const alertDialogConfig: ComponentDocConfig = {
       {
         name: 'cancelButton',
         type: 'ButtonConfig',
-        typeLink: '/components/button#button-config',
+        typeLink: '/components/button#props',
         default: String(alertDialogDefaults.cancelButton),
         description: `Configuration for the default cancel Button. Uses the ${alertDialogCancelButtonDefaults.variant} variant, ${alertDialogCancelButtonDefaults.color} color, and the i18n-provided label by default.`,
       },

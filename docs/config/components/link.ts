@@ -91,7 +91,7 @@ const linkConfig: ComponentDocConfig = {
     props: [
       {
         name: '...ButtonProps',
-        type: "Omit<ButtonProps, 'as' | 'asChild' | 'loading'>",
+        type: "Omit<ButtonProps, 'as' | 'loading'>",
         typeLink: '/components/button#props',
         description:
           'Includes label, variant, size, radius, color, icon, and trailingIcon. Link defaults variant to link; the other inherited defaults match Button.',
