@@ -698,155 +698,213 @@ describe('Button', () => {
   })
 
   describe('nodos', () => {
-    const casesNodos = [
-      {
-        text: 'root coloca el contenido en fila, centrado y separado con gap-2',
-        input: { node: 'root', props: {} },
-        expected: {
-          class: ['inline-flex', 'shrink-0', 'items-center', 'justify-center', 'gap-2'],
-          attrs: {},
-          reka: {},
-        },
-      },
-      {
-        text: 'root tiene un borde transparente y el radio de --button-radius',
-        input: { node: 'root', props: {} },
-        expected: {
-          class: ['border', 'border-transparent', 'rounded-(--button-radius)'],
-          attrs: {},
-          reka: {},
-        },
-      },
-      {
-        text: 'root no parte el texto, lo pone en negrita media y anima los cambios de color',
-        input: { node: 'root', props: {} },
-        expected: {
-          class: ['whitespace-nowrap', 'font-medium', 'transition-colors'],
-          attrs: {},
-          reka: {},
-        },
-      },
-      {
-        text: 'root con el foco de teclado muestra un anillo de --button-color en lugar del outline',
-        input: { node: 'root', props: {} },
-        expected: {
-          class: [
-            'outline-none',
-            'focus-visible:border-(--button-color)',
-            'focus-visible:ring-[3px]',
-            'focus-visible:ring-(--button-color)/30',
-          ],
-          attrs: {},
-          reka: {},
-        },
-      },
-      {
-        text: 'root tiene data-button-ui=root',
-        input: { node: 'root', props: {} },
-        expected: {
-          class: [],
-          attrs: { 'data-button-ui': 'root' },
-          reka: {},
-        },
-      },
-      {
-        text: 'root se pinta como su propio elemento en lugar de pasar sus props al hijo',
-        input: { node: 'root', props: {} },
-        expected: {
-          class: [],
-          attrs: {},
-          reka: { asChild: false },
-        },
-      },
-      {
-        text: 'leading centra su contenido sin encogerse',
-        input: { node: 'leading', props: { icon: 'check' } },
-        expected: {
-          class: ['inline-flex', 'shrink-0', 'items-center', 'justify-center'],
-          attrs: {},
-          reka: {},
-        },
-      },
-      {
-        text: 'leading tiene data-button-ui=leading para que root ajuste su padding',
-        input: { node: 'leading', props: { icon: 'check' } },
-        expected: {
-          class: [],
-          attrs: { 'data-button-ui': 'leading' },
-          reka: {},
-        },
-      },
-      {
-        text: 'trailing centra su contenido sin encogerse',
-        input: { node: 'trailing', props: { trailingIcon: 'chevronRight' } },
-        expected: {
-          class: ['inline-flex', 'shrink-0', 'items-center', 'justify-center'],
-          attrs: {},
-          reka: {},
-        },
-      },
-      {
-        text: 'trailing tiene data-button-ui=trailing para que root ajuste su padding',
-        input: { node: 'trailing', props: { trailingIcon: 'chevronRight' } },
-        expected: {
-          class: [],
-          attrs: { 'data-button-ui': 'trailing' },
-          reka: {},
-        },
-      },
-      {
-        text: 'icon ocupa todo el hueco del leading',
-        input: { node: 'icon', props: { icon: 'check' } },
-        expected: {
-          class: ['size-full'],
-          attrs: {},
-          reka: {},
-        },
-      },
-      {
-        text: 'trailing-icon ocupa todo el hueco del trailing',
-        input: { node: 'trailing-icon', props: { trailingIcon: 'chevronRight' } },
-        expected: {
-          class: ['size-full'],
-          attrs: {},
-          reka: {},
-        },
-      },
-      {
-        text: 'loading-icon ocupa todo el hueco del leading y gira sin parar',
-        input: { node: 'loading-icon', props: { loading: true } },
-        expected: {
-          class: ['size-full', 'animate-spin'],
-          attrs: {},
-          reka: {},
-        },
-      },
-    ] as const
-
-    it.each(casesNodos)('$text', ({ input, expected }) => {
-      const button = mountButton({ props: input.props })
-      const node = button.get(`[data-test-button-${input.node}]`)
-
-      expect({
-        class: node.classes(),
-        attrs: node.attributes(),
-        reka: button.getComponent(Primitive).props(),
-      }).toEqual({
-        class: expect.arrayContaining(expected.class),
-        attrs: expect.objectContaining(expected.attrs),
-        reka: expect.objectContaining(expected.reka),
-      })
-    })
-
     describe('root', () => {
+      const casesRoot = [
+        {
+          text: 'coloca el contenido en fila, centrado y separado con gap-2',
+          input: {},
+          expected: {
+            class: ['inline-flex', 'shrink-0', 'items-center', 'justify-center', 'gap-2'],
+            attrs: {},
+            reka: {},
+          },
+        },
+        {
+          text: 'tiene un borde transparente y el radio de --button-radius',
+          input: {},
+          expected: {
+            class: ['border', 'border-transparent', 'rounded-(--button-radius)'],
+            attrs: {},
+            reka: {},
+          },
+        },
+        {
+          text: 'no parte el texto, lo pone en negrita media y anima los cambios de color',
+          input: {},
+          expected: {
+            class: ['whitespace-nowrap', 'font-medium', 'transition-colors'],
+            attrs: {},
+            reka: {},
+          },
+        },
+        {
+          text: 'con el foco de teclado muestra un anillo de --button-color en lugar del outline',
+          input: {},
+          expected: {
+            class: [
+              'outline-none',
+              'focus-visible:border-(--button-color)',
+              'focus-visible:ring-[3px]',
+              'focus-visible:ring-(--button-color)/30',
+            ],
+            attrs: {},
+            reka: {},
+          },
+        },
+        {
+          text: 'tiene data-button-ui=root',
+          input: {},
+          expected: {
+            class: [],
+            attrs: { 'data-button-ui': 'root' },
+            reka: {},
+          },
+        },
+        {
+          text: 'se pinta como su propio elemento en lugar de pasar sus props al hijo',
+          input: {},
+          expected: {
+            class: [],
+            attrs: {},
+            reka: { asChild: false },
+          },
+        },
+      ] as const
+
+      it.each(casesRoot)('$text', ({ input, expected }) => {
+        const button = mountButton({ props: input })
+        const root = button.get('[data-test-button-root]')
+
+        expect({
+          class: root.classes(),
+          attrs: root.attributes(),
+          reka: button.getComponent(Primitive).props(),
+        }).toEqual({
+          class: expect.arrayContaining(expected.class),
+          attrs: expect.objectContaining(expected.attrs),
+          reka: expect.objectContaining(expected.reka),
+        })
+      })
+
       testAttrs({
         id: '[data-test-button-root]',
         ownClass: 'h-9',
         conflictingClass: 'h-12',
+        // data-button-ui lo usan los estilos para saber si hay leading o trailing
         notOverridable: ['data-button-ui'],
         // type="sustituido" no es válido y el navegador lo convierte en submit
         values: { type: 'reset' },
         mount: (attrs) => mountButton({ attrs }),
+      })
+    })
+
+    describe('leading', () => {
+      const casesLeading = [
+        {
+          text: 'centra su contenido sin encogerse',
+          input: { icon: 'check' },
+          expected: {
+            class: ['inline-flex', 'shrink-0', 'items-center', 'justify-center'],
+            attrs: {},
+          },
+        },
+        {
+          text: 'tiene data-button-ui=leading para que root ajuste su padding',
+          input: { icon: 'check' },
+          expected: {
+            class: [],
+            attrs: { 'data-button-ui': 'leading' },
+          },
+        },
+      ] as const
+
+      it.each(casesLeading)('$text', ({ input, expected }) => {
+        const leading = mountButton({ props: input }).get('[data-test-button-leading]')
+
+        expect({ class: leading.classes(), attrs: leading.attributes() }).toEqual({
+          class: expect.arrayContaining(expected.class),
+          attrs: expect.objectContaining(expected.attrs),
+        })
+      })
+    })
+
+    describe('trailing', () => {
+      const casesTrailing = [
+        {
+          text: 'centra su contenido sin encogerse',
+          input: { trailingIcon: 'chevronRight' },
+          expected: {
+            class: ['inline-flex', 'shrink-0', 'items-center', 'justify-center'],
+            attrs: {},
+          },
+        },
+        {
+          text: 'tiene data-button-ui=trailing para que root ajuste su padding',
+          input: { trailingIcon: 'chevronRight' },
+          expected: {
+            class: [],
+            attrs: { 'data-button-ui': 'trailing' },
+          },
+        },
+      ] as const
+
+      it.each(casesTrailing)('$text', ({ input, expected }) => {
+        const trailing = mountButton({ props: input }).get('[data-test-button-trailing]')
+
+        expect({ class: trailing.classes(), attrs: trailing.attributes() }).toEqual({
+          class: expect.arrayContaining(expected.class),
+          attrs: expect.objectContaining(expected.attrs),
+        })
+      })
+    })
+
+    describe('icon', () => {
+      const casesIconNode = [
+        {
+          text: 'ocupa todo el hueco del leading',
+          input: { icon: 'check' },
+          expected: {
+            class: ['size-full'],
+          },
+        },
+      ] as const
+
+      it.each(casesIconNode)('$text', ({ input, expected }) => {
+        const icon = mountButton({ props: input }).get('[data-test-button-icon]')
+
+        expect({ class: icon.classes() }).toEqual({
+          class: expect.arrayContaining(expected.class),
+        })
+      })
+    })
+
+    describe('trailing-icon', () => {
+      const casesTrailingIconNode = [
+        {
+          text: 'ocupa todo el hueco del trailing',
+          input: { trailingIcon: 'chevronRight' },
+          expected: {
+            class: ['size-full'],
+          },
+        },
+      ] as const
+
+      it.each(casesTrailingIconNode)('$text', ({ input, expected }) => {
+        const trailingIcon = mountButton({ props: input }).get('[data-test-button-trailing-icon]')
+
+        expect({ class: trailingIcon.classes() }).toEqual({
+          class: expect.arrayContaining(expected.class),
+        })
+      })
+    })
+
+    describe('loading-icon', () => {
+      const casesLoadingIcon = [
+        {
+          text: 'ocupa todo el hueco del leading y gira sin parar',
+          input: { loading: true },
+          expected: {
+            class: ['size-full', 'animate-spin'],
+          },
+        },
+      ] as const
+
+      it.each(casesLoadingIcon)('$text', ({ input, expected }) => {
+        const loadingIcon = mountButton({ props: input }).get('[data-test-button-loading-icon]')
+
+        expect({ class: loadingIcon.classes() }).toEqual({
+          class: expect.arrayContaining(expected.class),
+        })
       })
     })
   })

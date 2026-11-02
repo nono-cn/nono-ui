@@ -12,32 +12,90 @@ function mountIcon(options: MountingOptions<IconProps> = {}) {
 describe('Icon', () => {
   describe('props', () => {
     describe('name', () => {
-      it('pinta el icono indicado en name', () => {
-        const icon = mountIcon({ props: { name: 'check' } })
+      const casesName = [
+        {
+          text: 'con name=check pinta el icono check de Lucide',
+          input: { name: 'check' },
+          expected: {
+            root: { class: ['lucide-check'] },
+          },
+        },
+        {
+          text: 'con name=x pinta el icono x de Lucide',
+          input: { name: 'x' },
+          expected: {
+            root: { class: ['lucide-x'] },
+          },
+        },
+      ] as const
 
-        expect(icon.get('[data-test-icon-root]').classes()).toContain('lucide-check')
+      it.each(casesName)('$text', ({ input, expected }) => {
+        const root = mountIcon({ props: input }).get('[data-test-icon-root]')
+
+        expect({
+          root: { class: root.classes() },
+        }).toEqual({
+          root: { class: expect.arrayContaining(expected.root.class) },
+        })
       })
     })
 
     describe('size', () => {
-      it('por defecto tiene el size' + iconDefaults.size, () => {
-        const icon = mountIcon({ props: { name: 'check' } })
+      it('por defecto usa iconDefaults.size', () => {
+        const icon = mountIcon()
+        const withDefault = mountIcon({ props: { name: 'check', size: iconDefaults.size } })
 
-        expect(icon.get('[data-test-icon-root]').classes()).toContain('size-5')
+        expect(icon.get('[data-test-icon-root]').classes()).toEqual(
+          withDefault.get('[data-test-icon-root]').classes(),
+        )
       })
 
-      const sizes = [
-        { size: 'xs', expected: 'size-3' },
-        { size: 'sm', expected: 'size-4' },
-        { size: 'md', expected: 'size-5' },
-        { size: 'lg', expected: 'size-6' },
-        { size: 'xl', expected: 'size-7' },
+      const casesSize = [
+        {
+          text: 'con size=xs mide size-3',
+          input: { name: 'check', size: 'xs' },
+          expected: {
+            root: { class: ['size-3'] },
+          },
+        },
+        {
+          text: 'con size=sm mide size-4',
+          input: { name: 'check', size: 'sm' },
+          expected: {
+            root: { class: ['size-4'] },
+          },
+        },
+        {
+          text: 'con size=md mide size-5',
+          input: { name: 'check', size: 'md' },
+          expected: {
+            root: { class: ['size-5'] },
+          },
+        },
+        {
+          text: 'con size=lg mide size-6',
+          input: { name: 'check', size: 'lg' },
+          expected: {
+            root: { class: ['size-6'] },
+          },
+        },
+        {
+          text: 'con size=xl mide size-7',
+          input: { name: 'check', size: 'xl' },
+          expected: {
+            root: { class: ['size-7'] },
+          },
+        },
       ] as const
 
-      it.each(sizes)('con size=$size tiene la class $expected', ({ size, expected }) => {
-        const icon = mountIcon({ props: { name: 'check', size } })
+      it.each(casesSize)('$text', ({ input, expected }) => {
+        const root = mountIcon({ props: input }).get('[data-test-icon-root]')
 
-        expect(icon.get('[data-test-icon-root]').classes()).toContain(expected)
+        expect({
+          root: { class: root.classes() },
+        }).toEqual({
+          root: { class: expect.arrayContaining(expected.root.class) },
+        })
       })
     })
 
@@ -49,70 +107,110 @@ describe('Icon', () => {
         mount: (color) => mountIcon({ props: { name: 'check', color } }),
       })
 
-      it('por defecto hereda el color del texto', () => {
-        const icon = mountIcon({ props: { name: 'check' } })
+      const casesColor = [
+        {
+          text: 'por defecto hereda el color del texto y no define --icon-color',
+          input: { name: 'check' },
+          expected: {
+            root: { style: { color: 'currentcolor', '--icon-color': '' } },
+          },
+        },
+        {
+          text: 'con un color distinto de currentColor pinta con var(--icon-color)',
+          input: { name: 'check', color: 'error' },
+          expected: {
+            root: {
+              style: { color: 'var(--icon-color)', '--icon-color': 'var(--error, var(--primary))' },
+            },
+          },
+        },
+      ] as const
 
-        expect(icon.get('[data-test-icon-root]').attributes('style')).toContain(
-          'color: currentcolor',
-        )
-      })
+      it.each(casesColor)('$text', ({ input, expected }) => {
+        const root = mountIcon({ props: input }).get('[data-test-icon-root]')
+        const style = (root.element as SVGElement).style
 
-      it('por defecto no define la variable --icon-color', () => {
-        const icon = mountIcon({ props: { name: 'check' } })
-
-        expect(icon.get('[data-test-icon-root]').attributes('style')).not.toContain('--icon-color')
-      })
-
-      it('con un color distinto de currentColor pinta con var(--icon-color)', () => {
-        const icon = mountIcon({ props: { name: 'check', color: 'error' } })
-
-        expect(icon.get('[data-test-icon-root]').attributes('style')).toContain(
-          'color: var(--icon-color)',
-        )
+        expect({
+          root: {
+            style: {
+              color: style.getPropertyValue('color'),
+              '--icon-color': style.getPropertyValue('--icon-color'),
+            },
+          },
+        }).toEqual(expected)
       })
     })
 
     describe('stroke', () => {
-      it('por defecto usa iconDefaults.stroke como stroke-width', () => {
-        const icon = mountIcon({ props: { name: 'check' } })
+      const casesStroke = [
+        {
+          text: 'por defecto usa iconDefaults.stroke como stroke-width',
+          input: { name: 'check' },
+          expected: {
+            root: { attrs: { 'stroke-width': String(iconDefaults.stroke) } },
+          },
+        },
+        {
+          text: 'con stroke=3 usa 3 como stroke-width',
+          input: { name: 'check', stroke: 3 },
+          expected: {
+            root: { attrs: { 'stroke-width': '3' } },
+          },
+        },
+        {
+          text: 'con stroke=1.5 acepta decimales',
+          input: { name: 'check', stroke: 1.5 },
+          expected: {
+            root: { attrs: { 'stroke-width': '1.5' } },
+          },
+        },
+      ] as const
 
-        expect(icon.get('[data-test-icon-root]').attributes('stroke-width')).toBe(
-          String(iconDefaults.stroke),
-        )
-      })
+      it.each(casesStroke)('$text', ({ input, expected }) => {
+        const root = mountIcon({ props: input }).get('[data-test-icon-root]')
 
-      it('con stroke=3 usa 3 como stroke-width', () => {
-        const icon = mountIcon({ props: { name: 'check', stroke: 3 } })
-
-        expect(icon.get('[data-test-icon-root]').attributes('stroke-width')).toBe('3')
-      })
-
-      it('con stroke=1.5 acepta decimales', () => {
-        const icon = mountIcon({ props: { name: 'check', stroke: 1.5 } })
-
-        expect(icon.get('[data-test-icon-root]').attributes('stroke-width')).toBe('1.5')
+        expect({
+          root: { attrs: { 'stroke-width': root.attributes('stroke-width') } },
+        }).toEqual(expected)
       })
     })
   })
 
   describe('nodos', () => {
     describe('root', () => {
-      it('tiene aria-hidden=true', () => {
-        const icon = mountIcon()
+      const casesRoot = [
+        {
+          text: 'no se encoge dentro de un contenedor flex',
+          input: {},
+          expected: {
+            class: ['shrink-0'],
+            attrs: {},
+          },
+        },
+        {
+          text: 'se oculta a los lectores de pantalla porque es decorativo',
+          input: {},
+          expected: {
+            class: [],
+            attrs: { 'aria-hidden': 'true' },
+          },
+        },
+      ] as const
 
-        expect(icon.get('[data-test-icon-root]').attributes('aria-hidden')).toBe('true')
-      })
+      it.each(casesRoot)('$text', ({ input, expected }) => {
+        const root = mountIcon({ props: { name: 'check', ...input } }).get('[data-test-icon-root]')
 
-      it('tiene la class shrink-0', () => {
-        const icon = mountIcon()
-
-        expect(icon.get('[data-test-icon-root]').classes()).toContain('shrink-0')
+        expect({ class: root.classes(), attrs: root.attributes() }).toEqual({
+          class: expect.arrayContaining(expected.class),
+          attrs: expect.objectContaining(expected.attrs),
+        })
       })
 
       testAttrs({
         id: '[data-test-icon-root]',
         ownClass: 'size-5',
         conflictingClass: 'size-8',
+        // width, height y stroke los impone Lucide
         notOverridable: ['stroke-width', 'width', 'height', 'stroke'],
         mount: (attrs) => mountIcon({ attrs }),
       })

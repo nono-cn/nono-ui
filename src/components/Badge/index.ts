@@ -6,7 +6,7 @@ export { default as Badge } from './Badge.vue'
 export { badgeDefaults, badgeSizes, badgeVariantNames } from './constants'
 
 export const badgeVariants = cva(
-  'inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-(--badge-radius) border font-medium whitespace-nowrap transition-[color,box-shadow] aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none',
+  'inline-flex w-fit shrink-0 items-center justify-center overflow-hidden rounded-(--badge-radius) border font-medium whitespace-nowrap',
   {
     variants: {
       size: {
@@ -17,7 +17,7 @@ export const badgeVariants = cva(
         xl: 'gap-2 px-2.5 text-xl',
       } satisfies Record<(typeof badgeSizes)[number], string>,
       variant: {
-        solid: 'border-transparent bg-(--badge-solid) text-(--badge-solid-foreground)',
+        solid: 'border-transparent bg-(--badge-color) text-(--badge-color-foreground)',
         outline: 'border-(--badge-color)/40 bg-transparent text-(--badge-color)',
         plain: 'border-transparent bg-transparent text-(--badge-color)',
         subtle: 'border-(--badge-color)/20 bg-(--badge-color)/10 text-(--badge-color)',
@@ -30,6 +30,38 @@ export const badgeVariants = cva(
     },
   },
 )
+
+export const badgeLeadingVariants = cva('inline-flex shrink-0 items-center justify-center', {
+  variants: {
+    size: {
+      xs: 'size-3',
+      sm: 'size-4',
+      md: 'size-5',
+      lg: 'size-6',
+      xl: 'size-7',
+    } satisfies Record<(typeof badgeSizes)[number], string>,
+  },
+  defaultVariants: {
+    size: badgeDefaults.size,
+  },
+})
+
+export const badgeTrailingVariants = cva('inline-flex shrink-0 items-center justify-center', {
+  variants: {
+    size: {
+      xs: 'size-3',
+      sm: 'size-4',
+      md: 'size-5',
+      lg: 'size-6',
+      xl: 'size-7',
+    } satisfies Record<(typeof badgeSizes)[number], string>,
+  },
+  defaultVariants: {
+    size: badgeDefaults.size,
+  },
+})
+
+export const badgeIconVariants = cva('size-full')
 
 export type BadgeVariants = VariantProps<typeof badgeVariants>
 export type BadgeSize = NonNullable<BadgeVariants['size']>
