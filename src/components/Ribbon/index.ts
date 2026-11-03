@@ -31,7 +31,6 @@ export const ribbonContentVariants = cva('relative z-10')
 // Item
 export interface RibbonItem {
   label?: string
-  slot?: string
   color?: string
   position?: RibbonPosition
   rotate?: number
@@ -62,9 +61,7 @@ export interface RibbonUI {
 }
 
 // Slots
-export type RibbonSlots = {
+export interface RibbonSlots {
   default?(): unknown
   label?(props: RibbonItemContext): unknown
-} & {
-  [name: `label-${string}`]: ((props: RibbonItemContext) => unknown) | undefined
 }

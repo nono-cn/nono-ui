@@ -6,7 +6,7 @@ import ComponentExample from '../ComponentExample.vue'
 import { scriptEnd } from '../example-code'
 
 const ribbons: RibbonItem[] = [
-  { label: 'Top rated', slot: 'rated', position: 'top-left', color: 'warning' },
+  { label: 'Top rated', position: 'top-left', color: 'warning' },
   { label: 'New' },
 ]
 const code = `<script setup lang="ts">
@@ -15,15 +15,14 @@ import { Icon } from '__DOCS_PACKAGE__/components/Icon'
 import { Ribbon, type RibbonItem } from '__DOCS_PACKAGE__/components/Ribbon'
 
 const ribbons: RibbonItem[] = [
-  { label: 'Top rated', slot: 'rated', position: 'top-left', color: 'warning' },
+  { label: 'Top rated', position: 'top-left', color: 'warning' },
   { label: 'New' },
 ]
 ${scriptEnd}
 
 <template>
   <Ribbon :ribbons="ribbons" class="w-72 rounded-xl">
-    <template #label="{ item }">{{ item.label?.toUpperCase() }}</template>
-    <template #label-rated="{ item }">
+    <template #label="{ item }">
       <span class="inline-flex items-center gap-1"><Icon name="star" />{{ item.label }}</span>
     </template>
     <Card class="min-h-48 items-center justify-center text-center">
@@ -37,13 +36,12 @@ ${scriptEnd}
 <template>
   <ComponentExample
     title="Slots"
-    description="Customize every label, or one ribbon through its slot key."
+    description="Customize the label of every ribbon through the label slot."
     :code="code"
     :show-reset="false"
   >
     <Ribbon :ribbons="ribbons" class="w-72 rounded-xl">
-      <template #label="{ item }">{{ item.label?.toUpperCase() }}</template>
-      <template #label-rated="{ item }">
+      <template #label="{ item }">
         <span class="inline-flex items-center gap-1"><Icon name="star" />{{ item.label }}</span>
       </template>
       <Card class="min-h-48 items-center justify-center text-center">

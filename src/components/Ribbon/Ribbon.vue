@@ -45,7 +45,6 @@ function getBandProps(context: RibbonItemContext) {
       },
       ui.style,
     ],
-    'aria-hidden': true,
   }
 }
 
@@ -61,29 +60,18 @@ const contentProps = computed(() => {
     class: cn(ribbonContentVariants(), ui.class),
   }
 })
-
-function getSlotName(context: RibbonItemContext) {
-  const slot = context.item.slot
-  return slot === undefined ? 'label' : (`label-${slot}` as const)
-}
-
-function getKey(context: RibbonItemContext) {
-  return context.item.slot ?? context.index
-}
 </script>
 
 <template>
   <div v-bind="rootProps" data-test-ribbon-root>
     <div
       v-for="context in itemContexts"
-      :key="getKey(context)"
+      :key="context.index"
       v-bind="getBandProps(context)"
       data-test-ribbon-band
     >
       <span v-bind="getLabelProps(context)" data-test-ribbon-label>
-        <slot :name="getSlotName(context)" v-bind="context">
-          <slot name="label" v-bind="context">{{ context.item.label }}</slot>
-        </slot>
+        <slot name="label" v-bind="context">{{ context.item.label }}</slot>
       </span>
     </div>
 

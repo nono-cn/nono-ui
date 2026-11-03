@@ -5,8 +5,9 @@ interface TestAttrsOptions {
   text?: string
   id: string
   // class propia del nodo y otra de attrs que choca con ella (tailwind-merge se queda con la de attrs)
-  ownClass: string
-  conflictingClass: string
+  // sin ellas (nodo sin class propia) no se prueba el choque
+  ownClass?: string
+  conflictingClass?: string
   // atributos propios del nodo que los attrs no pueden sustituir
   notOverridable?: string[]
   // valor con el que sustituir un atributo cuando 'sustituido' no es válido (p. ej. type de un button)
@@ -94,12 +95,14 @@ export function testAttrs({
       expect(node.classes()).toEqual(expect.arrayContaining([...own, 'mi-clase']))
     })
 
-    it(`con ${conflictingClass} en attrs sustituye a ${ownClass}`, async () => {
-      const node = (await mount({ class: conflictingClass })).get(id)
+    if (ownClass && conflictingClass) {
+      it(`con ${conflictingClass} en attrs sustituye a ${ownClass}`, async () => {
+        const node = (await mount({ class: conflictingClass })).get(id)
 
-      expect(node.classes()).toContain(conflictingClass)
-      expect(node.classes()).not.toContain(ownClass)
-    })
+        expect(node.classes()).toContain(conflictingClass)
+        expect(node.classes()).not.toContain(ownClass)
+      })
+    }
 
     it('añade el style de attrs sin quitar el suyo', async () => {
       const own = styleDeclarations((await mount({})).get(id).attributes('style'))

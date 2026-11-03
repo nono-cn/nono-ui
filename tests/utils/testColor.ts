@@ -6,9 +6,16 @@ interface TestColorOptions {
   variable: string
   fallbackColor: string
   mount: (color: string) => VueWrapper | Promise<VueWrapper>
+  setColor?: (wrapper: VueWrapper, color: string) => Promise<void>
 }
 
-export function testColor({ id, variable, fallbackColor, mount }: TestColorOptions) {
+export function testColor({
+  id,
+  variable,
+  fallbackColor,
+  mount,
+  setColor = (wrapper, color) => wrapper.setProps({ color }),
+}: TestColorOptions) {
   it(`con un token de tema define ${variable} con ese token`, async () => {
     const node = (await mount('error')).get(id)
 
@@ -18,7 +25,7 @@ export function testColor({ id, variable, fallbackColor, mount }: TestColorOptio
   it(`se actualiza ${variable} al cambiar color`, async () => {
     const wrapper = await mount('error')
 
-    await wrapper.setProps({ color: '#ff0000' })
+    await setColor(wrapper, '#ff0000')
 
     expect(wrapper.get(id).attributes('style')).toContain(`${variable}: #ff0000`)
   })

@@ -44,7 +44,7 @@ const ribbonConfig: ComponentDocConfig = {
     },
     {
       title: 'Slots',
-      description: 'Customize every label, or one ribbon through its slot key.',
+      description: 'Customize the label of every ribbon through the label slot.',
       component: RibbonSlotsExample,
     },
     {
@@ -56,23 +56,19 @@ const ribbonConfig: ComponentDocConfig = {
   accessibility: [
     {
       title: 'Roles and attributes',
-      description: 'Ribbons are decoration on top of the content of the default slot.',
+      description: 'Ribbons are read as text before the content of the default slot.',
       table: {
         columns: ['Attribute', 'Element', 'Value'],
         rows: [
           ['div', 'Root', 'Generic container that wraps the default slot.'],
-          [
-            'aria-hidden="true"',
-            'Band',
-            'Each band, with its label, is hidden from assistive technology.',
-          ],
+          ['div', 'Band', 'Each band, with its label, is read by assistive technology.'],
         ],
       },
     },
     {
-      title: 'Information in ribbons',
+      title: 'Decorative ribbons',
       description:
-        'If a ribbon carries information users need, such as a discount or a status, repeat it in the content.',
+        'If a ribbon is only decoration, hide it from assistive technology with ui.band returning aria-hidden="true".',
     },
   ],
   api: {
@@ -117,12 +113,6 @@ const ribbonConfig: ComponentDocConfig = {
             description: 'Text shown in the band.',
           },
           {
-            name: 'slot',
-            type: 'string',
-            default: 'undefined',
-            description: 'Key used in the targeted label slot, such as label-sale.',
-          },
-          {
             name: 'color',
             type: 'string',
             default: formatValue(ribbonItemDefaults.color),
@@ -155,7 +145,7 @@ const ribbonConfig: ComponentDocConfig = {
         title: 'RibbonItemContext',
         typeLabel: 'slotProps',
         showDefault: false,
-        description: 'Context passed to the label slots and the band and label resolvers.',
+        description: 'Context passed to the label slot and the band and label resolvers.',
         rows: [
           {
             name: 'item',
@@ -179,12 +169,6 @@ const ribbonConfig: ComponentDocConfig = {
         type: 'RibbonItemContext',
         typeLink: '#ribbon-item-context',
         description: 'Shared label content, replacing the label of every ribbon.',
-      },
-      {
-        name: 'label-[slot]',
-        type: 'RibbonItemContext',
-        typeLink: '#ribbon-item-context',
-        description: 'Label content for the ribbon with that slot key.',
       },
     ],
     expose: [],
