@@ -1,7 +1,7 @@
 import { h } from 'vue'
-import { mount, type MountingOptions } from '@vue/test-utils'
+import { enableAutoUnmount, mount, type MountingOptions } from '@vue/test-utils'
 import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'reka-ui'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import {
   Popover,
@@ -11,9 +11,13 @@ import {
 } from '@/components/Popover'
 import { testAttrs } from '../utils/testAttrs'
 
+enableAutoUnmount(afterEach)
+
 // abierto, con trigger y contenido; el teleport pinta su slot en sitio para encontrar el contenido en el wrapper
+// se monta en el body porque el modo modal de Reka oculta el resto con aria-hidden y avisa si está fuera
 function mountPopover(options: MountingOptions<PopoverProps> = {}) {
   return mount(Popover, {
+    attachTo: document.body,
     ...options,
     props: { open: true, ...options.props },
     slots: {
@@ -109,7 +113,7 @@ describe('Popover', () => {
 
         popover.getComponent(PopoverContent).vm.$emit('escapeKeyDown', event)
 
-        expect(onEscapeKeyDown).toHaveBeenCalledWith(event)
+        expect(onEscapeKeyDown.mock.lastCall?.[0]).toBe(event)
       })
     })
 
