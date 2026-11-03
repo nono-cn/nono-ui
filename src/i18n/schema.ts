@@ -27,6 +27,7 @@ export interface Messages {
   fileUploadMaxSize: string
   tagInputRemove: string
   tagInputClear: string
+  tagGroupRemove: string
   colorAreaRoleDescription: string
   colorAreaThumbRoleDescription: string
   ratingItemLabel: string

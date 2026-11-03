@@ -29,6 +29,7 @@ export default {
   fileUploadMaxSize: 'لا يمكن أن يتجاوز الحجم الإجمالي {size}.',
   tagInputRemove: 'إزالة الوسم',
   tagInputClear: 'مسح الوسوم',
+  tagGroupRemove: 'إزالة',
   colorAreaRoleDescription: 'منتقي الألوان',
   colorAreaThumbRoleDescription: 'مقبض منتقي الألوان',
   ratingItemLabel: '{step} من {length}',

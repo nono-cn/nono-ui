@@ -29,6 +29,7 @@ export default {
   fileUploadMaxSize: 'O tamanho total não pode exceder {size}.',
   tagInputRemove: 'Remover etiqueta',
   tagInputClear: 'Limpar etiquetas',
+  tagGroupRemove: 'Remover',
   colorAreaRoleDescription: 'Seletor de cores',
   colorAreaThumbRoleDescription: 'Controle deslizante de cor',
   ratingItemLabel: '{step} de {length}',

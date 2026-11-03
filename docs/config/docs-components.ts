@@ -44,6 +44,7 @@ import slider from './components/slider'
 import stepper from './components/stepper'
 import switchConfig from './components/switch'
 import tabsConfig from './components/tabs'
+import tagGroup from './components/tag-group'
 import textarea from './components/textarea'
 import timeline from './components/timeline'
 import tooltip from './components/tooltip'
@@ -99,6 +100,7 @@ export const docsComponents = [
   stepper,
   switchConfig,
   tabsConfig,
+  tagGroup,
   textarea,
   timeline,
   tooltip,

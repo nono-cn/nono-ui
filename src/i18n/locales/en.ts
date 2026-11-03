@@ -29,6 +29,7 @@ export default {
   fileUploadMaxSize: 'The total size cannot exceed {size}.',
   tagInputRemove: 'Remove tag',
   tagInputClear: 'Clear tags',
+  tagGroupRemove: 'Remove',
   colorAreaRoleDescription: 'Color picker',
   colorAreaThumbRoleDescription: 'Color thumb',
   ratingItemLabel: '{step} of {length}',
