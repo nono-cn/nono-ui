@@ -35,16 +35,11 @@ function reset() {
     @reset="reset"
   >
     <template #controls>
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-wrap items-end gap-4">
         <ExampleSelectControl v-model="selectedAtomic" label="Atomic" :options="booleanOptions" />
+        <code class="text-sm text-muted-foreground">aria-atomic="{{ atomic }}"</code>
       </div>
     </template>
-    <div class="grid gap-2 text-sm">
-      <Announcer message="Upload complete." :atomic="atomic" />
-      <p class="text-muted-foreground">
-        <code>aria-atomic="{{ atomic }}"</code>
-      </p>
-      <p class="text-xs text-muted-foreground">The live region is visually hidden.</p>
-    </div>
+    <Announcer message="Upload complete." :atomic="atomic" />
   </ComponentExample>
 </template>

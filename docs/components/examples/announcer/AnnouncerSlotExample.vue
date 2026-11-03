@@ -42,13 +42,8 @@ function reset() {
         />
       </div>
     </template>
-    <div class="grid gap-2 text-sm">
-      <Announcer>
-        <strong>{{ message }}</strong>
-      </Announcer>
-      <p class="text-xs text-muted-foreground">
-        Slot content is visible in the page and replaces the <code>message</code> prop.
-      </p>
-    </div>
+    <Announcer>
+      <strong>{{ message }}</strong>
+    </Announcer>
   </ComponentExample>
 </template>

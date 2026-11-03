@@ -4,4 +4,5 @@ export const announcerDefaults = {
   atomic: true,
   message: '',
   politeness: 'polite' as const,
+  visible: false,
 }

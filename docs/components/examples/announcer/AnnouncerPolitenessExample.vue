@@ -42,24 +42,19 @@ function reset() {
     @reset="reset"
   >
     <template #controls>
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-wrap items-end gap-4">
         <ExampleSelectControl
           v-model="politeness"
           label="Politeness"
           :options="announcerPolitenessOptions"
         />
+        <p class="text-sm text-muted-foreground">
+          <code>aria-live="{{ politeness }}"</code>
+          <span aria-hidden="true"> · </span>
+          <code>role="{{ role }}"</code>
+        </p>
       </div>
     </template>
-    <div class="grid gap-2 text-sm">
-      <Announcer message="Your changes have been saved." :politeness="politeness" />
-      <p class="text-muted-foreground">
-        <code>aria-live="{{ politeness }}"</code>
-        <span aria-hidden="true"> · </span>
-        <code>role="{{ role }}"</code>
-      </p>
-      <p class="text-xs text-muted-foreground">
-        The announcement region is visually hidden; the values above describe its semantics.
-      </p>
-    </div>
+    <Announcer message="Your changes have been saved." :politeness="politeness" />
   </ComponentExample>
 </template>

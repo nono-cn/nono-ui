@@ -40,10 +40,6 @@ function reset() {
         />
       </div>
     </template>
-    <div class="grid gap-2 text-sm">
-      <Announcer :message="message" />
-      <p><span class="font-medium">Announcement:</span> {{ message }}</p>
-      <p class="text-xs text-muted-foreground">The live region is visually hidden.</p>
-    </div>
+    <Announcer :message="message" />
   </ComponentExample>
 </template>

@@ -4,6 +4,7 @@ import AnnouncerBasicExample from '../../components/examples/announcer/Announcer
 import AnnouncerMessageExample from '../../components/examples/announcer/AnnouncerMessageExample.vue'
 import AnnouncerPolitenessExample from '../../components/examples/announcer/AnnouncerPolitenessExample.vue'
 import AnnouncerAtomicExample from '../../components/examples/announcer/AnnouncerAtomicExample.vue'
+import AnnouncerVisibleExample from '../../components/examples/announcer/AnnouncerVisibleExample.vue'
 import AnnouncerSlotExample from '../../components/examples/announcer/AnnouncerSlotExample.vue'
 
 const announcerConfig: ComponentDocConfig = {
@@ -36,6 +37,11 @@ const announcerConfig: ComponentDocConfig = {
       component: AnnouncerAtomicExample,
     },
     {
+      title: 'Visible',
+      description: 'Show the region on the page while it keeps announcing its content.',
+      component: AnnouncerVisibleExample,
+    },
+    {
       title: 'Custom content',
       description: 'Use the default slot to announce formatted content.',
       component: AnnouncerSlotExample,
@@ -45,7 +51,7 @@ const announcerConfig: ComponentDocConfig = {
     {
       title: 'Roles and attributes',
       description:
-        'Announcer is a live region: when its content changes, screen readers read it out. It is visually hidden unless you pass a default slot.',
+        'Announcer is a live region: when its content changes, screen readers read it out. It is visually hidden unless visible is true.',
       table: {
         columns: ['Attribute', 'Element', 'Value'],
         rows: [
@@ -57,7 +63,7 @@ const announcerConfig: ComponentDocConfig = {
           ],
           ['role="status"', 'Root', 'Set when politeness is polite.'],
           ['role="alert"', 'Root', 'Set when politeness is assertive.'],
-          ['sr-only', 'Root', 'Visually hides the message when there is no default slot.'],
+          ['sr-only', 'Root', 'Visually hides the region unless visible is true.'],
         ],
       },
     },
@@ -89,14 +95,19 @@ const announcerConfig: ComponentDocConfig = {
         description:
           'Value for aria-live. Also determines the role: alert for assertive, status for polite, and no role for off.',
       },
+      {
+        name: 'visible',
+        type: 'boolean',
+        default: String(announcerDefaults.visible),
+        description: 'Shows the region on the page instead of hiding it visually.',
+      },
     ],
     emits: [],
     slots: [
       {
         name: 'default',
         type: '-',
-        description:
-          'Custom content announced by the region. When provided, the content is no longer visually hidden.',
+        description: 'Custom content announced by the region. Replaces the message prop.',
       },
     ],
     expose: [],

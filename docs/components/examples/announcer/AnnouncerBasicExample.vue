@@ -20,6 +20,5 @@ ${scriptEnd}
     :show-reset="false"
   >
     <Announcer message="Changes saved successfully" />
-    <span class="text-sm text-muted-foreground">The announcement is visually hidden.</span>
   </ComponentExample>
 </template>
