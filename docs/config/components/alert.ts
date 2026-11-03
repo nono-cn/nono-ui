@@ -54,8 +54,8 @@ const alertConfig: ComponentDocConfig = {
       component: AlertClosableExample,
     },
     {
-      title: 'Close button',
-      description: 'Customize the Alert’s close button.',
+      title: 'Close slot',
+      description: 'Replace the default close button using the close slot.',
       component: AlertCloseButtonExample,
     },
   ],
@@ -112,14 +112,6 @@ const alertConfig: ComponentDocConfig = {
         description: 'Name of the icon displayed at the start when the icon slot is not used.',
       },
       {
-        name: 'closeButton',
-        type: 'ButtonConfig',
-        typeLink: '/components/button#props',
-        default: String(alertDefaults.closeButton),
-        description:
-          'Configuration for the default close button. Only shown when closable is true.',
-      },
-      {
         name: 'variant',
         type: alertVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: `'${alertDefaults.variant}'`,
@@ -141,19 +133,19 @@ const alertConfig: ComponentDocConfig = {
         name: 'decorative',
         type: 'boolean',
         default: String(alertDefaults.decorative),
-        description: 'Uses role="none" instead of role="alert" for purely visual content.',
+        description:
+          'Uses role="none" instead of role="alert" for purely visual content. A role passed as an attribute takes precedence.',
       },
       {
         name: 'ui',
         type: `{
   label?: () => HTMLAttributes
   description?: () => HTMLAttributes
-  closeButtonContainer?: () => HTMLAttributes
 }`,
         typePre: true,
         default: String(alertDefaults.ui),
         description:
-          'Resolver object for customizing the attributes and classes of label, description, and closeButtonContainer.',
+          'Resolver object for customizing the attributes and classes of label and description.',
       },
     ],
     emits: [
