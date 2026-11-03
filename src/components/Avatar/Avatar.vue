@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { computed, useAttrs, type ImgHTMLAttributes } from 'vue'
+import { computed, useAttrs } from 'vue'
 import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui'
 import { Icon } from '@/components/Icon'
 import { useTheme } from '@/composables'
+import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
-import { avatarVariants, type AvatarProps, type AvatarSlots } from '.'
+import {
+  avatarFallbackVariants,
+  avatarIconVariants,
+  avatarImageVariants,
+  avatarVariants,
+  type AvatarProps,
+  type AvatarSlots,
+} from '.'
 import { avatarDefaults } from './constants'
 
 defineOptions({ inheritAttrs: false })
@@ -13,6 +21,7 @@ const props = withDefaults(defineProps<AvatarProps>(), avatarDefaults)
 defineSlots<AvatarSlots>()
 
 const attrs = useAttrs()
+
 const { colorStyle, radiusStyle } = useTheme({
   color: () => props.color,
   prefix: 'avatar',
@@ -20,49 +29,54 @@ const { colorStyle, radiusStyle } = useTheme({
   radius: () => props.radius,
   defaultRadius: avatarDefaults.radius,
 })
-type AvatarImageProps = ImgHTMLAttributes & { src: string }
+
 const rootProps = computed(() => {
   return {
-    class: cn(
-      avatarVariants({
-        size: props.size,
-      }),
-    ),
-    style: [colorStyle.value, radiusStyle.value],
+    ...attrs,
+    as: 'span' as const,
+    asChild: false,
+    class: cn(avatarVariants({ size: props.size }), attrs.class),
+    style: [colorStyle.value, radiusStyle.value, attrs.style],
   }
 })
 
-const imageProps = computed<AvatarImageProps>(() => {
+const imageProps = computed(() => {
+  const ui = useUi(props.ui?.image, undefined)
+
   return {
-    ...attrs,
+    ...ui,
     src: props.src ?? '',
-    alt: props.alt ?? '',
-    class: cn('aspect-square size-full', attrs.class),
-  } as AvatarImageProps
+    alt: props.alt,
+    as: 'img' as const,
+    asChild: false,
+    class: cn(avatarImageVariants(), ui.class),
+  }
 })
 
 const fallbackProps = computed(() => {
+  const ui = useUi(props.ui?.fallback, undefined)
+
   return {
-    ...attrs,
+    ...ui,
     delayMs: props.delayMs,
-    class: cn('flex size-full items-center justify-center', attrs.class),
+    as: 'span' as const,
+    asChild: false,
+    class: cn(avatarFallbackVariants(), ui.class),
   }
 })
 
-const iconProps = computed(() => {
-  if (!props.icon) return undefined
-
-  return { name: props.icon, size: props.size }
-})
+const iconProps = {
+  class: avatarIconVariants(),
+}
 </script>
 
 <template>
-  <AvatarRoot v-bind="rootProps" as="span" :as-child="false" data-test-avatar-root>
-    <AvatarImage v-bind="imageProps" as="img" :as-child="false" data-test-avatar-image />
+  <AvatarRoot v-bind="rootProps" data-test-avatar-root>
+    <AvatarImage v-bind="imageProps" data-test-avatar-image />
 
-    <AvatarFallback v-bind="fallbackProps" as="div" :as-child="false" data-test-avatar-fallback>
+    <AvatarFallback v-bind="fallbackProps" data-test-avatar-fallback>
       <slot name="fallback">
-        <Icon v-if="iconProps?.name" v-bind="iconProps" data-test-avatar-icon />
+        <Icon v-if="props.icon" :name="props.icon" v-bind="iconProps" data-test-avatar-icon />
         <template v-else>{{ props.label }}</template>
       </slot>
     </AvatarFallback>

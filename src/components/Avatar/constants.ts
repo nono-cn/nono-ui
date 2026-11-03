@@ -8,4 +8,5 @@ export const avatarDefaults = {
   delayMs: undefined,
   icon: undefined,
   label: undefined,
+  ui: undefined,
 }

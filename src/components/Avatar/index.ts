@@ -1,4 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority'
+import type { HTMLAttributes, ImgHTMLAttributes } from 'vue'
 import type { IconName } from '@/components/Icon'
 import { avatarDefaults, avatarSizes } from './constants'
 
@@ -23,6 +24,12 @@ export const avatarVariants = cva(
   },
 )
 
+export const avatarImageVariants = cva('aspect-square size-full')
+
+export const avatarFallbackVariants = cva('flex size-full items-center justify-center')
+
+export const avatarIconVariants = cva('size-1/2')
+
 export type AvatarSize = NonNullable<VariantProps<typeof avatarVariants>['size']>
 export type AvatarRadius = string | number
 
@@ -36,9 +43,19 @@ export interface AvatarProps {
   delayMs?: number
   icon?: IconName
   label?: string
+  ui?: AvatarUI
+}
+
+// Fn
+export type AvatarFn<T> = () => T
+
+// UI
+export interface AvatarUI {
+  image?: AvatarFn<ImgHTMLAttributes>
+  fallback?: AvatarFn<HTMLAttributes>
 }
 
 // Slots
 export interface AvatarSlots {
-  fallback?(props: Record<string, never>): unknown
+  fallback?(): unknown
 }

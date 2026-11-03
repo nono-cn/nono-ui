@@ -7,6 +7,7 @@ import AvatarColorExample from '../../components/examples/avatar/AvatarColorExam
 import AvatarDelayMsExample from '../../components/examples/avatar/AvatarDelayMsExample.vue'
 import AvatarIconExample from '../../components/examples/avatar/AvatarIconExample.vue'
 import AvatarLabelExample from '../../components/examples/avatar/AvatarLabelExample.vue'
+import AvatarUiExample from '../../components/examples/avatar/AvatarUiExample.vue'
 import AvatarUsageExample from '../../components/examples/avatar/AvatarUsageExample.vue'
 
 const avatarConfig: ComponentDocConfig = {
@@ -57,6 +58,11 @@ const avatarConfig: ComponentDocConfig = {
       title: 'Label',
       description: 'Set the text shown in the avatar fallback.',
       component: AvatarLabelExample,
+    },
+    {
+      title: 'UI',
+      description: 'Customize the image and fallback attributes.',
+      component: AvatarUiExample,
     },
   ],
   accessibility: [
@@ -134,6 +140,17 @@ const avatarConfig: ComponentDocConfig = {
         default: String(avatarDefaults.label),
         description:
           'Text displayed in the fallback when neither icon nor the fallback slot is provided.',
+      },
+      {
+        name: 'ui',
+        type: `{
+  image?: () => ImgHTMLAttributes
+  fallback?: () => HTMLAttributes
+}`,
+        typePre: true,
+        default: String(avatarDefaults.ui),
+        description:
+          'Resolvers for image and fallback attributes, including class, style, and ARIA.',
       },
     ],
     emits: [],
