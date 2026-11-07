@@ -67,3 +67,16 @@
 [data-showcase-grid-cells] > [data-showcase-part] {
   display: flex;
 }
+
+/* gridOn con captions: el valor de la columna debajo de la celda */
+[data-showcase-grid-cells] > figure[data-showcase-part] {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+[data-showcase-grid-cells] figcaption {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}

@@ -3,7 +3,7 @@ import { computed, useAttrs } from 'vue'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/composables'
 import { kbdVariants, type KbdProps, type KbdSlots } from '.'
-import { kbdDefaults } from './constants'
+import { kbdDefaults, kbdSizes, kbdVariantNames } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -18,10 +18,18 @@ const { colorStyle, radiusStyle } = useTheme({
   radius: () => props.radius,
   defaultRadius: kbdDefaults.radius,
 })
+const size = computed(() =>
+  (kbdSizes as readonly unknown[]).includes(props.size) ? props.size : kbdDefaults.size,
+)
+const variant = computed(() =>
+  (kbdVariantNames as readonly unknown[]).includes(props.variant)
+    ? props.variant
+    : kbdDefaults.variant,
+)
 const rootProps = computed(() => {
   const calculatedVariants = kbdVariants({
-    size: props.size,
-    variant: props.variant,
+    size: size.value,
+    variant: variant.value,
   })
 
   return {

@@ -3,12 +3,14 @@ import { h, type VNodeChild } from 'vue'
 // Como gridOn de Vuetify (packages/vuetify/test/templates/gridOn.tsx): una rejilla A × B para
 // las stories del showcase. Una fila por cada valor de `rows`, titulada con ese valor, con
 // `render(row, column)` para cada valor de `columns`. Con `rows = [null]`, una sola fila sin título.
+// Con `{ captions: true }`, cada celda lleva debajo el valor de su columna.
 //
 // stories: { 'Variante × color': gridOn(badgeVariantNames, themeColors, (variant, color) => …) }
 export function gridOn<A, B>(
   rows: readonly A[],
   columns: readonly B[],
   render: (row: A, column: B) => VNodeChild,
+  { captions = false }: { captions?: boolean } = {},
 ) {
   return () =>
     h(
@@ -23,11 +25,11 @@ export function gridOn<A, B>(
             // cada celda lleva su nombre para que el showcase diga cuál ha cambiado
             columns.map((column) =>
               h(
-                'div',
+                captions ? 'figure' : 'div',
                 {
                   'data-showcase-part': row != null ? `${row} / ${column}` : String(column),
                 },
-                [render(row, column)],
+                [render(row, column), captions && h('figcaption', String(column))],
               ),
             ),
           ),

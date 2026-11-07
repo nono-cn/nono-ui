@@ -122,7 +122,7 @@ describe('Badge', () => {
 - `props`: una fila por prop, una variante por valor; un booleano pinta `true` y `false`. Valores sacados de las constantes (`xxxSizes`, `xxxVariantNames`, `themeColors`).
 - `base`: props comunes a todas las variantes (las obligatorias).
 - `stories`: casos a mano, como funciones con `h()` (los tests no compilan JSX).
-- Combinaciones con **`gridOn(filas, columnas, (fila, columna) => h(...))`** de `@test`, como en Vuetify: una fila titulada por cada valor, con una celda por columna. Con `[null]` como filas, una sola fila sin título.
+- Combinaciones con **`gridOn(filas, columnas, (fila, columna) => h(...))`** de `@test`, como en Vuetify: una fila titulada por cada valor, con una celda por columna. Con `[null]` como filas, una sola fila sin título. Con `{ captions: true }` como cuarto argumento, cada celda lleva debajo el valor de su columna (p. ej. el color, con un label corto como `'K'`).
   ```ts
   stories: {
     'Variant x color': gridOn(badgeVariantNames, themeColors, (variant, color) =>
