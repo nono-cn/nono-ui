@@ -38,8 +38,15 @@
   margin: 0;
 }
 
+/*
+ * El pie solo pide su palabra más larga y luego ocupa el ancho de la variante: un pie con espacios
+ * pasa a otra línea en vez de ensancharla.
+ */
 [data-showcase-variants] figcaption {
+  width: min-content;
+  min-width: 100%;
   font-size: 0.75rem;
+  text-align: center;
   color: var(--muted-foreground);
 }
 
@@ -63,6 +70,22 @@
   gap: 0.75rem;
 }
 
+/* con `columns`, las variantes y las celdas reparten el ancho de la página en N columnas iguales */
+[data-showcase-columns] [data-showcase-variants],
+[data-showcase-columns] [data-showcase-grid-cells] {
+  display: grid;
+  grid-template-columns: repeat(var(--showcase-columns), minmax(0, 1fr));
+}
+
+/* una story con gridOn ocupa toda la fila, y sus celdas se reparten ese ancho */
+[data-showcase-columns] [data-showcase-variants] > figure:has(> [data-showcase-grid]) {
+  grid-column: 1 / -1;
+}
+
+[data-showcase-columns] [data-showcase-grid] {
+  justify-self: stretch;
+}
+
 /* la celda con nombre no añade espacio alrededor de lo que contiene */
 [data-showcase-grid-cells] > [data-showcase-part] {
   display: flex;
@@ -77,6 +100,9 @@
 }
 
 [data-showcase-grid-cells] figcaption {
+  width: min-content;
+  min-width: 100%;
   font-size: 0.75rem;
+  text-align: center;
   color: var(--muted-foreground);
 }

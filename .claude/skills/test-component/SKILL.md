@@ -35,7 +35,8 @@ Argumentos: `$ARGUMENTS` — el componente o composable (p. ej. `Badge`, `useThe
 - **Slots y emits**: un `it` explícito por comportamiento, sin cases. Los slotProps se prueban con `vi.fn` + `toHaveBeenLastCalledWith`, y sus funciones por su efecto.
 - **Defaults desde las constantes**: lo esperado por defecto sale de `xxxDefaults`. Si no se puede escribir directamente, comparar con el componente montado con el default explícito (`'by default has the same size as with badgeDefaults.size'`).
 - **Un `it`, una responsabilidad**: sin `if` dentro del test ni valores que dependan de datos definidos lejos.
-- **No probar Vue**: si la prop se pinta tal cual (`{{ props.label }}`), sin tests de «al cambiar X…» ni «por defecto no muestra nada». Solo cuando hay lógica propia entre la prop y el resultado (un `computed`, un `watch`, un valor por defecto con efecto que no se ve, como `aria-hidden`).
+- **No probar Vue**: si la prop se pinta tal cual (`{{ props.label }}`), sin tests: ni «muestra el texto», ni «al cambiar X…», ni «por defecto no muestra nada». Esa prop va como fila en `showcase` (`label: ['Badge', 'A longer badge label']`). Solo cuando hay lógica propia entre la prop y el resultado (un `computed`, un `watch`, un valor por defecto con efecto que no se ve, como `aria-hidden`).
+- **No probar lo que hace un componente hijo** (`Icon`, `Button`…): se prueba en el suyo. P. ej. el `aria-hidden` de un icono lo pone `Icon`, así que no va en el test de Badge ni de Alert. Sí se prueba lo que el componente le pasa (el `aria-label` que da al botón de cerrar).
 - **Si la lógica solo cambia el aspecto, basta el `showcase`**: p. ej. que un `size` o `variant` no válido use el valor por defecto se cubre añadiendo `null` y `'unknown-x'` a los valores de esa prop en `showcase`, sin test.
 - **Nodos como constantes** arriba del archivo, sin comentario: `const ROOT = '[data-test-badge-root]'`. Solo los que el archivo usa (ESLint da error con los no usados).
 - No ampliar los helpers compartidos (`tests/helpers`) con casos de un componente: van en su test o en un helper local (`renderBadge`).
@@ -55,6 +56,7 @@ Argumentos: `$ARGUMENTS` — el componente o composable (p. ej. `Badge`, `useThe
   })
   ```
   Si el componente manda los attrs a otro elemento (el contenido de un Dialog, Tooltip…), `root` es ese elemento.
+  Los atributos que entran por `ui` (`ui.label`, `ui.content`…) se prueban igual, en `describe('props') > describe('ui') > describe('<nodo>')`, con `toProps` para decir por dónde entran: `toProps: (attrs) => ({ ui: { label: () => attrs } })`. Si la función de `ui` recibe contexto, aparte un `it` con `vi.fn` + `toHaveBeenLastCalledWith`.
 - Avisar si un test está mal o si falta cobertura.
 
 ## Plantilla de un componente
@@ -131,7 +133,9 @@ describe('Badge', () => {
     ),
   }
   ```
-- **Qué va en tests y qué en `showcase`**, como Vuetify: lo visual (size, variant, color, radius, iconos…) solo en `showcase`, sin tests de comportamiento. Los tests, para lo que no se ve o la captura no asegura: texto, accesibilidad, slots, attrs, emits, lógica (p. ej. un sufijo `+` por `max`).
+- **Qué va en tests y qué en `showcase`**, como Vuetify: lo visual (size, variant, color, radius, iconos…) solo en `showcase`, sin tests de comportamiento. Los tests, para lo que no se ve o la captura no asegura: texto calculado (un sufijo, un plural, un valor formateado; no una prop pintada tal cual), accesibilidad, slots, attrs, emits, lógica (p. ej. un sufijo `+` por `max`).
+- `columns: N` reparte el ancho de la página en N columnas iguales para las variantes y las celdas de `gridOn` (una story con `gridOn` ocupa la fila entera). Para componentes anchos (`w-full`) como Alert, que así miden 1/N de la página sin darles un ancho fijo; sin él, van en línea.
+- `hideCaptions: ['label', …]` quita el pie de las filas de esas props cuando el valor ya se lee en la variante (textos como `label` o `description`). El diff sigue nombrando cada variante.
 - `mobile: true` **solo si el diseño cambia con el ancho** (diálogos, pestañas, paginación…). Por defecto, 2 capturas.
 - No se multiplican las paletas `data-neutral` en cada componente: van en un test propio del tema.
 - No usar los ejemplos de las docs.

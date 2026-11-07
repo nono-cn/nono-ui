@@ -1,4 +1,5 @@
 import { h, type VNodeChild } from 'vue'
+import { unbreakableHyphens } from './showcase'
 
 // Como gridOn de Vuetify (packages/vuetify/test/templates/gridOn.tsx): una rejilla A × B para
 // las stories del showcase. Una fila por cada valor de `rows`, titulada con ese valor, con
@@ -29,7 +30,10 @@ export function gridOn<A, B>(
                 {
                   'data-showcase-part': row != null ? `${row} / ${column}` : String(column),
                 },
-                [render(row, column), captions && h('figcaption', String(column))],
+                [
+                  render(row, column),
+                  captions && h('figcaption', unbreakableHyphens(String(column))),
+                ],
               ),
             ),
           ),

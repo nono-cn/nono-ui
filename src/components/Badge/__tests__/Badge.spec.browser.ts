@@ -21,32 +21,6 @@ async function renderBadge(
 }
 
 describe('Badge', () => {
-  describe('props', () => {
-    describe('label', () => {
-      it('shows the label text', async () => {
-        const { screen } = await renderBadge({ label: 'Nuevo' })
-
-        await expect.element(screen.getByText('Nuevo')).toBeVisible()
-      })
-    })
-
-    describe('icon', () => {
-      it('hides the icon from assistive technology', async () => {
-        const { icon } = await renderBadge({ label: 'Nuevo', icon: 'check' })
-
-        expect(icon?.getAttribute('aria-hidden')).toBe('true')
-      })
-    })
-
-    describe('trailingIcon', () => {
-      it('hides the trailing icon from assistive technology', async () => {
-        const { trailingIcon } = await renderBadge({ label: 'Nuevo', trailingIcon: 'x' })
-
-        expect(trailingIcon?.getAttribute('aria-hidden')).toBe('true')
-      })
-    })
-  })
-
   describe('slots', () => {
     describe('default', () => {
       it('replaces the label with its content', async () => {
@@ -99,8 +73,10 @@ describe('Badge', () => {
 
   showcase({
     component: Badge,
+    hideCaptions: ['label'],
     base: { label: 'Badge' },
     props: {
+      label: ['Badge', 'A longer badge label'],
       size: [...badgeSizes, null, 'unknown-size'],
       variant: [...badgeVariantNames, null, 'unknown-variant'],
       radius: [...themeRadii, 0, 8, '0.25rem'],

@@ -14,16 +14,6 @@ async function renderKbd(props: KbdProps = {}, slots: { [K in keyof KbdSlots]: K
 }
 
 describe('Kbd', () => {
-  describe('props', () => {
-    describe('label', () => {
-      it('shows the label text', async () => {
-        const { screen } = await renderKbd({ label: 'Enter' })
-
-        await expect.element(screen.getByText('Enter')).toBeVisible()
-      })
-    })
-  })
-
   describe('slots', () => {
     describe('default', () => {
       it('replaces the label with its content', async () => {
@@ -56,6 +46,7 @@ describe('Kbd', () => {
     component: Kbd,
     base: { label: 'K' },
     props: {
+      label: ['K', 'Esc', 'Enter'],
       size: [...kbdSizes, null, 'unknown-size'],
       variant: [...kbdVariantNames, null, 'unknown-variant'],
       radius: [...themeRadii, 0, 8, '0.25rem'],

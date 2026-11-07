@@ -17,6 +17,17 @@ import { render } from 'vitest-browser-vue'
 //     })
 //   })
 // })
+//
+// Si los atributos no entran como attrs del componente sino por una prop (p. ej. `ui.label`),
+// `toProps` dice cómo convertirlos en las props con que se monta:
+//
+// attrsTests({
+//   component: Alert,
+//   props: { label: 'Heads up' },
+//   root: '[data-test-alert-label]',
+//   toProps: (attrs) => ({ ui: { label: () => attrs } }),
+//   class: { value: 'font-normal', expected: { fontWeight: '400' } },
+// })
 
 type StyleProperty = Exclude<
   {
@@ -31,6 +42,8 @@ interface AttrsTestsOptions {
   props?: Record<string, unknown>
   /** Selector del elemento que recibe los attrs. */
   root: string
+  /** Convierte los atributos de prueba en props, si no entran como attrs del componente. */
+  toProps?: (attrs: Record<string, unknown>) => Record<string, unknown>
   /**
    * Una clase que choca con una del componente y lo que debe medirse con ella. Se escribe en
    * el test del componente (Tailwind solo genera las clases que encuentra en src/).
@@ -50,11 +63,12 @@ export function attrsTests({
   component,
   props = {},
   root,
+  toProps = (attrs) => attrs,
   class: customClass,
   keeps = [],
 }: AttrsTestsOptions) {
   async function renderRoot(attrs: Record<string, unknown> = {}) {
-    const screen = await render(() => h(component, { ...props, ...attrs }))
+    const screen = await render(() => h(component, { ...props, ...toProps(attrs) }))
 
     return screen.container.querySelector(root)!
   }

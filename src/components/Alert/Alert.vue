@@ -16,7 +16,7 @@ import {
   type AlertProps,
   type AlertSlots,
 } from '.'
-import { alertDefaults } from './constants'
+import { alertDefaults, alertVariantNames } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -35,13 +35,19 @@ const { colorStyle } = useTheme({
   defaultColor: alertDefaults.color,
 })
 
+const variant = computed(() =>
+  (alertVariantNames as readonly unknown[]).includes(props.variant)
+    ? props.variant
+    : alertDefaults.variant,
+)
+
 const rootProps = computed(() => {
   return {
     role: props.decorative ? 'none' : 'alert',
     ...attrs,
     class: cn(
       alertVariants({
-        variant: props.variant,
+        variant: variant.value,
         icon: Boolean(props.icon || slots.icon),
       }),
       attrs.class,
@@ -73,7 +79,7 @@ const closeButtonProps = computed(() => {
     'aria-label': t('close'),
     size: 'icon-xs' as const,
     radius: 'full',
-    variant: props.variant,
+    variant: variant.value,
     color: props.color,
     icon: 'x' as const,
   }

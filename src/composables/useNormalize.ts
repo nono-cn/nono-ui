@@ -41,7 +41,7 @@ function isNativeAttribute(key: string): boolean {
   )
 }
 
-/** Removes non-native HTML, SVG and MathML attributes. SSR safe. */
+/** Removes non-native HTML, SVG and MathML attributes, event listeners included. SSR safe. */
 export function normalizeHTMLAttributes<T extends object>(value: T | undefined): T {
   if (!value) return {} as T
 

@@ -20,11 +20,17 @@ interface ShowcaseOptions {
   slots?: Slots
   props?: Props
   stories?: Stories
+  /** Props cuya fila va sin pie, porque el valor ya se lee en la variante (p. ej. `label`). */
+  hideCaptions?: string[]
+  /** Variantes por fila, en rejilla (p. ej. 2 para componentes anchos como Alert). Sin él, en línea. */
+  columns?: number
   mobile?: boolean
 }
 
 interface ShowcaseRow {
   title: string
+  /** Si se pinta el pie con el nombre de cada variante (el nombre se usa igual para el diff). */
+  captions: boolean
   variants: { label: string; render: () => VNodeChild }[]
 }
 
@@ -38,12 +44,14 @@ function rowsFromProps(
   base: Record<string, unknown>,
   slots: Slots | undefined,
   props: Props,
+  hideCaptions: string[],
 ) {
   return Object.entries(props).map<ShowcaseRow>(([key, value]) => {
     const values = typeof value === 'boolean' ? [true, false] : value
 
     return {
       title: key,
+      captions: !hideCaptions.includes(key),
       variants: values.map((v) => ({
         label: String(v),
         render: () => h(component, { ...base, [key]: v }, slots),
@@ -55,8 +63,17 @@ function rowsFromProps(
 function rowsFromStories(stories: Stories) {
   return Object.entries(stories).map<ShowcaseRow>(([title, render]) => ({
     title,
+    captions: false,
     variants: [{ label: '', render }],
   }))
+}
+
+/**
+ * Pone un word joiner (U+2060, invisible) tras cada guion para que un pie como `unknown-variant`
+ * no se parta: solo pasan a otra línea los que tienen espacios.
+ */
+export function unbreakableHyphens(text: string) {
+  return text.replaceAll('-', '-\u2060')
 }
 
 function section(title: string, rows: ShowcaseRow[]) {
@@ -73,7 +90,9 @@ function section(title: string, rows: ShowcaseRow[]) {
           row.variants.map((variant) =>
             h('figure', { 'data-showcase-part': variant.label || undefined }, [
               variant.render(),
-              variant.label && h('figcaption', variant.label),
+              row.captions &&
+                variant.label &&
+                h('figcaption', unbreakableHyphens(variant.label)),
             ]),
           ),
         ),
@@ -115,6 +134,8 @@ export function showcase({
   slots,
   props,
   stories,
+  hideCaptions = [],
+  columns,
   mobile = false,
 }: ShowcaseOptions) {
   if (props && !component) throw new Error('showcase: props requires component')
@@ -123,14 +144,22 @@ export function showcase({
   const matrix = themes.flatMap((theme) => sizes.map((viewport) => ({ theme, viewport })))
 
   const storyRows = stories ? rowsFromStories(stories) : []
-  const propRows = props && component ? rowsFromProps(component, base, slots, props) : []
+  const propRows = props && component ? rowsFromProps(component, base, slots, props, hideCaptions) : []
 
   const Gallery = defineComponent(
     () => () =>
-      h('main', { 'data-showcase': '' }, [
-        section('Stories', storyRows),
-        section('Props', propRows),
-      ]),
+      h(
+        'main',
+        {
+          'data-showcase': '',
+          'data-showcase-columns': columns,
+          style: columns ? { '--showcase-columns': columns } : undefined,
+        },
+        [
+          section('Stories', storyRows),
+          section('Props', propRows),
+        ],
+      ),
   )
 
   describe('Showcase', () => {
