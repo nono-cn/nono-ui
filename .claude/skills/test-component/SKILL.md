@@ -121,6 +121,7 @@ describe('Badge', () => {
 `showcase({ component, base, props, stories, mobile })` genera en el test una página con todas las variantes y la captura entera en `light` y `dark`:
 - `props`: una fila por prop, una variante por valor; un booleano pinta `true` y `false`. Valores sacados de las constantes (`xxxSizes`, `xxxVariantNames`, `themeColors`).
 - `base`: props comunes a todas las variantes (las obligatorias).
+- `slots`: slots comunes a las variantes de `props`, cuando el componente necesita contenido para verse (p. ej. `{ default: () => h('div', …) }` en Chip).
 - `stories`: casos a mano, como funciones con `h()` (los tests no compilan JSX).
 - Combinaciones con **`gridOn(filas, columnas, (fila, columna) => h(...))`** de `@test`, como en Vuetify: una fila titulada por cada valor, con una celda por columna. Con `[null]` como filas, una sola fila sin título. Con `{ captions: true }` como cuarto argumento, cada celda lleva debajo el valor de su columna (p. ej. el color, con un label corto como `'K'`).
   ```ts
@@ -150,5 +151,6 @@ describe('Badge', () => {
 | *No browser at ws://127.0.0.1:6677/* | Abrir Docker Desktop y relanzar |
 | *No existing reference screenshot found* | `npm run test:update -- X` y revisar las PNG |
 | *N pixels differ* | El error empieza con *Changed:* y lista lo que ha cambiado: fila y variante (`Props > size > xs`, `Stories > Variant x color > soft / primary`); lo que solo se ha movido no sale. Mirar su diferencia en `.vitest-attachments/` y actualizar solo si el cambio es intencionado |
+| Tras `test:update` la PNG sigue enseñando lo de antes | El cambio es tan suave que no pasa el umbral, así que no falla y `-u` no la reescribe. Borrar esa PNG y volver a generar |
 | *No test files found* | El filtro no coincide, o falta `__tests__` / la terminación `.spec(.browser).ts` |
 | Prettier marca archivos que no has tocado | Solo finales de línea (CRLF por `core.autocrlf`); el contenido está bien |

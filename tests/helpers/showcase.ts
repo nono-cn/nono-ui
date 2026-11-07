@@ -10,10 +10,14 @@ type Stories = Record<string, () => VNodeChild>
 
 type Props = Record<string, boolean | readonly unknown[]>
 
+type Slots = Record<string, () => VNodeChild>
+
 interface ShowcaseOptions {
   component?: Component
   /** Props comunes a todas las variantes (p. ej. las obligatorias). */
   base?: Record<string, unknown>
+  /** Slots comunes a todas las variantes de `props` (p. ej. el contenido sobre el que se pinta). */
+  slots?: Slots
   props?: Props
   stories?: Stories
   mobile?: boolean
@@ -29,7 +33,12 @@ const themes = [
   { text: 'dark', dark: true },
 ]
 
-function rowsFromProps(component: Component, base: Record<string, unknown>, props: Props) {
+function rowsFromProps(
+  component: Component,
+  base: Record<string, unknown>,
+  slots: Slots | undefined,
+  props: Props,
+) {
   return Object.entries(props).map<ShowcaseRow>(([key, value]) => {
     const values = typeof value === 'boolean' ? [true, false] : value
 
@@ -37,7 +46,7 @@ function rowsFromProps(component: Component, base: Record<string, unknown>, prop
       title: key,
       variants: values.map((v) => ({
         label: String(v),
-        render: () => h(component, { ...base, [key]: v }),
+        render: () => h(component, { ...base, [key]: v }, slots),
       })),
     }
   })
@@ -103,6 +112,7 @@ function showcaseBoxes(gallery: HTMLElement) {
 export function showcase({
   component,
   base = {},
+  slots,
   props,
   stories,
   mobile = false,
@@ -113,7 +123,7 @@ export function showcase({
   const matrix = themes.flatMap((theme) => sizes.map((viewport) => ({ theme, viewport })))
 
   const storyRows = stories ? rowsFromStories(stories) : []
-  const propRows = props && component ? rowsFromProps(component, base, props) : []
+  const propRows = props && component ? rowsFromProps(component, base, slots, props) : []
 
   const Gallery = defineComponent(
     () => () =>

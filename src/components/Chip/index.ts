@@ -10,13 +10,13 @@ export const chipBaseVariants = cva('rounded-full bg-(--chip-color) ring-2 ring-
   variants: {
     size: {
       '3xs': 'h-1 min-w-1',
-      '2xs': 'h-1.5 min-w-1.5',
+      '2xs': 'h-1.25 min-w-1.25',
       xs: 'h-1.5 min-w-1.5',
-      sm: 'h-2 min-w-2',
+      sm: 'h-1.75 min-w-1.75',
       md: 'h-2 min-w-2',
-      lg: 'h-2.5 min-w-2.5',
+      lg: 'h-2.25 min-w-2.25',
       xl: 'h-2.5 min-w-2.5',
-      '2xl': 'h-3 min-w-3',
+      '2xl': 'h-2.75 min-w-2.75',
       '3xl': 'h-3 min-w-3',
     } satisfies Record<(typeof chipSizes)[number], string>,
     position: {

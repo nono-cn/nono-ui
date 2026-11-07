@@ -3,7 +3,7 @@ import { computed, useAttrs } from 'vue'
 import { useTheme } from '@/composables'
 import { cn } from '@/lib/utils'
 import { chipBaseVariants, chipRootVariants, type ChipProps, type ChipSlots } from '.'
-import { chipDefaults } from './constants'
+import { chipDefaults, chipPositions, chipSizes } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -26,11 +26,20 @@ const rootProps = computed(() => {
   }
 })
 
+const size = computed(() =>
+  (chipSizes as readonly unknown[]).includes(props.size) ? props.size : chipDefaults.size,
+)
+const position = computed(() =>
+  (chipPositions as readonly unknown[]).includes(props.position)
+    ? props.position
+    : chipDefaults.position,
+)
+
 const baseProps = computed(() => {
   return {
     class: chipBaseVariants({
-      size: props.size,
-      position: props.standalone ? undefined : props.position,
+      size: size.value,
+      position: props.standalone ? undefined : position.value,
       inset: props.inset,
       standalone: props.standalone,
     }),
