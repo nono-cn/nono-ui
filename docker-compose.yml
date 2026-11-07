@@ -1,0 +1,11 @@
+# Navegador para los tests de Vitest Browser Mode.
+# Vitest se ejecuta en tu máquina y se conecta a este Chromium (Linux) por WebSocket,
+# así las capturas salen iguales lo lance quien lo lance (Windows, Mac o CI).
+# La versión de la imagen y la de run-server deben coincidir con "playwright" en package.json.
+services:
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.65.0-noble
+    command: npx -y playwright@1.65.0 run-server --port 6677 --host 0.0.0.0
+    ports:
+      - '6677:6677'
+    init: true

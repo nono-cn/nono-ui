@@ -1,0 +1,24 @@
+/* Estilos de la librería, sin los de las docs. Tailwind genera las clases que encuentra en src,
+   también las de los tests (p. ej. una class propia en un caso). */
+@import '../../src/assets/css/styles.css';
+@source '../../src';
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Sin animaciones ni transiciones: cada captura muestra el estado final, nunca uno intermedio.
+   !important gana también a los estilos inline de los componentes. */
+*,
+*::before,
+*::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
+  caret-color: transparent !important;
+}

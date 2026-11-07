@@ -1,0 +1,44 @@
+/* Página del showcase: una fila por story o por prop, con sus variantes en línea. */
+[data-showcase] {
+  display: grid;
+  gap: 2rem;
+  padding: 1rem;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, sans-serif;
+}
+
+[data-showcase] h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+[data-showcase-row] {
+  margin-bottom: 1.5rem;
+}
+
+[data-showcase-row] > h3 {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+[data-showcase-variants] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+[data-showcase-variants] > figure {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+[data-showcase-variants] figcaption {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}

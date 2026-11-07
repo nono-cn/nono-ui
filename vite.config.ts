@@ -48,6 +48,9 @@ export default defineConfig({
         'src/assets/icon/**/*.ts',
         'src/index.js',
       ],
+      // los tests viven junto a cada componente (__tests__): sin tipos en dist/.
+      // Sustituye al exclude por defecto, por eso se repite node_modules.
+      exclude: ['node_modules/**', 'src/**/__tests__/**'],
       rollupTypes: false,
       entryRoot: 'src',
     }),

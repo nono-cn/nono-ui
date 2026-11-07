@@ -15,6 +15,10 @@ docs/storybook-static
 coverage
 *.local
 
+# Tests de navegador: diferencias de capturas fallidas y galerías de showcaseDocs
+.vitest-attachments
+__showcase__/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

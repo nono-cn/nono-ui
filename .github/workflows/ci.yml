@@ -33,5 +33,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Chromium de docker-compose.yml: el mismo navegador que en local, así las capturas
+      # coinciden. npm test también lo levanta (pretest); aquí va aparte para ver su log.
+      - name: Start browser (Docker)
+        run: npm run browser:up
+
       - name: Run tests
         run: npm test
+
+      # Si cambia alguna captura: la actual y la diferencia de cada una, para verlas
+      - name: Upload screenshot diffs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-diffs
+          path: .vitest-attachments
+          if-no-files-found: ignore
+          retention-days: 7
