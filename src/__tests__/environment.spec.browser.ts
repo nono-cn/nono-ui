@@ -5,44 +5,44 @@ import { render } from '@test'
 
 // Comprueba que los tests de navegador corren siempre en el mismo entorno (vitest.config.ts),
 // para que las capturas no dependan de quién los lance.
-describe('Entorno del navegador', () => {
-  it('se ejecuta en el Chromium Linux de Docker', () => {
+describe('Browser environment', () => {
+  it('runs in the Linux Chromium from Docker', () => {
     expect(navigator.platform).toBe('Linux x86_64')
   })
 
-  it('usa por defecto el viewport de escritorio (1280x800)', () => {
+  it('uses the desktop viewport (1280x800) by default', () => {
     expect({ width: window.innerWidth, height: window.innerHeight }).toEqual({
       width: 1280,
       height: 800,
     })
   })
 
-  it('usa una densidad de píxeles de 1', () => {
+  it('uses a device pixel ratio of 1', () => {
     expect(window.devicePixelRatio).toBe(1)
   })
 
-  it('pide animaciones reducidas', () => {
+  it('requests reduced motion', () => {
     expect(matchMedia('(prefers-reduced-motion: reduce)').matches).toBe(true)
   })
 
-  it('usa el idioma en-US', () => {
+  it('uses the en-US locale', () => {
     expect(navigator.language).toBe('en-US')
   })
 
-  it('usa la zona horaria UTC', () => {
+  it('uses the UTC time zone', () => {
     expect(Intl.DateTimeFormat().resolvedOptions().timeZone).toBe('UTC')
   })
 })
 
 // Comprueba lo que añade tests/setup/browser.ts a cada test de navegador.
-describe('Setup del navegador', () => {
-  it('carga los estilos de la librería', () => {
+describe('Browser setup', () => {
+  it('loads the library styles', () => {
     const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary')
 
     expect(primary.trim()).not.toBe('')
   })
 
-  it('anula las animaciones, incluso las inline', () => {
+  it('disables animations, even inline ones', () => {
     const element = document.createElement('div')
     element.style.animation = 'spin 1s infinite'
     document.body.append(element)
@@ -55,7 +55,7 @@ describe('Setup del navegador', () => {
     element.remove()
   })
 
-  it('anula las transiciones, incluso las inline', () => {
+  it('disables transitions, even inline ones', () => {
     const element = document.createElement('div')
     element.style.transition = 'color 1s 1s'
     document.body.append(element)
@@ -68,7 +68,7 @@ describe('Setup del navegador', () => {
     element.remove()
   })
 
-  it('render monta los componentes con i18n en inglés', async () => {
+  it('render mounts components with i18n in English', async () => {
     const Translated = defineComponent(() => {
       const { t } = useI18n()
       return () => h('span', t('close'))

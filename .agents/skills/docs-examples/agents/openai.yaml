@@ -1,4 +1,0 @@
-interface:
-  display_name: 'Documentación de componentes'
-  short_description: 'Crea documentación Nuxt-style y ejemplos copiables'
-  default_prompt: 'Usa $docs-examples para documentar este componente Vue con Import, Usage, Examples, Accessibility y API.'

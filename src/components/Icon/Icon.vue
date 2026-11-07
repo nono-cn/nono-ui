@@ -18,9 +18,11 @@ const { colorStyle } = useTheme({
   defaultColor: 'primary',
 })
 
+const isLabelled = computed(() => attrs['aria-label'] != null || attrs['aria-labelledby'] != null)
+
 const rootProps = computed(() => {
   return {
-    'aria-hidden': true,
+    'aria-hidden': isLabelled.value ? undefined : true,
     ...attrs,
     'stroke-width': props.stroke,
     class: cn(iconVariants({ size: props.size }), attrs.class),

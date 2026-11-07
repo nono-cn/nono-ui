@@ -50,6 +50,17 @@
   --animate-caret-blink: caret-blink 1.2s ease-out infinite;
 }
 
+@theme static {
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+}
+
 @keyframes accordion-down {
   from {
     height: 0;

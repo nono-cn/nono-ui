@@ -42,3 +42,28 @@
   font-size: 0.75rem;
   color: var(--muted-foreground);
 }
+
+/* gridOn: una fila por valor, con su título y las celdas en línea */
+[data-showcase-grid] {
+  display: grid;
+  gap: 0.75rem;
+}
+
+[data-showcase-grid-row] > h4 {
+  margin: 0 0 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+[data-showcase-grid-cells] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* la celda con nombre no añade espacio alrededor de lo que contiene */
+[data-showcase-grid-cells] > [data-showcase-part] {
+  display: flex;
+}

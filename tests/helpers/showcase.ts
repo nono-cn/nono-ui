@@ -2,20 +2,12 @@ import { defineComponent, h, type Component, type VNodeChild } from 'vue'
 import { describe, expect, it } from 'vitest'
 import { commands, page } from 'vitest/browser'
 import { render } from 'vitest-browser-vue'
-import '../setup/browser-commands'
-import { browserWindow, viewports } from '../setup/viewports'
+import { browserWindow, defaultViewport, viewports } from '../setup/viewports'
+import { describeChanges, type ShowcaseBox } from './changedRows'
 import './showcase.css'
 
-// Como el showcase de Vuetify (packages/vuetify/test/templates/generateStories.tsx):
-// genera una página con todas las variantes del componente y la captura entera en claro y
-// oscuro, en escritorio y móvil: 4 capturas por componente.
-//
-// Referencias (en git): __tests__/__screenshots__/<test>/<tema>-<tamaño>-chromium.png
-
-/** Ejemplos escritos a mano: el título y lo que se pinta. */
 type Stories = Record<string, () => VNodeChild>
 
-/** Por cada prop, sus valores: cada uno es una variante. Un booleano pinta true y false. */
 type Props = Record<string, boolean | readonly unknown[]>
 
 interface ShowcaseOptions {
@@ -24,6 +16,7 @@ interface ShowcaseOptions {
   base?: Record<string, unknown>
   props?: Props
   stories?: Stories
+  mobile?: boolean
 }
 
 interface ShowcaseRow {
@@ -32,13 +25,9 @@ interface ShowcaseRow {
 }
 
 const themes = [
-  { text: 'claro', dark: false },
-  { text: 'oscuro', dark: true },
+  { text: 'light', dark: false },
+  { text: 'dark', dark: true },
 ]
-
-const matrix = themes.flatMap((theme) =>
-  Object.values(viewports).map((viewport) => ({ theme, viewport })),
-)
 
 function rowsFromProps(component: Component, base: Record<string, unknown>, props: Props) {
   return Object.entries(props).map<ShowcaseRow>(([key, value]) => {
@@ -67,13 +56,16 @@ function section(title: string, rows: ShowcaseRow[]) {
   return h('section', [
     h('h2', title),
     ...rows.map((row) =>
-      h('div', { 'data-showcase-row': '' }, [
+      h('div', { 'data-showcase-row': `${title} > ${row.title}` }, [
         h('h3', row.title),
         h(
           'div',
           { 'data-showcase-variants': '' },
           row.variants.map((variant) =>
-            h('figure', [variant.render(), variant.label && h('figcaption', variant.label)]),
+            h('figure', { 'data-showcase-part': variant.label || undefined }, [
+              variant.render(),
+              variant.label && h('figcaption', variant.label),
+            ]),
           ),
         ),
       ]),
@@ -81,8 +73,44 @@ function section(title: string, rows: ShowcaseRow[]) {
   ])
 }
 
-export function showcase({ component, base = {}, props, stories }: ShowcaseOptions) {
-  if (props && !component) throw new Error('showcase: props necesita component')
+// Posición de cada fila y de sus variantes dentro de la captura (relativa a la galería).
+function showcaseBoxes(gallery: HTMLElement) {
+  const origin = gallery.getBoundingClientRect()
+  const box = (element: HTMLElement, title: string, parts: ShowcaseBox[] = []): ShowcaseBox => {
+    const rect = element.getBoundingClientRect()
+
+    return {
+      title,
+      top: Math.floor(rect.top - origin.top),
+      bottom: Math.ceil(rect.bottom - origin.top),
+      left: Math.floor(rect.left - origin.left),
+      right: Math.ceil(rect.right - origin.left),
+      parts,
+    }
+  }
+
+  return [...gallery.querySelectorAll<HTMLElement>('[data-showcase-row]')].map((row) =>
+    box(
+      row,
+      row.dataset.showcaseRow!,
+      [...row.querySelectorAll<HTMLElement>('[data-showcase-part]')].map((part) =>
+        box(part, part.dataset.showcasePart!),
+      ),
+    ),
+  )
+}
+
+export function showcase({
+  component,
+  base = {},
+  props,
+  stories,
+  mobile = false,
+}: ShowcaseOptions) {
+  if (props && !component) throw new Error('showcase: props requires component')
+
+  const sizes = mobile ? [viewports.desktop, viewports.mobile] : [viewports[defaultViewport]]
+  const matrix = themes.flatMap((theme) => sizes.map((viewport) => ({ theme, viewport })))
 
   const storyRows = stories ? rowsFromStories(stories) : []
   const propRows = props && component ? rowsFromProps(component, base, props) : []
@@ -97,7 +125,7 @@ export function showcase({ component, base = {}, props, stories }: ShowcaseOptio
 
   describe('Showcase', () => {
     it.each(matrix)(
-      'en tema $theme.text y $viewport.text se ve igual que su captura de referencia',
+      'matches its reference screenshot in $theme.text theme on $viewport.text',
       async ({ theme, viewport }) => {
         await page.viewport(viewport.width, viewport.height)
         document.documentElement.classList.toggle('dark', theme.dark)
@@ -116,13 +144,18 @@ export function showcase({ component, base = {}, props, stories }: ShowcaseOptio
           )
           await page.viewport(viewport.width, Math.max(viewport.height, height))
 
-          await expect
-            .element(page.elementLocator(gallery))
-            .toMatchScreenshot(`${theme.text}-${viewport.text}`)
+          try {
+            await expect
+              .element(page.elementLocator(gallery))
+              .toMatchScreenshot(`${theme.text}-${viewport.text}`)
+          } catch (error) {
+            await describeChanges(error, showcaseBoxes(gallery))
+            throw error
+          }
         } finally {
           document.documentElement.classList.remove('dark')
           await commands.setWindowSize(browserWindow.width, browserWindow.height)
-          const { width, height } = viewports.desktop
+          const { width, height } = viewports[defaultViewport]
           await page.viewport(width, height)
         }
       },

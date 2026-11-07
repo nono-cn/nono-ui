@@ -1,8 +1,8 @@
 // Tamaños de pantalla de los tests de navegador. Única fuente: los usan vitest.config.ts,
 // showcase y el test de entorno.
 export const viewports = {
-  desktop: { text: 'escritorio', width: 1280, height: 800 },
-  mobile: { text: 'movil', width: 390, height: 844 },
+  desktop: { text: 'desktop', width: 1280, height: 800 },
+  mobile: { text: 'mobile', width: 390, height: 844 },
 } as const
 
 export type ViewportName = keyof typeof viewports

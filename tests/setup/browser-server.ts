@@ -27,6 +27,6 @@ export default async function waitForBrowserServer() {
   }
 
   throw new Error(
-    `No hay navegador en ${endpoint.href}. Abre Docker Desktop y ejecuta: npm run browser:up`,
+    `No browser at ${endpoint.href}. Open Docker Desktop and run: npm run browser:up`,
   )
 }

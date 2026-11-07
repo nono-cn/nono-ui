@@ -11,7 +11,7 @@ import {
   type BadgeProps,
   type BadgeSlots,
 } from '.'
-import { badgeDefaults } from './constants'
+import { badgeDefaults, badgeSizes, badgeVariantNames } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -26,10 +26,19 @@ const { colorStyle, radiusStyle } = useTheme({
   radius: () => props.radius,
   defaultRadius: badgeDefaults.radius,
 })
+const size = computed(() =>
+  (badgeSizes as readonly unknown[]).includes(props.size) ? props.size : badgeDefaults.size,
+)
+const variant = computed(() =>
+  (badgeVariantNames as readonly unknown[]).includes(props.variant)
+    ? props.variant
+    : badgeDefaults.variant,
+)
+
 const rootProps = computed(() => {
   const calculatedVariants = badgeVariants({
-    size: props.size,
-    variant: props.variant,
+    size: size.value,
+    variant: variant.value,
   })
 
   return {
@@ -41,13 +50,13 @@ const rootProps = computed(() => {
 
 const leadingProps = computed(() => {
   return {
-    class: badgeLeadingVariants({ size: props.size }),
+    class: badgeLeadingVariants({ size: size.value }),
   }
 })
 
 const trailingProps = computed(() => {
   return {
-    class: badgeTrailingVariants({ size: props.size }),
+    class: badgeTrailingVariants({ size: size.value }),
   }
 })
 

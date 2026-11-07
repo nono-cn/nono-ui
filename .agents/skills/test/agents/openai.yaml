@@ -1,4 +1,0 @@
-interface:
-  display_name: "Tests de componentes"
-  short_description: "Crear tests exhaustivos de componentes Vue"
-  default_prompt: "Usa $test para crear o completar tests exhaustivos de este componente Vue."
