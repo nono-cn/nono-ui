@@ -5,7 +5,6 @@ import { themeColors } from '@/components/constants'
 import { Alert, alertVariantNames, type AlertProps, type AlertSlots } from '..'
 
 const ROOT = '[data-test-alert-root]'
-const ICON = '[data-test-alert-icon]'
 const LABEL = '[data-test-alert-label]'
 const DESCRIPTION = '[data-test-alert-description]'
 const CLOSE_BUTTON = '[data-test-alert-close-button]'
@@ -81,45 +80,6 @@ describe('Alert', () => {
   })
 
   describe('slots', () => {
-    describe('icon', () => {
-      it('replaces the icon with its content', async () => {
-        const { screen } = await renderAlert({ icon: 'info' }, { icon: () => <span>Custom</span> })
-
-        expect({
-          slot: screen.container.textContent?.includes('Custom'),
-          icon: screen.container.querySelector(ICON),
-        }).toEqual({ slot: true, icon: null })
-      })
-    })
-
-    describe('label', () => {
-      it('replaces the label with its content', async () => {
-        const { screen } = await renderAlert({ label: 'Heads up' }, { label: () => 'Custom' })
-
-        expect(screen.container.querySelector(LABEL)?.textContent).toBe('Custom')
-      })
-
-      it('shows without the label prop', async () => {
-        const { screen } = await renderAlert({ label: undefined }, { label: () => 'Custom' })
-
-        expect(screen.container.querySelector(LABEL)?.textContent).toBe('Custom')
-      })
-    })
-
-    describe('description', () => {
-      it('replaces the description with its content', async () => {
-        const { screen } = await renderAlert({ description }, { description: () => 'Custom' })
-
-        expect(screen.container.querySelector(DESCRIPTION)?.textContent).toBe('Custom')
-      })
-
-      it('shows without the description prop', async () => {
-        const { screen } = await renderAlert({}, { description: () => 'Custom' })
-
-        expect(screen.container.querySelector(DESCRIPTION)?.textContent).toBe('Custom')
-      })
-    })
-
     describe('close', () => {
       it('receives a close function', async () => {
         const close = vi.fn()
@@ -248,10 +208,26 @@ describe('Alert', () => {
 
       Slots: () => (
         <div class="grid grid-cols-2 gap-4">
-          <Part name="icon">
-            <Alert label="Custom icon slot" description={description}>
+          <Part name="icon replaces icon">
+            <Alert label="Icon slot" description={description} icon="info">
               {{ icon: () => <span class="size-2 rounded-full bg-current" /> }}
             </Alert>
+          </Part>
+          <Part name="label replaces label">
+            <Alert label="Label prop" description={description}>
+              {{ label: () => 'Label slot' }}
+            </Alert>
+          </Part>
+          <Part name="label without label prop">
+            <Alert description={description}>{{ label: () => 'Label slot' }}</Alert>
+          </Part>
+          <Part name="description replaces description">
+            <Alert label="Heads up" description="Description prop">
+              {{ description: () => 'Description slot' }}
+            </Alert>
+          </Part>
+          <Part name="description without description prop">
+            <Alert label="Heads up">{{ description: () => 'Description slot' }}</Alert>
           </Part>
           <Part name="close">
             <Alert label="Custom close slot" description={description} closable>

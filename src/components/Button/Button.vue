@@ -13,8 +13,15 @@ import {
   type ButtonProps,
   type ButtonSlots,
 } from '.'
-import { buttonDefaults } from './constants'
+import {
+  buttonDefaults,
+  buttonIconSizes,
+  buttonSizes,
+  buttonTextSizes,
+  buttonVariantNames,
+} from './constants'
 import { buttonGroupSizeKey } from '@/components/ButtonGroup'
+import { toIconButtonSize } from '@/composables/useIconButtonSize'
 
 defineOptions({ inheritAttrs: false })
 
@@ -24,7 +31,23 @@ const slots = defineSlots<ButtonSlots>()
 
 const attrs = useAttrs()
 const groupSize = inject(buttonGroupSizeKey, undefined)
-const size = computed(() => props.size ?? groupSize?.value ?? buttonDefaults.size)
+const size = computed(() => {
+  const own = (buttonSizes as readonly unknown[]).includes(props.size) ? props.size : undefined
+  const group = (buttonTextSizes as readonly unknown[]).includes(groupSize?.value)
+    ? groupSize!.value
+    : undefined
+
+  if (!group) return own ?? buttonDefaults.size
+
+  return own && (buttonIconSizes as readonly unknown[]).includes(own)
+    ? toIconButtonSize(group)
+    : group
+})
+const variant = computed(() =>
+  (buttonVariantNames as readonly unknown[]).includes(props.variant)
+    ? props.variant
+    : buttonDefaults.variant,
+)
 const { colorStyle, radiusStyle } = useTheme({
   color: () => props.color,
   prefix: 'button',
@@ -39,9 +62,9 @@ const ariaDisabled = computed(
 const ariaBusy = computed(() => props.loading || attrs['aria-busy'])
 const calculatedVariants = computed(() => {
   const classes = buttonVariants({
-    variant: props.variant,
+    variant: variant.value,
     size: size.value,
-    disabled: props.disabled,
+    disabled: props.disabled || props.loading,
   })
 
   if (props.as === 'button' || props.as === 'a') return classes

@@ -26,20 +26,27 @@ Argumentos: `$ARGUMENTS` — el componente o composable (p. ej. `Badge`, `useThe
 - Lógica pura dentro de la carpeta de un componente (p. ej. una función de `index.ts`): su propio `nombre.spec.ts`, con el nombre de lo que prueba.
 
 ## Reglas
+- **Criterio: ¿se ve en la captura?** Si sí, va en una story del `showcase`; si no, en un test. Aunque haya lógica detrás (un `v-if`, una prioridad, un valor por defecto), si su único efecto es visual basta la captura. Los tests son solo para lo que una captura no puede asegurar:
+  - atributos y accesibilidad: `type`, `disabled`, `role`, `aria-*`, nombre accesible
+  - eventos: que se emiten, que se bloquean, que no llegan al padre
+  - slotProps: los argumentos que recibe el slot y el efecto de sus funciones (el `close` de Alert)
+  - attrs y `ui`: que llegan al elemento (`attrsTests`)
+  - el elemento que se renderiza (`as`, `asChild`), texto calculado, lógica sin efecto visual
+  - Ejemplos que van en `showcase` y no en tests: que un slot sustituya a un icono o al label, qué gana cuando hay varios (`loading` sobre `leading`), el tamaño heredado de un grupo, el hover según `as`, un `size` no válido.
 - **Nunca comprobar clases.** Se mide el efecto real en el navegador:
   - estilos calculados: `getComputedStyle(el).color`, `borderRadius`, `opacity`…
   - tamaño y posición: `getBoundingClientRect()` (antes/después = posición en pantalla, no orden en el HTML)
   - atributos: `getAttribute(...)` (`null` = no está), texto (`textContent`, `getByText`), si un nodo existe
   - el aspecto general lo cubre `showcase`.
 - **Textos de los tests en inglés y descriptivos**: `it`, `text` de los cases, títulos de las stories y mensajes de error de los helpers. P. ej. `'with an unknown theme token paints with primary'`. Los `describe` usan las claves técnicas (`props`, `label`, `slots`, `emits`, `attrs`). **Sin comentarios** en el código de los tests ni de los helpers.
-- **Estructura**: `describe('X') > describe('props') > describe('<prop>')`, luego `slots`, `emits`, `attrs` y `showcase` al final.
+- **Estructura**: `describe('X') > describe('props') > describe('<prop>')`, luego `slots`, `emits`, `attrs` y `showcase` al final. Solo los bloques que tengan algún test (p. ej. sin `slots` si todos sus casos son visuales).
 - **Tablas** (`cases`) solo en props y attrs: `const casesX = [...] as const` justo encima de `it.each(casesX)('$text', …)`. Cada caso: `{ text, input, expected: { <nodo>: { <lo medido> } } }`, con las claves de nodo según su `data-test-*` (`root`, `leading`, `'trailing-icon'`). El `it.each` monta una vez y compara un objeto con la misma forma que `expected`.
-- **Slots y emits**: un `it` explícito por comportamiento, sin cases. Los slotProps se prueban con `vi.fn` + `toHaveBeenLastCalledWith`, y sus funciones por su efecto.
+- **Slots y emits**: un `it` explícito por comportamiento, sin cases. De los slots solo se prueba lo que no se ve: los slotProps con `vi.fn` + `toHaveBeenLastCalledWith`, sus funciones por su efecto, y lo que dé accesibilidad (un control anidado en Label). Que el slot sustituya algo va en una story `Slots` con un `Part` por caso (`'leading replaces icon'`).
 - **Defaults desde las constantes**: lo esperado por defecto sale de `xxxDefaults`. Si no se puede escribir directamente, comparar con el componente montado con el default explícito (`'by default has the same size as with badgeDefaults.size'`).
 - **Un `it`, una responsabilidad**: sin `if` dentro del test ni valores que dependan de datos definidos lejos.
 - **No probar Vue**: si la prop se pinta tal cual (`{{ props.label }}`), sin tests: ni «muestra el texto», ni «al cambiar X…», ni «por defecto no muestra nada». Esa prop va en una story del `showcase` (un label corto y uno largo). Solo cuando hay lógica propia entre la prop y el resultado (un `computed`, un `watch`, un valor por defecto con efecto que no se ve, como `aria-hidden`).
 - **No probar lo que hace un componente hijo** (`Icon`, `Button`…): se prueba en el suyo. P. ej. el `aria-hidden` de un icono lo pone `Icon`, así que no va en el test de Badge ni de Alert. Sí se prueba lo que el componente le pasa (el `aria-label` que da al botón de cerrar).
-- **Si la lógica solo cambia el aspecto, basta el `showcase`**: p. ej. que un `size` o `variant` no válido use el valor por defecto se cubre añadiendo `null` y `'unknown-x'` a los valores de esa prop en su story del `showcase`, sin test.
+- **Valores no válidos**: que un `size` o `variant` no válido use el valor por defecto se cubre añadiendo `null` y `'unknown-x'` a los valores de esa prop en su story del `showcase`, sin test.
 - **Nodos como constantes** arriba del archivo, sin comentario: `const ROOT = '[data-test-badge-root]'`. Solo los que el archivo usa (ESLint da error con los no usados).
 - No ampliar los helpers compartidos (`tests/helpers`) con casos de un componente: van en su test o en un helper local (`renderBadge`).
 - **attrs** con `attrsTests` de `@test` (`tests/utils/attrsTests.ts`), no a mano: comprueba que los atributos llegan a la raíz, que una `class` propia gana y que un `style` propio no quita los del componente. La clase la pone el test del componente (Tailwind solo genera las de `src/`):
@@ -154,7 +161,7 @@ describe('Badge', () => {
   - Anidados, el diff nombra solo el más interno que ha cambiado.
 - Componentes anchos (`w-full`) como Alert: en `grid grid-cols-2`, para que midan media página.
 - Un booleano se pinta con `true` y `false`; un componente que necesita contenido para verse (Chip) lo recibe como hijo en cada pieza.
-- **Qué va en tests y qué en `showcase`**, como Vuetify: lo visual (size, variant, color, radius, iconos…) solo en `showcase`, sin tests de comportamiento. Los tests, para lo que no se ve o la captura no asegura: texto calculado (un sufijo, un plural, un valor formateado; no una prop pintada tal cual), accesibilidad, slots, attrs, emits, lógica (p. ej. un sufijo `+` por `max`).
+- **Qué va en tests y qué en `showcase`**: ver el criterio de Reglas. Todo lo que se ve (size, variant, color, radius, iconos, slots que sustituyen contenido, prioridades visuales) solo en `showcase`, con un `Part` con nombre por caso para que el diff diga cuál ha cambiado.
 - `mobile: true` **solo si el diseño cambia con el ancho** (diálogos, pestañas, paginación…). Por defecto, 2 capturas.
 - No se multiplican las paletas `data-neutral` en cada componente: van en un test propio del tema.
 - No usar los ejemplos de las docs.

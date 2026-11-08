@@ -10,7 +10,8 @@ import {
   PaginationPrev,
   PaginationRoot,
 } from 'reka-ui'
-import { Button, toIconButtonSize } from '@/components/Button'
+import { Button } from '@/components/Button'
+import { toIconButtonSize } from '@/composables/useIconButtonSize'
 import { Icon } from '@/components/Icon'
 import { useUi } from '@/composables/useUi'
 import { useI18n } from '@/i18n'

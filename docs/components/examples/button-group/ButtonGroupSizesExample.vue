@@ -37,7 +37,7 @@ function reset() {
 <template>
   <ComponentExample
     title="Size"
-    description="Provides a default size to the buttons in the group."
+    description="Sets the size of every button in the group."
     :code="code"
     @reset="reset"
   >

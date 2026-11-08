@@ -29,7 +29,7 @@ const buttonGroupConfig: ComponentDocConfig = {
     },
     {
       title: 'Size',
-      description: 'Passes a shared size to buttons in the group.',
+      description: 'Sets the size of every button in the group.',
       component: ButtonGroupSizesExample,
     },
   ],
@@ -70,7 +70,7 @@ const buttonGroupConfig: ComponentDocConfig = {
         type: buttonGroupSizes.map((size) => `'${size}'`).join(' | '),
         default: `'${buttonGroupDefaults.size}'`,
         description:
-          'Default size provided to descendant Buttons; an explicit Button size takes priority.',
+          'Size of every Button in the group; it overrides the size set on each Button. Icon-only Buttons get the matching icon size.',
       },
     ],
     emits: [],

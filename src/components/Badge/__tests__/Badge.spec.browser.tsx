@@ -1,23 +1,9 @@
-import { describe, expect, it } from 'vitest'
-import { attrsTests, Part, render, showcase } from '@test'
+import { describe } from 'vitest'
+import { attrsTests, Part, showcase } from '@test'
 import { themeColors, themeRadii } from '@/components/constants'
-import { Badge, badgeSizes, badgeVariantNames, type BadgeProps, type BadgeSlots } from '..'
+import { Badge, badgeSizes, badgeVariantNames, type BadgeProps } from '..'
 
 const ROOT = '[data-test-badge-root]'
-const ICON = '[data-test-badge-icon]'
-const TRAILING_ICON = '[data-test-badge-trailing-icon]'
-
-async function renderBadge(
-  props: BadgeProps = {},
-  slots: { [K in keyof BadgeSlots]: BadgeSlots[K] } = {},
-) {
-  const screen = await render(Badge, { props, slots })
-  const root = screen.container.querySelector<HTMLElement>(ROOT)!
-  const icon = screen.container.querySelector<SVGElement>(ICON)
-  const trailingIcon = screen.container.querySelector<SVGElement>(TRAILING_ICON)
-
-  return { screen, root, icon, trailingIcon }
-}
 
 const sizes = [...badgeSizes, null, 'unknown-size'] as BadgeProps['size'][]
 const variants = [...badgeVariantNames, null, 'unknown-variant'] as BadgeProps['variant'][]
@@ -25,44 +11,6 @@ const radii = [...themeRadii, 0, 8, '0.25rem']
 const colors = [...themeColors, '#6366f1', '#facc15', '#1e3a8a', 'unknown-token']
 
 describe('Badge', () => {
-  describe('slots', () => {
-    describe('default', () => {
-      it('replaces the label with its content', async () => {
-        const { root } = await renderBadge({ label: 'Nuevo' }, { default: () => 'Custom' })
-
-        expect(root.textContent).toBe('Custom')
-      })
-    })
-
-    describe('leading', () => {
-      it('replaces the icon with its content', async () => {
-        const { screen, icon } = await renderBadge(
-          { label: 'Nuevo', icon: 'check' },
-          { leading: () => <span>Leading</span> },
-        )
-
-        expect({
-          slot: screen.container.textContent?.includes('Leading'),
-          icon,
-        }).toEqual({ slot: true, icon: null })
-      })
-    })
-
-    describe('trailing', () => {
-      it('replaces the trailing icon with its content', async () => {
-        const { screen, trailingIcon } = await renderBadge(
-          { label: 'Nuevo', trailingIcon: 'x' },
-          { trailing: () => <span>Trailing</span> },
-        )
-
-        expect({
-          slot: screen.container.textContent?.includes('Trailing'),
-          trailingIcon,
-        }).toEqual({ slot: true, trailingIcon: null })
-      })
-    })
-  })
-
   describe('attrs', () => {
     describe('root', () => {
       attrsTests({
@@ -159,15 +107,30 @@ describe('Badge', () => {
         </div>
       ),
 
-      'Custom slots': () => (
-        <div class="flex">
-          <Badge>
-            {{
-              leading: () => <span class="size-2 rounded-full bg-current" />,
-              default: () => 'Online',
-              trailing: () => <strong>3</strong>,
-            }}
-          </Badge>
+      Slots: () => (
+        <div class="flex flex-wrap items-end gap-6">
+          <Part name="default replaces label" caption>
+            <Badge label="Label">{{ default: () => 'Default slot' }}</Badge>
+          </Part>
+          <Part name="leading replaces icon" caption>
+            <Badge label="Badge" icon="check">
+              {{ leading: () => <span class="size-2 rounded-full bg-current" /> }}
+            </Badge>
+          </Part>
+          <Part name="trailing replaces trailingIcon" caption>
+            <Badge label="Badge" trailingIcon="x">
+              {{ trailing: () => <strong>3</strong> }}
+            </Badge>
+          </Part>
+          <Part name="all slots" caption>
+            <Badge>
+              {{
+                leading: () => <span class="size-2 rounded-full bg-current" />,
+                default: () => 'Online',
+                trailing: () => <strong>3</strong>,
+              }}
+            </Badge>
+          </Part>
         </div>
       ),
     },

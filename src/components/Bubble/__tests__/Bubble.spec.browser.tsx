@@ -24,9 +24,8 @@ async function renderBubble(
   const screen = await render(Bubble, { props, slots })
   const root = screen.container.querySelector<HTMLElement>(ROOT)!
   const surface = screen.container.querySelector<HTMLElement>(SURFACE)!
-  const reactions = screen.container.querySelector<HTMLElement>(REACTIONS)
 
-  return { screen, root, surface, reactions }
+  return { screen, root, surface }
 }
 
 const longText =
@@ -111,25 +110,6 @@ describe('Bubble', () => {
           class: { value: 'rounded-none', expected: { borderRadius: '0px' } },
           keeps: ['backgroundColor'],
         })
-      })
-    })
-  })
-
-  describe('slots', () => {
-    describe('reactions', () => {
-      it('without the reactions slot there is no reactions node', async () => {
-        const { reactions } = await renderBubble()
-
-        expect(reactions).toBeNull()
-      })
-
-      it('shows its content in the reactions node', async () => {
-        const { reactions } = await renderBubble(
-          {},
-          { default: () => 'Hello', reactions: () => '👍 2' },
-        )
-
-        expect(reactions?.textContent).toBe('👍 2')
       })
     })
   })

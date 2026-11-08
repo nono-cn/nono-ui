@@ -102,12 +102,6 @@ export type ButtonVariant = NonNullable<ButtonVariants['variant']>
 export type ButtonSize = NonNullable<ButtonVariants['size']>
 export type IconButtonSize = (typeof buttonIconSizes)[number]
 
-// Pasarlo a Utils
-export function toIconButtonSize(size: ButtonSize = 'md'): IconButtonSize {
-  if (size === 'icon' || size === 'md') return 'icon'
-  return size.startsWith('icon-') ? (size as IconButtonSize) : (`icon-${size}` as IconButtonSize)
-}
-
 // Props
 export interface ButtonProps extends Pick<PrimitiveProps, 'as'> {
   label?: string

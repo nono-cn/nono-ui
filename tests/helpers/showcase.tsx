@@ -1,6 +1,6 @@
 import { defineComponent, type VNodeChild } from 'vue'
 import { describe, expect, it } from 'vitest'
-import { commands, page } from 'vitest/browser'
+import { cdp, commands, page } from 'vitest/browser'
 import { render } from 'vitest-browser-vue'
 import { browserWindow, defaultViewport, viewports } from '../setup/viewports'
 import { describeChanges, type ShowcaseBox } from './changedRows'
@@ -42,6 +42,38 @@ function showcaseBoxes(gallery: HTMLElement) {
   )
 }
 
+async function forcePseudoStates(gallery: HTMLElement) {
+  if (!gallery.querySelector('[data-showcase-force]')) return
+
+  const id = crypto.randomUUID()
+  gallery.dataset.showcaseId = id
+
+  const session = cdp()
+  await session.send('DOM.enable')
+  await session.send('CSS.enable')
+  await session.send('DOM.getDocument', { depth: -1, pierce: true })
+  const { searchId, resultCount } = await session.send('DOM.performSearch', {
+    query: `[data-showcase-id="${id}"] [data-showcase-force]`,
+  })
+  const { nodeIds } = await session.send('DOM.getSearchResults', {
+    searchId,
+    fromIndex: 0,
+    toIndex: resultCount,
+  })
+  await session.send('DOM.discardSearchResults', { searchId })
+
+  for (const nodeId of nodeIds as number[]) {
+    const { attributes } = await session.send('DOM.getAttributes', { nodeId })
+    const value = (attributes as string[])[
+      (attributes as string[]).indexOf('data-showcase-force') + 1
+    ]
+    await session.send('CSS.forcePseudoState', {
+      nodeId,
+      forcedPseudoClasses: value!.split(/\s+/).filter(Boolean),
+    })
+  }
+}
+
 export function showcase({ stories, mobile = false }: ShowcaseOptions) {
   const sizes = mobile ? [viewports.desktop, viewports.mobile] : [viewports[defaultViewport]]
   const matrix = themes.flatMap((theme) => sizes.map((viewport) => ({ theme, viewport })))
@@ -77,6 +109,7 @@ export function showcase({ stories, mobile = false }: ShowcaseOptions) {
             Math.max(browserWindow.height, height),
           )
           await page.viewport(viewport.width, Math.max(viewport.height, height))
+          await forcePseudoStates(gallery)
 
           try {
             await expect
