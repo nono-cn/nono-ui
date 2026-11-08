@@ -30,6 +30,27 @@ export const avatarFallbackVariants = cva('flex size-full items-center justify-c
 
 export const avatarIconVariants = cva('size-1/2')
 
+export const avatarLabelVariants = cva('whitespace-nowrap')
+
+export const avatarScreenReaderLabelVariants = cva('sr-only')
+
+export function fitText(text: string, fits: (text: string) => boolean) {
+  if (fits(text)) return text
+
+  const cut = (length: number) => `${text.slice(0, length).trimEnd()}...`
+  let low = 0
+  let high = text.length
+
+  while (low < high) {
+    const middle = Math.ceil((low + high) / 2)
+
+    if (fits(cut(middle))) low = middle
+    else high = middle - 1
+  }
+
+  return cut(low)
+}
+
 export type AvatarSize = NonNullable<VariantProps<typeof avatarVariants>['size']>
 export type AvatarRadius = string | number
 
