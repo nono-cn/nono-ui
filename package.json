@@ -101,6 +101,7 @@
     "@testing-library/user-event": "^14.6.8",
     "@types/node": "^25.0.0",
     "@vitejs/plugin-vue": "^6.0.7",
+    "@vitejs/plugin-vue-jsx": "^5.1.6",
     "@vitest/browser-playwright": "4.1.10",
     "@vitest/coverage-v8": "4.1.10",
     "@vue/test-utils": "^2.4.11",

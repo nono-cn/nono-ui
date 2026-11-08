@@ -64,6 +64,15 @@ function differsAt(reference: ImageData, actual: ImageData, box: ShowcaseBox, dx
   return false
 }
 
+function contains(outer: ShowcaseBox, inner: ShowcaseBox) {
+  return (
+    inner.left >= outer.left &&
+    inner.right <= outer.right &&
+    inner.top >= outer.top &&
+    inner.bottom <= outer.bottom
+  )
+}
+
 // 0, 1, 2… hasta `to` (también negativo)
 function range(to: number) {
   return Array.from({ length: Math.abs(to) + 1 }, (_, i) => i * Math.sign(to || 1))
@@ -113,8 +122,11 @@ export async function describeChanges(error: unknown, rows: ShowcaseBox[]) {
     const changed = rows
       .filter((row) => boxDiffers(reference, actual, row, [0], shiftsY))
       .map((row) => {
-        const parts = row.parts.filter((part) =>
+        const differing = row.parts.filter((part) =>
           boxDiffers(reference, actual, part, shiftsX, shiftsY),
+        )
+        const parts = differing.filter(
+          (part) => !differing.some((inner) => inner !== part && contains(part, inner)),
         )
         // Sin variantes cambiadas (o sin variantes con nombre), ha cambiado la fila en sí.
         return parts.length ? `${row.title} > ${parts.map((p) => p.title).join(', ')}` : row.title

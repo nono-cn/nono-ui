@@ -2,6 +2,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 import { browserCommands } from './tests/setup/browser-commands'
@@ -16,7 +17,8 @@ const browserWsEndpoint = process.env.BROWSER_WS_ENDPOINT ?? 'ws://127.0.0.1:667
 const browserViewport = viewports[defaultViewport]
 
 export default defineConfig({
-  plugins: [vue()],
+  // vueJsx: las stories del showcase se escriben en JSX (tests .tsx)
+  plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
       '@': path.resolve(dirname, 'src'),
@@ -40,7 +42,7 @@ export default defineConfig({
           name: 'unit',
           environment: 'jsdom',
           setupFiles: ['./tests/setup/jsdom.ts'],
-          include: ['src/**/__tests__/*.spec.ts'],
+          include: ['src/**/__tests__/*.spec.{ts,tsx}'],
           passWithNoTests: true, // aún no hay tests unitarios: que no falle la ejecución por eso
         },
       },
@@ -67,7 +69,7 @@ export default defineConfig({
         },
         test: {
           name: 'browser',
-          include: ['src/**/__tests__/*.spec.browser.ts'],
+          include: ['src/**/__tests__/*.spec.browser.{ts,tsx}'],
           globalSetup: ['./tests/setup/browser-server.ts'],
           setupFiles: ['./tests/setup/browser.ts'],
           browser: {

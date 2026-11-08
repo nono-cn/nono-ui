@@ -1,6 +1,5 @@
-import { h } from 'vue'
 import { describe, expect, it, vi } from 'vitest'
-import { attrsTests, gridOn, render, showcase, userEvent } from '@test'
+import { attrsTests, Part, render, showcase, userEvent } from '@test'
 import { Button } from '@/components/Button'
 import { themeColors } from '@/components/constants'
 import { Alert, alertVariantNames, type AlertProps, type AlertSlots } from '..'
@@ -20,6 +19,10 @@ async function renderAlert(
 
   return { screen, root }
 }
+
+const description = 'Check your card details.'
+const variants = [...alertVariantNames, null, 'unknown-variant'] as AlertProps['variant'][]
+const colors = [...themeColors, '#6366f1', 'unknown-token']
 
 describe('Alert', () => {
   describe('props', () => {
@@ -68,7 +71,7 @@ describe('Alert', () => {
       describe('description', () => {
         attrsTests({
           component: Alert,
-          props: { description: 'Check your card details.' },
+          props: { description },
           root: DESCRIPTION,
           toProps: (attrs) => ({ ui: { description: () => attrs } }),
           class: { value: 'col-start-1', expected: { gridColumnStart: '1' } },
@@ -80,7 +83,7 @@ describe('Alert', () => {
   describe('slots', () => {
     describe('icon', () => {
       it('replaces the icon with its content', async () => {
-        const { screen } = await renderAlert({ icon: 'info' }, { icon: () => h('span', 'Custom') })
+        const { screen } = await renderAlert({ icon: 'info' }, { icon: () => <span>Custom</span> })
 
         expect({
           slot: screen.container.textContent?.includes('Custom'),
@@ -105,10 +108,7 @@ describe('Alert', () => {
 
     describe('description', () => {
       it('replaces the description with its content', async () => {
-        const { screen } = await renderAlert(
-          { description: 'Check your card details.' },
-          { description: () => 'Custom' },
-        )
+        const { screen } = await renderAlert({ description }, { description: () => 'Custom' })
 
         expect(screen.container.querySelector(DESCRIPTION)?.textContent).toBe('Custom')
       })
@@ -131,7 +131,7 @@ describe('Alert', () => {
       it('calling close removes the alert', async () => {
         const { screen } = await renderAlert(
           { closable: true },
-          { close: ({ close }) => h('button', { onClick: close }, 'Dismiss') },
+          { close: ({ close }) => <button onClick={close}>Dismiss</button> },
         )
 
         await userEvent.click(screen.getByRole('button', { name: 'Dismiss' }))
@@ -154,7 +154,7 @@ describe('Alert', () => {
       it('is emitted when the close slot calls close', async () => {
         const { screen } = await renderAlert(
           { closable: true },
-          { close: ({ close }) => h('button', { onClick: close }, 'Dismiss') },
+          { close: ({ close }) => <button onClick={close}>Dismiss</button> },
         )
 
         await userEvent.click(screen.getByRole('button', { name: 'Dismiss' }))
@@ -186,56 +186,84 @@ describe('Alert', () => {
   })
 
   showcase({
-    component: Alert,
-    columns: 2,
-    hideCaptions: ['label', 'description'],
-    base: { label: 'Heads up', description: 'Check your card details.' },
-    props: {
-      label: [
-        'Heads up',
-        'A very long label that does not fit on a single line, so it is cut with an ellipsis at the end instead of wrapping onto a second line like the description does',
-      ],
-      description: [
-        'Check your card details.',
-        'A longer description that wraps onto several lines to show how it flows when there is more to say than fits in one line.',
-      ],
-      variant: [...alertVariantNames, null, 'unknown-variant'],
-      color: [...themeColors, '#6366f1', 'unknown-token'],
-      icon: ['info', 'check', 'user'],
-      closable: true,
-    },
     stories: {
-      'Variant x color with label, description, icon and close button': gridOn(
-        alertVariantNames,
-        [...themeColors, '#6366f1'],
-        (variant, color) =>
-          h(Alert, {
-            label: color,
-            description: 'Check your card details.',
-            icon: 'info',
-            closable: true,
-            variant,
-            color,
-          }),
+      'Label and description': () => (
+        <div class="grid grid-cols-2 gap-4">
+          <Part name="short">
+            <Alert label="Heads up" description={description} />
+          </Part>
+          <Part name="long label">
+            <Alert
+              label="A very long label that does not fit on a single line, so it is cut with an ellipsis at the end instead of wrapping onto a second line like the description does"
+              description={description}
+            />
+          </Part>
+          <Part name="long description">
+            <Alert
+              label="Heads up"
+              description="A longer description that wraps onto several lines to show how it flows when there is more to say than fits in one line."
+            />
+          </Part>
+          <Part name="label only">
+            <Alert label="Heads up" closable />
+          </Part>
+          <Part name="description only">
+            <Alert description={description} closable />
+          </Part>
+        </div>
       ),
-      'Label only': () => h(Alert, { label: 'Heads up', closable: true }),
-      'Description only': () =>
-        h(Alert, { description: 'Check your card details.', closable: true }),
-      'Custom icon slot': () =>
-        h(
-          Alert,
-          { label: 'Heads up', description: 'Check your card details.' },
-          { icon: () => h('span', { class: 'size-2 rounded-full bg-current' }) },
-        ),
-      'Custom close slot': () =>
-        h(
-          Alert,
-          { label: 'Heads up', description: 'Check your card details.', closable: true },
-          {
-            close: ({ close }) =>
-              h(Button, { label: 'Dismiss', size: 'xs', variant: 'outline', onClick: close }),
-          },
-        ),
+
+      'Variant x color': () => (
+        <div class="grid gap-4">
+          {variants.map((variant) => (
+            <Part name={String(variant)} title>
+              <div class="grid w-full grid-cols-2 gap-4">
+                {colors.map((color) => (
+                  <Part name={`${variant} / ${color}`}>
+                    <Alert
+                      label={color}
+                      description={description}
+                      icon="info"
+                      closable
+                      variant={variant}
+                      color={color}
+                    />
+                  </Part>
+                ))}
+              </div>
+            </Part>
+          ))}
+        </div>
+      ),
+
+      Icon: () => (
+        <div class="grid grid-cols-2 gap-4">
+          {(['info', 'check', 'user'] as const).map((icon) => (
+            <Part name={icon}>
+              <Alert label={icon} description={description} icon={icon} />
+            </Part>
+          ))}
+        </div>
+      ),
+
+      Slots: () => (
+        <div class="grid grid-cols-2 gap-4">
+          <Part name="icon">
+            <Alert label="Custom icon slot" description={description}>
+              {{ icon: () => <span class="size-2 rounded-full bg-current" /> }}
+            </Alert>
+          </Part>
+          <Part name="close">
+            <Alert label="Custom close slot" description={description} closable>
+              {{
+                close: ({ close }: { close: () => void }) => (
+                  <Button label="Dismiss" size="xs" variant="outline" onClick={close} />
+                ),
+              }}
+            </Alert>
+          </Part>
+        </div>
+      ),
     },
   })
 })

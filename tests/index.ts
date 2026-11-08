@@ -1,6 +1,5 @@
-// Punto de entrada de los helpers de test: import { render, showcase, gridOn } from '@test'
 export { render } from 'vitest-browser-vue'
 export { page, userEvent } from 'vitest/browser'
-export { gridOn } from './helpers/gridOn'
+export { Part } from './helpers/Part'
 export { showcase } from './helpers/showcase'
 export { attrsTests } from './utils/attrsTests'
