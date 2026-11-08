@@ -3,7 +3,13 @@ import { computed, useAttrs } from 'vue'
 import { Separator as RekaSeparator } from 'reka-ui'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/composables'
-import { separatorDefaults } from './constants'
+import {
+  separatorDefaults,
+  separatorOrientations,
+  separatorPositions,
+  separatorSizes,
+  separatorTypes,
+} from './constants'
 import {
   separatorContentVariants,
   separatorVariants,
@@ -20,19 +26,36 @@ const attrs = useAttrs()
 const { colorStyle } = useTheme({
   color: () => (props.color === 'neutral' ? 'var(--border)' : props.color),
   prefix: 'separator',
-  defaultColor: separatorDefaults.color,
+  defaultColor: 'border',
 })
+const orientation = computed(() =>
+  (separatorOrientations as readonly unknown[]).includes(props.orientation)
+    ? props.orientation
+    : separatorDefaults.orientation,
+)
+const type = computed(() =>
+  (separatorTypes as readonly unknown[]).includes(props.type) ? props.type : separatorDefaults.type,
+)
+const size = computed(() =>
+  (separatorSizes as readonly unknown[]).includes(props.size) ? props.size : separatorDefaults.size,
+)
+const position = computed(() =>
+  (separatorPositions as readonly unknown[]).includes(props.position)
+    ? props.position
+    : separatorDefaults.position,
+)
+
 const rootProps = computed(() => {
   return {
     ...attrs,
-    orientation: props.orientation,
+    orientation: orientation.value,
     decorative: props.decorative,
     class: cn(
       separatorVariants({
-        type: props.type,
-        orientation: props.orientation,
-        size: props.size,
-        position: props.position,
+        type: type.value,
+        orientation: orientation.value,
+        size: size.value,
+        position: position.value,
       }),
       attrs.class,
     ),

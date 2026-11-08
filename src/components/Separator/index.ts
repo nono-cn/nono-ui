@@ -1,9 +1,21 @@
 import type { SeparatorProps as RekaSeparatorProps } from 'reka-ui'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { separatorDefaults, separatorPositions, separatorSizes, separatorTypes } from './constants'
+import {
+  separatorDefaults,
+  separatorOrientations,
+  separatorPositions,
+  separatorSizes,
+  separatorTypes,
+} from './constants'
 
 export { default as Separator } from './Separator.vue'
-export { separatorDefaults, separatorPositions, separatorSizes, separatorTypes } from './constants'
+export {
+  separatorDefaults,
+  separatorOrientations,
+  separatorPositions,
+  separatorSizes,
+  separatorTypes,
+} from './constants'
 
 export const separatorVariants = cva('flex shrink-0 items-center border-(--separator-color)', {
   variants: {
@@ -15,7 +27,7 @@ export const separatorVariants = cva('flex shrink-0 items-center border-(--separ
     orientation: {
       horizontal: 'w-full flex-row',
       vertical: 'h-full flex-col self-stretch',
-    } satisfies Record<NonNullable<RekaSeparatorProps['orientation']>, string>,
+    } satisfies Record<(typeof separatorOrientations)[number], string>,
     position: {
       left: 'justify-start',
       center: 'justify-center',
