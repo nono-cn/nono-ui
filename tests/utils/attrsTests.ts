@@ -1,4 +1,4 @@
-import { h, type Component } from 'vue'
+import { h, type Component, type VNodeChild } from 'vue'
 import { expect, it } from 'vitest'
 import { render } from 'vitest-browser-vue'
 
@@ -40,6 +40,7 @@ interface AttrsTestsOptions {
   component: Component
   /** Props comunes a todos los casos (p. ej. las obligatorias). */
   props?: Record<string, unknown>
+  slots?: Record<string, () => VNodeChild>
   /** Selector del elemento que recibe los attrs. */
   root: string
   /** Convierte los atributos de prueba en props, si no entran como attrs del componente. */
@@ -62,13 +63,14 @@ function measure(element: Element, properties: StyleProperty[]) {
 export function attrsTests({
   component,
   props = {},
+  slots,
   root,
   toProps = (attrs) => attrs,
   class: customClass,
   keeps = [],
 }: AttrsTestsOptions) {
   async function renderRoot(attrs: Record<string, unknown> = {}) {
-    const screen = await render(() => h(component, { ...props, ...toProps(attrs) }))
+    const screen = await render(() => h(component, { ...props, ...toProps(attrs) }, slots))
 
     return screen.container.querySelector(root)!
   }

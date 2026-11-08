@@ -11,7 +11,14 @@ import {
   type BubbleProps,
   type BubbleSlots,
 } from '.'
-import { bubbleDefaults } from './constants'
+import {
+  bubbleAlignments,
+  bubbleDefaults,
+  bubbleReactionsAlignments,
+  bubbleReactionsSides,
+  bubbleSizes,
+  bubbleVariantNames,
+} from './constants'
 
 defineOptions({ inheritAttrs: false })
 
@@ -28,9 +35,33 @@ const { colorStyle, radiusStyle } = useTheme({
   defaultRadius: bubbleDefaults.radius,
 })
 
+const align = computed(() =>
+  (bubbleAlignments as readonly unknown[]).includes(props.align)
+    ? props.align
+    : bubbleDefaults.align,
+)
+const variant = computed(() =>
+  (bubbleVariantNames as readonly unknown[]).includes(props.variant)
+    ? props.variant
+    : bubbleDefaults.variant,
+)
+const size = computed(() =>
+  (bubbleSizes as readonly unknown[]).includes(props.size) ? props.size : bubbleDefaults.size,
+)
+const reactionsSide = computed(() =>
+  (bubbleReactionsSides as readonly unknown[]).includes(props.reactionsSide)
+    ? props.reactionsSide
+    : bubbleDefaults.reactionsSide,
+)
+const reactionsAlign = computed(() =>
+  (bubbleReactionsAlignments as readonly unknown[]).includes(props.reactionsAlign)
+    ? props.reactionsAlign
+    : bubbleDefaults.reactionsAlign,
+)
+
 const rootProps = computed(() => ({
   ...attrs,
-  class: cn(bubbleVariants({ align: props.align }), attrs.class),
+  class: cn(bubbleVariants({ align: align.value }), attrs.class),
 }))
 
 const surfaceProps = computed(() => {
@@ -40,7 +71,7 @@ const surfaceProps = computed(() => {
     ...ui,
     as: props.as,
     asChild: props.asChild,
-    class: cn(bubbleSurfaceVariants({ variant: props.variant, size: props.size }), ui.class),
+    class: cn(bubbleSurfaceVariants({ variant: variant.value, size: size.value }), ui.class),
     style: [colorStyle.value, radiusStyle.value, ui.style],
   }
 })
@@ -51,7 +82,7 @@ const reactionsProps = computed(() => {
   return {
     ...ui,
     class: cn(
-      bubbleReactionsVariants({ side: props.reactionsSide, align: props.reactionsAlign }),
+      bubbleReactionsVariants({ side: reactionsSide.value, align: reactionsAlign.value }),
       ui.class,
     ),
   }
