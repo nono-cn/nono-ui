@@ -159,6 +159,7 @@ describe('Badge', () => {
   - `caption`: pie debajo (`true` = el `name`, o un texto).
   - `title`: título encima, a la izquierda (`true` = el `name`, o un texto). Para filas: un `Part` con `title` que contiene un `div` con los `Part` de cada valor.
   - Anidados, el diff nombra solo el más interno que ha cambiado.
+- **Estados forzados**: `data-showcase-force="hover"` en un elemento (o varios estados: `"hover active"`) fuerza esa pseudoclase en la captura por CDP: `hover`, `focus-visible`, `active`… Así se ven a la vez en muchos elementos, cosa que el ratón o el foco reales no permiten. P. ej. `<Button label="Button" data-showcase-force="focus-visible" />`. Para estados por variante y color, una story `Variant x color x state`.
 - Componentes anchos (`w-full`) como Alert: en `grid grid-cols-2`, para que midan media página.
 - Un booleano se pinta con `true` y `false`; un componente que necesita contenido para verse (Chip) lo recibe como hijo en cada pieza.
 - **Qué va en tests y qué en `showcase`**: ver el criterio de Reglas. Todo lo que se ve (size, variant, color, radius, iconos, slots que sustituyen contenido, prioridades visuales) solo en `showcase`, con un `Part` con nombre por caso para que el diff diga cuál ha cambiado.
