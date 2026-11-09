@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { attrsTests, Part, render, showcase } from '@test'
+import { attrsTests, invalidValueTests, Part, render, showcase } from '@test'
 import { themeColors, themeRadii } from '@/components/constants'
 import {
   Bubble,
@@ -30,24 +30,84 @@ async function renderBubble(
 
 const longText =
   'A long message that does not fit on a single line, so the bubble stops growing at most of the available width and wraps the rest of the text onto the next lines.'
-const alignments = [...bubbleAlignments, null, 'unknown-align'] as BubbleProps['align'][]
-const variants = [...bubbleVariantNames, null, 'unknown-variant'] as BubbleProps['variant'][]
-const sizes = [...bubbleSizes, null, 'unknown-size'] as BubbleProps['size'][]
+const alignments = bubbleAlignments
+const variants = bubbleVariantNames
+const sizes = bubbleSizes
 const radii = [...themeRadii, 0, 8, '0.25rem']
-const colors = [...themeColors, '#6366f1', 'unknown-token']
-const reactionsSides = [
-  ...bubbleReactionsSides,
-  null,
-  'unknown-side',
-] as BubbleProps['reactionsSide'][]
-const reactionsAlignments = [
-  ...bubbleReactionsAlignments,
-  null,
-  'unknown-align',
-] as BubbleProps['reactionsAlign'][]
+const colors = [...themeColors, '#6366f1']
+const reactionsSides = bubbleReactionsSides
+const reactionsAlignments = bubbleReactionsAlignments
+const messageSlots = { default: () => 'Hello there' }
+const reactionsSlots = { default: () => 'A message with reactions', reactions: () => '👍 2' }
 
 describe('Bubble', () => {
   describe('props', () => {
+    describe('align', () => {
+      invalidValueTests({
+        component: Bubble,
+        slots: messageSlots,
+        root: ROOT,
+        prop: 'align',
+        values: [null, 'unknown-align'],
+        fallback: bubbleDefaults.align,
+      })
+    })
+
+    describe('variant', () => {
+      invalidValueTests({
+        component: Bubble,
+        slots: messageSlots,
+        root: ROOT,
+        prop: 'variant',
+        values: [null, 'unknown-variant'],
+        fallback: bubbleDefaults.variant,
+      })
+    })
+
+    describe('size', () => {
+      invalidValueTests({
+        component: Bubble,
+        slots: messageSlots,
+        root: ROOT,
+        prop: 'size',
+        values: [null, 'unknown-size'],
+        fallback: bubbleDefaults.size,
+      })
+    })
+
+    describe('color', () => {
+      invalidValueTests({
+        component: Bubble,
+        slots: messageSlots,
+        root: ROOT,
+        prop: 'color',
+        values: ['unknown-token'],
+        fallback: bubbleDefaults.color,
+      })
+    })
+
+    describe('reactionsSide', () => {
+      invalidValueTests({
+        component: Bubble,
+        slots: reactionsSlots,
+        root: ROOT,
+        prop: 'reactionsSide',
+        values: [null, 'unknown-side'],
+        fallback: bubbleDefaults.reactionsSide,
+      })
+    })
+
+    describe('reactionsAlign', () => {
+      invalidValueTests({
+        component: Bubble,
+        slots: reactionsSlots,
+        root: ROOT,
+        prop: 'reactionsAlign',
+        values: [null, 'unknown-align'],
+        fallback: bubbleDefaults.reactionsAlign,
+      })
+    })
+
     describe('as', () => {
       const casesAs = [
         {

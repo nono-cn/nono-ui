@@ -1,16 +1,51 @@
 import { describe } from 'vitest'
-import { attrsTests, Part, showcase } from '@test'
+import { attrsTests, invalidValueTests, Part, showcase } from '@test'
 import { themeColors, themeRadii } from '@/components/constants'
-import { Badge, badgeSizes, badgeVariantNames, type BadgeProps } from '..'
+import { Badge, badgeDefaults, badgeSizes, badgeVariantNames } from '..'
 
 const ROOT = '[data-test-badge-root]'
 
-const sizes = [...badgeSizes, null, 'unknown-size'] as BadgeProps['size'][]
-const variants = [...badgeVariantNames, null, 'unknown-variant'] as BadgeProps['variant'][]
+const sizes = badgeSizes
+const variants = badgeVariantNames
 const radii = [...themeRadii, 0, 8, '0.25rem']
-const colors = [...themeColors, '#6366f1', '#facc15', '#1e3a8a', 'unknown-token']
+const colors = [...themeColors, '#6366f1', '#facc15', '#1e3a8a']
 
 describe('Badge', () => {
+  describe('props', () => {
+    describe('size', () => {
+      invalidValueTests({
+        component: Badge,
+        props: { label: 'Badge', icon: 'check' },
+        root: ROOT,
+        prop: 'size',
+        values: [null, 'unknown-size'],
+        fallback: badgeDefaults.size,
+      })
+    })
+
+    describe('variant', () => {
+      invalidValueTests({
+        component: Badge,
+        props: { label: 'Badge' },
+        root: ROOT,
+        prop: 'variant',
+        values: [null, 'unknown-variant'],
+        fallback: badgeDefaults.variant,
+      })
+    })
+
+    describe('color', () => {
+      invalidValueTests({
+        component: Badge,
+        props: { label: 'Badge' },
+        root: ROOT,
+        prop: 'color',
+        values: ['unknown-token'],
+        fallback: badgeDefaults.color,
+      })
+    })
+  })
+
   describe('attrs', () => {
     describe('root', () => {
       attrsTests({

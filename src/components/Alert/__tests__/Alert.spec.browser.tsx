@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
-import { attrsTests, Part, render, showcase, userEvent } from '@test'
+import { attrsTests, invalidValueTests, Part, render, showcase, userEvent } from '@test'
 import { Button } from '@/components/Button'
 import { themeColors } from '@/components/constants'
-import { Alert, alertVariantNames, type AlertProps, type AlertSlots } from '..'
+import { Alert, alertDefaults, alertVariantNames, type AlertProps, type AlertSlots } from '..'
 
 const ROOT = '[data-test-alert-root]'
 const LABEL = '[data-test-alert-label]'
@@ -20,11 +20,33 @@ async function renderAlert(
 }
 
 const description = 'Check your card details.'
-const variants = [...alertVariantNames, null, 'unknown-variant'] as AlertProps['variant'][]
-const colors = [...themeColors, '#6366f1', 'unknown-token']
+const variants = alertVariantNames
+const colors = [...themeColors, '#6366f1']
 
 describe('Alert', () => {
   describe('props', () => {
+    describe('variant', () => {
+      invalidValueTests({
+        component: Alert,
+        props: { label: 'Heads up', description, icon: 'info', closable: true },
+        root: ROOT,
+        prop: 'variant',
+        values: [null, 'unknown-variant'],
+        fallback: alertDefaults.variant,
+      })
+    })
+
+    describe('color', () => {
+      invalidValueTests({
+        component: Alert,
+        props: { label: 'Heads up', description, icon: 'info', closable: true },
+        root: ROOT,
+        prop: 'color',
+        values: ['unknown-token'],
+        fallback: alertDefaults.color,
+      })
+    })
+
     describe('decorative', () => {
       it('by default is an alert', async () => {
         const { root } = await renderAlert()

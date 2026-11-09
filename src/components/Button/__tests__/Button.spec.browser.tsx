@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { attrsTests, Part, render, showcase, userEvent } from '@test'
+import { attrsTests, invalidValueTests, Part, render, showcase, userEvent } from '@test'
 import { ButtonGroup, buttonGroupSizes } from '@/components/ButtonGroup'
 import { themeColors, themeRadii } from '@/components/constants'
 import {
@@ -13,8 +13,7 @@ import {
 
 const ROOT = '[data-test-button-root]'
 
-const invalidVariants = [null, 'unknown-variant'] as unknown as ButtonProps['variant'][]
-const sizes = [...buttonTextSizes, null, 'unknown-size'] as ButtonProps['size'][]
+const sizes = buttonTextSizes
 const colors = [...themeColors, '#6366f1']
 const radii = [...themeRadii, 0, 8, '0.25rem']
 const contents = [
@@ -51,6 +50,39 @@ function stateAttributes(root: HTMLElement) {
 
 describe('Button', () => {
   describe('props', () => {
+    describe('variant', () => {
+      invalidValueTests({
+        component: Button,
+        props: { label: 'Button' },
+        root: ROOT,
+        prop: 'variant',
+        values: [null, 'unknown-variant'],
+        fallback: buttonDefaults.variant,
+      })
+    })
+
+    describe('size', () => {
+      invalidValueTests({
+        component: Button,
+        props: { label: 'Button', icon: 'check' },
+        root: ROOT,
+        prop: 'size',
+        values: [null, 'unknown-size'],
+        fallback: buttonDefaults.size,
+      })
+    })
+
+    describe('color', () => {
+      invalidValueTests({
+        component: Button,
+        props: { label: 'Button' },
+        root: ROOT,
+        prop: 'color',
+        values: ['unknown-token'],
+        fallback: buttonDefaults.color,
+      })
+    })
+
     describe('as', () => {
       const casesAs = [
         {
@@ -264,31 +296,6 @@ describe('Button', () => {
               </div>
             </Part>
           ))}
-        </div>
-      ),
-
-      'Invalid variant x color': () => (
-        <div class="grid gap-3">
-          {invalidVariants.map((variant) => (
-            <Part name={String(variant)} title>
-              <div class="flex flex-wrap items-center gap-3">
-                {[...colors, 'unknown-token'].map((color) => (
-                  <Part name={`${variant} / ${color}`}>
-                    <Button label={color} variant={variant} color={color} />
-                  </Part>
-                ))}
-              </div>
-            </Part>
-          ))}
-          <Part name="unknown-token" title>
-            <div class="flex flex-wrap items-center gap-3">
-              {buttonVariantNames.map((variant) => (
-                <Part name={`unknown-token / ${variant}`}>
-                  <Button label={variant} variant={variant} color="unknown-token" />
-                </Part>
-              ))}
-            </div>
-          </Part>
         </div>
       ),
 

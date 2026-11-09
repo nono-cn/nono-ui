@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { AvatarFallback, AvatarImage } from 'reka-ui'
-import { attrsTests, avatarImage, Part, render, showcase } from '@test'
+import { attrsTests, avatarImage, invalidValueTests, Part, render, showcase } from '@test'
 import { themeColors, themeRadii } from '@/components/constants'
 import { Avatar, avatarDefaults, avatarSizes, type AvatarProps } from '..'
 
@@ -13,8 +13,8 @@ const SCREEN_READER_LABEL = '[data-test-avatar-screen-reader-label]'
 
 const brokenImage = 'data:image/png;base64,broken'
 
-const sizes = [...avatarSizes, null, 'unknown-size'] as AvatarProps['size'][]
-const colors = [...themeColors, '#6366f1', '#facc15', '#1e3a8a', 'unknown-token']
+const sizes = avatarSizes
+const colors = [...themeColors, '#6366f1', '#facc15', '#1e3a8a']
 const radii = [...themeRadii, 0, 8, '0.25rem']
 const contents = [
   ['image', { src: avatarImage, alt: 'Avatar' }],
@@ -56,6 +56,28 @@ describe('Avatar', () => {
   })
 
   describe('props', () => {
+    describe('size', () => {
+      invalidValueTests({
+        component: Avatar,
+        props: { label: 'JD' },
+        root: ROOT,
+        prop: 'size',
+        values: [null, 'unknown-size'],
+        fallback: avatarDefaults.size,
+      })
+    })
+
+    describe('color', () => {
+      invalidValueTests({
+        component: Avatar,
+        props: { label: 'JD' },
+        root: ROOT,
+        prop: 'color',
+        values: ['unknown-token'],
+        fallback: avatarDefaults.color,
+      })
+    })
+
     describe('src', () => {
       it('passes src to reka', () => {
         expect(rekaImageProps({ src: avatarImage }).src).toBe(avatarImage)

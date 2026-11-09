@@ -32,7 +32,7 @@ Argumentos: `$ARGUMENTS` — el componente o composable (p. ej. `Badge`, `useThe
   - slotProps: los argumentos que recibe el slot y el efecto de sus funciones (el `close` de Alert)
   - attrs y `ui`: que llegan al elemento (`attrsTests`)
   - el elemento que se renderiza (`as`, `asChild`), texto calculado, lógica sin efecto visual
-  - Ejemplos que van en `showcase` y no en tests: que un slot sustituya a un icono o al label, qué gana cuando hay varios (`loading` sobre `leading`), el tamaño heredado de un grupo, el hover según `as`, un `size` no válido.
+  - Ejemplos que van en `showcase` y no en tests: que un slot sustituya a un icono o al label, qué gana cuando hay varios (`loading` sobre `leading`), el tamaño heredado de un grupo, el hover según `as`.
 - **Nunca comprobar clases.** Se mide el efecto real en el navegador:
   - estilos calculados: `getComputedStyle(el).color`, `borderRadius`, `opacity`…
   - tamaño y posición: `getBoundingClientRect()` (antes/después = posición en pantalla, no orden en el HTML)
@@ -48,7 +48,20 @@ Argumentos: `$ARGUMENTS` — el componente o composable (p. ej. `Badge`, `useThe
 - **No probar reka-ui**: lo que hace reka (foco, teclado, abrir/cerrar, cargar la imagen, el retardo del fallback…) no se testea. Solo el cableado: un `it` por cada prop, evento o slot que el componente le pasa, comprobando que llega al componente de reka (`mount(X, { props }).findComponent(RekaY).props()`, como `'passes delayMs to reka'`) o, si es un evento, que el componente lo reemite. Sí se prueba la lógica propia antes de pasarlo (un valor por defecto, una conversión: `src` sin valor pasa `''`).
 - **Imágenes**: nunca de internet. Se usan las de `tests/assets/`, exportadas desde `@test` (`avatarImage`); para una imagen rota, un `data:` no válido. Si un componente nuevo necesita otra, se añade ahí.
 - **No probar lo que hace un componente hijo** (`Icon`, `Button`…): se prueba en el suyo. P. ej. el `aria-hidden` de un icono lo pone `Icon`, así que no va en el test de Badge ni de Alert. Sí se prueba lo que el componente le pasa (el `aria-label` que da al botón de cerrar).
-- **Valores no válidos**: que un `size` o `variant` no válido use el valor por defecto se cubre añadiendo `null` y `'unknown-x'` a los valores de esa prop en su story del `showcase`, sin test.
+- **Valores no válidos**: que un valor no válido (`null`, `'unknown-size'`, `'unknown-token'`…) se pinte como el por defecto se prueba con `invalidValueTests` de `@test` (`tests/utils/invalidValueTests.ts`), **nunca en el `showcase`**: las stories solo llevan valores válidos. Monta el componente con cada valor y con `fallback`, y compara los estilos calculados de la raíz y todos sus descendientes (sin variables CSS); si falla, dice qué nodo y qué propiedad cambian. Va en `describe('props') > describe('<prop>')`:
+  ```ts
+  describe('size', () => {
+    invalidValueTests({
+      component: Badge,
+      props: { label: 'Badge', icon: 'check' },
+      root: ROOT,
+      prop: 'size',
+      values: [null, 'unknown-size'],
+      fallback: badgeDefaults.size,
+    })
+  })
+  ```
+  Con `props` o `slots`, el contenido necesario para que se note la prop (iconos para `size`, un label para `position`). Para `color`, `values: ['unknown-token']`.
 - **Nodos como constantes** arriba del archivo, sin comentario: `const ROOT = '[data-test-badge-root]'`. Solo los que el archivo usa (ESLint da error con los no usados).
 - No ampliar los helpers compartidos (`tests/helpers`) con casos de un componente: van en su test o en un helper local (`renderBadge`).
 - **attrs** con `attrsTests` de `@test` (`tests/utils/attrsTests.ts`), no a mano: comprueba que los atributos llegan a la raíz, que una `class` propia gana y que un `style` propio no quita los del componente. La clase la pone el test del componente (Tailwind solo genera las de `src/`):
@@ -86,8 +99,8 @@ async function renderBadge(props: BadgeProps = {}) {
   return { screen, root }
 }
 
-const sizes = [...badgeSizes, null, 'unknown-size'] as BadgeProps['size'][]
-const variants = [...badgeVariantNames, null, 'unknown-variant'] as BadgeProps['variant'][]
+const sizes = badgeSizes
+const variants = badgeVariantNames
 
 function resolveColor(value: string) {
   const probe = document.body.appendChild(document.createElement('span'))
@@ -149,7 +162,6 @@ describe('Badge', () => {
   })
 })
 ```
-- Los valores no válidos (`null`, `'unknown-x'`) no encajan en el tipo de la prop: el array se tipa con `as XProps['size'][]`.
 - `render(Componente, { props, slots, attrs })` es asíncrono. Devuelve `container`, localizadores (`getByText`, `getByRole`…), `rerender(props)` y `emitted()`.
 - Interacción: `userEvent` de `@test` (`await userEvent.click(...)`).
 - Si al cambiar una prop se sustituye el nodo (p. ej. `<component :is>`), volver a buscarlo después del `rerender`.

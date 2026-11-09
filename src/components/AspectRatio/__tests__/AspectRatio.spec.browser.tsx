@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { AspectRatio as RekaAspectRatio } from 'reka-ui'
-import { attrsTests, Part, showcase } from '@test'
-import { AspectRatio, type AspectRatioProps } from '..'
+import { attrsTests, invalidValueTests, Part, showcase } from '@test'
+import { AspectRatio, aspectRatioDefaults, type AspectRatioProps } from '..'
 
 const ROOT = '[data-test-aspect-ratio-root]'
 
@@ -13,12 +13,6 @@ const ratios = [
   ['3 / 4', 3 / 4],
   ['9 / 16', 9 / 16],
   ['default', undefined],
-  ['null', null],
-  ['0', 0],
-  ['-1', -1],
-  ['NaN', NaN],
-  ['Infinity', Infinity],
-  ['unknown-ratio', 'unknown-ratio'],
 ] as [string, AspectRatioProps['ratio']][]
 
 function rekaProps(props: AspectRatioProps = {}) {
@@ -30,6 +24,15 @@ describe('AspectRatio', () => {
     describe('ratio', () => {
       it('passes ratio to reka', () => {
         expect(rekaProps({ ratio: 16 / 9 }).ratio).toBe(16 / 9)
+      })
+
+      invalidValueTests({
+        component: AspectRatio,
+        slots: { default: () => <div class="size-full bg-muted" /> },
+        root: ROOT,
+        prop: 'ratio',
+        values: [null, 0, -1, NaN, Infinity, 'unknown-ratio'],
+        fallback: aspectRatioDefaults.ratio,
       })
     })
   })

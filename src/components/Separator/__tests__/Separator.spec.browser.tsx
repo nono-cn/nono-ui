@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { Separator as RekaSeparator } from 'reka-ui'
-import { attrsTests, Part, showcase } from '@test'
+import { attrsTests, invalidValueTests, Part, showcase } from '@test'
 import { themeColors } from '@/components/constants'
 import {
   Separator,
+  separatorDefaults,
   separatorOrientations,
   separatorPositions,
   separatorSizes,
@@ -18,19 +19,11 @@ function rekaProps(props: SeparatorProps = {}) {
   return mount(Separator, { props }).findComponent(RekaSeparator).props()
 }
 
-const orientations = [
-  ...separatorOrientations,
-  null,
-  'unknown-orientation',
-] as SeparatorProps['orientation'][]
-const sizes = [...separatorSizes, null, 'unknown-size'] as SeparatorProps['size'][]
-const types = [...separatorTypes, null, 'unknown-type'] as SeparatorProps['type'][]
-const positions = [
-  ...separatorPositions,
-  null,
-  'unknown-position',
-] as SeparatorProps['position'][]
-const colors = [...themeColors, '#e11d48', null, 'unknown-color'] as SeparatorProps['color'][]
+const orientations = separatorOrientations
+const sizes = separatorSizes
+const types = separatorTypes
+const positions = separatorPositions
+const colors = [...themeColors, '#e11d48']
 
 describe('Separator', () => {
   describe('props', () => {
@@ -43,6 +36,56 @@ describe('Separator', () => {
     describe('orientation', () => {
       it('passes orientation to reka', () => {
         expect(rekaProps({ orientation: 'vertical' }).orientation).toBe('vertical')
+      })
+
+      invalidValueTests({
+        component: Separator,
+        props: { label: 'Or' },
+        root: ROOT,
+        prop: 'orientation',
+        values: [null, 'unknown-orientation'],
+        fallback: separatorDefaults.orientation,
+      })
+    })
+
+    describe('size', () => {
+      invalidValueTests({
+        component: Separator,
+        root: ROOT,
+        prop: 'size',
+        values: [null, 'unknown-size'],
+        fallback: separatorDefaults.size,
+      })
+    })
+
+    describe('type', () => {
+      invalidValueTests({
+        component: Separator,
+        root: ROOT,
+        prop: 'type',
+        values: [null, 'unknown-type'],
+        fallback: separatorDefaults.type,
+      })
+    })
+
+    describe('color', () => {
+      invalidValueTests({
+        component: Separator,
+        root: ROOT,
+        prop: 'color',
+        values: [null, 'unknown-color'],
+        fallback: separatorDefaults.color,
+      })
+    })
+
+    describe('position', () => {
+      invalidValueTests({
+        component: Separator,
+        props: { label: 'Or' },
+        root: ROOT,
+        prop: 'position',
+        values: [null, 'unknown-position'],
+        fallback: separatorDefaults.position,
       })
     })
   })

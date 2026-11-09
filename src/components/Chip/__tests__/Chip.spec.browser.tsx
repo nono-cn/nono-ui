@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { attrsTests, Part, render, showcase } from '@test'
+import { attrsTests, invalidValueTests, Part, render, showcase } from '@test'
 import { themeColors } from '@/components/constants'
-import { Chip, chipPositions, chipSizes, type ChipProps } from '..'
+import { Chip, chipDefaults, chipPositions, chipSizes } from '..'
 
 const ROOT = '[data-test-chip-root]'
 const BASE = '[data-test-chip-base]'
@@ -18,11 +18,46 @@ async function baseColor(attrs: Record<string, unknown> = {}) {
   return getComputedStyle(screen.container.querySelector(BASE)!).backgroundColor
 }
 
-const sizes = [...chipSizes, null, 'unknown-size'] as ChipProps['size'][]
-const positions = [...chipPositions, null, 'unknown-position'] as ChipProps['position'][]
-const colors = [...themeColors, '#6366f1', 'unknown-token']
+const sizes = chipSizes
+const positions = chipPositions
+const colors = [...themeColors, '#6366f1']
 
 describe('Chip', () => {
+  describe('props', () => {
+    describe('size', () => {
+      invalidValueTests({
+        component: Chip,
+        slots: { default: anchor },
+        root: ROOT,
+        prop: 'size',
+        values: [null, 'unknown-size'],
+        fallback: chipDefaults.size,
+      })
+    })
+
+    describe('position', () => {
+      invalidValueTests({
+        component: Chip,
+        slots: { default: anchor },
+        root: ROOT,
+        prop: 'position',
+        values: [null, 'unknown-position'],
+        fallback: chipDefaults.position,
+      })
+    })
+
+    describe('color', () => {
+      invalidValueTests({
+        component: Chip,
+        slots: { default: anchor },
+        root: ROOT,
+        prop: 'color',
+        values: ['unknown-token'],
+        fallback: chipDefaults.color,
+      })
+    })
+  })
+
   describe('attrs', () => {
     describe('root', () => {
       attrsTests({

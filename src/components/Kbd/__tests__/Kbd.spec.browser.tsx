@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { attrsTests, Part, render, showcase } from '@test'
+import { attrsTests, invalidValueTests, Part, render, showcase } from '@test'
 import { themeColors, themeRadii } from '@/components/constants'
-import { Kbd, kbdSizes, kbdVariantNames, type KbdProps } from '..'
+import { Kbd, kbdDefaults, kbdSizes, kbdVariantNames, type KbdProps } from '..'
 
 const ROOT = '[data-test-kbd-root]'
 
@@ -13,12 +13,47 @@ async function renderKbd(props: KbdProps = {}) {
 }
 
 const labels = ['K', 'Esc', 'Enter', '⌘']
-const sizes = [...kbdSizes, null, 'unknown-size'] as KbdProps['size'][]
-const variants = [...kbdVariantNames, null, 'unknown-variant'] as KbdProps['variant'][]
+const sizes = kbdSizes
+const variants = kbdVariantNames
 const radii = [...themeRadii, 0, 8, '0.25rem']
-const colors = [...themeColors, '#6366f1', '#facc15', '#1e3a8a', 'unknown-token']
+const colors = [...themeColors, '#6366f1', '#facc15', '#1e3a8a']
 
 describe('Kbd', () => {
+  describe('props', () => {
+    describe('size', () => {
+      invalidValueTests({
+        component: Kbd,
+        props: { label: 'Enter' },
+        root: ROOT,
+        prop: 'size',
+        values: [null, 'unknown-size'],
+        fallback: kbdDefaults.size,
+      })
+    })
+
+    describe('variant', () => {
+      invalidValueTests({
+        component: Kbd,
+        props: { label: 'Enter' },
+        root: ROOT,
+        prop: 'variant',
+        values: [null, 'unknown-variant'],
+        fallback: kbdDefaults.variant,
+      })
+    })
+
+    describe('color', () => {
+      invalidValueTests({
+        component: Kbd,
+        props: { label: 'Enter' },
+        root: ROOT,
+        prop: 'color',
+        values: ['unknown-token'],
+        fallback: kbdDefaults.color,
+      })
+    })
+  })
+
   describe('attrs', () => {
     describe('root', () => {
       attrsTests({
