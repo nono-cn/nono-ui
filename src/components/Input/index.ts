@@ -8,7 +8,7 @@ export { default as Input } from './Input.vue'
 export { inputDefaults, inputSizes, inputVariantNames } from './constants'
 
 export const inputVariants = cva(
-  'relative flex w-full min-w-0 items-center overflow-hidden transition-[color,box-shadow] focus-within:border-(--input-color) focus-within:ring-3 focus-within:ring-(--input-color)/30 has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-3 has-[[aria-invalid=true]]:ring-destructive/20 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 dark:bg-input/30 dark:has-[[aria-invalid=true]]:ring-destructive/40',
+  'relative flex w-full min-w-0 items-center overflow-hidden transition-[color,box-shadow] focus-within:border-(--input-color) focus-within:ring-3 focus-within:ring-(--input-color)/30 has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-3 has-[[aria-invalid=true]]:ring-destructive/20 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 dark:has-[[aria-invalid=true]]:ring-destructive/40',
   {
     variants: {
       size: {
@@ -19,9 +19,8 @@ export const inputVariants = cva(
         xl: 'h-11 text-xl',
       } satisfies Record<(typeof inputSizes)[number], string>,
       variant: {
-        outline: 'rounded-md border bg-transparent shadow-xs',
+        outline: 'rounded-md border bg-transparent shadow-xs dark:bg-input/30',
         plain: 'rounded-md border-transparent bg-transparent shadow-none',
-        none: 'rounded-md border-0 bg-transparent shadow-none',
         subtle: 'rounded-md border bg-muted shadow-xs',
         soft: 'rounded-md border-transparent bg-muted/50 shadow-none',
       } satisfies Record<(typeof inputVariantNames)[number], string>,
@@ -31,7 +30,6 @@ export const inputVariants = cva(
       },
     },
     compoundVariants: [
-      { variant: 'none', class: 'focus-within:border-0 focus-within:ring-0' },
       { variant: ['outline', 'plain'], class: 'text-(--input-color)' },
       { variant: ['subtle', 'soft'], class: 'text-(--input-color)' },
       { variant: ['outline', 'plain'], highlight: true, class: 'border-(--input-color)/40' },
@@ -54,21 +52,62 @@ export const inputFieldVariants = cva(
         true: 'pl-0',
         false: '',
       },
+      trailing: {
+        true: 'pr-0',
+        false: '',
+      },
     },
     defaultVariants: {
       leading: false,
+      trailing: false,
     },
   },
 )
 
+export const inputLeadingVariants = cva(
+  'ms-3 me-3 inline-flex h-(--input-icon-size) min-w-(--input-icon-size) shrink-0 items-center justify-center text-muted-foreground',
+  {
+    variants: {
+      size: {
+        xs: '[--input-icon-size:--spacing(3.5)]',
+        sm: '[--input-icon-size:--spacing(4)]',
+        md: '[--input-icon-size:--spacing(5)]',
+        lg: '[--input-icon-size:--spacing(6)]',
+        xl: '[--input-icon-size:--spacing(7)]',
+      } satisfies Record<(typeof inputSizes)[number], string>,
+    },
+    defaultVariants: {
+      size: inputDefaults.size,
+    },
+  },
+)
+
+export const inputTrailingVariants = cva(
+  'ms-3 me-3 inline-flex h-(--input-icon-size) min-w-(--input-icon-size) shrink-0 items-center justify-center text-muted-foreground',
+  {
+    variants: {
+      size: {
+        xs: '[--input-icon-size:--spacing(3.5)]',
+        sm: '[--input-icon-size:--spacing(4)]',
+        md: '[--input-icon-size:--spacing(5)]',
+        lg: '[--input-icon-size:--spacing(6)]',
+        xl: '[--input-icon-size:--spacing(7)]',
+      } satisfies Record<(typeof inputSizes)[number], string>,
+    },
+    defaultVariants: {
+      size: inputDefaults.size,
+    },
+  },
+)
+
+export const inputIconVariants = cva('size-(--input-icon-size)')
+
 export type InputVariants = VariantProps<typeof inputVariants>
 export type InputSize = NonNullable<InputVariants['size']>
 export type InputVariant = NonNullable<InputVariants['variant']>
-export type InputLoadingIcon = IconName
 
 export type InputValue = string | number
 
-// Props
 export interface InputProps {
   modelValue?: InputValue
   size?: InputSize
@@ -77,7 +116,7 @@ export interface InputProps {
   highlight?: boolean
   icon?: IconName
   loading?: boolean
-  loadingIcon?: InputLoadingIcon
+  loadingIcon?: IconName
   trailingIcon?: IconName
   ui?: InputUI
 }
@@ -90,17 +129,14 @@ export interface InputUI {
   trailing?: InputFn<HTMLAttributes>
 }
 
-// Emits
 export interface InputEmits {
   'update:modelValue': [value: InputValue]
 }
 
-// Slots
 export interface InputSlots {
   leading?(): unknown
   loading?(): unknown
   trailing?(): unknown
 }
 
-// Normalize
 export type NormalizeInputProps = InputProps & EmitsAsProps<InputEmits>

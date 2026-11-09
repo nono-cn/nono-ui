@@ -87,8 +87,7 @@ const inputConfig: ComponentDocConfig = {
         name: 'variant',
         type: inputVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: `'${inputDefaults.variant}'`,
-        description:
-          'Controls the border and background style. none removes the focus border and ring.',
+        description: 'Controls the border and background style.',
       },
       {
         name: 'color',
@@ -142,7 +141,7 @@ const inputConfig: ComponentDocConfig = {
         typePre: true,
         default: 'undefined',
         description:
-          'Resolvers for customizing HTML attributes on the root container and leading and trailing InputGroupAddon containers, including class, style, and ARIA attributes.',
+          'Resolvers for customizing HTML attributes on the root container and the leading and trailing containers, including class, style, and ARIA attributes.',
       },
     ],
     emits: [

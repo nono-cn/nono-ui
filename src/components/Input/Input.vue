@@ -1,30 +1,44 @@
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from 'vue'
-import { InputGroupAddon } from '@/components/internal/InputGroup'
+import { computed, useAttrs, type InputHTMLAttributes } from 'vue'
 import { Icon } from '@/components/Icon'
 import { useTheme } from '@/composables'
 import { useUi } from '@/composables/useUi'
 import { cn } from '@/lib/utils'
 import type { InputProps, InputSlots, InputValue } from '.'
-import { inputFieldVariants, inputVariants } from '.'
-import { inputDefaults, inputSizes } from './constants'
+import {
+  inputFieldVariants,
+  inputIconVariants,
+  inputLeadingVariants,
+  inputTrailingVariants,
+  inputVariants,
+} from '.'
+import { inputDefaults, inputSizes, inputVariantNames } from './constants'
 
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<InputProps>(), inputDefaults)
-defineSlots<InputSlots>()
+const slots = defineSlots<InputSlots>()
 const value = defineModel<InputValue>({ default: inputDefaults.modelValue })
-const resolvedSize = computed(() =>
-  inputSizes.includes(props.size) ? props.size : inputDefaults.size,
-)
 
 const attrs = useAttrs()
-const slots = useSlots()
+const size = computed(() =>
+  (inputSizes as readonly unknown[]).includes(props.size) ? props.size : inputDefaults.size,
+)
+
+const variant = computed(() =>
+  (inputVariantNames as readonly unknown[]).includes(props.variant)
+    ? props.variant
+    : inputDefaults.variant,
+)
+
 const { colorStyle } = useTheme({
   color: () => props.color,
   prefix: 'input',
   defaultColor: inputDefaults.color,
 })
+
+const hasLeading = computed(() => props.loading || Boolean(props.icon) || Boolean(slots.leading))
+const hasTrailing = computed(() => Boolean(props.trailingIcon) || Boolean(slots.trailing))
 
 const rootProps = computed(() => {
   const ui = useUi(props.ui?.root, undefined)
@@ -33,8 +47,8 @@ const rootProps = computed(() => {
     ...ui,
     class: cn(
       inputVariants({
-        size: resolvedSize.value,
-        variant: props.variant,
+        size: size.value,
+        variant: variant.value,
         highlight: props.highlight,
       }),
       ui.class,
@@ -43,62 +57,68 @@ const rootProps = computed(() => {
   }
 })
 
-const inputProps = computed(() => {
+const fieldProps = computed(() => ({
+  ...attrs,
+  'aria-busy': props.loading ? true : (attrs['aria-busy'] as InputHTMLAttributes['aria-busy']),
+  class: cn(
+    inputFieldVariants({ leading: hasLeading.value, trailing: hasTrailing.value }),
+    attrs.class,
+  ),
+  style: attrs.style,
+}))
+
+const leadingProps = computed(() => {
+  const ui = useUi(props.ui?.leading, undefined)
+
   return {
-    ...attrs,
-    'aria-busy': props.loading || attrs['aria-busy'],
-    class: cn(
-      inputFieldVariants({
-        leading: props.loading || Boolean(props.icon) || Boolean(slots.leading),
-      }),
-      attrs.class,
-    ),
-    style: [attrs.style],
+    ...ui,
+    class: cn(inputLeadingVariants({ size: size.value }), ui.class),
+    style: ui.style,
   }
 })
 
-const leadingAddonProps = computed(() => {
-  const ui = useUi(props.ui?.leading, undefined)
-  return { ...ui, class: cn(ui.class), style: ui.style }
+const trailingProps = computed(() => {
+  const ui = useUi(props.ui?.trailing, undefined)
+
+  return {
+    ...ui,
+    class: cn(inputTrailingVariants({ size: size.value }), ui.class),
+    style: ui.style,
+  }
 })
 
-const trailingAddonProps = computed(() => {
-  const ui = useUi(props.ui?.trailing, undefined)
-  return { ...ui, class: cn(ui.class), style: ui.style }
-})
+const iconProps = {
+  class: inputIconVariants(),
+}
 </script>
 
 <template>
-  <div v-bind="rootProps" data-test-input-group-root>
-    <InputGroupAddon v-if="props.loading || props.icon || slots.leading" v-bind="leadingAddonProps">
+  <div v-bind="rootProps" data-test-input-root>
+    <span v-if="hasLeading" v-bind="leadingProps" data-test-input-leading>
       <slot v-if="props.loading" name="loading">
         <Icon
           :name="props.loadingIcon"
-          :size="resolvedSize"
+          v-bind="iconProps"
           class="animate-spin"
           data-test-input-loading-icon
         />
       </slot>
       <slot v-else name="leading">
-        <Icon v-if="props.icon" :name="props.icon" :size="resolvedSize" data-test-input-leading-icon/>
+        <Icon v-if="props.icon" :name="props.icon" v-bind="iconProps" data-test-input-icon />
       </slot>
-    </InputGroupAddon>
+    </span>
 
-    <input v-model="value" v-bind="inputProps" data-test-input-root />
+    <input v-model="value" v-bind="fieldProps" data-test-input-field />
 
-    <InputGroupAddon
-      v-if="slots.trailing || props.trailingIcon"
-      v-bind="trailingAddonProps"
-      align="inline-end"
-    >
+    <span v-if="hasTrailing" v-bind="trailingProps" data-test-input-trailing>
       <slot name="trailing">
         <Icon
           v-if="props.trailingIcon"
           :name="props.trailingIcon"
-          :size="resolvedSize"
+          v-bind="iconProps"
           data-test-input-trailing-icon
         />
       </slot>
-    </InputGroupAddon>
+    </span>
   </div>
 </template>
