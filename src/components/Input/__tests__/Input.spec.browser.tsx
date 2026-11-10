@@ -23,6 +23,7 @@ async function renderInput(props: InputProps = {}, attrs: Record<string, unknown
 }
 
 const sizes = inputSizes
+const contents = ['icon', 'text addon', 'loading'] as const
 const variants = inputVariantNames
 const colors = [...themeColors, '#7c3aed']
 const focusUi: InputUI = { root: () => ({ 'data-showcase-force': 'focus-within' }) }
@@ -151,11 +152,124 @@ describe('Input', () => {
 
   showcase({
     stories: {
-      Size: () => (
-        <div class="grid grid-cols-4 gap-4">
-          {sizes.map((size) => (
-            <Part name={String(size)} caption>
-              <Input size={size} icon="search" trailingIcon="x" modelValue="Search" />
+      'Size x content': () => (
+        <div class="grid gap-3">
+          {contents.map((content) => (
+            <Part name={content} title>
+              <div class="grid w-full grid-cols-5 items-end gap-3">
+                {sizes.map((size) => (
+                  <Part name={`${content} / ${size}`} caption={String(size)}>
+                    {content === 'icon' && (
+                      <Input size={size} icon="search" trailingIcon="x" modelValue="Search" />
+                    )}
+                    {content === 'text addon' && (
+                      <Input size={size} modelValue="25.00">
+                        {{ leading: () => '$', trailing: () => 'USD' }}
+                      </Input>
+                    )}
+                    {content === 'loading' && (
+                      <Input size={size} loading trailingIcon="x" modelValue="Search" />
+                    )}
+                  </Part>
+                ))}
+              </div>
+            </Part>
+          ))}
+        </div>
+      ),
+      'Leading and trailing': () => (
+        <div class="grid grid-cols-3 items-start gap-x-6 gap-y-4">
+          <Part name="no addons" caption>
+            <Input modelValue="Search" />
+          </Part>
+          <Part name="icon" caption>
+            <Input icon="search" modelValue="Search" />
+          </Part>
+          <Part name="trailingIcon" caption>
+            <Input trailingIcon="x" modelValue="Search" />
+          </Part>
+          <Part name="icon and trailingIcon" caption>
+            <Input icon="search" trailingIcon="x" modelValue="Search" />
+          </Part>
+          <Part name="leading replaces icon" caption>
+            <Input icon="search" modelValue="username">
+              {{ leading: () => '@' }}
+            </Input>
+          </Part>
+          <Part name="trailing replaces trailingIcon" caption>
+            <Input trailingIcon="x" modelValue="example">
+              {{ trailing: () => '.com' }}
+            </Input>
+          </Part>
+        </div>
+      ),
+      Loading: () => (
+        <div class="grid grid-cols-3 items-start gap-x-6 gap-y-4">
+          <Part name="loading without icon" caption>
+            <Input loading modelValue="Search" />
+          </Part>
+          <Part name="loading replaces icon" caption>
+            <Input loading icon="search" modelValue="Search" />
+          </Part>
+          <Part name="loading replaces leading slot" caption>
+            <Input loading modelValue="username">
+              {{ leading: () => '@' }}
+            </Input>
+          </Part>
+          <Part name="loading keeps trailingIcon" caption>
+            <Input loading icon="search" trailingIcon="x" modelValue="Search" />
+          </Part>
+          <Part name="custom loadingIcon" caption>
+            <Input loading loadingIcon="upload" modelValue="photo.png" />
+          </Part>
+          <Part name="loading slot replaces loadingIcon" caption>
+            <Input loading loadingIcon="upload" modelValue="photo.png">
+              {{ loading: () => '…' }}
+            </Input>
+          </Part>
+        </div>
+      ),
+      Content: () => (
+        <div class="grid grid-cols-2 items-start gap-x-6 gap-y-4">
+          <Part name="placeholder" caption>
+            <Input icon="search" placeholder="Search projects" />
+          </Part>
+          <Part name="value" caption>
+            <Input icon="search" modelValue="Search" />
+          </Part>
+          <Part name="long value" caption>
+            <Input
+              icon="search"
+              trailingIcon="x"
+              modelValue="A very long value that does not fit inside the field and has to be cut at the edge"
+            />
+          </Part>
+          <Part name="file" caption>
+            <Input type="file" />
+          </Part>
+        </div>
+      ),
+      'Variant x field state': () => (
+        <div class="grid gap-3">
+          {variants.map((variant) => (
+            <Part name={String(variant)} title>
+              <div class="grid w-full grid-cols-3 gap-3">
+                <Part name={`${variant} / disabled`} caption="disabled">
+                  <Input variant={variant} icon="search" modelValue="Search" disabled />
+                </Part>
+                <Part name={`${variant} / invalid`} caption="invalid">
+                  <Input variant={variant} icon="search" modelValue="Search" aria-invalid="true" />
+                </Part>
+                <Part name={`${variant} / invalid + focus`} caption="invalid + focus">
+                  <Input
+                    variant={variant}
+                    icon="search"
+                    modelValue="Search"
+                    aria-invalid="true"
+                    ui={focusUi}
+                  />
+                </Part>
+              </div>
             </Part>
           ))}
         </div>
