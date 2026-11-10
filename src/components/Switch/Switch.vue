@@ -23,10 +23,6 @@ const switchContext = computed(() => createSwitchContext(modelValue.value, props
 const thumbIcon = computed(() =>
   switchContext.value.state ? props.checkedIcon : props.uncheckedIcon,
 )
-const colorIcon = computed(() => {
-  if (!switchContext.value.state) return 'var(--muted-foreground)'
-  return 'var(--switch-color)'
-})
 
 const attrs = useAttrs()
 const size = computed(() =>
@@ -58,12 +54,17 @@ const thumbProps = computed(() => {
     style: ui.style,
   }
 })
+
+const iconProps = computed(() => ({
+  name: thumbIcon.value,
+  color: switchContext.value.state ? 'var(--switch-color)' : 'var(--muted-foreground)',
+}))
 </script>
 
 <template>
   <SwitchRoot v-bind="rootProps" v-model="modelValue" data-test-switch-root>
     <SwitchThumb v-bind="thumbProps" data-test-switch-thumb>
-      <Icon v-if="thumbIcon" :name="thumbIcon" :color="colorIcon" data-test-switch-icon />
+      <Icon v-if="iconProps.name" v-bind="iconProps" data-test-switch-icon />
     </SwitchThumb>
   </SwitchRoot>
 </template>

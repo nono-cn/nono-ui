@@ -8,7 +8,7 @@ export { default as Checkbox } from './Checkbox.vue'
 export { checkboxDefaults, checkboxSizes } from './constants'
 
 export const checkboxVariants = cva(
-  'peer shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-(--checkbox-color) focus-visible:ring-3 focus-visible:ring-(--checkbox-color)/30 data-[state=checked]:border-(--checkbox-color) data-[state=checked]:bg-(--checkbox-color) data-[state=checked]:text-(--checkbox-color-foreground) data-[state=indeterminate]:border-(--checkbox-color) data-[state=indeterminate]:bg-(--checkbox-color) data-[state=indeterminate]:text-(--checkbox-color-foreground) disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
+  'peer shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-(--checkbox-color) focus-visible:ring-3 focus-visible:ring-(--checkbox-color)/30 data-[state=checked]:border-(--checkbox-color) data-[state=checked]:bg-(--checkbox-color) data-[state=checked]:text-(--checkbox-color-foreground) data-[state=indeterminate]:border-(--checkbox-color) data-[state=indeterminate]:bg-(--checkbox-color) data-[state=indeterminate]:text-(--checkbox-color-foreground) disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:data-[state=checked]:border-destructive aria-invalid:data-[state=indeterminate]:border-destructive dark:aria-invalid:ring-destructive/40',
   {
     variants: {
       size: {
@@ -74,6 +74,13 @@ export interface CheckboxProps extends Pick<
 // Context
 export interface CheckboxContext {
   state: CheckboxState
+}
+
+export function createCheckboxContext(
+  value: CheckboxModelValue | undefined,
+  trueValue: CheckboxValue,
+): CheckboxContext {
+  return { state: value === 'indeterminate' ? 'indeterminate' : value === trueValue }
 }
 
 // Emits
