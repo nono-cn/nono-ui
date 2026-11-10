@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs, watch } from 'vue'
+import { computed, useAttrs } from 'vue'
 import { SwitchRoot, SwitchThumb } from 'reka-ui'
 import { Icon } from '@/components/Icon'
 import { useUi } from '@/composables/useUi'
@@ -17,27 +17,8 @@ import { switchDefaults, switchSizes } from './constants'
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<SwitchProps>(), switchDefaults)
-const size = computed(
-  () => switchSizes.find((candidate) => candidate === props.size) ?? switchDefaults.size,
-)
 const modelValue = defineModel<SwitchValue>({ default: switchDefaults.falseValue })
 
-const validateValue = (val: SwitchValue) => {
-  const isValid = [props.trueValue, props.falseValue].includes(val)
-  if (!isValid) return props.falseValue
-
-  return val
-}
-
-watch(
-  [modelValue, () => props.trueValue, () => props.falseValue],
-  () => {
-    modelValue.value = validateValue(modelValue.value)
-  },
-  {
-    immediate: true,
-  },
-)
 const switchContext = computed(() => createSwitchContext(modelValue.value, props.trueValue))
 const thumbIcon = computed(() =>
   switchContext.value.state ? props.checkedIcon : props.uncheckedIcon,
@@ -48,30 +29,33 @@ const colorIcon = computed(() => {
 })
 
 const attrs = useAttrs()
+const size = computed(() =>
+  (switchSizes as readonly unknown[]).includes(props.size) ? props.size : switchDefaults.size,
+)
+
 const { colorStyle } = useTheme({
   color: () => props.color,
   prefix: 'switch',
   defaultColor: switchDefaults.color,
 })
-const rootProps = computed(() => {
-  return {
-    ...attrs,
-    as: 'button',
-    asChild: false,
-    trueValue: props.trueValue,
-    falseValue: props.falseValue,
-    class: cn(switchVariants({ size: size.value }), attrs.class),
-    style: [colorStyle.value, attrs.style],
-  }
-})
+
+const rootProps = computed(() => ({
+  ...attrs,
+  as: 'button',
+  asChild: false,
+  trueValue: props.trueValue,
+  falseValue: props.falseValue,
+  class: cn(switchVariants({ size: size.value }), attrs.class),
+  style: [colorStyle.value, attrs.style],
+}))
 
 const thumbProps = computed(() => {
-  const thumbUI = useUi(props.ui?.thumb, switchContext.value)
+  const ui = useUi(props.ui?.thumb, switchContext.value)
 
   return {
-    ...thumbUI,
-    class: cn(switchThumbVariants({ size: size.value }), thumbUI.class),
-    style: thumbUI.style,
+    ...ui,
+    class: cn(switchThumbVariants({ size: size.value }), ui.class),
+    style: ui.style,
   }
 })
 </script>
