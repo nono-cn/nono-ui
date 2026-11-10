@@ -98,8 +98,7 @@ const textareaConfig: ComponentDocConfig = {
         name: 'variant',
         type: textareaVariantNames.map((variant) => `'${variant}'`).join(' | '),
         default: `'${textareaDefaults.variant}'`,
-        description:
-          'Defines the border and background style. none also removes the border on focus.',
+        description: 'Defines the border and background style.',
       },
     ],
     emits: [

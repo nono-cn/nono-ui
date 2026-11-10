@@ -57,6 +57,17 @@ describe('Input', () => {
       })
     })
 
+    describe('color', () => {
+      invalidValueTests({
+        component: Input,
+        props: { icon: 'search', modelValue: 'Search', highlight: true },
+        root: ROOT,
+        prop: 'color',
+        values: ['unknown-token'],
+        fallback: inputDefaults.color,
+      })
+    })
+
     describe('loading', () => {
       it(`by default has no aria-busy (inputDefaults.loading is ${inputDefaults.loading})`, async () => {
         const { field } = await renderInput()

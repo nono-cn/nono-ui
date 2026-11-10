@@ -6,7 +6,7 @@ export { default as Textarea } from './Textarea.vue'
 export { textareaDefaults, textareaSizes, textareaVariantNames } from './constants'
 
 export const textareaVariants = cva(
-  'flex w-full border bg-transparent outline-none transition-[color,box-shadow] placeholder:text-muted-foreground focus-visible:border-(--textarea-color) focus-visible:ring-3 focus-visible:ring-(--textarea-color)/30 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:aria-invalid:ring-destructive/40',
+  'flex w-full border bg-transparent outline-none transition-[color,box-shadow] placeholder:text-muted-foreground focus-visible:border-(--textarea-color) focus-visible:ring-3 focus-visible:ring-(--textarea-color)/30 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
   {
     variants: {
       autoresize: {
@@ -25,15 +25,13 @@ export const textareaVariants = cva(
         false: 'border-input',
       },
       variant: {
-        outline: 'rounded-md border bg-transparent shadow-xs',
+        outline: 'rounded-md border bg-transparent shadow-xs dark:bg-input/30',
         subtle: 'rounded-md border bg-muted shadow-xs',
         soft: 'rounded-md border-transparent bg-muted/50 shadow-none hover:bg-muted focus:bg-muted disabled:bg-muted/50',
         plain: 'rounded-md border-transparent bg-transparent shadow-none',
-        none: 'rounded-md border-0 bg-transparent shadow-none',
       } satisfies Record<(typeof textareaVariantNames)[number], string>,
     },
     compoundVariants: [
-      { variant: 'none', class: 'focus-visible:border-0 focus-visible:ring-0' },
       { variant: ['outline', 'plain'], highlight: true, class: 'border-(--textarea-color)/40' },
       { variant: 'subtle', highlight: true, class: 'border-(--textarea-color)/20' },
       { variant: 'soft', highlight: true, class: 'border-(--textarea-color)/40' },

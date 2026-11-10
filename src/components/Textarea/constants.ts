@@ -1,5 +1,5 @@
 export const textareaSizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
-export const textareaVariantNames = ['outline', 'subtle', 'soft', 'plain', 'none'] as const
+export const textareaVariantNames = ['outline', 'subtle', 'soft', 'plain'] as const
 
 export const textareaDefaults = {
   modelValue: '',
